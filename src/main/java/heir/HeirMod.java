@@ -36,7 +36,7 @@ public final class HeirMod implements EditCardsSubscriber,EditCharactersSubscrib
     public static void initialize(){instance=new HeirMod();}
     public HeirMod(){
         root=PlatformPaths.data(System.getenv(),System.getProperty("user.home"));profilePath=root.resolve("family.json");
-        if(!Files.exists(root.resolve("cache/source.json")))throw new IllegalStateException("Rogue Legacy 2 content is missing. Launch using HeirOfTheSpire/Play.cmd (Windows) or Play.sh (Linux) so your installed content is prepared first.");
+        ContentBootstrap.prepare(root);
         profile=Profile.load(profilePath);BaseMod.subscribe(this);BaseMod.addSaveField("heir:run",this);
         BaseMod.addColor(Enums.HEIR_COLOR,new Color(.65f,.48f,.2f,1),asset("host_attack512.png"),asset("host_skill512.png"),asset("host_power512.png"),asset("host_orb512.png"),asset("host_attack1024.png"),asset("host_skill1024.png"),asset("host_power1024.png"),asset("host_orb1024.png"),asset("host_orb32.png"));
         System.out.println("HEIR: loaded family "+profile.family+", generation "+profile.generation);
