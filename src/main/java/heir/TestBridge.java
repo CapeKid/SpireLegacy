@@ -46,7 +46,8 @@ public final class TestBridge {
                     int index=cmd.get("index").getAsInt();AbstractCard card=AbstractDungeon.player.hand.group.get(index);AbstractMonster target=AbstractDungeon.getMonsters().getRandomMonster(true);
                     if(card.canUse(AbstractDungeon.player,target))AbstractDungeon.player.useCard(card,target,card.costForTurn);
                 }else if(action.equals("die")&&HeirMod.isHeir()){AbstractDungeon.player.damage(new DamageInfo(null,9999,DamageInfo.DamageType.HP_LOSS));}
-                else if(action.equals("manor")){Manor.open=true;}
+                else if(action.equals("manor")){Manor.openSelection();Manor.open=true;Manor.settingsOnly=false;}
+                else if(action.equals("settings")){Manor.openSelection();Manor.open=true;Manor.settingsOnly=true;}
                 else if(action.equals("menu")){CardCrawlGame.startOver=true;CardCrawlGame.mode=CardCrawlGame.GameMode.CHAR_SELECT;CardCrawlGame.mainMenuScreen=new com.megacrit.cardcrawl.screens.mainMenu.MainMenuScreen();CardCrawlGame.mainMenuScreen.screen=com.megacrit.cardcrawl.screens.mainMenu.MainMenuScreen.CurScreen.MAIN_MENU;}
                 else if(action.equals("dismiss")){AbstractDungeon.closeCurrentScreen();}
                 else if(action.equals("audit")){

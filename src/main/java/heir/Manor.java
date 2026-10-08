@@ -12,23 +12,37 @@ import java.util.*;
 /** Family UI is available between runs; purchases never change an active heir. */
 public final class Manor {
     public static boolean open=false,autoOpen=false;
+    public static boolean settingsOnly=false;
     private static Texture pixel;
     public static String message="";
     private static final Color[] COLORS={new Color(.9f,.73f,.4f,1),new Color(.47f,.76f,.85f,1),new Color(.8f,.5f,.62f,1),new Color(.57f,.8f,.59f,1)};
     public static Color bannerColor(){return COLORS[HeirMod.profile.banner%COLORS.length];}
-    private static boolean menu(){return CardCrawlGame.mode==CardCrawlGame.GameMode.CHAR_SELECT&&CardCrawlGame.mainMenuScreen!=null&&CardCrawlGame.mainMenuScreen.screen==MainMenuScreen.CurScreen.MAIN_MENU;}
+    private static boolean menu(){
+        if(CardCrawlGame.mode!=CardCrawlGame.GameMode.CHAR_SELECT||CardCrawlGame.mainMenuScreen==null||CardCrawlGame.mainMenuScreen.screen!=MainMenuScreen.CurScreen.CHAR_SELECT)return false;
+        for(com.megacrit.cardcrawl.screens.charSelect.CharacterOption option:CardCrawlGame.mainMenuScreen.charSelectScreen.options)if(option.selected&&option.c instanceof HeirPlayer)return true;
+        return false;
+    }
+    public static void openSelection(){
+        CardCrawlGame.mainMenuScreen.charSelectScreen.open(false);
+        for(com.megacrit.cardcrawl.screens.charSelect.CharacterOption option:CardCrawlGame.mainMenuScreen.charSelectScreen.options){option.selected=option.c instanceof HeirPlayer;if(option.selected){CardCrawlGame.chosenCharacter=HeirMod.Enums.HEIR;option.locked=false;}}
+        CardCrawlGame.mainMenuScreen.charSelectScreen.justSelected();
+        CardCrawlGame.mainMenuScreen.charSelectScreen.bgCharImg=com.megacrit.cardcrawl.helpers.ImageMaster.loadImage(Data.row("ui_art","select_bg").s("path"));
+    }
     private static boolean hit(float x,float y,float w,float h){float s=Settings.scale;return InputHelper.mX>=x*s&&InputHelper.mX<=(x+w)*s&&InputHelper.mY>=y*s&&InputHelper.mY<=(y+h)*s;}
     public static void update(){
+        if(autoOpen&&CardCrawlGame.mode==CardCrawlGame.GameMode.CHAR_SELECT&&CardCrawlGame.mainMenuScreen!=null&&CardCrawlGame.mainMenuScreen.screen==MainMenuScreen.CurScreen.MAIN_MENU){openSelection();open=true;settingsOnly=false;autoOpen=false;}
         if(!menu()){open=false;return;}
-        if(autoOpen){open=true;autoOpen=false;}
-        if(!open){if(HeirMod.profile.generation>0&&InputHelper.justClickedLeft&&hit(1390,790,390,72)){open=true;InputHelper.justClickedLeft=false;}return;}
+        if(!open){
+            if(InputHelper.justClickedLeft&&(hit(170,420,330,50)||hit(170,355,330,50))){settingsOnly=hit(170,355,330,50);open=true;InputHelper.justClickedLeft=false;}
+            return;
+        }
         if(InputHelper.pressedEscape){open=false;InputHelper.pressedEscape=false;return;}
         if(!InputHelper.justClickedLeft)return;
         if(hit(1510,135,220,60)){open=false;}
         else if(hit(260,800,240,54)){
             Gdx.input.getTextInput(new Input.TextInputListener(){public void input(String text){String t=text.trim();if(t.length()>0){HeirMod.profile.family=t.substring(0,Math.min(24,t.length()));HeirMod.profile.save(HeirMod.profilePath);}}public void canceled(){}},"Family name",HeirMod.profile.family,"Up to 24 characters");
         }else if(hit(520,800,240,54)){HeirMod.profile.banner=(HeirMod.profile.banner+1)%COLORS.length;HeirMod.profile.save(HeirMod.profilePath);}
-        else{
+        else if(!settingsOnly){
             for(int i=0;i<HeirMod.profile.offers.size();i++)if(hit(260+i*465,475,435,280)){
                 if(HeirMod.profile.active==null){HeirMod.profile.selected=HeirMod.profile.offers.get(i);message="Next heir: "+HeirMod.profile.selected.name;HeirMod.profile.save(HeirMod.profilePath);}else message="Finish or abandon the current climb first.";
             }
@@ -41,11 +55,12 @@ public final class Manor {
     private static void button(SpriteBatch sb,String str,float x,float y,float w,float h){rect(sb,x,y,w,h,new Color(.15f,.2f,.29f,1));text(sb,str,x+18,y+h-15,bannerColor());}
     public static void render(SpriteBatch sb){
         if(!menu())return;
-        if(!open){if(HeirMod.profile.generation>0)button(sb,"Family Manor  |  "+HeirMod.profile.crowns+" crowns",1390,790,390,72);return;}
+        if(!open){button(sb,"Family Manor  |  "+HeirMod.profile.crowns+" crowns",170,420,330,50);button(sb,"Heir Settings",170,355,330,50);return;}
         rect(sb,0,0,1920,1080,new Color(.035f,.055f,.09f,.97f));rect(sb,225,105,1470,870,new Color(.075f,.105f,.16f,1));rect(sb,225,970,1470,5,bannerColor());
         FontHelper.renderFontLeftTopAligned(sb,FontHelper.panelNameFont,"HOUSE "+HeirMod.profile.family.toUpperCase(),260*Settings.scale,940*Settings.scale,bannerColor());
         text(sb,"Generation "+HeirMod.profile.generation+"  |  "+HeirMod.profile.crowns+" legacy crowns  |  Last climb +"+HeirMod.profile.lastEarned,260,880,Color.WHITE);
         button(sb,"Name your family",260,800,240,54);button(sb,"Change banner",520,800,240,54);
+        if(settingsOnly){text(sb,"Customize your family name and banner. These persist across heirs.",260,740,Color.WHITE);text(sb,"Choose heirs and purchase permanent upgrades in Family Manor.",260,680,Color.LIGHT_GRAY);button(sb,"Return",1510,135,150,60);return;}
         int i=0;for(Profile.Heir h:HeirMod.profile.offers){float x=260+i*465;boolean selected=HeirMod.profile.selected!=null&&HeirMod.profile.selected.name.equals(h.name)&&HeirMod.profile.selected.classId.equals(h.classId);
             rect(sb,x,475,435,280,selected?new Color(.2f,.23f,.24f,1):new Color(.11f,.15f,.22f,1));Data.Row cls=Data.row("classes",h.classId);sb.setColor(Color.WHITE);sb.draw(HeirMod.texture(cls.s("asset")+".png"),(x+20)*Settings.scale,680*Settings.scale,54*Settings.scale,54*Settings.scale);
             text(sb,h.name+" "+HeirMod.profile.family,x+88,727,bannerColor());text(sb,cls.s("name")+(selected?"  [CHOSEN]":"  [SELECT]"),x+88,688,Color.WHITE);

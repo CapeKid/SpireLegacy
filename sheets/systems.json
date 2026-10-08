@@ -46,7 +46,7 @@
     "hook": "manor",
     "amount": 4,
     "enabled": true,
-    "summary": "Name the family and choose one of four banner colors between runs; heir cards have 280 units of height to separate trait summaries from statistics."
+    "summary": "Family Manor and Heir Settings are contextual options beneath The Heir on character selection; preserve between-run choices, upgrades and family identity."
   },
   {
     "id": "source",
