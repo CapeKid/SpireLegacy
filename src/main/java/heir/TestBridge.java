@@ -40,6 +40,7 @@ public final class TestBridge {
                     CardCrawlGame.mainMenuScreen.charSelectScreen.open(false);
                     for(CharacterOption o:CardCrawlGame.mainMenuScreen.charSelectScreen.options){o.selected=o.c instanceof HeirPlayer;if(o.selected){CardCrawlGame.chosenCharacter=HeirMod.Enums.HEIR;o.locked=false;}}
                     CardCrawlGame.mainMenuScreen.charSelectScreen.justSelected();
+                    CardCrawlGame.mainMenuScreen.charSelectScreen.bgCharImg=com.megacrit.cardcrawl.helpers.ImageMaster.loadImage(Data.row("ui_art","select_bg").s("path"));
                 }else if(action.equals("start")){CardCrawlGame.mainMenuScreen.charSelectScreen.confirmButton.hb.clicked=true;}
                 else if(action.equals("play")&&HeirMod.isHeir()){
                     int index=cmd.get("index").getAsInt();AbstractCard card=AbstractDungeon.player.hand.group.get(index);AbstractMonster target=AbstractDungeon.getMonsters().getRandomMonster(true);
