@@ -21,6 +21,7 @@ public class ProfileChecks {
         for(int seed=0;seed<2000;seed++){Profile sample=new Profile();sample.generateOffers(seed);for(Profile.Heir h:sample.offers){Data.Row a=Data.row("traits",h.traits.get(0)),b=Data.row("traits",h.traits.get(1));check(a.b("enabled")&&b.b("enabled"),"disabled traits excluded");check(Profile.compatible(a,b),"incompatibilities respected");seen.addAll(h.traits);}}
         for(Data.Row t:Data.rows("traits"))if(t.b("enabled"))check(seen.contains(t.s("id")),"every eligible trait reachable: "+t.s("id"));
         check(!Profile.compatible(Data.row("traits","large"),Data.row("traits","small")),"size incompatibility");
+        Map<String,String> env=new HashMap<>();check(PlatformPaths.data(env,"/deck").equals(Paths.get("/deck/.local/share/HeirOfTheSpire")),"Linux data location");env.put("XDG_DATA_HOME","/xdg");check(PlatformPaths.data(env,"/deck").equals(Paths.get("/xdg/HeirOfTheSpire")),"XDG override");env.put("LOCALAPPDATA","C:/Local");check(PlatformPaths.data(env,"/deck").equals(Paths.get("C:/Local/HeirOfTheSpire")),"Windows data location preserved");env.put("HEIR_DATA_DIR","/custom");check(PlatformPaths.data(env,"/deck").equals(Paths.get("/custom")),"explicit data directory wins");
         System.out.println("Passed "+checks+" progression checks.");
     }
 }

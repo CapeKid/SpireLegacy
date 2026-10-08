@@ -18,8 +18,9 @@ def find_game(explicit=None):
         import winreg
         with winreg.OpenKey(winreg.HKEY_CURRENT_USER,r'Software\Valve\Steam') as key:
             steam_roots.append(Path(winreg.QueryValueEx(key,'SteamPath')[0]))
-    except OSError: pass
+    except (OSError,ImportError): pass
     steam_roots += [Path(os.environ.get('PROGRAMFILES(X86)',r'C:\Program Files (x86)'))/'Steam',Path(r'C:\Steam')]
+    steam_roots += [Path.home()/'.local/share/Steam',Path.home()/'.steam/steam',Path.home()/'.steam/root']
     libs=list(steam_roots)
     for root in steam_roots:
         vdf=root/'steamapps/libraryfolders.vdf'

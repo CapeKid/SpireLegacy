@@ -1,0 +1,3 @@
+Python standalone runtime build 20260320, CPython 3.12.13 x86_64 Linux GNU.
+Notice source: https://github.com/astral-sh/python-build-standalone/tree/517bea88fe93a259f28e02d13c6c0ef4a682b2d7
+Includes notices for runtime build components, some of which are optional.

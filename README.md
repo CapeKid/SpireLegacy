@@ -15,7 +15,7 @@ A solo custom character for **Slay the Spire 1, regular branch**. Your first hei
 
 ## Required games and platform
 
-Windows x64, owned Steam copies of Slay the Spire 1 (regular branch, installed build 10180494 / v2.3.4 tested target) and Rogue Legacy 2 (build 13303339 tested target). Steam library discovery locates Rogue Legacy 2 automatically. It does not modify that game's installation or saves. No multiplayer.
+Windows x64 has been tested in-game. The native Linux x86_64 package supports Steam Deck installation, with physical hardware verification pending. Both require owned Steam copies of Slay the Spire 1 (regular branch, build 10180494 / v2.3.4 tested on Windows) and Rogue Legacy 2 (build 13303339 content target). Steam library discovery locates Rogue Legacy 2 automatically. It does not modify that game's installation or saves. No multiplayer.
 
 ## Build
 
@@ -38,7 +38,9 @@ The isolated game is in `private/lab`. `scripts/launch-test.ps1` enables an opt-
 
 ## Status
 
-Compilation, 12,079 progression checks, all 30 card-upgrade checks, all 63 trait-power loading checks and eight runtime trait-rule checks pass. The expanded trait catalog was tested in real combat: Pacifist prevented attacks and applied Poison, and Limitless provided four initial Energy. Earlier packaged-launcher tests verified local content preparation, card play, death settlement, heir choices, a manor purchase and its health bonus after restart. Gameplay screenshots are in `media/`.
+Version 0.1.3 includes the cursor-layer fix, new selection art, character-specific family controls, the complete eligible trait catalog, and a native Linux/Steam Deck package. [Steam Deck installation and controls](docs/steam-deck.md) describe the bundled reader and Steam Input setup. The Linux reader extracted all 66 selected sprites from the actual owned game files in a Linux container, and seven launcher-discovery/error checks pass. Physical Deck gameplay and suspend/resume remain unverified.
+
+Compilation, 12,083 progression/platform-path checks, all 30 card-upgrade checks, all 63 trait-power loading checks and nine runtime trait-rule checks pass, including the native healing patch. The expanded trait catalog was tested in real combat: Pacifist prevented attacks and applied Poison, and Limitless provided four Energy on both the first and second turn. Earlier packaged-launcher tests verified local content preparation, card play, death settlement, heir choices, a manor purchase and its health bonus after restart. Gameplay screenshots are in `media/`.
 
 Melty validates all install mappings and its one-click check says yes. Its automatic detector does not recognize this package layout; the supplied `melty.json` corrects that. It flags executable code and the bundled Python standard-library archive for review, and requires playing through Melty before publishing. That Melty install has not yet been tested. A full three-act playthrough and balance testing have not been completed. Sound could not be verified in this test environment (no working OpenAL playback device).
 

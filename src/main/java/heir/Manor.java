@@ -13,6 +13,8 @@ import java.util.*;
 public final class Manor {
     public static boolean open=false,autoOpen=false;
     public static boolean settingsOnly=false;
+    private static int focus=0;
+    private static boolean keyboardFocus=false;
     private static Texture pixel;
     public static String message="";
     private static final Color[] COLORS={new Color(.9f,.73f,.4f,1),new Color(.47f,.76f,.85f,1),new Color(.8f,.5f,.62f,1),new Color(.57f,.8f,.59f,1)};
@@ -33,10 +35,15 @@ public final class Manor {
         if(autoOpen&&CardCrawlGame.mode==CardCrawlGame.GameMode.CHAR_SELECT&&CardCrawlGame.mainMenuScreen!=null&&CardCrawlGame.mainMenuScreen.screen==MainMenuScreen.CurScreen.MAIN_MENU){openSelection();open=true;settingsOnly=false;autoOpen=false;}
         if(!menu()){open=false;return;}
         if(!open){
+            if(Gdx.input.isKeyJustPressed(Input.Keys.M)||Gdx.input.isKeyJustPressed(Input.Keys.I)){settingsOnly=Gdx.input.isKeyJustPressed(Input.Keys.I);open=true;focus=0;keyboardFocus=true;return;}
             if(InputHelper.justClickedLeft&&(hit(170,420,330,50)||hit(170,355,330,50))){settingsOnly=hit(170,355,330,50);open=true;InputHelper.justClickedLeft=false;}
             return;
         }
         if(InputHelper.pressedEscape){open=false;InputHelper.pressedEscape=false;return;}
+        int count=settingsOnly?3:12;
+        if(Gdx.input.isKeyJustPressed(Input.Keys.RIGHT)||Gdx.input.isKeyJustPressed(Input.Keys.DOWN)||Gdx.input.isKeyJustPressed(Input.Keys.TAB)){focus=(focus+1)%count;keyboardFocus=true;}
+        if(Gdx.input.isKeyJustPressed(Input.Keys.LEFT)||Gdx.input.isKeyJustPressed(Input.Keys.UP)){focus=(focus+count-1)%count;keyboardFocus=true;}
+        if(keyboardFocus&&Gdx.input.isKeyJustPressed(Input.Keys.ENTER)){float[] point=focusPoint();InputHelper.mX=(int)(point[0]*Settings.scale);InputHelper.mY=(int)(point[1]*Settings.scale);InputHelper.justClickedLeft=true;}
         if(!InputHelper.justClickedLeft)return;
         if(hit(1510,135,220,60)){open=false;}
         else if(hit(260,800,240,54)){
@@ -53,6 +60,8 @@ public final class Manor {
     private static void rect(SpriteBatch sb,float x,float y,float w,float h,Color color){if(pixel==null){Pixmap p=new Pixmap(1,1,Pixmap.Format.RGBA8888);p.setColor(Color.WHITE);p.fill();pixel=new Texture(p);p.dispose();}sb.setColor(color);sb.draw(pixel,x*Settings.scale,y*Settings.scale,w*Settings.scale,h*Settings.scale);sb.setColor(Color.WHITE);}
     private static void text(SpriteBatch sb,String str,float x,float y,Color color){FontHelper.renderFontLeftTopAligned(sb,FontHelper.tipBodyFont,str,x*Settings.scale,y*Settings.scale,color);}
     private static void button(SpriteBatch sb,String str,float x,float y,float w,float h){rect(sb,x,y,w,h,new Color(.15f,.2f,.29f,1));text(sb,str,x+18,y+h-15,bannerColor());}
+    private static float[] focusPoint(){if(focus==0)return new float[]{380,825};if(focus==1)return new float[]{640,825};if(settingsOnly||focus==11)return new float[]{1585,165};if(focus<5)return new float[]{475+(focus-2)*465,650};int index=focus-5;return new float[]{475+(index%3)*465,395-(index/3)*125};}
+    private static void focusMark(SpriteBatch sb){if(keyboardFocus){float[] point=focusPoint();rect(sb,point[0]-9,point[1]-9,18,18,bannerColor());}}
     public static void render(SpriteBatch sb){
         if(!menu())return;
         if(!open){button(sb,"Family Manor  |  "+HeirMod.profile.crowns+" crowns",170,420,330,50);button(sb,"Heir Settings",170,355,330,50);return;}
@@ -60,7 +69,7 @@ public final class Manor {
         FontHelper.renderFontLeftTopAligned(sb,FontHelper.panelNameFont,"HOUSE "+HeirMod.profile.family.toUpperCase(),260*Settings.scale,940*Settings.scale,bannerColor());
         text(sb,"Generation "+HeirMod.profile.generation+"  |  "+HeirMod.profile.crowns+" legacy crowns  |  Last climb +"+HeirMod.profile.lastEarned,260,880,Color.WHITE);
         button(sb,"Name your family",260,800,240,54);button(sb,"Change banner",520,800,240,54);
-        if(settingsOnly){text(sb,"Customize your family name and banner. These persist across heirs.",260,740,Color.WHITE);text(sb,"Choose heirs and purchase permanent upgrades in Family Manor.",260,680,Color.LIGHT_GRAY);button(sb,"Return",1510,135,150,60);return;}
+        if(settingsOnly){text(sb,"Customize your family name and banner. These persist across heirs.",260,740,Color.WHITE);text(sb,"Choose heirs and purchase permanent upgrades in Family Manor.",260,680,Color.LIGHT_GRAY);button(sb,"Return",1510,135,150,60);focusMark(sb);return;}
         int i=0;for(Profile.Heir h:HeirMod.profile.offers){float x=260+i*465;boolean selected=HeirMod.profile.selected!=null&&HeirMod.profile.selected.name.equals(h.name)&&HeirMod.profile.selected.classId.equals(h.classId);
             rect(sb,x,475,435,280,selected?new Color(.2f,.23f,.24f,1):new Color(.11f,.15f,.22f,1));Data.Row cls=Data.row("classes",h.classId);sb.setColor(Color.WHITE);sb.draw(HeirMod.texture(cls.s("asset")+".png"),(x+20)*Settings.scale,680*Settings.scale,54*Settings.scale,54*Settings.scale);
             text(sb,h.name+" "+HeirMod.profile.family,x+88,727,bannerColor());text(sb,cls.s("name")+(selected?"  [CHOSEN]":"  [SELECT]"),x+88,688,Color.WHITE);
@@ -69,6 +78,7 @@ public final class Manor {
         }
         i=0;for(Data.Row row:Data.rows("manor")){float x=260+(i%3)*465,y=345-(i/3)*125;rect(sb,x,y,435,105,new Color(.11f,.15f,.22f,1));int lv=HeirMod.profile.level(row.s("id"));text(sb,row.s("name")+"  "+lv+"/"+row.i("maxLevel"),x+16,y+87,bannerColor());text(sb,row.s("summary"),x+16,y+56,Color.WHITE);String status=lv==row.i("maxLevel")?"MAX":HeirMod.profile.cost(row)+" crowns";if(!row.s("requires").equals("none")&&HeirMod.profile.level(row.s("requires"))==0)status="Requires "+Data.row("manor",row.s("requires")).s("name");text(sb,status,x+16,y+26,Color.LIGHT_GRAY);i++;}
         text(sb,message.isEmpty()?"Select an heir and buy upgrades. Then start a new run as The Heir.":message,260,167,Color.LIGHT_GRAY);button(sb,"Return",1510,135,150,60);
+        focusMark(sb);
     }
     public static int heirHp(Profile.Heir h){int hp=Data.row("classes",h.classId).i("hp")+HeirMod.profile.bonus("hp");for(String t:h.traits)hp+=Data.row("traits",t).i("hp");for(String t:h.traits)if(Data.row("traits",t).s("effect").equals("fragile"))return 1;return Math.max(20,hp);}
     private static String shortSummary(String text){while(new com.badlogic.gdx.graphics.g2d.GlyphLayout(FontHelper.tipBodyFont,text).width>390*Settings.scale&&text.length()>4)text=text.substring(0,text.length()-4)+"...";return text;}

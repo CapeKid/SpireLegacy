@@ -51,8 +51,9 @@ public final class TestBridge {
                 else if(action.equals("menu")){CardCrawlGame.startOver=true;CardCrawlGame.mode=CardCrawlGame.GameMode.CHAR_SELECT;CardCrawlGame.mainMenuScreen=new com.megacrit.cardcrawl.screens.mainMenu.MainMenuScreen();CardCrawlGame.mainMenuScreen.screen=com.megacrit.cardcrawl.screens.mainMenu.MainMenuScreen.CurScreen.MAIN_MENU;}
                 else if(action.equals("dismiss")){AbstractDungeon.closeCurrentScreen();}
                 else if(action.equals("fight")){HeirMod.quickPending=true;}
+                else if(action.equals("endturn")&&HeirMod.isHeir()){AbstractDungeon.actionManager.callEndTurnEarlySequence();}
                 else if(action.equals("traitchecks")){
-                    java.util.List<String> saved=new java.util.ArrayList<>(HeirMod.heir().traits);int checks=0;
+                    java.util.List<String> saved=new java.util.ArrayList<>(HeirMod.heir().traits);int checks=0;int savedHp=HeirMod.isHeir()?AbstractDungeon.player.currentHealth:0;
                     try{
                         HeirMod.heir().traits.clear();HeirMod.heir().traits.add("onehitdeath");if(TraitRules.maxHp(999)!=1)throw new AssertionError("Fragile HP");checks++;
                         HeirMod.heir().traits.clear();HeirMod.heir().traits.add("nomeat");if(TraitRules.healing(9)!=4)throw new AssertionError("Vegan healing");checks++;
@@ -62,8 +63,9 @@ public final class TestBridge {
                         TraitPower costly=new TraitPower(Data.row("traits","manacostanddamageup"));costly.onCardDraw(attack);if(attack.costForTurn!=2||costly.atDamageGive(10,DamageInfo.DamageType.NORMAL)!=15)throw new AssertionError("Overcompensation");checks++;
                         TraitPower algesia=new TraitPower(Data.row("traits","noimmunitywindow"));if(algesia.onAttackedToChangeDamage(new DamageInfo(null,4,DamageInfo.DamageType.NORMAL),4)!=6||algesia.onAttackedToChangeDamage(new DamageInfo(null,4,DamageInfo.DamageType.HP_LOSS),4)!=4)throw new AssertionError("Algesia");checks++;
                         HeirMod.heir().traits.clear();HeirMod.heir().traits.add("randomizekit");if(!TraitRules.deck("mage",42).equals(TraitRules.deck("mage",42)))throw new AssertionError("Seeded kit");checks++;
+                        if(HeirMod.isHeir()&&AbstractDungeon.player.maxHealth>20){HeirMod.heir().traits.clear();HeirMod.heir().traits.add("nomeat");AbstractDungeon.player.currentHealth=AbstractDungeon.player.maxHealth-20;int before=AbstractDungeon.player.currentHealth;AbstractDungeon.player.heal(9);if(AbstractDungeon.player.currentHealth!=before+4)throw new AssertionError("Native healing patch");checks++;}
                         Files.write(HeirMod.root.resolve("trait-checks.json"),("{\"runtimeTraitChecks\":"+checks+"}").getBytes(StandardCharsets.UTF_8));
-                    }finally{HeirMod.heir().traits.clear();HeirMod.heir().traits.addAll(saved);}
+                    }finally{HeirMod.heir().traits.clear();HeirMod.heir().traits.addAll(saved);if(HeirMod.isHeir())AbstractDungeon.player.currentHealth=savedHp;}
                 }
                 else if(action.equals("audit")){
                     int checks=0;
