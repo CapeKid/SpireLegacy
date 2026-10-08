@@ -1,0 +1,9 @@
+tools/
+private/
+build/
+dist/
+*.log
+__pycache__/
+
+scripts/melty-read.ps1
+*.pyc

@@ -1,0 +1,35 @@
+[
+  {
+    "id": "knight",
+    "name": "Knight",
+    "asset": "Icons_Classes_SwordClass",
+    "hp": 78,
+    "strength": 0,
+    "dexterity": 1,
+    "heal": 2,
+    "signature": "shield",
+    "summary": "Sword strikes and dependable defenses."
+  },
+  {
+    "id": "mage",
+    "name": "Mage",
+    "asset": "Icons_Classes_MagicWandClass",
+    "hp": 64,
+    "strength": 0,
+    "dexterity": 0,
+    "heal": 2,
+    "signature": "flame",
+    "summary": "Spell attacks, drawing cards and energy."
+  },
+  {
+    "id": "ranger",
+    "name": "Ranger",
+    "asset": "Icons_Classes_BowClass",
+    "hp": 70,
+    "strength": 1,
+    "dexterity": 0,
+    "heal": 2,
+    "signature": "aim",
+    "summary": "Multi-hit arrows and carefully timed attacks."
+  }
+]

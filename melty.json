@@ -1,0 +1,48 @@
+{
+  "schemaVersion": 1,
+  "mode": "installed",
+  "games": [
+    {
+      "slug": "slay-the-spire",
+      "role": "primary"
+    },
+    {
+      "slug": "custom-rogue-legacy-2",
+      "role": "secondary"
+    }
+  ],
+  "components": [
+    {
+      "id": "main",
+      "fileName": "HeirOfTheSpire-0.1.2.zip",
+      "label": "Spire Legacy with content reader and modding libraries",
+      "kind": "main",
+      "required": true
+    }
+  ],
+  "requirements": [],
+  "mappings": [
+    {
+      "component": "main",
+      "from": "mods/",
+      "to": "{game}/mods"
+    },
+    {
+      "component": "main",
+      "from": "HeirOfTheSpire/",
+      "to": "{game}/HeirOfTheSpire"
+    }
+  ],
+  "launch": {
+    "kind": "exe",
+    "path": "{game}/HeirOfTheSpire/Play.cmd",
+    "cwd": "{game}"
+  },
+  "runtimeData": [
+    "{localappdata}/HeirOfTheSpire"
+  ],
+  "notes": {
+    "beforeInstall": "Requires your owned Windows Steam copies of Slay the Spire 1 on its regular branch and Rogue Legacy 2. The mod finds Rogue Legacy 2 in your Steam libraries and reads its content locally; no game assets are included.",
+    "firstLaunch": "Choose The Heir in Slay the Spire. Your first family run enters combat immediately; after it ends, open Family Manor from the main menu to choose heirs and buy upgrades."
+  }
+}

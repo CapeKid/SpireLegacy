@@ -1,0 +1,79 @@
+[
+  {
+    "id": "hand",
+    "hook": "character_loadout",
+    "amount": 5,
+    "enabled": true,
+    "summary": "Master and current hand sizes include manor draw upgrades and inherited draw traits."
+  },
+  {
+    "id": "registration",
+    "hook": "startup",
+    "amount": 0,
+    "enabled": true,
+    "summary": "Register character HEIR and identical HEIR_COLOR names for card color and card library enums; provide the host red energy flash texture when using EnergyOrbRed."
+  },
+  {
+    "id": "lineage",
+    "hook": "run_start",
+    "amount": 3,
+    "enabled": true,
+    "summary": "Random first heir; later choose one of three, each with two distinct traits."
+  },
+  {
+    "id": "legacy",
+    "hook": "run_end",
+    "amount": 8,
+    "enabled": true,
+    "summary": "Legacy crowns awarded per cleared floor, plus one-quarter of remaining run gold."
+  },
+  {
+    "id": "victory",
+    "hook": "run_end",
+    "amount": 120,
+    "enabled": true,
+    "summary": "Victory adds 120 legacy crowns. Each run settles at most once."
+  },
+  {
+    "id": "quickstart",
+    "hook": "first_room",
+    "amount": 1,
+    "enabled": true,
+    "summary": "First run skips Neow and enters a normal floor-one fight once GAMEPLAY initialization and its fade-in are complete."
+  },
+  {
+    "id": "family",
+    "hook": "manor",
+    "amount": 4,
+    "enabled": true,
+    "summary": "Name the family and choose one of four banner colors between runs; heir cards have 280 units of height to separate trait summaries from statistics."
+  },
+  {
+    "id": "source",
+    "hook": "launch",
+    "amount": 1,
+    "enabled": true,
+    "summary": "Require Rogue Legacy 2; read genuine class and trait sprites into a local cache at launch."
+  },
+  {
+    "id": "persistence",
+    "hook": "save",
+    "amount": 1,
+    "enabled": true,
+    "summary": "Atomic profile saves, backup recovery, and a unique run identity."
+  },
+  {
+    "enabled": true,
+    "id": "trait_tooltips",
+    "hook": "post_render",
+    "amount": 440,
+    "summary": "Hover a trait icon or name in combat or on an heir offer to see its sheet-derived maximum HP, Strength, Dexterity, draw, healing, legacy earnings and cosmetic size changes. Render above the manor; clamp to screen."
+  },
+  {
+    "hook": "card_constructor",
+    "enabled": true,
+    "summary": "Each card loads its own effect-based original illustration from the card_art sheet and packaged resources; retain Rogue Legacy 2 class/trait content on the character, HUD and heir offers.",
+    "id": "card_illustrations",
+    "amount": 30
+  }
+]

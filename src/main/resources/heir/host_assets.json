@@ -1,0 +1,65 @@
+[
+  {
+    "id": "attack512",
+    "sourceFile": "cardui/cardui.atlas",
+    "sourceName": "512/bg_attack_red",
+    "output": "host_attack512.png",
+    "resize": 0
+  },
+  {
+    "id": "skill512",
+    "sourceFile": "cardui/cardui.atlas",
+    "sourceName": "512/bg_skill_red",
+    "output": "host_skill512.png",
+    "resize": 0
+  },
+  {
+    "id": "power512",
+    "sourceFile": "cardui/cardui.atlas",
+    "sourceName": "512/bg_power_red",
+    "output": "host_power512.png",
+    "resize": 0
+  },
+  {
+    "id": "orb512",
+    "sourceFile": "cardui/cardui.atlas",
+    "sourceName": "512/card_red_orb",
+    "output": "host_orb512.png",
+    "resize": 0
+  },
+  {
+    "id": "attack1024",
+    "sourceFile": "cardui/cardui.atlas",
+    "sourceName": "1024/bg_attack_red",
+    "output": "host_attack1024.png",
+    "resize": 0
+  },
+  {
+    "id": "skill1024",
+    "sourceFile": "cardui/cardui.atlas",
+    "sourceName": "1024/bg_skill_red",
+    "output": "host_skill1024.png",
+    "resize": 0
+  },
+  {
+    "id": "power1024",
+    "sourceFile": "cardui/cardui.atlas",
+    "sourceName": "1024/bg_power_red",
+    "output": "host_power1024.png",
+    "resize": 0
+  },
+  {
+    "id": "orb1024",
+    "sourceFile": "cardui/cardui.atlas",
+    "sourceName": "1024/card_red_orb",
+    "output": "host_orb1024.png",
+    "resize": 0
+  },
+  {
+    "id": "orb32",
+    "sourceFile": "cardui/cardui.atlas",
+    "sourceName": "512/card_red_orb",
+    "output": "host_orb32.png",
+    "resize": 32
+  }
+]

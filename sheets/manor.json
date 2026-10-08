@@ -1,0 +1,68 @@
+[
+  {
+    "id": "vitality",
+    "name": "Living Quarters",
+    "effect": "hp",
+    "perLevel": 4,
+    "maxLevel": 5,
+    "baseCost": 40,
+    "costStep": 25,
+    "requires": "none",
+    "summary": "+4 maximum health per level."
+  },
+  {
+    "id": "smith",
+    "name": "Blacksmith",
+    "effect": "strength",
+    "perLevel": 1,
+    "maxLevel": 3,
+    "baseCost": 90,
+    "costStep": 80,
+    "requires": "vitality",
+    "summary": "+1 Strength per level."
+  },
+  {
+    "id": "armory",
+    "name": "Armory",
+    "effect": "dexterity",
+    "perLevel": 1,
+    "maxLevel": 3,
+    "baseCost": 90,
+    "costStep": 80,
+    "requires": "vitality",
+    "summary": "+1 Dexterity per level."
+  },
+  {
+    "id": "vault",
+    "name": "Treasury",
+    "effect": "gold",
+    "perLevel": 10,
+    "maxLevel": 4,
+    "baseCost": 60,
+    "costStep": 35,
+    "requires": "none",
+    "summary": "+10% legacy earnings per level."
+  },
+  {
+    "id": "library",
+    "name": "Library",
+    "effect": "draw",
+    "perLevel": 1,
+    "maxLevel": 1,
+    "baseCost": 180,
+    "costStep": 0,
+    "requires": "armory",
+    "summary": "+1 card drawn each turn."
+  },
+  {
+    "id": "garden",
+    "name": "Healing Garden",
+    "effect": "heal",
+    "perLevel": 1,
+    "maxLevel": 4,
+    "baseCost": 60,
+    "costStep": 35,
+    "requires": "none",
+    "summary": "+1 healing after combat per level."
+  }
+]

@@ -1,0 +1,43 @@
+# Heir of the Spire
+
+Approved scope: Slay the Spire 1, regular Steam branch; solo; random first heir and quick combat; thereafter custom family identity, three heir choices, three classes, eight traits, permanent manor tree, full runs. Both class and traits affect play. Publish on Melty only after testing, gameplay media, metadata choices and explicit approval.
+
+Host: C:/Program Files (x86)/Steam/steamapps/common/SlayTheSpire (Steam 646570, build 10180494, no beta setting).
+Source game: C:/Program Files (x86)/Steam/steamapps/common/Rogue Legacy 2 (Steam 1253920, build 13303339, Unity 2020.3.47f1 Mono).
+
+Route: Java 8 custom character through ModTheSpire and BaseMod. Use the host's own art only via its existing jar, never redistribute it. A bundled local converter reads Rogue Legacy 2 assets from each player's installation at launch, into a private runtime cache; no game assets in the release. Verify exact assets before selecting them.
+
+Melty reports ModTheSpire v3.6.3 auto-install. Official GitHub latest: MTS v3.6.3, BaseMod v5.5.0. Closest published recipe Tears of the Spire bundles MTS 3.30.3/BaseMod 5.56.0. Need reconcile the old official release with this installed game by real launch testing before packaging.
+
+Downloaded toolkit: ../tools/universal-modder, Python dependencies installed locally. No field note exists for Slay the Spire. Build JDK: Temurin 8 from Adoptium; converter tools UnityPy and PyInstaller from PyPI. No paid generation.
+
+Next: inspect real game assets and APIs, write sheets, implement and validate the smallest working character before widening. Back up saves and profiles before launch. Source-only until in-game tests pass.
+
+## Verified local build, 2026-10-08
+
+Nine JSON sheets, 92 rows, 977 filled cells, all cross references and source asset names checked. Generated row definitions and per-card classes. Java compiles against the installed host jar, Workshop ModTheSpire 3.30.3 and BaseMod 5.56.0. Downloaded release versions were older; use redistributable Workshop copies and included MIT notices, matching the working Melty example.
+
+13 Rogue Legacy 2 sprites are read at launch. Host card background and energy orb regions are read from the owned StS jar. Sprite-only converter disables optional FMOD imports and is packaged with Python, UnityPy resources, archspec CPU data and all needed decoder modules. Executable tested without an installed Python dependency. No source-game assets, decompiled source, saves or credentials in package. Toolkit package check: 315 files, 0 failures, 0 warnings.
+
+Backups: [local backup folder]/heir-sts-preferences/20261008-105535.zip and heir-sts-saves/20261008-105535.zip. Original game folders and saves are not changed; tests run from ignored private/lab and private/install-check. Test profile files are under private/runtime and private/install-runtime.
+
+Progression checks: 185 pass, including three distinct classes, distinct traits, selected heir, costs/prerequisites, immutable run bonuses, duplicate settlement and backup recovery. In-game audit: 30 upgraded cards verified. Knight attack: energy 3→2, slime HP 12→4. Simulated death: 44 crowns, three fresh heirs. Bought Living Quarters for 40, reloaded and started a Mage: max HP 96, including permanent +4. Packaged clean start with Mage/Magic Gift/Healthy: max HP 70, six cards; attack energy 3→2 and enemy HP 10→5. Second simulated death: 41 crowns and generation 1. Real framebuffer screenshots inspected; no desktop or private windows captured.
+
+Fixes from real tests: LibraryType enum must have exactly the CardColor enum name; CustomPlayer needs getEnergyImage for EnergyOrbRed; quick start must wait until gameplay fade-in ends; masterHandSize must include draw traits; card backgrounds must retain atlas original dimensions and offsets; flush SpriteBatch before framebuffer capture. Avoid multiple test instances sharing commands/logs. Main-menu lab profile requires STSSaveSlots PROFILE_NAME.
+
+Melty inspect_package cannot infer this layout; supplied recipe fixes mapping to host mods and HeirOfTheSpire folders. validate_recipe valid, no missing files. one_click_check yes, no blockers/toFinish. Review flags for executable code, Python base_library.zip and unverified layout remain; creator must launch through Melty before publishing. No draft/upload/publish yet: title choice pending, creator credit/license/remix choices unknown. No repository commits or pushed changes.
+
+Outstanding: full three-act playthrough/balance; audio (test machine playback device fails); through-Melty install/launch; listing metadata choices; uploading and attaching inspected media after metadata; final explicit publishing approval. Local playable build exists and has been smoke-tested; do not call it live or claim a completed full run.
+
+Listing title approved by creator: Spire Legacy. Renamed display metadata, README and reader messages; internal mod ID, save path and package paths remain stable. Updated manor capture inspected. Creator credit question pending; no listing created or publication authorized.
+
+Creator credit approved: CapeKid. MIT license and remixes with attribution approved. Tagline and short description approved. Preparing a private Melty draft, package and real gameplay media; final publication approval remains pending.
+
+Private Melty draft created: 473fd50c-3966-4d9d-b3a6-3924560756ac (spire-legacy). Release 0.1.0 submitted as draft: 1d308fef-3519-40e2-9186-ad8b03a9e427. Package SHA-256 a15bca3c35fb4ed90efd68f22d5f46dfd736be82367f927c1442cedd97ff52ec, 39,201,429 bytes, 316 entries. Server verified upload checksum. Combat and manor screenshots finished and attached. Review findings: executable dependencies, embedded Python standard-library archive, and through-Melty integration still unverified. Not published; awaiting explicit publication approval and creator Play through Melty.
+
+2026-10-08 install correction: Melty install_outcomes reported game-version-unknown for >=2.3.4. Steam manifest still confirms installed regular build 10180494. Removed the optional Melty semantic version gate; no package code changes. ModTheSpire sts_version compatibility metadata stays 12-18-2022. Revalidate and replace unpublished 0.1.0 recipe.
+
+Trait hover fix 0.1.1: added sheet-described tooltip system/hook (94 rows, 986 verified cells), per-trait combat labels and hover regions, manor icon/name/summary regions, screen-clamped overlay with effects derived from gameplay values. Verified real Healthy manor tooltip, Dwarfism combat tooltip, Healthy combat tooltip and switching targets. Isolated test only; actual family data untouched. 0.1.1 private draft release 93cf4dc0-5d85-48ab-9e24-e706c91b246d, package f2147d106feeae6526d31e7a65f0d460f191285e5248e3e3d9918cc47205f116, server checksum checked. New real tooltip screenshot attached. Publication remains pending.
+
+0.1.2 card art: user requested unique effect-based pictures and corrected style to Rogue Legacy. Discarded the painterly draft. Built-in imagegen produced 30 original cartoon illustrations using installed class portraits as style references. Sources saved in art/originals; full prompts and exported hashes in sheets/card_art.json. Packaged 250x190 art loads through classpath; real Rogue Legacy content stays on character/traits. Preflight: 10 sheets, 125 rows, 1291 verified cells. Contact sheet inspected, native card renderer inspected, all 30 upgraded cards loaded and passed. Uploaded package 35c88ff91bd54ba82899e0c53b3190a1d11f44e8d7c104d073c221cf473b20a9, server verified checksum. New private release a1e873ff-ada5-4d50-b356-459ebadd2abc; not published.
+Normal floor-one combat hand captured and inspected in 0.1.2: Ward, Flame Barrier and Spark use distinct artwork, hover portrait reads clearly. Real new combat screenshot attached. Original source images in art/originals and prompts in sheets/card_art.json; generated with built-in imagegen. No painterly draft art shipped.

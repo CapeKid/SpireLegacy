@@ -1,0 +1,93 @@
+[
+  {
+    "id": "Icons_Classes_BowClass",
+    "sourceFile": "resources.assets",
+    "sourceType": "Sprite",
+    "sourceName": "Icons_Classes_BowClass",
+    "output": "Icons_Classes_BowClass.png"
+  },
+  {
+    "id": "Icons_Classes_MagicWandClass",
+    "sourceFile": "resources.assets",
+    "sourceType": "Sprite",
+    "sourceName": "Icons_Classes_MagicWandClass",
+    "output": "Icons_Classes_MagicWandClass.png"
+  },
+  {
+    "id": "Icons_Classes_SwordClass",
+    "sourceFile": "resources.assets",
+    "sourceType": "Sprite",
+    "sourceName": "Icons_Classes_SwordClass",
+    "output": "Icons_Classes_SwordClass.png"
+  },
+  {
+    "id": "Icons_Traits_BonusHealth",
+    "sourceFile": "resources.assets",
+    "sourceType": "Sprite",
+    "sourceName": "Icons_Traits_BonusHealth",
+    "output": "Icons_Traits_BonusHealth.png"
+  },
+  {
+    "id": "Icons_Traits_BonusStrength",
+    "sourceFile": "resources.assets",
+    "sourceType": "Sprite",
+    "sourceName": "Icons_Traits_BonusStrength",
+    "output": "Icons_Traits_BonusStrength.png"
+  },
+  {
+    "id": "Icons_Traits_MagicDamageBoost",
+    "sourceFile": "resources.assets",
+    "sourceType": "Sprite",
+    "sourceName": "Icons_Traits_MagicDamageBoost",
+    "output": "Icons_Traits_MagicDamageBoost.png"
+  },
+  {
+    "id": "Icons_Traits_SmallHitbox",
+    "sourceFile": "resources.assets",
+    "sourceType": "Sprite",
+    "sourceName": "Icons_Traits_SmallHitbox",
+    "output": "Icons_Traits_SmallHitbox.png"
+  },
+  {
+    "id": "Icons_Traits_Vampire",
+    "sourceFile": "resources.assets",
+    "sourceType": "Sprite",
+    "sourceName": "Icons_Traits_Vampire",
+    "output": "Icons_Traits_Vampire.png"
+  },
+  {
+    "id": "Icons_Traits_WeaponDamageBoost",
+    "sourceFile": "resources.assets",
+    "sourceType": "Sprite",
+    "sourceName": "Icons_Traits_WeaponDamageBoost",
+    "output": "Icons_Traits_WeaponDamageBoost.png"
+  },
+  {
+    "id": "Icons_Traits_YouAreLarge",
+    "sourceFile": "resources.assets",
+    "sourceType": "Sprite",
+    "sourceName": "Icons_Traits_YouAreLarge",
+    "output": "Icons_Traits_YouAreLarge.png"
+  },
+  {
+    "id": "Icons_Traits_YouAreSmall",
+    "sourceFile": "resources.assets",
+    "sourceType": "Sprite",
+    "sourceName": "Icons_Traits_YouAreSmall",
+    "output": "Icons_Traits_YouAreSmall.png"
+  },
+  {
+    "id": "KnightEmote",
+    "sourceFile": "resources.assets",
+    "sourceType": "Sprite",
+    "sourceName": "KnightEmote",
+    "output": "KnightEmote.png"
+  },
+  {
+    "id": "PlayerHUD_ResourcesCoinIcon_Texture",
+    "sourceFile": "resources.assets",
+    "sourceType": "Sprite",
+    "sourceName": "PlayerHUD_ResourcesCoinIcon_Texture",
+    "output": "PlayerHUD_ResourcesCoinIcon_Texture.png"
+  }
+]

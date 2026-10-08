@@ -1,0 +1,74 @@
+[
+  {
+    "id": "content",
+    "api": "EditCardsSubscriber",
+    "system": "source",
+    "implementation": "HeirMod.receiveEditCards"
+  },
+  {
+    "id": "character",
+    "api": "PostInitializeSubscriber",
+    "system": "lineage",
+    "implementation": "HeirMod.receivePostInitialize"
+  },
+  {
+    "id": "start",
+    "api": "PostDungeonInitializeSubscriber",
+    "system": "lineage",
+    "implementation": "HeirMod.receivePostDungeonInitialize"
+  },
+  {
+    "id": "death",
+    "api": "PostDeathSubscriber",
+    "system": "legacy",
+    "implementation": "HeirMod.receivePostDeath"
+  },
+  {
+    "id": "victory",
+    "api": "VictoryScreen.constructor",
+    "system": "victory",
+    "implementation": "Hooks.Victory"
+  },
+  {
+    "id": "battle",
+    "api": "PostBattleSubscriber",
+    "system": "legacy",
+    "implementation": "HeirMod.receivePostBattle"
+  },
+  {
+    "id": "turn",
+    "api": "OnPlayerTurnStartSubscriber",
+    "system": "lineage",
+    "implementation": "HeirMod.receiveOnPlayerTurnStart"
+  },
+  {
+    "id": "ui_update",
+    "api": "PostUpdateSubscriber",
+    "system": "family",
+    "implementation": "HeirMod.receivePostUpdate"
+  },
+  {
+    "id": "ui_render",
+    "api": "PostRenderSubscriber",
+    "system": "family",
+    "implementation": "HeirMod.receivePostRender"
+  },
+  {
+    "id": "save",
+    "api": "CustomSavable",
+    "system": "persistence",
+    "implementation": "HeirMod.onSave"
+  },
+  {
+    "id": "first_room",
+    "api": "Exordium.constructor",
+    "system": "quickstart",
+    "implementation": "Hooks.QuickStart"
+  },
+  {
+    "system": "trait_tooltips",
+    "id": "trait_tooltips",
+    "implementation": "TraitTips.render",
+    "api": "PostRenderSubscriber"
+  }
+]

@@ -1,0 +1,50 @@
+[
+  {
+    "id": "knight",
+    "classId": "knight",
+    "cards": [
+      "knight_strike",
+      "knight_strike",
+      "knight_strike",
+      "knight_strike",
+      "knight_strike",
+      "knight_guard",
+      "knight_guard",
+      "knight_guard",
+      "knight_guard",
+      "shield"
+    ]
+  },
+  {
+    "id": "mage",
+    "classId": "mage",
+    "cards": [
+      "mage_strike",
+      "mage_strike",
+      "mage_strike",
+      "mage_strike",
+      "mage_strike",
+      "mage_guard",
+      "mage_guard",
+      "mage_guard",
+      "mage_guard",
+      "flame"
+    ]
+  },
+  {
+    "id": "ranger",
+    "classId": "ranger",
+    "cards": [
+      "ranger_strike",
+      "ranger_strike",
+      "ranger_strike",
+      "ranger_strike",
+      "ranger_strike",
+      "ranger_guard",
+      "ranger_guard",
+      "ranger_guard",
+      "ranger_guard",
+      "aim"
+    ]
+  }
+]
