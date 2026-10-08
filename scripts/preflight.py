@@ -45,6 +45,13 @@ def validate():
         with Image.open(path) as image:
             if image.size!=(row['width'],row['height']):errors.append('Wrong art dimensions '+row['id'])
     # Confirm every selected source object against the real installed game's asset index.
+    for row in sheets.get('ui_art',[]):
+        path=ROOT/'src/main/resources'/row['path']
+        if not path.is_file():errors.append('Missing UI art '+row['id']);continue
+        if hashlib.sha256(path.read_bytes()).hexdigest()!=row['sha256']:errors.append('Unverified UI art '+row['id'])
+        with Image.open(path) as image:
+            if image.size!=(row['width'],row['height']):errors.append('Wrong UI dimensions '+row['id'])
+            if row['transparent'] and ('A' not in image.getbands() or image.getchannel('A').getextrema()[0]==255):errors.append('UI art needs transparency '+row['id'])
     index=ROOT/'private'/'rl_asset_index.json'
     if not index.exists(): errors.append('Real Rogue Legacy 2 asset inspection missing')
     else:

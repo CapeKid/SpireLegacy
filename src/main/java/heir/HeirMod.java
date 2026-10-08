@@ -55,7 +55,7 @@ public final class HeirMod implements EditCardsSubscriber,EditCharactersSubscrib
     public void receiveEditCards(){
         for(Data.Row row:Data.rows("cards")){BaseMod.addCard(new HeirCard(row.s("id")));UnlockTracker.unlockCard("heir:"+row.s("id"));}
     }
-    public void receiveEditCharacters(){BaseMod.loadCustomStrings(com.megacrit.cardcrawl.localization.CharacterStrings.class,"{\"heir:Heir\":{\"NAMES\":[\"The Heir\",\"the Heir\"],\"TEXT\":[\"An heir climbs. A family endures.\",\"The bloodline faces the Heart.\",\"Blood recognizes blood.\"]}}");BaseMod.addCharacter(new HeirPlayer(),asset("button.png"),asset("portrait.png"),Enums.HEIR);}
+    public void receiveEditCharacters(){BaseMod.loadCustomStrings(com.megacrit.cardcrawl.localization.CharacterStrings.class,"{\"heir:Heir\":{\"NAMES\":[\"The Heir\",\"the Heir\"],\"TEXT\":[\"An heir climbs. A family endures.\",\"The bloodline faces the Heart.\",\"Blood recognizes blood.\"]}}");BaseMod.addCharacter(new HeirPlayer(),Data.row("ui_art","select_icon").s("path"),Data.row("ui_art","select_bg").s("path"),Enums.HEIR);}
     public void receivePostInitialize(){System.out.println("HEIR: character and "+Data.rows("cards").size()+" cards registered");}
     public void receivePreStartGame(){
         if(CardCrawlGame.chosenCharacter==Enums.HEIR&&!CardCrawlGame.loadingSave){
