@@ -89,5 +89,376 @@
     "sourceType": "Sprite",
     "sourceName": "PlayerHUD_ResourcesCoinIcon_Texture",
     "output": "PlayerHUD_ResourcesCoinIcon_Texture.png"
+  },
+  {
+    "id": "Icons_Traits_NoColor",
+    "sourceFile": "resources.assets",
+    "sourceType": "Sprite",
+    "sourceName": "Icons_Traits_NoColor",
+    "output": "Icons_Traits_NoColor.png"
+  },
+  {
+    "id": "Icons_Traits_PlayerNoHealthBar",
+    "sourceFile": "resources.assets",
+    "sourceType": "Sprite",
+    "sourceName": "Icons_Traits_PlayerNoHealthBar",
+    "output": "Icons_Traits_PlayerNoHealthBar.png"
+  },
+  {
+    "id": "Icons_Traits_EasyBreakables",
+    "sourceFile": "resources.assets",
+    "sourceType": "Sprite",
+    "sourceName": "Icons_Traits_EasyBreakables",
+    "output": "Icons_Traits_EasyBreakables.png"
+  },
+  {
+    "id": "Icons_Traits_PlayerKnockedLow",
+    "sourceFile": "resources.assets",
+    "sourceType": "Sprite",
+    "sourceName": "Icons_Traits_PlayerKnockedLow",
+    "output": "Icons_Traits_PlayerKnockedLow.png"
+  },
+  {
+    "id": "Icons_Traits_PlayerKnockedFar",
+    "sourceFile": "resources.assets",
+    "sourceType": "Sprite",
+    "sourceName": "Icons_Traits_PlayerKnockedFar",
+    "output": "Icons_Traits_PlayerKnockedFar.png"
+  },
+  {
+    "id": "Icons_Traits_Gay",
+    "sourceFile": "resources.assets",
+    "sourceType": "Sprite",
+    "sourceName": "Icons_Traits_Gay",
+    "output": "Icons_Traits_Gay.png"
+  },
+  {
+    "id": "Icons_Traits_Fart",
+    "sourceFile": "resources.assets",
+    "sourceType": "Sprite",
+    "sourceName": "Icons_Traits_Fart",
+    "output": "Icons_Traits_Fart.png"
+  },
+  {
+    "id": "Icons_Traits_EnemyKnockedLow",
+    "sourceFile": "resources.assets",
+    "sourceType": "Sprite",
+    "sourceName": "Icons_Traits_EnemyKnockedLow",
+    "output": "Icons_Traits_EnemyKnockedLow.png"
+  },
+  {
+    "id": "Icons_Traits_BreakPropsForMana",
+    "sourceFile": "resources.assets",
+    "sourceType": "Sprite",
+    "sourceName": "Icons_Traits_BreakPropsForMana",
+    "output": "Icons_Traits_BreakPropsForMana.png"
+  },
+  {
+    "id": "Icons_Traits_OneHitDeath",
+    "sourceFile": "resources.assets",
+    "sourceType": "Sprite",
+    "sourceName": "Icons_Traits_OneHitDeath",
+    "output": "Icons_Traits_OneHitDeath.png"
+  },
+  {
+    "id": "Icons_Traits_CantAttack",
+    "sourceFile": "resources.assets",
+    "sourceType": "Sprite",
+    "sourceName": "Icons_Traits_CantAttack",
+    "output": "Icons_Traits_CantAttack.png"
+  },
+  {
+    "id": "Icons_Traits_OmniDash",
+    "sourceFile": "resources.assets",
+    "sourceType": "Sprite",
+    "sourceName": "Icons_Traits_OmniDash",
+    "output": "Icons_Traits_OmniDash.png"
+  },
+  {
+    "id": "Icons_Traits_HighJump",
+    "sourceFile": "resources.assets",
+    "sourceType": "Sprite",
+    "sourceName": "Icons_Traits_HighJump",
+    "output": "Icons_Traits_HighJump.png"
+  },
+  {
+    "id": "Icons_Traits_GainDownStrike",
+    "sourceFile": "resources.assets",
+    "sourceType": "Sprite",
+    "sourceName": "Icons_Traits_GainDownStrike",
+    "output": "Icons_Traits_GainDownStrike.png"
+  },
+  {
+    "id": "Icons_Traits_EnemyKnockedFar",
+    "sourceFile": "resources.assets",
+    "sourceType": "Sprite",
+    "sourceName": "Icons_Traits_EnemyKnockedFar",
+    "output": "Icons_Traits_EnemyKnockedFar.png"
+  },
+  {
+    "id": "Icons_Traits_LongerCD",
+    "sourceFile": "resources.assets",
+    "sourceType": "Sprite",
+    "sourceName": "Icons_Traits_LongerCD",
+    "output": "Icons_Traits_LongerCD.png"
+  },
+  {
+    "id": "Icons_Traits_FMFFan",
+    "sourceFile": "resources.assets",
+    "sourceType": "Sprite",
+    "sourceName": "Icons_Traits_FMFFan",
+    "output": "Icons_Traits_FMFFan.png"
+  },
+  {
+    "id": "Icons_Traits_EnemyNoHealthBar",
+    "sourceFile": "resources.assets",
+    "sourceType": "Sprite",
+    "sourceName": "Icons_Traits_EnemyNoHealthBar",
+    "output": "Icons_Traits_EnemyNoHealthBar.png"
+  },
+  {
+    "id": "Icons_Traits_ManaCostAndDamageUp",
+    "sourceFile": "resources.assets",
+    "sourceType": "Sprite",
+    "sourceName": "Icons_Traits_ManaCostAndDamageUp",
+    "output": "Icons_Traits_ManaCostAndDamageUp.png"
+  },
+  {
+    "id": "Icons_Traits_RevealAllChests",
+    "sourceFile": "resources.assets",
+    "sourceType": "Sprite",
+    "sourceName": "Icons_Traits_RevealAllChests",
+    "output": "Icons_Traits_RevealAllChests.png"
+  },
+  {
+    "id": "Icons_Traits_BounceTerrain",
+    "sourceFile": "resources.assets",
+    "sourceType": "Sprite",
+    "sourceName": "Icons_Traits_BounceTerrain",
+    "output": "Icons_Traits_BounceTerrain.png"
+  },
+  {
+    "id": "Icons_Traits_LowerStorePrices",
+    "sourceFile": "resources.assets",
+    "sourceType": "Sprite",
+    "sourceName": "Icons_Traits_LowerStorePrices",
+    "output": "Icons_Traits_LowerStorePrices.png"
+  },
+  {
+    "id": "Icons_Traits_FakeSelfDamage",
+    "sourceFile": "resources.assets",
+    "sourceType": "Sprite",
+    "sourceName": "Icons_Traits_FakeSelfDamage",
+    "output": "Icons_Traits_FakeSelfDamage.png"
+  },
+  {
+    "id": "Icons_Traits_Retro",
+    "sourceFile": "resources.assets",
+    "sourceType": "Sprite",
+    "sourceName": "Icons_Traits_Retro",
+    "output": "Icons_Traits_Retro.png"
+  },
+  {
+    "id": "Icons_Traits_EnemiesCensored",
+    "sourceFile": "resources.assets",
+    "sourceType": "Sprite",
+    "sourceName": "Icons_Traits_EnemiesCensored",
+    "output": "Icons_Traits_EnemiesCensored.png"
+  },
+  {
+    "id": "Icons_Traits_EnemiesBlackFill",
+    "sourceFile": "resources.assets",
+    "sourceType": "Sprite",
+    "sourceName": "Icons_Traits_EnemiesBlackFill",
+    "output": "Icons_Traits_EnemiesBlackFill.png"
+  },
+  {
+    "id": "Icons_Traits_LowerGravity",
+    "sourceFile": "resources.assets",
+    "sourceType": "Sprite",
+    "sourceName": "Icons_Traits_LowerGravity",
+    "output": "Icons_Traits_LowerGravity.png"
+  },
+  {
+    "id": "Icons_Traits_BlurOnHit",
+    "sourceFile": "resources.assets",
+    "sourceType": "Sprite",
+    "sourceName": "Icons_Traits_BlurOnHit",
+    "output": "Icons_Traits_BlurOnHit.png"
+  },
+  {
+    "id": "Icons_Traits_ColorTrail",
+    "sourceFile": "resources.assets",
+    "sourceType": "Sprite",
+    "sourceName": "Icons_Traits_ColorTrail",
+    "output": "Icons_Traits_ColorTrail.png"
+  },
+  {
+    "id": "Icons_Traits_NoMeat",
+    "sourceFile": "resources.assets",
+    "sourceType": "Sprite",
+    "sourceName": "Icons_Traits_NoMeat",
+    "output": "Icons_Traits_NoMeat.png"
+  },
+  {
+    "id": "Icons_Traits_CheerOnKills",
+    "sourceFile": "resources.assets",
+    "sourceType": "Sprite",
+    "sourceName": "Icons_Traits_CheerOnKills",
+    "output": "Icons_Traits_CheerOnKills.png"
+  },
+  {
+    "id": "Icons_Traits_SuperFart",
+    "sourceFile": "resources.assets",
+    "sourceType": "Sprite",
+    "sourceName": "Icons_Traits_SuperFart",
+    "output": "Icons_Traits_SuperFart.png"
+  },
+  {
+    "id": "Icons_Traits_MapReveal",
+    "sourceFile": "resources.assets",
+    "sourceType": "Sprite",
+    "sourceName": "Icons_Traits_MapReveal",
+    "output": "Icons_Traits_MapReveal.png"
+  },
+  {
+    "id": "Icons_Traits_ManaFromHurt",
+    "sourceFile": "resources.assets",
+    "sourceType": "Sprite",
+    "sourceName": "Icons_Traits_ManaFromHurt",
+    "output": "Icons_Traits_ManaFromHurt.png"
+  },
+  {
+    "id": "Icons_Traits_NoManaCap_1",
+    "sourceFile": "resources.assets",
+    "sourceType": "Sprite",
+    "sourceName": "Icons_Traits_NoManaCap 1",
+    "output": "Icons_Traits_NoManaCap_1.png"
+  },
+  {
+    "id": "Icons_Traits_BonusHealth2",
+    "sourceFile": "resources.assets",
+    "sourceType": "Sprite",
+    "sourceName": "Icons_Traits_BonusHealth2",
+    "output": "Icons_Traits_BonusHealth2.png"
+  },
+  {
+    "id": "Icons_Traits_ItemsGoFlying",
+    "sourceFile": "resources.assets",
+    "sourceType": "Sprite",
+    "sourceName": "Icons_Traits_ItemsGoFlying",
+    "output": "Icons_Traits_ItemsGoFlying.png"
+  },
+  {
+    "id": "Icons_Traits_BonusChestGold",
+    "sourceFile": "resources.assets",
+    "sourceType": "Sprite",
+    "sourceName": "Icons_Traits_BonusChestGold",
+    "output": "Icons_Traits_BonusChestGold.png"
+  },
+  {
+    "id": "Icons_Traits_SuperHealer",
+    "sourceFile": "resources.assets",
+    "sourceType": "Sprite",
+    "sourceName": "Icons_Traits_SuperHealer",
+    "output": "Icons_Traits_SuperHealer.png"
+  },
+  {
+    "id": "Icons_Traits_TwinRelics",
+    "sourceFile": "resources.assets",
+    "sourceType": "Sprite",
+    "sourceName": "Icons_Traits_TwinRelics",
+    "output": "Icons_Traits_TwinRelics.png"
+  },
+  {
+    "id": "Icons_Traits_MushroomGrow",
+    "sourceFile": "resources.assets",
+    "sourceType": "Sprite",
+    "sourceName": "Icons_Traits_MushroomGrow",
+    "output": "Icons_Traits_MushroomGrow.png"
+  },
+  {
+    "id": "Icons_Traits_YouAreBlue",
+    "sourceFile": "resources.assets",
+    "sourceType": "Sprite",
+    "sourceName": "Icons_Traits_YouAreBlue",
+    "output": "Icons_Traits_YouAreBlue.png"
+  },
+  {
+    "id": "Icons_Traits_SkillCritsOnly",
+    "sourceFile": "resources.assets",
+    "sourceType": "Sprite",
+    "sourceName": "Icons_Traits_SkillCritsOnly",
+    "output": "Icons_Traits_SkillCritsOnly.png"
+  },
+  {
+    "id": "Icons_Traits_DisableOnHurt",
+    "sourceFile": "resources.assets",
+    "sourceType": "Sprite",
+    "sourceName": "Icons_Traits_DisableOnHurt",
+    "output": "Icons_Traits_DisableOnHurt.png"
+  },
+  {
+    "id": "Icons_Traits_ExplosiveChest",
+    "sourceFile": "resources.assets",
+    "sourceType": "Sprite",
+    "sourceName": "Icons_Traits_ExplosiveChest",
+    "output": "Icons_Traits_ExplosiveChest.png"
+  },
+  {
+    "id": "Icons_Traits_ExplosiveEnemies",
+    "sourceFile": "resources.assets",
+    "sourceType": "Sprite",
+    "sourceName": "Icons_Traits_ExplosiveEnemies",
+    "output": "Icons_Traits_ExplosiveEnemies.png"
+  },
+  {
+    "id": "Icons_Traits_HalloweenHoliday",
+    "sourceFile": "resources.assets",
+    "sourceType": "Sprite",
+    "sourceName": "Icons_Traits_HalloweenHoliday",
+    "output": "Icons_Traits_HalloweenHoliday.png"
+  },
+  {
+    "id": "Icons_Traits_WinterHoliday",
+    "sourceFile": "resources.assets",
+    "sourceType": "Sprite",
+    "sourceName": "Icons_Traits_WinterHoliday",
+    "output": "Icons_Traits_WinterHoliday.png"
+  },
+  {
+    "id": "Icons_Traits_RandomizeKit",
+    "sourceFile": "resources.assets",
+    "sourceType": "Sprite",
+    "sourceName": "Icons_Traits_RandomizeKit",
+    "output": "Icons_Traits_RandomizeKit.png"
+  },
+  {
+    "id": "Icons_Traits_SuperSpinKick",
+    "sourceFile": "resources.assets",
+    "sourceType": "Sprite",
+    "sourceName": "Icons_Traits_SuperSpinKick",
+    "output": "Icons_Traits_SuperSpinKick.png"
+  },
+  {
+    "id": "Icons_Traits_CoinTimer",
+    "sourceFile": "resources.assets",
+    "sourceType": "Sprite",
+    "sourceName": "Icons_Traits_CoinTimer",
+    "output": "Icons_Traits_CoinTimer.png"
+  },
+  {
+    "id": "Icons_Traits_ProjectilesNoWalls",
+    "sourceFile": "resources.assets",
+    "sourceType": "Sprite",
+    "sourceName": "Icons_Traits_ProjectilesNoWalls",
+    "output": "Icons_Traits_ProjectilesNoWalls.png"
+  },
+  {
+    "id": "Icons_Traits_FreeRelic",
+    "sourceFile": "resources.assets",
+    "sourceType": "Sprite",
+    "sourceName": "Icons_Traits_FreeRelic",
+    "output": "Icons_Traits_FreeRelic.png"
   }
 ]

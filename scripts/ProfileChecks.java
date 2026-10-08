@@ -17,7 +17,10 @@ public class ProfileChecks {
         check(p.active.bonuses.get("hp")==4,"run snapshots upgrades");p.settle(p.active.id,3,10,false);
         Path path=Paths.get(args[0]);p.save(path);Profile loaded=Profile.load(path);check(loaded.generation==2&&loaded.crowns==p.crowns,"round-trip save");
         p.crowns+=1;p.save(path);Files.write(path,"broken".getBytes());Profile recovered=Profile.load(path);check(recovered.crowns==loaded.crowns,"backup recovery");
-        for(Data.Row cl:Data.rows("classes"))for(Data.Row a:Data.rows("traits"))for(Data.Row b:Data.rows("traits"))if(!a.s("id").equals(b.s("id")))check(cl.i("hp")+a.i("hp")+b.i("hp")>=20,"valid trait health combination");
+        Set<String> seen=new HashSet<>();
+        for(int seed=0;seed<2000;seed++){Profile sample=new Profile();sample.generateOffers(seed);for(Profile.Heir h:sample.offers){Data.Row a=Data.row("traits",h.traits.get(0)),b=Data.row("traits",h.traits.get(1));check(a.b("enabled")&&b.b("enabled"),"disabled traits excluded");check(Profile.compatible(a,b),"incompatibilities respected");seen.addAll(h.traits);}}
+        for(Data.Row t:Data.rows("traits"))if(t.b("enabled"))check(seen.contains(t.s("id")),"every eligible trait reachable: "+t.s("id"));
+        check(!Profile.compatible(Data.row("traits","large"),Data.row("traits","small")),"size incompatibility");
         System.out.println("Passed "+checks+" progression checks.");
     }
 }

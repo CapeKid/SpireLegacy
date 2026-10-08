@@ -30,10 +30,12 @@ public final class Profile {
     public int level(String id){return manor.containsKey(id)?manor.get(id):0;}
     public int bonus(String effect){int n=0;for(Data.Row r:Data.rows("manor"))if(r.s("effect").equals(effect))n+=level(r.s("id"))*r.i("perLevel");return n;}
     public void generateOffers(long seed){
-        Random rng=new Random(seed); offers.clear(); List<Data.Row> classes=new ArrayList<>(Data.rows("classes")); List<Data.Row> traits=new ArrayList<>(Data.rows("traits"));
+        Random rng=new Random(seed); offers.clear(); List<Data.Row> classes=new ArrayList<>(Data.rows("classes")); List<Data.Row> traits=new ArrayList<>();
+        for(Data.Row trait:Data.rows("traits"))if(trait.b("enabled"))traits.add(trait);
         Collections.shuffle(classes,rng);
-        for(Data.Row cls:classes){Collections.shuffle(traits,rng);offers.add(new Heir(NAMES[rng.nextInt(NAMES.length)],cls.s("id"),Arrays.asList(traits.get(0).s("id"),traits.get(1).s("id"))));}
+        for(Data.Row cls:classes){Collections.shuffle(traits,rng);Data.Row first=traits.get(0),second=null;for(Data.Row candidate:traits)if(compatible(first,candidate)){second=candidate;break;}if(second==null)throw new IllegalStateException("No compatible trait pair");offers.add(new Heir(NAMES[rng.nextInt(NAMES.length)],cls.s("id"),Arrays.asList(first.s("id"),second.s("id"))));}
     }
+    public static boolean compatible(Data.Row a,Data.Row b){return !a.s("id").equals(b.s("id"))&&!a.list("excludes").contains(b.s("id"))&&!b.list("excludes").contains(a.s("id"));}
     public Run begin(long seed){
         if(active!=null && !active.id.equals(settledId))throw new IllegalStateException("An unfinished heir already exists. Resume or abandon it before starting another.");
         if(offers.isEmpty())generateOffers(seed);

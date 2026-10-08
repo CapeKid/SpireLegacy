@@ -18,6 +18,7 @@ public final class TraitTips {
     private static String signed(int n){return (n>0?"+":"")+n;}
     public static List<String> effects(String id){
         Data.Row row=Data.row("traits",id);List<String> lines=new ArrayList<>();
+        if(!row.s("effect").equals("none"))lines.addAll(Arrays.asList(row.s("summary").split("(?<=\\.) ")));
         if(row.i("hp")!=0)lines.add(signed(row.i("hp"))+" maximum HP.");
         if(row.i("strength")!=0)lines.add(signed(row.i("strength"))+" Strength (attack damage).");
         if(row.i("dexterity")!=0)lines.add(signed(row.i("dexterity"))+" Dexterity (Block from cards).");
@@ -31,7 +32,7 @@ public final class TraitTips {
     public static void render(SpriteBatch sb){
         if(hovered==null||!Data.row("systems","trait_tooltips").b("enabled"))return;
         float s=Settings.scale,w=Data.row("systems","trait_tooltips").i("amount")*s;
-        List<String> lines=effects(hovered);float h=(70+lines.size()*30)*s;
+        List<String> lines=new ArrayList<>();for(String line:effects(hovered)){String part="";for(String word:line.split(" ")){String next=part.isEmpty()?word:part+" "+word;if(new GlyphLayout(FontHelper.tipBodyFont,next).width>w-36*s&&!part.isEmpty()){lines.add(part);part=word;}else part=next;}if(!part.isEmpty())lines.add(part);}float h=(70+lines.size()*30)*s;
         float x=Math.max(12*s,Math.min(InputHelper.mX+24*s,Settings.WIDTH-w-12*s));
         float top=Math.max(h+12*s,Math.min(InputHelper.mY-16*s,Settings.HEIGHT-12*s));
         if(pixel==null){Pixmap p=new Pixmap(1,1,Pixmap.Format.RGBA8888);p.setColor(Color.WHITE);p.fill();pixel=new Texture(p);p.dispose();}

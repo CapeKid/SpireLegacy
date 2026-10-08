@@ -47,7 +47,7 @@ public final class HeirMod implements EditCardsSubscriber,EditCharactersSubscrib
         return profile.selected;
     }
     public static int maxHp(){
-        Profile.Heir h=heir();int hp=Data.row("classes",h.classId).i("hp")+stat("hp");for(String id:h.traits)hp+=Data.row("traits",id).i("hp");return Math.max(20,hp);
+        Profile.Heir h=heir();int hp=Data.row("classes",h.classId).i("hp")+stat("hp");for(String id:h.traits)hp+=Data.row("traits",id).i("hp");return TraitRules.maxHp(hp);
     }
     public static int stat(String effect){return profile.active!=null?profile.active.bonuses.get(effect):profile.bonus(effect);}
     public static int handSize(){int n=Data.row("systems","hand").i("amount")+stat("draw");for(String t:heir().traits)n+=Data.row("traits",t).i("draw");return n;}
@@ -67,6 +67,7 @@ public final class HeirMod implements EditCardsSubscriber,EditCharactersSubscrib
     public void receiveStartGame(){
         if(!isHeir())return;
         AbstractDungeon.player.masterHandSize=AbstractDungeon.player.gameHandSize=handSize();
+        if(!CardCrawlGame.loadingSave)for(int i=0;i<TraitRules.amount("relics");i++)AbstractDungeon.returnRandomRelic(com.megacrit.cardcrawl.relics.AbstractRelic.RelicTier.COMMON).instantObtain(AbstractDungeon.player,AbstractDungeon.player.relics.size(),true);
     }
     public void receivePostDungeonInitialize(){if(isHeir())System.out.println("HEIR: dungeon initialized, class "+heir().classId);}
     public void receiveOnBattleStart(AbstractRoom room){
@@ -75,10 +76,12 @@ public final class HeirMod implements EditCardsSubscriber,EditCharactersSubscrib
         if(strength!=0)AbstractDungeon.actionManager.addToBottom(new ApplyPowerAction(AbstractDungeon.player,AbstractDungeon.player,new StrengthPower(AbstractDungeon.player,strength),strength));
         if(dex!=0)AbstractDungeon.actionManager.addToBottom(new ApplyPowerAction(AbstractDungeon.player,AbstractDungeon.player,new DexterityPower(AbstractDungeon.player,dex),dex));
         System.out.println("HEIR: battle bonuses Strength="+strength+", Dexterity="+dex);
+        TraitRules.battle();
     }
     public void receiveOnPlayerTurnStart(){}
     public void receivePostBattle(AbstractRoom room){
         if(!isHeir())return;int heal=Data.row("classes",heir().classId).i("heal")+stat("heal");for(String t:heir().traits)heal+=Data.row("traits",t).i("heal");AbstractDungeon.player.heal(heal);
+        AbstractDungeon.player.gainGold(TraitRules.amount("gold"));AbstractDungeon.player.loseGold(TraitRules.amount("coin_loss"));
         if(profile.active!=null){profile.active.floors=Math.max(profile.active.floors,AbstractDungeon.floorNum);profile.save(profilePath);}
     }
     public static void finish(boolean victory){if(!isHeir()||profile.active==null)return;int earned=profile.settle(profile.active.id,AbstractDungeon.floorNum,AbstractDungeon.player.gold,victory);profile.save(profilePath);Manor.autoOpen=true;System.out.println("HEIR: settled run; crowns="+earned+", family crowns="+profile.crowns);}

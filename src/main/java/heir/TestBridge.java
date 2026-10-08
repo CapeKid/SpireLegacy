@@ -50,10 +50,26 @@ public final class TestBridge {
                 else if(action.equals("settings")){Manor.openSelection();Manor.open=true;Manor.settingsOnly=true;}
                 else if(action.equals("menu")){CardCrawlGame.startOver=true;CardCrawlGame.mode=CardCrawlGame.GameMode.CHAR_SELECT;CardCrawlGame.mainMenuScreen=new com.megacrit.cardcrawl.screens.mainMenu.MainMenuScreen();CardCrawlGame.mainMenuScreen.screen=com.megacrit.cardcrawl.screens.mainMenu.MainMenuScreen.CurScreen.MAIN_MENU;}
                 else if(action.equals("dismiss")){AbstractDungeon.closeCurrentScreen();}
+                else if(action.equals("fight")){HeirMod.quickPending=true;}
+                else if(action.equals("traitchecks")){
+                    java.util.List<String> saved=new java.util.ArrayList<>(HeirMod.heir().traits);int checks=0;
+                    try{
+                        HeirMod.heir().traits.clear();HeirMod.heir().traits.add("onehitdeath");if(TraitRules.maxHp(999)!=1)throw new AssertionError("Fragile HP");checks++;
+                        HeirMod.heir().traits.clear();HeirMod.heir().traits.add("nomeat");if(TraitRules.healing(9)!=4)throw new AssertionError("Vegan healing");checks++;
+                        HeirMod.heir().traits.clear();HeirMod.heir().traits.add("megahealth");if(TraitRules.healing(99)!=0)throw new AssertionError("Hero Complex healing");checks++;
+                        HeirMod.heir().traits.clear();HeirMod.heir().traits.add("superhealer");if(TraitRules.healing(7)!=14)throw new AssertionError("Super Healer");checks++;
+                        HeirCard attack=new HeirCard("mage_strike");TraitPower pacifist=new TraitPower(Data.row("traits","cantattack"));if(pacifist.canPlayCard(attack)||!pacifist.canPlayCard(new HeirCard("mage_guard")))throw new AssertionError("Pacifist card rules");checks++;
+                        TraitPower costly=new TraitPower(Data.row("traits","manacostanddamageup"));costly.onCardDraw(attack);if(attack.costForTurn!=2||costly.atDamageGive(10,DamageInfo.DamageType.NORMAL)!=15)throw new AssertionError("Overcompensation");checks++;
+                        TraitPower algesia=new TraitPower(Data.row("traits","noimmunitywindow"));if(algesia.onAttackedToChangeDamage(new DamageInfo(null,4,DamageInfo.DamageType.NORMAL),4)!=6||algesia.onAttackedToChangeDamage(new DamageInfo(null,4,DamageInfo.DamageType.HP_LOSS),4)!=4)throw new AssertionError("Algesia");checks++;
+                        HeirMod.heir().traits.clear();HeirMod.heir().traits.add("randomizekit");if(!TraitRules.deck("mage",42).equals(TraitRules.deck("mage",42)))throw new AssertionError("Seeded kit");checks++;
+                        Files.write(HeirMod.root.resolve("trait-checks.json"),("{\"runtimeTraitChecks\":"+checks+"}").getBytes(StandardCharsets.UTF_8));
+                    }finally{HeirMod.heir().traits.clear();HeirMod.heir().traits.addAll(saved);}
+                }
                 else if(action.equals("audit")){
                     int checks=0;
                     for(Data.Row row:Data.rows("cards")){HeirCard c=new HeirCard(row.s("id"));c.upgrade();if(c.baseDamage!=row.i("damage")+row.i("upgradeDamage")||c.baseBlock!=row.i("block")+row.i("upgradeBlock")||!c.upgraded)throw new IllegalStateException("Card upgrade mismatch "+row.s("id"));checks++;}
-                    Files.write(HeirMod.root.resolve("audit.json"),("{\"cardUpgradesVerified\":"+checks+"}").getBytes(StandardCharsets.UTF_8));
+                    for(Data.Row row:Data.rows("traits")){new TraitPower(row);if(TraitTips.effects(row.s("id")).isEmpty())throw new IllegalStateException("Empty trait tooltip");}
+                    Files.write(HeirMod.root.resolve("audit.json"),("{\"cardUpgradesVerified\":"+checks+",\"traitPowersVerified\":"+Data.rows("traits").size()+"}").getBytes(StandardCharsets.UTF_8));
                 }
                 else if(action.equals("purchase")){boolean bought=HeirMod.profile.purchase(cmd.get("id").getAsString());if(!bought)throw new IllegalStateException("Purchase rejected");HeirMod.profile.save(HeirMod.profilePath);}
                 else if(action.equals("choose")){HeirMod.profile.selected=HeirMod.profile.offers.get(cmd.get("index").getAsInt());HeirMod.profile.save(HeirMod.profilePath);}

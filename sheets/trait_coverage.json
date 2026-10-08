@@ -1,0 +1,682 @@
+[
+  {
+    "id": "nocolor",
+    "source": "NoColor",
+    "name": "Colorblind",
+    "sourceRarity": 1,
+    "status": "adapted",
+    "traitId": "nocolor"
+  },
+  {
+    "id": "nohealthbar",
+    "source": "NoHealthBar",
+    "name": "C.I.P",
+    "sourceRarity": 1,
+    "status": "adapted",
+    "traitId": "nohealthbar"
+  },
+  {
+    "id": "easybreakables",
+    "source": "EasyBreakables",
+    "name": "Clumsy",
+    "sourceRarity": 1,
+    "status": "adapted",
+    "traitId": "easybreakables"
+  },
+  {
+    "id": "swearing",
+    "source": "Swearing",
+    "name": "Coprolalia",
+    "sourceRarity": 91,
+    "status": "disabled_in_source",
+    "traitId": "none"
+  },
+  {
+    "id": "youaresmall",
+    "source": "YouAreSmall",
+    "name": "Dwarfism",
+    "sourceRarity": 1,
+    "status": "adapted",
+    "traitId": "small"
+  },
+  {
+    "id": "showenemiesonmap",
+    "source": "ShowEnemiesOnMap",
+    "name": "Eidetic Memory",
+    "sourceRarity": 92,
+    "status": "disabled_in_source",
+    "traitId": "none"
+  },
+  {
+    "id": "playerknockedlow",
+    "source": "PlayerKnockedLow",
+    "name": "Endomorph",
+    "sourceRarity": 1,
+    "status": "adapted",
+    "traitId": "playerknockedlow"
+  },
+  {
+    "id": "playerknockedfar",
+    "source": "PlayerKnockedFar",
+    "name": "Ectomorph",
+    "sourceRarity": 1,
+    "status": "adapted",
+    "traitId": "playerknockedfar"
+  },
+  {
+    "id": "disposition",
+    "source": "Disposition",
+    "name": "Nature",
+    "sourceRarity": 1,
+    "status": "adapted",
+    "traitId": "disposition"
+  },
+  {
+    "id": "youarelarge",
+    "source": "YouAreLarge",
+    "name": "Gigantism",
+    "sourceRarity": 1,
+    "status": "adapted",
+    "traitId": "large"
+  },
+  {
+    "id": "darkscreen",
+    "source": "DarkScreen",
+    "name": "Glaucoma",
+    "sourceRarity": 92,
+    "status": "disabled_in_source",
+    "traitId": "none"
+  },
+  {
+    "id": "fart",
+    "source": "Fart",
+    "name": "IBS",
+    "sourceRarity": 1,
+    "status": "adapted",
+    "traitId": "fart"
+  },
+  {
+    "id": "enemyknockedlow",
+    "source": "EnemyKnockedLow",
+    "name": "Muscle Weakness",
+    "sourceRarity": 1,
+    "status": "adapted",
+    "traitId": "enemyknockedlow"
+  },
+  {
+    "id": "breakpropsformana",
+    "source": "BreakPropsForMana",
+    "name": "Breaker",
+    "sourceRarity": 1,
+    "status": "adapted",
+    "traitId": "breakpropsformana"
+  },
+  {
+    "id": "upsidedown",
+    "source": "UpsideDown",
+    "name": "Vertigo",
+    "sourceRarity": 93,
+    "status": "disabled_in_source",
+    "traitId": "none"
+  },
+  {
+    "id": "oversaturate",
+    "source": "Oversaturate",
+    "name": "Tetrachromat",
+    "sourceRarity": 93,
+    "status": "disabled_in_source",
+    "traitId": "none"
+  },
+  {
+    "id": "onehitdeath",
+    "source": "OneHitDeath",
+    "name": "Fragile",
+    "sourceRarity": 1,
+    "status": "adapted",
+    "traitId": "onehitdeath"
+  },
+  {
+    "id": "angryonhit",
+    "source": "AngryOnHit",
+    "name": "Quick to Anger",
+    "sourceRarity": 93,
+    "status": "disabled_in_source",
+    "traitId": "none"
+  },
+  {
+    "id": "cantattack",
+    "source": "CantAttack",
+    "name": "Pacifist",
+    "sourceRarity": 1,
+    "status": "adapted",
+    "traitId": "cantattack"
+  },
+  {
+    "id": "cannowattack",
+    "source": "CanNowAttack",
+    "name": "Pacifier",
+    "sourceRarity": 51,
+    "status": "disabled_in_source",
+    "traitId": "none"
+  },
+  {
+    "id": "omnidash",
+    "source": "OmniDash",
+    "name": "Superfluid",
+    "sourceRarity": 1,
+    "status": "adapted",
+    "traitId": "omnidash"
+  },
+  {
+    "id": "highjump",
+    "source": "HighJump",
+    "name": "High Jumper",
+    "sourceRarity": 1,
+    "status": "adapted",
+    "traitId": "highjump"
+  },
+  {
+    "id": "invulndash",
+    "source": "InvulnDash",
+    "name": "Evasive",
+    "sourceRarity": 92,
+    "status": "disabled_in_source",
+    "traitId": "none"
+  },
+  {
+    "id": "gaindownstrike",
+    "source": "GainDownStrike",
+    "name": "Aerodynamic",
+    "sourceRarity": 1,
+    "status": "adapted",
+    "traitId": "gaindownstrike"
+  },
+  {
+    "id": "damageboost",
+    "source": "DamageBoost",
+    "name": "Combative",
+    "sourceRarity": 1,
+    "status": "adapted",
+    "traitId": "weapon"
+  },
+  {
+    "id": "magicboost",
+    "source": "MagicBoost",
+    "name": "Bookish",
+    "sourceRarity": 1,
+    "status": "adapted",
+    "traitId": "magic"
+  },
+  {
+    "id": "enemyknockedfar",
+    "source": "EnemyKnockedFar",
+    "name": "Hypergonadism",
+    "sourceRarity": 1,
+    "status": "adapted",
+    "traitId": "enemyknockedfar"
+  },
+  {
+    "id": "longercd",
+    "source": "LongerCD",
+    "name": "Exhausted",
+    "sourceRarity": 1,
+    "status": "adapted",
+    "traitId": "longercd"
+  },
+  {
+    "id": "bonushealth",
+    "source": "BonusHealth",
+    "name": "Mesomorph - DISABLED",
+    "sourceRarity": 91,
+    "status": "adapted",
+    "traitId": "health"
+  },
+  {
+    "id": "bonusstrength",
+    "source": "BonusStrength",
+    "name": "Big Muscles - DISABLED",
+    "sourceRarity": 91,
+    "status": "adapted",
+    "traitId": "strength"
+  },
+  {
+    "id": "bonusmagicstrength",
+    "source": "BonusMagicStrength",
+    "name": "Crippling Intellect",
+    "sourceRarity": 1,
+    "status": "adapted",
+    "traitId": "bonusmagicstrength"
+  },
+  {
+    "id": "fmffan",
+    "source": "FMFFan",
+    "name": "FMF Fan",
+    "sourceRarity": 1,
+    "status": "adapted",
+    "traitId": "fmffan"
+  },
+  {
+    "id": "noenemyhealthbar",
+    "source": "NoEnemyHealthBar",
+    "name": "Unempathetic",
+    "sourceRarity": 1,
+    "status": "adapted",
+    "traitId": "noenemyhealthbar"
+  },
+  {
+    "id": "manacostanddamageup",
+    "source": "ManaCostAndDamageUp",
+    "name": "Overcompensation",
+    "sourceRarity": 1,
+    "status": "adapted",
+    "traitId": "manacostanddamageup"
+  },
+  {
+    "id": "revealallchests",
+    "source": "RevealAllChests",
+    "name": "Spelunker",
+    "sourceRarity": 1,
+    "status": "adapted",
+    "traitId": "revealallchests"
+  },
+  {
+    "id": "bounceterrain",
+    "source": "BounceTerrain",
+    "name": "Clownanthropy",
+    "sourceRarity": 1,
+    "status": "adapted",
+    "traitId": "bounceterrain"
+  },
+  {
+    "id": "lowerstoreprice",
+    "source": "LowerStorePrice",
+    "name": "Charismatic",
+    "sourceRarity": 1,
+    "status": "adapted",
+    "traitId": "lowerstoreprice"
+  },
+  {
+    "id": "fakeselfdamage",
+    "source": "FakeSelfDamage",
+    "name": "Histrionic",
+    "sourceRarity": 1,
+    "status": "adapted",
+    "traitId": "fakeselfdamage"
+  },
+  {
+    "id": "blurryfar",
+    "source": "BlurryFar",
+    "name": "Near-sighted",
+    "sourceRarity": 91,
+    "status": "disabled_in_source",
+    "traitId": "none"
+  },
+  {
+    "id": "oldyellowtint",
+    "source": "OldYellowTint",
+    "name": "Nostalgic",
+    "sourceRarity": 1,
+    "status": "adapted",
+    "traitId": "oldyellowtint"
+  },
+  {
+    "id": "horizontaldarkness",
+    "source": "HorizontalDarkness",
+    "name": "Tunnel Vision",
+    "sourceRarity": 92,
+    "status": "disabled_in_source",
+    "traitId": "none"
+  },
+  {
+    "id": "enemiescensored",
+    "source": "EnemiesCensored",
+    "name": "Puritan",
+    "sourceRarity": 1,
+    "status": "adapted",
+    "traitId": "enemiescensored"
+  },
+  {
+    "id": "enemiesblackfill",
+    "source": "EnemiesBlackFill",
+    "name": "Associative Agnosia",
+    "sourceRarity": 1,
+    "status": "adapted",
+    "traitId": "enemiesblackfill"
+  },
+  {
+    "id": "lowergravity",
+    "source": "LowerGravity",
+    "name": "Hollow Bones",
+    "sourceRarity": 1,
+    "status": "adapted",
+    "traitId": "lowergravity"
+  },
+  {
+    "id": "bluronhit",
+    "source": "BlurOnHit",
+    "name": "Stressed",
+    "sourceRarity": 1,
+    "status": "adapted",
+    "traitId": "bluronhit"
+  },
+  {
+    "id": "colortrails",
+    "source": "ColorTrails",
+    "name": "Synesthesia",
+    "sourceRarity": 1,
+    "status": "adapted",
+    "traitId": "colortrails"
+  },
+  {
+    "id": "nomeat",
+    "source": "NoMeat",
+    "name": "Vegan",
+    "sourceRarity": 1,
+    "status": "adapted",
+    "traitId": "nomeat"
+  },
+  {
+    "id": "smallhitbox",
+    "source": "SmallHitbox",
+    "name": "Only Heart",
+    "sourceRarity": 1,
+    "status": "adapted",
+    "traitId": "smallhitbox"
+  },
+  {
+    "id": "cheeronkills",
+    "source": "CheerOnKills",
+    "name": "Diva",
+    "sourceRarity": 1,
+    "status": "adapted",
+    "traitId": "cheeronkills"
+  },
+  {
+    "id": "retro",
+    "source": "Retro",
+    "name": "Antiquarian",
+    "sourceRarity": 93,
+    "status": "disabled_in_source",
+    "traitId": "none"
+  },
+  {
+    "id": "freerelic",
+    "source": "FreeRelic",
+    "name": "Treasure Hunter",
+    "sourceRarity": 91,
+    "status": "disabled_in_source",
+    "traitId": "none"
+  },
+  {
+    "id": "disablespiketraps",
+    "source": "DisableSpikeTraps",
+    "name": "DISABLE SPIKE TRAPS -----------------------------------------------------------",
+    "sourceRarity": 93,
+    "status": "disabled_in_source",
+    "traitId": "none"
+  },
+  {
+    "id": "gameshake",
+    "source": "GameShake",
+    "name": "Clonus",
+    "sourceRarity": 92,
+    "status": "disabled_in_source",
+    "traitId": "none"
+  },
+  {
+    "id": "wordscramble",
+    "source": "WordScramble",
+    "name": "Dyslexia",
+    "sourceRarity": 92,
+    "status": "disabled_in_source",
+    "traitId": "none"
+  },
+  {
+    "id": "blurryclose",
+    "source": "BlurryClose",
+    "name": "Optical Migraine",
+    "sourceRarity": 91,
+    "status": "disabled_in_source",
+    "traitId": "none"
+  },
+  {
+    "id": "disableattacklock",
+    "source": "DisableAttackLock",
+    "name": "Flexible",
+    "sourceRarity": 93,
+    "status": "disabled_in_source",
+    "traitId": "none"
+  },
+  {
+    "id": "superfart",
+    "source": "SuperFart",
+    "name": "Super IBS",
+    "sourceRarity": 1,
+    "status": "adapted",
+    "traitId": "superfart"
+  },
+  {
+    "id": "vampire",
+    "source": "Vampire",
+    "name": "Vampirism",
+    "sourceRarity": 1,
+    "status": "adapted",
+    "traitId": "vampire"
+  },
+  {
+    "id": "notmovingslowgame",
+    "source": "NotMovingSlowGame",
+    "name": "Hyperreflexia",
+    "sourceRarity": 93,
+    "status": "disabled_in_source",
+    "traitId": "none"
+  },
+  {
+    "id": "mapreveal",
+    "source": "MapReveal",
+    "name": "Cartographer",
+    "sourceRarity": 1,
+    "status": "adapted",
+    "traitId": "mapreveal"
+  },
+  {
+    "id": "noimmunitywindow",
+    "source": "NoImmunityWindow",
+    "name": "Algesia",
+    "sourceRarity": 1,
+    "status": "adapted",
+    "traitId": "noimmunitywindow"
+  },
+  {
+    "id": "nomanacap",
+    "source": "NoManaCap",
+    "name": "Limitless",
+    "sourceRarity": 1,
+    "status": "adapted",
+    "traitId": "nomanacap"
+  },
+  {
+    "id": "megahealth",
+    "source": "MegaHealth",
+    "name": "Hero Complex",
+    "sourceRarity": 1,
+    "status": "adapted",
+    "traitId": "megahealth"
+  },
+  {
+    "id": "itemsgoflying",
+    "source": "ItemsGoFlying",
+    "name": "Butter Fingers",
+    "sourceRarity": 1,
+    "status": "adapted",
+    "traitId": "itemsgoflying"
+  },
+  {
+    "id": "manafromhurt",
+    "source": "ManaFromHurt",
+    "name": "Masochism",
+    "sourceRarity": 1,
+    "status": "adapted",
+    "traitId": "manafromhurt"
+  },
+  {
+    "id": "bonuschestgold",
+    "source": "BonusChestGold",
+    "name": "Lootbox Addict",
+    "sourceRarity": 1,
+    "status": "adapted",
+    "traitId": "bonuschestgold"
+  },
+  {
+    "id": "superhealer",
+    "source": "SuperHealer",
+    "name": "Super Healer",
+    "sourceRarity": 1,
+    "status": "adapted",
+    "traitId": "superhealer"
+  },
+  {
+    "id": "twinrelics",
+    "source": "TwinRelics",
+    "name": "Hoarder",
+    "sourceRarity": 1,
+    "status": "adapted",
+    "traitId": "twinrelics"
+  },
+  {
+    "id": "mushroomgrow",
+    "source": "MushroomGrow",
+    "name": "Mushroom Man",
+    "sourceRarity": 1,
+    "status": "adapted",
+    "traitId": "mushroomgrow"
+  },
+  {
+    "id": "youareblue",
+    "source": "YouAreBlue",
+    "name": "Blue",
+    "sourceRarity": 1,
+    "status": "adapted",
+    "traitId": "youareblue"
+  },
+  {
+    "id": "skillcritsonly",
+    "source": "SkillCritsOnly",
+    "name": "Perfectionist",
+    "sourceRarity": 1,
+    "status": "adapted",
+    "traitId": "skillcritsonly"
+  },
+  {
+    "id": "disarmonhurt",
+    "source": "DisarmOnHurt",
+    "name": "Shocked",
+    "sourceRarity": 1,
+    "status": "adapted",
+    "traitId": "disarmonhurt"
+  },
+  {
+    "id": "explosivechests",
+    "source": "ExplosiveChests",
+    "name": "Explosive Chests",
+    "sourceRarity": 1,
+    "status": "adapted",
+    "traitId": "explosivechests"
+  },
+  {
+    "id": "explosiveenemies",
+    "source": "ExplosiveEnemies",
+    "name": "Explosive Enemies",
+    "sourceRarity": 1,
+    "status": "adapted",
+    "traitId": "explosiveenemies"
+  },
+  {
+    "id": "halloweenholiday",
+    "source": "HalloweenHoliday",
+    "name": "Medium",
+    "sourceRarity": 1,
+    "status": "adapted",
+    "traitId": "halloweenholiday"
+  },
+  {
+    "id": "christmasholiday",
+    "source": "ChristmasHoliday",
+    "name": "Festive",
+    "sourceRarity": 1,
+    "status": "adapted",
+    "traitId": "christmasholiday"
+  },
+  {
+    "id": "tonedeaf",
+    "source": "ToneDeaf",
+    "name": "Tone Deaf",
+    "sourceRarity": 93,
+    "status": "disabled_in_source",
+    "traitId": "none"
+  },
+  {
+    "id": "randomizekit",
+    "source": "RandomizeKit",
+    "name": "Innovator",
+    "sourceRarity": 1,
+    "status": "adapted",
+    "traitId": "randomizekit"
+  },
+  {
+    "id": "superspinkick",
+    "source": "SuperSpinKick",
+    "name": "Kanganthropy",
+    "sourceRarity": 1,
+    "status": "adapted",
+    "traitId": "superspinkick"
+  },
+  {
+    "id": "cointimer",
+    "source": "CoinTimer",
+    "name": "Forgetful",
+    "sourceRarity": 1,
+    "status": "adapted",
+    "traitId": "cointimer"
+  },
+  {
+    "id": "projectilesnowalls",
+    "source": "ProjectilesNoWalls",
+    "name": "Inter-dimensional",
+    "sourceRarity": 1,
+    "status": "adapted",
+    "traitId": "projectilesnowalls"
+  },
+  {
+    "id": "bosschestrandom",
+    "source": "BossChestRandom",
+    "name": "True Rogue",
+    "sourceRarity": 92,
+    "status": "disabled_in_source",
+    "traitId": "none"
+  },
+  {
+    "id": "economygivesstats",
+    "source": "EconomyGivesStats",
+    "name": "RPG Fanatic",
+    "sourceRarity": 92,
+    "status": "disabled_in_source",
+    "traitId": "none"
+  },
+  {
+    "id": "truerogue",
+    "source": "TrueRogue",
+    "name": "True Rogue",
+    "sourceRarity": 92,
+    "status": "disabled_in_source",
+    "traitId": "none"
+  },
+  {
+    "id": "antique",
+    "source": "Antique",
+    "name": "<color=purple>Antique</color> - {0}",
+    "sourceRarity": 1,
+    "status": "adapted",
+    "traitId": "antique"
+  }
+]

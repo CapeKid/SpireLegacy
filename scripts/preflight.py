@@ -22,7 +22,17 @@ def validate():
     def ref(name,row,col,ids):
         if row[col] not in ids: errors.append(f'{name}.{row["id"]}.{col}: unresolved {row[col]}')
     for row in sheets['classes']: ref('classes',row,'asset',assets); ref('classes',row,'signature',cards)
-    for row in sheets['traits']: ref('traits',row,'asset',assets)
+    traits={r['id'] for r in sheets['traits']}
+    effects={'none','gray','skill_block','nature','poison','skill_draw','fragile','pacifist','turn_block','first_attack_block','weak','enemy_guard','costly','gold','shop','histrionic','sepia','enemy_strength','hurt_weak','rainbow','vegan','diva','algesia','energy','no_heal','coin_loss','hurt_energy','super_heal','relics','thorns','blue','perfectionist','shock','chest','explosions','medium','festive','kit','piercing','exhausted'}
+    for row in sheets['traits']:
+        ref('traits',row,'asset',assets)
+        if row['effect'] not in effects:errors.append('Unimplemented trait effect '+row['id'])
+        for excluded in row['excludes']:
+            # Source incompatibilities can reference a disabled historical entry.
+            if excluded not in traits and excluded not in {r['id'] for r in sheets['trait_coverage']}:errors.append('Unknown exclusion '+excluded)
+    for row in sheets.get('trait_coverage',[]):
+        if row['status']=='adapted':ref('trait_coverage',row,'traitId',traits)
+        elif row['sourceRarity'] in (1,2,3):errors.append('Eligible source trait missing '+row['source'])
     for row in sheets['cards']:
         ref('cards',row,'classId',classes); ref('cards',row,'asset',assets)
         ref('cards',row,'art',{r['id'] for r in sheets.get('card_art',[])})

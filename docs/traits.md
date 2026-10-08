@@ -1,0 +1,9 @@
+Spire Legacy adapts the trait library from the locally installed Rogue Legacy 2 build 13303339 to turn-based card play. This is a gameplay adaptation: HP, Energy, Block, status effects and legacy crowns replace platforming and mana mechanics. The in-game tooltip describes the actual effect. Health and card information remain readable; traits that obscure the original game's display use stated combat penalties instead.
+
+The audit found 85 library entries. Rogue Legacy 2's character generator includes rarity values 1–3; other rarity values are disabled or reserved. All 61 eligible entries have an adaptation, including Antique and the two seasonal appearances. The mod also understands the two old Healthy and Strong save IDs, but no longer generates them. Existing eight-trait save IDs are preserved. Only Heart is now named correctly; Hollow Bones is a separate trait.
+
+[trait_coverage.json](../sheets/trait_coverage.json) records every library entry, its source rarity and adaptation status. [traits.json](../sheets/traits.json) contains all exact modifiers, effects and incompatibilities. Cosmetic-only entries still affect appearance. Effects that depend on real-time platforming have explicit card-game substitutes rather than silently inactive names.
+
+The audit tools require the player's installed copy, UnityPy and TypeTreeGeneratorAPI. Extracted definitions, localization text and decompiled source stay under the ignored private directory. They are never distributed. Factual names and enum identifiers are used to identify the adaptations; descriptions and implementation are original mod content.
+
+Validation checks that every eligible source entry resolves to an adaptation, every effect is implemented, selected icons exist in the installed game, and 2,000 seeded offer generations exclude disabled entries and incompatible pairs. Physical gameplay testing remains necessary for balance across all three acts.

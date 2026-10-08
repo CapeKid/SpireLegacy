@@ -18,7 +18,7 @@ public final class HeirPlayer extends CustomPlayer {
         initializeClass(HeirMod.asset("hero.png"),"images/characters/ironclad/shoulder2.png","images/characters/ironclad/shoulder.png","images/characters/ironclad/corpse.png",getLoadout(),0,0,150,200,new EnergyManager(3));
         dialogX=drawX;dialogY=drawY+220*Settings.scale;
     }
-    public ArrayList<String> getStartingDeck(){ArrayList<String> d=new ArrayList<>();for(String key:Data.row("decks",HeirMod.heir().classId).list("cards"))d.add("heir:"+key);return d;}
+    public ArrayList<String> getStartingDeck(){ArrayList<String> d=new ArrayList<>();for(String key:TraitRules.deck(HeirMod.heir().classId,Settings.seed==null?0L:Settings.seed))d.add("heir:"+key);return d;}
     public ArrayList<String> getStartingRelics(){return new ArrayList<>();}
     public CharSelectInfo getLoadout(){int hp=HeirMod.maxHp();return new CharSelectInfo("The Heir","A new life. A lasting legacy. NL Three classes, inherited traits and a growing family manor.",hp,hp,0,99,HeirMod.handSize(),this,getStartingRelics(),getStartingDeck(),false);}
     public String getTitle(PlayerClass cls){return "the Heir";}
@@ -41,7 +41,7 @@ public final class HeirPlayer extends CustomPlayer {
     public void renderPlayerImage(SpriteBatch sb){
         Texture hero=HeirMod.texture("hero.png");float scale=Settings.scale;
         for(String id:HeirMod.heir().traits)scale*=Data.row("traits",id).f("scale");
-        sb.setColor(Manor.bannerColor());sb.draw(hero,drawX-hero.getWidth()*scale/2,drawY,hero.getWidth()*scale,hero.getHeight()*scale);sb.setColor(Color.WHITE);
+        sb.setColor(TraitRules.color(Manor.bannerColor()));sb.draw(hero,drawX-hero.getWidth()*scale/2,drawY,hero.getWidth()*scale,hero.getHeight()*scale);sb.setColor(Color.WHITE);
         Texture badge=HeirMod.texture(Data.row("classes",HeirMod.heir().classId).s("asset")+".png");sb.draw(badge,drawX-26*Settings.scale,drawY+190*Settings.scale,52*Settings.scale,52*Settings.scale);
     }
 }
