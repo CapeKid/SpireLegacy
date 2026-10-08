@@ -75,5 +75,12 @@
     "summary": "Each card loads its own effect-based original illustration from the card_art sheet and packaged resources; retain Rogue Legacy 2 class/trait content on the character, HUD and heir offers.",
     "id": "card_illustrations",
     "amount": 30
+  },
+  {
+    "id": "manor_cursor",
+    "enabled": true,
+    "summary": "Render the native game cursor after manor panels and trait tooltips so upgrade controls remain usable.",
+    "amount": 1,
+    "hook": "post_render"
   }
 ]

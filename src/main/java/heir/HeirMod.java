@@ -109,6 +109,7 @@ public final class HeirMod implements EditCardsSubscriber,EditCharactersSubscrib
         Manor.render(sb);
         TraitTips.render(sb);
         TestBridge.renderGallery(sb);
+        if(Manor.open&&Data.row("systems","manor_cursor").b("enabled"))CardCrawlGame.cursor.render(sb);
         sb.flush();
         TestBridge.capture();
     }
