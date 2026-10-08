@@ -74,7 +74,7 @@
     "enabled": true,
     "summary": "Each card loads its own effect-based original illustration from the card_art sheet and packaged resources; retain Rogue Legacy 2 class/trait content on the character, HUD and heir offers.",
     "id": "card_illustrations",
-    "amount": 30
+    "amount": 37
   },
   {
     "id": "manor_cursor",

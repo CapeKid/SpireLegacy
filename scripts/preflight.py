@@ -37,6 +37,17 @@ def validate():
         ref('cards',row,'classId',classes); ref('cards',row,'asset',assets)
         ref('cards',row,'art',{r['id'] for r in sheets.get('card_art',[])})
         if row['type'] not in ('ATTACK','SKILL','POWER'): errors.append('invalid card type '+row['id'])
+        if row['power'] not in ('none','reservoir','quiver'):errors.append('Unsupported class power '+row['id'])
+    for cls in classes:
+        pool=[r for r in sheets['cards'] if r['classId']==cls and r['rarity']!='BASIC']
+        for kind in ('ATTACK','SKILL'):
+            if len([r for r in pool if r['type']==kind])<2:errors.append(f'{cls}: shop needs two distinct {kind} cards')
+            for rarity in ('COMMON','UNCOMMON','RARE'):
+                if not any(r['type']==kind and r['rarity']==rarity for r in pool):errors.append(f'{cls}: missing {rarity} {kind} shop tier')
+        for rarity in ('UNCOMMON','RARE'):
+            if not any(r['type']=='POWER' and r['rarity']==rarity for r in pool):errors.append(f'{cls}: missing {rarity} POWER shop tier')
+    for row in sheets['class_mechanics']:ref('class_mechanics',row,'id',classes)
+    for row in sheets['starter_genes']:ref('starter_genes',row,'id',traits)
     for row in sheets['decks']:
         ref('decks',row,'classId',classes)
         for c in row['cards']:

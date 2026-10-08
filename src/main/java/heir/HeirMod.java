@@ -76,6 +76,7 @@ public final class HeirMod implements EditCardsSubscriber,EditCharactersSubscrib
         if(strength!=0)AbstractDungeon.actionManager.addToBottom(new ApplyPowerAction(AbstractDungeon.player,AbstractDungeon.player,new StrengthPower(AbstractDungeon.player,strength),strength));
         if(dex!=0)AbstractDungeon.actionManager.addToBottom(new ApplyPowerAction(AbstractDungeon.player,AbstractDungeon.player,new DexterityPower(AbstractDungeon.player,dex),dex));
         System.out.println("HEIR: battle bonuses Strength="+strength+", Dexterity="+dex);
+        AbstractDungeon.actionManager.addToBottom(new ApplyPowerAction(AbstractDungeon.player,AbstractDungeon.player,new ClassPower(heir().classId),0));
         TraitRules.battle();
     }
     public void receiveOnPlayerTurnStart(){}
@@ -98,7 +99,7 @@ public final class HeirMod implements EditCardsSubscriber,EditCharactersSubscrib
     }
     public void receivePostRender(SpriteBatch sb){
         TraitTips.begin();
-        if(isHeir()&&AbstractDungeon.isPlayerInDungeon()&&profile.active!=null){
+        if(isHeir()&&AbstractDungeon.isPlayerInDungeon()&&profile.active!=null&&AbstractDungeon.screen!=AbstractDungeon.CurrentScreen.SHOP){
             Profile.Heir h=heir();FontHelper.renderFontLeftTopAligned(sb,FontHelper.tipBodyFont,h.name+" "+profile.family+"  |  "+Data.row("classes",h.classId).s("name"),30*Settings.scale,Settings.HEIGHT-100*Settings.scale,Manor.bannerColor());
             float x=30*Settings.scale,y=Settings.HEIGHT-165*Settings.scale;
             for(String id:h.traits){

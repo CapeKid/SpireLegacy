@@ -7,7 +7,7 @@
     "cost": 1,
     "rarity": "BASIC",
     "damage": 6,
-    "block": 0,
+    "block": 2,
     "draw": 0,
     "energy": 0,
     "strength": 0,
@@ -20,7 +20,10 @@
     "upgradeBlock": 0,
     "upgradeMagic": 0,
     "asset": "Icons_Classes_SwordClass",
-    "art": "knight_strike"
+    "art": "knight_strike",
+    "power": "none",
+    "magic": 0,
+    "discard": 0
   },
   {
     "id": "knight_guard",
@@ -43,7 +46,10 @@
     "upgradeBlock": 3,
     "upgradeMagic": 0,
     "asset": "Icons_Classes_SwordClass",
-    "art": "knight_guard"
+    "art": "knight_guard",
+    "power": "none",
+    "magic": 0,
+    "discard": 0
   },
   {
     "id": "mage_strike",
@@ -52,7 +58,7 @@
     "type": "ATTACK",
     "cost": 1,
     "rarity": "BASIC",
-    "damage": 6,
+    "damage": 5,
     "block": 0,
     "draw": 0,
     "energy": 0,
@@ -66,7 +72,10 @@
     "upgradeBlock": 0,
     "upgradeMagic": 0,
     "asset": "Icons_Classes_MagicWandClass",
-    "art": "mage_strike"
+    "art": "mage_strike",
+    "power": "none",
+    "magic": 0,
+    "discard": 0
   },
   {
     "id": "mage_guard",
@@ -76,7 +85,7 @@
     "cost": 1,
     "rarity": "BASIC",
     "damage": 0,
-    "block": 5,
+    "block": 4,
     "draw": 0,
     "energy": 0,
     "strength": 0,
@@ -89,7 +98,10 @@
     "upgradeBlock": 3,
     "upgradeMagic": 0,
     "asset": "Icons_Classes_MagicWandClass",
-    "art": "mage_guard"
+    "art": "mage_guard",
+    "power": "none",
+    "magic": 0,
+    "discard": 0
   },
   {
     "id": "ranger_strike",
@@ -112,7 +124,10 @@
     "upgradeBlock": 0,
     "upgradeMagic": 0,
     "asset": "Icons_Classes_BowClass",
-    "art": "ranger_strike"
+    "art": "ranger_strike",
+    "power": "none",
+    "magic": 0,
+    "discard": 0
   },
   {
     "id": "ranger_guard",
@@ -122,8 +137,8 @@
     "cost": 1,
     "rarity": "BASIC",
     "damage": 0,
-    "block": 5,
-    "draw": 0,
+    "block": 4,
+    "draw": 1,
     "energy": 0,
     "strength": 0,
     "dexterity": 0,
@@ -135,7 +150,10 @@
     "upgradeBlock": 3,
     "upgradeMagic": 0,
     "asset": "Icons_Classes_BowClass",
-    "art": "ranger_guard"
+    "art": "ranger_guard",
+    "power": "none",
+    "magic": 0,
+    "discard": 1
   },
   {
     "id": "shield",
@@ -158,7 +176,10 @@
     "upgradeBlock": 2,
     "upgradeMagic": 0,
     "asset": "Icons_Classes_SwordClass",
-    "art": "shield"
+    "art": "shield",
+    "power": "none",
+    "magic": 0,
+    "discard": 0
   },
   {
     "id": "cleave",
@@ -181,7 +202,10 @@
     "upgradeBlock": 0,
     "upgradeMagic": 0,
     "asset": "Icons_Classes_SwordClass",
-    "art": "cleave"
+    "art": "cleave",
+    "power": "none",
+    "magic": 0,
+    "discard": 0
   },
   {
     "id": "fortify",
@@ -204,7 +228,10 @@
     "upgradeBlock": 4,
     "upgradeMagic": 0,
     "asset": "Icons_Classes_SwordClass",
-    "art": "fortify"
+    "art": "fortify",
+    "power": "none",
+    "magic": 0,
+    "discard": 0
   },
   {
     "id": "riposte",
@@ -227,7 +254,10 @@
     "upgradeBlock": 2,
     "upgradeMagic": 0,
     "asset": "Icons_Classes_SwordClass",
-    "art": "riposte"
+    "art": "riposte",
+    "power": "none",
+    "magic": 0,
+    "discard": 0
   },
   {
     "id": "challenge",
@@ -250,7 +280,10 @@
     "upgradeBlock": 0,
     "upgradeMagic": 1,
     "asset": "Icons_Classes_SwordClass",
-    "art": "challenge"
+    "art": "challenge",
+    "power": "none",
+    "magic": 0,
+    "discard": 0
   },
   {
     "id": "valor",
@@ -273,7 +306,10 @@
     "upgradeBlock": 0,
     "upgradeMagic": 1,
     "asset": "Icons_Classes_SwordClass",
-    "art": "valor"
+    "art": "valor",
+    "power": "none",
+    "magic": 0,
+    "discard": 0
   },
   {
     "id": "bastion",
@@ -296,7 +332,10 @@
     "upgradeBlock": 0,
     "upgradeMagic": 1,
     "asset": "Icons_Classes_SwordClass",
-    "art": "bastion"
+    "art": "bastion",
+    "power": "none",
+    "magic": 0,
+    "discard": 0
   },
   {
     "id": "oath",
@@ -319,7 +358,10 @@
     "upgradeBlock": 0,
     "upgradeMagic": 0,
     "asset": "Icons_Classes_SwordClass",
-    "art": "oath"
+    "art": "oath",
+    "power": "none",
+    "magic": 0,
+    "discard": 0
   },
   {
     "id": "flame",
@@ -342,7 +384,10 @@
     "upgradeBlock": 2,
     "upgradeMagic": 0,
     "asset": "Icons_Classes_MagicWandClass",
-    "art": "flame"
+    "art": "flame",
+    "power": "none",
+    "magic": 0,
+    "discard": 0
   },
   {
     "id": "fireball",
@@ -365,7 +410,10 @@
     "upgradeBlock": 0,
     "upgradeMagic": 0,
     "asset": "Icons_Classes_MagicWandClass",
-    "art": "fireball"
+    "art": "fireball",
+    "power": "none",
+    "magic": 0,
+    "discard": 0
   },
   {
     "id": "study",
@@ -388,7 +436,10 @@
     "upgradeBlock": 0,
     "upgradeMagic": 1,
     "asset": "Icons_Classes_MagicWandClass",
-    "art": "study"
+    "art": "study",
+    "power": "none",
+    "magic": 0,
+    "discard": 0
   },
   {
     "id": "barrier",
@@ -411,7 +462,10 @@
     "upgradeBlock": 3,
     "upgradeMagic": 0,
     "asset": "Icons_Classes_MagicWandClass",
-    "art": "barrier"
+    "art": "barrier",
+    "power": "none",
+    "magic": 0,
+    "discard": 0
   },
   {
     "id": "concentrate",
@@ -434,7 +488,10 @@
     "upgradeBlock": 0,
     "upgradeMagic": 1,
     "asset": "Icons_Classes_MagicWandClass",
-    "art": "concentrate"
+    "art": "concentrate",
+    "power": "none",
+    "magic": 0,
+    "discard": 0
   },
   {
     "id": "frost",
@@ -457,7 +514,10 @@
     "upgradeBlock": 0,
     "upgradeMagic": 1,
     "asset": "Icons_Classes_MagicWandClass",
-    "art": "frost"
+    "art": "frost",
+    "power": "none",
+    "magic": 0,
+    "discard": 0
   },
   {
     "id": "surge",
@@ -480,7 +540,10 @@
     "upgradeBlock": 0,
     "upgradeMagic": 1,
     "asset": "Icons_Classes_MagicWandClass",
-    "art": "surge"
+    "art": "surge",
+    "power": "none",
+    "magic": 0,
+    "discard": 0
   },
   {
     "id": "nova",
@@ -503,7 +566,10 @@
     "upgradeBlock": 0,
     "upgradeMagic": 0,
     "asset": "Icons_Classes_MagicWandClass",
-    "art": "nova"
+    "art": "nova",
+    "power": "none",
+    "magic": 0,
+    "discard": 0
   },
   {
     "id": "aim",
@@ -526,7 +592,10 @@
     "upgradeBlock": 0,
     "upgradeMagic": 0,
     "asset": "Icons_Classes_BowClass",
-    "art": "aim"
+    "art": "aim",
+    "power": "none",
+    "magic": 0,
+    "discard": 0
   },
   {
     "id": "double",
@@ -549,7 +618,10 @@
     "upgradeBlock": 0,
     "upgradeMagic": 0,
     "asset": "Icons_Classes_BowClass",
-    "art": "double"
+    "art": "double",
+    "power": "none",
+    "magic": 0,
+    "discard": 0
   },
   {
     "id": "retreat",
@@ -572,7 +644,10 @@
     "upgradeBlock": 3,
     "upgradeMagic": 0,
     "asset": "Icons_Classes_BowClass",
-    "art": "retreat"
+    "art": "retreat",
+    "power": "none",
+    "magic": 0,
+    "discard": 0
   },
   {
     "id": "volley",
@@ -595,7 +670,10 @@
     "upgradeBlock": 0,
     "upgradeMagic": 0,
     "asset": "Icons_Classes_BowClass",
-    "art": "volley"
+    "art": "volley",
+    "power": "none",
+    "magic": 0,
+    "discard": 0
   },
   {
     "id": "mark",
@@ -618,7 +696,10 @@
     "upgradeBlock": 0,
     "upgradeMagic": 1,
     "asset": "Icons_Classes_BowClass",
-    "art": "mark"
+    "art": "mark",
+    "power": "none",
+    "magic": 0,
+    "discard": 0
   },
   {
     "id": "focus",
@@ -641,7 +722,10 @@
     "upgradeBlock": 0,
     "upgradeMagic": 0,
     "asset": "Icons_Classes_BowClass",
-    "art": "focus"
+    "art": "focus",
+    "power": "none",
+    "magic": 0,
+    "discard": 0
   },
   {
     "id": "evasion",
@@ -664,7 +748,10 @@
     "upgradeBlock": 0,
     "upgradeMagic": 1,
     "asset": "Icons_Classes_BowClass",
-    "art": "evasion"
+    "art": "evasion",
+    "power": "none",
+    "magic": 0,
+    "discard": 0
   },
   {
     "id": "snipe",
@@ -687,6 +774,191 @@
     "upgradeBlock": 0,
     "upgradeMagic": 0,
     "asset": "Icons_Classes_BowClass",
-    "art": "snipe"
+    "art": "snipe",
+    "power": "none",
+    "magic": 0,
+    "discard": 0
+  },
+  {
+    "id": "shieldwall",
+    "name": "Shield Wall",
+    "classId": "knight",
+    "type": "SKILL",
+    "cost": 1,
+    "rarity": "UNCOMMON",
+    "damage": 0,
+    "block": 12,
+    "draw": 0,
+    "energy": 0,
+    "strength": 0,
+    "dexterity": 0,
+    "weak": 0,
+    "vulnerable": 0,
+    "hits": 1,
+    "exhaust": false,
+    "upgradeDamage": 0,
+    "upgradeBlock": 3,
+    "upgradeMagic": 0,
+    "asset": "Icons_Classes_SwordClass",
+    "art": "shieldwall",
+    "power": "none",
+    "magic": 0,
+    "discard": 0
+  },
+  {
+    "id": "rally",
+    "name": "Royal Rally",
+    "classId": "knight",
+    "type": "SKILL",
+    "cost": 1,
+    "rarity": "RARE",
+    "damage": 0,
+    "block": 10,
+    "draw": 0,
+    "energy": 0,
+    "strength": 1,
+    "dexterity": 0,
+    "weak": 0,
+    "vulnerable": 0,
+    "hits": 1,
+    "exhaust": true,
+    "upgradeDamage": 0,
+    "upgradeBlock": 3,
+    "upgradeMagic": 1,
+    "asset": "Icons_Classes_SwordClass",
+    "art": "rally",
+    "power": "none",
+    "magic": 0,
+    "discard": 0
+  },
+  {
+    "id": "meditate",
+    "name": "Meditate",
+    "classId": "mage",
+    "type": "SKILL",
+    "cost": 0,
+    "rarity": "RARE",
+    "damage": 0,
+    "block": 0,
+    "draw": 2,
+    "energy": 1,
+    "strength": 0,
+    "dexterity": 0,
+    "weak": 0,
+    "vulnerable": 0,
+    "hits": 1,
+    "exhaust": true,
+    "upgradeDamage": 0,
+    "upgradeBlock": 0,
+    "upgradeMagic": 1,
+    "asset": "Icons_Classes_MagicWandClass",
+    "art": "meditate",
+    "power": "none",
+    "magic": 0,
+    "discard": 0
+  },
+  {
+    "id": "reservoir",
+    "name": "Arcane Reservoir",
+    "classId": "mage",
+    "type": "POWER",
+    "cost": 1,
+    "rarity": "UNCOMMON",
+    "damage": 0,
+    "block": 0,
+    "draw": 0,
+    "energy": 0,
+    "strength": 0,
+    "dexterity": 0,
+    "weak": 0,
+    "vulnerable": 0,
+    "hits": 1,
+    "exhaust": false,
+    "upgradeDamage": 0,
+    "upgradeBlock": 0,
+    "upgradeMagic": 1,
+    "asset": "Icons_Classes_MagicWandClass",
+    "art": "reservoir",
+    "power": "reservoir",
+    "magic": 1,
+    "discard": 0
+  },
+  {
+    "id": "smokescreen",
+    "name": "Smoke Screen",
+    "classId": "ranger",
+    "type": "SKILL",
+    "cost": 1,
+    "rarity": "UNCOMMON",
+    "damage": 0,
+    "block": 8,
+    "draw": 1,
+    "energy": 0,
+    "strength": 0,
+    "dexterity": 0,
+    "weak": 0,
+    "vulnerable": 0,
+    "hits": 1,
+    "exhaust": false,
+    "upgradeDamage": 0,
+    "upgradeBlock": 3,
+    "upgradeMagic": 1,
+    "asset": "Icons_Classes_BowClass",
+    "art": "smokescreen",
+    "power": "none",
+    "magic": 0,
+    "discard": 0
+  },
+  {
+    "id": "escapeplan",
+    "name": "Escape Plan",
+    "classId": "ranger",
+    "type": "SKILL",
+    "cost": 0,
+    "rarity": "RARE",
+    "damage": 0,
+    "block": 6,
+    "draw": 2,
+    "energy": 0,
+    "strength": 0,
+    "dexterity": 0,
+    "weak": 0,
+    "vulnerable": 0,
+    "hits": 1,
+    "exhaust": true,
+    "upgradeDamage": 0,
+    "upgradeBlock": 3,
+    "upgradeMagic": 1,
+    "asset": "Icons_Classes_BowClass",
+    "art": "escapeplan",
+    "power": "none",
+    "magic": 0,
+    "discard": 0
+  },
+  {
+    "id": "quiver",
+    "name": "Endless Quiver",
+    "classId": "ranger",
+    "type": "POWER",
+    "cost": 1,
+    "rarity": "UNCOMMON",
+    "damage": 0,
+    "block": 0,
+    "draw": 0,
+    "energy": 0,
+    "strength": 0,
+    "dexterity": 0,
+    "weak": 0,
+    "vulnerable": 0,
+    "hits": 1,
+    "exhaust": false,
+    "upgradeDamage": 0,
+    "upgradeBlock": 0,
+    "upgradeMagic": 1,
+    "asset": "Icons_Classes_BowClass",
+    "art": "quiver",
+    "power": "quiver",
+    "magic": 1,
+    "discard": 0
   }
 ]

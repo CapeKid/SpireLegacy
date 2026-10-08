@@ -14,7 +14,7 @@
   "components": [
     {
       "id": "main",
-      "fileName": "HeirOfTheSpire-0.1.3.zip",
+      "fileName": "HeirOfTheSpire-0.1.4.zip",
       "label": "Spire Legacy with content reader and modding libraries",
       "kind": "main",
       "required": true

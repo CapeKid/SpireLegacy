@@ -6,7 +6,7 @@ A solo custom character for **Slay the Spire 1, regular branch**. Your first hei
 
 - Three classes: Knight, Mage and Ranger, with distinct 10-card starting decks and separate reward pools.
 - All 61 eligible entries in the installed RL2 trait library have turn-based adaptations, with two compatible traits per heir. Hover icons or names for exact effects. [Trait coverage and adaptation notes](docs/traits.md).
-- Thirty cards spanning attacks, defenses, powers, draw and energy; every card can be upgraded and has its own original illustration showing its effect.
+- Thirty-seven cards spanning attacks, defenses, powers, draw and energy; every card can be upgraded and has its own original illustration showing its effect.
 - Six manor upgrades for health, Strength, Dexterity, card draw, legacy earnings and recovery.
 - A customizable family name and four banner colors.
 - Normal Slay the Spire enemies, events, maps and three-act runs; the first run goes directly to a first-floor fight.
@@ -28,7 +28,7 @@ This repository contains the development source and issue fixes. Local tools, ga
 - Local asset inspection via `scripts/inspect_rl.py` creates `private/rl_asset_index.json`; the owned host card atlas is inspected locally as `private/cardui.atlas` for preflight.
 - Packaging also expects the locally frozen reader under `private/helper-release/ReadRogueLegacy` and dependency license sources in sibling toolkit checkouts. No game assets belong in a release.
 
-All 30 original generated illustrations are in `art/originals/`. The built-in imagegen prompts, exported paths and verified image hashes are in `sheets/card_art.json`. `scripts/prepare_card_art.py` exports the card-sized resources. [Review all card artwork](media/card-art-review.png).
+All 37 original generated illustrations are in `art/originals/`. The built-in imagegen prompts, exported paths and verified image hashes are in `sheets/card_art.json`. `scripts/prepare_card_art.py` exports the card-sized resources. [Review all card artwork](media/card-art-review.png).
 
 Private inspection data, extracted content, lab game files and test saves belong only under ignored `private/`. Never distribute them. The release contains original code/UI art, redistributable modding dependencies and a converter, not game content.
 
@@ -38,9 +38,9 @@ The isolated game is in `private/lab`. `scripts/launch-test.ps1` enables an opt-
 
 ## Status
 
-Version 0.1.3 includes the cursor-layer fix, new selection art, character-specific family controls, the complete eligible trait catalog, and a native Linux/Steam Deck package. [Steam Deck installation and controls](docs/steam-deck.md) describe the bundled reader and Steam Input setup. The Linux reader extracted all 66 selected sprites from the actual owned game files in a Linux container, and seven launcher-discovery/error checks pass. Physical Deck gameplay and suspend/resume remain unverified.
+Version 0.1.4 adds complete shop pools, seven cards, class combat loops and inherited starter-card changes. [Class mechanics and starter genetics](docs/classes-and-genes.md) explain the rules. It also includes the cursor-layer fix, new selection art, character-specific family controls, the complete eligible trait catalog, and a native Linux/Steam Deck package. [Steam Deck installation and controls](docs/steam-deck.md) describe the bundled reader and Steam Input setup. The Linux reader extracted all 66 selected sprites from the actual owned game files in a Linux container, and seven launcher-discovery/error checks pass. Physical Deck gameplay and suspend/resume remain unverified.
 
-Compilation, 12,083 progression/platform-path checks, all 30 card-upgrade checks, all 63 trait-power loading checks and nine runtime trait-rule checks pass, including the native healing patch. The expanded trait catalog was tested in real combat: Pacifist prevented attacks and applied Poison, and Limitless provided four Energy on both the first and second turn. Earlier packaged-launcher tests verified local content preparation, card play, death settlement, heir choices, a manor purchase and its health bonus after restart. Gameplay screenshots are in `media/`.
+Compilation, 2,019 native shop/class checks (including three actual merchants), 36 starter-genetics checks, 12,083 progression/platform-path checks, all 37 card-upgrade checks, all 63 trait-power loading checks and nine runtime trait-rule checks pass, including the native healing patch. The expanded trait catalog was tested in real combat: Pacifist prevented attacks and applied Poison, and Limitless provided four Energy on both the first and second turn. Earlier packaged-launcher tests verified local content preparation, card play, death settlement, heir choices, a manor purchase and its health bonus after restart. Gameplay screenshots are in `media/`.
 
 Melty validates all install mappings and its one-click check says yes. Its automatic detector does not recognize this package layout; the supplied `melty.json` corrects that. It flags executable code and the bundled Python standard-library archive for review, and requires playing through Melty before publishing. That Melty install has not yet been tested. A full three-act playthrough and balance testing have not been completed. Sound could not be verified in this test environment (no working OpenAL playback device).
 

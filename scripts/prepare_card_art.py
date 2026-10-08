@@ -17,7 +17,7 @@ for row in rows:
 sheet.write_text(json.dumps(rows,indent=2)+'\n')
 if missing:raise SystemExit('Missing generated illustrations: '+', '.join(missing))
 # Review exported art at a size close to the illustrations in a game hand.
-preview=Image.new('RGB',(1000,1150),(18,25,35));draw=ImageDraw.Draw(preview)
+preview=Image.new('RGB',(1000,((len(rows)+4)//5)*190+10),(18,25,35));draw=ImageDraw.Draw(preview)
 for i,row in enumerate(rows):
     x=(i%5)*200+12;y=(i//5)*190+12
     with Image.open(ROOT/'src/main/resources'/row['path']) as image:

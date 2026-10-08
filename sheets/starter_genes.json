@@ -1,0 +1,82 @@
+[
+  {
+    "id": "large",
+    "damage": 3,
+    "block": -1,
+    "draw": 0,
+    "heal": 0,
+    "poison": 0,
+    "mercy": false,
+    "summary": "Starter attacks +3 damage; starter defenses -1 Block."
+  },
+  {
+    "id": "small",
+    "damage": -1,
+    "block": 2,
+    "draw": 0,
+    "heal": 0,
+    "poison": 0,
+    "mercy": false,
+    "summary": "Starter attacks -1 damage; starter defenses +2 Block."
+  },
+  {
+    "id": "weapon",
+    "damage": 2,
+    "block": -1,
+    "draw": 0,
+    "heal": 0,
+    "poison": 0,
+    "mercy": false,
+    "summary": "Starter attacks +2 damage; starter defenses -1 Block."
+  },
+  {
+    "id": "magic",
+    "damage": -1,
+    "block": 0,
+    "draw": 1,
+    "heal": 0,
+    "poison": 0,
+    "mercy": false,
+    "summary": "Starter attacks -1 damage; starter Skills draw one extra card."
+  },
+  {
+    "id": "vampire",
+    "damage": 0,
+    "block": 0,
+    "draw": 0,
+    "heal": 1,
+    "poison": 0,
+    "mercy": false,
+    "summary": "Starter Attacks heal one HP when played."
+  },
+  {
+    "id": "smallhitbox",
+    "damage": 0,
+    "block": -1,
+    "draw": 1,
+    "heal": 0,
+    "poison": 0,
+    "mercy": false,
+    "summary": "Starter Skills draw one extra card, with one less base Block."
+  },
+  {
+    "id": "lowergravity",
+    "damage": 0,
+    "block": 0,
+    "draw": 1,
+    "heal": 0,
+    "poison": 0,
+    "mercy": false,
+    "summary": "Starter Skills draw one extra card."
+  },
+  {
+    "id": "cantattack",
+    "damage": 0,
+    "block": 4,
+    "draw": 0,
+    "heal": 0,
+    "poison": 2,
+    "mercy": true,
+    "summary": "Starter Attacks become Mercy Skills: gain four Block and apply two Poison instead of attacking."
+  }
+]

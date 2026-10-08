@@ -19,6 +19,7 @@ public final class TraitTips {
     public static List<String> effects(String id){
         Data.Row row=Data.row("traits",id);List<String> lines=new ArrayList<>();
         if(!row.s("effect").equals("none"))lines.addAll(Arrays.asList(row.s("summary").split("(?<=\\.) ")));
+        for(Data.Row gene:Data.rows("starter_genes"))if(gene.s("id").equals(id))lines.addAll(Arrays.asList(gene.s("summary").split("(?<=\\.) ")));
         if(row.i("hp")!=0)lines.add(signed(row.i("hp"))+" maximum HP.");
         if(row.i("strength")!=0)lines.add(signed(row.i("strength"))+" Strength (attack damage).");
         if(row.i("dexterity")!=0)lines.add(signed(row.i("dexterity"))+" Dexterity (Block from cards).");

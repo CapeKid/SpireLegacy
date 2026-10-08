@@ -1,0 +1,26 @@
+[
+  {
+    "id": "knight",
+    "name": "Counterguard",
+    "effect": "counterguard",
+    "amount": 4,
+    "limit": 1,
+    "summary": "Playing a Skill primes your next Attack for +4 damage. Attacking consumes the counter."
+  },
+  {
+    "id": "mage",
+    "name": "Arcane Charges",
+    "effect": "charges",
+    "amount": 2,
+    "limit": 3,
+    "summary": "Each Skill grants one charge, up to three. Your next Attack gains +2 damage per charge and consumes them."
+  },
+  {
+    "id": "ranger",
+    "name": "Hunter Rhythm",
+    "effect": "rhythm",
+    "amount": 1,
+    "limit": 3,
+    "summary": "Every third Attack in a turn draws one card and applies one Vulnerable to its target."
+  }
+]

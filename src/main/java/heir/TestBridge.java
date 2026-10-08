@@ -43,15 +43,23 @@ public final class TestBridge {
                     CardCrawlGame.mainMenuScreen.charSelectScreen.bgCharImg=com.megacrit.cardcrawl.helpers.ImageMaster.loadImage(Data.row("ui_art","select_bg").s("path"));
                 }else if(action.equals("start")){CardCrawlGame.mainMenuScreen.charSelectScreen.confirmButton.hb.clicked=true;}
                 else if(action.equals("play")&&HeirMod.isHeir()){
+                    if(AbstractDungeon.getCurrRoom().phase!=com.megacrit.cardcrawl.rooms.AbstractRoom.RoomPhase.COMBAT)throw new IllegalStateException("Play requires a combat room");
                     int index=cmd.get("index").getAsInt();AbstractCard card=AbstractDungeon.player.hand.group.get(index);AbstractMonster target=AbstractDungeon.getMonsters().getRandomMonster(true);
-                    if(card.canUse(AbstractDungeon.player,target))AbstractDungeon.player.useCard(card,target,card.costForTurn);
+                    if(card.canUse(AbstractDungeon.player,target))AbstractDungeon.actionManager.addCardQueueItem(new CardQueueItem(card,target,com.megacrit.cardcrawl.ui.panels.EnergyPanel.totalCount));
                 }else if(action.equals("die")&&HeirMod.isHeir()){AbstractDungeon.player.damage(new DamageInfo(null,9999,DamageInfo.DamageType.HP_LOSS));}
                 else if(action.equals("manor")){Manor.openSelection();Manor.open=true;Manor.settingsOnly=false;}
                 else if(action.equals("settings")){Manor.openSelection();Manor.open=true;Manor.settingsOnly=true;}
                 else if(action.equals("menu")){CardCrawlGame.startOver=true;CardCrawlGame.mode=CardCrawlGame.GameMode.CHAR_SELECT;CardCrawlGame.mainMenuScreen=new com.megacrit.cardcrawl.screens.mainMenu.MainMenuScreen();CardCrawlGame.mainMenuScreen.screen=com.megacrit.cardcrawl.screens.mainMenu.MainMenuScreen.CurScreen.MAIN_MENU;}
                 else if(action.equals("dismiss")){AbstractDungeon.closeCurrentScreen();}
                 else if(action.equals("fight")){HeirMod.quickPending=true;}
-                else if(action.equals("endturn")&&HeirMod.isHeir()){AbstractDungeon.actionManager.callEndTurnEarlySequence();}
+                else if(action.equals("issue6checks")){Issue6Checks.run();}
+                else if(action.equals("hand")){
+                    AbstractDungeon.player.hand.clear();for(JsonElement id:cmd.getAsJsonArray("cards")){HeirCard card=new HeirCard(id.getAsString());card.current_x=Settings.WIDTH/2f;card.current_y=Settings.HEIGHT/4f;AbstractDungeon.player.hand.addToHand(card);}AbstractDungeon.player.hand.refreshHandLayout();AbstractDungeon.player.hand.applyPowers();
+                }
+                else if(action.equals("shop")){
+                    AbstractDungeon.currMapNode.room=new com.megacrit.cardcrawl.rooms.ShopRoom();AbstractDungeon.getCurrRoom().onPlayerEntry();AbstractDungeon.shopScreen.open();
+                }
+                else if(action.equals("endturn")&&HeirMod.isHeir()){AbstractDungeon.overlayMenu.endTurnButton.disable(true);}
                 else if(action.equals("traitchecks")){
                     java.util.List<String> saved=new java.util.ArrayList<>(HeirMod.heir().traits);int checks=0;int savedHp=HeirMod.isHeir()?AbstractDungeon.player.currentHealth:0;
                     try{
@@ -69,7 +77,7 @@ public final class TestBridge {
                 }
                 else if(action.equals("audit")){
                     int checks=0;
-                    for(Data.Row row:Data.rows("cards")){HeirCard c=new HeirCard(row.s("id"));c.upgrade();if(c.baseDamage!=row.i("damage")+row.i("upgradeDamage")||c.baseBlock!=row.i("block")+row.i("upgradeBlock")||!c.upgraded)throw new IllegalStateException("Card upgrade mismatch "+row.s("id"));checks++;}
+                    for(Data.Row row:Data.rows("cards")){HeirCard c=new HeirCard(row.s("id"));int damage=c.baseDamage,block=c.baseBlock,magic=c.baseMagicNumber;c.upgrade();if(c.baseDamage!=damage+(damage>0?row.i("upgradeDamage"):0)||c.baseBlock!=block+(block>0?(c.genes.mercy?3:row.i("upgradeBlock")):0)||c.baseMagicNumber!=magic+(magic>0?row.i("upgradeMagic"):0)||!c.upgraded)throw new IllegalStateException("Card upgrade mismatch "+row.s("id"));checks++;}
                     for(Data.Row row:Data.rows("traits")){new TraitPower(row);if(TraitTips.effects(row.s("id")).isEmpty())throw new IllegalStateException("Empty trait tooltip");}
                     Files.write(HeirMod.root.resolve("audit.json"),("{\"cardUpgradesVerified\":"+checks+",\"traitPowersVerified\":"+Data.rows("traits").size()+"}").getBytes(StandardCharsets.UTF_8));
                 }

@@ -328,5 +328,82 @@
     "prompt": "Create an original card illustration matching Rogue Legacy 2's playful 2D cartoon art style. Use the reference ONLY for visual style: chibi medieval adventurers, oversized rounded helmets and hands, thick dark brown/black outlines, compact clean silhouettes, small expressive faces, saturated cheerful colors, flat base colors with just one hard cel-shaded shadow. No painterly texture, realism, gritty details, glowing cinematic castle, intricate armor, gradients or concept-art look. Simple muted parchment-color backdrop with at most a few bold flat scenery shapes. The central action should look like game sprite artwork, extremely legible at a thumbnail. Landscape 5:4 composition, keep complete subject inside central crop-safe region. Artwork only: NO text, card frame, numbers, letters, UI, logos or watermark. A distinct original action composition for this card; do not simply reuse the reference portrait.\nCard: Snipe. Action: A distant green-cloaked marksman releasing ONE lethal silver arrow from a high stone ledge at one shadow target below, striking comet-like trail and bowstring fading into dust; very heavy one-use precise attack.",
     "generator": "built-in imagegen",
     "sha256": "55118eb02746a2ca06d423258549c5c64b37523f1e6ddf2a1924205871e9a212"
+  },
+  {
+    "id": "shieldwall",
+    "cardId": "shieldwall",
+    "name": "Shield Wall",
+    "path": "heir/cards/shieldwall.png",
+    "width": 250,
+    "height": 190,
+    "prompt": "Create an original card illustration matching Rogue Legacy 2's playful 2D cartoon art style. Use the reference ONLY for visual style: chibi medieval adventurers, oversized rounded helmets and hands, thick dark brown/black outlines, compact clean silhouettes, small expressive faces, saturated cheerful colors, flat base colors with just one hard cel-shaded shadow. No painterly texture, realism, gritty details, glowing cinematic castle, intricate armor, gradients or concept-art look. Simple muted parchment-color backdrop with at most a few bold flat scenery shapes. The central action should look like game sprite artwork, extremely legible at a thumbnail. Landscape 5:4 composition, keep complete subject inside central crop-safe region. Artwork only: NO text, card frame, numbers, letters, UI, logos or watermark. A distinct original action composition for this card; do not simply reuse the reference portrait.\nCard: Shield Wall. Action: A tiny broad-helmeted knight locks a blue shield into a wall of three shields, arrows bouncing away; layered defensive cover.",
+    "generator": "built-in imagegen",
+    "sha256": "634a5da8d56de1255c8ad3cfd6fe835333fd3fe1ea75fded3a70b8fdc2610f80"
+  },
+  {
+    "id": "rally",
+    "cardId": "rally",
+    "name": "Royal Rally",
+    "path": "heir/cards/rally.png",
+    "width": 250,
+    "height": 190,
+    "prompt": "Create an original card illustration matching Rogue Legacy 2's playful 2D cartoon art style. Use the reference ONLY for visual style: chibi medieval adventurers, oversized rounded helmets and hands, thick dark brown/black outlines, compact clean silhouettes, small expressive faces, saturated cheerful colors, flat base colors with just one hard cel-shaded shadow. No painterly texture, realism, gritty details, glowing cinematic castle, intricate armor, gradients or concept-art look. Simple muted parchment-color backdrop with at most a few bold flat scenery shapes. The central action should look like game sprite artwork, extremely legible at a thumbnail. Landscape 5:4 composition, keep complete subject inside central crop-safe region. Artwork only: NO text, card frame, numbers, letters, UI, logos or watermark. A distinct original action composition for this card; do not simply reuse the reference portrait.\nCard: Royal Rally. Action: A stout red-caped knight raises a golden banner behind a blue shield, rallying tiny allies; defense and renewed fighting strength.",
+    "generator": "built-in imagegen",
+    "sha256": "ed1507d121ac7763ec7270a638261b25882858e83b46e09d626cbe705ae71387"
+  },
+  {
+    "id": "meditate",
+    "cardId": "meditate",
+    "name": "Meditate",
+    "path": "heir/cards/meditate.png",
+    "width": 250,
+    "height": 190,
+    "prompt": "Create an original card illustration matching Rogue Legacy 2's playful 2D cartoon art style. Use the reference ONLY for visual style: chibi medieval adventurers, oversized rounded helmets and hands, thick dark brown/black outlines, compact clean silhouettes, small expressive faces, saturated cheerful colors, flat base colors with just one hard cel-shaded shadow. No painterly texture, realism, gritty details, glowing cinematic castle, intricate armor, gradients or concept-art look. Simple muted parchment-color backdrop with at most a few bold flat scenery shapes. The central action should look like game sprite artwork, extremely legible at a thumbnail. Landscape 5:4 composition, keep complete subject inside central crop-safe region. Artwork only: NO text, card frame, numbers, letters, UI, logos or watermark. A distinct original action composition for this card; do not simply reuse the reference portrait.\nCard: Meditate. Action: A tiny bearded red-hatted mage sits cross-legged, two floating parchment cards and one bright blue mana crystal circling him; drawing spells and restoring energy.",
+    "generator": "built-in imagegen",
+    "sha256": "6fa84c4ff1d2f4bd9917ca9ec73d7ed99786146bc15f0de94da43e9cb98b7f4f"
+  },
+  {
+    "id": "reservoir",
+    "cardId": "reservoir",
+    "name": "Arcane Reservoir",
+    "path": "heir/cards/reservoir.png",
+    "width": 250,
+    "height": 190,
+    "prompt": "Create an original card illustration matching Rogue Legacy 2's playful 2D cartoon art style. Use the reference ONLY for visual style: chibi medieval adventurers, oversized rounded helmets and hands, thick dark brown/black outlines, compact clean silhouettes, small expressive faces, saturated cheerful colors, flat base colors with just one hard cel-shaded shadow. No painterly texture, realism, gritty details, glowing cinematic castle, intricate armor, gradients or concept-art look. Simple muted parchment-color backdrop with at most a few bold flat scenery shapes. The central action should look like game sprite artwork, extremely legible at a thumbnail. Landscape 5:4 composition, keep complete subject inside central crop-safe region. Artwork only: NO text, card frame, numbers, letters, UI, logos or watermark. A distinct original action composition for this card; do not simply reuse the reference portrait.\nCard: Arcane Reservoir. Action: A tiny bearded red-hatted mage pours a blue potion into a huge glowing crystal reservoir, with a wand aimed beside it; storing stronger arcane charges.",
+    "generator": "built-in imagegen",
+    "sha256": "1a58c790405e169551ac0aebc68de07c8e23c4aeb98f0dd7edf162cd534726d9"
+  },
+  {
+    "id": "smokescreen",
+    "cardId": "smokescreen",
+    "name": "Smoke Screen",
+    "path": "heir/cards/smokescreen.png",
+    "width": 250,
+    "height": 190,
+    "prompt": "Create an original card illustration matching Rogue Legacy 2's playful 2D cartoon art style. Use the reference ONLY for visual style: chibi medieval adventurers, oversized rounded helmets and hands, thick dark brown/black outlines, compact clean silhouettes, small expressive faces, saturated cheerful colors, flat base colors with just one hard cel-shaded shadow. No painterly texture, realism, gritty details, glowing cinematic castle, intricate armor, gradients or concept-art look. Simple muted parchment-color backdrop with at most a few bold flat scenery shapes. The central action should look like game sprite artwork, extremely legible at a thumbnail. Landscape 5:4 composition, keep complete subject inside central crop-safe region. Artwork only: NO text, card frame, numbers, letters, UI, logos or watermark. A distinct original action composition for this card; do not simply reuse the reference portrait.\nCard: Smoke Screen. Action: A tiny green-hooded archer disappears behind a curling gray smoke cloud, an arrow bouncing away and one parchment card peeking out; evasive defense and card cycling.",
+    "generator": "built-in imagegen",
+    "sha256": "dace418b68f5a34250022b27ec4466eec76821357e856daae09bc287222794f3"
+  },
+  {
+    "id": "escapeplan",
+    "cardId": "escapeplan",
+    "name": "Escape Plan",
+    "path": "heir/cards/escapeplan.png",
+    "width": 250,
+    "height": 190,
+    "prompt": "Create an original card illustration matching Rogue Legacy 2's playful 2D cartoon art style. Use the reference ONLY for visual style: chibi medieval adventurers, oversized rounded helmets and hands, thick dark brown/black outlines, compact clean silhouettes, small expressive faces, saturated cheerful colors, flat base colors with just one hard cel-shaded shadow. No painterly texture, realism, gritty details, glowing cinematic castle, intricate armor, gradients or concept-art look. Simple muted parchment-color backdrop with at most a few bold flat scenery shapes. The central action should look like game sprite artwork, extremely legible at a thumbnail. Landscape 5:4 composition, keep complete subject inside central crop-safe region. Artwork only: NO text, card frame, numbers, letters, UI, logos or watermark. A distinct original action composition for this card; do not simply reuse the reference portrait.\nCard: Escape Plan. Action: A tiny green-hooded archer leaps backward behind a tree, two floating parchment cards following the retreat; free evasive defense and drawing options.",
+    "generator": "built-in imagegen",
+    "sha256": "450699553667508606f716c42f64c7ac87412a21349a6fd52889aa083c61de33"
+  },
+  {
+    "id": "quiver",
+    "cardId": "quiver",
+    "name": "Endless Quiver",
+    "path": "heir/cards/quiver.png",
+    "width": 250,
+    "height": 190,
+    "prompt": "Create an original card illustration matching Rogue Legacy 2's playful 2D cartoon art style. Use the reference ONLY for visual style: chibi medieval adventurers, oversized rounded helmets and hands, thick dark brown/black outlines, compact clean silhouettes, small expressive faces, saturated cheerful colors, flat base colors with just one hard cel-shaded shadow. No painterly texture, realism, gritty details, glowing cinematic castle, intricate armor, gradients or concept-art look. Simple muted parchment-color backdrop with at most a few bold flat scenery shapes. The central action should look like game sprite artwork, extremely legible at a thumbnail. Landscape 5:4 composition, keep complete subject inside central crop-safe region. Artwork only: NO text, card frame, numbers, letters, UI, logos or watermark. A distinct original action composition for this card; do not simply reuse the reference portrait.\nCard: Endless Quiver. Action: A tiny green-hooded archer opens a magical quiver spilling a flowing loop of arrows and one parchment card; sustained attack-chain card draw.",
+    "generator": "built-in imagegen",
+    "sha256": "07aeada71a7c6b08a795e5d1f5b00a72eb8de5e6d681c70a2f199b53cc71ef6a"
   }
 ]

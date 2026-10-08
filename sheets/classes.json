@@ -8,7 +8,7 @@
     "dexterity": 1,
     "heal": 2,
     "signature": "shield",
-    "summary": "Sword strikes and dependable defenses."
+    "summary": "Playing a Skill primes your next Attack for +4 damage. Attacking consumes the counter."
   },
   {
     "id": "mage",
@@ -19,7 +19,7 @@
     "dexterity": 0,
     "heal": 2,
     "signature": "flame",
-    "summary": "Spell attacks, drawing cards and energy."
+    "summary": "Each Skill grants one charge, up to three. Your next Attack gains +2 damage per charge and consumes them."
   },
   {
     "id": "ranger",
@@ -30,6 +30,6 @@
     "dexterity": 0,
     "heal": 2,
     "signature": "aim",
-    "summary": "Multi-hit arrows and carefully timed attacks."
+    "summary": "Every third Attack in a turn draws one card and applies one Vulnerable to its target."
   }
 ]
