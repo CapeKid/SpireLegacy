@@ -1,29 +1,29 @@
 [
   {
     "id": "knight",
-    "reference": "Expanded class-specific library; 45 additions over 0.2.0",
+    "reference": "Owned Ironclad: 75 total; 30 shared and 45 unique",
     "basic": 3,
-    "common": 35,
-    "uncommon": 56,
-    "rare": 26,
-    "total": 120
+    "common": 20,
+    "uncommon": 36,
+    "rare": 16,
+    "total": 75
   },
   {
     "id": "mage",
-    "reference": "Expanded class-specific library; 45 additions over 0.2.0",
+    "reference": "Owned Ironclad: 75 total; 30 shared and 45 unique",
     "basic": 3,
-    "common": 35,
-    "uncommon": 56,
-    "rare": 26,
-    "total": 120
+    "common": 20,
+    "uncommon": 36,
+    "rare": 16,
+    "total": 75
   },
   {
     "id": "ranger",
-    "reference": "Expanded class-specific library; 45 additions over 0.2.0",
+    "reference": "Owned Ironclad: 75 total; 30 shared and 45 unique",
     "basic": 3,
-    "common": 35,
-    "uncommon": 56,
-    "rare": 26,
-    "total": 120
+    "common": 20,
+    "uncommon": 36,
+    "rare": 16,
+    "total": 75
   }
 ]

@@ -33,9 +33,9 @@ public final class RewardChecks {
                     for(AbstractCard card:result){
                         if(boss&&card.rarity!=AbstractCard.CardRarity.RARE)throw new AssertionError("Boss reward rarity");checks++;
                         if(relicSet==4)continue;
-                        if(!(card instanceof HeirCard)||!Data.row("cards",((HeirCard)card).key).s("classId").equals(cls.s("id")))throw new AssertionError("Wrong heir reward pool");checks++;
+                        if(!(card instanceof HeirCard)||!CardPools.contains(cls.s("id"),((HeirCard)card).key))throw new AssertionError("Wrong heir reward pool");checks++;
                         Set<String> same=byRarity.get(card.rarity);if(same==null){same=new HashSet<>();byRarity.put(card.rarity,same);}
-                        int distinct=0;for(Data.Row row:Data.rows("cards"))if(row.s("classId").equals(cls.s("id"))&&row.s("rarity").equals(card.rarity.toString()))distinct++;
+                        int distinct=0;for(Data.Row row:Data.rows("cards"))if(CardPools.contains(cls.s("id"),row.s("id"))&&row.s("rarity").equals(card.rarity.toString()))distinct++;
                         if(seen.contains(card.cardID)&&same.size()<distinct)throw new AssertionError("Duplicate before rarity exhaustion");checks++;
                         seen.add(card.cardID);same.add(card.cardID);
                     }

@@ -1,3 +1,21 @@
+# 0.4.0 shared-pool verification
+
+Each class has 75 cards (3 basic / 20 common / 36 uncommon / 16 rare), matching the owned Ironclad reference. There are 30 identical shared cards plus 45 unique cards per class: 165 distinct active IDs and 225 class/card memberships. All 360 historical IDs remain registered for saved decks.
+
+The exact production JAR was tested in the owned regular Slay the Spire 1 Windows build 10180494 with isolated game and family saves (private/shared-pools-040).
+
+| Release check | Result |
+| --- | --- |
+| Native pools, copies, targeting, queued effects and shared passive interactions | 2,799 assertions; 225 class/card cases |
+| Native card upgrades and trait construction | 360 upgrades; 63 traits |
+| Native rewards with ordinary/boss rooms and Question Card/Crown/Shard | 600 calls; 4,680 assertions |
+| Native merchants and class/genetics behavior | 2,019 assertions; three merchants |
+| Live engine scenarios | 102 assertions across 11 scenarios |
+
+Checks verify exact rarity counts, 30 shared/45 unique membership, no foreign/legacy entries or duplicate IDs in ordinary pools, and shared Skills/Attacks using the selected class passive. Every shared card is exercised in all three classes. Native Ranger Question Card boss rewards rendered four distinct rares, including shared Comet Calendar, Guardian Angel and Mirror Manuscript alongside unique Falcon Courier. [Boss reward](../media/boss-reward-040.png). [Shared cards in the native renderer](../media/shared-core-040.png).
+
+Release JAR SHA-256: `21594A30FDBF9F17FAB812E99040D43BCD96ACEA3B227607B9EC9E29A6A44216`. The official uploader updated existing private Workshop item 3816067184. Steam downloaded the identical JAR; a subscribed-only cold launch with an empty local mods directory and fresh content/family data reached Mage combat, passed all class/shared membership checks (2,791 assertions in that starting fixture), and produced four distinct Ranger boss rares with Question Card. Full-run balance and physical Deck playtesting of 0.4.0 remain pending; the content preparation, controller and platform bootstrap code is unchanged.
+
 # 0.3.0 expanded-build verification
 
 The final release registers 360 cards: 120 per class, with 117 reward/shop cards in each separate class library. Tests use the owned regular Windows Slay the Spire 1 build 10180494 and isolated game/family data.

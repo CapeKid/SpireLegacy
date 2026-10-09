@@ -40,14 +40,38 @@ def validate():
         if row['power'] not in {'none','reservoir','quiver'}|{r['id'] for r in sheets.get('power_effects',[])}:errors.append('Unsupported class power '+row['id'])
         if row.get('special','none') not in {'none'}|{r['id'] for r in sheets.get('special_effects',[])}:errors.append('Unsupported card mechanic '+row['id'])
         if row.get('aoe') and row.get('special')=='random_attack':errors.append('Conflicting multi-target modes '+row['id'])
+    members=sheets['card_pools']
+    membership={cls:{r['cardId'] for r in members if r['classId']==cls} for cls in classes}
+    shared_sets=[]
+    active=set()
+    for row in members:
+        ref('card_pools',row,'classId',classes);ref('card_pools',row,'cardId',cards)
+        if row['scope'] not in ('shared','unique'):errors.append('Invalid membership scope '+row['id'])
+    for cls in classes:
+        rows=[r for r in members if r['classId']==cls]
+        if len(rows)!=len(membership[cls]):errors.append(cls+': duplicate pool membership')
+        shared={r['cardId'] for r in rows if r['scope']=='shared'}
+        unique={r['cardId'] for r in rows if r['scope']=='unique'}
+        if len(shared)!=30 or len(unique)!=45:errors.append(cls+': expected 30 shared and 45 unique')
+        shared_sets.append(shared);active.update(membership[cls])
+        for key in unique:
+            if key not in cards:continue
+            card=next(r for r in sheets['cards'] if r['id']==key)
+            if card['classId']!=cls:errors.append(cls+': foreign unique card '+key)
+        for key in shared:
+            if key not in cards:continue
+            card=next(r for r in sheets['cards'] if r['id']==key)
+            if card['rarity']=='BASIC' or card['power'] in ('reservoir','quiver') or card['special']=='charge_gain':errors.append('Class-specific mechanic in shared core '+key)
+    if any(shared!=shared_sets[0] for shared in shared_sets):errors.append('Shared core differs by class')
+    if len(active)!=165:errors.append('Expected 165 active cards across all classes')
     for target in sheets.get('pool_targets',[]):
         ref('pool_targets',target,'id',classes)
-        pool=[r for r in sheets['cards'] if r['classId']==target['id']]
+        pool=[r for r in sheets['cards'] if r['id'] in membership[target['id']]]
         if len(pool)!=target['total']:errors.append(target['id']+': class pool is not full-sized')
         for rarity in ('BASIC','COMMON','UNCOMMON','RARE'):
             if sum(r['rarity']==rarity for r in pool)!=target[rarity.lower()]:errors.append(target['id']+': incorrect '+rarity+' pool size')
     for cls in classes:
-        pool=[r for r in sheets['cards'] if r['classId']==cls and r['rarity']!='BASIC']
+        pool=[r for r in sheets['cards'] if r['id'] in membership[cls] and r['rarity']!='BASIC']
         signatures=set()
         for row in pool:
             signature=tuple((key,str(row[key])) for key in sorted(row) if key not in ('id','name','asset','art','classId','rarity') and not key.startswith('upgrade'))
@@ -65,7 +89,7 @@ def validate():
         for build in {r['build'] for r in additions}:
             group=[r for r in additions if r['build']==build]
             if not any(r['role']=='payoff' for r in group):errors.append(cls+': build has no payoff '+build)
-        pool=[r for r in sheets['cards'] if r['classId']==cls and r['rarity']!='BASIC']
+        pool=[r for r in sheets['cards'] if r['id'] in membership[cls] and r['rarity']!='BASIC']
         for kind in ('ATTACK','SKILL'):
             if len([r for r in pool if r['type']==kind])<2:errors.append(f'{cls}: shop needs two distinct {kind} cards')
             for rarity in ('COMMON','UNCOMMON','RARE'):

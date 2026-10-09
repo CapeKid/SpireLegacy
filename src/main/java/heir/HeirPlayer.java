@@ -37,7 +37,7 @@ public final class HeirPlayer extends CustomPlayer {
     public AbstractCard getStartCardForEvent(){return new HeirCard(Data.row("classes",HeirMod.heir().classId).s("signature"));}
     public String getCustomModeCharacterButtonSoundKey(){return "ATTACK_HEAVY";}
     public void doCharSelectScreenSelectEffect(){CardCrawlGame.sound.play("ATTACK_HEAVY");}
-    public ArrayList<AbstractCard> getCardPool(ArrayList<AbstractCard> pool){for(Data.Row r:Data.rows("cards"))if(!r.s("rarity").equals("BASIC")&&r.s("classId").equals(HeirMod.heir().classId))pool.add(new HeirCard(r.s("id")));return pool;}
+    public ArrayList<AbstractCard> getCardPool(ArrayList<AbstractCard> pool){for(Data.Row r:Data.rows("cards"))if(!r.s("rarity").equals("BASIC")&&CardPools.contains(HeirMod.heir().classId,r.s("id")))pool.add(new HeirCard(r.s("id")));return pool;}
     public void renderPlayerImage(SpriteBatch sb){
         Texture hero=HeirMod.texture("hero.png");float scale=Settings.scale;
         for(String id:HeirMod.heir().traits)scale*=Data.row("traits",id).f("scale");

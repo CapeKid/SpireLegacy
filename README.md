@@ -6,7 +6,7 @@ A solo custom character for **Slay the Spire 1, regular branch**. Your first hei
 
 - Three classes: Knight, Mage and Ranger, with distinct 10-card starting decks and separate reward pools.
 - All 61 eligible entries in the installed RL2 trait library have turn-based adaptations, with two compatible traits per heir. Hover icons or names for exact effects. [Trait coverage and adaptation notes](docs/traits.md).
-- 360 cards: 120 per class, with 35 common, 56 uncommon, 26 rare and 3 basic cards each. Every card upgrades and has its own original illustration. [Card pool guide](docs/card-pools.md) · [Complete card catalogue](docs/card-catalogue.md) · [135 added cards and build roles](docs/new-build-cards.md).
+- 75 cards per class: 30 shared family cards and 45 unique cards, including 3 basics. Each pool has 20 common, 36 uncommon and 16 rare cards. The character has 165 distinct active cards, with original illustrations and upgrades. [Card pool guide](docs/card-pools.md) · [Current card catalogue](docs/card-catalogue.md).
 - Six manor upgrades for health, Strength, Dexterity, card draw, legacy earnings and recovery.
 - A customizable family name and four banner colors.
 - Normal Slay the Spire enemies, events, maps and three-act runs; the first run goes directly to a first-floor fight.
@@ -40,11 +40,11 @@ The isolated game is in `private/lab`. `scripts/launch-test.ps1` enables an opt-
 
 ## Status
 
-Version 0.3.0 adds 45 cards and illustrations to each class, expanding their separate libraries to 120 cards each. The 135 additions support armor, exhaust, blood costs, status fuel, spell sequencing, delayed turns, retained cards, discard, poison, attack chains and scry. Native rewards use the full rarity pools; the 0.1.9 sparse-pool reward replacement has been removed. Existing card IDs and family saves remain compatible. [Class mechanics and starter genetics](docs/classes-and-genes.md) explain inherited starters; [Steam Deck installation and controls](docs/steam-deck.md) cover setup.
+Version 0.4.0 curates 75 cards per class: 30 shared family cards and 45 unique cards, including three basics. The shared core connects exhaust, retention, draw, delayed resources and debuffs to distinct Knight, Mage and Ranger payoffs. There are 165 active cards across the character; all 360 historical IDs remain registered for existing saves. Native rewards use the full rarity pools; the 0.1.9 sparse-pool reward replacement has been removed. Existing card IDs and family saves remain compatible. [Class mechanics and starter genetics](docs/classes-and-genes.md) explain inherited starters; [Steam Deck installation and controls](docs/steam-deck.md) cover setup.
 
 [Verification results](docs/card-pool-verification.md) cover native pools, upgrades, rewards, merchants and new engine scenarios.
 
-The creator verified loading and gameplay on Steam Deck using both Steam Linux Runtime and Proton with the 0.1.8 content-preparation changes. The 0.3.0 expansion is tested in the owned Windows game with isolated saves; its new balance still needs full-run playtesting.
+The creator verified loading and gameplay on Steam Deck using both Steam Linux Runtime and Proton with the 0.1.8 content-preparation changes. The 0.4.0 shared-pool revision is tested in the owned Windows game with isolated saves; its new balance still needs full-run playtesting.
 
 
 Melty validates all install mappings and its one-click check says yes. Its automatic detector does not recognize this package layout; the supplied `melty.json` corrects that. It flags executable code and the bundled Python standard-library archive for review, and requires playing through Melty before publishing. That Melty install has not yet been tested. A full three-act playthrough and balance testing have not been completed. Sound could not be verified in this test environment (no working OpenAL playback device).

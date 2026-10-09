@@ -21,7 +21,7 @@ public final class Issue6Checks {
             for(Data.Row cls:Data.rows("classes")){
                 heir.classId=cls.s("id");CardCrawlGame.dungeon.initializeCardPools();
                 for(AbstractCard.CardRarity rarity:Arrays.asList(AbstractCard.CardRarity.COMMON,AbstractCard.CardRarity.UNCOMMON,AbstractCard.CardRarity.RARE))for(AbstractCard.CardType kind:Arrays.asList(AbstractCard.CardType.ATTACK,AbstractCard.CardType.SKILL,AbstractCard.CardType.POWER))for(int i=0;i<20;i++){
-                    AbstractCard card=AbstractDungeon.getCardFromPool(rarity,kind,true);check(card instanceof HeirCard,"Native pool fell outside the mod");check(card.type==kind,"Native pool returned wrong type");check(Data.row("cards",((HeirCard)card).key).s("classId").equals(heir.classId),"Wrong class shop card");if(kind!=AbstractCard.CardType.POWER)check(card.rarity==rarity,"Rarity fallback hides missing tier");
+                    AbstractCard card=AbstractDungeon.getCardFromPool(rarity,kind,true);check(card instanceof HeirCard,"Native pool fell outside the mod");check(card.type==kind,"Native pool returned wrong type");check(CardPools.contains(heir.classId,((HeirCard)card).key),"Wrong class shop card");if(kind!=AbstractCard.CardType.POWER)check(card.rarity==rarity,"Rarity fallback hides missing tier");
                 }
                 Merchant merchant=new Merchant();java.lang.reflect.Field field=Merchant.class.getDeclaredField("cards1");field.setAccessible(true);List<AbstractCard> stock=(List<AbstractCard>)field.get(merchant);
                 check(stock.size()==5,"Merchant stock count");check(!stock.get(0).cardID.equals(stock.get(1).cardID),"Duplicate shop attacks");check(!stock.get(2).cardID.equals(stock.get(3).cardID),"Duplicate shop skills");

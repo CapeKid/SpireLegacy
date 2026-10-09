@@ -1,0 +1,1352 @@
+[
+  {
+    "id": "knight__study",
+    "classId": "knight",
+    "cardId": "study",
+    "scope": "shared"
+  },
+  {
+    "id": "knight__mage_cold_read",
+    "classId": "knight",
+    "cardId": "mage_cold_read",
+    "scope": "shared"
+  },
+  {
+    "id": "knight__knight_reforge",
+    "classId": "knight",
+    "cardId": "knight_reforge",
+    "scope": "shared"
+  },
+  {
+    "id": "knight__knight_brave_advance",
+    "classId": "knight",
+    "cardId": "knight_brave_advance",
+    "scope": "shared"
+  },
+  {
+    "id": "knight__ranger_tripwire",
+    "classId": "knight",
+    "cardId": "ranger_tripwire",
+    "scope": "shared"
+  },
+  {
+    "id": "knight__mage_stored_ember",
+    "classId": "knight",
+    "cardId": "mage_stored_ember",
+    "scope": "shared"
+  },
+  {
+    "id": "knight__mage_crystal_seed",
+    "classId": "knight",
+    "cardId": "mage_crystal_seed",
+    "scope": "shared"
+  },
+  {
+    "id": "knight__knight_long_reach",
+    "classId": "knight",
+    "cardId": "knight_long_reach",
+    "scope": "shared"
+  },
+  {
+    "id": "knight__challenge",
+    "classId": "knight",
+    "cardId": "challenge",
+    "scope": "shared"
+  },
+  {
+    "id": "knight__knight_battle_meditation",
+    "classId": "knight",
+    "cardId": "knight_battle_meditation",
+    "scope": "shared"
+  },
+  {
+    "id": "knight__mage_spellweave",
+    "classId": "knight",
+    "cardId": "mage_spellweave",
+    "scope": "shared"
+  },
+  {
+    "id": "knight__mage_memory_prism",
+    "classId": "knight",
+    "cardId": "mage_memory_prism",
+    "scope": "shared"
+  },
+  {
+    "id": "knight__knight_clean_armor",
+    "classId": "knight",
+    "cardId": "knight_clean_armor",
+    "scope": "shared"
+  },
+  {
+    "id": "knight__knight_arms_vault",
+    "classId": "knight",
+    "cardId": "knight_arms_vault",
+    "scope": "shared"
+  },
+  {
+    "id": "knight__mage_time_pocket",
+    "classId": "knight",
+    "cardId": "mage_time_pocket",
+    "scope": "shared"
+  },
+  {
+    "id": "knight__mage_enchanted_ink",
+    "classId": "knight",
+    "cardId": "mage_enchanted_ink",
+    "scope": "shared"
+  },
+  {
+    "id": "knight__knight_last_stand",
+    "classId": "knight",
+    "cardId": "knight_last_stand",
+    "scope": "shared"
+  },
+  {
+    "id": "knight__knight_burnished_legacy",
+    "classId": "knight",
+    "cardId": "knight_burnished_legacy",
+    "scope": "shared"
+  },
+  {
+    "id": "knight__mage_secret_thesis",
+    "classId": "knight",
+    "cardId": "mage_secret_thesis",
+    "scope": "shared"
+  },
+  {
+    "id": "knight__ranger_measured_breath",
+    "classId": "knight",
+    "cardId": "ranger_measured_breath",
+    "scope": "shared"
+  },
+  {
+    "id": "knight__mage_woven_incantation",
+    "classId": "knight",
+    "cardId": "mage_woven_incantation",
+    "scope": "shared"
+  },
+  {
+    "id": "knight__ranger_tracking_rhythm",
+    "classId": "knight",
+    "cardId": "ranger_tracking_rhythm",
+    "scope": "shared"
+  },
+  {
+    "id": "knight__mage_alchemist_s_patience",
+    "classId": "knight",
+    "cardId": "mage_alchemist_s_patience",
+    "scope": "shared"
+  },
+  {
+    "id": "knight__knight_merciless",
+    "classId": "knight",
+    "cardId": "knight_merciless",
+    "scope": "shared"
+  },
+  {
+    "id": "knight__meditate",
+    "classId": "knight",
+    "cardId": "meditate",
+    "scope": "shared"
+  },
+  {
+    "id": "knight__knight_guardian_angel",
+    "classId": "knight",
+    "cardId": "knight_guardian_angel",
+    "scope": "shared"
+  },
+  {
+    "id": "knight__mage_mirror_manuscript",
+    "classId": "knight",
+    "cardId": "mage_mirror_manuscript",
+    "scope": "shared"
+  },
+  {
+    "id": "knight__mage_comet_calendar",
+    "classId": "knight",
+    "cardId": "mage_comet_calendar",
+    "scope": "shared"
+  },
+  {
+    "id": "knight__ranger_master_plan",
+    "classId": "knight",
+    "cardId": "ranger_master_plan",
+    "scope": "shared"
+  },
+  {
+    "id": "knight__ranger_perfect_timing",
+    "classId": "knight",
+    "cardId": "ranger_perfect_timing",
+    "scope": "shared"
+  },
+  {
+    "id": "knight__knight_strike",
+    "classId": "knight",
+    "cardId": "knight_strike",
+    "scope": "unique"
+  },
+  {
+    "id": "knight__knight_guard",
+    "classId": "knight",
+    "cardId": "knight_guard",
+    "scope": "unique"
+  },
+  {
+    "id": "knight__shield",
+    "classId": "knight",
+    "cardId": "shield",
+    "scope": "unique"
+  },
+  {
+    "id": "knight__riposte",
+    "classId": "knight",
+    "cardId": "riposte",
+    "scope": "unique"
+  },
+  {
+    "id": "knight__fortify",
+    "classId": "knight",
+    "cardId": "fortify",
+    "scope": "unique"
+  },
+  {
+    "id": "knight__knight_pommel_knock",
+    "classId": "knight",
+    "cardId": "knight_pommel_knock",
+    "scope": "unique"
+  },
+  {
+    "id": "knight__knight_sweeping_edge",
+    "classId": "knight",
+    "cardId": "knight_sweeping_edge",
+    "scope": "unique"
+  },
+  {
+    "id": "knight__knight_twin_cut",
+    "classId": "knight",
+    "cardId": "knight_twin_cut",
+    "scope": "unique"
+  },
+  {
+    "id": "knight__knight_tower_guard",
+    "classId": "knight",
+    "cardId": "knight_tower_guard",
+    "scope": "unique"
+  },
+  {
+    "id": "knight__knight_iron_resolve",
+    "classId": "knight",
+    "cardId": "knight_iron_resolve",
+    "scope": "unique"
+  },
+  {
+    "id": "knight__knight_blood_price",
+    "classId": "knight",
+    "cardId": "knight_blood_price",
+    "scope": "unique"
+  },
+  {
+    "id": "knight__knight_shield_drill",
+    "classId": "knight",
+    "cardId": "knight_shield_drill",
+    "scope": "unique"
+  },
+  {
+    "id": "knight__knight_splintered_pike",
+    "classId": "knight",
+    "cardId": "knight_splintered_pike",
+    "scope": "unique"
+  },
+  {
+    "id": "knight__knight_heavy_harness",
+    "classId": "knight",
+    "cardId": "knight_heavy_harness",
+    "scope": "unique"
+  },
+  {
+    "id": "knight__knight_grit_teeth",
+    "classId": "knight",
+    "cardId": "knight_grit_teeth",
+    "scope": "unique"
+  },
+  {
+    "id": "knight__knight_shield_slam",
+    "classId": "knight",
+    "cardId": "knight_shield_slam",
+    "scope": "unique"
+  },
+  {
+    "id": "knight__knight_counter_lunge",
+    "classId": "knight",
+    "cardId": "knight_counter_lunge",
+    "scope": "unique"
+  },
+  {
+    "id": "knight__knight_executioner_axe",
+    "classId": "knight",
+    "cardId": "knight_executioner_axe",
+    "scope": "unique"
+  },
+  {
+    "id": "knight__knight_banner_charge",
+    "classId": "knight",
+    "cardId": "knight_banner_charge",
+    "scope": "unique"
+  },
+  {
+    "id": "knight__knight_bloodied_blade",
+    "classId": "knight",
+    "cardId": "knight_bloodied_blade",
+    "scope": "unique"
+  },
+  {
+    "id": "knight__knight_sword_dance",
+    "classId": "knight",
+    "cardId": "knight_sword_dance",
+    "scope": "unique"
+  },
+  {
+    "id": "knight__knight_second_wind",
+    "classId": "knight",
+    "cardId": "knight_second_wind",
+    "scope": "unique"
+  },
+  {
+    "id": "knight__knight_double_guard",
+    "classId": "knight",
+    "cardId": "knight_double_guard",
+    "scope": "unique"
+  },
+  {
+    "id": "knight__knight_reinforce",
+    "classId": "knight",
+    "cardId": "knight_reinforce",
+    "scope": "unique"
+  },
+  {
+    "id": "knight__knight_bulwark",
+    "classId": "knight",
+    "cardId": "knight_bulwark",
+    "scope": "unique"
+  },
+  {
+    "id": "knight__knight_battle_rhythm",
+    "classId": "knight",
+    "cardId": "knight_battle_rhythm",
+    "scope": "unique"
+  },
+  {
+    "id": "knight__knight_forged_in_pain",
+    "classId": "knight",
+    "cardId": "knight_forged_in_pain",
+    "scope": "unique"
+  },
+  {
+    "id": "knight__knight_veteran_training",
+    "classId": "knight",
+    "cardId": "knight_veteran_training",
+    "scope": "unique"
+  },
+  {
+    "id": "knight__knight_cast_off",
+    "classId": "knight",
+    "cardId": "knight_cast_off",
+    "scope": "unique"
+  },
+  {
+    "id": "knight__knight_forge_sparks",
+    "classId": "knight",
+    "cardId": "knight_forge_sparks",
+    "scope": "unique"
+  },
+  {
+    "id": "knight__knight_ashen_advance",
+    "classId": "knight",
+    "cardId": "knight_ashen_advance",
+    "scope": "unique"
+  },
+  {
+    "id": "knight__knight_salvage_guard",
+    "classId": "knight",
+    "cardId": "knight_salvage_guard",
+    "scope": "unique"
+  },
+  {
+    "id": "knight__knight_scar_tissue",
+    "classId": "knight",
+    "cardId": "knight_scar_tissue",
+    "scope": "unique"
+  },
+  {
+    "id": "knight__knight_furnace_breath",
+    "classId": "knight",
+    "cardId": "knight_furnace_breath",
+    "scope": "unique"
+  },
+  {
+    "id": "knight__knight_patient_riposte",
+    "classId": "knight",
+    "cardId": "knight_patient_riposte",
+    "scope": "unique"
+  },
+  {
+    "id": "knight__bastion",
+    "classId": "knight",
+    "cardId": "bastion",
+    "scope": "unique"
+  },
+  {
+    "id": "knight__knight_living_fortress",
+    "classId": "knight",
+    "cardId": "knight_living_fortress",
+    "scope": "unique"
+  },
+  {
+    "id": "knight__knight_ancestral_fury",
+    "classId": "knight",
+    "cardId": "knight_ancestral_fury",
+    "scope": "unique"
+  },
+  {
+    "id": "knight__knight_phoenix_forge",
+    "classId": "knight",
+    "cardId": "knight_phoenix_forge",
+    "scope": "unique"
+  },
+  {
+    "id": "knight__knight_iron_avalanche",
+    "classId": "knight",
+    "cardId": "knight_iron_avalanche",
+    "scope": "unique"
+  },
+  {
+    "id": "knight__knight_bloodfire_mantle",
+    "classId": "knight",
+    "cardId": "knight_bloodfire_mantle",
+    "scope": "unique"
+  },
+  {
+    "id": "knight__knight_grand_melee",
+    "classId": "knight",
+    "cardId": "knight_grand_melee",
+    "scope": "unique"
+  },
+  {
+    "id": "knight__knight_warlord_s_command",
+    "classId": "knight",
+    "cardId": "knight_warlord_s_command",
+    "scope": "unique"
+  },
+  {
+    "id": "knight__knight_iron_furnace",
+    "classId": "knight",
+    "cardId": "knight_iron_furnace",
+    "scope": "unique"
+  },
+  {
+    "id": "knight__knight_siege_tomorrow",
+    "classId": "knight",
+    "cardId": "knight_siege_tomorrow",
+    "scope": "unique"
+  },
+  {
+    "id": "mage__study",
+    "classId": "mage",
+    "cardId": "study",
+    "scope": "shared"
+  },
+  {
+    "id": "mage__mage_cold_read",
+    "classId": "mage",
+    "cardId": "mage_cold_read",
+    "scope": "shared"
+  },
+  {
+    "id": "mage__knight_reforge",
+    "classId": "mage",
+    "cardId": "knight_reforge",
+    "scope": "shared"
+  },
+  {
+    "id": "mage__knight_brave_advance",
+    "classId": "mage",
+    "cardId": "knight_brave_advance",
+    "scope": "shared"
+  },
+  {
+    "id": "mage__ranger_tripwire",
+    "classId": "mage",
+    "cardId": "ranger_tripwire",
+    "scope": "shared"
+  },
+  {
+    "id": "mage__mage_stored_ember",
+    "classId": "mage",
+    "cardId": "mage_stored_ember",
+    "scope": "shared"
+  },
+  {
+    "id": "mage__mage_crystal_seed",
+    "classId": "mage",
+    "cardId": "mage_crystal_seed",
+    "scope": "shared"
+  },
+  {
+    "id": "mage__knight_long_reach",
+    "classId": "mage",
+    "cardId": "knight_long_reach",
+    "scope": "shared"
+  },
+  {
+    "id": "mage__challenge",
+    "classId": "mage",
+    "cardId": "challenge",
+    "scope": "shared"
+  },
+  {
+    "id": "mage__knight_battle_meditation",
+    "classId": "mage",
+    "cardId": "knight_battle_meditation",
+    "scope": "shared"
+  },
+  {
+    "id": "mage__mage_spellweave",
+    "classId": "mage",
+    "cardId": "mage_spellweave",
+    "scope": "shared"
+  },
+  {
+    "id": "mage__mage_memory_prism",
+    "classId": "mage",
+    "cardId": "mage_memory_prism",
+    "scope": "shared"
+  },
+  {
+    "id": "mage__knight_clean_armor",
+    "classId": "mage",
+    "cardId": "knight_clean_armor",
+    "scope": "shared"
+  },
+  {
+    "id": "mage__knight_arms_vault",
+    "classId": "mage",
+    "cardId": "knight_arms_vault",
+    "scope": "shared"
+  },
+  {
+    "id": "mage__mage_time_pocket",
+    "classId": "mage",
+    "cardId": "mage_time_pocket",
+    "scope": "shared"
+  },
+  {
+    "id": "mage__mage_enchanted_ink",
+    "classId": "mage",
+    "cardId": "mage_enchanted_ink",
+    "scope": "shared"
+  },
+  {
+    "id": "mage__knight_last_stand",
+    "classId": "mage",
+    "cardId": "knight_last_stand",
+    "scope": "shared"
+  },
+  {
+    "id": "mage__knight_burnished_legacy",
+    "classId": "mage",
+    "cardId": "knight_burnished_legacy",
+    "scope": "shared"
+  },
+  {
+    "id": "mage__mage_secret_thesis",
+    "classId": "mage",
+    "cardId": "mage_secret_thesis",
+    "scope": "shared"
+  },
+  {
+    "id": "mage__ranger_measured_breath",
+    "classId": "mage",
+    "cardId": "ranger_measured_breath",
+    "scope": "shared"
+  },
+  {
+    "id": "mage__mage_woven_incantation",
+    "classId": "mage",
+    "cardId": "mage_woven_incantation",
+    "scope": "shared"
+  },
+  {
+    "id": "mage__ranger_tracking_rhythm",
+    "classId": "mage",
+    "cardId": "ranger_tracking_rhythm",
+    "scope": "shared"
+  },
+  {
+    "id": "mage__mage_alchemist_s_patience",
+    "classId": "mage",
+    "cardId": "mage_alchemist_s_patience",
+    "scope": "shared"
+  },
+  {
+    "id": "mage__knight_merciless",
+    "classId": "mage",
+    "cardId": "knight_merciless",
+    "scope": "shared"
+  },
+  {
+    "id": "mage__meditate",
+    "classId": "mage",
+    "cardId": "meditate",
+    "scope": "shared"
+  },
+  {
+    "id": "mage__knight_guardian_angel",
+    "classId": "mage",
+    "cardId": "knight_guardian_angel",
+    "scope": "shared"
+  },
+  {
+    "id": "mage__mage_mirror_manuscript",
+    "classId": "mage",
+    "cardId": "mage_mirror_manuscript",
+    "scope": "shared"
+  },
+  {
+    "id": "mage__mage_comet_calendar",
+    "classId": "mage",
+    "cardId": "mage_comet_calendar",
+    "scope": "shared"
+  },
+  {
+    "id": "mage__ranger_master_plan",
+    "classId": "mage",
+    "cardId": "ranger_master_plan",
+    "scope": "shared"
+  },
+  {
+    "id": "mage__ranger_perfect_timing",
+    "classId": "mage",
+    "cardId": "ranger_perfect_timing",
+    "scope": "shared"
+  },
+  {
+    "id": "mage__mage_strike",
+    "classId": "mage",
+    "cardId": "mage_strike",
+    "scope": "unique"
+  },
+  {
+    "id": "mage__mage_guard",
+    "classId": "mage",
+    "cardId": "mage_guard",
+    "scope": "unique"
+  },
+  {
+    "id": "mage__flame",
+    "classId": "mage",
+    "cardId": "flame",
+    "scope": "unique"
+  },
+  {
+    "id": "mage__fireball",
+    "classId": "mage",
+    "cardId": "fireball",
+    "scope": "unique"
+  },
+  {
+    "id": "mage__barrier",
+    "classId": "mage",
+    "cardId": "barrier",
+    "scope": "unique"
+  },
+  {
+    "id": "mage__mage_ember_dart",
+    "classId": "mage",
+    "cardId": "mage_ember_dart",
+    "scope": "unique"
+  },
+  {
+    "id": "mage__mage_arcane_missile",
+    "classId": "mage",
+    "cardId": "mage_arcane_missile",
+    "scope": "unique"
+  },
+  {
+    "id": "mage__mage_witchfire",
+    "classId": "mage",
+    "cardId": "mage_witchfire",
+    "scope": "unique"
+  },
+  {
+    "id": "mage__mage_frost_ring",
+    "classId": "mage",
+    "cardId": "mage_frost_ring",
+    "scope": "unique"
+  },
+  {
+    "id": "mage__mage_mana_shield",
+    "classId": "mage",
+    "cardId": "mage_mana_shield",
+    "scope": "unique"
+  },
+  {
+    "id": "mage__mage_spell_notes",
+    "classId": "mage",
+    "cardId": "mage_spell_notes",
+    "scope": "unique"
+  },
+  {
+    "id": "mage__mage_kindle",
+    "classId": "mage",
+    "cardId": "mage_kindle",
+    "scope": "unique"
+  },
+  {
+    "id": "mage__mage_ash_reading",
+    "classId": "mage",
+    "cardId": "mage_ash_reading",
+    "scope": "unique"
+  },
+  {
+    "id": "mage__mage_warding_verse",
+    "classId": "mage",
+    "cardId": "mage_warding_verse",
+    "scope": "unique"
+  },
+  {
+    "id": "mage__mage_chilling_words",
+    "classId": "mage",
+    "cardId": "mage_chilling_words",
+    "scope": "unique"
+  },
+  {
+    "id": "mage__reservoir",
+    "classId": "mage",
+    "cardId": "reservoir",
+    "scope": "unique"
+  },
+  {
+    "id": "mage__frost",
+    "classId": "mage",
+    "cardId": "frost",
+    "scope": "unique"
+  },
+  {
+    "id": "mage__mage_thunderchain",
+    "classId": "mage",
+    "cardId": "mage_thunderchain",
+    "scope": "unique"
+  },
+  {
+    "id": "mage__mage_inferno_wave",
+    "classId": "mage",
+    "cardId": "mage_inferno_wave",
+    "scope": "unique"
+  },
+  {
+    "id": "mage__mage_venom_rune",
+    "classId": "mage",
+    "cardId": "mage_venom_rune",
+    "scope": "unique"
+  },
+  {
+    "id": "mage__mage_mana_burn",
+    "classId": "mage",
+    "cardId": "mage_mana_burn",
+    "scope": "unique"
+  },
+  {
+    "id": "mage__mage_rune_detonation",
+    "classId": "mage",
+    "cardId": "mage_rune_detonation",
+    "scope": "unique"
+  },
+  {
+    "id": "mage__mage_toxic_cloud",
+    "classId": "mage",
+    "cardId": "mage_toxic_cloud",
+    "scope": "unique"
+  },
+  {
+    "id": "mage__mage_overcharge",
+    "classId": "mage",
+    "cardId": "mage_overcharge",
+    "scope": "unique"
+  },
+  {
+    "id": "mage__mage_rewrite",
+    "classId": "mage",
+    "cardId": "mage_rewrite",
+    "scope": "unique"
+  },
+  {
+    "id": "mage__mage_blood_to_mana",
+    "classId": "mage",
+    "cardId": "mage_blood_to_mana",
+    "scope": "unique"
+  },
+  {
+    "id": "mage__mage_rune_storm",
+    "classId": "mage",
+    "cardId": "mage_rune_storm",
+    "scope": "unique"
+  },
+  {
+    "id": "mage__mage_spell_threads",
+    "classId": "mage",
+    "cardId": "mage_spell_threads",
+    "scope": "unique"
+  },
+  {
+    "id": "mage__mage_toxic_theory",
+    "classId": "mage",
+    "cardId": "mage_toxic_theory",
+    "scope": "unique"
+  },
+  {
+    "id": "mage__mage_arcane_meter",
+    "classId": "mage",
+    "cardId": "mage_arcane_meter",
+    "scope": "unique"
+  },
+  {
+    "id": "mage__mage_tower_library",
+    "classId": "mage",
+    "cardId": "mage_tower_library",
+    "scope": "unique"
+  },
+  {
+    "id": "mage__mage_moonstone_lance",
+    "classId": "mage",
+    "cardId": "mage_moonstone_lance",
+    "scope": "unique"
+  },
+  {
+    "id": "mage__mage_geode_ward",
+    "classId": "mage",
+    "cardId": "mage_geode_ward",
+    "scope": "unique"
+  },
+  {
+    "id": "mage__mage_rune_familiar",
+    "classId": "mage",
+    "cardId": "mage_rune_familiar",
+    "scope": "unique"
+  },
+  {
+    "id": "mage__mage_hex_rain",
+    "classId": "mage",
+    "cardId": "mage_hex_rain",
+    "scope": "unique"
+  },
+  {
+    "id": "mage__nova",
+    "classId": "mage",
+    "cardId": "nova",
+    "scope": "unique"
+  },
+  {
+    "id": "mage__surge",
+    "classId": "mage",
+    "cardId": "surge",
+    "scope": "unique"
+  },
+  {
+    "id": "mage__mage_starfall",
+    "classId": "mage",
+    "cardId": "mage_starfall",
+    "scope": "unique"
+  },
+  {
+    "id": "mage__mage_soulfire",
+    "classId": "mage",
+    "cardId": "mage_soulfire",
+    "scope": "unique"
+  },
+  {
+    "id": "mage__mage_perfect_ward",
+    "classId": "mage",
+    "cardId": "mage_perfect_ward",
+    "scope": "unique"
+  },
+  {
+    "id": "mage__mage_mana_fountain",
+    "classId": "mage",
+    "cardId": "mage_mana_fountain",
+    "scope": "unique"
+  },
+  {
+    "id": "mage__mage_transmutation",
+    "classId": "mage",
+    "cardId": "mage_transmutation",
+    "scope": "unique"
+  },
+  {
+    "id": "mage__mage_astral_mantle",
+    "classId": "mage",
+    "cardId": "mage_astral_mantle",
+    "scope": "unique"
+  },
+  {
+    "id": "mage__mage_sun_in_a_bottle",
+    "classId": "mage",
+    "cardId": "mage_sun_in_a_bottle",
+    "scope": "unique"
+  },
+  {
+    "id": "mage__mage_grand_incantation",
+    "classId": "mage",
+    "cardId": "mage_grand_incantation",
+    "scope": "unique"
+  },
+  {
+    "id": "ranger__study",
+    "classId": "ranger",
+    "cardId": "study",
+    "scope": "shared"
+  },
+  {
+    "id": "ranger__mage_cold_read",
+    "classId": "ranger",
+    "cardId": "mage_cold_read",
+    "scope": "shared"
+  },
+  {
+    "id": "ranger__knight_reforge",
+    "classId": "ranger",
+    "cardId": "knight_reforge",
+    "scope": "shared"
+  },
+  {
+    "id": "ranger__knight_brave_advance",
+    "classId": "ranger",
+    "cardId": "knight_brave_advance",
+    "scope": "shared"
+  },
+  {
+    "id": "ranger__ranger_tripwire",
+    "classId": "ranger",
+    "cardId": "ranger_tripwire",
+    "scope": "shared"
+  },
+  {
+    "id": "ranger__mage_stored_ember",
+    "classId": "ranger",
+    "cardId": "mage_stored_ember",
+    "scope": "shared"
+  },
+  {
+    "id": "ranger__mage_crystal_seed",
+    "classId": "ranger",
+    "cardId": "mage_crystal_seed",
+    "scope": "shared"
+  },
+  {
+    "id": "ranger__knight_long_reach",
+    "classId": "ranger",
+    "cardId": "knight_long_reach",
+    "scope": "shared"
+  },
+  {
+    "id": "ranger__challenge",
+    "classId": "ranger",
+    "cardId": "challenge",
+    "scope": "shared"
+  },
+  {
+    "id": "ranger__knight_battle_meditation",
+    "classId": "ranger",
+    "cardId": "knight_battle_meditation",
+    "scope": "shared"
+  },
+  {
+    "id": "ranger__mage_spellweave",
+    "classId": "ranger",
+    "cardId": "mage_spellweave",
+    "scope": "shared"
+  },
+  {
+    "id": "ranger__mage_memory_prism",
+    "classId": "ranger",
+    "cardId": "mage_memory_prism",
+    "scope": "shared"
+  },
+  {
+    "id": "ranger__knight_clean_armor",
+    "classId": "ranger",
+    "cardId": "knight_clean_armor",
+    "scope": "shared"
+  },
+  {
+    "id": "ranger__knight_arms_vault",
+    "classId": "ranger",
+    "cardId": "knight_arms_vault",
+    "scope": "shared"
+  },
+  {
+    "id": "ranger__mage_time_pocket",
+    "classId": "ranger",
+    "cardId": "mage_time_pocket",
+    "scope": "shared"
+  },
+  {
+    "id": "ranger__mage_enchanted_ink",
+    "classId": "ranger",
+    "cardId": "mage_enchanted_ink",
+    "scope": "shared"
+  },
+  {
+    "id": "ranger__knight_last_stand",
+    "classId": "ranger",
+    "cardId": "knight_last_stand",
+    "scope": "shared"
+  },
+  {
+    "id": "ranger__knight_burnished_legacy",
+    "classId": "ranger",
+    "cardId": "knight_burnished_legacy",
+    "scope": "shared"
+  },
+  {
+    "id": "ranger__mage_secret_thesis",
+    "classId": "ranger",
+    "cardId": "mage_secret_thesis",
+    "scope": "shared"
+  },
+  {
+    "id": "ranger__ranger_measured_breath",
+    "classId": "ranger",
+    "cardId": "ranger_measured_breath",
+    "scope": "shared"
+  },
+  {
+    "id": "ranger__mage_woven_incantation",
+    "classId": "ranger",
+    "cardId": "mage_woven_incantation",
+    "scope": "shared"
+  },
+  {
+    "id": "ranger__ranger_tracking_rhythm",
+    "classId": "ranger",
+    "cardId": "ranger_tracking_rhythm",
+    "scope": "shared"
+  },
+  {
+    "id": "ranger__mage_alchemist_s_patience",
+    "classId": "ranger",
+    "cardId": "mage_alchemist_s_patience",
+    "scope": "shared"
+  },
+  {
+    "id": "ranger__knight_merciless",
+    "classId": "ranger",
+    "cardId": "knight_merciless",
+    "scope": "shared"
+  },
+  {
+    "id": "ranger__meditate",
+    "classId": "ranger",
+    "cardId": "meditate",
+    "scope": "shared"
+  },
+  {
+    "id": "ranger__knight_guardian_angel",
+    "classId": "ranger",
+    "cardId": "knight_guardian_angel",
+    "scope": "shared"
+  },
+  {
+    "id": "ranger__mage_mirror_manuscript",
+    "classId": "ranger",
+    "cardId": "mage_mirror_manuscript",
+    "scope": "shared"
+  },
+  {
+    "id": "ranger__mage_comet_calendar",
+    "classId": "ranger",
+    "cardId": "mage_comet_calendar",
+    "scope": "shared"
+  },
+  {
+    "id": "ranger__ranger_master_plan",
+    "classId": "ranger",
+    "cardId": "ranger_master_plan",
+    "scope": "shared"
+  },
+  {
+    "id": "ranger__ranger_perfect_timing",
+    "classId": "ranger",
+    "cardId": "ranger_perfect_timing",
+    "scope": "shared"
+  },
+  {
+    "id": "ranger__ranger_strike",
+    "classId": "ranger",
+    "cardId": "ranger_strike",
+    "scope": "unique"
+  },
+  {
+    "id": "ranger__ranger_guard",
+    "classId": "ranger",
+    "cardId": "ranger_guard",
+    "scope": "unique"
+  },
+  {
+    "id": "ranger__aim",
+    "classId": "ranger",
+    "cardId": "aim",
+    "scope": "unique"
+  },
+  {
+    "id": "ranger__double",
+    "classId": "ranger",
+    "cardId": "double",
+    "scope": "unique"
+  },
+  {
+    "id": "ranger__volley",
+    "classId": "ranger",
+    "cardId": "volley",
+    "scope": "unique"
+  },
+  {
+    "id": "ranger__retreat",
+    "classId": "ranger",
+    "cardId": "retreat",
+    "scope": "unique"
+  },
+  {
+    "id": "ranger__ranger_barbed_arrow",
+    "classId": "ranger",
+    "cardId": "ranger_barbed_arrow",
+    "scope": "unique"
+  },
+  {
+    "id": "ranger__ranger_scattershot",
+    "classId": "ranger",
+    "cardId": "ranger_scattershot",
+    "scope": "unique"
+  },
+  {
+    "id": "ranger__ranger_hidden_knife",
+    "classId": "ranger",
+    "cardId": "ranger_hidden_knife",
+    "scope": "unique"
+  },
+  {
+    "id": "ranger__ranger_snap_shot",
+    "classId": "ranger",
+    "cardId": "ranger_snap_shot",
+    "scope": "unique"
+  },
+  {
+    "id": "ranger__ranger_poison_tip",
+    "classId": "ranger",
+    "cardId": "ranger_poison_tip",
+    "scope": "unique"
+  },
+  {
+    "id": "ranger__ranger_watch_the_wind",
+    "classId": "ranger",
+    "cardId": "ranger_watch_the_wind",
+    "scope": "unique"
+  },
+  {
+    "id": "ranger__ranger_loose_fletching",
+    "classId": "ranger",
+    "cardId": "ranger_loose_fletching",
+    "scope": "unique"
+  },
+  {
+    "id": "ranger__ranger_pocket_wind",
+    "classId": "ranger",
+    "cardId": "ranger_pocket_wind",
+    "scope": "unique"
+  },
+  {
+    "id": "ranger__ranger_sort_quiver",
+    "classId": "ranger",
+    "cardId": "ranger_sort_quiver",
+    "scope": "unique"
+  },
+  {
+    "id": "ranger__quiver",
+    "classId": "ranger",
+    "cardId": "quiver",
+    "scope": "unique"
+  },
+  {
+    "id": "ranger__mark",
+    "classId": "ranger",
+    "cardId": "mark",
+    "scope": "unique"
+  },
+  {
+    "id": "ranger__ranger_ambush",
+    "classId": "ranger",
+    "cardId": "ranger_ambush",
+    "scope": "unique"
+  },
+  {
+    "id": "ranger__ranger_rapid_fire",
+    "classId": "ranger",
+    "cardId": "ranger_rapid_fire",
+    "scope": "unique"
+  },
+  {
+    "id": "ranger__ranger_razor_fletching",
+    "classId": "ranger",
+    "cardId": "ranger_razor_fletching",
+    "scope": "unique"
+  },
+  {
+    "id": "ranger__ranger_finishing_flurry",
+    "classId": "ranger",
+    "cardId": "ranger_finishing_flurry",
+    "scope": "unique"
+  },
+  {
+    "id": "ranger__ranger_hooked_arrow",
+    "classId": "ranger",
+    "cardId": "ranger_hooked_arrow",
+    "scope": "unique"
+  },
+  {
+    "id": "ranger__ranger_ricochet",
+    "classId": "ranger",
+    "cardId": "ranger_ricochet",
+    "scope": "unique"
+  },
+  {
+    "id": "ranger__ranger_reposition",
+    "classId": "ranger",
+    "cardId": "ranger_reposition",
+    "scope": "unique"
+  },
+  {
+    "id": "ranger__ranger_double_dose",
+    "classId": "ranger",
+    "cardId": "ranger_double_dose",
+    "scope": "unique"
+  },
+  {
+    "id": "ranger__ranger_escape_route",
+    "classId": "ranger",
+    "cardId": "ranger_escape_route",
+    "scope": "unique"
+  },
+  {
+    "id": "ranger__ranger_patient_hunter",
+    "classId": "ranger",
+    "cardId": "ranger_patient_hunter",
+    "scope": "unique"
+  },
+  {
+    "id": "ranger__ranger_cruel_precision",
+    "classId": "ranger",
+    "cardId": "ranger_cruel_precision",
+    "scope": "unique"
+  },
+  {
+    "id": "ranger__ranger_light_pack",
+    "classId": "ranger",
+    "cardId": "ranger_light_pack",
+    "scope": "unique"
+  },
+  {
+    "id": "ranger__ranger_tailwind",
+    "classId": "ranger",
+    "cardId": "ranger_tailwind",
+    "scope": "unique"
+  },
+  {
+    "id": "ranger__ranger_spring_nock",
+    "classId": "ranger",
+    "cardId": "ranger_spring_nock",
+    "scope": "unique"
+  },
+  {
+    "id": "ranger__ranger_venom_reserve",
+    "classId": "ranger",
+    "cardId": "ranger_venom_reserve",
+    "scope": "unique"
+  },
+  {
+    "id": "ranger__ranger_perch_discipline",
+    "classId": "ranger",
+    "cardId": "ranger_perch_discipline",
+    "scope": "unique"
+  },
+  {
+    "id": "ranger__ranger_pursuit_volley",
+    "classId": "ranger",
+    "cardId": "ranger_pursuit_volley",
+    "scope": "unique"
+  },
+  {
+    "id": "ranger__ranger_owl_watch",
+    "classId": "ranger",
+    "cardId": "ranger_owl_watch",
+    "scope": "unique"
+  },
+  {
+    "id": "ranger__snipe",
+    "classId": "ranger",
+    "cardId": "snipe",
+    "scope": "unique"
+  },
+  {
+    "id": "ranger__ranger_storm_of_arrows",
+    "classId": "ranger",
+    "cardId": "ranger_storm_of_arrows",
+    "scope": "unique"
+  },
+  {
+    "id": "ranger__ranger_assassinate",
+    "classId": "ranger",
+    "cardId": "ranger_assassinate",
+    "scope": "unique"
+  },
+  {
+    "id": "ranger__ranger_black_arrow",
+    "classId": "ranger",
+    "cardId": "ranger_black_arrow",
+    "scope": "unique"
+  },
+  {
+    "id": "ranger__ranger_poisoned_arsenal",
+    "classId": "ranger",
+    "cardId": "ranger_poisoned_arsenal",
+    "scope": "unique"
+  },
+  {
+    "id": "ranger__ranger_falcon_courier",
+    "classId": "ranger",
+    "cardId": "ranger_falcon_courier",
+    "scope": "unique"
+  },
+  {
+    "id": "ranger__ranger_venom_eclipse",
+    "classId": "ranger",
+    "cardId": "ranger_venom_eclipse",
+    "scope": "unique"
+  },
+  {
+    "id": "ranger__ranger_long_vigil",
+    "classId": "ranger",
+    "cardId": "ranger_long_vigil",
+    "scope": "unique"
+  },
+  {
+    "id": "ranger__ranger_arrow_cascade",
+    "classId": "ranger",
+    "cardId": "ranger_arrow_cascade",
+    "scope": "unique"
+  },
+  {
+    "id": "ranger__ranger_forest_oracle",
+    "classId": "ranger",
+    "cardId": "ranger_forest_oracle",
+    "scope": "unique"
+  }
+]

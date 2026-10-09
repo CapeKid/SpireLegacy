@@ -29,7 +29,7 @@ public final class ExpansionChecks {
                 check(AbstractDungeon.uncommonCardPool.size()==target.i("uncommon"),"Uncommon class pool");
                 check(AbstractDungeon.rareCardPool.size()==target.i("rare"),"Rare class pool");
                 int count=0;
-                for(Data.Row row:Data.rows("cards"))if(row.s("classId").equals(heir.classId)){
+                for(Data.Row row:Data.rows("cards"))if(CardPools.contains(heir.classId,row.s("id"))){
                     count++;HeirCard card=new HeirCard(row.s("id"));HeirCard copy=(HeirCard)card.makeCopy();
                     check(CardLibrary.cards.containsKey(card.cardID),"Card is missing from the native library: "+card.cardID);
                     if(!row.s("rarity").equals("BASIC")){
@@ -49,7 +49,27 @@ public final class ExpansionChecks {
                         if(row.i("poison")>0&&!row.b("aoe"))check(card.target==AbstractCard.CardTarget.ENEMY,"Poison Skill needs an enemy target");
                     }
                 }
-                check(count==target.i("total")&&count>originalTotal,"Expanded class pool is incomplete");
+                check(count==target.i("total")&&count==originalTotal,"Class pool must match the regular character");
+                int shared=0,unique=0;
+                for(Data.Row membership:Data.rows("card_pools"))if(membership.s("classId").equals(heir.classId)){
+                    if(membership.s("scope").equals("shared"))shared++;else unique++;
+                }
+                check(shared==30&&unique==45,"Shared plus unique must equal 75");
+                for(CardGroup group:Arrays.asList(AbstractDungeon.commonCardPool,AbstractDungeon.uncommonCardPool,AbstractDungeon.rareCardPool)){
+                    Set<String> ids=new HashSet<>();
+                    for(AbstractCard candidate:group.group){
+                        check(candidate instanceof HeirCard&&CardPools.contains(heir.classId,((HeirCard)candidate).key),"Foreign/legacy card entered a class pool");
+                        check(ids.add(candidate.cardID),"Duplicate pool entry");
+                    }
+                }
+                ClassPower passive=new ClassPower(heir.classId);
+                HeirCard sharedSkill=new HeirCard("study"),sharedAttack=new HeirCard("knight_long_reach");
+                passive.onUseCard(sharedSkill,new com.megacrit.cardcrawl.actions.utility.UseCardAction(sharedSkill));
+                if(heir.classId.equals("knight"))check(passive.atDamageGive(10,DamageInfo.DamageType.NORMAL)==14,"Shared Skill primes Knight counter");
+                if(heir.classId.equals("mage"))check(passive.amount==1&&passive.atDamageGive(10,DamageInfo.DamageType.NORMAL)==12,"Shared Skill grants Mage charge");
+                passive.onUseCard(sharedAttack,new com.megacrit.cardcrawl.actions.utility.UseCardAction(sharedAttack));
+                check(passive.amount==(heir.classId.equals("ranger")?1:0),"Shared Attack uses the selected heir's passive");
+                check(sharedSkill.getCustomTooltips().get(0).title.equals("Family card"),"Shared tooltip identifies family membership");
             }
             HeirCard training=new HeirCard("knight_veteran_training");training.upgrade();check(training.cost==0&&training.magicNumber==1,"Draw-power upgrade keeps recurring HP cost");
             HeirCard wall=new HeirCard("knight_living_fortress");wall.upgrade();check(wall.cost==2,"Fortress upgrade reduces its cost");
@@ -87,7 +107,7 @@ public final class ExpansionChecks {
             HeirCard costly=new HeirCard("knight_blood_price");costly.upgrade();AbstractDungeon.actionManager.actions.clear();costly.use(AbstractDungeon.player,enemy);
             boolean stableHpCost=false;for(AbstractGameAction action:AbstractDungeon.actionManager.actions)if(action instanceof com.megacrit.cardcrawl.actions.common.LoseHPAction)stableHpCost=action.amount==3;
             check(stableHpCost,"Upgrading Blood Price must not increase HP cost");
-            Files.write(HeirMod.root.resolve("expansion-checks.json"),("{\"combatAssertions\":"+checks+",\"cardsExercised\":"+Data.rows("cards").size()+",\"regularHeroCards\":"+originalTotal+"}").getBytes(StandardCharsets.UTF_8));
+            Files.write(HeirMod.root.resolve("expansion-checks.json"),("{\"combatAssertions\":"+checks+",\"classCardCases\":225,\"activeCards\":165,\"sharedCards\":30,\"regularHeroCards\":"+originalTotal+"}").getBytes(StandardCharsets.UTF_8));
         }finally{
             heir.classId=cls;heir.traits.clear();heir.traits.addAll(traits);AbstractDungeon.player.powers.clear();AbstractDungeon.player.powers.addAll(powers);AbstractDungeon.player.currentBlock=block;enemy.powers.clear();enemy.powers.addAll(enemyPowers);enemy.currentHealth=hp;enemy.maxHealth=max;
             AbstractDungeon.actionManager.actions.clear();AbstractDungeon.actionManager.actions.addAll(actions);com.megacrit.cardcrawl.core.CardCrawlGame.dungeon.initializeCardPools();AbstractDungeon.player.hand.applyPowers();

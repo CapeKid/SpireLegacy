@@ -1,49 +1,36 @@
-# Expanded class libraries
+# Shared family and class libraries
 
-Version 0.3.0 contains **120 cards per class, 360 total**. Each Knight, Mage or Ranger draws exclusively from that class's own **117 reward/shop cards**: 35 common, 56 uncommon and 26 rare, alongside three basics. This is 45 additional cards per class over 0.2.0, a 60% larger individual library. The other classes' cards do not contribute to an heir's ordinary draft choices.
+Version 0.4.0 gives each heir **75 cards: 30 shared family cards plus 45 unique class cards**. This matches the owned Slay the Spire 1 Ironclad library: 3 basic, 20 common, 36 uncommon and 16 rare cards. Each class has 72 reward/shop cards; the basics are unique starters, not draft rewards.
 
-All 225 existing cards remain available with their IDs, starter genetics and save behavior preserved. The 135 additions have individual illustrations, upgrades and authored build roles. [The catalogue](card-catalogue.md) lists all 360 cards. `sheets/card_builds.json` identifies every addition's intended build and role; these are design labels rather than a guarantee of a winning deck.
+There are **165 distinct active cards** across the character, not 225: the same 30 shared IDs appear in all three pools. Shared cards contain 8 commons, 16 uncommons and 6 rares; each class contributes 3 basics, 12 commons, 20 uncommons and 10 rares. [The catalogue](card-catalogue.md) lists exactly what each heir can obtain normally and labels shared versus unique cards.
 
-## Knight choices
+## Shared core
 
-| Strategy | Added enablers/support | Added payoffs | Existing connections |
-| --- | --- | --- | --- |
-| Armor | Buckler Jab, Layered Mail, Cathedral Guard, Guard Rotation | Rampart Rush, Castle Heart, Iron Avalanche | Shield Slam, Battle Rhythm, Living Fortress |
-| Exhaust | Shield Drill, Hot Rivets, Burning Orders, Cast Off, Ancestral Salvage | Forge Sparks, Ashen Advance, Salvage Guard, Phoenix Forge | Burnished Legacy, Forge Memory, Arms Vault |
-| Blood costs | Blood Oath, Grit Teeth, Blood Temper, Painful Lesson, Warrior Feast | Crimson Banner, King's Ransom, Bloodfire Mantle | Forged in Pain, Blood Price, Battlefield Recovery |
-| Multi-hit Strength | Measured Cut, Weapons Master, Focused Defense, Warlord's Command | Redoubled Blow, Siege Volley, Serrated Barrage, Grand Melee | Twin Cut, Sword Dance, Ancestral Fury |
-| Status fuel | Splintered Pike, Heavy Harness, Jagged Charge | Scar Tissue, Furnace Breath, Iron Furnace | Exhausting Wounds also feeds exhaust powers |
-| Delayed defense/tempo | Rationed Assault, Stand Ready, Flanking March, Armor Cache | Ready Arsenal, Siege Tomorrow | Reinforce, Brave Advance |
+Shared cards keep identical rules, upgrades, art and IDs in all classes. The selected class's passive changes how they fit a deck. Study and Spellweave prime Knight counters, generate Mage charges and help Ranger find more Attacks. Long Reach consumes counters/charges or advances Hunter Rhythm. Woven Incantation rewards Skill sequences in every class; Tracking Rhythm rewards Attack sequences in every class.
 
-Patient Riposte adds a retained Attack that grows over successive turns. Status-fuel cards offer larger immediate effects at the cost of Wounds; those become fuel for Evolve, Fire Breathing or exhaust engines.
+| Shared route | Support and payoffs | Class connections |
+| --- | --- | --- |
+| Exhaust | Reforge, Enchanted Ink, Last Stand, Merciless, Burnished Legacy, Secret Thesis, Arms Vault | Knight adds Forge Sparks and Cast Off; Mage adds Ash Reading and Transmutation; Ranger can exhaust utility cards to cycle into repeatable shots. |
+| Retention | Stored Ember, Crystal Seed, Memory Prism, Time Pocket, Measured Breath | Knight adds Patient Riposte; Mage adds Tower Library, Moonstone Lance and Geode Ward; Ranger adds Perch Discipline and Long Vigil. |
+| Sequencing | Study, Cold Read, Long Reach, Battle Meditation, Woven Incantation, Tracking Rhythm | Skills support Knight/Mage passives; Attacks support Ranger rhythm. Either sequence can become a secondary route in any class. |
+| Delayed resources | Brave Advance, Spellweave, Comet Calendar, Perfect Timing | Knight adds Reinforce and Siege Tomorrow; Mage adds Mana Shield; Ranger adds Patient Hunter. |
+| Debuffs | Challenge, Tripwire, Merciless, Alchemist's Patience | Knight gains armor and Strength payoffs; Mage adds Toxic Theory and area spells; Ranger adds poison doubling and marked-target shots. |
+| Flexible bursts | Meditate, Guardian Angel, Mirror Manuscript, Master Plan | Resource, protection and Skill duplication tools support several routes rather than one class-exclusive combo. |
 
-## Mage choices
+Shared cards are identified as **Family card** in their tooltip. They count toward the 75-card total; they are not an additional colorless pool.
 
-| Strategy | Added enablers/support | Added payoffs | Existing connections |
-| --- | --- | --- | --- |
-| Skill sequencing | Warding Verse, Page Turner, Triple Formula, Bookmark Ward, Rune Familiar | Woven Incantation, Arcane Meter, Archmage Thesis, Mirror Manuscript | Arcane Reservoir, Rune Storm, Spell Threads |
-| Delayed turns | Slow Incantation, Ice Cocoon, Tomorrow's Flame, Winter Reserve | Hourglass Array, Delayed Nova, Comet Calendar, Stasis Dome | Spellweave, Time Pocket, Mana Shield |
-| Exhaust spells | Ash Reading, Paper Shield, Fading Star, Spell Pyre, Phoenix Notes, Returned Prophecy | Ashen Chorus, Ashbolt, Book of Embers | Secret Thesis, Rekindle, Rune Scrub |
-| Retained spells | Patient Study, Tower Library, Wax Seal, Eternal Bookmark | Stored Ember, Crystal Seed, Moonstone Lance, Geode Ward, Sun in a Bottle | Rune Detonation, Memory Prism |
-| Poison/debuffs | Corrosive Ink, Chilling Words, Hex Rain, Viper Script | Alchemist's Patience, Plague Constellation | Toxic Theory, Venom Rune, Toxic Cloud |
-| Charge-powered hits | Scripted Spark, Rune Scatter, Conduit Lance, Grand Incantation | Charge multipliers apply across repeated hits | Kindle, Overcharge, Arcane Reservoir |
+## Class identity
 
-Third-Skill engines grant Block now or Energy next turn. Retained spells reward waiting, and Establishment reduces their combat cost. These encourage different timing from immediately spending charges on an Attack, while also allowing mixed decks.
+| Class | Unique routes | Examples |
+| --- | --- | --- |
+| Knight | Block into damage, blood costs, Strength multi-hit, Wound fuel and exhaust | Shield Slam, Battle Rhythm, Living Fortress; Blood Price and Forged in Pain; Sword Dance and Grand Melee; Splintered Pike, Scar Tissue and Furnace Breath; Forge Sparks and Phoenix Forge. |
+| Mage | Charge spending, Skill chains, retained spells, spell exhaust and debuff magic | Kindle, Overcharge and Arcane Reservoir; Arcane Meter; Tower Library and Sun in a Bottle; Rewrite and Transmutation; Toxic Theory and Venom Rune. |
+| Ranger | Attack chains, manual discard, poison, retained shots and Scry | Finishing Flurry and Arrow Cascade; Sort Quiver, Loose Fletching, Pocket Wind, Light Pack and Tailwind; Double Dose and Poisoned Arsenal; Long Vigil and Perch Discipline; Watch the Wind, Owl Watch and Forest Oracle. |
 
-## Ranger choices
+Mage-only charge effects and the class-specific Hunter Rhythm upgrade remain unique. Shared engines work without either passive. Multiple routes overlap: retaining an Attack can support Strength or attack chains; exhaust can improve cycling while fueling Block/damage; debuffs enable both direct hits and poison.
 
-| Strategy | Added enablers/support | Added payoffs | Existing connections |
-| --- | --- | --- | --- |
-| Discard | Sort Quiver, Quick Exchange, Trail Reset, Briar Retreat, Quiver Repack, Scatter Supplies | Loose Fletching, Pocket Wind, Shed Cloak, Light Pack, Tailwind, Spring Nock, Spare Provisions, Empty Quiver, Ghost Luggage, Falcon Courier | Trail Sense, Reposition, Ranger Kit |
-| Poison | Hissing Arrow, Toxic Snare, Silent Mixture, Mire Volley, Spreading Blight | Serpent Trail, Venom Reserve, Venom Eclipse, King Cobra | Poisoned Arsenal, Double Dose, marked-target Attacks |
-| Retained shots/defense | Perch Discipline, Conserve Arrows | Held Shot, Hidden Buckler, Eagle Focus, Camouflage Nest, Long Vigil, Ancient Canopy | Measured Breath, Camouflage, Deep Cover |
-| Attack chains | Pine Needle, Running Shot, Thread the Needle | Pursuit Volley, Tracking Rhythm, Arrow Cascade, Hunt Without End | Hunter Rhythm, Finishing Flurry, Endless Quiver |
-| Scry planning | Trail Sign, Marked Path, Owl Watch, Chosen Trail | Forest Oracle grants Block each time Scry triggers | Watch the Wind, Scouting |
+## Save compatibility and verification
 
-Discard payoffs trigger when a card is actually discarded during your turn. Ordinary end-turn discarding grants nothing. Tailwind pays once per turn; Light Pack pays per card. Tracking Rhythm's Vigor applies after the third Attack resolves, rewarding a fourth Attack. Forest Oracle connects deck filtering to defense.
+All 360 previously released IDs, effects and illustrations remain registered so existing decks and saves can load. The 195 cards outside the curated active set have a legacy tooltip and are excluded from current normal class reward/shop pools. Historical authoring class is retained in cards.json; card_pools.json is the authoritative draft membership table. Effects that deliberately access other colors, such as Prismatic Shard, retain native behavior.
 
-## Integration and limits
-
-Rewards, shops, transformations, upgrades and relic modifiers use native Slay the Spire behavior. Question Card chooses from 26 distinct class rares. The old small-pool reward replacement remains removed. Every addition belongs to one specific class.
-
-Preflight checks exact class/rarity counts, shop coverage, complete references, distinct within-class rules, added build roles, and unique verified illustrations. Native scenarios test discard, exhaust, retention/cost reduction, Skill and Attack sequencing, Scry and Wound interactions. Bigger pools make individual cards harder to find; common/uncommon support and existing-card connections give strategies multiple routes. Full-run balance and win-rate comparisons still require playtesting.
+Preflight checks exact totals/rarities, identical shared membership, disjoint unique memberships, class-compatible shared mechanics, distinct rules within each pool, shop type coverage and verified art. Native checks cover selected-class pool membership, shared card copies/upgrades and passive behavior, rewards with Question Card/Crown/Shard, and merchants. The small-pool reward replacement remains removed; the native game has 16 rares per class to choose from. Full-run balance and physical Deck verification of this pool revision remain pending.
