@@ -9,6 +9,33 @@ import UnityPy
 from PIL import Image
 
 DECK_RL2 = '/home/deck/.local/share/Steam/steamapps/common/Rogue Legacy 2'
+READER_BUILD = '0.1.7'
+
+def content_directory(root):
+    """Unity names its data folder after the platform's executable."""
+    standard = root / 'Rogue Legacy 2_Data'
+    if (standard / 'resources.assets').is_file(): return standard
+    matches = sorted(p for p in root.glob('*_Data') if (p / 'resources.assets').is_file())
+    if len(matches) == 1: return matches[0]
+    if len(matches) > 1:
+        raise RuntimeError('Multiple Unity content folders found in ' + str(root) + '. Keep one Rogue Legacy 2 installation in this folder.')
+    return None
+
+def installed_content(root):
+    print('Checking RL2 installation:', root, flush=True)
+    try:
+        data = content_directory(root)
+        if data:
+            print('Found Unity content:', data, flush=True)
+            return True
+        if root.is_dir():
+            names = sorted(p.name for p in root.iterdir())
+            print('Folder exists, but resources.assets was not found in a *_Data folder. Entries:', ', '.join(names[:30]), flush=True)
+        else:
+            print('Installation folder is missing or not visible to this reader.', flush=True)
+    except OSError as exc:
+        print('Cannot access installation:', exc, flush=True)
+    return False
 
 def deck_install_candidates():
     # Wine/Proton exposes the host filesystem through Z:, while Path.home()
@@ -20,7 +47,7 @@ def deck_install_candidates():
 def find_game(explicit=None):
     if explicit:
         root=Path(explicit)
-        if (root/'Rogue Legacy 2_Data/resources.assets').is_file(): return root
+        if installed_content(root): return root
         raise RuntimeError('The supplied Rogue Legacy 2 folder is not a valid installation.')
     steam_roots=[]
     try:
@@ -41,11 +68,11 @@ def find_game(explicit=None):
             match=re.search(r'"installdir"\s*"([^"]+)"',manifest.read_text())
             if match:
                 root=lib/'steamapps/common'/match.group(1)
-                if (root/'Rogue Legacy 2_Data/resources.assets').is_file(): return root
+                if installed_content(root): return root
     # A valid installed content folder is sufficient; no first game launch or
     # readable Steam manifest is needed for this Deck fallback.
     for root in deck_install_candidates():
-        if (root/'Rogue Legacy 2_Data/resources.assets').is_file(): return root
+        if installed_content(root): return root
     raise RuntimeError('Rogue Legacy 2 is required. Install your own Steam copy, then press Play again. No game content is included with this mod.')
 
 def host_assets(host,cache,sheet):
@@ -73,11 +100,14 @@ def host_assets(host,cache,sheet):
             canvas.save(cache/row['output'])
 
 def run(game,sheet,cache,host=None):
+    print('Spire Legacy content reader', READER_BUILD, '| OS:', sys.platform, '| home:', Path.home(), flush=True)
+    if game: print('Explicit RL2 override:', game, flush=True)
     root=find_game(game); cache=Path(cache); cache.mkdir(parents=True,exist_ok=True)
+    content=content_directory(root)
     host_assets(host,cache,sheet)
     rows=json.loads(Path(sheet).read_text())
     required=[cache/r['output'] for r in rows]+[cache/'button.png',cache/'portrait.png',cache/'hero.png']
-    source=root/'Rogue Legacy 2_Data/resources.assets'
+    source=content/'resources.assets'
     fingerprint='sprite-layout-v2:'+hashlib.sha256(source.read_bytes()).hexdigest()
     fingerprint+=hashlib.sha256(source.with_suffix('.assets.resS').read_bytes()).hexdigest()
     fingerprint+=hashlib.sha256(Path(sheet).read_bytes()).hexdigest()
@@ -88,7 +118,7 @@ def run(game,sheet,cache,host=None):
             print('Rogue Legacy 2 content cache verified:',root); return
     wanted={r['sourceName']:r for r in rows}; images={}
     for file in {r['sourceFile'] for r in rows}:
-        env=UnityPy.load(str(root/'Rogue Legacy 2_Data'/file))
+        env=UnityPy.load(str(content/file))
         for obj in env.objects:
             if obj.type.name=='Sprite':
                 sprite=obj.read()

@@ -25,6 +25,10 @@ public final class BootstrapChecks {
             Files.delete(data.resolve("cache/Icons_Classes_BowClass.png"));check(!ContentBootstrap.complete(data),"Missing sprite invalidates completeness");ContentBootstrap.prepare(data);check(ContentBootstrap.complete(data),"Reader repairs missing sprite");
             check(!Files.exists(data.resolve("family.json")),"Preparation preserves family state");
         }
+        String log=new String(Files.readAllBytes(data.resolve("content-preparation.log")),java.nio.charset.StandardCharsets.UTF_8);
+        check(log.contains("Spire Legacy bootstrap | OS:"),"Bootstrap records its actual platform");
+        check(log.contains("Spire Legacy content reader"),"Bootstrap retains reader diagnostics");
+        check(log.contains("Checking RL2 installation:"),"Reader records the installation it checked");
         System.out.println("Passed "+checks+" packaged bootstrap checks.");
     }
 }

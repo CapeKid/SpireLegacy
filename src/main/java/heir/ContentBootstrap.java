@@ -4,6 +4,7 @@ import com.evacipated.cardcrawl.modthespire.Loader;
 import com.evacipated.cardcrawl.modthespire.ModInfo;
 import java.nio.file.*;
 import java.nio.channels.*;
+import java.nio.charset.StandardCharsets;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
 
@@ -53,13 +54,14 @@ public final class ContentBootstrap {
             Files.createDirectories(data);
             try(FileChannel channel=FileChannel.open(data.resolve("content-preparation.lock"),StandardOpenOption.CREATE,StandardOpenOption.WRITE);FileLock lock=channel.lock()){
                 List<String> args=command(runtime,host,data,System.getProperty("os.name"),System.getenv());
-                ProcessBuilder builder=new ProcessBuilder(args).directory(runtime.toFile()).redirectErrorStream(true).redirectOutput(log.toFile());
+                Files.write(log,Arrays.asList("Spire Legacy bootstrap | OS: "+System.getProperty("os.name"),"Content runtime: "+runtime,"Reader command: "+args),StandardCharsets.UTF_8);
+                ProcessBuilder builder=new ProcessBuilder(args).directory(runtime.toFile()).redirectErrorStream(true).redirectOutput(ProcessBuilder.Redirect.appendTo(log.toFile()));
                 builder.environment().put("PYTHONPATH",runtime.resolve("ReaderLinux/site").toString());
                 System.out.println("HEIR: preparing installed Rogue Legacy 2 content; log: "+log);
                 Process child=builder.start();
                 try{
                     if(!child.waitFor(180,TimeUnit.SECONDS)){child.destroyForcibly();throw new IllegalStateException("Content preparation took too long. Check "+log+" and try again.");}
-                    if(child.exitValue()!=0)throw new IllegalStateException("Content preparation failed. Install Rogue Legacy 2 through Steam and check "+log+" for details.");
+                    if(child.exitValue()!=0)throw new IllegalStateException("Content preparation failed. Check "+log+" for the reader version, detected paths and file-access details.");
                 }catch(InterruptedException interrupted){child.destroyForcibly();Thread.currentThread().interrupt();throw interrupted;}
                 if(!complete(data))throw new IllegalStateException("Content preparation did not produce all required images. Check "+log+" and reinstall the complete mod package.");
             }

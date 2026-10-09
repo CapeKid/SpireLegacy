@@ -15,7 +15,9 @@ The family save/cache location is unchanged: `%LOCALAPPDATA%/HeirOfTheSpire` on 
 
 ## Prepare and upload
 
-Version 0.1.6 also checks `/home/deck/.local/share/Steam/steamapps/common/Rogue Legacy 2` directly when Steam manifest discovery fails. It checks the equivalent `Z:` host-filesystem path when the reader runs under Proton. The folder must contain `Rogue Legacy 2_Data/resources.assets`; launching RL2 once is not required. Explicit `HEIR_RL2_DIR` overrides still take precedence. Native Linux remains the recommended Deck runtime; this discovery fix does not certify full Proton gameplay.
+Version 0.1.6 also checks `/home/deck/.local/share/Steam/steamapps/common/Rogue Legacy 2` directly when Steam manifest discovery fails. It checks the equivalent `Z:` host-filesystem path when the reader runs under Proton. Version 0.1.7 accepts a differently named Unity `*_Data` folder when exactly one contains `resources.assets`. Launching RL2 once is not required. Explicit `HEIR_RL2_DIR` overrides still take precedence. Native Linux remains the recommended Deck runtime; these discovery fixes do not certify full Proton gameplay.
+
+For a Deck failure, use the log path shown in that launch's error. Native Linux writes `~/.local/share/HeirOfTheSpire/content-preparation.log` by default; Proton writes inside its Windows prefix. They are separate files. Version 0.1.7 logs the actual bootstrap OS, reader version, checked installation paths and whether the folder is missing, inaccessible or lacks the required Unity content. A log without the reader-version line may belong to an older attempt.
 
 1. Run `scripts/build.ps1`, then `scripts/package.py` and `scripts/package_linux.py` using the development Python environment.
 2. Run `scripts/package_workshop.py`. This creates `build/workshop` and a distributable `dist/SpireLegacy-<version>-workshop.zip`. The workspace uses the official StS1 uploader's schema. `config.json` defaults to **private**; the script retains a previously assigned `steamPublishedID`.

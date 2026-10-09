@@ -1,5 +1,6 @@
 """Check discovery precedence and manifest-free Deck installations."""
-import tempfile, unittest
+import tempfile, unittest, io
+from contextlib import redirect_stdout
 from pathlib import Path
 from unittest.mock import patch
 import load_rl
@@ -47,6 +48,29 @@ class Discovery(unittest.TestCase):
         (self.deck / 'Rogue Legacy 2_Data/resources.assets').unlink()
         with self.assertRaisesRegex(RuntimeError, 'Rogue Legacy 2 is required'):
             load_rl.find_game()
+
+    def test_platform_specific_data_folder(self):
+        source = self.deck / 'Rogue Legacy 2_Data'
+        renamed = self.deck / 'Rogue Legacy 2 Linux_Data'
+        source.rename(renamed)
+        self.assertEqual(load_rl.find_game(), self.deck)
+        self.assertEqual(load_rl.content_directory(self.deck), renamed)
+
+    def test_ambiguous_content_is_rejected(self):
+        original = self.deck / 'Rogue Legacy 2_Data'
+        original.rename(self.deck / 'First_Data')
+        extra = self.deck / 'Second_Data'; extra.mkdir()
+        (extra / 'resources.assets').touch()
+        with self.assertRaisesRegex(RuntimeError, 'Multiple Unity content folders'):
+            load_rl.find_game()
+
+    def test_missing_content_diagnostic(self):
+        (self.deck / 'Rogue Legacy 2_Data/resources.assets').unlink()
+        output = io.StringIO()
+        with redirect_stdout(output):
+            with self.assertRaises(RuntimeError): load_rl.find_game()
+        self.assertIn(str(self.deck), output.getvalue())
+        self.assertIn('Folder exists', output.getvalue())
 
 class DeckPaths(unittest.TestCase):
     def test_native_path(self):
