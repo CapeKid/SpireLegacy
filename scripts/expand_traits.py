@@ -4,6 +4,7 @@ Names and enum identifiers are factual references; descriptions below are origin
 The private audit and extracted game text are never packaged.
 """
 import json
+import re
 from pathlib import Path
 ROOT=Path(__file__).resolve().parents[1]
 catalog=json.loads((ROOT/'private/trait-catalog.json').read_text())
@@ -75,12 +76,17 @@ for c in catalog:
     enabled=c['rarity'] in (1,2,3)
     key=legacy.get(c['source'],c['source'].lower())
     included=enabled or c['source'] in legacy
-    coverage.append(dict(id=c['source'].lower(),source=c['source'],name=c['name'],sourceRarity=c['rarity'],status='adapted' if included else 'disabled_in_source',traitId=key if included else 'none'))
+    # Unity rich text and runtime relic-name slots are not trait labels in StS.
+    display_name=re.sub(r'<[^>]+>', '', c['name'])
+    display_name=re.sub(r'\s*[-–—:]?\s*\{\d+\}', '', display_name).strip()
+    coverage.append(dict(id=c['source'].lower(),source=c['source'],name=display_name,sourceRarity=c['rarity'],status='adapted' if included else 'disabled_in_source',traitId=key if included else 'none'))
     if not included:continue
     base=next((dict(r) for r in old if r['id']==key),dict(id=key,name=c['name'],asset='none',hp=0,strength=0,dexterity=0,draw=0,goldBonus=round(c['gold']*100),scale=1.0,summary='none',heal=0))
     base.update(source=c['source'],enabled=enabled,effect='none',amount=0,excludes=[next(x['source'].lower() for x in catalog if x['number']==n) for n in c['excludes']])
     base['excludes']=[legacy.get(next(x['source'] for x in catalog if x['source'].lower()==n),n) for n in base['excludes']]
     if c['source'] in design:base.update(design[c['source']])
+    base['name']=re.sub(r'<[^>]+>', '', base['name'])
+    base['name']=re.sub(r'\s*[-–—:]?\s*\{\d+\}', '', base['name']).strip()
     if c['source']=='SmallHitbox':base['name']='Only Heart'
     if c['source']=='DamageBoost':base['name']='Combative'
     if c['source']=='MagicBoost':base['name']='Bookish'

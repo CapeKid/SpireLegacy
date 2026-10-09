@@ -674,7 +674,7 @@
   {
     "id": "antique",
     "source": "Antique",
-    "name": "<color=purple>Antique</color> - {0}",
+    "name": "Antique",
     "sourceRarity": 1,
     "status": "adapted",
     "traitId": "antique"

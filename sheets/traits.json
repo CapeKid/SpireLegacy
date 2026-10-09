@@ -1163,7 +1163,7 @@
   },
   {
     "id": "antique",
-    "name": "<color=purple>Antique</color> - {0}",
+    "name": "Antique",
     "asset": "Icons_Traits_FreeRelic",
     "hp": 0,
     "strength": 0,

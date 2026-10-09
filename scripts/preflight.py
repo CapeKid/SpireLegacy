@@ -1,5 +1,6 @@
 import json
 import hashlib
+import re
 from PIL import Image
 from pathlib import Path
 ROOT=Path(__file__).resolve().parents[1]
@@ -25,12 +26,14 @@ def validate():
     traits={r['id'] for r in sheets['traits']}
     effects={'none','gray','skill_block','nature','poison','skill_draw','fragile','pacifist','turn_block','first_attack_block','weak','enemy_guard','costly','gold','shop','histrionic','sepia','enemy_strength','hurt_weak','rainbow','vegan','diva','algesia','energy','no_heal','coin_loss','hurt_energy','super_heal','relics','thorns','blue','perfectionist','shock','chest','explosions','medium','festive','kit','piercing','exhausted'}
     for row in sheets['traits']:
+        if re.search(r'<[^>]+>|\{\d+\}',row['name']):errors.append('Unresolved trait name formatting '+row['id'])
         ref('traits',row,'asset',assets)
         if row['effect'] not in effects:errors.append('Unimplemented trait effect '+row['id'])
         for excluded in row['excludes']:
             # Source incompatibilities can reference a disabled historical entry.
             if excluded not in traits and excluded not in {r['id'] for r in sheets['trait_coverage']}:errors.append('Unknown exclusion '+excluded)
     for row in sheets.get('trait_coverage',[]):
+        if re.search(r'<[^>]+>|\{\d+\}',row['name']):errors.append('Unresolved coverage name formatting '+row['id'])
         if row['status']=='adapted':ref('trait_coverage',row,'traitId',traits)
         elif row['sourceRarity'] in (1,2,3):errors.append('Eligible source trait missing '+row['source'])
     for row in sheets['cards']:
