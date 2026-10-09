@@ -20,3 +20,7 @@ Combat checks cover Block-based and conditional damage, stable HP costs on upgra
 All artwork was generated individually using built-in imagegen with the existing class artwork as style references. Full originals are saved under art/originals; prompts, exported paths and SHA-256 hashes are in sheets/card_art.json. Labeled reviews: [Knight](../media/card-art-knight.png), [Mage](../media/card-art-mage.png), [Ranger](../media/card-art-ranger.png).
 
 These checks verify implementation and integration. Full three-act balance playtesting and a fresh physical Deck playthrough of 0.2.0 remain outstanding. The creator already verified the earlier startup/controls update on Deck with both Steam Linux Runtime and Proton.
+
+## Workshop delivery
+
+The official uploader updated private item 3816067184. Steam downloaded the same release JAR (SHA-256 D446392B864A2F0CCD5E818E8E66C3344037B1A96C1A31B2BE928F8FA8084C67). A subscribed-only Windows launch with an empty local mods folder and fresh isolated data prepared all 66 owned sprites, registered all 225 cards, reached combat and generated four distinct Ranger boss rares with Question Card.
