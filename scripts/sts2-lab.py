@@ -7,9 +7,14 @@ import argparse, json, os, pathlib, shutil
 repo = pathlib.Path(__file__).resolve().parents[1]
 parser=argparse.ArgumentParser(description=__doc__)
 parser.add_argument('--configuration',choices=['Debug','Release'],default='Debug')
-configuration=parser.parse_args().configuration
+parser.add_argument('--lab-directory',default='private/sts2-lab')
+parser.add_argument('--user-directory',default='SpireLegacy2PortLab')
+args=parser.parse_args()
+configuration=args.configuration
 game = pathlib.Path(os.environ.get('STS2_DIR', r'C:\Program Files (x86)\Steam\steamapps\common\Slay the Spire 2'))
-lab = repo / 'private/sts2-lab'
+lab = (repo / args.lab_directory).resolve()
+if not lab.is_relative_to((repo / 'private').resolve()): raise SystemExit('Lab must stay inside the private workspace.')
+if not args.user_directory.startswith('SpireLegacy2PortLab') or any(c in args.user_directory for c in '/\\'): raise SystemExit('Use a dedicated SpireLegacy2PortLab user directory.')
 lab.mkdir(parents=True, exist_ok=True)
 for source in game.iterdir():
     if source.name in ('mods', 'mods_STEAMTEST', 'steam_appid.txt', 'override.cfg'): continue
@@ -22,7 +27,7 @@ for source in game.iterdir():
                 if not (dest / name).exists(): os.link(pathlib.Path(root) / name, dest / name)
     elif not target.exists(): os.link(source, target)
 (lab / 'steam_appid.txt').write_text('2868840', encoding='utf-8')
-(lab / 'override.cfg').write_text('[application]\nconfig/use_custom_user_dir=true\nconfig/custom_user_dir_name="SpireLegacy2PortLab"\n[display]\nwindow/size/mode=0\n', encoding='utf-8')
+(lab / 'override.cfg').write_text(f'[application]\nconfig/use_custom_user_dir=true\nconfig/custom_user_dir_name="{args.user_directory}"\n[display]\nwindow/size/mode=0\n', encoding='utf-8')
 mod = lab / 'mods/SpireLegacy'
 mod.mkdir(parents=True, exist_ok=True)
 shutil.copy2(repo / f'sts2/bin/{configuration}/net9.0/SpireLegacy.dll', mod)
@@ -50,7 +55,9 @@ for path in workshop.rglob('*.json'):
     except (ValueError, OSError): pass
 settings = dict(schema_version=5,fullscreen=False,window_size=dict(x=1280,y=800),language='eng',mod_settings=dict(mods_enabled=True,mod_list=disabled + [dict(id='BaseLib',source=1,is_enabled=True),dict(id='SpireLegacy',source=1,is_enabled=True)]))
 # Only the unique lab account receives settings; the normal StS2 profile is untouched.
-userdata = pathlib.Path(os.environ['APPDATA']) / 'SpireLegacy2PortLab/steam/76561197992561100'
-userdata.mkdir(parents=True, exist_ok=True)
-(userdata / 'settings.save').write_text(json.dumps(settings), encoding='utf-8')
+userdata_root = pathlib.Path(os.environ['APPDATA']) / args.user_directory
+for account in ('steam/76561197992561100', 'default/1'):
+    userdata = userdata_root / account
+    userdata.mkdir(parents=True, exist_ok=True)
+    (userdata / 'settings.save').write_text(json.dumps(settings), encoding='utf-8')
 print(f'Lab: {lab}; disabled {len(disabled)} Workshop manifests; isolated settings: {userdata}')

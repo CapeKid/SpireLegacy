@@ -92,8 +92,8 @@ public sealed class BloodlineRelic : CustomRelicModel
         if (Inheritance.Has("costly") && !card.EnergyCost.CostsX) card.EnergyCost.AddThisTurn(1);
         if (shocked) { shocked = false; await CardCmd.Discard(context,card); }
     }
-    public override decimal ModifyDamageAdditive(Creature? target, decimal amount, ValueProp props, Creature? dealer, CardModel? card) => dealer == Owner.Creature && props.IsPoweredAttack() ? Inheritance.Amount("piercing") : 0;
-    public override decimal ModifyDamageMultiplicative(Creature? target, decimal amount, ValueProp props, Creature? dealer, CardModel? card)
+    public decimal InheritedDamageAdditive(Creature? target, decimal amount, ValueProp props, Creature? dealer, CardModel? card) => dealer == Owner.Creature && props.IsPoweredAttack() ? Inheritance.Amount("piercing") : 0;
+    public decimal InheritedDamageMultiplicative(Creature? target, decimal amount, ValueProp props, Creature? dealer, CardModel? card)
     {
         if (dealer != Owner.Creature || !props.IsPoweredAttack()) return 1;
         var factor = 1 + Inheritance.Amount("costly") / 100m;

@@ -77,7 +77,7 @@ public abstract class LegacyCard : CustomCardModel
         DynamicVars.Block.UpgradeValueBy(DesignCard.Mercy ? 3 : Row.Number("upgradeBlock"));
         if (Row.Flag("upgradeCost")) EnergyCost.UpgradeBy(-1);
     }
-    public override decimal ModifyDamageAdditive(Creature? target, decimal amount, ValueProp props, Creature? dealer, CardModel? source)
+    public decimal InheritedDamageAdditive(Creature? target, decimal amount, ValueProp props, Creature? dealer, CardModel? source)
     {
         if (source != this || !props.IsPoweredAttack()) return 0;
         var n = DesignCard.SpecialAmount; var basis = DynamicVars.Damage.BaseValue;

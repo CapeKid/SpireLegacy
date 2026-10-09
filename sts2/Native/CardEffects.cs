@@ -21,7 +21,7 @@ public static class CardEffects
  {
   var d=card.DesignCard;var row=d.Row;var player=card.Owner;var creature=player.Creature;
   IEnumerable<Creature> enemies=row.Flag("aoe")?card.CombatState!.GetOpponentsOf(creature):play.Target is {} target?new[]{target}:[];
-  if(d.Amount("hpLoss")>0)await CreatureCmd.Damage(context,creature,d.Amount("hpLoss"),ValueProp.Unblockable|ValueProp.Unpowered,creature,card);
+  if(d.Amount("hpLoss")>0)await BranchCommands.DamageFromCard(context,creature,d.Amount("hpLoss"),ValueProp.Unblockable|ValueProp.Unpowered,creature,card,play);
   if(d.Amount("heal")+d.Gene("heal")>0)await CreatureCmd.Heal(creature,d.Amount("heal")+d.Gene("heal"));
   foreach(var key in new[]{"vigor","thorns","plated","nextEnergy","nextDraw","nextBlock"})await Apply(context,key,creature,d.Amount(key),creature,card);
   if(row.Text("special")=="scry")await Scry(card,context,d.SpecialAmount);
@@ -50,10 +50,10 @@ public static class CardEffects
    case "wounds":for(var i=0;i<amount;i++)await CardPileCmd.AddGeneratedCardToCombat(card.CombatState!.CreateCard(ModelDb.Card<MegaCrit.Sts2.Core.Models.Cards.Wound>(),player),PileType.Draw,player,CardPilePosition.Random);break;
    case "refill_hand":var count=hand.Cards.Count;await CardCmd.Discard(context,hand.Cards.ToArray());await CardPileCmd.Draw(context,count,player);break;
    case "exhaust_block":await CreatureCmd.GainBlock(creature,Math.Min(10,PileType.Exhaust.GetPile(player).Cards.Count)*amount,ValueProp.Unpowered,null);break;
-   case "exhaust_nonattacks":foreach(var fuel in hand.Cards.Where(c=>c.Type!=CardType.Attack).ToArray()){await CardCmd.Exhaust(context,fuel);await CreatureCmd.GainBlock(creature,amount,ValueProp.Unpowered,null);}break;
+   case "exhaust_nonattacks":foreach(var fuel in hand.Cards.Where(c=>c.Type!=CardType.Attack).ToArray()){await BranchCommands.Exhaust(context,fuel);await CreatureCmd.GainBlock(creature,amount,ValueProp.Unpowered,null);}break;
    case "double_block":await CreatureCmd.GainBlock(creature,creature.Block,ValueProp.Unpowered,null);break;
    case "cleanse":foreach(var power in creature.Powers.Where(p=>p.Type==PowerType.Debuff).ToArray())await PowerCmd.Remove(power);break;
-   case "exhaust_one":foreach(var fuel in await CardSelectCmd.FromHand(context,player,new CardSelectorPrefs(CardSelectorPrefs.ExhaustSelectionPrompt,amount),null,card))await CardCmd.Exhaust(context,fuel);break;
+   case "exhaust_one":foreach(var fuel in await CardSelectCmd.FromHand(context,player,new CardSelectorPrefs(CardSelectorPrefs.ExhaustSelectionPrompt,amount),null,card))await BranchCommands.Exhaust(context,fuel);break;
    case "retrieve":case "exhume":var pile=row.Text("special")=="retrieve"?PileType.Discard:PileType.Exhaust;var selected=await CardSelectCmd.FromCombatPile(context,pile.GetPile(player),player,new CardSelectorPrefs(new MegaCrit.Sts2.Core.Localization.LocString("cards",card.Id.Entry+".returnPrompt"),amount));foreach(var retrieved in selected)await CardPileCmd.Add(retrieved,PileType.Hand);break;
    case "charge_gain":if(creature.GetPower<P_class>() is {} cls && Runtime.Heir.classId=="mage")cls.Charges=Math.Min(2,cls.Charges+amount);break;
    case "discount_hand":var eligible=hand.Cards.Where(c=>!c.EnergyCost.CostsX&&c.EnergyCost.GetWithModifiers(CostModifiers.All)>0).ToList();for(var i=0;i<amount&&eligible.Count>0;i++){var index=player.RunState.Rng.CombatCardSelection.NextInt(eligible.Count);var discounted=eligible[index];eligible.RemoveAt(index);discounted.EnergyCost.AddThisTurn(-1);}break;

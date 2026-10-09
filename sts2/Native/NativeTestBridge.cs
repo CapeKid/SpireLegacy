@@ -76,6 +76,7 @@ public static class NativeTestBridge
                         if(RunState().IsGameOver && Runtime.Profile.active is {} testOrphan)Runtime.Profile.Settle(testOrphan.id,testOrphan.floors,0,false);
                         await NGame.Instance.ReturnToMainMenu();
                     }
+                    if (Runtime.Profile.active is {} orphan) Runtime.Profile.Settle(orphan.id,orphan.floors,0,false);
                     var cls = request.GetProperty("class").GetString()!;
                     Runtime.Profile.selected = new FamilyProfile.Heir { name="PortTester",classId=cls,traits=request.TryGetProperty("traits",out var traits) ? traits.EnumerateArray().Select(t=>t.GetString()!).ToList() : [] };
                     if(request.TryGetProperty("quick",out var quick)&&quick.GetBoolean() && Runtime.Profile.active==null)Runtime.Profile.generation=0;
@@ -90,7 +91,9 @@ public static class NativeTestBridge
                     var accepted=manualCard.TryManualPlay(manualTarget);
                     var playDeadline=Time.GetTicksMsec()+8000;
                     while(manualCard.Pile?.Type is PileType.Hand or PileType.Play && Time.GetTicksMsec()<playDeadline)await Tree.ToSignal(Tree,SceneTree.SignalName.ProcessFrame);
-                    result=new{canPlay,reason=unplayable.ToString(),preventer=preventer?.Id.ToString(),accepted,pile=manualCard.Pile?.Type.ToString(),queuePaused=RunManager.Instance.ActionExecutor.IsPaused,queueRunning=RunManager.Instance.ActionExecutor.IsRunning,action=RunManager.Instance.ActionExecutor.CurrentlyRunningAction?.ToString(),state=StateSummary()};break;
+                    var visualDeadline=Time.GetTicksMsec()+2000;
+                    while(MegaCrit.Sts2.Core.Nodes.Cards.NCard.FindOnTable(manualCard)!=null && Time.GetTicksMsec()<visualDeadline)await Tree.ToSignal(Tree,SceneTree.SignalName.ProcessFrame);
+                    result=new{canPlay,reason=unplayable.ToString(),preventer=preventer?.Id.ToString(),accepted,pile=manualCard.Pile?.Type.ToString(),tableNodePresent=MegaCrit.Sts2.Core.Nodes.Cards.NCard.FindOnTable(manualCard)!=null,playPileCount=PileType.Play.GetPile(manualPlayer).Cards.Count,queuePaused=RunManager.Instance.ActionExecutor.IsPaused,queueRunning=RunManager.Instance.ActionExecutor.IsRunning,action=RunManager.Instance.ActionExecutor.CurrentlyRunningAction?.ToString(),state=StateSummary()};break;
                 case "diagnostic":
                     try {await CardPlayDiagnostics.Observe(Task.FromException(new InvalidOperationException("Owned-game diagnostic fixture")),"TEST_ONLY");}catch(InvalidOperationException){}
                     ManorUi.Open();result=new{diagnostic=CardPlayDiagnostics.LastFailure};break;
@@ -156,7 +159,7 @@ public static class NativeTestBridge
                     result = new {Runtime.Profile.crowns,Runtime.Profile.generation,Runtime.Profile.settledId,active=Runtime.Profile.active != null}; break;
                 case "kill":
                     var victimState = RunState(); var victimPlayer = victimState.Players.Single();
-                    using (CardSelectCmd.UseSelector(new FirstChoiceSelector()))
+                    using (UseTestSelector())
                     {
                         var victims=request.TryGetProperty("player",out var killPlayer) && killPlayer.GetBoolean() ? new[]{victimPlayer.Creature} : victimPlayer.Creature.CombatState!.GetOpponentsOf(victimPlayer.Creature).Where(e=>e.IsAlive).ToArray();
                         await CreatureCmd.Damage(new BlockingPlayerChoiceContext(),victims,999999,MegaCrit.Sts2.Core.ValueProps.ValueProp.Unblockable|MegaCrit.Sts2.Core.ValueProps.ValueProp.Unpowered,victimPlayer.Creature);
@@ -235,7 +238,7 @@ public static class NativeTestBridge
                             var smokeCard=smokeCombat.CreateCard(NativeCards.Get(smokeRow.Text("id")),smokePlayer);
                             if(request.TryGetProperty("upgrade",out var smokeUpgrade)&&smokeUpgrade.GetBoolean())CardCmd.Upgrade(smokeCard);
                             await CardPileCmd.Add(smokeCard,PileType.Hand,skipVisuals:true);
-                            using(CardSelectCmd.UseSelector(new FirstChoiceSelector())) await CardCmd.AutoPlay(new BlockingPlayerChoiceContext(),smokeCard,smokeCombat.GetOpponentsOf(smokePlayer.Creature).First(e=>e.IsAlive));
+                            using(UseTestSelector()) await CardCmd.AutoPlay(new BlockingPlayerChoiceContext(),smokeCard,smokeCombat.GetOpponentsOf(smokePlayer.Creature).First(e=>e.IsAlive));
                             played.Add(smokeRow.Text("id"));
                         }
                     } finally {Engine.TimeScale=previousScale;}
@@ -247,7 +250,7 @@ public static class NativeTestBridge
                     var model = combat.CreateCard(NativeCards.Get(request.GetProperty("card").GetString()!),actor);
                     if (request.TryGetProperty("upgrade",out var upgrade) && upgrade.GetBoolean()) CardCmd.Upgrade(model);
                     await CardPileCmd.Add(model,PileType.Hand,skipVisuals:true);
-                    using (CardSelectCmd.UseSelector(new FirstChoiceSelector())) await CardCmd.AutoPlay(new BlockingPlayerChoiceContext(),model,combat.GetOpponentsOf(actor.Creature).FirstOrDefault(e=>e.IsAlive));
+                    using (UseTestSelector()) await CardCmd.AutoPlay(new BlockingPlayerChoiceContext(),model,combat.GetOpponentsOf(actor.Creature).FirstOrDefault(e=>e.IsAlive));
                     result = StateSummary(); break;
                 case "turn":
                     var turnPlayer = RunState().Players.Single();
@@ -280,6 +283,14 @@ public static class NativeTestBridge
     {
         var run = RunState(); var player = run.Players.Single();
         return new { floor=run.TotalFloor,room=run.CurrentRoom?.GetType().Name,heir=new {Runtime.Heir.name,Runtime.Heir.classId,Runtime.Heir.traits}, hp=player.Creature.CurrentHp,maxHp=player.Creature.MaxHp,block=player.Creature.Block,gold=player.Gold,energy=player.PlayerCombatState?.Energy,phase=player.PlayerCombatState?.Phase.ToString(),relics=player.Relics.Select(r=>new{id=r.Id.ToString(),title=r.Title.GetFormattedText()}).ToArray(),hand=player.PlayerCombatState?.Hand.Cards.Select(c=>c.Id.ToString()).ToArray(),powers=player.Creature.Powers.Select(p=>new {id=p.Id.ToString(),amount=p.Amount,display=p.DisplayAmount,title=p.Title.GetFormattedText()}).ToArray(),enemies=player.Creature.CombatState?.GetOpponentsOf(player.Creature).Select(e=>new {hp=e.CurrentHp,block=e.Block,powers=e.Powers.Select(p=>new{id=p.Id.ToString(),amount=p.Amount}).ToArray()}).ToArray() };
+    }
+    // Test-only selector scope acquired across the regular/beta API signatures.
+    private static IDisposable UseTestSelector()
+    {
+        var selector = new FirstChoiceSelector();
+        var method = AccessTools.Method(typeof(CardSelectCmd), "UseSelector", [typeof(ICardSelector), typeof(bool)])
+            ?? AccessTools.Method(typeof(CardSelectCmd), "UseSelector", [typeof(ICardSelector)]);
+        return (IDisposable)method.Invoke(null, method.GetParameters().Length == 2 ? [selector, false] : [selector])!;
     }
     private sealed class FirstChoiceSelector : ICardSelector
     {

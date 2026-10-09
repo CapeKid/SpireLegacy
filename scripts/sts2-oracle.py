@@ -5,9 +5,12 @@ parser = argparse.ArgumentParser()
 parser.add_argument('request', help='JSON request, or @path to a request file')
 parser.add_argument('--timeout',type=int,default=60)
 parser.add_argument('--name',default='latest')
+parser.add_argument('--profile-directory',default='private/sts2-test-profile')
 args = parser.parse_args()
 request = json.loads(pathlib.Path(args.request[1:]).read_text()) if args.request.startswith('@') else json.loads(args.request)
-profile = repo / 'private/sts2-test-profile'
+profile = (repo / args.profile_directory).resolve()
+if not profile.is_relative_to((repo / 'private').resolve()): raise SystemExit('Oracle profile must stay inside the private workspace.')
+profile.mkdir(parents=True,exist_ok=True)
 request_path = profile / 'request.json'; response_path = profile / 'response.json'
 if request_path.exists(): raise SystemExit('An oracle request is already pending; refusing to overwrite it.')
 if response_path.exists(): response_path.unlink()

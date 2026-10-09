@@ -69,7 +69,7 @@ public abstract class LegacyPower:CustomPowerModel
   if((Key is "skill_block" or "skill_energy"&&card.Type==CardType.Skill)||(Key=="attack_vigor"&&card.Type==CardType.Attack)){
    if(++plays==3){plays=0;if(Key=="skill_block")await CreatureCmd.GainBlock(Owner,Amount,ValueProp.Unpowered,null);if(Key=="skill_energy")await CardEffects.Apply(context,"nextEnergy",Owner,Amount,Owner,card);if(Key=="attack_vigor")await CardEffects.Apply(context,"vigor",Owner,Amount,Owner,card);}}
  }
- public override decimal ModifyDamageAdditive(Creature? target,decimal amount,ValueProp props,Creature? dealer,CardModel? card)
+ public decimal InheritedDamageAdditive(Creature? target,decimal amount,ValueProp props,Creature? dealer,CardModel? card)
  {
   if(Key!="class"||dealer!=Owner||!props.IsPoweredAttack())return 0;
   return Runtime.Heir.classId switch{"knight"=>Charges>0?2:0,"mage"=>Charges*(1+FindAmount("reservoir")),_=>0};
