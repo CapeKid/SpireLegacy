@@ -9,7 +9,7 @@ import com.megacrit.cardcrawl.relics.*;
 import com.megacrit.cardcrawl.rooms.*;
 import com.megacrit.cardcrawl.monsters.*;
 
-/** Opt-in regression checks calling the patched native reward entry point. */
+/** Opt-in regression checks calling the native reward entry point. */
 public final class RewardChecks {
     public static void run()throws Exception {
         Profile.Heir heir=HeirMod.heir();String originalClass=heir.classId;

@@ -1,9 +1,11 @@
-Spire Legacy has a native Linux x86_64 launcher and bundled content-reader runtime. Steam Deck uses this package; no Proton setting, Python installation, sudo command or SteamOS system change is required by the mod. Hardware verification is still pending.
+Spire Legacy has a native Linux x86_64 launcher and bundled content-reader runtime. Steam Deck uses this package; no Proton setting, Python installation, sudo command or SteamOS system change is required by the mod. The creator verified Workshop loading, gameplay and controls with both Steam Linux Runtime and Proton after the 0.1.8 update. The 0.2.0 card expansion is verified in the owned Windows game; it has not yet had a full Deck playthrough.
 
 ## Install on Steam Deck
 
+For Workshop installation, use the [Workshop guide](workshop.md). The manual package steps follow.
+
 1. Install your owned Slay the Spire 1 and Rogue Legacy 2 copies through Steam. Select the regular StS1 branch. In StS1 Properties → Compatibility, enable the specific compatibility tool override and select **Steam Linux Runtime 1.0 (scout)** so Steam installs its native Linux runtime. RL2 may use Proton normally; the mod reads its local data files without launching RL2.
-2. Switch to Desktop Mode. Extract `SpireLegacy-0.1.7-linux-x86_64.zip` into StS1's game folder, found with Steam's Manage → Browse local files. The resulting folders must be `SlayTheSpire/mods` and `SlayTheSpire/HeirOfTheSpire`. Preserve the complete ReaderLinux folder.
+2. Switch to Desktop Mode. Extract `SpireLegacy-0.2.0-linux-x86_64.zip` into StS1's game folder, found with Steam's Manage → Browse local files. The resulting folders must be `SlayTheSpire/mods` and `SlayTheSpire/HeirOfTheSpire`. Preserve the complete ReaderLinux folder.
 3. Add a Non-Steam Game with target `/bin/bash`. Set Launch Options to the quoted absolute path of `HeirOfTheSpire/Play.sh`, for example `"/home/deck/.local/share/Steam/steamapps/common/SlayTheSpire/HeirOfTheSpire/Play.sh"`. Set Start In to the quoted StS1 game folder. Leave forced compatibility disabled for this shortcut.
 4. Start the shortcut once in Desktop Mode, then use it from Gaming Mode. First launch prepares icons and character content from the installed RL2 copy. Game files remain in their owned installations.
 
@@ -19,7 +21,7 @@ Family progression, extracted content cache and launch log are stored under `~/.
 
 The launcher verifies both games, the native ELF Java runtime, and required mod files before starting. Run `/bin/bash "/absolute/path/HeirOfTheSpire/Play.sh" --check` in Konsole to inspect detected paths. Launch errors are recorded in `~/.local/share/HeirOfTheSpire/launch.log`. A Windows runtime error means Steam needs to restore StS1's native Linux installation.
 
-Linux reader dependencies are pinned for CPython 3.12, x86_64 GNU/Linux. The reader is tested in a Linux container against the actual owned RL2 and StS1 content, and library-discovery tests include SD-card-style paths with spaces. Those checks do not replace testing the native game, Steam Input, on-screen keyboard and suspend/resume on a physical Deck. GitHub issue #5 remains open for that verification.
+Linux reader dependencies are pinned for CPython 3.12, x86_64 GNU/Linux. The reader is tested in a Linux container against the actual owned RL2 and StS1 content, and library-discovery tests include SD-card-style paths with spaces. The creator completed physical Deck verification and asked to close GitHub issue #5. A fresh full-run test remains useful for the 0.2.0 expansion.
 
 ## Build the Linux package
 

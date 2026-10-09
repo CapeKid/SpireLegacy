@@ -1,0 +1,82 @@
+[
+  {
+    "id": "metallicize",
+    "summary": "At the end of your turn, gain !M! Block."
+  },
+  {
+    "id": "juggernaut",
+    "summary": "Whenever you gain Block, deal !M! damage to a random enemy."
+  },
+  {
+    "id": "rupture",
+    "summary": "Whenever you lose HP from a card, gain !M! Strength."
+  },
+  {
+    "id": "feel_no_pain",
+    "summary": "Whenever you Exhaust a card, gain !M! Block."
+  },
+  {
+    "id": "thorns",
+    "summary": "Whenever an enemy attacks you, deal !M! damage to it."
+  },
+  {
+    "id": "brutality",
+    "summary": "At the start of your turn, lose !M! HP and draw !M! card(s)."
+  },
+  {
+    "id": "barricade",
+    "summary": "Your Block is not removed at the start of your turn."
+  },
+  {
+    "id": "demon_form",
+    "summary": "At the start of your turn, gain !M! Strength."
+  },
+  {
+    "id": "dark_embrace",
+    "summary": "Whenever you Exhaust a card, draw !M! card(s)."
+  },
+  {
+    "id": "berserk",
+    "summary": "At the start of your turn, gain !M! Energy."
+  },
+  {
+    "id": "buffer",
+    "summary": "Prevent the next !M! time(s) you would lose HP."
+  },
+  {
+    "id": "double_tap",
+    "summary": "Your next !M! Attack(s) this turn are played twice."
+  },
+  {
+    "id": "equilibrium",
+    "summary": "Retain your hand for !M! turn(s)."
+  },
+  {
+    "id": "panache",
+    "summary": "Every 5 cards played in a turn, deal !M! damage to ALL enemies."
+  },
+  {
+    "id": "thousand_cuts",
+    "summary": "Whenever you play a card, deal !M! damage to ALL enemies."
+  },
+  {
+    "id": "tools",
+    "summary": "At the start of your turn, draw !M! card(s), then discard !M! card(s)."
+  },
+  {
+    "id": "sadistic",
+    "summary": "Whenever you apply a debuff to an enemy, deal !M! damage to it."
+  },
+  {
+    "id": "after_image",
+    "summary": "Whenever you play a card, gain !M! Block."
+  },
+  {
+    "id": "well_laid",
+    "summary": "At the end of your turn, Retain up to !M! card(s)."
+  },
+  {
+    "id": "envenom",
+    "summary": "Whenever an Attack deals unblocked damage, apply !M! Poison."
+  }
+]

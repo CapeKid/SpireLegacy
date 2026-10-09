@@ -7,7 +7,7 @@ The Workshop package contains one mod JAR and a `SpireLegacyRuntime` directory b
 1. Install your owned Steam copies of Slay the Spire 1 and Rogue Legacy 2. StS1 must use its regular branch. On Steam Deck, open StS1 Properties → Compatibility, enable the specific compatibility tool override and select **Steam Linux Runtime 1.0 (scout)** to install its native Linux version. RL2 may use Proton normally.
 2. Subscribe to [ModTheSpire](https://steamcommunity.com/sharedfiles/filedetails/?id=1605060445), [BaseMod](https://steamcommunity.com/sharedfiles/filedetails/?id=1605833019), and [Spire Legacy](https://steamcommunity.com/sharedfiles/filedetails/?id=3816067184). Spire Legacy is currently hidden for creator testing; sign in as CapeKid to access it.
 3. Launch Slay the Spire with **Play with Mods**, enable BaseMod and Spire Legacy, then start. First startup prepares genuine RL2 sprites locally before character registration. Later starts verify the cache against your installed files. No custom launcher or Python installation is needed.
-4. Select **The Heir**. For Steam Deck, use a Keyboard and Mouse Steam Input layout with the right trackpad as mouse and R2 as left click. Steam+X opens the naming keyboard. Physical Deck gameplay, the mod-picker window and suspend/resume still require hardware verification.
+4. Select **The Heir**. For Steam Deck, use a Keyboard and Mouse Steam Input layout with the right trackpad as mouse and R2 as left click. Steam+X opens the naming keyboard. The creator verified Deck gameplay and controls with Steam Linux Runtime and Proton after the 0.1.8 preparation update.
 
 Use either the Workshop installation or a manual mod installation. Remove an older manually installed `mods/HeirOfTheSpire.jar` before switching to Workshop so there are no duplicate mod IDs. Keep your family save.
 
@@ -21,7 +21,7 @@ For a Deck failure, use the log path shown in that launch's error. Native Linux 
 
 Version 0.1.8 includes the complete current preparation log in ModTheSpire's debug output and error details on failure. Copy that section directly; opening the separate log file is optional. The bundled reader still identifies itself as 0.1.7 because this update changes how the mod displays its output.
 
-Version 0.1.9 fixes an infinite reroll when Question Card requests four rare boss rewards from an heir's three-card rare pool. Heir rewards use each distinct card of the rolled rarity before allowing repeats; the extra choice and all-rare boss rewards are preserved. Relic count modifiers, ordinary upgrade chances and preview hooks still apply. Prismatic Shard continues using the game's larger cross-color pool.
+Version 0.2.0 replaces the small-pool workaround from 0.1.9 with 75 cards per class, including 16 distinct rares. Rewards now use the native Slay the Spire code, preserving Question Card, Busted Crown, Prismatic Shard, upgrade rolls and ordinary uniqueness rules. See the [pool guide](card-pools.md) and [full catalogue](card-catalogue.md).
 
 1. Run `scripts/build.ps1`, then `scripts/package.py` and `scripts/package_linux.py` using the development Python environment.
 2. Run `scripts/package_workshop.py`. This creates `build/workshop` and a distributable `dist/SpireLegacy-<version>-workshop.zip`. The workspace uses the official StS1 uploader's schema. `config.json` defaults to **private**; the script retains a previously assigned `steamPublishedID`.

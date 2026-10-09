@@ -21,6 +21,6 @@
     "effect": "rhythm",
     "amount": 1,
     "limit": 3,
-    "summary": "Every third Attack in a turn draws one card and applies one Vulnerable to its target."
+    "summary": "Every third Attack in a turn draws one card and applies one Vulnerable to its target. Area attacks mark all enemies; random-hit attacks mark a random enemy."
   }
 ]

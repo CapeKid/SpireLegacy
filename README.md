@@ -6,7 +6,7 @@ A solo custom character for **Slay the Spire 1, regular branch**. Your first hei
 
 - Three classes: Knight, Mage and Ranger, with distinct 10-card starting decks and separate reward pools.
 - All 61 eligible entries in the installed RL2 trait library have turn-based adaptations, with two compatible traits per heir. Hover icons or names for exact effects. [Trait coverage and adaptation notes](docs/traits.md).
-- Thirty-seven cards spanning attacks, defenses, powers, draw and energy; every card can be upgraded and has its own original illustration showing its effect.
+- 225 cards: 75 per class, with 20 common, 36 uncommon, 16 rare and 3 basic cards each. Every card upgrades and has its own original illustration. [Card pool guide](docs/card-pools.md) · [Complete card catalogue](docs/card-catalogue.md).
 - Six manor upgrades for health, Strength, Dexterity, card draw, legacy earnings and recovery.
 - A customizable family name and four banner colors.
 - Normal Slay the Spire enemies, events, maps and three-act runs; the first run goes directly to a first-floor fight.
@@ -17,7 +17,7 @@ A solo custom character for **Slay the Spire 1, regular branch**. Your first hei
 
 ## Required games and platform
 
-Windows x64 has been tested in-game. The native Linux x86_64 package supports Steam Deck installation, with physical hardware verification pending. Both require owned Steam copies of Slay the Spire 1 (regular branch, build 10180494 / v2.3.4 tested on Windows) and Rogue Legacy 2 (build 13303339 content target). Steam library discovery locates Rogue Legacy 2 automatically. It does not modify that game's installation or saves. No multiplayer.
+Windows x64 has been tested in-game. The native Linux x86_64 package supports Steam Deck installation, with creator-verified Steam Deck gameplay using both Steam Linux Runtime and Proton. Both require owned Steam copies of Slay the Spire 1 (regular branch, build 10180494 / v2.3.4 tested on Windows) and Rogue Legacy 2 (build 13303339 content target). Steam library discovery locates Rogue Legacy 2 automatically. It does not modify that game's installation or saves. No multiplayer.
 
 ## Build
 
@@ -30,7 +30,7 @@ This repository contains the development source and issue fixes. Local tools, ga
 - Local asset inspection via `scripts/inspect_rl.py` creates `private/rl_asset_index.json`; the owned host card atlas is inspected locally as `private/cardui.atlas` for preflight.
 - Packaging also expects the locally frozen reader under `private/helper-release/ReadRogueLegacy` and dependency license sources in sibling toolkit checkouts. No game assets belong in a release.
 
-All 37 original generated illustrations are in `art/originals/`. The built-in imagegen prompts, exported paths and verified image hashes are in `sheets/card_art.json`. `scripts/prepare_card_art.py` exports the card-sized resources. [Review all card artwork](media/card-art-review.png).
+All 225 original generated illustrations are in `art/originals/`. The built-in imagegen prompts, exported paths and verified image hashes are in `sheets/card_art.json`. `scripts/prepare_card_art.py` and `scripts/export_expansion_art.py` export the card-sized resources; `scripts/review_card_art.py` creates the labeled review sheets. Review the artwork: [Knight](media/card-art-knight.png), [Mage](media/card-art-mage.png), [Ranger](media/card-art-ranger.png).
 
 Private inspection data, extracted content, lab game files and test saves belong only under ignored `private/`. Never distribute them. The release contains original code/UI art, redistributable modding dependencies and a converter, not game content.
 
@@ -40,9 +40,12 @@ The isolated game is in `private/lab`. `scripts/launch-test.ps1` enables an opt-
 
 ## Status
 
-Version 0.1.6 adds a direct fallback for the standard Steam Deck RL2 installation path, including its Proton Z: mapping. Version 0.1.5 adds automatic content preparation for Workshop launches on Windows and Linux, with a private upload workspace and both platform readers. Version 0.1.4 added complete shop pools, seven cards, class combat loops and inherited starter-card changes. [Class mechanics and starter genetics](docs/classes-and-genes.md) explain the rules. It also includes the cursor-layer fix, new selection art, character-specific family controls, the complete eligible trait catalog, and a native Linux/Steam Deck package. [Steam Deck installation and controls](docs/steam-deck.md) describe the bundled reader and Steam Input setup. The Linux reader extracted all 66 selected sprites from the actual owned game files in a Linux container, and seven launcher-discovery/error checks pass. Physical Deck gameplay and suspend/resume remain unverified.
+Version 0.2.0 expands all three classes to the owned regular-branch Ironclad library size: 75 cards each. It adds 188 individually authored cards and illustrations, with several deck strategies per class. Native rewards use the full rarity pools; the 0.1.9 sparse-pool reward replacement has been removed. Existing card IDs and family saves remain compatible. [Class mechanics and starter genetics](docs/classes-and-genes.md) explain inherited starters; [Steam Deck installation and controls](docs/steam-deck.md) cover setup.
 
-Compilation, 2,019 native shop/class checks (including three actual merchants), 36 starter-genetics checks, 12,083 progression/platform-path checks, all 37 card-upgrade checks, all 63 trait-power loading checks and nine runtime trait-rule checks pass, including the native healing patch. The expanded trait catalog was tested in real combat: Pacifist prevented attacks and applied Poison, and Limitless provided four Energy on both the first and second turn. Earlier packaged-launcher tests verified local content preparation, card play, death settlement, heir choices, a manor purchase and its health bonus after restart. Gameplay screenshots are in `media/`.
+[0.2.0 verification results](docs/card-pool-verification.md) include all 225 upgrades, 600 native reward cases and three native merchants.
+
+The creator verified loading and gameplay on Steam Deck using both Steam Linux Runtime and Proton with the 0.1.8 content-preparation changes. The 0.2.0 expansion is tested in the owned Windows game with isolated saves; its new balance still needs full-run playtesting.
+
 
 Melty validates all install mappings and its one-click check says yes. Its automatic detector does not recognize this package layout; the supplied `melty.json` corrects that. It flags executable code and the bundled Python standard-library archive for review, and requires playing through Melty before publishing. That Melty install has not yet been tested. A full three-act playthrough and balance testing have not been completed. Sound could not be verified in this test environment (no working OpenAL playback device).
 

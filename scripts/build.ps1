@@ -6,7 +6,10 @@ if ($LASTEXITCODE -ne 0) { throw 'Sheet preflight/generation failed.' }
 $taskJdk = (Get-ChildItem "$taskRoot/tools/jdk" -Directory | Select-Object -First 1).FullName
 $taskGame = 'C:\Program Files (x86)\Steam\steamapps\common\SlayTheSpire'
 $taskCp = "$taskGame/desktop-1.0.jar;$taskRoot/tools/ModTheSpire.jar;$taskRoot/tools/BaseMod.jar"
-New-Item -ItemType Directory -Force -Path "$taskRoot/build/classes" | Out-Null
+$taskClasses = [System.IO.Path]::GetFullPath((Join-Path $taskRoot 'build/classes'))
+if (-not $taskClasses.StartsWith(($taskRoot + [System.IO.Path]::DirectorySeparatorChar + 'build' + [System.IO.Path]::DirectorySeparatorChar), [System.StringComparison]::OrdinalIgnoreCase)) { throw 'Class output must stay within this project build directory.' }
+if (Test-Path -LiteralPath $taskClasses) { Remove-Item -LiteralPath $taskClasses -Recurse -Force }
+New-Item -ItemType Directory -Force -Path $taskClasses | Out-Null
 $taskSources = Get-ChildItem "$taskRoot/src/main/java" -Recurse -Filter '*.java' | ForEach-Object { '"' + $_.FullName.Replace('\','/') + '"' }
 Set-Content -LiteralPath "$taskRoot/build/sources.txt" -Value $taskSources -Encoding ascii
 & "$taskJdk/bin/javac.exe" -encoding UTF-8 -source 8 -target 8 -cp $taskCp -d "$taskRoot/build/classes" "@$taskRoot/build/sources.txt"

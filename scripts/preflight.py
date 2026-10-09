@@ -37,9 +37,22 @@ def validate():
         ref('cards',row,'classId',classes); ref('cards',row,'asset',assets)
         ref('cards',row,'art',{r['id'] for r in sheets.get('card_art',[])})
         if row['type'] not in ('ATTACK','SKILL','POWER'): errors.append('invalid card type '+row['id'])
-        if row['power'] not in ('none','reservoir','quiver'):errors.append('Unsupported class power '+row['id'])
+        if row['power'] not in {'none','reservoir','quiver'}|{r['id'] for r in sheets.get('power_effects',[])}:errors.append('Unsupported class power '+row['id'])
+        if row.get('special','none') not in {'none'}|{r['id'] for r in sheets.get('special_effects',[])}:errors.append('Unsupported card mechanic '+row['id'])
+        if row.get('aoe') and row.get('special')=='random_attack':errors.append('Conflicting multi-target modes '+row['id'])
+    for target in sheets.get('pool_targets',[]):
+        ref('pool_targets',target,'id',classes)
+        pool=[r for r in sheets['cards'] if r['classId']==target['id']]
+        if len(pool)!=target['total']:errors.append(target['id']+': class pool is not full-sized')
+        for rarity in ('BASIC','COMMON','UNCOMMON','RARE'):
+            if sum(r['rarity']==rarity for r in pool)!=target[rarity.lower()]:errors.append(target['id']+': incorrect '+rarity+' pool size')
     for cls in classes:
         pool=[r for r in sheets['cards'] if r['classId']==cls and r['rarity']!='BASIC']
+        signatures=set()
+        for row in pool:
+            signature=tuple((key,str(row[key])) for key in sorted(row) if key not in ('id','name','asset','art','classId','rarity') and not key.startswith('upgrade'))
+            if signature in signatures:errors.append(cls+': duplicated card mechanics '+row['id'])
+            signatures.add(signature)
         for kind in ('ATTACK','SKILL'):
             if len([r for r in pool if r['type']==kind])<2:errors.append(f'{cls}: shop needs two distinct {kind} cards')
             for rarity in ('COMMON','UNCOMMON','RARE'):

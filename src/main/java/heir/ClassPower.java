@@ -16,7 +16,14 @@ public final class ClassPower extends AbstractPower {
         if(card.type==AbstractCard.CardType.SKILL){if(effect.equals("counterguard"))amount=1;if(effect.equals("charges"))amount=Math.min(row.i("limit"),amount+1);}
         if(card.type==AbstractCard.CardType.ATTACK){
             if(effect.equals("counterguard")||effect.equals("charges"))amount=0;
-            if(effect.equals("rhythm")){amount++;if(amount>=row.i("limit")){amount=0;addToBot(new DrawCardAction(row.i("amount")+bonus("quiver")));if(action.target!=null)addToBot(new ApplyPowerAction(action.target,owner,new VulnerablePower(action.target,row.i("amount"),false),row.i("amount")));}}
+            if(effect.equals("rhythm")){amount++;if(amount>=row.i("limit")){
+                amount=0;addToBot(new DrawCardAction(row.i("amount")+bonus("quiver")));
+                java.util.List<com.megacrit.cardcrawl.monsters.AbstractMonster> targets=new java.util.ArrayList<>();
+                if(card.multiDamage!=null || (card instanceof HeirCard && Data.row("cards",((HeirCard)card).key).b("aoe")))targets.addAll(AbstractDungeon.getMonsters().monsters);
+                else if(action.target instanceof com.megacrit.cardcrawl.monsters.AbstractMonster)targets.add((com.megacrit.cardcrawl.monsters.AbstractMonster)action.target);
+                else if(card.target==AbstractCard.CardTarget.ALL_ENEMY){com.megacrit.cardcrawl.monsters.AbstractMonster enemy=AbstractDungeon.getRandomMonster();if(enemy!=null)targets.add(enemy);}
+                for(com.megacrit.cardcrawl.monsters.AbstractMonster enemy:targets)if(!enemy.isDeadOrEscaped())addToBot(new ApplyPowerAction(enemy,owner,new VulnerablePower(enemy,row.i("amount"),false),row.i("amount")));
+            }}
         }
         updateDescription();AbstractDungeon.player.hand.applyPowers();
     }

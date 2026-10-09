@@ -1,0 +1,66 @@
+[
+  {
+    "id": "block_damage",
+    "summary": "Deal damage equal to your current Block."
+  },
+  {
+    "id": "execute",
+    "summary": "Deal {n} times damage if the target is at or below half HP."
+  },
+  {
+    "id": "guard_bonus",
+    "summary": "Deal {n} additional damage if you have Block."
+  },
+  {
+    "id": "marked_bonus",
+    "summary": "Deal {n} additional damage if the target is Vulnerable or Poisoned."
+  },
+  {
+    "id": "random_attack",
+    "summary": "Hits target random enemies."
+  },
+  {
+    "id": "exhaust_one",
+    "summary": "Exhaust {n} card(s) from your hand."
+  },
+  {
+    "id": "double_block",
+    "summary": "Double your current Block."
+  },
+  {
+    "id": "retrieve",
+    "summary": "Return {n} card(s) from your discard pile to your hand."
+  },
+  {
+    "id": "cleanse",
+    "summary": "Remove all debuffs from yourself."
+  },
+  {
+    "id": "exhume",
+    "summary": "Return a card from your Exhaust pile to your hand."
+  },
+  {
+    "id": "charge_gain",
+    "summary": "Gain {n} Arcane Charge(s), up to the normal charge cap."
+  },
+  {
+    "id": "discount_hand",
+    "summary": "Cards currently in your hand cost 1 less this turn."
+  },
+  {
+    "id": "free_hand",
+    "summary": "Cards currently in your hand cost 0 this turn."
+  },
+  {
+    "id": "scry",
+    "summary": "Scry {n}."
+  },
+  {
+    "id": "double_poison",
+    "summary": "Double Poison on the target."
+  },
+  {
+    "id": "chain_damage",
+    "summary": "Deal {n} damage for each OTHER Attack played this turn."
+  }
+]
