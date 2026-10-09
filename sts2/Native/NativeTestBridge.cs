@@ -82,6 +82,18 @@ public static class NativeTestBridge
                     await NGame.Instance.StartNewSingleplayerRun(ModelDb.Character<HeirCharacter>(),true,ModelDb.ActsByIndex.Select(a=>a.First()).ToArray(),[],"SPIRELEGACY-PORT-TEST",GameMode.Standard);
                     result = StateSummary(); break;
                 case "state": result = StateSummary(); break;
+                case "manual":
+                    var manualPlayer=RunState().Players.Single(); await WaitForPlay(manualPlayer);
+                    var manualCard=manualPlayer.PlayerCombatState!.Hand.Cards.First(c=>c is LegacyCard lc && lc.Key==request.GetProperty("card").GetString());
+                    var manualTarget=manualCard.TargetType==TargetType.AnyEnemy?manualPlayer.Creature.CombatState!.GetOpponentsOf(manualPlayer.Creature).First(e=>e.IsAlive):null;
+                    var canPlay=manualCard.CanPlay(out var unplayable,out var preventer);
+                    var accepted=manualCard.TryManualPlay(manualTarget);
+                    var playDeadline=Time.GetTicksMsec()+8000;
+                    while(manualCard.Pile?.Type is PileType.Hand or PileType.Play && Time.GetTicksMsec()<playDeadline)await Tree.ToSignal(Tree,SceneTree.SignalName.ProcessFrame);
+                    result=new{canPlay,reason=unplayable.ToString(),preventer=preventer?.Id.ToString(),accepted,pile=manualCard.Pile?.Type.ToString(),queuePaused=RunManager.Instance.ActionExecutor.IsPaused,queueRunning=RunManager.Instance.ActionExecutor.IsRunning,action=RunManager.Instance.ActionExecutor.CurrentlyRunningAction?.ToString(),state=StateSummary()};break;
+                case "diagnostic":
+                    try {await CardPlayDiagnostics.Observe(Task.FromException(new InvalidOperationException("Owned-game diagnostic fixture")),"TEST_ONLY");}catch(InvalidOperationException){}
+                    ManorUi.Open();result=new{diagnostic=CardPlayDiagnostics.LastFailure};break;
                 case "ancients":
                     var ancientPlayer=RunState().Players.Single(); var originalClass=Runtime.Heir.classId; var ancientChecks=0;
                     try {

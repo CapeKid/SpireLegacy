@@ -30,7 +30,7 @@ Spire Legacy supports solo play. Its character cannot embark in a multiplayer lo
 
 ## Manual installation
 
-Extract `SpireLegacy-StS2-1.0.0.zip` into your StS2 install folder. Its layout is `mods/SpireLegacy/SpireLegacy.json`, `SpireLegacy.dll`, `content-reader.zip` and `heir/`. Subscribe to BaseLib separately, or use the Melty bundle, which includes BaseLib. Launch the normal game executable; no separate mod launcher is required.
+Extract `SpireLegacy-StS2-1.0.1.zip` into your StS2 install folder. Its layout is `mods/SpireLegacy/SpireLegacy.json`, `SpireLegacy.dll`, `content-reader.zip` and `heir/`. Subscribe to BaseLib separately, or use the Melty bundle, which includes BaseLib. Launch the normal game executable; no separate mod launcher is required.
 
 ## Steam Deck
 
@@ -44,9 +44,11 @@ HEIR_RL2_DIR="/home/deck/.local/share/Steam/steamapps/common/Rogue Legacy 2" %co
 
 The full content-preparation diagnostic appears in the game's log and in Family Manor when preparation fails. Use **Retry content preparation** after correcting the installation. Starting RL2 once is not required. Native Linux support is implemented; this new StS2 port has not yet been tested on a physical Deck.
 
+If a card spends energy but never resolves, open **Family / Traits** after the failure. Version 1.0.1 shows the mod/game versions and the full failed card-action exception, including loaded mod versions, in Family Manor. **Copy card-play diagnostic** copies it for reporting. This diagnostic update does not yet establish the cause or fix of the reported Steam Deck failure.
+
 ## Melty
 
-`SpireLegacy-StS2-1.0.0-melty.zip` includes the mod, both readers and BaseLib 3.4.7. `sts2/melty.json` declares StS2 as the primary game and RL2 as the secondary game, installs the two mods and launches `SlayTheSpire2.exe`. This launcher mapping targets Windows. Melty must validate the uploaded mapping and observe a successful launch before publication. A prepared archive alone is not a verified Melty install.
+`SpireLegacy-StS2-1.0.1-melty.zip` includes the mod, both readers and BaseLib 3.4.7. `sts2/melty.json` declares StS2 as the primary game and RL2 as the secondary game, installs the two mods and launches `SlayTheSpire2.exe`. This launcher mapping targets Windows. Melty must validate the uploaded mapping and observe a successful launch before publication. A prepared archive alone is not a verified Melty install.
 
 The Workshop package uses Mega Crit's official StS2 uploader workspace format: `content/`, `workshop.json` and a PNG preview below 1 MB. Its visibility defaults to **private**. It creates a new StS2 item; do not supply the StS1 item's ID. BaseLib is a Required Item.
 
