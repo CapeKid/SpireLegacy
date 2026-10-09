@@ -1,6 +1,6 @@
 # Spire Legacy card catalogue
 
-Each class has 75 cards: 3 basics and 72 rewards (20 common, 36 uncommon, 16 rare), matching the owned regular-branch Ironclad library. Starter genes modify basic cards separately. Values below are the base cards before inherited traits and combat powers.
+Each class has 120 cards: 3 basics and 117 rewards (35 common, 56 uncommon, 26 rare). Each heir uses its own class library. Starter genes modify basic cards separately. Values below are the base cards before inherited traits and combat powers.
 
 ## Knight
 
@@ -81,6 +81,51 @@ Each class has 75 cards: 3 basics and 72 rewards (20 common, 36 uncommon, 16 rar
 | Ancestral Fury | Rare | Power | 3 | At the start of your turn, gain 2 Strength. |
 | Forge Memory | Rare | Power | 2 | Whenever you Exhaust a card, draw 1 card(s). |
 | Siege Resolve | Rare | Power | 2 | 3 HP cost; At the start of your turn, gain 1 Energy. |
+| Buckler Jab | Common | Attack | 1 | 5 damage; 5 Block |
+| Layered Mail | Common | Skill | 1 | 4 Block; 6 Block next turn |
+| Shield Drill | Common | Skill | 0 | 3 Block; Exhaust 1 card(s) from your hand. |
+| Hot Rivets | Common | Attack | 1 | 8 damage; Exhaust 1 card(s) from your hand. |
+| Burning Orders | Common | Skill | 0 | 2 draw next turn; Exhaust 1 card(s) from your hand. |
+| Blood Oath | Common | Skill | 1 | 2 Strength; 2 HP cost; Exhaust |
+| Grit Teeth | Common | Skill | 0 | 7 Block; 2 HP cost |
+| Redoubled Blow | Common | Attack | 1 | 2 damage ×4 |
+| Measured Cut | Common | Attack | 1 | 7 damage; 4 next Attack damage |
+| Splintered Pike | Common | Attack | 1 | 13 damage; Shuffle 1 Wound(s) into your draw pile. |
+| Heavy Harness | Common | Skill | 1 | 15 Block; Shuffle 1 Wound(s) into your draw pile. |
+| Rationed Assault | Common | Attack | 1 | 8 damage; 1 draw next turn |
+| Stand Ready | Common | Skill | 1 | 1 Energy next turn; 10 Block next turn |
+| Flanking March | Common | Attack | 0 | 4 damage; 4 Block next turn |
+| Siege Volley | Common | Attack | 2 | 4 damage ×3 to all enemies |
+| Cathedral Guard | Uncommon | Skill | 2 | 12 Block; 2 Plated Armor |
+| Rampart Rush | Uncommon | Attack | 2 | Deal damage equal to your current Block 2 times.; Exhaust |
+| Guard Rotation | Uncommon | Skill | 1 | 6 Block; Return 1 card(s) from your discard pile to your hand.; Retain |
+| Armor Cache | Uncommon | Skill | 1 | 1 draw; 12 Block next turn; Exhaust |
+| Cast Off | Uncommon | Skill | 1 | Exhaust all non-Attacks in your hand. Gain 3 Block per card Exhausted. |
+| Forge Sparks | Uncommon | Power | 1 | Whenever you Exhaust a card, deal 3 damage to ALL enemies. |
+| Ashen Advance | Uncommon | Attack | 1 | 5 damage; Deal 2 additional damage per card in your Exhaust pile (up to 10 cards). |
+| Salvage Guard | Uncommon | Skill | 1 | 3 Block; Gain 2 Block per card in your Exhaust pile (up to 10 cards). |
+| Blood Temper | Uncommon | Attack | 1 | 6 damage ×2; 2 HP cost |
+| Crimson Banner | Uncommon | Power | 2 | Whenever you lose HP from a card, gain 2 Strength. |
+| Painful Lesson | Uncommon | Skill | 1 | 3 draw; 2 HP cost; Exhaust |
+| Warrior Feast | Uncommon | Skill | 2 | 7 next Attack damage; 7 healing; Exhaust |
+| Serrated Barrage | Uncommon | Attack | 2 | 2 damage ×6 |
+| Weapons Master | Uncommon | Skill | 1 | 1 Strength; 5 next Attack damage; Exhaust |
+| Focused Defense | Uncommon | Skill | 1 | 9 Block; 1 draw next turn |
+| Scar Tissue | Uncommon | Power | 1 | Whenever you draw a Status, draw 1 card(s). |
+| Furnace Breath | Uncommon | Power | 1 | Whenever you draw a Status or Curse, deal 5 damage to ALL enemies. |
+| Jagged Charge | Uncommon | Attack | 2 | 12 damage to all enemies; Shuffle 2 Wound(s) into your draw pile. |
+| Ready Arsenal | Uncommon | Skill | 2 | 2 draw next turn; 2 Energy next turn; Exhaust |
+| Patient Riposte | Uncommon | Attack | 2 | 12 damage; Whenever this is Retained, gain 4 damage this combat.; Retain |
+| Castle Heart | Rare | Power | 2 | At the end of your turn, gain 7 Block. |
+| Iron Avalanche | Rare | Attack | 3 | 8 damage to all enemies; Deal 24 additional damage if you have Block.; Exhaust |
+| Phoenix Forge | Rare | Power | 2 | Whenever you Exhaust a card, deal 6 damage to ALL enemies. |
+| Ancestral Salvage | Rare | Skill | 2 | 16 Block; Return a card from your Exhaust pile to your hand.; Exhaust |
+| King's Ransom | Rare | Skill | 0 | 3 Energy; 8 HP cost; Exhaust |
+| Bloodfire Mantle | Rare | Power | 1 | At the end of your turn, lose 1 HP and deal 7 damage to ALL enemies. |
+| Grand Melee | Rare | Attack | 3 | 3 damage ×7 to all enemies |
+| Warlord's Command | Rare | Skill | 2 | 2 Strength; Your next 2 Attack(s) this turn are played twice.; Exhaust |
+| Iron Furnace | Rare | Power | 2 | Whenever you draw a Status or Curse, deal 10 damage to ALL enemies. |
+| Siege Tomorrow | Rare | Skill | 2 | 3 Energy next turn; 20 Block next turn; Exhaust |
 
 ## Mage
 
@@ -161,6 +206,51 @@ Each class has 75 cards: 3 basics and 72 rewards (20 common, 36 uncommon, 16 rar
 | Infinite Script | Rare | Power | 2 | At the start of your turn, lose 2 HP and draw 2 card(s). |
 | Arcane Conductor | Rare | Power | 2 | 3 HP cost; At the start of your turn, gain 1 Energy. |
 | Astral Mantle | Rare | Power | 2 | Whenever you play a card, gain 1 Block. |
+| Scripted Spark | Common | Attack | 1 | 5 damage; 1 draw; 3 Block next turn |
+| Warding Verse | Common | Skill | 0 | 3 Block; Retain |
+| Page Turner | Common | Skill | 1 | 1 draw; 2 draw next turn |
+| Slow Incantation | Common | Skill | 1 | 1 draw next turn; 1 Energy next turn; 5 Block next turn |
+| Ice Cocoon | Common | Skill | 1 | 4 Block; 8 Block next turn |
+| Tomorrow's Flame | Common | Attack | 1 | 7 damage; 1 Energy next turn; Retain |
+| Ash Reading | Common | Skill | 0 | 1 draw; 1 HP cost; Exhaust 1 card(s) from your hand. |
+| Paper Shield | Common | Skill | 1 | 11 Block; Exhaust |
+| Fading Star | Common | Attack | 0 | 7 damage; Ethereal |
+| Stored Ember | Common | Attack | 1 | 5 damage; Whenever this is Retained, gain 3 damage this combat.; Retain |
+| Crystal Seed | Common | Skill | 1 | 4 Block; Whenever this is Retained, gain 3 Block this combat.; Retain |
+| Patient Study | Common | Skill | 1 | 2 draw; Retain; Exhaust |
+| Corrosive Ink | Common | Attack | 1 | 4 damage; 4 Poison |
+| Chilling Words | Common | Skill | 1 | 5 Block; 2 Weak |
+| Rune Scatter | Common | Attack | 1 | 2 damage ×4; Hits target random enemies. |
+| Woven Incantation | Uncommon | Power | 1 | Every third Skill you play each turn grants 4 Block. |
+| Arcane Meter | Uncommon | Power | 1 | Every third Skill you play each turn grants 1 Energy NEXT turn. |
+| Triple Formula | Uncommon | Skill | 1 | 2 draw; Gain 1 Arcane Charge(s), up to the normal charge cap.; Exhaust |
+| Conduit Lance | Uncommon | Attack | 2 | 4 damage ×5 |
+| Bookmark Ward | Uncommon | Skill | 1 | 5 Block; Retain your hand for 1 turn(s). |
+| Hourglass Array | Uncommon | Skill | 2 | 3 draw next turn; 2 Energy next turn; Exhaust |
+| Delayed Nova | Uncommon | Attack | 2 | 12 damage to all enemies; 8 Block next turn |
+| Winter Reserve | Uncommon | Skill | 1 | 14 Block next turn; Retain |
+| Ashen Chorus | Uncommon | Power | 1 | Whenever you Exhaust a card, deal 2 damage to ALL enemies. |
+| Spell Pyre | Uncommon | Skill | 1 | Exhaust all non-Attacks in your hand. Gain 4 Block per card Exhausted. |
+| Phoenix Notes | Uncommon | Skill | 1 | 2 draw next turn; Return 1 card(s) from your discard pile to your hand.; Exhaust |
+| Ashbolt | Uncommon | Attack | 2 | 6 damage; Deal 3 additional damage per card in your Exhaust pile (up to 10 cards). |
+| Tower Library | Uncommon | Power | 2 | Whenever a card is Retained, reduce its cost by 1 this combat. |
+| Wax Seal | Uncommon | Skill | 1 | 4 Block; Cards currently in your hand cost 1 less this turn.; Exhaust |
+| Moonstone Lance | Uncommon | Attack | 2 | 9 damage; Whenever this is Retained, gain 6 damage this combat.; Retain |
+| Geode Ward | Uncommon | Skill | 2 | 9 Block; Whenever this is Retained, gain 5 Block this combat.; Retain |
+| Hex Rain | Uncommon | Attack | 2 | 6 damage to all enemies; 2 Weak to all enemies |
+| Viper Script | Uncommon | Skill | 1 | 1 Vulnerable; 4 Poison |
+| Alchemist's Patience | Uncommon | Power | 1 | At the start of your turn, apply 2 Poison to ALL enemies. |
+| Rune Familiar | Uncommon | Power | 2 | Whenever you play a Power, draw 1 card(s). |
+| Archmage Thesis | Rare | Power | 2 | Every third Skill you play each turn grants 8 Block. |
+| Mirror Manuscript | Rare | Skill | 1 | Your next 1 Skill(s) this turn are played twice.; Retain; Exhaust |
+| Comet Calendar | Rare | Skill | 2 | 4 draw next turn; 3 Energy next turn; Exhaust |
+| Stasis Dome | Rare | Skill | 2 | 12 Block; 20 Block next turn; Exhaust |
+| Book of Embers | Rare | Power | 2 | Whenever you Exhaust a card, deal 5 damage to ALL enemies. |
+| Returned Prophecy | Rare | Skill | 2 | 3 draw; Return a card from your Exhaust pile to your hand.; Exhaust |
+| Eternal Bookmark | Rare | Power | 2 | At the end of your turn, Retain up to 3 card(s). |
+| Sun in a Bottle | Rare | Attack | 3 | 18 damage to all enemies; Whenever this is Retained, gain 8 damage this combat.; Retain |
+| Plague Constellation | Rare | Power | 2 | At the start of your turn, apply 4 Poison to ALL enemies. |
+| Grand Incantation | Rare | Attack | 3 | 4 damage ×8; Hits target random enemies.; Exhaust |
 
 ## Ranger
 
@@ -241,3 +331,48 @@ Each class has 75 cards: 3 basics and 72 rewards (20 common, 36 uncommon, 16 rar
 | Unseen Hunter | Rare | Power | 2 | Whenever you play a card, gain 2 Block. |
 | Endless Pursuit | Rare | Power | 3 | At the start of your turn, gain 2 Strength. |
 | Perfect Timing | Rare | Power | 2 | 3 HP cost; At the start of your turn, gain 1 Energy. |
+| Loose Fletching | Common | Attack | 1 | 6 damage; When discarded during your turn, draw 1 card(s). |
+| Pocket Wind | Common | Skill | 1 | 5 Block; When discarded during your turn, gain 1 Energy. |
+| Shed Cloak | Common | Skill | 1 | 6 Block; When discarded during your turn, gain 5 Block. |
+| Sort Quiver | Common | Skill | 0 | 2 draw; 2 discard |
+| Quick Exchange | Common | Attack | 1 | 8 damage; 1 draw; 1 discard |
+| Trail Reset | Common | Skill | 1 | Discard your hand, then draw that many cards. |
+| Hissing Arrow | Common | Attack | 1 | 7 damage; 3 Poison |
+| Toxic Snare | Common | Skill | 1 | 1 Weak; 3 Poison |
+| Silent Mixture | Common | Skill | 1 | 4 Poison; Retain |
+| Held Shot | Common | Attack | 1 | 6 damage; Whenever this is Retained, gain 3 damage this combat.; Retain |
+| Hidden Buckler | Common | Skill | 1 | 5 Block; Whenever this is Retained, gain 2 Block this combat.; Retain |
+| Pine Needle | Common | Attack | 0 | 3 damage; 1 Poison |
+| Running Shot | Common | Attack | 1 | 5 damage; 1 draw next turn |
+| Trail Sign | Common | Skill | 0 | 2 Block; Scry 2. |
+| Marked Path | Common | Attack | 1 | 6 damage; Scry 2. |
+| Light Pack | Uncommon | Power | 1 | Whenever you discard a card during your turn, gain 3 Block. |
+| Tailwind | Uncommon | Power | 1 | The first time you discard a card each turn, gain 1 Energy. |
+| Spring Nock | Uncommon | Attack | 1 | 8 damage; When discarded during your turn, draw 2 card(s). |
+| Spare Provisions | Uncommon | Skill | 1 | 1 draw; When discarded during your turn, gain 2 Energy.; Exhaust |
+| Briar Retreat | Uncommon | Skill | 2 | 14 Block; 2 draw; 2 discard |
+| Quiver Repack | Uncommon | Skill | 1 | 6 Block next turn; Discard your hand, then draw that many cards. |
+| Scatter Supplies | Uncommon | Attack | 1 | 5 damage to all enemies; 1 discard |
+| Mire Volley | Uncommon | Attack | 2 | 3 damage ×3; 4 Poison |
+| Spreading Blight | Uncommon | Skill | 1 | 1 Weak to all enemies; 3 Poison to all enemies |
+| Serpent Trail | Uncommon | Power | 1 | At the start of your turn, apply 2 Poison to ALL enemies. |
+| Venom Reserve | Uncommon | Skill | 1 | Double Poison on the target.; Retain; Exhaust |
+| Perch Discipline | Uncommon | Power | 2 | Whenever a card is Retained, reduce its cost by 1 this combat. |
+| Eagle Focus | Uncommon | Attack | 2 | 10 damage; Whenever this is Retained, gain 5 damage this combat.; Retain |
+| Camouflage Nest | Uncommon | Skill | 1 | 7 Block; Whenever this is Retained, gain 4 Block this combat.; Retain |
+| Conserve Arrows | Uncommon | Skill | 1 | 6 Block; Retain your hand for 1 turn(s). |
+| Thread the Needle | Uncommon | Attack | 0 | 2 damage ×2 |
+| Pursuit Volley | Uncommon | Attack | 1 | 2 damage ×2; Deal 4 additional damage if the target is Vulnerable or Poisoned. |
+| Tracking Rhythm | Uncommon | Power | 1 | Every third Attack you play each turn grants 3 Vigor for your NEXT Attack. |
+| Owl Watch | Uncommon | Power | 1 | At the start of your turn, Scry 3. |
+| Chosen Trail | Uncommon | Attack | 2 | 15 damage; Scry 3.; Retain |
+| Empty Quiver | Rare | Skill | 1 | 1 Energy; Discard your hand, then draw that many cards.; Exhaust |
+| Ghost Luggage | Rare | Power | 2 | Whenever you discard a card during your turn, gain 6 Block. |
+| Falcon Courier | Rare | Attack | 2 | 14 damage; When discarded during your turn, gain 3 Energy.; Exhaust |
+| Venom Eclipse | Rare | Skill | 2 | 10 Poison to all enemies; Exhaust |
+| King Cobra | Rare | Power | 2 | At the start of your turn, apply 4 Poison to ALL enemies. |
+| Long Vigil | Rare | Attack | 3 | 20 damage; Whenever this is Retained, gain 9 damage this combat.; Retain |
+| Ancient Canopy | Rare | Skill | 2 | 15 Block; Whenever this is Retained, gain 7 Block this combat.; Retain |
+| Arrow Cascade | Rare | Attack | 2 | Deal 3 damage for each OTHER Attack played this turn to all enemies.; Exhaust |
+| Hunt Without End | Rare | Power | 2 | Every third Attack you play each turn grants 6 Vigor for your NEXT Attack. |
+| Forest Oracle | Rare | Power | 2 | Whenever you Scry, gain 6 Block. |

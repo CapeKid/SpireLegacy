@@ -6,6 +6,14 @@ import com.megacrit.cardcrawl.powers.*;
 public final class CardPowers {
     public static AbstractPower create(String effect,AbstractCreature owner,int n){
         switch(effect){
+            case "exhaust_damage":case "skill_block":case "skill_energy":case "discard_block":case "discard_energy":case "attack_vigor":case "power_draw":case "scry_block":return new BuildPower(effect,owner,n);
+            case "evolve":return new EvolvePower(owner,n);
+            case "fire_breathing":return new FireBreathingPower(owner,n);
+            case "combust":return new CombustPower(owner,1,n);
+            case "establishment":return new com.megacrit.cardcrawl.powers.watcher.EstablishmentPower(owner,n);
+            case "burst":return new BurstPower(owner,n);
+            case "noxious":return new NoxiousFumesPower(owner,n);
+            case "foresight":return new com.megacrit.cardcrawl.powers.watcher.ForesightPower(owner,n);
             case "reservoir":case "quiver":return new HeirEnginePower(effect,n);
             case "metallicize":return new MetallicizePower(owner,n);
             case "juggernaut":return new JuggernautPower(owner,n);

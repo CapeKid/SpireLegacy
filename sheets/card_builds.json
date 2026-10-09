@@ -1,0 +1,812 @@
+[
+  {
+    "id": "knight_buckler_jab",
+    "classId": "knight",
+    "build": "armor",
+    "role": "bridge"
+  },
+  {
+    "id": "knight_layered_mail",
+    "classId": "knight",
+    "build": "armor",
+    "role": "setup"
+  },
+  {
+    "id": "knight_shield_drill",
+    "classId": "knight",
+    "build": "armor",
+    "role": "support"
+  },
+  {
+    "id": "knight_hot_rivets",
+    "classId": "knight",
+    "build": "exhaust",
+    "role": "bridge"
+  },
+  {
+    "id": "knight_burning_orders",
+    "classId": "knight",
+    "build": "exhaust",
+    "role": "support"
+  },
+  {
+    "id": "knight_blood_oath",
+    "classId": "knight",
+    "build": "blood",
+    "role": "setup"
+  },
+  {
+    "id": "knight_grit_teeth",
+    "classId": "knight",
+    "build": "blood",
+    "role": "bridge"
+  },
+  {
+    "id": "knight_redoubled_blow",
+    "classId": "knight",
+    "build": "strength",
+    "role": "payoff"
+  },
+  {
+    "id": "knight_measured_cut",
+    "classId": "knight",
+    "build": "strength",
+    "role": "support"
+  },
+  {
+    "id": "knight_splintered_pike",
+    "classId": "knight",
+    "build": "status",
+    "role": "setup"
+  },
+  {
+    "id": "knight_heavy_harness",
+    "classId": "knight",
+    "build": "status",
+    "role": "setup"
+  },
+  {
+    "id": "knight_rationed_assault",
+    "classId": "knight",
+    "build": "delayed",
+    "role": "bridge"
+  },
+  {
+    "id": "knight_stand_ready",
+    "classId": "knight",
+    "build": "delayed",
+    "role": "support"
+  },
+  {
+    "id": "knight_flanking_march",
+    "classId": "knight",
+    "build": "delayed",
+    "role": "bridge"
+  },
+  {
+    "id": "knight_siege_volley",
+    "classId": "knight",
+    "build": "strength",
+    "role": "payoff"
+  },
+  {
+    "id": "knight_cathedral_guard",
+    "classId": "knight",
+    "build": "armor",
+    "role": "setup"
+  },
+  {
+    "id": "knight_rampart_rush",
+    "classId": "knight",
+    "build": "armor",
+    "role": "payoff"
+  },
+  {
+    "id": "knight_guard_rotation",
+    "classId": "knight",
+    "build": "armor",
+    "role": "support"
+  },
+  {
+    "id": "knight_armor_cache",
+    "classId": "knight",
+    "build": "delayed",
+    "role": "setup"
+  },
+  {
+    "id": "knight_cast_off",
+    "classId": "knight",
+    "build": "exhaust",
+    "role": "enabler"
+  },
+  {
+    "id": "knight_forge_sparks",
+    "classId": "knight",
+    "build": "exhaust",
+    "role": "payoff"
+  },
+  {
+    "id": "knight_ashen_advance",
+    "classId": "knight",
+    "build": "exhaust",
+    "role": "payoff"
+  },
+  {
+    "id": "knight_salvage_guard",
+    "classId": "knight",
+    "build": "exhaust",
+    "role": "payoff"
+  },
+  {
+    "id": "knight_blood_temper",
+    "classId": "knight",
+    "build": "blood",
+    "role": "bridge"
+  },
+  {
+    "id": "knight_crimson_banner",
+    "classId": "knight",
+    "build": "blood",
+    "role": "payoff"
+  },
+  {
+    "id": "knight_painful_lesson",
+    "classId": "knight",
+    "build": "blood",
+    "role": "support"
+  },
+  {
+    "id": "knight_warrior_feast",
+    "classId": "knight",
+    "build": "blood",
+    "role": "recovery"
+  },
+  {
+    "id": "knight_serrated_barrage",
+    "classId": "knight",
+    "build": "strength",
+    "role": "payoff"
+  },
+  {
+    "id": "knight_weapons_master",
+    "classId": "knight",
+    "build": "strength",
+    "role": "setup"
+  },
+  {
+    "id": "knight_focused_defense",
+    "classId": "knight",
+    "build": "strength",
+    "role": "support"
+  },
+  {
+    "id": "knight_scar_tissue",
+    "classId": "knight",
+    "build": "status",
+    "role": "payoff"
+  },
+  {
+    "id": "knight_furnace_breath",
+    "classId": "knight",
+    "build": "status",
+    "role": "payoff"
+  },
+  {
+    "id": "knight_jagged_charge",
+    "classId": "knight",
+    "build": "status",
+    "role": "setup"
+  },
+  {
+    "id": "knight_ready_arsenal",
+    "classId": "knight",
+    "build": "delayed",
+    "role": "payoff"
+  },
+  {
+    "id": "knight_patient_riposte",
+    "classId": "knight",
+    "build": "retained",
+    "role": "payoff"
+  },
+  {
+    "id": "knight_castle_heart",
+    "classId": "knight",
+    "build": "armor",
+    "role": "payoff"
+  },
+  {
+    "id": "knight_iron_avalanche",
+    "classId": "knight",
+    "build": "armor",
+    "role": "payoff"
+  },
+  {
+    "id": "knight_phoenix_forge",
+    "classId": "knight",
+    "build": "exhaust",
+    "role": "payoff"
+  },
+  {
+    "id": "knight_ancestral_salvage",
+    "classId": "knight",
+    "build": "exhaust",
+    "role": "support"
+  },
+  {
+    "id": "knight_king_s_ransom",
+    "classId": "knight",
+    "build": "blood",
+    "role": "payoff"
+  },
+  {
+    "id": "knight_bloodfire_mantle",
+    "classId": "knight",
+    "build": "blood",
+    "role": "payoff"
+  },
+  {
+    "id": "knight_grand_melee",
+    "classId": "knight",
+    "build": "strength",
+    "role": "payoff"
+  },
+  {
+    "id": "knight_warlord_s_command",
+    "classId": "knight",
+    "build": "strength",
+    "role": "support"
+  },
+  {
+    "id": "knight_iron_furnace",
+    "classId": "knight",
+    "build": "status",
+    "role": "payoff"
+  },
+  {
+    "id": "knight_siege_tomorrow",
+    "classId": "knight",
+    "build": "delayed",
+    "role": "payoff"
+  },
+  {
+    "id": "mage_scripted_spark",
+    "classId": "mage",
+    "build": "sequencing",
+    "role": "bridge"
+  },
+  {
+    "id": "mage_warding_verse",
+    "classId": "mage",
+    "build": "sequencing",
+    "role": "enabler"
+  },
+  {
+    "id": "mage_page_turner",
+    "classId": "mage",
+    "build": "sequencing",
+    "role": "support"
+  },
+  {
+    "id": "mage_slow_incantation",
+    "classId": "mage",
+    "build": "delayed",
+    "role": "setup"
+  },
+  {
+    "id": "mage_ice_cocoon",
+    "classId": "mage",
+    "build": "delayed",
+    "role": "setup"
+  },
+  {
+    "id": "mage_tomorrow_s_flame",
+    "classId": "mage",
+    "build": "delayed",
+    "role": "bridge"
+  },
+  {
+    "id": "mage_ash_reading",
+    "classId": "mage",
+    "build": "exhaust",
+    "role": "enabler"
+  },
+  {
+    "id": "mage_paper_shield",
+    "classId": "mage",
+    "build": "exhaust",
+    "role": "bridge"
+  },
+  {
+    "id": "mage_fading_star",
+    "classId": "mage",
+    "build": "exhaust",
+    "role": "enabler"
+  },
+  {
+    "id": "mage_stored_ember",
+    "classId": "mage",
+    "build": "retained",
+    "role": "payoff"
+  },
+  {
+    "id": "mage_crystal_seed",
+    "classId": "mage",
+    "build": "retained",
+    "role": "payoff"
+  },
+  {
+    "id": "mage_patient_study",
+    "classId": "mage",
+    "build": "retained",
+    "role": "support"
+  },
+  {
+    "id": "mage_corrosive_ink",
+    "classId": "mage",
+    "build": "debuff",
+    "role": "bridge"
+  },
+  {
+    "id": "mage_chilling_words",
+    "classId": "mage",
+    "build": "debuff",
+    "role": "support"
+  },
+  {
+    "id": "mage_rune_scatter",
+    "classId": "mage",
+    "build": "sequencing",
+    "role": "payoff"
+  },
+  {
+    "id": "mage_woven_incantation",
+    "classId": "mage",
+    "build": "sequencing",
+    "role": "payoff"
+  },
+  {
+    "id": "mage_arcane_meter",
+    "classId": "mage",
+    "build": "sequencing",
+    "role": "payoff"
+  },
+  {
+    "id": "mage_triple_formula",
+    "classId": "mage",
+    "build": "sequencing",
+    "role": "enabler"
+  },
+  {
+    "id": "mage_conduit_lance",
+    "classId": "mage",
+    "build": "sequencing",
+    "role": "payoff"
+  },
+  {
+    "id": "mage_bookmark_ward",
+    "classId": "mage",
+    "build": "sequencing",
+    "role": "bridge"
+  },
+  {
+    "id": "mage_hourglass_array",
+    "classId": "mage",
+    "build": "delayed",
+    "role": "setup"
+  },
+  {
+    "id": "mage_delayed_nova",
+    "classId": "mage",
+    "build": "delayed",
+    "role": "bridge"
+  },
+  {
+    "id": "mage_winter_reserve",
+    "classId": "mage",
+    "build": "delayed",
+    "role": "support"
+  },
+  {
+    "id": "mage_ashen_chorus",
+    "classId": "mage",
+    "build": "exhaust",
+    "role": "payoff"
+  },
+  {
+    "id": "mage_spell_pyre",
+    "classId": "mage",
+    "build": "exhaust",
+    "role": "enabler"
+  },
+  {
+    "id": "mage_phoenix_notes",
+    "classId": "mage",
+    "build": "exhaust",
+    "role": "support"
+  },
+  {
+    "id": "mage_ashbolt",
+    "classId": "mage",
+    "build": "exhaust",
+    "role": "payoff"
+  },
+  {
+    "id": "mage_tower_library",
+    "classId": "mage",
+    "build": "retained",
+    "role": "payoff"
+  },
+  {
+    "id": "mage_wax_seal",
+    "classId": "mage",
+    "build": "retained",
+    "role": "support"
+  },
+  {
+    "id": "mage_moonstone_lance",
+    "classId": "mage",
+    "build": "retained",
+    "role": "payoff"
+  },
+  {
+    "id": "mage_geode_ward",
+    "classId": "mage",
+    "build": "retained",
+    "role": "payoff"
+  },
+  {
+    "id": "mage_hex_rain",
+    "classId": "mage",
+    "build": "debuff",
+    "role": "enabler"
+  },
+  {
+    "id": "mage_viper_script",
+    "classId": "mage",
+    "build": "debuff",
+    "role": "setup"
+  },
+  {
+    "id": "mage_alchemist_s_patience",
+    "classId": "mage",
+    "build": "debuff",
+    "role": "payoff"
+  },
+  {
+    "id": "mage_rune_familiar",
+    "classId": "mage",
+    "build": "sequencing",
+    "role": "support"
+  },
+  {
+    "id": "mage_archmage_thesis",
+    "classId": "mage",
+    "build": "sequencing",
+    "role": "payoff"
+  },
+  {
+    "id": "mage_mirror_manuscript",
+    "classId": "mage",
+    "build": "sequencing",
+    "role": "payoff"
+  },
+  {
+    "id": "mage_comet_calendar",
+    "classId": "mage",
+    "build": "delayed",
+    "role": "payoff"
+  },
+  {
+    "id": "mage_stasis_dome",
+    "classId": "mage",
+    "build": "delayed",
+    "role": "payoff"
+  },
+  {
+    "id": "mage_book_of_embers",
+    "classId": "mage",
+    "build": "exhaust",
+    "role": "payoff"
+  },
+  {
+    "id": "mage_returned_prophecy",
+    "classId": "mage",
+    "build": "exhaust",
+    "role": "support"
+  },
+  {
+    "id": "mage_eternal_bookmark",
+    "classId": "mage",
+    "build": "retained",
+    "role": "support"
+  },
+  {
+    "id": "mage_sun_in_a_bottle",
+    "classId": "mage",
+    "build": "retained",
+    "role": "payoff"
+  },
+  {
+    "id": "mage_plague_constellation",
+    "classId": "mage",
+    "build": "debuff",
+    "role": "payoff"
+  },
+  {
+    "id": "mage_grand_incantation",
+    "classId": "mage",
+    "build": "sequencing",
+    "role": "payoff"
+  },
+  {
+    "id": "ranger_loose_fletching",
+    "classId": "ranger",
+    "build": "discard",
+    "role": "payoff"
+  },
+  {
+    "id": "ranger_pocket_wind",
+    "classId": "ranger",
+    "build": "discard",
+    "role": "payoff"
+  },
+  {
+    "id": "ranger_shed_cloak",
+    "classId": "ranger",
+    "build": "discard",
+    "role": "payoff"
+  },
+  {
+    "id": "ranger_sort_quiver",
+    "classId": "ranger",
+    "build": "discard",
+    "role": "enabler"
+  },
+  {
+    "id": "ranger_quick_exchange",
+    "classId": "ranger",
+    "build": "discard",
+    "role": "enabler"
+  },
+  {
+    "id": "ranger_trail_reset",
+    "classId": "ranger",
+    "build": "discard",
+    "role": "enabler"
+  },
+  {
+    "id": "ranger_hissing_arrow",
+    "classId": "ranger",
+    "build": "poison",
+    "role": "bridge"
+  },
+  {
+    "id": "ranger_toxic_snare",
+    "classId": "ranger",
+    "build": "poison",
+    "role": "support"
+  },
+  {
+    "id": "ranger_silent_mixture",
+    "classId": "ranger",
+    "build": "poison",
+    "role": "setup"
+  },
+  {
+    "id": "ranger_held_shot",
+    "classId": "ranger",
+    "build": "retained",
+    "role": "payoff"
+  },
+  {
+    "id": "ranger_hidden_buckler",
+    "classId": "ranger",
+    "build": "retained",
+    "role": "payoff"
+  },
+  {
+    "id": "ranger_pine_needle",
+    "classId": "ranger",
+    "build": "chain",
+    "role": "enabler"
+  },
+  {
+    "id": "ranger_running_shot",
+    "classId": "ranger",
+    "build": "chain",
+    "role": "bridge"
+  },
+  {
+    "id": "ranger_trail_sign",
+    "classId": "ranger",
+    "build": "scry",
+    "role": "enabler"
+  },
+  {
+    "id": "ranger_marked_path",
+    "classId": "ranger",
+    "build": "scry",
+    "role": "bridge"
+  },
+  {
+    "id": "ranger_light_pack",
+    "classId": "ranger",
+    "build": "discard",
+    "role": "payoff"
+  },
+  {
+    "id": "ranger_tailwind",
+    "classId": "ranger",
+    "build": "discard",
+    "role": "payoff"
+  },
+  {
+    "id": "ranger_spring_nock",
+    "classId": "ranger",
+    "build": "discard",
+    "role": "payoff"
+  },
+  {
+    "id": "ranger_spare_provisions",
+    "classId": "ranger",
+    "build": "discard",
+    "role": "payoff"
+  },
+  {
+    "id": "ranger_briar_retreat",
+    "classId": "ranger",
+    "build": "discard",
+    "role": "enabler"
+  },
+  {
+    "id": "ranger_quiver_repack",
+    "classId": "ranger",
+    "build": "discard",
+    "role": "enabler"
+  },
+  {
+    "id": "ranger_scatter_supplies",
+    "classId": "ranger",
+    "build": "discard",
+    "role": "enabler"
+  },
+  {
+    "id": "ranger_mire_volley",
+    "classId": "ranger",
+    "build": "poison",
+    "role": "bridge"
+  },
+  {
+    "id": "ranger_spreading_blight",
+    "classId": "ranger",
+    "build": "poison",
+    "role": "enabler"
+  },
+  {
+    "id": "ranger_serpent_trail",
+    "classId": "ranger",
+    "build": "poison",
+    "role": "payoff"
+  },
+  {
+    "id": "ranger_venom_reserve",
+    "classId": "ranger",
+    "build": "poison",
+    "role": "payoff"
+  },
+  {
+    "id": "ranger_perch_discipline",
+    "classId": "ranger",
+    "build": "retained",
+    "role": "payoff"
+  },
+  {
+    "id": "ranger_eagle_focus",
+    "classId": "ranger",
+    "build": "retained",
+    "role": "payoff"
+  },
+  {
+    "id": "ranger_camouflage_nest",
+    "classId": "ranger",
+    "build": "retained",
+    "role": "payoff"
+  },
+  {
+    "id": "ranger_conserve_arrows",
+    "classId": "ranger",
+    "build": "retained",
+    "role": "support"
+  },
+  {
+    "id": "ranger_thread_the_needle",
+    "classId": "ranger",
+    "build": "chain",
+    "role": "enabler"
+  },
+  {
+    "id": "ranger_pursuit_volley",
+    "classId": "ranger",
+    "build": "chain",
+    "role": "payoff"
+  },
+  {
+    "id": "ranger_tracking_rhythm",
+    "classId": "ranger",
+    "build": "chain",
+    "role": "payoff"
+  },
+  {
+    "id": "ranger_owl_watch",
+    "classId": "ranger",
+    "build": "scry",
+    "role": "support"
+  },
+  {
+    "id": "ranger_chosen_trail",
+    "classId": "ranger",
+    "build": "scry",
+    "role": "bridge"
+  },
+  {
+    "id": "ranger_empty_quiver",
+    "classId": "ranger",
+    "build": "discard",
+    "role": "payoff"
+  },
+  {
+    "id": "ranger_ghost_luggage",
+    "classId": "ranger",
+    "build": "discard",
+    "role": "payoff"
+  },
+  {
+    "id": "ranger_falcon_courier",
+    "classId": "ranger",
+    "build": "discard",
+    "role": "payoff"
+  },
+  {
+    "id": "ranger_venom_eclipse",
+    "classId": "ranger",
+    "build": "poison",
+    "role": "payoff"
+  },
+  {
+    "id": "ranger_king_cobra",
+    "classId": "ranger",
+    "build": "poison",
+    "role": "payoff"
+  },
+  {
+    "id": "ranger_long_vigil",
+    "classId": "ranger",
+    "build": "retained",
+    "role": "payoff"
+  },
+  {
+    "id": "ranger_ancient_canopy",
+    "classId": "ranger",
+    "build": "retained",
+    "role": "payoff"
+  },
+  {
+    "id": "ranger_arrow_cascade",
+    "classId": "ranger",
+    "build": "chain",
+    "role": "payoff"
+  },
+  {
+    "id": "ranger_hunt_without_end",
+    "classId": "ranger",
+    "build": "chain",
+    "role": "payoff"
+  },
+  {
+    "id": "ranger_forest_oracle",
+    "classId": "ranger",
+    "build": "scry",
+    "role": "payoff"
+  }
+]

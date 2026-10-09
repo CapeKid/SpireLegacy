@@ -70,5 +70,11 @@
     "id": "trait_tooltips",
     "implementation": "TraitTips.render",
     "api": "PostRenderSubscriber"
+  },
+  {
+    "id": "discard_builds",
+    "api": "GameActionManager.incrementDiscard(boolean)",
+    "system": "lineage",
+    "implementation": "DiscardBuildPatch.after"
   }
 ]

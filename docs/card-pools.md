@@ -1,32 +1,49 @@
-# Full-sized class pools
+# Expanded class libraries
 
-Version 0.2.0 expands Knight, Mage and Ranger to **75 cards each**: three basics, 20 commons, 36 uncommons and 16 rares. The count and rarity split match the Ironclad in the owned regular Slay the Spire 1 installation. Each class has 72 cards available to rewards, shops and card transformations. The nine existing starter cards and the class-specific starting decks retain their identities and inherited gene behavior.
+Version 0.3.0 contains **120 cards per class, 360 total**. Each Knight, Mage or Ranger draws exclusively from that class's own **117 reward/shop cards**: 35 common, 56 uncommon and 26 rare, alongside three basics. This is 45 additional cards per class over 0.2.0, a 60% larger individual library. The other classes' cards do not contribute to an heir's ordinary draft choices.
 
-The expansion adds 188 original cards. Each card has a distinct complete rules combination within its class, original effect-based art and an upgrade. [The catalogue](card-catalogue.md) lists all 225 base cards. Sheets in `sheets/cards.json`, `power_effects.json`, `special_effects.json` and `pool_targets.json` are the authoring sources. `card_art.json` records the individual generation prompts and verified resource hashes.
+All 225 existing cards remain available with their IDs, starter genetics and save behavior preserved. The 135 additions have individual illustrations, upgrades and authored build roles. [The catalogue](card-catalogue.md) lists all 360 cards. `sheets/card_builds.json` identifies every addition's intended build and role; these are design labels rather than a guarantee of a winning deck.
 
-## Knight builds
+## Knight choices
 
-- **Block and retaliation:** Tower Guard, Bulwark and Hold the Line establish defense. Shield Slam converts current Block into damage; Battle Rhythm damages an enemy whenever Block is gained; Living Fortress preserves Block between turns.
-- **Exhaust engines:** Reforge and Second Wind remove spent cards. Burnished Legacy adds Block on Exhaust, and Forge Memory draws on Exhaust. Arms Vault retrieves an exhausted card.
-- **Blood and Strength:** Blood Price and Bloodied Blade trade HP for tempo. Forged in Pain turns card HP loss into Strength. Field Rations and Battlefield Recovery support the HP cost.
-- **Multi-hit counters:** Iron Resolve and Tempered Steel prepare extra attack damage. Twin Cut, Sword Dance and Meteor Hammer use it across several hits, alongside the class's Counterguard mechanic.
+| Strategy | Added enablers/support | Added payoffs | Existing connections |
+| --- | --- | --- | --- |
+| Armor | Buckler Jab, Layered Mail, Cathedral Guard, Guard Rotation | Rampart Rush, Castle Heart, Iron Avalanche | Shield Slam, Battle Rhythm, Living Fortress |
+| Exhaust | Shield Drill, Hot Rivets, Burning Orders, Cast Off, Ancestral Salvage | Forge Sparks, Ashen Advance, Salvage Guard, Phoenix Forge | Burnished Legacy, Forge Memory, Arms Vault |
+| Blood costs | Blood Oath, Grit Teeth, Blood Temper, Painful Lesson, Warrior Feast | Crimson Banner, King's Ransom, Bloodfire Mantle | Forged in Pain, Blood Price, Battlefield Recovery |
+| Multi-hit Strength | Measured Cut, Weapons Master, Focused Defense, Warlord's Command | Redoubled Blow, Siege Volley, Serrated Barrage, Grand Melee | Twin Cut, Sword Dance, Ancestral Fury |
+| Status fuel | Splintered Pike, Heavy Harness, Jagged Charge | Scar Tissue, Furnace Breath, Iron Furnace | Exhausting Wounds also feeds exhaust powers |
+| Delayed defense/tempo | Rationed Assault, Stand Ready, Flanking March, Armor Cache | Ready Arsenal, Siege Tomorrow | Reinforce, Brave Advance |
 
-## Mage builds
+Patient Riposte adds a retained Attack that grows over successive turns. Status-fuel cards offer larger immediate effects at the cost of Wounds; those become fuel for Evolve, Fire Breathing or exhaust engines.
 
-- **Arcane charge burst:** Kindle and Overcharge prepare charges. Arcane Reservoir strengthens them; Arcane Missile, Thunderchain and Spell Cascade deliver repeated hits.
-- **Spell chains:** Rune Storm rewards five-card turns. Spell Threads adds damage per play, Astral Mantle provides Block per play, and the draw and Energy cards keep the chain moving.
-- **Control and preparation:** Frost Ring, Frozen Spear and Crystal Shell handle enemy pressure. Spellweave prepares next-turn draw and Energy; Time Pocket retains the hand; Memory Prism retrieves a discarded spell.
-- **Poison and debuffs:** Witchfire, Venom Rune, Toxic Cloud and Soulfire supply Poison. Toxic Theory converts applied debuffs into immediate damage.
+## Mage choices
 
-## Ranger builds
+| Strategy | Added enablers/support | Added payoffs | Existing connections |
+| --- | --- | --- | --- |
+| Skill sequencing | Warding Verse, Page Turner, Triple Formula, Bookmark Ward, Rune Familiar | Woven Incantation, Arcane Meter, Archmage Thesis, Mirror Manuscript | Arcane Reservoir, Rune Storm, Spell Threads |
+| Delayed turns | Slow Incantation, Ice Cocoon, Tomorrow's Flame, Winter Reserve | Hourglass Array, Delayed Nova, Comet Calendar, Stasis Dome | Spellweave, Time Pocket, Mana Shield |
+| Exhaust spells | Ash Reading, Paper Shield, Fading Star, Spell Pyre, Phoenix Notes, Returned Prophecy | Ashen Chorus, Ashbolt, Book of Embers | Secret Thesis, Rekindle, Rune Scrub |
+| Retained spells | Patient Study, Tower Library, Wax Seal, Eternal Bookmark | Stored Ember, Crystal Seed, Moonstone Lance, Geode Ward, Sun in a Bottle | Rune Detonation, Memory Prism |
+| Poison/debuffs | Corrosive Ink, Chilling Words, Hex Rain, Viper Script | Alchemist's Patience, Plague Constellation | Toxic Theory, Venom Rune, Toxic Cloud |
+| Charge-powered hits | Scripted Spark, Rune Scatter, Conduit Lance, Grand Incantation | Charge multipliers apply across repeated hits | Kindle, Overcharge, Arcane Reservoir |
 
-- **Poison and precision:** Barbed Arrow, Razor Fletching and Black Arrow build Poison. Double Dose and Serpent Oil double it. Poisoned Arsenal adds Poison to unblocked attacks; Ambush and Assassinate reward marked targets.
-- **Hunter Rhythm:** Cheap attacks such as Quick Nock and Hidden Knife build the three-attack rhythm. Finishing Flurry scales with attacks played, while Endless Quiver improves rhythm draw.
-- **Discard and recovery:** Trail Sense, Reposition and Ranger Kit cycle cards. Escape Route gains Energy through discarding, Reclaim Arrows retrieves discarded cards, and Pocket Arsenal discounts the hand.
-- **Planning and defense:** Watch the Wind and Scouting use Scry to plan upcoming draws. Camouflage and Deep Cover can be retained; Measured Breath keeps chosen cards; Ghost Steps adds Block per card played.
+Third-Skill engines grant Block now or Energy next turn. Retained spells reward waiting, and Establishment reduces their combat cost. These encourage different timing from immediately spending charges on an Attack, while also allowing mixed decks.
 
-## Native integration
+## Ranger choices
 
-The larger pools restore ordinary Slay the Spire reward generation. The 0.1.9 reward-reroll replacement is removed. Question Card can offer four distinct rares from each class's sixteen-card rare pool. Shops, Prismatic Shard and other host reward modifiers use their native paths. Preflight rejects an undersized class pool, a missing shop tier, identical card mechanics within a class, duplicated illustrations or missing art.
+| Strategy | Added enablers/support | Added payoffs | Existing connections |
+| --- | --- | --- | --- |
+| Discard | Sort Quiver, Quick Exchange, Trail Reset, Briar Retreat, Quiver Repack, Scatter Supplies | Loose Fletching, Pocket Wind, Shed Cloak, Light Pack, Tailwind, Spring Nock, Spare Provisions, Empty Quiver, Ghost Luggage, Falcon Courier | Trail Sense, Reposition, Ranger Kit |
+| Poison | Hissing Arrow, Toxic Snare, Silent Mixture, Mire Volley, Spreading Blight | Serpent Trail, Venom Reserve, Venom Eclipse, King Cobra | Poisoned Arsenal, Double Dose, marked-target Attacks |
+| Retained shots/defense | Perch Discipline, Conserve Arrows | Held Shot, Hidden Buckler, Eagle Focus, Camouflage Nest, Long Vigil, Ancient Canopy | Measured Breath, Camouflage, Deep Cover |
+| Attack chains | Pine Needle, Running Shot, Thread the Needle | Pursuit Volley, Tracking Rhythm, Arrow Cascade, Hunt Without End | Hunter Rhythm, Finishing Flurry, Endless Quiver |
+| Scry planning | Trail Sign, Marked Path, Owl Watch, Chosen Trail | Forest Oracle grants Block each time Scry triggers | Watch the Wind, Scouting |
 
-Existing card IDs and family/save locations remain stable, so ongoing runs and manor progression can continue. New cards appear through normal rewards and shops. Balance across full runs will benefit from playtesting; the published build's regression checks cover pools, native rewards, shops, card creation/upgrades and representative combat effects.
+Discard payoffs trigger when a card is actually discarded during your turn. Ordinary end-turn discarding grants nothing. Tailwind pays once per turn; Light Pack pays per card. Tracking Rhythm's Vigor applies after the third Attack resolves, rewarding a fourth Attack. Forest Oracle connects deck filtering to defense.
+
+## Integration and limits
+
+Rewards, shops, transformations, upgrades and relic modifiers use native Slay the Spire behavior. Question Card chooses from 26 distinct class rares. The old small-pool reward replacement remains removed. Every addition belongs to one specific class.
+
+Preflight checks exact class/rarity counts, shop coverage, complete references, distinct within-class rules, added build roles, and unique verified illustrations. Native scenarios test discard, exhaust, retention/cost reduction, Skill and Attack sequencing, Scry and Wound interactions. Bigger pools make individual cards harder to find; common/uncommon support and existing-card connections give strategies multiple routes. Full-run balance and win-rate comparisons still require playtesting.

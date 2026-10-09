@@ -62,5 +62,45 @@
   {
     "id": "chain_damage",
     "summary": "Deal {n} damage for each OTHER Attack played this turn."
+  },
+  {
+    "id": "discard_draw",
+    "summary": "When discarded during your turn, draw {n} card(s)."
+  },
+  {
+    "id": "discard_energy",
+    "summary": "When discarded during your turn, gain {n} Energy."
+  },
+  {
+    "id": "discard_block",
+    "summary": "When discarded during your turn, gain {n} Block."
+  },
+  {
+    "id": "retain_damage",
+    "summary": "Whenever this is Retained, gain {n} damage this combat."
+  },
+  {
+    "id": "retain_block",
+    "summary": "Whenever this is Retained, gain {n} Block this combat."
+  },
+  {
+    "id": "refill_hand",
+    "summary": "Discard your hand, then draw that many cards."
+  },
+  {
+    "id": "wounds",
+    "summary": "Shuffle {n} Wound(s) into your draw pile."
+  },
+  {
+    "id": "exhaust_nonattacks",
+    "summary": "Exhaust all non-Attacks in your hand. Gain {n} Block per card Exhausted."
+  },
+  {
+    "id": "exhaust_damage",
+    "summary": "Deal {n} additional damage per card in your Exhaust pile (up to 10 cards)."
+  },
+  {
+    "id": "exhaust_block",
+    "summary": "Gain {n} Block per card in your Exhaust pile (up to 10 cards)."
   }
 ]

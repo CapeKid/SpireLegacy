@@ -55,6 +55,7 @@ public final class TestBridge {
                 else if(action.equals("issue6checks")){Issue6Checks.run();}
                 else if(action.equals("rewardchecks")){RewardChecks.run();}
                 else if(action.equals("expansionchecks")){ExpansionChecks.run();}
+                else if(action.equals("buildchecks")){BuildChecks.start();}
                 else if(action.equals("bossreward")){
                     HeirMod.heir().classId=cmd.get("classId").getAsString();HeirMod.heir().traits.clear();CardCrawlGame.dungeon.initializeCardPools();
                     AbstractDungeon.player.relics.clear();
@@ -104,6 +105,7 @@ public final class TestBridge {
                 System.out.println("HEIR TEST: "+action);
             }
             if(hoverX!=null&&hoverY!=null){com.megacrit.cardcrawl.helpers.input.InputHelper.mX=hoverX;com.megacrit.cardcrawl.helpers.input.InputHelper.mY=hoverY;}
+            BuildChecks.update();
             if(++frames%60==0){
                 JsonObject out=new JsonObject();out.addProperty("mode",String.valueOf(CardCrawlGame.mode));out.addProperty("menu",CardCrawlGame.mainMenuScreen==null?"none":String.valueOf(CardCrawlGame.mainMenuScreen.screen));out.addProperty("generation",HeirMod.profile.generation);out.addProperty("crowns",HeirMod.profile.crowns);out.addProperty("manor",Manor.open);
                 if(HeirMod.isHeir()&&AbstractDungeon.currMapNode!=null){out.addProperty("hp",AbstractDungeon.player.currentHealth);out.addProperty("maxHp",AbstractDungeon.player.maxHealth);out.addProperty("energy",com.megacrit.cardcrawl.ui.panels.EnergyPanel.totalCount);out.addProperty("floor",AbstractDungeon.floorNum);out.addProperty("room",AbstractDungeon.getCurrRoom().getClass().getSimpleName());out.addProperty("phase",String.valueOf(AbstractDungeon.getCurrRoom().phase));out.addProperty("screen",String.valueOf(AbstractDungeon.screen));out.addProperty("drawPile",AbstractDungeon.player.drawPile.size());out.addProperty("discardPile",AbstractDungeon.player.discardPile.size());out.addProperty("exhaustPile",AbstractDungeon.player.exhaustPile.size());out.addProperty("queuedCards",AbstractDungeon.actionManager.cardQueue.size());out.addProperty("queuedActions",AbstractDungeon.actionManager.actions.size());out.addProperty("currentAction",AbstractDungeon.actionManager.currentAction==null?"none":AbstractDungeon.actionManager.currentAction.getClass().getSimpleName());JsonArray cards=new JsonArray();for(AbstractCard c:AbstractDungeon.player.hand.group){JsonObject r=new JsonObject();r.addProperty("id",c.cardID);r.addProperty("cost",c.costForTurn);r.addProperty("damage",c.damage);r.addProperty("block",c.block);cards.add(r);}out.add("hand",cards);JsonArray enemies=new JsonArray();if(AbstractDungeon.getMonsters()!=null)for(AbstractMonster m:AbstractDungeon.getMonsters().monsters){JsonObject e=new JsonObject();e.addProperty("name",m.name);e.addProperty("hp",m.currentHealth);enemies.add(e);}out.add("enemies",enemies);}

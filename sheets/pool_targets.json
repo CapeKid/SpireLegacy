@@ -1,5 +1,29 @@
 [
-  {"id":"knight","reference":"Ironclad, owned StS1 regular build 10180494","basic":3,"common":20,"uncommon":36,"rare":16,"total":75},
-  {"id":"mage","reference":"Ironclad, owned StS1 regular build 10180494","basic":3,"common":20,"uncommon":36,"rare":16,"total":75},
-  {"id":"ranger","reference":"Ironclad, owned StS1 regular build 10180494","basic":3,"common":20,"uncommon":36,"rare":16,"total":75}
+  {
+    "id": "knight",
+    "reference": "Expanded class-specific library; 45 additions over 0.2.0",
+    "basic": 3,
+    "common": 35,
+    "uncommon": 56,
+    "rare": 26,
+    "total": 120
+  },
+  {
+    "id": "mage",
+    "reference": "Expanded class-specific library; 45 additions over 0.2.0",
+    "basic": 3,
+    "common": 35,
+    "uncommon": 56,
+    "rare": 26,
+    "total": 120
+  },
+  {
+    "id": "ranger",
+    "reference": "Expanded class-specific library; 45 additions over 0.2.0",
+    "basic": 3,
+    "common": 35,
+    "uncommon": 56,
+    "rare": 26,
+    "total": 120
+  }
 ]

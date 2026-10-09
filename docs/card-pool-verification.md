@@ -1,3 +1,21 @@
+# 0.3.0 expanded-build verification
+
+The final release registers 360 cards: 120 per class, with 117 reward/shop cards in each separate class library. Tests use the owned regular Windows Slay the Spire 1 build 10180494 and isolated game/family data.
+
+| Release check | Result |
+| --- | --- |
+| Constructors, copies, targeting and queued effects | 360 cards; 3,843 assertions |
+| Native card upgrades and trait-power construction | 360 upgrades; 63 traits |
+| Native reward generation | 600 calls; 4,680 assertions |
+| Native shops/class behavior | 2,019 assertions; three merchants |
+| Live engine scenarios | 102 assertions across 11 scenarios |
+
+The live scenarios play cards through the native card queue and wait for actions to finish. They verify per-card discard rewards, the manual-discard patch, once-per-turn Tailwind and its turn reset, exclusion of end-turn discards, exhaust-all-non-Attacks, exhaust-triggered area damage, exhausted-pile scaling/cap, native retained growth/Establishment, third-Skill Block and delayed Energy, third-Attack Vigor for the following Attack, Scry-triggered Block, complete hand refill and native Wound creation. Power factories also require a valid renderable flash icon.
+
+The exact final production JAR passed 3,843 combat/card assertions, including native library registration and membership of every one of the 117 reward cards in each class. All 360 upgrades, 600 native reward calls / 4,680 assertions, 2,019 shop/class checks / three merchants, and 102 live engine assertions passed. All 135 new illustrations were generated individually with built-in imagegen and reviewed in labeled class sheets; all 360 resource images passed dimensions, unique-hash and reference checks. Windows, Linux and Workshop archives contain the same JAR and exclude game files and saves. Full three-act balance playtesting and a physical Deck playthrough of the new card expansion remain outstanding. The existing Deck content-reader/bootstrap and save paths are unchanged.
+
+Release JAR SHA-256: `D5E6D9306F2C5044B7B250699F6B6A8B4CC908E990612254CADFACF2053BEFAD`. Native renderer samples: [Mage](../media/mage-cards-030.png), [Ranger](../media/ranger-cards-030.png). The native Ranger Question Card boss reward displays four distinct rares, including Forest Oracle and Venom Eclipse: [framebuffer](../media/boss-reward-030.png). The official uploader successfully updated existing private item 3816067184. Steam downloaded the same verified JAR. A subscribed-only launch with an empty local mods directory and fresh isolated data loaded 0.3.0, registered 360 cards, reached combat and produced four distinct Ranger boss rares with Question Card (Hunt Without End, Perfect Escape, Ghost Luggage and Snipe).
+
 # 0.2.0 card-pool verification
 
 The release JAR was built from strict preflight and tested in the owned Slay the Spire 1 regular Windows build 10180494 (v2.3.4 / 12-18-2022), with isolated game and family saves.

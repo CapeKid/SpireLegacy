@@ -31,6 +31,12 @@ public final class ExpansionChecks {
                 int count=0;
                 for(Data.Row row:Data.rows("cards"))if(row.s("classId").equals(heir.classId)){
                     count++;HeirCard card=new HeirCard(row.s("id"));HeirCard copy=(HeirCard)card.makeCopy();
+                    check(CardLibrary.cards.containsKey(card.cardID),"Card is missing from the native library: "+card.cardID);
+                    if(!row.s("rarity").equals("BASIC")){
+                        CardGroup pool=row.s("rarity").equals("COMMON")?AbstractDungeon.commonCardPool:row.s("rarity").equals("UNCOMMON")?AbstractDungeon.uncommonCardPool:AbstractDungeon.rareCardPool;
+                        boolean available=false;for(AbstractCard candidate:pool.group)if(candidate.cardID.equals(card.cardID)){available=true;break;}
+                        check(available,"Card cannot be drafted in its own class: "+card.cardID);
+                    }
                     check(card.cardID.equals(copy.cardID)&&card.cost==copy.cost&&card.baseDamage==copy.baseDamage&&card.baseBlock==copy.baseBlock,"Copy lost base card behavior");
                     check(card.selfRetain==row.b("retain"),"Prepared card retention");
                     check(!card.rawDescription.isEmpty(),"Missing rules text");
@@ -43,7 +49,7 @@ public final class ExpansionChecks {
                         if(row.i("poison")>0&&!row.b("aoe"))check(card.target==AbstractCard.CardTarget.ENEMY,"Poison Skill needs an enemy target");
                     }
                 }
-                check(count==originalTotal,"Class is smaller than the regular hero");
+                check(count==target.i("total")&&count>originalTotal,"Expanded class pool is incomplete");
             }
             HeirCard training=new HeirCard("knight_veteran_training");training.upgrade();check(training.cost==0&&training.magicNumber==1,"Draw-power upgrade keeps recurring HP cost");
             HeirCard wall=new HeirCard("knight_living_fortress");wall.upgrade();check(wall.cost==2,"Fortress upgrade reduces its cost");
@@ -81,7 +87,7 @@ public final class ExpansionChecks {
             HeirCard costly=new HeirCard("knight_blood_price");costly.upgrade();AbstractDungeon.actionManager.actions.clear();costly.use(AbstractDungeon.player,enemy);
             boolean stableHpCost=false;for(AbstractGameAction action:AbstractDungeon.actionManager.actions)if(action instanceof com.megacrit.cardcrawl.actions.common.LoseHPAction)stableHpCost=action.amount==3;
             check(stableHpCost,"Upgrading Blood Price must not increase HP cost");
-            Files.write(HeirMod.root.resolve("expansion-checks.json"),("{\"combatAssertions\":"+checks+",\"cardsExercised\":225,\"regularHeroCards\":"+originalTotal+"}").getBytes(StandardCharsets.UTF_8));
+            Files.write(HeirMod.root.resolve("expansion-checks.json"),("{\"combatAssertions\":"+checks+",\"cardsExercised\":"+Data.rows("cards").size()+",\"regularHeroCards\":"+originalTotal+"}").getBytes(StandardCharsets.UTF_8));
         }finally{
             heir.classId=cls;heir.traits.clear();heir.traits.addAll(traits);AbstractDungeon.player.powers.clear();AbstractDungeon.player.powers.addAll(powers);AbstractDungeon.player.currentBlock=block;enemy.powers.clear();enemy.powers.addAll(enemyPowers);enemy.currentHealth=hp;enemy.maxHealth=max;
             AbstractDungeon.actionManager.actions.clear();AbstractDungeon.actionManager.actions.addAll(actions);com.megacrit.cardcrawl.core.CardCrawlGame.dungeon.initializeCardPools();AbstractDungeon.player.hand.applyPowers();

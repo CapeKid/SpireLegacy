@@ -78,5 +78,65 @@
   {
     "id": "envenom",
     "summary": "Whenever an Attack deals unblocked damage, apply !M! Poison."
+  },
+  {
+    "id": "exhaust_damage",
+    "summary": "Whenever you Exhaust a card, deal !M! damage to ALL enemies."
+  },
+  {
+    "id": "skill_block",
+    "summary": "Every third Skill you play each turn grants !M! Block."
+  },
+  {
+    "id": "skill_energy",
+    "summary": "Every third Skill you play each turn grants !M! Energy NEXT turn."
+  },
+  {
+    "id": "discard_block",
+    "summary": "Whenever you discard a card during your turn, gain !M! Block."
+  },
+  {
+    "id": "discard_energy",
+    "summary": "The first time you discard a card each turn, gain !M! Energy."
+  },
+  {
+    "id": "attack_vigor",
+    "summary": "Every third Attack you play each turn grants !M! Vigor for your NEXT Attack."
+  },
+  {
+    "id": "power_draw",
+    "summary": "Whenever you play a Power, draw !M! card(s)."
+  },
+  {
+    "id": "evolve",
+    "summary": "Whenever you draw a Status, draw !M! card(s)."
+  },
+  {
+    "id": "fire_breathing",
+    "summary": "Whenever you draw a Status or Curse, deal !M! damage to ALL enemies."
+  },
+  {
+    "id": "combust",
+    "summary": "At the end of your turn, lose 1 HP and deal !M! damage to ALL enemies."
+  },
+  {
+    "id": "establishment",
+    "summary": "Whenever a card is Retained, reduce its cost by !M! this combat."
+  },
+  {
+    "id": "burst",
+    "summary": "Your next !M! Skill(s) this turn are played twice."
+  },
+  {
+    "id": "noxious",
+    "summary": "At the start of your turn, apply !M! Poison to ALL enemies."
+  },
+  {
+    "id": "foresight",
+    "summary": "At the start of your turn, Scry !M!."
+  },
+  {
+    "id": "scry_block",
+    "summary": "Whenever you Scry, gain !M! Block."
   }
 ]

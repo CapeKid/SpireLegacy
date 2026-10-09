@@ -53,6 +53,19 @@ def validate():
             signature=tuple((key,str(row[key])) for key in sorted(row) if key not in ('id','name','asset','art','classId','rarity') and not key.startswith('upgrade'))
             if signature in signatures:errors.append(cls+': duplicated card mechanics '+row['id'])
             signatures.add(signature)
+    for row in sheets.get('card_builds',[]):
+        ref('card_builds',row,'id',cards)
+        ref('card_builds',row,'classId',classes)
+        if row['id'] not in cards:continue
+        card=next(r for r in sheets['cards'] if r['id']==row['id'])
+        if card['classId']!=row['classId']:errors.append('Incorrect build class '+row['id'])
+    for cls in classes:
+        additions=[r for r in sheets.get('card_builds',[]) if r['classId']==cls]
+        if len(additions)!=45:errors.append(cls+': incomplete 45-card build expansion')
+        for build in {r['build'] for r in additions}:
+            group=[r for r in additions if r['build']==build]
+            if not any(r['role']=='payoff' for r in group):errors.append(cls+': build has no payoff '+build)
+        pool=[r for r in sheets['cards'] if r['classId']==cls and r['rarity']!='BASIC']
         for kind in ('ATTACK','SKILL'):
             if len([r for r in pool if r['type']==kind])<2:errors.append(f'{cls}: shop needs two distinct {kind} cards')
             for rarity in ('COMMON','UNCOMMON','RARE'):

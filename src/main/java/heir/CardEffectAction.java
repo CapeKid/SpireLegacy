@@ -17,6 +17,16 @@ public final class CardEffectAction extends AbstractGameAction {
     public void update(){
         com.megacrit.cardcrawl.characters.AbstractPlayer p=AbstractDungeon.player;
         switch(effect){
+            case "wounds":addToTop(new MakeTempCardInDrawPileAction(new com.megacrit.cardcrawl.cards.status.Wound(),amount,true,true));break;
+            case "refill_hand":
+                int count=p.hand.size();
+                addToTop(new DrawCardAction(p,count));
+                addToTop(new DiscardAction(p,p,count,false));break;
+            case "exhaust_block":addToTop(new GainBlockAction(p,p,Math.min(10,p.exhaustPile.size())*amount));break;
+            case "exhaust_nonattacks":
+                List<AbstractCard> fuel=new ArrayList<>();for(AbstractCard card:p.hand.group)if(card.type!=AbstractCard.CardType.ATTACK)fuel.add(card);
+                // Native actions invoke relic/power exhaust hooks and animate each removal.
+                for(AbstractCard card:fuel){addToBot(new ExhaustSpecificCardAction(card,p.hand));addToBot(new GainBlockAction(p,p,amount));}break;
             case "double_block":addToTop(new GainBlockAction(p,p,p.currentBlock));break;
             case "cleanse":for(AbstractPower power:new ArrayList<>(p.powers))if(power.type==AbstractPower.PowerType.DEBUFF)addToTop(new RemoveSpecificPowerAction(p,p,power.ID));break;
             case "exhaust_one":addToTop(new ExhaustAction(p,p,amount,false));break;

@@ -6,7 +6,7 @@ A solo custom character for **Slay the Spire 1, regular branch**. Your first hei
 
 - Three classes: Knight, Mage and Ranger, with distinct 10-card starting decks and separate reward pools.
 - All 61 eligible entries in the installed RL2 trait library have turn-based adaptations, with two compatible traits per heir. Hover icons or names for exact effects. [Trait coverage and adaptation notes](docs/traits.md).
-- 225 cards: 75 per class, with 20 common, 36 uncommon, 16 rare and 3 basic cards each. Every card upgrades and has its own original illustration. [Card pool guide](docs/card-pools.md) · [Complete card catalogue](docs/card-catalogue.md).
+- 360 cards: 120 per class, with 35 common, 56 uncommon, 26 rare and 3 basic cards each. Every card upgrades and has its own original illustration. [Card pool guide](docs/card-pools.md) · [Complete card catalogue](docs/card-catalogue.md) · [135 added cards and build roles](docs/new-build-cards.md).
 - Six manor upgrades for health, Strength, Dexterity, card draw, legacy earnings and recovery.
 - A customizable family name and four banner colors.
 - Normal Slay the Spire enemies, events, maps and three-act runs; the first run goes directly to a first-floor fight.
@@ -30,7 +30,7 @@ This repository contains the development source and issue fixes. Local tools, ga
 - Local asset inspection via `scripts/inspect_rl.py` creates `private/rl_asset_index.json`; the owned host card atlas is inspected locally as `private/cardui.atlas` for preflight.
 - Packaging also expects the locally frozen reader under `private/helper-release/ReadRogueLegacy` and dependency license sources in sibling toolkit checkouts. No game assets belong in a release.
 
-All 225 original generated illustrations are in `art/originals/`. The built-in imagegen prompts, exported paths and verified image hashes are in `sheets/card_art.json`. `scripts/prepare_card_art.py` and `scripts/export_expansion_art.py` export the card-sized resources; `scripts/review_card_art.py` creates the labeled review sheets. Review the artwork: [Knight](media/card-art-knight.png), [Mage](media/card-art-mage.png), [Ranger](media/card-art-ranger.png).
+All 360 original generated illustrations are in `art/originals/`. The built-in imagegen prompts, exported paths and verified image hashes are in `sheets/card_art.json`. `scripts/prepare_card_art.py` and `scripts/export_expansion_art.py` export the card-sized resources; `scripts/review_card_art.py` creates the labeled review sheets. Review the artwork: [Knight](media/card-art-knight.png), [Mage](media/card-art-mage.png), [Ranger](media/card-art-ranger.png). The 0.3.0 additions also have labeled build-role reviews: [Knight additions](media/added-card-art-knight.png), [Mage additions](media/added-card-art-mage.png), [Ranger additions](media/added-card-art-ranger.png).
 
 Private inspection data, extracted content, lab game files and test saves belong only under ignored `private/`. Never distribute them. The release contains original code/UI art, redistributable modding dependencies and a converter, not game content.
 
@@ -40,11 +40,11 @@ The isolated game is in `private/lab`. `scripts/launch-test.ps1` enables an opt-
 
 ## Status
 
-Version 0.2.0 expands all three classes to the owned regular-branch Ironclad library size: 75 cards each. It adds 188 individually authored cards and illustrations, with several deck strategies per class. Native rewards use the full rarity pools; the 0.1.9 sparse-pool reward replacement has been removed. Existing card IDs and family saves remain compatible. [Class mechanics and starter genetics](docs/classes-and-genes.md) explain inherited starters; [Steam Deck installation and controls](docs/steam-deck.md) cover setup.
+Version 0.3.0 adds 45 cards and illustrations to each class, expanding their separate libraries to 120 cards each. The 135 additions support armor, exhaust, blood costs, status fuel, spell sequencing, delayed turns, retained cards, discard, poison, attack chains and scry. Native rewards use the full rarity pools; the 0.1.9 sparse-pool reward replacement has been removed. Existing card IDs and family saves remain compatible. [Class mechanics and starter genetics](docs/classes-and-genes.md) explain inherited starters; [Steam Deck installation and controls](docs/steam-deck.md) cover setup.
 
-[0.2.0 verification results](docs/card-pool-verification.md) include all 225 upgrades, 600 native reward cases and three native merchants.
+[Verification results](docs/card-pool-verification.md) cover native pools, upgrades, rewards, merchants and new engine scenarios.
 
-The creator verified loading and gameplay on Steam Deck using both Steam Linux Runtime and Proton with the 0.1.8 content-preparation changes. The 0.2.0 expansion is tested in the owned Windows game with isolated saves; its new balance still needs full-run playtesting.
+The creator verified loading and gameplay on Steam Deck using both Steam Linux Runtime and Proton with the 0.1.8 content-preparation changes. The 0.3.0 expansion is tested in the owned Windows game with isolated saves; its new balance still needs full-run playtesting.
 
 
 Melty validates all install mappings and its one-click check says yes. Its automatic detector does not recognize this package layout; the supplied `melty.json` corrects that. It flags executable code and the bundled Python standard-library archive for review, and requires playing through Melty before publishing. That Melty install has not yet been tested. A full three-act playthrough and balance testing have not been completed. Sound could not be verified in this test environment (no working OpenAL playback device).

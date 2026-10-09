@@ -28,7 +28,7 @@ public class HeirCard extends CustomCard {
     public java.util.List<basemod.helpers.TooltipInfo> getCustomTooltips(){java.util.List<basemod.helpers.TooltipInfo> tips=new java.util.ArrayList<>();tips.add(new basemod.helpers.TooltipInfo(Data.row("classes",row.s("classId")).s("name")+" card","Part of this class's "+Data.row("pool_targets",row.s("classId")).i("total")+"-card library."));for(String id:genes.traits)tips.add(new basemod.helpers.TooltipInfo(Data.row("traits",id).s("name"),Data.row("starter_genes",id).s("summary")));if(row.s("rarity").equals("BASIC")){Data.Row mechanic=Data.row("class_mechanics",row.s("classId"));tips.add(new basemod.helpers.TooltipInfo(mechanic.s("name"),mechanic.s("summary")));}return tips;}
     private void describe(){
         StringBuilder s=new StringBuilder();
-        if(baseDamage>0){s.append("Deal !D! damage");if(row.b("aoe"))s.append(" to ALL enemies");if(row.i("hits")>1)s.append(" ").append(row.i("hits")).append(" times");s.append(".");}
+        if(baseDamage>0||row.s("special").equals("block_damage")||row.s("special").equals("chain_damage")){s.append("Deal !D! damage");if(row.b("aoe"))s.append(" to ALL enemies");if(row.i("hits")>1)s.append(" ").append(row.i("hits")).append(" times");s.append(".");}
         if(baseBlock>0)s.append(" NL Gain !B! Block.");
         if(poison()>0)s.append(" NL Apply ").append(poison()).append(" Poison.");
         if(genes.heal>0)s.append(" NL Heal ").append(genes.heal).append(" HP.");
@@ -55,7 +55,9 @@ public class HeirCard extends CustomCard {
         if(row.s("power").equals("reservoir"))s.append("Each Arcane Charge adds !M! extra attack damage.");
         if(row.s("power").equals("quiver"))s.append("Hunter Rhythm draws !M! additional card(s).");
         if(!row.s("power").equals("none")&&!row.s("power").equals("quiver")&&!row.s("power").equals("reservoir"))s.append(" NL ").append(Data.row("power_effects",row.s("power")).s("summary"));
-        if(!row.s("special").equals("none")&&!row.s("special").equals("scry"))s.append(" NL ").append(Data.row("special_effects",row.s("special")).s("summary").replace("{n}",String.valueOf(specialAmount())).replace("the target",row.b("aoe")?"ALL enemies":"the target"));
+        if(row.s("special").equals("block_damage")||row.s("special").equals("chain_damage")){
+            s.append(" NL ").append(row.s("special").equals("block_damage")?"Base damage equals your current Block.":"Base damage is "+specialAmount()+" per OTHER Attack played this turn.");
+        }else if(!row.s("special").equals("none")&&!row.s("special").equals("scry"))s.append(" NL ").append(Data.row("special_effects",row.s("special")).s("summary").replace("{n}",String.valueOf(specialAmount())).replace("the target",row.b("aoe")?"ALL enemies":"the target"));
         if(selfRetain)s.append(" NL Retain.");if(isEthereal)s.append(" NL Ethereal.");if(isInnate)s.append(" NL Innate.");
         if(exhaust)s.append(" NL Exhaust.");rawDescription=s.toString().replaceFirst("^ NL ","");initializeDescription();
     }
@@ -89,10 +91,23 @@ public class HeirCard extends CustomCard {
             if(amount("poison")>0)AbstractDungeon.actionManager.addToBottom(new ApplyPowerAction(enemy,p,new PoisonPower(enemy,p,amount("poison")),amount("poison")));
         }
         if(!row.s("power").equals("none"))AbstractDungeon.actionManager.addToBottom(new ApplyPowerAction(p,p,CardPowers.create(row.s("power"),p,magicNumber),magicNumber));
-        if(!row.s("special").equals("none")&&!java.util.Arrays.asList("block_damage","chain_damage","random_attack","execute","guard_bonus","marked_bonus","scry").contains(row.s("special")))AbstractDungeon.actionManager.addToBottom(new CardEffectAction(row.s("special"),specialAmount(),m,row.b("aoe")));
+        if(!row.s("special").equals("none")&&!java.util.Arrays.asList("block_damage","chain_damage","random_attack","execute","guard_bonus","marked_bonus","scry","exhaust_damage","retain_damage","retain_block","discard_draw","discard_energy","discard_block").contains(row.s("special")))AbstractDungeon.actionManager.addToBottom(new CardEffectAction(row.s("special"),specialAmount(),m,row.b("aoe")));
+    }
+    public void triggerOnManualDiscard(){
+        if(AbstractDungeon.actionManager.turnHasEnded)return;
+        String effect=row.s("special");AbstractPlayer p=AbstractDungeon.player;
+        if(effect.equals("discard_draw"))addToBot(new DrawCardAction(p,specialAmount()));
+        if(effect.equals("discard_energy"))addToBot(new GainEnergyAction(specialAmount()));
+        if(effect.equals("discard_block"))addToBot(new GainBlockAction(p,p,specialAmount()));
+    }
+    public void onRetained(){
+        if(row.s("special").equals("retain_damage"))baseDamage+=specialAmount();
+        if(row.s("special").equals("retain_block"))baseBlock+=specialAmount();
+        applyPowers();
     }
     private int conditionalBase(AbstractMonster m){
         String special=row.s("special");
+        if(special.equals("exhaust_damage")&&AbstractDungeon.player!=null)return baseDamage+Math.min(10,AbstractDungeon.player.exhaustPile.size())*specialAmount();
         if(special.equals("block_damage"))return AbstractDungeon.player==null?0:AbstractDungeon.player.currentBlock;
         if(special.equals("chain_damage")){
             int count=0;
@@ -109,8 +124,8 @@ public class HeirCard extends CustomCard {
         if(special.equals("marked_bonus")&&m!=null&&(m.hasPower("Vulnerable")||m.hasPower("Poison")))return baseDamage+specialAmount();
         return baseDamage;
     }
-    public void applyPowers(){int original=baseDamage;baseDamage=conditionalBase(null);super.applyPowers();baseDamage=original;}
-    public void calculateCardDamage(AbstractMonster m){int original=baseDamage;baseDamage=conditionalBase(m);super.calculateCardDamage(m);baseDamage=original;}
+    public void applyPowers(){int original=baseDamage;baseDamage=conditionalBase(null);super.applyPowers();baseDamage=original;isDamageModified=isDamageModified||damage!=baseDamage;}
+    public void calculateCardDamage(AbstractMonster m){int original=baseDamage;baseDamage=conditionalBase(m);super.calculateCardDamage(m);baseDamage=original;isDamageModified=isDamageModified||damage!=baseDamage;}
     public void upgrade(){if(!upgraded){upgradeName();if(baseDamage>0)upgradeDamage(row.i("upgradeDamage"));if(baseBlock>0)upgradeBlock(genes.mercy?3:row.i("upgradeBlock"));if(baseMagicNumber>0)upgradeMagicNumber(row.i("upgradeMagic"));if(row.b("upgradeCost"))upgradeBaseCost(Math.max(0,cost-1));describe();}}
     public AbstractCard makeCopy(){return new HeirCard(key);}
 }

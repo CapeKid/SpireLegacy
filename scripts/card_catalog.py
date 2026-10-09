@@ -6,7 +6,7 @@ read=lambda name:json.loads((ROOT/'sheets'/f'{name}.json').read_text())
 powers={r['id']:r['summary'] for r in read('power_effects')}
 special={r['id']:r['summary'] for r in read('special_effects')}
 lines=['# Spire Legacy card catalogue','',
-       'Each class has 75 cards: 3 basics and 72 rewards (20 common, 36 uncommon, 16 rare), matching the owned regular-branch Ironclad library. Starter genes modify basic cards separately. Values below are the base cards before inherited traits and combat powers.','']
+       'Each class has 120 cards: 3 basics and 117 rewards (35 common, 56 uncommon, 26 rare). Each heir uses its own class library. Starter genes modify basic cards separately. Values below are the base cards before inherited traits and combat powers.','']
 for cls in read('classes'):
     lines.extend(['## '+cls['name'],'','| Card | Rarity | Type | Energy | Effects |','| --- | --- | --- | ---: | --- |'])
     for row in read('cards'):
@@ -18,10 +18,14 @@ for cls in read('classes'):
         if row['power'] in powers:effects.append(powers[row['power']].replace('!M!',str(row['magic'])))
         if row['power']=='reservoir':effects.append('Each Arcane Charge adds '+str(row['magic'])+' extra attack damage.')
         if row['power']=='quiver':effects.append('Hunter Rhythm draws '+str(row['magic'])+' extra card(s).')
-        if row['special']!='none':effects.append(special[row['special']].replace('{n}',str(row['specialAmount'])))
+        if row['special']!='none':
+            text=special[row['special']].replace('{n}',str(row['specialAmount']))
+            if row['special'] in ('block_damage','chain_damage'):
+                text=text.rstrip('.')+(' to all enemies' if row['aoe'] else '')+(' '+str(row['hits'])+' times' if row['hits']>1 else '')+'.'
+            effects.append(text)
         for key,label in [('retain','Retain'),('ethereal','Ethereal'),('innate','Innate'),('exhaust','Exhaust')]:
             if row[key]:effects.append(label)
         lines.append('| '+row['name']+' | '+row['rarity'].title()+' | '+row['type'].title()+' | '+str(row['cost'])+' | '+'; '.join(effects)+' |')
     lines.append('')
 (ROOT/'docs/card-catalogue.md').write_text('\n'.join(lines).rstrip()+'\n')
-print('Exported 225-card catalogue')
+print('Exported',len(read('cards')),'card catalogue')

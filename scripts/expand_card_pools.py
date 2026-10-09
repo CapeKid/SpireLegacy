@@ -1,4 +1,4 @@
-"""Authoring source for the 75-card class expansion. No game assets are copied."""
+"""Historical 0.2.0 recipes for the 75-card expansion. Current additions use expand_build_choices.py. No game assets are copied."""
 import json, re, hashlib
 from pathlib import Path
 ROOT=Path(__file__).resolve().parents[1]
