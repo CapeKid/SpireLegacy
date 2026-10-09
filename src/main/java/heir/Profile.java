@@ -47,8 +47,8 @@ public final class Profile {
         if(active==null || !active.id.equals(runId) || settledId.equals(runId))return 0;
         int percent=100+active.bonuses.get("gold");
         for(String id:active.heir.traits)percent+=Data.row("traits",id).i("goldBonus");
-        int base=Math.max(0,floors)*Data.row("systems","legacy").i("amount")+Math.max(0,gold)/4+(victory?Data.row("systems","victory").i("amount"):0);
-        int earned=base*percent/100;crowns+=earned;lastEarned=earned;generation++;settledId=runId;active=null;
+        int base=Math.max(0,floors)*Data.row("systems","legacy").i("amount")+Math.max(0,gold)/Data.row("systems","gold_conversion").i("amount")+(victory?Data.row("systems","victory").i("amount"):0);
+        int earned=(int)Math.min(Integer.MAX_VALUE,(long)base*Math.min(200,Math.max(0,percent))/100);crowns=(int)Math.min(Integer.MAX_VALUE,(long)crowns+earned);lastEarned=earned;generation++;settledId=runId;active=null;
         generateOffers(generation*1009L+runId.hashCode());return earned;
     }
     public int cost(Data.Row row){return row.i("baseCost")+level(row.s("id"))*row.i("costStep");}
@@ -56,6 +56,16 @@ public final class Profile {
         Data.Row r=Data.row("manor",id);String prerequisite=r.s("requires");int price=cost(r);
         if(active!=null || level(id)>=r.i("maxLevel") || crowns<price || (!prerequisite.equals("none") && level(prerequisite)==0))return false;
         crowns-=price;manor.put(id,level(id)+1);return true;
+    }
+    public Profile previewPurchases(List<String> ids){
+        Profile trial=Data.GSON.fromJson(Data.GSON.toJson(this),Profile.class);
+        for(String id:ids)if(!trial.purchase(id))return null;
+        return trial;
+    }
+    /** Validate the whole cart and persist it before changing live balances. */
+    public boolean commitPurchases(List<String> ids,Path path){
+        Profile trial=previewPurchases(ids);if(trial==null||ids.isEmpty())return false;
+        trial.save(path);crowns=trial.crowns;manor=new LinkedHashMap<>(trial.manor);return true;
     }
     public static Profile load(Path path){
         if(!Files.exists(path))return new Profile();

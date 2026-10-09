@@ -22,7 +22,7 @@ public class HeirCard extends CustomCard {
         if(genes.mercy){type=CardType.SKILL;target=CardTarget.ENEMY;name="Mercy: "+name;initializeTitle();}describe();
         if(row.s("rarity").equals("BASIC")){if(type==CardType.ATTACK)tags.add(CardTags.STARTER_STRIKE);else tags.add(CardTags.STARTER_DEFEND);}
     }
-    private int amount(String field){return row.i(field)+(field.equals("draw")?genes.draw:0)+(upgraded && !field.equals("hpLoss") && row.i(field)>0?row.i("upgradeMagic"):0);}
+    private int amount(String field){if(field.equals("discard"))return row.i(field)+(upgraded?row.i("upgradeDiscard"):0);return row.i(field)+(field.equals("draw")?genes.draw:0)+(upgraded && !field.equals("hpLoss") && row.i(field)>0?row.i("upgradeMagic"):0);}
     private int specialAmount(){return row.i("specialAmount")+(upgraded?row.i("upgradeSpecial"):0);}
     public int poison(){return genes.poison+(genes.mercy&&upgraded?1:0);}
     public java.util.List<basemod.helpers.TooltipInfo> getCustomTooltips(){java.util.List<basemod.helpers.TooltipInfo> tips=new java.util.ArrayList<>();String title=CardPools.shared(key)?"Family card":Data.row("classes",row.s("classId")).s("name")+" card";String poolText=CardPools.shared(key)?"Shared by Knight, Mage and Ranger. Counts toward each class's 75-card library.":CardPools.active(key)?"Unique to this class. Its 75-card library contains 30 shared and 45 unique cards.":"Legacy card: retained for existing saves; outside the current class reward and shop pools.";tips.add(new basemod.helpers.TooltipInfo(title,poolText));for(String id:genes.traits)tips.add(new basemod.helpers.TooltipInfo(Data.row("traits",id).s("name"),Data.row("starter_genes",id).s("summary")));if(row.s("rarity").equals("BASIC")){Data.Row mechanic=Data.row("class_mechanics",row.s("classId"));tips.add(new basemod.helpers.TooltipInfo(mechanic.s("name"),mechanic.s("summary")));}return tips;}
@@ -51,7 +51,7 @@ public class HeirCard extends CustomCard {
             else if(field.equals("energy"))s.append("Gain ").append(n).append(" Energy.");
             else s.append(field.equals("weak")||field.equals("vulnerable")?"Apply ":"Gain ").append(n).append(" ").append(Character.toUpperCase(field.charAt(0))).append(field.substring(1)).append(row.b("aoe")&&(field.equals("weak")||field.equals("vulnerable"))?" to ALL enemies.":".");
         }
-        if(row.i("discard")>0)s.append(" NL Discard ").append(row.i("discard")).append(" card.");
+        if(amount("discard")>0)s.append(" NL Discard ").append(amount("discard")).append(" card(s).");
         if(row.s("power").equals("reservoir"))s.append("Each Arcane Charge adds !M! extra attack damage.");
         if(row.s("power").equals("quiver"))s.append("Hunter Rhythm draws !M! additional card(s).");
         if(!row.s("power").equals("none")&&!row.s("power").equals("quiver")&&!row.s("power").equals("reservoir"))s.append(" NL ").append(Data.row("power_effects",row.s("power")).s("summary"));
@@ -80,7 +80,7 @@ public class HeirCard extends CustomCard {
         if(amount("nextBlock")>0)AbstractDungeon.actionManager.addToBottom(new ApplyPowerAction(p,p,new NextTurnBlockPower(p,amount("nextBlock")),amount("nextBlock")));
         if(row.s("special").equals("scry"))AbstractDungeon.actionManager.addToBottom(new CardEffectAction("scry",specialAmount(),m,false));
         if(amount("draw")>0)AbstractDungeon.actionManager.addToBottom(new DrawCardAction(p,amount("draw")));
-        if(row.i("discard")>0)AbstractDungeon.actionManager.addToBottom(new DiscardAction(p,p,row.i("discard"),false));
+        if(amount("discard")>0)AbstractDungeon.actionManager.addToBottom(new DiscardAction(p,p,amount("discard"),false));
         if(amount("energy")>0)AbstractDungeon.actionManager.addToBottom(new GainEnergyAction(amount("energy")));
         if(amount("strength")>0)AbstractDungeon.actionManager.addToBottom(new ApplyPowerAction(p,p,new StrengthPower(p,amount("strength")),amount("strength")));
         if(amount("dexterity")>0)AbstractDungeon.actionManager.addToBottom(new ApplyPowerAction(p,p,new DexterityPower(p,amount("dexterity")),amount("dexterity")));

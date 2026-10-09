@@ -67,6 +67,13 @@ def validate():
             if card['rarity']=='BASIC' or card['power'] in ('reservoir','quiver') or card['special']=='charge_gain':errors.append('Class-specific mechanic in shared core '+key)
     if any(shared!=shared_sets[0] for shared in shared_sets):errors.append('Shared core differs by class')
     if len(active)!=165:errors.append('Expected 165 active cards across all classes')
+    for row in sheets['cards']:
+        if row['id'] not in active:continue
+        for upgraded in (False,True):
+            cost=max(0,row['cost']-(1 if upgraded and row['upgradeCost'] else 0))
+            draw=row['draw']+(row['upgradeMagic'] if upgraded and row['draw'] else 0)
+            discard=row['discard']+(row['upgradeDiscard'] if upgraded else 0)
+            if cost==0 and not row['exhaust'] and draw>discard:errors.append('Repeatable free positive-draw card '+row['id'])
     for target in sheets.get('pool_targets',[]):
         ref('pool_targets',target,'id',classes)
         pool=[r for r in sheets['cards'] if r['id'] in membership[target['id']]]

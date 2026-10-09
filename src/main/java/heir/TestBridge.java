@@ -56,6 +56,11 @@ public final class TestBridge {
                 else if(action.equals("rewardchecks")){RewardChecks.run();}
                 else if(action.equals("expansionchecks")){ExpansionChecks.run();}
                 else if(action.equals("buildchecks")){BuildChecks.start();}
+                else if(action.equals("balanceaudit")){BalanceAudit.run();}
+                else if(action.equals("progressionchecks")){ProgressionChecks.run();}
+                else if(action.equals("manorclick")){com.megacrit.cardcrawl.helpers.input.InputHelper.mX=(int)(cmd.get("x").getAsFloat()*Settings.scale);com.megacrit.cardcrawl.helpers.input.InputHelper.mY=(int)(cmd.get("y").getAsFloat()*Settings.scale);com.megacrit.cardcrawl.helpers.input.InputHelper.justClickedLeft=true;Manor.update();}
+                else if(action.equals("manorclose")){Manor.closeEditor();Manor.cancelPurchases();Manor.open=false;}
+                else if(action.equals("edittext")){for(int i=0;i<24;i++)com.badlogic.gdx.Gdx.input.getInputProcessor().keyTyped('\b');for(char c:cmd.get("value").getAsString().toCharArray())com.badlogic.gdx.Gdx.input.getInputProcessor().keyTyped(c);}
                 else if(action.equals("bossreward")){
                     HeirMod.heir().classId=cmd.get("classId").getAsString();HeirMod.heir().traits.clear();CardCrawlGame.dungeon.initializeCardPools();
                     AbstractDungeon.player.relics.clear();

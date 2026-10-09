@@ -3,17 +3,17 @@
     "id": "knight",
     "name": "Counterguard",
     "effect": "counterguard",
-    "amount": 4,
+    "amount": 2,
     "limit": 1,
-    "summary": "Playing a Skill primes your next Attack for +4 damage. Attacking consumes the counter."
+    "summary": "Playing a Skill primes your next Attack for +2 damage. Attacking consumes the counter."
   },
   {
     "id": "mage",
     "name": "Arcane Charges",
     "effect": "charges",
-    "amount": 2,
-    "limit": 3,
-    "summary": "Each Skill grants one charge, up to three. Your next Attack gains +2 damage per charge and consumes them."
+    "amount": 1,
+    "limit": 2,
+    "summary": "Each Skill grants one charge, up to two. Your next Attack gains +1 damage per charge and consumes them."
   },
   {
     "id": "ranger",

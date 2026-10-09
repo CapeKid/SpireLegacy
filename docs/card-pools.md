@@ -31,6 +31,8 @@ Mage-only charge effects and the class-specific Hunter Rhythm upgrade remain uni
 
 ## Save compatibility and verification
 
-All 360 previously released IDs, effects and illustrations remain registered so existing decks and saves can load. The 195 cards outside the curated active set have a legacy tooltip and are excluded from current normal class reward/shop pools. Historical authoring class is retained in cards.json; card_pools.json is the authoritative draft membership table. Effects that deliberately access other colors, such as Prismatic Shard, retain native behavior.
+All 360 previously released IDs and illustrations remain registered so existing decks and saves can load. The 195 cards outside the curated active set have a legacy tooltip and are excluded from current normal class reward/shop pools. Historical authoring class is retained in cards.json; card_pools.json is the authoritative draft membership table. Effects that deliberately access other colors, such as Prismatic Shard, retain native behavior. Version 0.5.0 rebalances legacy cards as well as the active set.
 
 Preflight checks exact totals/rarities, identical shared membership, disjoint unique memberships, class-compatible shared mechanics, distinct rules within each pool, shop type coverage and verified art. Native checks cover selected-class pool membership, shared card copies/upgrades and passive behavior, rewards with Question Card/Crown/Shard, and merchants. The small-pool reward replacement remains removed; the native game has 16 rares per class to choose from. Full-run balance and physical Deck verification of this pool revision remain pending.
+
+The [0.5.0 manor and balance guide](manor-and-balance.md) explains weaker starters, class passives, upgraded draw/discard rules and the progression economy.

@@ -40,11 +40,11 @@ The isolated game is in `private/lab`. `scripts/launch-test.ps1` enables an opt-
 
 ## Status
 
-Version 0.4.0 curates 75 cards per class: 30 shared family cards and 45 unique cards, including three basics. The shared core connects exhaust, retention, draw, delayed resources and debuffs to distinct Knight, Mage and Ranger payoffs. There are 165 active cards across the character; all 360 historical IDs remain registered for existing saves. Native rewards use the full rarity pools; the 0.1.9 sparse-pool reward replacement has been removed. Existing card IDs and family saves remain compatible. [Class mechanics and starter genetics](docs/classes-and-genes.md) explain inherited starters; [Steam Deck installation and controls](docs/steam-deck.md) cover setup.
+Version 0.5.0 retains 75 cards per class: 30 shared family cards and 45 unique cards, including three basics. The shared core connects exhaust, retention, draw, delayed resources and debuffs to distinct Knight, Mage and Ranger payoffs. There are 165 active cards across the character; all 360 historical IDs remain registered for existing saves. Native rewards use the full rarity pools; the 0.1.9 sparse-pool reward replacement has been removed. Existing card IDs and family saves remain compatible. [Class mechanics and starter genetics](docs/classes-and-genes.md) explain inherited starters; [Steam Deck installation and controls](docs/steam-deck.md) cover setup.
 
 [Verification results](docs/card-pool-verification.md) cover native pools, upgrades, rewards, merchants and new engine scenarios.
 
-The creator verified loading and gameplay on Steam Deck using both Steam Linux Runtime and Proton with the 0.1.8 content-preparation changes. The 0.4.0 shared-pool revision is tested in the owned Windows game with isolated saves; its new balance still needs full-run playtesting.
+The creator verified loading and gameplay on Steam Deck using both Steam Linux Runtime and Proton with the 0.1.8 content-preparation changes. The 0.5.0 manor/balance revision is tested in the owned Windows game with isolated saves; its new balance still needs full-run playtesting.
 
 
 Melty validates all install mappings and its one-click check says yes. Its automatic detector does not recognize this package layout; the supplied `melty.json` corrects that. It flags executable code and the bundled Python standard-library archive for review, and requires playing through Melty before publishing. That Melty install has not yet been tested. A full three-act playthrough and balance testing have not been completed. Sound could not be verified in this test environment (no working OpenAL playback device).
@@ -56,3 +56,5 @@ Prepared for a Melty draft release; publication requires a successful Melty laun
 Slay the Spire: Mega Crit. Rogue Legacy 2: Cellar Door Games. Game assets remain in each player's copy.
 ModTheSpire: Anthony Moore and contributors (MIT). BaseMod: t-larson, kiooeht, test447 and contributors (MIT). UnityPy: K0lb3 and contributors (MIT). Python: Python Software Foundation. Pillow and texture-decoding dependencies: their respective authors and licenses. PyInstaller: contributors, GPL with bootloader exception. universal-modder: rehan-remade and contributors (MIT), used as a development toolkit.
 Mod created by CapeKid with Codex. Original mod code and content use the MIT license; remixes with attribution are allowed. Third-party dependencies retain their own licenses.
+
+Version 0.5.0 adds full trait detail panels, in-game family naming, visible combat banners, slower crown earnings, staged and confirmed manor purchases, and a temporary crown editor. All 360 registered cards are rebalanced, with weaker plain starters and class baselines so manor investment matters. See the [manor and balance guide](docs/manor-and-balance.md). Full-run balance remains subject to playtesting.

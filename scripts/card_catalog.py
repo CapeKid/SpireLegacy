@@ -29,5 +29,5 @@ for cls in read('classes'):
             if row[key]:effects.append(label)
         lines.append('| '+row['name']+' | '+row['rarity'].title()+' | '+row['type'].title()+' | '+str(row['cost'])+' | '+'; '.join(effects)+' |')
     lines.append('')
-(ROOT/'docs/card-catalogue.md').write_text('\n'.join(lines).rstrip()+'\n')
+(ROOT/'docs/card-catalogue.md').write_text('\n'.join(lines).rstrip()+'\n',encoding='utf-8')
 print('Exported',len({r['cardId'] for r in members}),'active cards across three pools')

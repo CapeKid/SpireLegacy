@@ -39,3 +39,5 @@ Only the `content` directory is uploaded. It contains original mod resources and
 ## Verification for 0.1.5
 
 The official uploader successfully created private item **3816067184**. Its owner page shows hidden visibility and both Required Items. Steam downloaded all three subscribed items. Windows testing then used the downloaded ModTheSpire, BaseMod and Spire Legacy packages with an empty local mods folder and isolated game/family saves. The mod prepared a fresh cache, registered its character and reached combat. Separate packaged-reader tests passed fresh preparation, repeat verification, missing-sprite repair, path arguments and missing-game failures without creating family state. The Workshop Linux reader extracted all 66 selected sprites from owned game files in a network-disabled Linux container. These checks do not replace a physical Steam Deck launch.
+
+0.5.0 also includes the Antique name cleanup, manor input/detail/purchase fixes, temporary crown editor, visible family banners and a card/progression balance pass. See [manor and balance](manor-and-balance.md).

@@ -23,16 +23,16 @@
   {
     "id": "legacy",
     "hook": "run_end",
-    "amount": 8,
+    "amount": 2,
     "enabled": true,
-    "summary": "Legacy crowns awarded per cleared floor, plus one-quarter of remaining run gold."
+    "summary": "Earn 2 crowns per cleared floor; remaining gold converts at 25:1. Combined bonuses are capped at +100%."
   },
   {
     "id": "victory",
     "hook": "run_end",
-    "amount": 120,
+    "amount": 20,
     "enabled": true,
-    "summary": "Victory adds 120 legacy crowns. Each run settles at most once."
+    "summary": "Victory adds 20 crowns. Each run settles at most once."
   },
   {
     "id": "quickstart",
@@ -82,5 +82,19 @@
     "summary": "Render the native game cursor after manor panels and trait tooltips so upgrade controls remain usable.",
     "amount": 1,
     "hook": "post_render"
+  },
+  {
+    "id": "gold_conversion",
+    "hook": "run_end",
+    "amount": 25,
+    "enabled": true,
+    "summary": "Convert 25 unspent run gold into one legacy crown."
+  },
+  {
+    "id": "playtest_crowns",
+    "hook": "manor",
+    "amount": 1,
+    "enabled": true,
+    "summary": "Temporary pre-release crown editor. Explicit Save validates a nonnegative whole number. Remove for the full release."
   }
 ]

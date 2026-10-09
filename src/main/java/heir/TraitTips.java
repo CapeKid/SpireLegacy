@@ -27,7 +27,7 @@ public final class TraitTips {
         if(row.i("heal")!=0)lines.add("Heal "+row.i("heal")+" extra HP after combat.");
         lines.add("+"+row.i("goldBonus")+"% legacy crowns earned.");
         if(row.f("scale")!=1f)lines.add(Math.round(row.f("scale")*100)+"% character size (appearance only).");
-        lines.add("Stacks with class, manor and other traits.");
+        if(row.i("goldBonus")>0)lines.add("Combined legacy bonus is capped at +100%.");lines.add("Stacks with class, manor and other traits.");
         return lines;
     }
     public static void render(SpriteBatch sb){

@@ -45,11 +45,11 @@
   },
   {
     "id": "discount_hand",
-    "summary": "Cards currently in your hand cost 1 less this turn."
+    "summary": "Reduce the cost of {n} random card(s) in your hand by 1 this turn."
   },
   {
     "id": "free_hand",
-    "summary": "Cards currently in your hand cost 0 this turn."
+    "summary": "Cards currently in your hand cost 0 this turn. You cannot draw additional cards this turn."
   },
   {
     "id": "scry",

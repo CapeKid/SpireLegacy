@@ -100,6 +100,7 @@ public final class HeirMod implements EditCardsSubscriber,EditCharactersSubscrib
     public void receivePostRender(SpriteBatch sb){
         TraitTips.begin();
         if(isHeir()&&AbstractDungeon.isPlayerInDungeon()&&profile.active!=null&&AbstractDungeon.screen!=AbstractDungeon.CurrentScreen.SHOP){
+            FamilyBanner.render(sb,AbstractDungeon.player.drawX+65*Settings.scale,AbstractDungeon.player.drawY+15*Settings.scale);
             Profile.Heir h=heir();FontHelper.renderFontLeftTopAligned(sb,FontHelper.tipBodyFont,h.name+" "+profile.family+"  |  "+Data.row("classes",h.classId).s("name"),30*Settings.scale,Settings.HEIGHT-100*Settings.scale,Manor.bannerColor());
             float x=30*Settings.scale,y=Settings.HEIGHT-165*Settings.scale;
             for(String id:h.traits){

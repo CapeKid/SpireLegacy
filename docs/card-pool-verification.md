@@ -1,3 +1,24 @@
+# 0.5.0 manor and balance verification
+
+Tested the exact production JAR in owned regular Slay the Spire 1 build 10180494 with isolated family/game data (private/release-050). User saves were untouched.
+
+| Check | Result |
+| --- | --- |
+| Native input, profile persistence, staged purchases, controller navigation, crown curve and weak starters | 51 assertions |
+| Native class pools, copies, targeting, queued effects and passives | 2777 assertions; 225 class/card cases |
+| Native ordinary/boss rewards with Question Card/Crown/Shard | 600 calls; 4680 assertions |
+| Native shops, class/genetics behavior | 2019 assertions; three merchants |
+| Card upgrades / trait constructors | 360 cards / 63 traits |
+| Live combat engines | 112 assertions across 15 scenarios |
+
+Input tests send characters and Enter/Escape through the actual in-game input processor. They check delayed name saving, cancelling, empty names, crown bounds, cart prerequisites and total prices, no mutation during selection, atomic persistence failure, idempotent/overflow-safe settlement and controller navigation/activation through native input actions. Visual review: [name editor](../media/family-name-editor-050.png), [full traits](../media/trait-details-050.png), [purchase confirmation](../media/purchase-review-050.png), [banner in combat](../media/family-banner-combat-050.png).
+
+New live scenarios play upgraded Cold Read through the native card/action queue and verify two draws plus two discards; Master Plan makes only the current hand free and native No Draw prevents further draws until its native end-turn removal; Enchanted Ink discounts one eligible card or two when upgraded. Existing discard, exhaust, retention, sequence, Scry and Wound scenarios pass with revised values. Preflight rejects repeatable zero-energy positive-draw base/upgrade combinations in the active pools.
+
+Balance auditing reads the actual native card library, base and upgraded, into private test output. The [manor and balance guide](manor-and-balance.md) documents reference comparisons, deficits and crown examples. All 360 registered mod cards receive the pass, while draft membership remains 75/class. JAR SHA-256: `C7874D90D2347B5192309C5826279066CDA285484079C43F308A81529E384FA8`.
+
+Full-run balance/win-rate analysis and physical Steam Deck testing of 0.5.0 remain pending. Automated checks establish behavior, not final difficulty. Earlier native results follow as historical records.
+
 # 0.4.0 shared-pool verification
 
 Each class has 75 cards (3 basic / 20 common / 36 uncommon / 16 rare), matching the owned Ironclad reference. There are 30 identical shared cards plus 45 unique cards per class: 165 distinct active IDs and 225 class/card memberships. All 360 historical IDs remain registered for saved decks.

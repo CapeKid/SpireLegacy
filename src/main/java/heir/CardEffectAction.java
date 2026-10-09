@@ -34,7 +34,10 @@ public final class CardEffectAction extends AbstractGameAction {
             case "exhume":addToTop(new ExhumeAction(false));break;
             case "scry":addToTop(new ScryAction(amount));break;
             case "charge_gain":AbstractPower charge=p.getPower("heir:class");if(HeirMod.heir().classId.equals("mage")&&charge instanceof ClassPower){charge.amount=Math.min(Data.row("class_mechanics","mage").i("limit"),charge.amount+amount);charge.updateDescription();p.hand.applyPowers();}break;
-            case "discount_hand":case "free_hand":for(AbstractCard card:p.hand.group)if(card.costForTurn>=0){card.setCostForTurn(effect.equals("free_hand")?0:Math.max(0,card.costForTurn-1));card.applyPowers();}break;
+            case "discount_hand":
+                List<AbstractCard> eligible=new ArrayList<>();for(AbstractCard card:p.hand.group)if(card.costForTurn>0)eligible.add(card);
+                for(int i=0;i<amount&&!eligible.isEmpty();i++){AbstractCard card=eligible.remove(AbstractDungeon.cardRandomRng.random(eligible.size()-1));card.setCostForTurn(card.costForTurn-1);card.applyPowers();}break;
+            case "free_hand":for(AbstractCard card:p.hand.group)if(card.costForTurn>=0){card.setCostForTurn(0);card.applyPowers();}addToTop(new ApplyPowerAction(p,p,new NoDrawPower(p),1));break;
             case "double_poison":
                 List<AbstractMonster> targets=new ArrayList<>();if(all)targets.addAll(AbstractDungeon.getMonsters().monsters);else if(enemy!=null)targets.add(enemy);
                 for(AbstractMonster m:targets)if(!m.isDeadOrEscaped()){AbstractPower poison=m.getPower(PoisonPower.POWER_ID);if(poison!=null&&poison.amount>0)addToTop(new ApplyPowerAction(m,p,new PoisonPower(m,p,poison.amount),poison.amount));}break;

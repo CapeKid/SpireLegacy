@@ -5,7 +5,7 @@ Spire Legacy has a native Linux x86_64 launcher and bundled content-reader runti
 For Workshop installation, use the [Workshop guide](workshop.md). The manual package steps follow.
 
 1. Install your owned Slay the Spire 1 and Rogue Legacy 2 copies through Steam. Select the regular StS1 branch. In StS1 Properties → Compatibility, enable the specific compatibility tool override and select **Steam Linux Runtime 1.0 (scout)** so Steam installs its native Linux runtime. RL2 may use Proton normally; the mod reads its local data files without launching RL2.
-2. Switch to Desktop Mode. Extract `SpireLegacy-0.4.1-linux-x86_64.zip` into StS1's game folder, found with Steam's Manage → Browse local files. The resulting folders must be `SlayTheSpire/mods` and `SlayTheSpire/HeirOfTheSpire`. Preserve the complete ReaderLinux folder.
+2. Switch to Desktop Mode. Extract `SpireLegacy-0.5.0-linux-x86_64.zip` into StS1's game folder, found with Steam's Manage → Browse local files. The resulting folders must be `SlayTheSpire/mods` and `SlayTheSpire/HeirOfTheSpire`. Preserve the complete ReaderLinux folder.
 3. Add a Non-Steam Game with target `/bin/bash`. Set Launch Options to the quoted absolute path of `HeirOfTheSpire/Play.sh`, for example `"/home/deck/.local/share/Steam/steamapps/common/SlayTheSpire/HeirOfTheSpire/Play.sh"`. Set Start In to the quoted StS1 game folder. Leave forced compatibility disabled for this shortcut.
 4. Start the shortcut once in Desktop Mode, then use it from Gaming Mode. First launch prepares icons and character content from the installed RL2 copy. Game files remain in their owned installations.
 
@@ -28,3 +28,5 @@ Linux reader dependencies are pinned for CPython 3.12, x86_64 GNU/Linux. The rea
 On the Windows development setup, prepare dependencies with `uv python install cpython-3.12.13-linux-x86_64-gnu --install-dir tools/linux-python --no-bin` and `uv pip install --python-version 3.12 --python-platform x86_64-unknown-linux-gnu --target tools/linux-site UnityPy==1.25.4 Pillow==12.0.0`. Build the mod normally, then run `tools/python/Scripts/python.exe scripts/package_linux.py`. Python and package licenses accompany the runtime. Game data is excluded.
 
 Valve documents [Desktop Mode and trackpad mouse input](https://help.steampowered.com/en/faqs/view/671A-4453-E8D2-323C/) and [Steam Input/Steam Deck compatibility requirements](https://partner.steamgames.com/doc/steamhardware/compat).
+
+The manor now accepts native controller actions and offers an in-game on-screen keyboard for family names/crowns. Select Read full traits for a wrapped, scrollable detail view. See [manor controls](manor-and-balance.md). Physical Deck validation of these 0.5.0 controls remains pending.

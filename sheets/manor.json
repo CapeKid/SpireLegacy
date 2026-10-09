@@ -5,8 +5,8 @@
     "effect": "hp",
     "perLevel": 4,
     "maxLevel": 5,
-    "baseCost": 40,
-    "costStep": 25,
+    "baseCost": 80,
+    "costStep": 35,
     "requires": "none",
     "summary": "+4 maximum health per level."
   },
@@ -16,7 +16,7 @@
     "effect": "strength",
     "perLevel": 1,
     "maxLevel": 3,
-    "baseCost": 90,
+    "baseCost": 120,
     "costStep": 80,
     "requires": "vitality",
     "summary": "+1 Strength per level."
@@ -27,7 +27,7 @@
     "effect": "dexterity",
     "perLevel": 1,
     "maxLevel": 3,
-    "baseCost": 90,
+    "baseCost": 120,
     "costStep": 80,
     "requires": "vitality",
     "summary": "+1 Dexterity per level."
@@ -36,12 +36,12 @@
     "id": "vault",
     "name": "Treasury",
     "effect": "gold",
-    "perLevel": 10,
+    "perLevel": 5,
     "maxLevel": 4,
-    "baseCost": 60,
-    "costStep": 35,
+    "baseCost": 100,
+    "costStep": 40,
     "requires": "none",
-    "summary": "+10% legacy earnings per level."
+    "summary": "+5% legacy earnings per level."
   },
   {
     "id": "library",
@@ -49,7 +49,7 @@
     "effect": "draw",
     "perLevel": 1,
     "maxLevel": 1,
-    "baseCost": 180,
+    "baseCost": 350,
     "costStep": 0,
     "requires": "armory",
     "summary": "+1 card drawn each turn."
@@ -60,8 +60,8 @@
     "effect": "heal",
     "perLevel": 1,
     "maxLevel": 4,
-    "baseCost": 60,
-    "costStep": 35,
+    "baseCost": 100,
+    "costStep": 40,
     "requires": "none",
     "summary": "+1 healing after combat per level."
   }

@@ -3,33 +3,33 @@
     "id": "knight",
     "name": "Knight",
     "asset": "Icons_Classes_SwordClass",
-    "hp": 78,
+    "hp": 60,
     "strength": 0,
-    "dexterity": 1,
-    "heal": 2,
+    "dexterity": 0,
+    "heal": 0,
     "signature": "shield",
-    "summary": "Playing a Skill primes your next Attack for +4 damage. Attacking consumes the counter."
+    "summary": "Playing a Skill primes your next Attack for +2 damage. Attacking consumes the counter."
   },
   {
     "id": "mage",
     "name": "Mage",
     "asset": "Icons_Classes_MagicWandClass",
-    "hp": 64,
+    "hp": 52,
     "strength": 0,
     "dexterity": 0,
-    "heal": 2,
+    "heal": 0,
     "signature": "flame",
-    "summary": "Each Skill grants one charge, up to three. Your next Attack gains +2 damage per charge and consumes them."
+    "summary": "Each Skill grants one charge, up to two. Your next Attack gains +1 damage per charge and consumes them."
   },
   {
     "id": "ranger",
     "name": "Ranger",
     "asset": "Icons_Classes_BowClass",
-    "hp": 70,
-    "strength": 1,
+    "hp": 56,
+    "strength": 0,
     "dexterity": 0,
-    "heal": 2,
+    "heal": 0,
     "signature": "aim",
-    "summary": "Every third Attack in a turn draws one card and applies one Vulnerable to its target."
+    "summary": "Every third Attack in a turn draws one card and applies one Vulnerable to its target. Area attacks mark all enemies; random-hit attacks mark a random enemy."
   }
 ]

@@ -65,8 +65,8 @@ public final class ExpansionChecks {
                 ClassPower passive=new ClassPower(heir.classId);
                 HeirCard sharedSkill=new HeirCard("study"),sharedAttack=new HeirCard("knight_long_reach");
                 passive.onUseCard(sharedSkill,new com.megacrit.cardcrawl.actions.utility.UseCardAction(sharedSkill));
-                if(heir.classId.equals("knight"))check(passive.atDamageGive(10,DamageInfo.DamageType.NORMAL)==14,"Shared Skill primes Knight counter");
-                if(heir.classId.equals("mage"))check(passive.amount==1&&passive.atDamageGive(10,DamageInfo.DamageType.NORMAL)==12,"Shared Skill grants Mage charge");
+                if(heir.classId.equals("knight"))check(passive.atDamageGive(10,DamageInfo.DamageType.NORMAL)==12,"Shared Skill primes Knight counter");
+                if(heir.classId.equals("mage"))check(passive.amount==1&&passive.atDamageGive(10,DamageInfo.DamageType.NORMAL)==11,"Shared Skill grants Mage charge");
                 passive.onUseCard(sharedAttack,new com.megacrit.cardcrawl.actions.utility.UseCardAction(sharedAttack));
                 check(passive.amount==(heir.classId.equals("ranger")?1:0),"Shared Attack uses the selected heir's passive");
                 check(sharedSkill.getCustomTooltips().get(0).title.equals("Family card"),"Shared tooltip identifies family membership");
@@ -74,17 +74,17 @@ public final class ExpansionChecks {
             HeirCard training=new HeirCard("knight_veteran_training");training.upgrade();check(training.cost==0&&training.magicNumber==1,"Draw-power upgrade keeps recurring HP cost");
             HeirCard wall=new HeirCard("knight_living_fortress");wall.upgrade();check(wall.cost==2,"Fortress upgrade reduces its cost");
             heir.classId="knight";AbstractDungeon.player.currentBlock=12;HeirCard slam=new HeirCard("knight_shield_slam");slam.calculateCardDamage(enemy);check(slam.damage==12,"Shield Slam uses current Block");
-            HeirCard counter=new HeirCard("knight_counter_lunge");counter.calculateCardDamage(enemy);check(counter.damage==15,"Counter Lunge rewards Block");
-            enemy.currentHealth=50;HeirCard execute=new HeirCard("knight_executioner_axe");execute.calculateCardDamage(enemy);check(execute.damage==26,"Execution threshold bonus");
-            enemy.powers.add(new VulnerablePower(enemy,1,false));HeirCard ambush=new HeirCard("ranger_ambush");ambush.calculateCardDamage(enemy);check(ambush.damage==24,"Marked damage uses native Vulnerable scaling");enemy.powers.clear();
+            HeirCard counter=new HeirCard("knight_counter_lunge");counter.calculateCardDamage(enemy);check(counter.damage==10,"Counter Lunge rewards Block");
+            enemy.currentHealth=50;HeirCard execute=new HeirCard("knight_executioner_axe");execute.calculateCardDamage(enemy);check(execute.damage==18,"Execution threshold bonus");
+            enemy.powers.add(new VulnerablePower(enemy,1,false));HeirCard ambush=new HeirCard("ranger_ambush");ambush.calculateCardDamage(enemy);check(ambush.damage==16,"Marked damage uses native Vulnerable scaling");enemy.powers.clear();
             ArrayList<AbstractCard> played=new ArrayList<>(AbstractDungeon.actionManager.cardsPlayedThisTurn);
             ArrayList<CardQueueItem> queue=new ArrayList<>(AbstractDungeon.actionManager.cardQueue);
             try{
                 AbstractDungeon.actionManager.cardsPlayedThisTurn.clear();AbstractDungeon.actionManager.cardQueue.clear();
                 AbstractDungeon.actionManager.cardsPlayedThisTurn.add(new HeirCard("ranger_strike"));AbstractDungeon.actionManager.cardsPlayedThisTurn.add(new HeirCard("ranger_strike"));
-                HeirCard finish=new HeirCard("ranger_finishing_flurry");finish.calculateCardDamage(enemy);check(finish.damage==8,"Flurry previews earlier Attacks only");
+                HeirCard finish=new HeirCard("ranger_finishing_flurry");finish.calculateCardDamage(enemy);check(finish.damage==6,"Flurry previews earlier Attacks only");
                 AbstractDungeon.actionManager.cardsPlayedThisTurn.add(finish);AbstractDungeon.actionManager.cardQueue.add(new CardQueueItem(finish,enemy,3));
-                finish.calculateCardDamage(enemy);check(finish.damage==8,"Native queue must not count Flurry itself");
+                finish.calculateCardDamage(enemy);check(finish.damage==6,"Native queue must not count Flurry itself");
             }finally{AbstractDungeon.actionManager.cardsPlayedThisTurn.clear();AbstractDungeon.actionManager.cardsPlayedThisTurn.addAll(played);AbstractDungeon.actionManager.cardQueue.clear();AbstractDungeon.actionManager.cardQueue.addAll(queue);}
             com.megacrit.cardcrawl.monsters.MonsterGroup realGroup=AbstractDungeon.getCurrRoom().monsters;
             try{
