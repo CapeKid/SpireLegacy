@@ -4,7 +4,7 @@ The Workshop package contains one mod JAR and a `SpireLegacyRuntime` directory b
 
 ## Player installation
 
-1. Install your owned Steam copies of Slay the Spire 1 and Rogue Legacy 2. StS1 must use its regular branch. On Steam Deck, keep forced Proton compatibility disabled for StS1 so its native Linux version is installed. RL2 may use Proton normally.
+1. Install your owned Steam copies of Slay the Spire 1 and Rogue Legacy 2. StS1 must use its regular branch. On Steam Deck, open StS1 Properties → Compatibility, enable the specific compatibility tool override and select **Steam Linux Runtime 1.0 (scout)** to install its native Linux version. RL2 may use Proton normally.
 2. Subscribe to [ModTheSpire](https://steamcommunity.com/sharedfiles/filedetails/?id=1605060445), [BaseMod](https://steamcommunity.com/sharedfiles/filedetails/?id=1605833019), and [Spire Legacy](https://steamcommunity.com/sharedfiles/filedetails/?id=3816067184). Spire Legacy is currently hidden for creator testing; sign in as CapeKid to access it.
 3. Launch Slay the Spire with **Play with Mods**, enable BaseMod and Spire Legacy, then start. First startup prepares genuine RL2 sprites locally before character registration. Later starts verify the cache against your installed files. No custom launcher or Python installation is needed.
 4. Select **The Heir**. For Steam Deck, use a Keyboard and Mouse Steam Input layout with the right trackpad as mouse and R2 as left click. Steam+X opens the naming keyboard. Physical Deck gameplay, the mod-picker window and suspend/resume still require hardware verification.
@@ -14,6 +14,8 @@ Use either the Workshop installation or a manual mod installation. Remove an old
 The family save/cache location is unchanged: `%LOCALAPPDATA%/HeirOfTheSpire` on Windows, or `~/.local/share/HeirOfTheSpire` on Linux. `HEIR_DATA_DIR` and `XDG_DATA_HOME` overrides still work. Reader errors are in `content-preparation.log` in that directory. For a nonstandard RL2 installation, set `HEIR_RL2_DIR` to its installation folder. An incomplete package fails with an actionable error before loading or changing the family save.
 
 ## Prepare and upload
+
+Version 0.1.6 also checks `/home/deck/.local/share/Steam/steamapps/common/Rogue Legacy 2` directly when Steam manifest discovery fails. It checks the equivalent `Z:` host-filesystem path when the reader runs under Proton. The folder must contain `Rogue Legacy 2_Data/resources.assets`; launching RL2 once is not required. Explicit `HEIR_RL2_DIR` overrides still take precedence. Native Linux remains the recommended Deck runtime; this discovery fix does not certify full Proton gameplay.
 
 1. Run `scripts/build.ps1`, then `scripts/package.py` and `scripts/package_linux.py` using the development Python environment.
 2. Run `scripts/package_workshop.py`. This creates `build/workshop` and a distributable `dist/SpireLegacy-<version>-workshop.zip`. The workspace uses the official StS1 uploader's schema. `config.json` defaults to **private**; the script retains a previously assigned `steamPublishedID`.

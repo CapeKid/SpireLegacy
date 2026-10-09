@@ -2,7 +2,7 @@
   "title": "Spire Legacy",
   "description": "Every climb ends. Your bloodline grows.\n\nClimb Slay the Spire as a family of heirs, with three classes, inherited traits and permanent manor upgrades, using content from your installed Rogue Legacy 2 copy.\n\nRequires Slay the Spire 1 on its regular branch, an installed Steam copy of Rogue Legacy 2, ModTheSpire and BaseMod. Enable BaseMod and Spire Legacy in Play with Mods. Local Rogue Legacy 2 content is prepared automatically on first launch; no game assets are included.\n\nModTheSpire: https://steamcommunity.com/sharedfiles/filedetails/?id=1605060445\nBaseMod: https://steamcommunity.com/sharedfiles/filedetails/?id=1605833019\n\nCreator: CapeKid. Original mod code and content: MIT. Windows x64 and native Linux x86_64 support; physical Steam Deck gameplay is still unverified. Source: https://github.com/CapeKid/SpireLegacy",
   "visibility": "private",
-  "changeNote": "0.1.5: automatic local content preparation for normal Workshop launches; includes the shop, class mechanics and starter genetics fixes from 0.1.4.",
+  "changeNote": "0.1.6: discover installed Rogue Legacy 2 directly at the standard Steam Deck location when Steam manifest discovery fails, including the Proton Z: filesystem mapping. No first launch of Rogue Legacy 2 is required.",
   "tags": [
     "Character",
     "Gameplay"

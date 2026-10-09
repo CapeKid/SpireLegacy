@@ -8,6 +8,15 @@ sys.modules['fmod_toolkit'] = types.ModuleType('fmod_toolkit')
 import UnityPy
 from PIL import Image
 
+DECK_RL2 = '/home/deck/.local/share/Steam/steamapps/common/Rogue Legacy 2'
+
+def deck_install_candidates():
+    # Wine/Proton exposes the host filesystem through Z:, while Path.home()
+    # points inside its Windows prefix. Native Linux can use the path directly.
+    if os.name == 'nt':
+        return [Path('Z:' + DECK_RL2.replace('/', '\\'))]
+    return [Path(DECK_RL2)]
+
 def find_game(explicit=None):
     if explicit:
         root=Path(explicit)
@@ -33,6 +42,10 @@ def find_game(explicit=None):
             if match:
                 root=lib/'steamapps/common'/match.group(1)
                 if (root/'Rogue Legacy 2_Data/resources.assets').is_file(): return root
+    # A valid installed content folder is sufficient; no first game launch or
+    # readable Steam manifest is needed for this Deck fallback.
+    for root in deck_install_candidates():
+        if (root/'Rogue Legacy 2_Data/resources.assets').is_file(): return root
     raise RuntimeError('Rogue Legacy 2 is required. Install your own Steam copy, then press Play again. No game content is included with this mod.')
 
 def host_assets(host,cache,sheet):
