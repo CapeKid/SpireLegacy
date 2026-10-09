@@ -53,6 +53,18 @@ public final class TestBridge {
                 else if(action.equals("dismiss")){AbstractDungeon.closeCurrentScreen();}
                 else if(action.equals("fight")){HeirMod.quickPending=true;}
                 else if(action.equals("issue6checks")){Issue6Checks.run();}
+                else if(action.equals("rewardchecks")){RewardChecks.run();}
+                else if(action.equals("bossreward")){
+                    HeirMod.heir().classId=cmd.get("classId").getAsString();HeirMod.heir().traits.clear();CardCrawlGame.dungeon.initializeCardPools();
+                    AbstractDungeon.player.relics.clear();
+                    if(cmd.has("question")&&cmd.get("question").getAsBoolean())new com.megacrit.cardcrawl.relics.QuestionCard().instantObtain(AbstractDungeon.player,0,true);
+                    if(cmd.has("crown")&&cmd.get("crown").getAsBoolean())new com.megacrit.cardcrawl.relics.BustedCrown().instantObtain(AbstractDungeon.player,AbstractDungeon.player.relics.size(),true);
+                    if(cmd.has("shard")&&cmd.get("shard").getAsBoolean())new com.megacrit.cardcrawl.relics.PrismaticShard().instantObtain(AbstractDungeon.player,AbstractDungeon.player.relics.size(),true);
+                    com.megacrit.cardcrawl.rooms.MonsterRoomBoss room=new com.megacrit.cardcrawl.rooms.MonsterRoomBoss();room.monsters=new MonsterGroup(new AbstractMonster[0]);room.phase=com.megacrit.cardcrawl.rooms.AbstractRoom.RoomPhase.COMPLETE;AbstractDungeon.currMapNode.room=room;
+                    System.out.println("HEIR TEST: requesting boss reward; class="+HeirMod.heir().classId+", rares="+AbstractDungeon.rareCardPool.size()+", relics="+AbstractDungeon.player.relics);
+                    java.util.ArrayList<AbstractCard> rewards=AbstractDungeon.getRewardCards();JsonArray result=new JsonArray();for(AbstractCard c:rewards){JsonObject item=new JsonObject();item.addProperty("id",c.cardID);item.addProperty("rarity",c.rarity.toString());result.add(item);}
+                    Files.write(HeirMod.root.resolve("boss-reward.json"),Data.GSON.toJson(result).getBytes(StandardCharsets.UTF_8));AbstractDungeon.cardRewardScreen.open(rewards,null,"Boss reward check");
+                }
                 else if(action.equals("hand")){
                     AbstractDungeon.player.hand.clear();for(JsonElement id:cmd.getAsJsonArray("cards")){HeirCard card=new HeirCard(id.getAsString());card.current_x=Settings.WIDTH/2f;card.current_y=Settings.HEIGHT/4f;AbstractDungeon.player.hand.addToHand(card);}AbstractDungeon.player.hand.refreshHandLayout();AbstractDungeon.player.hand.applyPowers();
                 }

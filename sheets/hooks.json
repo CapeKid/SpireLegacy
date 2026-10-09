@@ -70,5 +70,11 @@
     "id": "trait_tooltips",
     "implementation": "TraitTips.render",
     "api": "PostRenderSubscriber"
+  },
+  {
+    "id": "reward_choices",
+    "api": "AbstractDungeon.getRewardCards",
+    "system": "reward_choices",
+    "implementation": "RewardPools.Prefix"
   }
 ]

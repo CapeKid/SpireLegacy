@@ -82,5 +82,12 @@
     "summary": "Render the native game cursor after manor panels and trait tooltips so upgrade controls remain usable.",
     "amount": 1,
     "hook": "post_render"
+  },
+  {
+    "id": "reward_choices",
+    "hook": "card_rewards",
+    "enabled": true,
+    "amount": 3,
+    "summary": "Offer three cards before relic and Binary modifiers. Prefer unique cards in the rolled rarity; after that rarity is exhausted, allow repeats so all extra choices remain available without rerolling forever."
   }
 ]
