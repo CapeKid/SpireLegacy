@@ -1,3 +1,4 @@
+using BaseLib.Utils;
 using BaseLib.Abstracts;
 using Godot;
 using MegaCrit.Sts2.Core.CardSelection;
@@ -61,7 +62,7 @@ public abstract class LegacyCard : CustomCardModel
         if (!design.Mercy && (DynamicVars.Damage.BaseValue > 0 || Row.Text("special") is "block_damage" or "chain_damage"))
             for (var hit = 0; hit < Row.Number("hits"); hit++)
             {
-                var attack = DamageCmd.Attack(DynamicVars.Damage.BaseValue).FromCard(this);
+                var attack = DamageCmd.Attack(DynamicVars.Damage.BaseValue).FromCardCompatibility(this, play);
                 if (Row.Flag("aoe")) attack.TargetingAllOpponents(CombatState!);
                 else if (Row.Text("special") == "random_attack") attack.TargetingRandomOpponents(CombatState!);
                 else attack.Targeting(play.Target!);

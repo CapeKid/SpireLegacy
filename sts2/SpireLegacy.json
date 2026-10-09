@@ -3,10 +3,15 @@
   "name": "Spire Legacy",
   "author": "CapeKid",
   "description": "A family of Knight, Mage and Ranger heirs with inherited traits and permanent manor progression. Requires an installed owned Rogue Legacy 2 copy.",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "has_pck": false,
   "has_dll": true,
   "affects_gameplay": true,
   "min_game_version": "0.107.1",
-  "dependencies": [{ "id": "BaseLib", "min_version": "3.4.7" }]
+  "dependencies": [
+    {
+      "id": "BaseLib",
+      "min_version": "3.4.7"
+    }
+  ]
 }
