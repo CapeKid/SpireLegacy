@@ -7,3 +7,6 @@ __pycache__/
 
 scripts/melty-read.ps1
 *.pyc
+sts2/**/bin/
+sts2/**/obj/
+sts2/.godot/
