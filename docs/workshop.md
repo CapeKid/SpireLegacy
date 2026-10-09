@@ -19,6 +19,8 @@ Version 0.1.6 also checks `/home/deck/.local/share/Steam/steamapps/common/Rogue 
 
 For a Deck failure, use the log path shown in that launch's error. Native Linux writes `~/.local/share/HeirOfTheSpire/content-preparation.log` by default; Proton writes inside its Windows prefix. They are separate files. Version 0.1.7 logs the actual bootstrap OS, reader version, checked installation paths and whether the folder is missing, inaccessible or lacks the required Unity content. A log without the reader-version line may belong to an older attempt.
 
+Version 0.1.8 includes the complete current preparation log in ModTheSpire's debug output and error details on failure. Copy that section directly; opening the separate log file is optional. The bundled reader still identifies itself as 0.1.7 because this update changes how the mod displays its output.
+
 1. Run `scripts/build.ps1`, then `scripts/package.py` and `scripts/package_linux.py` using the development Python environment.
 2. Run `scripts/package_workshop.py`. This creates `build/workshop` and a distributable `dist/SpireLegacy-<version>-workshop.zip`. The workspace uses the official StS1 uploader's schema. `config.json` defaults to **private**; the script retains a previously assigned `steamPublishedID`.
 3. Start Steam, signed into the creator account that owns StS1. From the StS1 installation folder run its bundled Java 8 runtime with the official uploader:

@@ -17,8 +17,25 @@ public final class BootstrapChecks {
         check(linux.get(0).endsWith("python3.12")&&linux.get(1).endsWith("load_rl.py"),"Native Linux reader selection");
         try{ContentBootstrap.command(runtime,host,data,"Mac OS X",Collections.<String,String>emptyMap());throw new AssertionError("Unsupported platform accepted");}catch(IllegalStateException expected){check(expected.getMessage().contains("supports Windows"),"Unsupported platform explanation");}
         if(args.length>3&&args[3].equals("failure")){
-            try{ContentBootstrap.prepare(data);throw new AssertionError("Missing owned installation accepted");}catch(IllegalStateException expected){check(expected.getMessage().contains("content-preparation.log"),"Reader failure points to diagnostics");}
+            java.io.ByteArrayOutputStream output=new java.io.ByteArrayOutputStream();java.io.PrintStream previous=System.err;
+            try{
+                System.setErr(new java.io.PrintStream(output,true,"UTF-8"));
+                try{ContentBootstrap.prepare(data);throw new AssertionError("Missing owned installation accepted");}catch(IllegalStateException expected){
+                    String fullLog=new String(Files.readAllBytes(data.resolve("content-preparation.log")),java.nio.charset.StandardCharsets.UTF_8);
+                    check(expected.getMessage().contains(fullLog),"Error details include the entire current log");
+                    check(output.toString("UTF-8").contains(fullLog),"Debug output includes the entire current log");
+                    check(expected.getMessage().contains("content-preparation.log"),"Reader failure points to diagnostics");
+                }
+            }finally{System.setErr(previous);}
             check(!ContentBootstrap.complete(data),"Failure cannot create a valid cache");check(!Files.exists(data.resolve("family.json")),"Failure cannot create family state");
+            info.jarURL=data.resolve("missing-runtime/mods/HeirOfTheSpire.jar").toUri().toURL();output.reset();
+            try{
+                System.setErr(new java.io.PrintStream(output,true,"UTF-8"));
+                try{ContentBootstrap.prepare(data);throw new AssertionError("Missing runtime accepted");}catch(IllegalStateException expected){
+                    check(!expected.getMessage().contains("--- Spire Legacy content preparation log ---"),"Error details do not display an old attempt's log");
+                    check(!output.toString("UTF-8").contains("--- Spire Legacy content preparation log ---"),"Debug output does not display stale reader diagnostics");
+                }
+            }finally{System.setErr(previous);info.jarURL=jar.toUri().toURL();}
         }else{
             check(!ContentBootstrap.complete(data),"Fresh test cache initially absent");ContentBootstrap.prepare(data);check(ContentBootstrap.complete(data),"Fresh cache prepared by packaged reader");
             byte[] signature=Files.readAllBytes(data.resolve("cache/source.json"));ContentBootstrap.prepare(data);check(Arrays.equals(signature,Files.readAllBytes(data.resolve("cache/source.json"))),"Repeat launch verifies existing cache");

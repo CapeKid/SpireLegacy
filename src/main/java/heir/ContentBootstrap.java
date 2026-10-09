@@ -42,6 +42,7 @@ public final class ContentBootstrap {
     }
     public static void prepare(Path data){
         Path log=data.resolve("content-preparation.log");
+        boolean logStarted=false;
         try{
             Path runtime=bundle(modJar());
             if(runtime==null){
@@ -55,6 +56,7 @@ public final class ContentBootstrap {
             try(FileChannel channel=FileChannel.open(data.resolve("content-preparation.lock"),StandardOpenOption.CREATE,StandardOpenOption.WRITE);FileLock lock=channel.lock()){
                 List<String> args=command(runtime,host,data,System.getProperty("os.name"),System.getenv());
                 Files.write(log,Arrays.asList("Spire Legacy bootstrap | OS: "+System.getProperty("os.name"),"Content runtime: "+runtime,"Reader command: "+args),StandardCharsets.UTF_8);
+                logStarted=true;
                 ProcessBuilder builder=new ProcessBuilder(args).directory(runtime.toFile()).redirectErrorStream(true).redirectOutput(ProcessBuilder.Redirect.appendTo(log.toFile()));
                 builder.environment().put("PYTHONPATH",runtime.resolve("ReaderLinux/site").toString());
                 System.out.println("HEIR: preparing installed Rogue Legacy 2 content; log: "+log);
@@ -65,6 +67,16 @@ public final class ContentBootstrap {
                 }catch(InterruptedException interrupted){child.destroyForcibly();Thread.currentThread().interrupt();throw interrupted;}
                 if(!complete(data))throw new IllegalStateException("Content preparation did not produce all required images. Check "+log+" and reinstall the complete mod package.");
             }
-        }catch(Exception failure){throw new IllegalStateException("Spire Legacy could not prepare your installed game content. "+failure.getMessage(),failure);}
+        }catch(Exception failure){
+            String diagnostics="";
+            if(logStarted)try{
+                diagnostics="\n\n--- Spire Legacy content preparation log ---\n"+new String(Files.readAllBytes(log),StandardCharsets.UTF_8)+"\n--- End content preparation log ---";
+            }catch(Exception readFailure){diagnostics="\nCould not read content preparation log: "+readFailure.getMessage();}
+            String message="Spire Legacy could not prepare your installed game content. "+failure.getMessage()+diagnostics;
+            // ModTheSpire captures stderr in debug output and the exception in
+            // its error details. Include every line in both places for Deck users.
+            System.err.println(message);
+            throw new IllegalStateException(message,failure);
+        }
     }
 }
