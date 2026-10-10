@@ -247,3 +247,5 @@ Owned RetainHandPower uses AfterSideTurnEnd Decrement, used as duration referenc
 ## 1.0.15 Pacifist description, 2026-10-10
 
 User requested explicit description of the inherited Basic Attack conversion. Updated cantattack summary with 4 Block/2 Poison, upgraded 7 Block/3 Poison, non-Basic Attack restriction and 5 starting Poison per enemy. Data description only, stable trait/card IDs and mechanics unchanged. Version 1.0.15 metadata and packages prevent Workshop clients retaining old text. Build/preflight/package/delivery checks follow.
+
+- Sheet preflight and regular Release build pass with zero warnings/errors. Native/Workshop/Melty 1.0.15 archives pass CRC. Official uploader reached existing item 3816525393 but failed with k_EResultFail as Steam logged the PC out with Logged In Elsewhere at 16:02:23; SDK proof initialization then failed. No 1.0.15 delivery claimed. Requested Deck Steam exit before reopening PC Steam/retrying. Last verified Workshop delivery remains 1.0.14.
