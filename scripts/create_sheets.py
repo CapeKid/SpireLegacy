@@ -37,7 +37,7 @@ card('challenge','Challenge','knight','ATTACK',1,'UNCOMMON',damage=8,vulnerable=
 card('valor','Valor','knight','POWER',1,'UNCOMMON',strength=2,upgradeMagic=1)
 card('bastion','Bastion','knight','POWER',1,'RARE',dexterity=3,upgradeMagic=1)
 card('oath','Family Oath','knight','ATTACK',2,'RARE',damage=14,hits=2,exhaust=True,upgradeDamage=4)
-card('flame','Flame Barrier','mage','ATTACK',1,'BASIC',damage=8,block=3,upgradeDamage=3,upgradeBlock=2)
+card('flame','Flame Barrier','mage','SKILL',1,'BASIC',block=5,upgradeBlock=2,power='flame_barrier',magic=2,upgradeMagic=1)
 card('fireball','Fireball','mage','ATTACK',2,'COMMON',damage=20,upgradeDamage=6)
 card('study','Study','mage','SKILL',1,'COMMON',draw=2,upgradeMagic=1)
 card('barrier','Magic Barrier','mage','SKILL',1,'COMMON',block=9,draw=1,upgradeBlock=3)

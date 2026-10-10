@@ -14,7 +14,7 @@ This is the native StS2 successor to Spire Legacy 0.5.0, created by CapeKid. It 
 - Family run identities, inherited card snapshots, atomic saves and backup recovery. A completed run settles crowns once.
 - Genuine class, trait and heir sprites read from your owned RL2 installation. No game assets are in the download.
 
-The previous balance is preserved: plain strikes deal 5 damage, guards supply 4 Block, and class HP starts at 60/52/56 before inheritance and manor bonuses. Upgraded drawing cards retain the safeguards from 0.5.0. Balance against StS2's enemies still needs full-run playtesting.
+The basic-card baseline remains: plain strikes deal 5 damage, guards supply 4 Block, and class HP starts at 60/52/56 before inheritance and manor bonuses. Upgraded drawing cards retain the safeguards from 0.5.0. Version 1.0.5 removes unrelated trait bonuses and overlapping starter modifiers, limits treasure income to treasure rooms, and makes Flame Barrier a defensive Skill with temporary retaliation. See [trait review](traits.md). Balance against StS2's enemies still needs full-run playtesting.
 
 StS2 adaptations preserve native encounters and rewards. Dusty Tome grants an upgraded rare card from the current heir's pool because the migrated set has no Ancient-rarity cards. Native relics that require a specific base-game starter card or relic keep their eligibility checks. Ancients use generic dialogue where available, with existing Ironclad dialogue as a fallback when the game supplies no custom-character dialogue, including the ending.
 
@@ -34,7 +34,7 @@ Use the D-pad or left stick to move through buttons and read trait descriptions;
 
 ## Manual installation
 
-Extract `SpireLegacy-StS2-1.0.4.zip` into your StS2 install folder. Its layout is `mods/SpireLegacy/SpireLegacy.json`, `SpireLegacy.dll`, `content-reader.zip` and `heir/`. Subscribe to BaseLib separately, or use the Melty bundle, which includes BaseLib. Launch the normal game executable; no separate mod launcher is required.
+Extract `SpireLegacy-StS2-1.0.5.zip` into your StS2 install folder. Its layout is `mods/SpireLegacy/SpireLegacy.json`, `SpireLegacy.dll`, `content-reader.zip` and `heir/`. Subscribe to BaseLib separately, or use the Melty bundle, which includes BaseLib. Launch the normal game executable; no separate mod launcher is required.
 
 ## Steam Deck
 
@@ -46,13 +46,13 @@ RL2 discovery checks Steam's libraries, including `/home/deck/.local/share/Steam
 HEIR_RL2_DIR="/home/deck/.local/share/Steam/steamapps/common/Rogue Legacy 2" %command%
 ```
 
-The full content-preparation diagnostic appears in the game's log and in Family Manor when preparation fails. Use **Retry content preparation** after correcting the installation. Starting RL2 once is not required. Native Linux support is implemented; the user tested 1.0.2 on a physical Deck and reported lingering cards on beta. The user confirmed the 1.0.3 cleanup fix works on Deck. Version 1.0.4 Manor controls still need physical Deck retesting.
+The full content-preparation diagnostic appears in the game's log and in Family Manor when preparation fails. Use **Retry content preparation** after correcting the installation. Starting RL2 once is not required. Native Linux support is implemented; the user tested 1.0.2 on a physical Deck and reported lingering cards on beta. The user confirmed the 1.0.3 cleanup fix works on Deck. Version 1.0.5 Manor controls still need physical Deck retesting.
 
 If a card spends energy but never resolves, open **Family / Traits** after the failure. Version 1.0.3 shows the mod/game versions and the full failed card-action exception, including loaded mod versions, in Family Manor. **Copy card-play diagnostic** copies it for reporting. Version 1.0.3 adapts attack, card-sourced damage, exhaust and damage-modifier APIs across both branches. Retain this diagnostic if a card still fails.
 
 ## Melty
 
-`SpireLegacy-StS2-1.0.4-melty.zip` includes the mod, both readers and BaseLib 3.4.7. `sts2/melty.json` declares StS2 as the primary game and RL2 as the secondary game, installs the two mods and launches `SlayTheSpire2.exe`. This launcher mapping targets Windows. Melty must validate the uploaded mapping and observe a successful launch before publication. A prepared archive alone is not a verified Melty install.
+`SpireLegacy-StS2-1.0.5-melty.zip` includes the mod, both readers and BaseLib 3.4.7. `sts2/melty.json` declares StS2 as the primary game and RL2 as the secondary game, installs the two mods and launches `SlayTheSpire2.exe`. This launcher mapping targets Windows. Melty must validate the uploaded mapping and observe a successful launch before publication. A prepared archive alone is not a verified Melty install.
 
 The Workshop package uses Mega Crit's official StS2 uploader workspace format: `content/`, `workshop.json` and a PNG preview below 1 MB. Its visibility defaults to **private**. It creates a new StS2 item; do not supply the StS1 item's ID. BaseLib is a Required Item.
 
@@ -78,7 +78,7 @@ The reader packager consumes licensed `Reader/`, `ReaderLinux/` and `licenses/` 
 
 `scripts/sts2-lab.py` creates an isolated hardlinked owned-game oracle with separate saves and Steam Cloud writes disabled. `scripts/sts2-oracle.py` exercises the opt-in test bridge. Normal launches do not expose that bridge. Private game files, logs, extracted RL2 content and saves must remain ignored and must never be uploaded.
 
-Validation includes 2,406 core assertions; all 360 base cards and all 360 upgrades executed in native combat; 720 native stat/text/art checks; 549 inherited starter upgrade/save/downgrade round trips; six-choice rewards and shops for all three pools; class counters; native boss victory rewards; normal autosave/resume without duplicating Antique; staged manor purchases, family naming, banners and controller focus. Ancient compatibility adds 90 class-specific reward/serialization checks, actual upgraded reward acquisition and 36 dialogue checks. Shop and rest-site sprites were visually inspected. Full campaign balance, physical Deck play and Melty-installed launch validation remain separate release checks.
+Validation includes 2,434 core assertions; all 360 base cards and all 360 upgrades executed in native combat; 720 native stat/text/art checks; 549 inherited starter upgrade/save/downgrade round trips; six-choice rewards and shops for all three pools; class counters; native boss victory rewards; normal autosave/resume without duplicating Antique; staged manor purchases, family naming, banners and controller focus. Ancient compatibility adds 90 class-specific reward/serialization checks, actual upgraded reward acquisition and 36 dialogue checks. Shop and rest-site sprites were visually inspected. Full campaign balance, physical Deck play and Melty-installed launch validation remain separate release checks.
 
 ## Credits and license
 

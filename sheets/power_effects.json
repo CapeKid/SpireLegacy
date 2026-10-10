@@ -138,5 +138,9 @@
   {
     "id": "scry_block",
     "summary": "Whenever you Scry, gain !M! Block."
+  },
+  {
+    "id": "flame_barrier",
+    "summary": "When attacked this turn, deal !M! damage back."
   }
 ]
