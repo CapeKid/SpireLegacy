@@ -103,3 +103,13 @@ The Manor launcher sits beneath the character information and reserves the full 
 ## 1.0.9 trait playtesting
 
 Clumsy removes 2 Block after the first Attack each turn. Playing Attacks before defensive cards avoids the penalty. Hero Complex grants +100% legacy crowns alongside +40 maximum HP and disabled healing; the existing 200% total payout cap remains. Both trait changes apply to existing heirs. The 1.0.8 Ascension and controller fixes remain included.
+
+## 1.0.10 class sprites and animation
+
+Knight, Mage and Ranger now have distinct original full-body sprite atlases. Each uses a four-frame idle loop, a four-frame class attack, and skill, hurt, fallen and victory poses. Native combat triggers and bloodline card-play hooks drive visual reactions without waiting on or replacing gameplay actions. Attacks swing a sword, cast from a staff or fire a bow respectively. Skill/hurt states return to idle; death and victory persist. Class-specific idle sprites also appear in rest sites and shops. Inherited size and color effects remain; family colors apply to the separate banner so armor and robes retain their intended palette.
+
+Original artwork and full prompt provenance are recorded in [character-sprites.md](character-sprites.md). The mod includes all three PNG atlases. No extracted game artwork is included. Run `scripts/sts2-character-check.py <private-profile> <branch>` with the isolated rendered oracle to verify all three classes, paid card cleanup, damage reactions and victory/death transitions.
+
+## 1.0.11 trait abilities
+
+Inter-dimensional, Cartographer, IBS, FMF Fan, Mushroom Man and Hypergonadism now have explicit gameplay effects. See [traits.md](traits.md) for exact numbers and drawbacks. Existing heir IDs remain compatible; the trait tooltips use the updated definitions.

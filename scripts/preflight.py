@@ -25,11 +25,12 @@ def validate():
     for row in sheets['classes']: ref('classes',row,'asset',assets); ref('classes',row,'signature',cards)
     traits={r['id'] for r in sheets['traits']}
     effects={'none','gray','skill_block','nature','poison','skill_draw','fragile','pacifist','turn_block','first_attack_block','weak','enemy_guard','costly','gold','shop','histrionic','sepia','enemy_strength','hurt_weak','rainbow','vegan','diva','algesia','energy','no_heal','coin_loss','hurt_energy','super_heal','relics','thorns','blue','perfectionist','shock','chest','explosions','medium','festive','kit','piercing','exhausted'}
-    effects.update({'treasure_gold','first_attack_damage','overcharge','first_attack_block_loss','first_attack_block_loss'})
+    effects.update({'treasure_gold','first_attack_damage','overcharge','first_attack_block_loss','first_attack_shred','first_attack_weak','opening_draw_energy','opening_weak','first_skill_block','first_hurt_block'})
     for row in sheets['traits']:
         if re.search(r'<[^>]+>|\{\d+\}',row['name']):errors.append('Unresolved trait name formatting '+row['id'])
         ref('traits',row,'asset',assets)
         if row['effect'] not in effects:errors.append('Unimplemented trait effect '+row['id'])
+        if row['enabled'] and (row['summary']=='none' or (row['effect']=='none' and all(row[k]==0 for k in ('hp','strength','dexterity','draw','heal')))):errors.append('Selectable trait lacks an explained gameplay or visual effect '+row['id'])
         for excluded in row['excludes']:
             # Source incompatibilities can reference a disabled historical entry.
             if excluded not in traits and excluded not in {r['id'] for r in sheets['trait_coverage']}:errors.append('Unknown exclusion '+excluded)
@@ -51,6 +52,16 @@ def validate():
     for row in members:
         ref('card_pools',row,'classId',classes);ref('card_pools',row,'cardId',cards)
         if row['scope'] not in ('shared','unique'):errors.append('Invalid membership scope '+row['id'])
+    for art in sheets.get('character_art',[]):
+        path=ROOT/'src/main/resources'/art['path']
+        if not path.is_file() or hashlib.sha256(path.read_bytes()).hexdigest()!=art['sha256']:
+            errors.append('Character atlas missing/hash mismatch: '+art['id']);continue
+        with Image.open(path) as atlas:
+            if atlas.mode!='RGBA':errors.append('Character atlas must preserve transparency: '+art['id'])
+            alpha=atlas.getchannel('A').point(lambda value:255 if value>=16 else 0)
+            for x,y,w,h in art['regions']:
+                bounds=alpha.crop((x,y,x+w,y+h)).getbbox()
+                if not bounds or not (0<bounds[0]<bounds[2]<w and 0<bounds[1]<bounds[3]<h):errors.append('Character frame clips at a region edge: '+art['id'])
     for cls in classes:
         rows=[r for r in members if r['classId']==cls]
         if len(rows)!=len(membership[cls]):errors.append(cls+': duplicate pool membership')

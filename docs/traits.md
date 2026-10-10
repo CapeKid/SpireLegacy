@@ -2,7 +2,7 @@ Spire Legacy adapts the trait library from the locally installed Rogue Legacy 2 
 
 The audit found 85 library entries. Rogue Legacy 2's character generator includes rarity values 1–3; other rarity values are disabled or reserved. All 61 eligible entries have an adaptation, including Antique and the two seasonal appearances. The mod also understands the two old Healthy and Strong save IDs, but no longer generates them. Existing eight-trait save IDs are preserved. Only Heart is now named correctly; Hollow Bones is a separate trait.
 
-[trait_coverage.json](../sheets/trait_coverage.json) records every library entry, its source rarity and adaptation status. [traits.json](../sheets/traits.json) contains all exact modifiers, effects and incompatibilities. Cosmetic-only entries still affect appearance. Platform-only traits without a meaningful card-game equivalent explicitly say they have no combat modifier. They retain their identity and appearance where supported, without invented combat rewards.
+[trait_coverage.json](../sheets/trait_coverage.json) records every library entry, its source rarity and adaptation status. [traits.json](../sheets/traits.json) contains all exact modifiers, effects and incompatibilities. Cosmetic-only entries still affect appearance. Previously inert platforming traits now have explicit card-combat adaptations, described below. Pure palette and appearance traits retain their visual effects.
 
 The audit tools require the player's installed copy, UnityPy and TypeTreeGeneratorAPI. Extracted definitions, localization text and decompiled source stay under the ignored private directory. They are never distributed. Factual names and enum identifiers are used to identify the adaptations; descriptions and implementation are original mod content.
 
@@ -36,3 +36,15 @@ Flame Barrier is now a 1-Energy defensive Skill: 5 Block and 2 retaliation per e
 ## 1.0.9 trait playtesting
 
 Clumsy now loses 2 Block after the first Attack each turn, clamped to zero. Attacking before guarding avoids the penalty; further Attacks that turn do not remove more Block. This replaces its former cosmetic-only adaptation. Hero Complex keeps +40 maximum HP and disabled healing, and now adds +100% legacy crowns. Crown bonuses add together at settlement, subject to the existing 200% total payout cap, and do not increase run gold. Both changes apply to existing heirs with these trait IDs.
+
+## 1.0.11 formerly inert traits
+
+- **Hypergonadism**: The first Attack each turn applies 1 Weak to each enemy it hits, before damage.
+
+- **Inter-dimensional**: Lose 6 maximum HP. The first Attack each turn removes up to 3 Block from each enemy it hits, before damage.
+- **Cartographer**: On the first turn of each combat, draw 1 extra card but lose 1 Energy.
+- **IBS**: Start each combat with 1 Weak.
+- **FMF Fan**: The first Skill played each turn grants 2 Block.
+- **Mushroom Man**: Lose 6 maximum HP. After the first enemy Attack that damages you each turn, gain 3 Block. Your heir has a compact appearance.
+
+Inter-dimensional removes guard once per enemy hit by the first Attack, including multi-hit and area attacks. It does not add damage or remove guard again on subsequent hits. Mushroom Man triggers only when an enemy Attack causes actual HP loss, once per player turn; non-attack HP costs and fully blocked attacks do not trigger it. These changes apply to existing heirs with the same saved trait IDs. Crown bonuses remain unchanged.

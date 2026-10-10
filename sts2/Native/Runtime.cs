@@ -39,6 +39,7 @@ public static class Runtime
             MegaCrit.Sts2.Core.Saves.SaveManager.MockInstanceForTesting(manager);
             manager.InitSettingsDataForTest();
             manager.SettingsSave.Language = "eng";
+            manager.SettingsSave.SeenEaDisclaimer = true;
             manager.SettingsSave.Fullscreen = false;
             manager.SettingsSave.WindowSize = new(1280,800);
             manager.SettingsSave.ModSettings = existingSettings.ModSettings;

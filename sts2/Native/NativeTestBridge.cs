@@ -113,6 +113,22 @@ public static class NativeTestBridge
                     await NGame.Instance.StartNewSingleplayerRun(ModelDb.Character<HeirCharacter>(),true,ModelDb.ActsByIndex.Select(a=>a.First()).ToArray(),[],"SPIRELEGACY-PORT-TEST",GameMode.Standard,request.TryGetProperty("ascension",out var ascension)?ascension.GetInt32():0);
                     result = StateSummary(); break;
                 case "state": result = StateSummary(); break;
+                case "visual": result = HeirVisuals.Diagnostic(); break;
+                case "injure":
+                    var injured = RunState().Players.Single().Creature;
+                    await CreatureCmd.Damage(new BlockingPlayerChoiceContext(),injured,request.GetProperty("amount").GetInt32(),MegaCrit.Sts2.Core.ValueProps.ValueProp.Unblockable | MegaCrit.Sts2.Core.ValueProps.ValueProp.Unpowered,injured.CombatState!.GetOpponentsOf(injured).First());
+                    result = StateSummary(); break;
+                case "trait-hit":
+                    var hitPlayer=RunState().Players.Single();
+                    var traitEnemy=hitPlayer.Creature.CombatState!.GetOpponentsOf(hitPlayer.Creature).First(e=>e.IsAlive);
+                    var hitProps=request.TryGetProperty("unpowered",out var unpowered) && unpowered.GetBoolean() ? MegaCrit.Sts2.Core.ValueProps.ValueProp.Unblockable | MegaCrit.Sts2.Core.ValueProps.ValueProp.Unpowered : MegaCrit.Sts2.Core.ValueProps.ValueProp.Move;
+                    await CreatureCmd.Damage(new BlockingPlayerChoiceContext(),hitPlayer.Creature,request.GetProperty("amount").GetInt32(),hitProps,traitEnemy);
+                    result=StateSummary();break;
+                case "trait-guard":
+                    var guardPlayer=RunState().Players.Single();
+                    var guardTargets=request.TryGetProperty("self",out var selfGuard) && selfGuard.GetBoolean() ? new[]{guardPlayer.Creature} : guardPlayer.Creature.CombatState!.GetOpponentsOf(guardPlayer.Creature).Where(e=>e.IsAlive).ToArray();
+                    foreach(var guardTarget in guardTargets)await CreatureCmd.GainBlock(guardTarget,request.GetProperty("amount").GetInt32(),MegaCrit.Sts2.Core.ValueProps.ValueProp.Unpowered,null);
+                    result=StateSummary();break;
                 case "manual":
                     var manualPlayer=RunState().Players.Single(); await WaitForPlay(manualPlayer);
                     var manualCard=manualPlayer.PlayerCombatState!.Hand.Cards.First(c=>c is LegacyCard lc && lc.Key==request.GetProperty("card").GetString());
