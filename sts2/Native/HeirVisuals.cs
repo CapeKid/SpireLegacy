@@ -110,7 +110,8 @@ public static class HeirSelectIcon
             if(AccessTools.Field(button.GetType(),field).GetValue(button) is TextureRect icon) {
                 icon.Texture=Runtime.Texture("heir/ui/heir-portrait.png");
                 icon.ExpandMode=TextureRect.ExpandModeEnum.IgnoreSize;
-                icon.StretchMode=TextureRect.StretchModeEnum.KeepAspectCentered;
+                // Picker portraits fill a tall tile; a square cutout creates empty bands.
+                icon.StretchMode=TextureRect.StretchModeEnum.Scale;
             }
     }
 }

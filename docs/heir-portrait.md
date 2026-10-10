@@ -1,8 +1,18 @@
 # Heir character-selection portrait
 
-`src/main/resources/heir/ui/heir-portrait.png` is an original transparent PNG generated with OpenAI imagegen for CapeKid's Spire Legacy. Original mod illustrations remain under the project's MIT license. No extracted game artwork is included.
+`src/main/resources/heir/ui/heir-portrait.png` is an original opaque vertical PNG generated with OpenAI imagegen for CapeKid's Spire Legacy. Original mod illustrations remain under the project's MIT license. No extracted game artwork is included.
 
-Generation mode: edit/reference, using the mod's existing original `select-icon.png` solely as an art-style reference. Output: 1280 × 1280, transparent background. The native picker fits the texture inside its existing portrait bounds.
+## Current portrait, 1.0.7
+
+Built-in imagegen edit/reference mode. Output: 1024 × 1536, an opaque portrait tile. The original Heir cutout supplied character identity; two native picker portraits read from the owned game supplied style and framing references only. Those reference files remain private and are not distributed. The replacement is an original painting, with a close crop, broad angular shading and ochre background. Native TextureRects scale the entire tile into the existing 100 × 154 picker bounds, matching surrounding portraits without empty bands.
+
+Full generation prompt:
+
+> Use case: style-transfer. Asset type: tall Slay the Spire 2 character-selection portrait tile for the original Spire Legacy Heir. Image 1 is the edit target: redraw its silver knight helmet, small golden crown crest with emerald gem, and green scarf. Images 2 and 3 are PRIVATE GAME STYLE AND FRAMING REFERENCES ONLY: match their tall rectangular portrait composition, broad hand-painted angular shadow shapes, restrained linework, earthy colors, and simple opaque colored backdrop; do not copy their characters, masks, or artwork. Produce a NEW original portrait of the Heir in a 2:3 tall canvas (ideally 1024x1536). Extreme close-up three-quarter head portrait facing right, tightly cropped shoulders and scarf at bottom. Helmet and face occupy nearly the entire width. Small crown sits near the top edge; simplify its silhouette so it stays readable. Keep Rogue Legacy-inspired medieval character design but render with hand-painted game UI shading, fewer graphic outlines, broad readable forms, no tiny metallic detailing. Matte silver helmet with warm ivory highlights and slate shadows, gold crown, emerald scarf, subtle amber eye slit. Flat muted ochre/gold background fills every corner with a narrow understated darker ochre edge matching the reference tile framing. Fill the entire tall rectangle with art: no transparency, no square cutout, no empty margins, no floating sticker silhouette, no border outside the image, no text or watermarks. At a final on-screen size of 100x154 pixels, head must be comparable in size and visual weight to the reference character heads. Save the replacement original asset and report its local file path.
+
+## Previous portrait, 1.0.6
+
+Generation mode: edit/reference, using the mod's existing original `select-icon.png` solely as an art-style reference. Output: 1280 × 1280, transparent background. The square cutout left empty space in the tall picker bounds; user feedback prompted the replacement above.
 
 Full generation prompt:
 

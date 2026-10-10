@@ -91,3 +91,7 @@ Neow's scripted starting HP restoration is exempt from inherited healing modifie
 On character select, the Family Manor & Heir Lab button sits above the Heir portrait. Press Y to open it, or move down from the Heir portrait and press A. B closes the Manor and returns focus to the portrait. Static text cannot receive focus; only enabled buttons and editable fields are selectable. LB/RB scroll the page. The picker uses an original Heir portrait; generation details are recorded in `docs/heir-portrait.md` in the source repository.
 
 The owned-game regression script `scripts/sts2-startup-ui-check.py --profile-directory private/<lab-profile> --branch beta` checks actual Neow initialization, all three Hero Complex/Diva classes, native paid card cleanup, abandon, Vegan/Super Healer healing, Ascension starting HP, portrait replacement and controller navigation. Use the isolated opt-in lab described above. Regular and public-beta native checks passed; physical Steam Deck validation of 1.0.6 remains a user check.
+
+## 1.0.7 portrait refinement
+
+The character picker uses a tightly cropped original vertical Heir portrait with an opaque ochre background and broad painted shading. The artwork fills the existing portrait tile dimensions alongside native heroes. This replaces the 1.0.6 transparent square cutout. All startup, controller and gameplay fixes remain included.

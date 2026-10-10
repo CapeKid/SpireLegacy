@@ -56,6 +56,13 @@ public static class NativeTestBridge
                     var screen = menu.SubmenuStack.GetSubmenuType<NCharacterSelectScreen>();
                     screen.InitializeSingleplayer(); menu.SubmenuStack.Push(screen);
                     var button = Descendants(screen).OfType<NCharacterSelectButton>().Single(b => b.Character is HeirCharacter);
+                    if(request.TryGetProperty("portraitPreview",out var preview) && preview.GetBoolean())
+                        foreach(var portraitButton in Descendants(screen).OfType<NCharacterSelectButton>()) {
+                            portraitButton.DebugUnlock();
+                            if(portraitButton.Character is HeirCharacter)continue;
+                            var reference=(TextureRect)AccessTools.Field(portraitButton.GetType(),"_icon").GetValue(portraitButton)!;
+                            reference.Texture.GetImage().SavePng(Path.Combine(Runtime.DataDirectory,"portrait-reference-"+portraitButton.Character.Id.Entry+".png"));
+                        }
                     screen.SelectCharacter(button,button.Character);
                     button.GrabFocus();
                     result = new { selected = true }; break;
