@@ -196,12 +196,6 @@ public static class ManorUi
             AddButton("Copy card-play diagnostic",()=>DisplayServer.ClipboardSet(cardFailure));
         }
         if(Notice is {} notice) AddText(notice,26);
-        if (ContentBootstrap.Failure is {} failure)
-        {
-            AddText("Rogue Legacy 2 content preparation failed. Full diagnostic log:",28);
-            AddText(failure,20);
-            AddButton("Retry content preparation",() => { ContentBootstrap.Prepare(); Render(); });
-        }
         var options = new VBoxContainer(); content.AddChild(options);
         options.AddChild(MakeButton("Name your family",() => EditValue(false)));
         options.AddChild(MakeButton("Change banner",() => { profile.banner = (profile.banner + 1) % 4; profile.Save(Runtime.FamilyPath); Render(); }));
@@ -245,7 +239,7 @@ public static class ManorUi
         foreach (var trait in Inheritance.Rows(heir))
         {
             var detail = new HBoxContainer(); content!.AddChild(detail);
-            if (ContentBootstrap.Ready) detail.AddChild(new TextureRect { Texture = Runtime.CacheTexture(trait.Text("asset") + ".png"), CustomMinimumSize = new(48,48), ExpandMode = TextureRect.ExpandModeEnum.IgnoreSize, StretchMode = TextureRect.StretchModeEnum.KeepAspectCentered });
+            detail.AddChild(new TextureRect { Texture = Runtime.TraitIcon(trait.Text("id")), CustomMinimumSize = new(48,48), ExpandMode = TextureRect.ExpandModeEnum.IgnoreSize, StretchMode = TextureRect.StretchModeEnum.KeepAspectCentered });
             detail.AddChild(Text($"{trait.Text("name")}: {trait.Text("summary")}\nCrown bonus: {trait.Number("goldBonus")}%"));
         }
         if (selectable) AddButton(selected ? "Selected for next climb" : "Choose this heir",() => { Runtime.Profile.selected = heir; Runtime.Profile.Save(Runtime.FamilyPath); Render(); });

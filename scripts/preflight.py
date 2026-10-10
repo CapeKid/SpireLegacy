@@ -5,7 +5,7 @@ from PIL import Image
 from pathlib import Path
 ROOT=Path(__file__).resolve().parents[1]
 
-def validate():
+def validate(historical_assets=False):
     sheets={p.stem:json.loads(p.read_text()) for p in (ROOT/'sheets').glob('*.json')}
     errors=[]; cells=0
     for name,rows in sheets.items():
@@ -155,21 +155,38 @@ def validate():
         with Image.open(path) as image:
             if image.size!=(row['width'],row['height']):errors.append('Wrong UI dimensions '+row['id'])
             if row['transparent'] and ('A' not in image.getbands() or image.getchannel('A').getextrema()[0]==255):errors.append('UI art needs transparency '+row['id'])
+    icons=sheets.get('icon_art',[])
+    expected={'trait_'+r['id'] for r in sheets['traits']}|{'class_'+r['id'] for r in sheets['classes']}
+    if {r['id'] for r in icons}!=expected:errors.append('Original trait/class icon coverage incomplete')
+    icon_hashes=set()
+    for row in icons:
+        path=ROOT/'src/main/resources'/row['path']
+        if not path.is_file():errors.append('Missing original icon '+row['id']);continue
+        digest=hashlib.sha256(path.read_bytes()).hexdigest()
+        if digest!=row['sha256'] or digest in icon_hashes:errors.append('Changed or duplicate original icon '+row['id'])
+        icon_hashes.add(digest)
+        import xml.etree.ElementTree as ET
+        svg=ET.fromstring(path.read_text())
+        if svg.get('viewBox')!='0 0 128 128' or any(e.tag.split('}')[-1] in {'image','text','script','foreignObject'} for e in svg.iter()):errors.append('Icon is not self-contained vector art '+row['id'])
+    # Historical StS1 asset inspection is optional and never needed for the StS2 build.
     index=ROOT/'private'/'rl_asset_index.json'
-    if not index.exists(): errors.append('Real Rogue Legacy 2 asset inspection missing')
-    else:
+    if historical_assets and not index.exists(): errors.append('Historical Rogue Legacy 2 inspection missing')
+    elif historical_assets:
         found={(r['file'],r['type'],r['name']) for r in json.loads(index.read_text())}
         for row in sheets['assets']:
             if (row['sourceFile'],row['sourceType'],row['sourceName']) not in found: errors.append('Missing real asset '+row['id'])
     atlas=ROOT/'private/cardui.atlas'
-    if not atlas.exists(): errors.append('Host card atlas inspection missing')
-    else:
+    if historical_assets and not atlas.exists(): errors.append('Historical StS1 atlas inspection missing')
+    elif historical_assets:
         names=set(atlas.read_text().splitlines())
         for row in sheets['host_assets']:
             if row['sourceName'] not in names:errors.append('Missing host region '+row['sourceName'])
     if errors:
         print('\n'.join(errors)); raise SystemExit(1)
-    print(f'Preflight clean: {len(sheets)} sheets, {sum(map(len,sheets.values()))} rows, {cells} filled and checked cells; references and source assets resolve.')
+    print(f'Preflight clean: {len(sheets)} sheets, {sum(map(len,sheets.values()))} rows, {cells} checked cells; design references and original mod art resolve.')
     return sheets
 
-if __name__=='__main__': validate()
+if __name__=='__main__':
+    import argparse
+    parser=argparse.ArgumentParser();parser.add_argument('--historical-sts1-assets',action='store_true')
+    validate(parser.parse_args().historical_sts1_assets)

@@ -13,7 +13,6 @@ public static class HeirVisuals
     public static void Initialize() => ((SceneTree)Engine.GetMainLoop()).ProcessFrame += Update;
     public static void AttachRoomPortrait(Node2D visual)
     {
-        if(!ContentBootstrap.Ready)return;
         foreach(var child in visual.GetChildren().OfType<Node2D>().Where(n=>n.GetClass()=="SpineSprite"))child.Visible=false;
         if (visual.GetNodeOrNull<Node>("SpireLegacyRoomHeir") != null) return;
         // Native rest-site roots shrink large Spine art; compensate for our smaller atlas.
@@ -24,7 +23,7 @@ public static class HeirVisuals
     }
     public static void Attach(NCreature creature)
     {
-        if (creature.Entity.Player?.Character is not HeirCharacter || !ContentBootstrap.Ready) return;
+        if (creature.Entity.Player?.Character is not HeirCharacter) return;
         var visuals = creature.Visuals;
         visuals.GetCurrentBody().Visible = false;
         if (visuals.GetNodeOrNull<Node>("SpireLegacyHeir") != null) return;
@@ -32,7 +31,7 @@ public static class HeirVisuals
         var sprite = HeirSprite.Create(Runtime.Heir.classId, factor);
         sprite.Name = "SpireLegacyHeir";
         visuals.AddChild(sprite);
-        var badge = new Sprite2D { Texture = Runtime.CacheTexture(Design.Get("classes",Runtime.Heir.classId).Text("asset") + ".png"), Position = new(0,-230 * factor - 35), Scale = Vector2.One * .3f };
+        var badge = new Sprite2D { Texture = Runtime.ClassIcon(Runtime.Heir.classId), Position = new(0,-230 * factor - 35), Scale = Vector2.One * .3f };
         visuals.AddChild(badge);
         var banner = new Polygon2D { Name = "FamilyBanner", Polygon = [new(-190,-210),new(-135,-210),new(-135,-155),new(-163,-135),new(-190,-155)], Color = ManorUi.BannerColor, ZIndex = 2 };
         visuals.AddChild(banner);
@@ -149,7 +148,7 @@ public static class HeirRunDetailsButton
         __instance.AddChild(traits);
         foreach(var row in Inheritance.Rows(heir)) {
             var info=$"{row.Text("name")}: {row.Text("summary")}\nCrown bonus: {row.Number("goldBonus")}%";
-            if(ContentBootstrap.Ready) traits.AddChild(new TextureRect {Texture=Runtime.CacheTexture(row.Text("asset")+".png"),CustomMinimumSize=new(48,48),ExpandMode=TextureRect.ExpandModeEnum.IgnoreSize,StretchMode=TextureRect.StretchModeEnum.KeepAspectCentered,TooltipText=info,MouseFilter=Control.MouseFilterEnum.Stop});
+            traits.AddChild(new TextureRect {Texture=Runtime.TraitIcon(row.Text("id")),CustomMinimumSize=new(48,48),ExpandMode=TextureRect.ExpandModeEnum.IgnoreSize,StretchMode=TextureRect.StretchModeEnum.KeepAspectCentered,TooltipText=info,MouseFilter=Control.MouseFilterEnum.Stop});
             traits.AddChild(new Label {Text=row.Text("name"),TooltipText=info,MouseFilter=Control.MouseFilterEnum.Stop});
         }
     }
@@ -159,8 +158,8 @@ public static class HeirRunDetailsButton
 public static class HeirClassPowerIcon
 {
     public static bool Prefix(PowerModel __instance,ref Texture2D __result) {
-        if(__instance is not P_class || !ContentBootstrap.Ready) return true;
-        __result=Runtime.CacheTexture(Design.Get("classes",Runtime.Heir.classId).Text("asset")+".png");return false;
+        if(__instance is not P_class) return true;
+        __result=Runtime.ClassIcon(Runtime.Heir.classId);return false;
     }
 }
 

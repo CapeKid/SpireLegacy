@@ -17,18 +17,19 @@ public static class Runtime
     public static Texture2D Texture(string path)
     {
         if (Textures.TryGetValue(path, out var texture)) return texture;
-        var image = Image.LoadFromFile(Path.Combine(ModDirectory, path));
+        var fullPath = Path.Combine(ModDirectory, path);
+        var image = new Image();
+        if (Path.GetExtension(path).Equals(".svg", StringComparison.OrdinalIgnoreCase))
+        {
+            var error = image.LoadSvgFromString(File.ReadAllText(fullPath));
+            if (error != Error.Ok) throw new InvalidDataException("Invalid mod icon: " + path + " (" + error + ")");
+        }
+        else image = Image.LoadFromFile(fullPath);
         if (image.IsEmpty()) throw new InvalidDataException("Missing mod illustration: " + path);
         return Textures[path] = ImageTexture.CreateFromImage(image);
     }
-    public static Texture2D CacheTexture(string name)
-    {
-        var key = "cache:" + name;
-        if (Textures.TryGetValue(key,out var result)) return result;
-        var image = Image.LoadFromFile(Path.Combine(ContentBootstrap.CacheDirectory,name));
-        if (image.IsEmpty()) throw new InvalidDataException("Missing owned-content image: " + name);
-        return Textures[key] = ImageTexture.CreateFromImage(image);
-    }
+    public static Texture2D TraitIcon(string id) => Texture(Design.Get("icon_art", "trait_" + id).Text("path"));
+    public static Texture2D ClassIcon(string id) => Texture(Design.Get("icon_art", "class_" + id).Text("path"));
     public static void Initialize()
     {
         if (System.Environment.GetEnvironmentVariable("HEIR_TEST_MODE") == "1")
@@ -49,7 +50,6 @@ public static class Runtime
         Profile = FamilyProfile.Load(FamilyPath);
         Inheritance.CurrentHeir = () => Heir;
         if (Profile.offers.Count == 0) { Profile.GenerateOffers(System.Environment.TickCount); Profile.Save(FamilyPath); }
-        ContentBootstrap.Prepare();
         new Harmony("CapeKid.SpireLegacy2").PatchAll(Assembly.GetExecutingAssembly());
         NativeTestBridge.Initialize();
         HeirVisuals.Initialize();
