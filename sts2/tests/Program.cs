@@ -3,6 +3,15 @@ using System.Text.Json;
 
 var count = 0;
 void Check(bool value, string message) { count++; if (!value) throw new Exception(message); }
+var endingScripts = new HashSet<string>();
+foreach (var cls in new[] { "knight", "mage", "ranger" })
+foreach (var firstEnding in new[] { false, true })
+{
+    var lines = ArchitectConversation.ForClass(cls, firstEnding);
+    Check(lines.Count == 4 && lines.Select(l => l.Architect).SequenceEqual(new[] { true, false, true, false }), cls + " ending alternates Architect and Heir");
+    Check(lines.All(l => !string.IsNullOrWhiteSpace(l.Text) && !l.Text.Contains('{')), cls + " ending has complete literal dialogue");
+    Check(endingScripts.Add(string.Join("\n", lines.Select(l => l.Text))), cls + " unique first/return ending");
+}
 Check(Design.Rows("cards").Count == 360, "Preserve every historical card");
 foreach (var cls in new[] { "knight", "mage", "ranger" })
 {

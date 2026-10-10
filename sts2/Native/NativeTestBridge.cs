@@ -145,6 +145,32 @@ public static class NativeTestBridge
                 case "diagnostic":
                     try {await CardPlayDiagnostics.Observe(Task.FromException(new InvalidOperationException("Owned-game diagnostic fixture")),"TEST_ONLY");}catch(InvalidOperationException){}
                     ManorUi.Open();result=new{diagnostic=CardPlayDiagnostics.LastFailure};break;
+                case "architect-dialogues":
+                    var endingSet=ModelDb.Event<MegaCrit.Sts2.Core.Models.Events.TheArchitect>().DialogueSet;
+                    var endingClass=Runtime.Heir.classId; var endingChecks=new List<object>();
+                    try {
+                        foreach(var clsForEnding in new[]{"knight","mage","ranger"}) {
+                            Runtime.Heir.classId=clsForEnding;
+                            foreach(var winsForEnding in new[]{0,1,4,10,100}) {
+                                var ending=endingSet.GetValidDialogues(ModelDb.Character<HeirCharacter>().Id,winsForEnding,winsForEnding,false).Single();
+                                if(ending.EndAttackers!=MegaCrit.Sts2.Core.Entities.Ancients.ArchitectAttackers.Both)throw new InvalidDataException("Ending animation changed.");
+                                endingChecks.Add(new{classId=clsForEnding,wins=winsForEnding,lines=ending.Lines.Select(l=>new{speaker=l.Speaker.ToString(),key=l.LineText!.LocEntryKey,text=l.LineText.GetFormattedText(),next=l.NextButtonText?.GetFormattedText()}).ToArray()});
+                            }
+                        }
+                        var baseEnding=endingSet.GetValidDialogues(ModelDb.Character<MegaCrit.Sts2.Core.Models.Characters.Ironclad>().Id,0,0,false).First();
+                        if(baseEnding.Lines.Any(l=>l.LineText!.LocEntryKey.StartsWith("SPIRELEGACY")))throw new InvalidDataException("Base character ending changed.");
+                    } finally {Runtime.Heir.classId=endingClass;}
+                    result=endingChecks;break;
+                case "architect-state":
+                case "architect-next":
+                    var endingEvent=(MegaCrit.Sts2.Core.Models.Events.TheArchitect)((MegaCrit.Sts2.Core.Rooms.EventRoom)RunState().CurrentRoom!).LocalMutableEvent;
+                    var endingDialogue=(MegaCrit.Sts2.Core.Entities.Ancients.AncientDialogue)AccessTools.Field(endingEvent.GetType(),"_dialogue").GetValue(endingEvent)!;
+                    if(request.GetProperty("command").GetString()=="architect-next") {
+                        var currentEndingLine=(int)AccessTools.Field(endingEvent.GetType(),"_currentLineIndex").GetValue(endingEvent)!;
+                        if(currentEndingLine>=endingDialogue.Lines.Count-1)throw new InvalidDataException("Do not trigger victory from the dialogue fixture.");
+                        await (Task)AccessTools.Method(endingEvent.GetType(),"AdvanceDialogue").Invoke(endingEvent,[])!;
+                    }
+                    result=new{index=(int)AccessTools.Field(endingEvent.GetType(),"_currentLineIndex").GetValue(endingEvent)!,lines=endingDialogue.Lines.Select(l=>l.LineText!.GetFormattedText()).ToArray(),options=endingEvent.CurrentOptions.Select(o=>o.Title.GetFormattedText()).ToArray()};break;
                 case "ancients":
                     var ancientPlayer=RunState().Players.Single(); var originalClass=Runtime.Heir.classId; var ancientChecks=0;
                     try {
@@ -183,6 +209,7 @@ public static class NativeTestBridge
                     var encounter=roomType is MegaCrit.Sts2.Core.Rooms.RoomType.Monster or MegaCrit.Sts2.Core.Rooms.RoomType.Elite or MegaCrit.Sts2.Core.Rooms.RoomType.Boss ? RunState().Act.AllEncounters.First(e=>e.RoomType==roomType).ToMutable() : null;
                     AbstractModel? roomModel=encounter;
                     if(request.TryGetProperty("event",out var eventName) && eventName.GetString()=="Neow")roomModel=ModelDb.Event<MegaCrit.Sts2.Core.Models.Events.Neow>();
+                    if(request.TryGetProperty("event",out var endingName) && endingName.GetString()=="Architect")roomModel=ModelDb.Event<MegaCrit.Sts2.Core.Models.Events.TheArchitect>();
                     await RunManager.Instance.EnterRoomDebug(roomType,model:roomModel,showTransition:false);
                     RunManager.Instance.ActionExecutor.Unpause();
                     result = StateSummary(); break;
