@@ -11,7 +11,13 @@ def copy(source,target):
     target.parent.mkdir(parents=True,exist_ok=True);shutil.copy2(source,target)
 copy(repo/'sts2/bin/Release/net9.0/SpireLegacy.dll',mod/'SpireLegacy.dll')
 copy(repo/'sts2/SpireLegacy.json',mod/'SpireLegacy.json')
-copy(repo/'build/sts2/content-reader.zip',mod/'content-reader.zip')
+# Remove the obsolete reader when rebuilding a previously staged version.
+(mod/'content-reader.zip').unlink(missing_ok=True)
+icons=json.loads((repo/'sheets/icon_art.json').read_text())
+for icon in icons:
+    source=repo/'src/main/resources'/icon['path']
+    if hashlib.sha256(source.read_bytes()).hexdigest()!=icon['sha256']:raise ValueError('Icon hash mismatch: '+icon['id'])
+    copy(source,mod/icon['path'])
 illustrations=json.loads((repo/'sheets/card_art.json').read_text(encoding='utf-8-sig'))
 for art in illustrations:
     source=repo/'src/main/resources'/art['path']
@@ -31,13 +37,14 @@ copy(repo/'private/sts2-baselib/LICENSE.txt',mod/'licenses/BaseLib-MIT.txt')
 copy(repo/'docs/sts2-port.md',mod/'README.md')
 copy(repo/'docs/traits.md',mod/'traits.md')
 copy(repo/'docs/character-sprites.md',mod/'character-sprites.md')
+copy(repo/'docs/original-icons.md',mod/'original-icons.md')
 def archive(root,target):
     with zipfile.ZipFile(target,'w',zipfile.ZIP_DEFLATED,compresslevel=6) as output:
         for path in sorted(root.rglob('*')):
             if not path.is_file():continue
             if path.suffix.lower()=='.log' or path.name=='mod_id.txt':continue
             name=path.relative_to(root).as_posix()
-            if any(token in name.lower() for token in ('family.json','source.json','sts2.dll','godotsharp.dll','slaythespire2.pck','assembly-csharp','host_assets','heir/test')):raise ValueError('Forbidden packaged file: '+name)
+            if any(token in name.lower() for token in ('family.json','source.json','sts2.dll','godotsharp.dll','slaythespire2.pck','assembly-csharp','host_assets','heir/test','content-reader','readerlinux','readroguelegacy','load_rl.py','assets.dat')):raise ValueError('Forbidden packaged file: '+name)
             entry=zipfile.ZipInfo(name);entry.create_system=3;entry.compress_type=zipfile.ZIP_DEFLATED;entry.external_attr=0o100644<<16
             output.writestr(entry,path.read_bytes())
     with zipfile.ZipFile(target) as check:
@@ -48,6 +55,7 @@ deliveries=[archive(stage,dist/f'SpireLegacy-StS2-{version}.zip')]
 workshop=repo/'build/sts2/workshop'
 workshop.mkdir(parents=True,exist_ok=True)
 shutil.copytree(mod,workshop/'content/SpireLegacy',dirs_exist_ok=True)
+(workshop/'content/SpireLegacy/content-reader.zip').unlink(missing_ok=True)
 copy(repo/'sts2/workshop.json',workshop/'workshop.json')
 copy(repo/'docs/sts2-port.md',workshop/'README.md')
 copy(repo/'docs/traits.md',workshop/'traits.md')
@@ -61,5 +69,5 @@ for source in [nuget/'lib/net9.0/BaseLib.dll',nuget/'Content/BaseLib.json',nuget
 melty_manifest=json.loads((repo/'sts2/melty.json').read_text())
 copy(repo/'sts2/melty.json',melty/'melty.json')
 deliveries.append(archive(melty,dist/f'SpireLegacy-StS2-{version}-melty.zip'))
-(repo/'build/sts2/package-inspection.json').write_text(json.dumps(dict(deliveries=deliveries,mod_sha256=hashlib.sha256((mod/'SpireLegacy.dll').read_bytes()).hexdigest(),card_illustrations=len(illustrations),melty=melty_manifest),indent=2),encoding='utf-8')
+(repo/'build/sts2/package-inspection.json').write_text(json.dumps(dict(deliveries=deliveries,mod_sha256=hashlib.sha256((mod/'SpireLegacy.dll').read_bytes()).hexdigest(),card_illustrations=len(illustrations),original_icons=len(icons),requires_rl2=False,melty=melty_manifest),indent=2),encoding='utf-8')
 for item in deliveries:print(json.dumps(item))

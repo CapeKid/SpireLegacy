@@ -3,6 +3,11 @@ using System.Text.Json;
 
 var count = 0;
 void Check(bool value, string message) { count++; if (!value) throw new Exception(message); }
+var icons = Design.Rows("icon_art");
+Check(icons.Count == Design.Rows("traits").Count + 3, "Every saved trait ID and class has an original icon");
+Check(icons.Select(r => r.Text("sha256")).Distinct().Count() == icons.Count, "Original trait/class icons are distinct");
+foreach (var trait in Design.Rows("traits")) Check(Design.Get("icon_art", "trait_" + trait.Text("id")).Text("license") == "MIT", "Original trait icon " + trait.Text("id"));
+foreach (var cls in new[] { "knight", "mage", "ranger" }) Check(Design.Get("icon_art", "class_" + cls).Text("path").StartsWith("heir/icons/"), "Packaged original class icon " + cls);
 var endingScripts = new HashSet<string>();
 foreach (var cls in new[] { "knight", "mage", "ranger" })
 foreach (var firstEnding in new[] { false, true })

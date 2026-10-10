@@ -46,6 +46,17 @@ public static class NativeTestBridge
             object result;
             switch (request.GetProperty("command").GetString())
             {
+                case "standalone-assets":
+                    if(File.Exists(Path.Combine(Runtime.ModDirectory,"content-reader.zip")) || Directory.Exists(Path.Combine(Runtime.DataDirectory,"cache")) || Directory.Exists(Path.Combine(Runtime.DataDirectory,"reader")))throw new InvalidDataException("Standalone lab contains old reader/cache content.");
+                    var iconFolder=Path.Combine(Runtime.DataDirectory,"icon-preview");Directory.CreateDirectory(iconFolder);
+                    var iconChecks=new List<object>();
+                    foreach(var icon in Design.Rows("icon_art")) {
+                        var iconImage=Runtime.Texture(icon.Text("path")).GetImage();
+                        if(iconImage.GetWidth()!=128 || iconImage.GetHeight()!=128 || iconImage.IsEmpty())throw new InvalidDataException("Invalid original icon: "+icon.Text("id"));
+                        iconImage.SavePng(Path.Combine(iconFolder,icon.Text("id")+".png"));
+                        iconChecks.Add(new{id=icon.Text("id"),path=icon.Text("path")});
+                    }
+                    result=new{count=iconChecks.Count,icons=iconChecks,readerPresent=false,cachePresent=false,rl2Override=System.Environment.GetEnvironmentVariable("HEIR_RL2_DIR"),Runtime.Profile.family,Runtime.Profile.crowns};break;
                 case "inspect":
                     result = new { userData = OS.GetUserDataDir(), character = ModelDb.Character<HeirCharacter>().Id.ToString(), cards = Design.Rows("cards").Select(r => NativeCards.Get(r.Text("id")).Id.ToString()).ToArray(), pools = new[] { ModelDb.CardPool<KnightCardPool>().AllCards.Count(), ModelDb.CardPool<MageCardPool>().AllCards.Count(), ModelDb.CardPool<RangerCardPool>().AllCards.Count() }, labels = Descendants(Tree.Root).OfType<Label>().Where(n=>n.IsVisibleInTree()).Select(n=>n.Text).ToArray() };
                     break;
@@ -99,7 +110,6 @@ public static class NativeTestBridge
                     Descendants(Tree.Root).OfType<LineEdit>().Single(b=>b.IsVisibleInTree()).Text = request.GetProperty("value").GetString();
                     result = new { edited=true }; break;
                 case "start":
-                    if (!ContentBootstrap.Ready) throw new InvalidDataException(ContentBootstrap.Failure);
                     NModalContainer.Instance?.Clear(); ManorUi.Close();
                     if(NRun.Instance != null) {
                         if(Runtime.Profile.active != null) await (Task)AccessTools.Method(typeof(RunManager),"AbandonInternal").Invoke(RunManager.Instance,[])!;
