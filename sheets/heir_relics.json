@@ -1,0 +1,86 @@
+[
+  {
+    "id": "heirloom_brooch",
+    "title": "Heirloom Brooch",
+    "rarity": "Common",
+    "amount": 5,
+    "threshold": 1,
+    "extra": 0,
+    "description": "Once per combat, after you play a Power, gain 5 Block.",
+    "flavor": "An old clasp, polished by many hands.",
+    "route": "Power setup",
+    "baseline": "Modest delayed defense; Anchor grants 10 Block at combat start."
+  },
+  {
+    "id": "training_dummy",
+    "title": "Training Dummy",
+    "rarity": "Common",
+    "amount": 1,
+    "threshold": 1,
+    "extra": 0,
+    "description": "The first time each turn an Attack leaves you with Block, gain 1 Vigor for your next Attack.",
+    "flavor": "The family insisted on learning to guard before striking.",
+    "route": "Guarded attacks",
+    "baseline": "One Vigor per turn after a guarded Attack; it applies to every hit of the next Attack. Vajra grants 1 Strength to every Attack without this condition."
+  },
+  {
+    "id": "threadbound_ledger",
+    "title": "Threadbound Ledger",
+    "rarity": "Uncommon",
+    "amount": 1,
+    "threshold": 1,
+    "extra": 0,
+    "description": "The first time you Exhaust a card during your turn, draw 1 card.",
+    "flavor": "Even a discarded lesson deserves a place in the record.",
+    "route": "Exhaust cycling",
+    "baseline": "One draw per turn, compared with Dark Embrace drawing for every Exhaust."
+  },
+  {
+    "id": "wayfarer_ribbon",
+    "title": "Wayfarer Ribbon",
+    "rarity": "Uncommon",
+    "amount": 3,
+    "threshold": 1,
+    "extra": 0,
+    "description": "The first time you discard a card during your turn, gain 3 Block. End-of-turn discards do not count.",
+    "flavor": "Tie it to the path you mean to return by.",
+    "route": "Manual discard",
+    "baseline": "Capped at 3 Block per turn; Tough Bandages grants 3 for every manual discard."
+  },
+  {
+    "id": "triune_crest",
+    "title": "Triune Crest",
+    "rarity": "Uncommon",
+    "amount": 4,
+    "threshold": 3,
+    "extra": 1,
+    "description": "Once per combat: Knight gains 4 Block after a Skill; Mage gains 1 Arcane Charge after a Skill (maximum 2); Ranger gains 3 Vigor after an Attack.",
+    "flavor": "Three callings, one family name.",
+    "route": "Class keepsake",
+    "baseline": "A small one-use class resource; no permanent stat or crown multiplier."
+  },
+  {
+    "id": "legacy_hourglass",
+    "title": "Legacy Hourglass",
+    "rarity": "Rare",
+    "amount": 1,
+    "threshold": 3,
+    "extra": 1,
+    "description": "At the start of turn 3, gain 1 Energy and draw 1 card. Once per combat.",
+    "flavor": "The next heir will inherit the time you leave behind.",
+    "route": "Delayed resources",
+    "baseline": "A delayed one-use burst; Pocketwatch can draw 3 each qualifying turn."
+  },
+  {
+    "id": "family_seal",
+    "title": "Family Seal",
+    "rarity": "Rare",
+    "amount": 4,
+    "threshold": 3,
+    "extra": 1,
+    "description": "Once each turn, after you have played an Attack, a Skill and a Power, gain 4 Block and draw 1 card.",
+    "flavor": "Not all branches look alike. They still share the same roots.",
+    "route": "Mixed-type sequences",
+    "baseline": "Three distinct types required; Ornamental Fan grants 4 Block per three Attacks and Letter Opener deals 5 to all per three Skills."
+  }
+]

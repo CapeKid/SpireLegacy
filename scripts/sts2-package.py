@@ -39,6 +39,12 @@ copy(repo/'docs/traits.md',mod/'traits.md')
 copy(repo/'docs/trait-effect-audit.md',mod/'trait-effect-audit.md')
 copy(repo/'docs/character-sprites.md',mod/'character-sprites.md')
 copy(repo/'docs/original-icons.md',mod/'original-icons.md')
+copy(repo/'docs/heir-relics.md',mod/'heir-relics.md')
+for art in json.loads((repo/'sheets/relic_art.json').read_text()):
+    for field,hashfield in [('path','sha256'),('outline','outlineSha256')]:
+        source=repo/'src/main/resources'/art[field]
+        if hashlib.sha256(source.read_bytes()).hexdigest()!=art[hashfield]:raise ValueError('Relic icon hash mismatch: '+art['id'])
+        copy(source,mod/art[field])
 for name in ['sts2-pool-expansion.md','card-pools.md','card-catalogue.md']:copy(repo/'docs'/name,mod/name)
 def archive(root,target):
     with zipfile.ZipFile(target,'w',zipfile.ZIP_DEFLATED,compresslevel=6) as output:

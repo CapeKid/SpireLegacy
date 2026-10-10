@@ -123,6 +123,18 @@ public static class NativeTestBridge
                     await NGame.Instance.StartNewSingleplayerRun(ModelDb.Character<HeirCharacter>(),true,ModelDb.ActsByIndex.Select(a=>a.First()).ToArray(),[],"SPIRELEGACY-PORT-TEST",GameMode.Standard,request.TryGetProperty("ascension",out var ascension)?ascension.GetInt32():0);
                     result = StateSummary(); break;
                 case "state": result = StateSummary(); break;
+                case "relic-info": result=HeirRelicOracle.Inspect(RunState());break;
+                case "relic-obtain": result=await HeirRelicOracle.Obtain(RunState(),request.GetProperty("relic").GetString()!,request.TryGetProperty("shop",out var shopRelic)&&shopRelic.GetBoolean());break;
+                case "relic-counters": result=HeirRelicOracle.Counters(RunState());break;
+                case "relic-roundtrip": result=await HeirRelicOracle.RoundTrip(RunState());break;
+                case "relic-clear":
+                    foreach(var drop in RunState().Players.Single().Relics.OfType<FamilyDropRelic>().ToArray())await RelicCmd.Remove(drop);
+                    result=HeirRelicOracle.Counters(RunState());break;
+                case "relic-focus":
+                    var focusKey=request.GetProperty("relic").GetString()!;
+                    var holder=Descendants(Tree.Root).OfType<MegaCrit.Sts2.Core.Nodes.Relics.NRelicInventoryHolder>().First(h=>Descendants(h).OfType<MegaCrit.Sts2.Core.Nodes.Relics.NRelic>().Any(n=>n.Model is FamilyDropRelic r&&r.Key==focusKey));
+                    holder.GrabFocus();await Tree.ToSignal(Tree,SceneTree.SignalName.ProcessFrame);
+                    result=new{focused=holder.HasFocus(),focusMode=holder.FocusMode.ToString(),right=holder.FocusNeighborRight.ToString()};break;
                 case "expansion-play":
                     await WaitForPlay(RunState().Players.Single());
                     result=await PoolExpansionOracle.Play(RunState(),request.GetProperty("card").GetString()!,request.GetProperty("upgrade").GetBoolean(),UseTestSelector());break;

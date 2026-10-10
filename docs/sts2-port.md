@@ -9,6 +9,7 @@ This is the native StS2 successor to Spire Legacy 0.5.0, created by CapeKid. It 
 - Knight, Mage and Ranger heirs with distinct starting decks and class mechanics.
 - 82 reward cards per class on regular (20 common / 36 uncommon / 26 rare), matching native characters. Public-beta has 85 (20 / 38 / 27), also matching native characters. Each class has three additional basics and 34 shared family cards. See [pool expansion](sts2-pool-expansion.md). All 360 historical card definitions, upgrades and original illustrations remain registered.
 - All 61 eligible inherited RL2 traits, compatible pairs, inherited starter changes, three heirs after a climb and the first family's quick start.
+- Seven original [Heir-exclusive relics](heir-relics.md), with native reward/shop eligibility and bounded per-turn/per-combat effects. Family Bloodline remains starter-only.
 - Six manor upgrades, slower crown earnings, staged purchases with an explicit confirmation, family naming, four visible banner emblems and a temporary playtest crown editor.
 - Full wrapped, scrolling trait descriptions, mouse tooltips and keyboard/controller navigation with an on-screen text keyboard.
 - Family run identities, inherited card snapshots, atomic saves and backup recovery. A completed run settles crowns once.
@@ -24,7 +25,7 @@ StS2 adaptations preserve native encounters and rewards. Dusty Tome grants an up
 2. Subscribe to [BaseLib](https://steamcommunity.com/sharedfiles/filedetails/?id=3737335127) and [Spire Legacy for StS2](https://steamcommunity.com/sharedfiles/filedetails/?id=3816525393). The new item is currently private for owner testing. The original StS1 Workshop item is a different mod.
 3. Start StS2 on your selected branch. Accept its mod notice and enable BaseLib and Spire Legacy in the mod list. Restart if requested.
 4. Select **The Heir**. **Family Manor & Heir Lab** appears beneath the character information, clear of Ascension. Press Y, or move down from the portrait and press A. Choose a family/heir and start a solo climb.
-5. After a climb, return to the manor to choose another heir. Selecting upgrades only stages them; **Review purchases Ã¢â€ â€™ Confirm and save** spends crowns.
+5. After a climb, return to the manor to choose another heir. Selecting upgrades only stages them; **Review purchases ÃƒÂ¢Ã¢â‚¬Â Ã¢â‚¬â„¢ Confirm and save** spends crowns.
 
 Spire Legacy supports solo play. Its character cannot embark in a multiplayer lobby.
 
@@ -34,7 +35,7 @@ Use the D-pad or left stick to move through buttons and read trait descriptions;
 
 ## Manual installation
 
-Extract `SpireLegacy-StS2-1.0.20.zip` into your StS2 install folder. Its layout is `mods/SpireLegacy/SpireLegacy.json`, `SpireLegacy.dll` and `heir/`. Subscribe to BaseLib separately, or use the Melty bundle, which includes BaseLib. Launch the normal game executable; no separate mod launcher is required.
+Extract `SpireLegacy-StS2-1.0.21.zip` into your StS2 install folder. Its layout is `mods/SpireLegacy/SpireLegacy.json`, `SpireLegacy.dll` and `heir/`. Subscribe to BaseLib separately, or use the Melty bundle, which includes BaseLib. Launch the normal game executable; no separate mod launcher is required.
 
 ## Steam Deck
 
@@ -46,7 +47,7 @@ If a card spends energy but never resolves, open **Family / Traits** after the f
 
 ## Melty
 
-`SpireLegacy-StS2-1.0.20-melty.zip` includes the standalone mod and BaseLib 3.4.7. `sts2/melty.json` declares only StS2, installs the two mods and launches `SlayTheSpire2.exe`. This launcher mapping targets Windows. Melty must validate the uploaded mapping and observe a successful launch before publication. A prepared archive alone is not a verified Melty install.
+`SpireLegacy-StS2-1.0.21-melty.zip` includes the standalone mod and BaseLib 3.4.7. `sts2/melty.json` declares only StS2, installs the two mods and launches `SlayTheSpire2.exe`. This launcher mapping targets Windows. Melty must validate the uploaded mapping and observe a successful launch before publication. A prepared archive alone is not a verified Melty install.
 
 The Workshop package uses Mega Crit's official StS2 uploader workspace format: `content/`, `workshop.json` and a PNG preview below 1 MB. Its visibility defaults to **private**. It creates a new StS2 item; do not supply the StS1 item's ID. BaseLib is a Required Item.
 
@@ -126,3 +127,7 @@ Synesthesia has animated rainbow motes and a colored ring that stays visible alo
 Each class now matches the native ordinary reward distribution on both supported branches: regular 82 (20 common / 36 uncommon / 26 rare), public-beta 85 (20 / 38 / 27), plus three basics. Four new shared family rares and six unique rares per class expand exhaust recovery, retention, HP trades, Skill/Attack sequences, poison and discard builds. Beta adds two uncommons and one rare per class. All 360 saved model IDs and original illustrations remain registered, including beta-only cards when a save is loaded on regular. The same DLL selects eligibility from the built-in native pool. Ancient cards remain separate work. See [expansion and balance guide](sts2-pool-expansion.md).
 
 Both owned Windows branches pass exact native/Heir pool parity, unlocked/compendium membership, six-choice rewards and merchant inventory checks for all classes. All new eligible cards resolve through paid native play in base/upgraded form (60 regular and 78 beta checks), preserve saved identities and leave no hovering card. Evidence validation checks exact damage, draws, installed power amounts, costs, HP, Block, poison, recovery and discounts. Native save/resume preserves family identity and relics. Core checks pass 2,778 assertions. Physical Steam Deck controls and full-run balance remain playtesting checks; prepared archives do not mean a Workshop or Melty upload has occurred.
+
+## 1.0.21 Heir-exclusive relic drops
+
+Seven original relics expand Power setup, guarded attacks, exhaust, manual discard, class resources, delayed resources and mixed-type sequences. Two common, three uncommon and two rare drops are available to all three classes. They use native reward and shop acquisition with original icons, outlines, tooltips and controller focus. Per-turn claims, per-combat claims, partial sequences and spent appearance serialize through native saves; no crown or manor multiplier is added. Existing saved grab bags remain intact; start a new climb for the expanded drop roster. See [rules and balance references](heir-relics.md).
