@@ -8,7 +8,7 @@ namespace SpireLegacy;
 
 public static class HeirVisuals
 {
-    private static readonly List<(NCreature creature, HeirSprite sprite, Polygon2D banner,Label symbol)> actors = new();
+    private static readonly List<(NCreature creature, HeirSprite sprite, Polygon2D banner,Label symbol, HashSet<string> effects)> actors = new();
     private static readonly string[] Symbols=["☀","☾","✿","♣"];
     public static void Initialize() => ((SceneTree)Engine.GetMainLoop()).ProcessFrame += Update;
     public static void AttachRoomPortrait(Node2D visual)
@@ -17,7 +17,7 @@ public static class HeirVisuals
         foreach(var child in visual.GetChildren().OfType<Node2D>().Where(n=>n.GetClass()=="SpineSprite"))child.Visible=false;
         if (visual.GetNodeOrNull<Node>("SpireLegacyRoomHeir") != null) return;
         // Native rest-site roots shrink large Spine art; compensate for our smaller atlas.
-        var roomSize = visual is MegaCrit.Sts2.Core.Nodes.RestSite.NRestSiteCharacter ? 1.8f : .8f;
+        var roomSize = visual is MegaCrit.Sts2.Core.Nodes.RestSite.NRestSiteCharacter ? 3.6f : 1.4f;
         var portrait = HeirSprite.Create(Runtime.Heir.classId, roomSize);
         portrait.Name = "SpireLegacyRoomHeir"; portrait.Modulate = Colors.White;
         visual.AddChild(portrait);
@@ -38,7 +38,7 @@ public static class HeirVisuals
         visuals.AddChild(banner);
         var symbol = new Label { Text = Symbols[Runtime.Profile.banner], Position = new(-184,-201), MouseFilter = Control.MouseFilterEnum.Ignore };
         symbol.AddThemeFontSizeOverride("font_size",32); banner.AddChild(symbol);
-        actors.Add((creature,sprite,banner,symbol));
+        actors.Add((creature,sprite,banner,symbol,Inheritance.Traits.Select(r=>r.Text("effect")).ToHashSet()));
     }
     public static void Animate(MegaCrit.Sts2.Core.Entities.Creatures.Creature creature, string pose)
     {
@@ -46,7 +46,7 @@ public static class HeirVisuals
     }
     public static object Diagnostic() => actors.Where(a => GodotObject.IsInstanceValid(a.sprite)).Select(a => new {
         classId = a.sprite.ClassId, pose = a.sprite.Animation.ToString(), frame = a.sprite.Frame,
-        frames = a.sprite.SpriteFrames.GetFrameCount(a.sprite.Animation), events = a.sprite.Events.ToArray(),
+        frames = a.sprite.SpriteFrames.GetFrameCount(a.sprite.Animation), deathFrames = a.sprite.DeathFrames.ToArray(), visible = a.sprite.IsVisibleInTree(), tint = a.sprite.Modulate.ToString(), events = a.sprite.Events.ToArray(),
         position = a.sprite.GlobalPosition.ToString(), scale = a.sprite.Scale.ToString(), hp = a.creature.Entity.CurrentHp,
         bannerVisible = a.banner.IsVisibleInTree(), bannerZ = a.banner.ZIndex
     }).ToArray();
@@ -55,17 +55,18 @@ public static class HeirVisuals
         actors.RemoveAll(actor => !GodotObject.IsInstanceValid(actor.creature) || !GodotObject.IsInstanceValid(actor.sprite));
         foreach (var actor in actors)
         {
+            bool Has(string effect) => actor.effects.Contains(effect);
             var color = Colors.White;
-            if (Inheritance.Has("gray")) color = Colors.LightGray;
-            else if (Inheritance.Has("blue")) color = Colors.Blue;
-            else if (Inheritance.Has("sepia")) color = new(.7f,.55f,.3f);
-            else if (Inheritance.Has("nature")) color = Colors.Green;
-            else if (Inheritance.Has("medium")) color = new(.65f,.45f,.9f);
-            else if (Inheritance.Has("festive")) color = Colors.Crimson;
-            else if (Inheritance.Has("rainbow")) { var t = Time.GetTicksMsec() % 6000 / 6000f * Mathf.Tau; color = new(.65f+.35f*Mathf.Sin(t),.65f+.35f*Mathf.Sin(t+2),.65f+.35f*Mathf.Sin(t+4)); }
-            else if (Inheritance.Has("histrionic") && actor.creature.Entity.CurrentHp < actor.creature.Entity.MaxHp) color = new(1,.5f,.5f);
+            if (Has("gray")) color = Colors.LightGray;
+            else if (Has("blue")) color = Colors.Blue;
+            else if (Has("sepia")) color = new(.7f,.55f,.3f);
+            else if (Has("nature")) color = Colors.Green;
+            else if (Has("medium")) color = new(.65f,.45f,.9f);
+            else if (Has("festive")) color = Colors.Crimson;
+            else if (Has("rainbow")) { var t = Time.GetTicksMsec() % 6000 / 6000f * Mathf.Tau; color = new(.65f+.35f*Mathf.Sin(t),.65f+.35f*Mathf.Sin(t+2),.65f+.35f*Mathf.Sin(t+4)); }
+            else if (Has("histrionic") && actor.creature.Entity.CurrentHp < actor.creature.Entity.MaxHp) color = new(1,.5f,.5f);
             actor.creature.Visuals.GetCurrentBody().Visible = false;
-            actor.sprite.SetGray(Inheritance.Has("gray"));
+            actor.sprite.SetGray(Has("gray"));
             if (actor.creature.Entity.IsDead) actor.sprite.PlayPose("dead");
             actor.sprite.Modulate = color; actor.banner.Color = ManorUi.BannerColor;
             actor.symbol.Text=Symbols[Runtime.Profile.banner];

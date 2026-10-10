@@ -21,6 +21,10 @@ for art in json.loads((repo/'sheets/character_art.json').read_text(encoding='utf
     source=repo/'src/main/resources'/art['path']
     if hashlib.sha256(source.read_bytes()).hexdigest()!=art['sha256']:raise ValueError('Character atlas hash mismatch: '+art['id'])
     copy(source,mod/art['path'])
+    if isinstance(art.get('death'),dict):
+        source=repo/'src/main/resources'/art['death']['path']
+        if hashlib.sha256(source.read_bytes()).hexdigest()!=art['death']['sha256']:raise ValueError('Death atlas hash mismatch: '+art['id'])
+        copy(source,mod/art['death']['path'])
 for art in ['select-icon.png','select-bg.png','heir-portrait.png']:copy(repo/'src/main/resources/heir/ui'/art,mod/'heir/ui'/art)
 copy(repo/'LICENSE',mod/'LICENSE')
 copy(repo/'private/sts2-baselib/LICENSE.txt',mod/'licenses/BaseLib-MIT.txt')

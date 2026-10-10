@@ -113,3 +113,7 @@ Original artwork and full prompt provenance are recorded in [character-sprites.m
 ## 1.0.11 trait abilities
 
 Inter-dimensional, Cartographer, IBS, FMF Fan, Mushroom Man and Hypergonadism now have explicit gameplay effects. See [traits.md](traits.md) for exact numbers and drawbacks. Existing heir IDs remain compatible; the trait tooltips use the updated definitions.
+
+## 1.0.12 visual fixes
+
+Mage now visibly collapses through four original death frames and holds the final defeated pose. All classes are enlarged at rest sites (2x previous size) and shops (1.75x), with ground anchors preserved. Native death timing remains unchanged.
