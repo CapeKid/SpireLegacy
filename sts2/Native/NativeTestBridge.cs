@@ -123,6 +123,15 @@ public static class NativeTestBridge
                     await NGame.Instance.StartNewSingleplayerRun(ModelDb.Character<HeirCharacter>(),true,ModelDb.ActsByIndex.Select(a=>a.First()).ToArray(),[],"SPIRELEGACY-PORT-TEST",GameMode.Standard,request.TryGetProperty("ascension",out var ascension)?ascension.GetInt32():0);
                     result = StateSummary(); break;
                 case "state": result = StateSummary(); break;
+                case "expansion-play":
+                    await WaitForPlay(RunState().Players.Single());
+                    result=await PoolExpansionOracle.Play(RunState(),request.GetProperty("card").GetString()!,request.GetProperty("upgrade").GetBoolean(),UseTestSelector());break;
+                case "pool-parity":
+                    object PoolCounts(CardPoolModel pool) {var cards=pool.AllCards.ToArray();return new {pool=pool.Id.ToString(),total=cards.Length,unique=cards.Select(c=>c.Id).Distinct().Count(),ordinary=cards.Count(c=>c.Rarity is CardRarity.Common or CardRarity.Uncommon or CardRarity.Rare),common=cards.Count(c=>c.Rarity==CardRarity.Common),uncommon=cards.Count(c=>c.Rarity==CardRarity.Uncommon),rare=cards.Count(c=>c.Rarity==CardRarity.Rare),basic=cards.Count(c=>c.Rarity==CardRarity.Basic),ancient=cards.Count(c=>c.Rarity==CardRarity.Ancient)};}
+                    result=new{native=ModelDb.AllCharacters.Where(c=>c is not HeirCharacter).Select(c=>PoolCounts(c.CardPool)).ToArray(),heirs=new[]{PoolCounts(ModelDb.CardPool<KnightCardPool>()),PoolCounts(ModelDb.CardPool<MageCardPool>()),PoolCounts(ModelDb.CardPool<RangerCardPool>())}};break;
+                case "pool-availability":
+                    var poolPlayer=RunState().Players.Single();var available=poolPlayer.Character.CardPool.GetUnlockedCards(poolPlayer.UnlockState,poolPlayer.RunState.CardMultiplayerConstraint).OfType<LegacyCard>().ToArray();
+                    result=new{expanded=NativePoolParity.Expanded,ids=available.Select(c=>c.Key).ToArray(),compendium=available.All(c=>ModelDb.AllCards.Any(m=>m.Id==c.Id))};break;
                 case "visual": result = HeirVisuals.Diagnostic(); break;
                 case "trait-appearance": result = Descendants(Tree.Root).OfType<TraitAppearance>().Where(a=>a.IsVisibleInTree()).Select(a=>a.Diagnostic()).ToArray(); break;
                 case "room-visual":
@@ -191,7 +200,7 @@ public static class NativeTestBridge
                                 var tome=(MegaCrit.Sts2.Core.Models.Relics.DustyTome)ModelDb.Relic<MegaCrit.Sts2.Core.Models.Relics.DustyTome>().ToMutable();
                                 tome.SetupForPlayer(ancientPlayer);
                                 var chosen=ModelDb.GetById<CardModel>(tome.AncientCard!);
-                                if(chosen is not LegacyCard legacyRare || chosen.Rarity!=CardRarity.Rare || !Design.Pool(heirClass).Any(r=>r.Text("id")==legacyRare.Key))throw new InvalidDataException("Wrong heir Ancient reward.");
+                                if(chosen is not LegacyCard legacyRare || chosen.Rarity!=CardRarity.Rare || !NativePoolParity.Rows(heirClass).Any(r=>r.Text("id")==legacyRare.Key))throw new InvalidDataException("Wrong heir Ancient reward.");
                                 var restoredTome=(MegaCrit.Sts2.Core.Models.Relics.DustyTome)RelicModel.FromSerializable(tome.ToSerializable());
                                 if(restoredTome.AncientCard!=tome.AncientCard)throw new InvalidDataException("Ancient relic save mismatch.");
                                 ancientChecks++;
@@ -299,22 +308,24 @@ public static class NativeTestBridge
                     } finally {Runtime.Heir.traits=originalGenes;}
                     result=new{count=inheritedChecks}; break;
                 case "rewards":
-                    var rewardPlayer=RunState().Players.Single(); var allowed=Design.Pool(Runtime.Heir.classId).Select(r=>r.Text("id")).ToHashSet(); var rewardChecks=0; var shopChecks=0;
+                    var rewardPlayer=RunState().Players.Single(); var allowed=NativePoolParity.Rows(Runtime.Heir.classId).Select(r=>r.Text("id")).ToHashSet(); var rewardChecks=0; var shopChecks=0;var seenRewards=new HashSet<string>();var seenShops=new HashSet<string>();
                     foreach(var room in new[]{MegaCrit.Sts2.Core.Rooms.RoomType.Monster,MegaCrit.Sts2.Core.Rooms.RoomType.Elite,MegaCrit.Sts2.Core.Rooms.RoomType.Boss})
-                        for(var roll=0;roll<20;roll++) {
+                        for(var roll=0;roll<(room==MegaCrit.Sts2.Core.Rooms.RoomType.Boss?80:20);roll++) {
                             var reward=new MegaCrit.Sts2.Core.Rewards.CardReward(CardCreationOptions.ForRoom(rewardPlayer,room),6,rewardPlayer); reward.Populate();
                             var offered=reward.Cards.OfType<LegacyCard>().ToArray();
                             if(offered.Length!=6 || offered.Select(c=>c.Key).Distinct().Count()!=6 || offered.Any(c=>!allowed.Contains(c.Key))) throw new InvalidDataException("Wrong or duplicate native reward pool.");
                             rewardChecks+=offered.Length;
+                            foreach(var offeredCard in offered)seenRewards.Add(offeredCard.Key);
                         }
-                    for(var store=0;store<3;store++) {
+                    for(var store=0;store<30;store++) {
                         var inventory=MegaCrit.Sts2.Core.Entities.Merchant.MerchantInventory.CreateForNormalMerchant(rewardPlayer);
                         foreach(var entry in inventory.CharacterCardEntries) {
                             if(entry.CreationResult?.Card is not LegacyCard stocked || !allowed.Contains(stocked.Key)) throw new InvalidDataException("Wrong native merchant pool.");
                             shopChecks++;
+                            seenShops.Add(stocked.Key);
                         }
                     }
-                    result=new{rewardChecks,shopChecks,classId=Runtime.Heir.classId};break;
+                    result=new{rewardChecks,shopChecks,classId=Runtime.Heir.classId,seenRewards=seenRewards.ToArray(),seenShops=seenShops.ToArray()};break;
                 case "smoke":
                     var smokePlayer=RunState().Players.Single();var smokeCombat=smokePlayer.Creature.CombatState!;
                     await WaitForPlay(smokePlayer);

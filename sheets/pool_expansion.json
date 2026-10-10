@@ -1,0 +1,250 @@
+[
+  {
+    "id": "oath",
+    "cardId": "oath",
+    "classId": "shared",
+    "availability": "all",
+    "build": "strength",
+    "reference": "Inflame: slower setup, smaller Strength gain, one-use attack."
+  },
+  {
+    "id": "knight_ancestral_salvage",
+    "cardId": "knight_ancestral_salvage",
+    "classId": "shared",
+    "availability": "all",
+    "build": "exhaust recovery",
+    "reference": "Recover one exhausted card for 2 Energy with modest Block, then Exhaust; cannot recover itself."
+  },
+  {
+    "id": "mage_eternal_bookmark",
+    "cardId": "mage_eternal_bookmark",
+    "classId": "shared",
+    "availability": "all",
+    "build": "retention",
+    "reference": "Well-Laid Plans: pay 2 Energy to retain two cards; upgrade lowers setup cost."
+  },
+  {
+    "id": "ranger_forest_remedy",
+    "cardId": "ranger_forest_remedy",
+    "classId": "shared",
+    "availability": "all",
+    "build": "healing and cleanse",
+    "reference": "Paid, one-use small heal and debuff removal; respects inherited healing and Hero Complex."
+  },
+  {
+    "id": "knight_royal_execution",
+    "cardId": "knight_royal_execution",
+    "classId": "knight",
+    "availability": "all",
+    "build": "finisher",
+    "reference": "Bludgeon: lower damage unless the enemy is already at half HP; no Energy refund."
+  },
+  {
+    "id": "knight_meteor_hammer",
+    "cardId": "knight_meteor_hammer",
+    "classId": "knight",
+    "availability": "all",
+    "build": "multi-hit and Weak",
+    "reference": "Twin Strike: two-Energy, three-hit, one-use attack with one turn of Weak; upgrade adds only one per hit."
+  },
+  {
+    "id": "knight_unbroken_wall",
+    "cardId": "knight_unbroken_wall",
+    "classId": "knight",
+    "availability": "all",
+    "build": "defense and exhaust",
+    "reference": "Impervious: lower one-use Block budget, same two-Energy cost."
+  },
+  {
+    "id": "knight_battlefield_recovery",
+    "cardId": "knight_battlefield_recovery",
+    "classId": "knight",
+    "availability": "all",
+    "build": "HP and draw",
+    "reference": "Offering: paid one-use recovery with smaller draw, small healing and no Energy gain."
+  },
+  {
+    "id": "knight_forge_memory",
+    "cardId": "knight_forge_memory",
+    "classId": "knight",
+    "availability": "all",
+    "build": "exhaust draw engine",
+    "reference": "Dark Embrace: paid one-card-per-Exhaust engine with four initial Block."
+  },
+  {
+    "id": "knight_king_s_ransom",
+    "cardId": "knight_king_s_ransom",
+    "classId": "knight",
+    "availability": "all",
+    "build": "HP for Energy",
+    "reference": "Offering: trades HP for Energy once; draws no cards."
+  },
+  {
+    "id": "mage_celestial_spear",
+    "cardId": "mage_celestial_spear",
+    "classId": "mage",
+    "availability": "all",
+    "build": "heavy attack",
+    "reference": "Bludgeon: smaller repeatable damage budget, benefiting from bounded Arcane Charge."
+  },
+  {
+    "id": "mage_grand_thesis",
+    "cardId": "mage_grand_thesis",
+    "classId": "mage",
+    "availability": "all",
+    "build": "draw and Arcane Charge",
+    "reference": "Skim: more expensive and one-use; also grants one bounded Arcane Charge."
+  },
+  {
+    "id": "mage_hourglass",
+    "cardId": "mage_hourglass",
+    "classId": "mage",
+    "availability": "all",
+    "build": "temporary discounts",
+    "reference": "Bullet Time: discounts only two random eligible cards by one, once, rather than freeing the hand."
+  },
+  {
+    "id": "mage_infinite_script",
+    "cardId": "mage_infinite_script",
+    "classId": "mage",
+    "availability": "all",
+    "build": "HP for sustained draw",
+    "reference": "Paid setup, one HP per turn for one extra card, plus one next-turn card; neither free nor HP-neutral."
+  },
+  {
+    "id": "mage_archmage_thesis",
+    "cardId": "mage_archmage_thesis",
+    "classId": "mage",
+    "availability": "all",
+    "build": "three-Skill defense engine",
+    "reference": "Afterimage: triggers only every third Skill; paid setup includes modest initial Block."
+  },
+  {
+    "id": "mage_returned_prophecy",
+    "cardId": "mage_returned_prophecy",
+    "classId": "mage",
+    "availability": "all",
+    "build": "exhaust recovery and draw",
+    "reference": "Skim: smaller draw for 2 Energy plus one exhausted card recovered, once; cannot recover itself."
+  },
+  {
+    "id": "ranger_heartseeker",
+    "cardId": "ranger_heartseeker",
+    "classId": "ranger",
+    "availability": "all",
+    "build": "retained multi-hit",
+    "reference": "Twin Strike: slower retained three-hit attack; per-hit upgrade stays at one."
+  },
+  {
+    "id": "ranger_serpent_oil",
+    "cardId": "ranger_serpent_oil",
+    "classId": "ranger",
+    "availability": "all",
+    "build": "poison seed and multiplier",
+    "reference": "Existing Double Dose: paid small Poison seed followed by doubling, once; upgrade improves only the seed."
+  },
+  {
+    "id": "ranger_second_quiver",
+    "cardId": "ranger_second_quiver",
+    "classId": "ranger",
+    "availability": "all",
+    "build": "HP for draw and Energy",
+    "reference": "Adrenaline/Offering: one-use resource burst with four HP loss and smaller draw."
+  },
+  {
+    "id": "ranger_empty_quiver",
+    "cardId": "ranger_empty_quiver",
+    "classId": "ranger",
+    "availability": "all",
+    "build": "discard and redraw",
+    "reference": "Calculated Gamble: costs one Energy, offers modest Block; redraw excludes the played card."
+  },
+  {
+    "id": "ranger_ghost_luggage",
+    "cardId": "ranger_ghost_luggage",
+    "classId": "ranger",
+    "availability": "all",
+    "build": "discard defense engine",
+    "reference": "Afterimage/Light Pack: paid two-Block discard engine with small initial defense."
+  },
+  {
+    "id": "ranger_hunt_without_end",
+    "cardId": "ranger_hunt_without_end",
+    "classId": "ranger",
+    "availability": "all",
+    "build": "three-Attack Vigor engine",
+    "reference": "Tracking Rhythm: slower setup with initial Vigor; subsequent Vigor only every third Attack."
+  },
+  {
+    "id": "knight_serrated_spear",
+    "cardId": "knight_serrated_spear",
+    "classId": "knight",
+    "availability": "public-beta",
+    "build": "Vulnerable setup",
+    "reference": "Bash: smaller attack and one turn of Vulnerable at one Energy."
+  },
+  {
+    "id": "knight_vengeful_armor",
+    "cardId": "knight_vengeful_armor",
+    "classId": "knight",
+    "availability": "public-beta",
+    "build": "retaliation",
+    "reference": "Caltrops: smaller recurring Thorns budget with modest initial Block."
+  },
+  {
+    "id": "knight_castle_heart",
+    "cardId": "knight_castle_heart",
+    "classId": "knight",
+    "availability": "public-beta",
+    "build": "end-turn defense",
+    "reference": "Afterimage: fixed four end-turn Block instead of scaling with cards played; paid setup and modest initial defense."
+  },
+  {
+    "id": "mage_frozen_spear",
+    "cardId": "mage_frozen_spear",
+    "classId": "mage",
+    "availability": "public-beta",
+    "build": "debuff setup",
+    "reference": "Uppercut: smaller damage and one turn each of Weak and Vulnerable."
+  },
+  {
+    "id": "mage_cleanse_sigil",
+    "cardId": "mage_cleanse_sigil",
+    "classId": "mage",
+    "availability": "public-beta",
+    "build": "cleanse defense",
+    "reference": "Paid one-use cleanse with modest Block; no healing or Energy refund."
+  },
+  {
+    "id": "mage_book_of_embers",
+    "cardId": "mage_book_of_embers",
+    "classId": "mage",
+    "availability": "public-beta",
+    "build": "exhaust damage engine",
+    "reference": "Phoenix Forge: smaller per-Exhaust damage budget, supporting Mage exhaust recovery."
+  },
+  {
+    "id": "ranger_scouting",
+    "cardId": "ranger_scouting",
+    "classId": "ranger",
+    "availability": "public-beta",
+    "build": "scry and draw",
+    "reference": "Prepared/Skim: one paid card with Scry selection, no immediate Energy gain or large draw burst."
+  },
+  {
+    "id": "ranger_pocket_arsenal",
+    "cardId": "ranger_pocket_arsenal",
+    "classId": "ranger",
+    "availability": "public-beta",
+    "build": "draw and temporary discount",
+    "reference": "Prepared/Bullet Time: paid, one-use draw and small random hand discount."
+  },
+  {
+    "id": "ranger_unseen_hunter",
+    "cardId": "ranger_unseen_hunter",
+    "classId": "ranger",
+    "availability": "public-beta",
+    "build": "per-card defense",
+    "reference": "Afterimage: paid setup with modest initial Block; one Block per played card."
+  }
+]

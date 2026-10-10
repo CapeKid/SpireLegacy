@@ -1,29 +1,29 @@
 [
   {
     "id": "knight",
-    "reference": "Owned Ironclad: 75 total; 30 shared and 45 unique",
+    "reference": "StS2 regular v0.107.1: 82 rewards; public-beta v0.111.0: 85 rewards with branch additions",
     "basic": 3,
     "common": 20,
     "uncommon": 36,
-    "rare": 16,
-    "total": 75
+    "rare": 26,
+    "total": 85
   },
   {
     "id": "mage",
-    "reference": "Owned Ironclad: 75 total; 30 shared and 45 unique",
+    "reference": "StS2 regular v0.107.1: 82 rewards; public-beta v0.111.0: 85 rewards with branch additions",
     "basic": 3,
     "common": 20,
     "uncommon": 36,
-    "rare": 16,
-    "total": 75
+    "rare": 26,
+    "total": 85
   },
   {
     "id": "ranger",
-    "reference": "Owned Ironclad: 75 total; 30 shared and 45 unique",
+    "reference": "StS2 regular v0.107.1: 82 rewards; public-beta v0.111.0: 85 rewards with branch additions",
     "basic": 3,
     "common": 20,
     "uncommon": 36,
-    "rare": 16,
-    "total": 75
+    "rare": 26,
+    "total": 85
   }
 ]

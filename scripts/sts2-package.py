@@ -39,6 +39,7 @@ copy(repo/'docs/traits.md',mod/'traits.md')
 copy(repo/'docs/trait-effect-audit.md',mod/'trait-effect-audit.md')
 copy(repo/'docs/character-sprites.md',mod/'character-sprites.md')
 copy(repo/'docs/original-icons.md',mod/'original-icons.md')
+for name in ['sts2-pool-expansion.md','card-pools.md','card-catalogue.md']:copy(repo/'docs'/name,mod/name)
 def archive(root,target):
     with zipfile.ZipFile(target,'w',zipfile.ZIP_DEFLATED,compresslevel=6) as output:
         for path in sorted(root.rglob('*')):

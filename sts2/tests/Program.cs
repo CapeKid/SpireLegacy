@@ -21,8 +21,12 @@ Check(Design.Rows("cards").Count == 360, "Preserve every historical card");
 foreach (var cls in new[] { "knight", "mage", "ranger" })
 {
     var pool = Design.Pool(cls).ToArray();
-    Check(pool.Length == 75 && pool.Select(r => r.Text("id")).Distinct().Count() == 75, cls + " pool");
-    Check(Design.Rows("card_pools").Count(r => r.Text("classId") == cls && r.Text("scope") == "shared") == 30, cls + " shared core");
+    Check(pool.Length == 85 && pool.Select(r => r.Text("id")).Distinct().Count() == 85, cls + " regular pool");
+    Check(Design.Rows("card_pools").Count(r => r.Text("classId") == cls && r.Text("scope") == "shared") == 34, cls + " shared core");
+    var expanded=Design.Pool(cls,true).ToArray();
+    Check(expanded.Length==88 && expanded.Select(r=>r.Text("id")).Distinct().Count()==88,cls+" beta pool");
+    foreach(var item in new[]{("COMMON",20,20),("UNCOMMON",36,38),("RARE",26,27)})
+        Check(pool.Count(r=>r.Text("rarity")==item.Item1)==item.Item2 && expanded.Count(r=>r.Text("rarity")==item.Item1)==item.Item3,cls+" native "+item.Item1+" reward parity");
     Check(Design.Get("decks", cls).List("cards").Length == 10, cls + " starters");
 }
 foreach (var row in Design.Rows("cards"))

@@ -1,8 +1,8 @@
 # Shared family and class libraries
 
-Version 0.4.0 gives each heir **75 cards: 30 shared family cards plus 45 unique class cards**. This matches the owned Slay the Spire 1 Ironclad library: 3 basic, 20 common, 36 uncommon and 16 rare cards. Each class has 72 reward/shop cards; the basics are unique starters, not draft rewards.
+Version 1.0.20 gives each heir **82 ordinary reward cards on regular and 85 on public-beta**, matching the native StS2 characters on regular v0.107.1 and public-beta v0.111.0. Each class also has three basic starters. Regular has 20 common, 36 uncommon and 26 rare rewards; beta has 20 common, 38 uncommon and 27 rare. Ancient cards are separate and tracked in #26. The earlier 75-card target was based on StS1.
 
-There are **165 distinct active cards** across the character, not 225: the same 30 shared IDs appear in all three pools. Shared cards contain 8 commons, 16 uncommons and 6 rares; each class contributes 3 basics, 12 commons, 20 uncommons and 10 rares. [The catalogue](card-catalogue.md) lists exactly what each heir can obtain normally and labels shared versus unique cards.
+There are **187 distinct active cards on regular and 196 on beta**. Each class has the same 34 shared IDs: 8 common, 16 uncommon and 10 rare. Regular class specialties add 3 basics, 12 commons, 20 uncommons and 16 rares; beta adds two uncommons and one rare per class. [The catalogue](card-catalogue.md) lists shared, unique and beta-only cards. [The expansion guide](sts2-pool-expansion.md) covers new choices, upgrades and balance comparisons.
 
 ## Shared core
 
@@ -17,7 +17,7 @@ Shared cards keep identical rules, upgrades, art and IDs in all classes. The sel
 | Debuffs | Challenge, Tripwire, Merciless, Alchemist's Patience | Knight gains armor and Strength payoffs; Mage adds Toxic Theory and area spells; Ranger adds poison doubling and marked-target shots. |
 | Flexible bursts | Meditate, Guardian Angel, Mirror Manuscript, Master Plan | Resource, protection and Skill duplication tools support several routes rather than one class-exclusive combo. |
 
-Shared cards are identified as **Family card** in their tooltip. They count toward the 75-card total; they are not an additional colorless pool.
+Shared cards are identified in the catalogue and count toward each class's pool. The native pool chooses beta additions from the installed game's built-in card distribution, excluding other mods' injected cards. Both packages retain all model IDs so saves can load previously acquired cards even when branch eligibility changes.
 
 ## Class identity
 
@@ -31,8 +31,8 @@ Mage-only charge effects and the class-specific Hunter Rhythm upgrade remain uni
 
 ## Save compatibility and verification
 
-All 360 previously released IDs and illustrations remain registered so existing decks and saves can load. The 195 cards outside the curated active set have a legacy tooltip and are excluded from current normal class reward/shop pools. Historical authoring class is retained in cards.json; card_pools.json is the authoritative draft membership table. Effects that deliberately access other colors, such as Prismatic Shard, retain native behavior. Version 0.5.0 rebalances legacy cards as well as the active set.
+All 360 previously released IDs and illustrations remain registered so existing decks and saves can load. The 173 cards outside the regular active set (164 on beta) are excluded from normal class reward/shop pools. Historical authoring class is retained in cards.json; card_pools.json and branch_cards.json define current membership. Effects that deliberately access other colors, such as Prismatic Shard, retain native behavior. Version 0.5.0 rebalances legacy cards as well as the active set.
 
-Preflight checks exact totals/rarities, identical shared membership, disjoint unique memberships, class-compatible shared mechanics, distinct rules within each pool, shop type coverage and verified art. Native checks cover selected-class pool membership, shared card copies/upgrades and passive behavior, rewards with Question Card/Crown/Shard, and merchants. The small-pool reward replacement remains removed; the native game has 16 rares per class to choose from. Full-run balance and physical Deck verification of this pool revision remain pending.
+Preflight checks exact totals/rarities, identical shared membership, disjoint unique memberships, class-compatible shared mechanics, distinct rules within each pool, shop type coverage and verified art. Native checks cover selected-class pool membership, shared card copies/upgrades, six-choice rewards, compendium and merchants. Native rewards now have 26 rares per class on regular and 27 on beta. Full-run balance and physical Deck verification of this pool revision remain pending.
 
 The [0.5.0 manor and balance guide](manor-and-balance.md) explains weaker starters, class passives, upgraded draw/discard rules and the progression economy.
