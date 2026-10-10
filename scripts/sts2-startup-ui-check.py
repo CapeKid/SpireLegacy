@@ -1,5 +1,5 @@
 """Regression checks for an opt-in isolated owned-game lab (HEIR_TEST_MODE=1)."""
-import argparse,json,time
+import argparse,json,re,time
 from pathlib import Path
 root=Path(__file__).resolve().parents[1]
 parser=argparse.ArgumentParser(description=__doc__)
@@ -44,13 +44,23 @@ try:
   h=send('heal');expectedHeal=0 if 'megahealth' in traits else 5 if 'nomeat' in traits else 10
   assert h['hp']==min(h['maxHp'],h['maxHp']-10+expectedHeal),h
   send('abandon')
- send('select');time.sleep(.8)
+ send('select',previewAscension=5);time.sleep(.8)
  picker=send('select-state');assert any(c['portrait'] for c in picker['controls']),picker
+ def bounds(name):
+  return tuple(map(float,re.findall(r'-?\d+(?:\.\d+)?',next(c['rect'] for c in picker['controls'] if c['name']==name))))
+ x,y,w,h=bounds('SpireLegacyManor')
+ for obstacle in ['AscensionPanel','BackButton']:
+  ox,oy,ow,oh=bounds(obstacle)
+  assert x+w<=ox or ox+ow<=x or y+h<=oy or oy+oh<=y,(obstacle,picker)
  key('ui_down');picker=send('select-state');assert picker['focus']=='SpireLegacyManor',picker
  key('ui_select');m=send('manor-state');assert m['focusableLabels']==0 and m['focusText']=='Name your family',m
  key('ui_down');assert send('manor-state')['focusText']=='Change banner'
  key('ui_cancel');assert send('select-state')['focus']!='SpireLegacyManor'
  key('ui_accept');assert send('manor-state')['open']
+ key('ui_cancel')
+ # Steam Input emits this controller action during node processing, after
+ # SceneTree.ProcessFrame; a just-pressed poll can miss the generated action.
+ key('controller_face_button_north');assert send('manor-state')['open']
  key('ui_cancel')
  if tag=='beta':send('screenshot')
  print(tag+': all three Hero Complex/Diva heirs survive Neow, play/discard cards and abandon; Vegan/Super Healer/ascension initialization preserved; healing restriction retained; unique portrait, D-pad/A and Y Manor entry, B exit and selectable-only focus passed')

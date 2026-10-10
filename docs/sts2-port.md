@@ -23,7 +23,7 @@ StS2 adaptations preserve native encounters and rewards. Dusty Tome grants an up
 1. Install owned Steam copies of Slay the Spire 2 and Rogue Legacy 2.
 2. Subscribe to [BaseLib](https://steamcommunity.com/sharedfiles/filedetails/?id=3737335127) and [Spire Legacy for StS2](https://steamcommunity.com/sharedfiles/filedetails/?id=3816525393). The new item is currently private for owner testing. The original StS1 Workshop item is a different mod.
 3. Start StS2 on your selected branch. Accept its mod notice and enable BaseLib and Spire Legacy in the mod list. Restart if requested.
-4. Select **The Heir**. **Family Manor & Heir Lab** appears above the Heir portrait. Press Y, or move down from the portrait and press A. Choose a family/heir and start a solo climb.
+4. Select **The Heir**. **Family Manor & Heir Lab** appears beneath the character information, clear of Ascension. Press Y, or move down from the portrait and press A. Choose a family/heir and start a solo climb.
 5. After a climb, return to the manor to choose another heir. Selecting upgrades only stages them; **Review purchases → Confirm and save** spends crowns.
 
 Spire Legacy supports solo play. Its character cannot embark in a multiplayer lobby.
@@ -95,3 +95,7 @@ The owned-game regression script `scripts/sts2-startup-ui-check.py --profile-dir
 ## 1.0.7 portrait refinement
 
 The character picker uses a tightly cropped original vertical Heir portrait with an opaque ochre background and broad painted shading. The artwork fills the existing portrait tile dimensions alongside native heroes. This replaces the 1.0.6 transparent square cutout. All startup, controller and gameplay fixes remain included.
+
+## 1.0.8 Ascension layout and Steam Input
+
+The Manor launcher sits beneath the character information and reserves the full visible Ascension panel bounds, including its icon and arrows. The Y shortcut observes held-state press edges for both the mapped accept action and the native north-face controller action, accommodating Steam Input events generated after the frame callback. Switching from touch/mouse to controller retains the selected Heir. D-pad/A entry and B exit remain available. Native checks exercise Ascension 5, non-overlapping control bounds and the north-face controller action on both branches; physical Deck confirmation remains a user check.
