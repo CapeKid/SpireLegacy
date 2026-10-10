@@ -25,11 +25,12 @@ def validate():
     for row in sheets['classes']: ref('classes',row,'asset',assets); ref('classes',row,'signature',cards)
     traits={r['id'] for r in sheets['traits']}
     effects={'none','gray','skill_block','nature','poison','skill_draw','fragile','pacifist','turn_block','first_attack_block','weak','enemy_guard','costly','gold','shop','histrionic','sepia','enemy_strength','hurt_weak','rainbow','vegan','diva','algesia','energy','no_heal','coin_loss','hurt_energy','super_heal','relics','thorns','blue','perfectionist','shock','chest','explosions','medium','festive','kit','piercing','exhausted'}
-    effects.update({'treasure_gold','first_attack_damage','overcharge','first_attack_block_loss','first_attack_block_loss'})
+    effects.update({'treasure_gold','first_attack_damage','overcharge','first_attack_block_loss','first_attack_shred','first_attack_weak','opening_draw_energy','opening_weak','first_skill_block','first_hurt_block'})
     for row in sheets['traits']:
         if re.search(r'<[^>]+>|\{\d+\}',row['name']):errors.append('Unresolved trait name formatting '+row['id'])
         ref('traits',row,'asset',assets)
         if row['effect'] not in effects:errors.append('Unimplemented trait effect '+row['id'])
+        if row['enabled'] and (row['summary']=='none' or (row['effect']=='none' and all(row[k]==0 for k in ('hp','strength','dexterity','draw','heal')))):errors.append('Selectable trait lacks an explained gameplay or visual effect '+row['id'])
         for excluded in row['excludes']:
             # Source incompatibilities can reference a disabled historical entry.
             if excluded not in traits and excluded not in {r['id'] for r in sheets['trait_coverage']}:errors.append('Unknown exclusion '+excluded)

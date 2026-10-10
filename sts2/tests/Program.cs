@@ -19,12 +19,15 @@ foreach (var upgrade in new[] { false, true })
     Check(!string.IsNullOrWhiteSpace(card.Rules()), card.Id + " full rules");
 }
 var traitIds = Design.Rows("traits").Where(r => r.Flag("enabled")).Select(r => r.Text("id")).ToArray();
-// Cosmetic/platform-only traits must not quietly grant relic-like combat effects.
-foreach (var traitId in new[] { "fart", "fmffan", "mushroomgrow", "projectilesnowalls", "mapreveal" })
+// Previously inert traits now expose explicit bounded gameplay effects.
+foreach (var (adaptedId,effect,amount,hp) in new[] {
+    ("enemyknockedfar","first_attack_weak",1,0), ("fart","opening_weak",1,0), ("fmffan","first_skill_block",2,0),
+    ("mushroomgrow","first_hurt_block",3,-6), ("projectilesnowalls","first_attack_shred",3,-6),
+    ("mapreveal","opening_draw_energy",1,0) })
 {
-    var trait = Design.Get("traits", traitId);
-    Check(trait.Text("effect") == "none" && trait.Number("amount") == 0, traitId + " has no invented combat effect");
-    Check(new[] { "hp", "strength", "dexterity", "draw", "heal" }.All(key => trait.Number(key) == 0), traitId + " has no hidden stats");
+    var trait = Design.Get("traits",adaptedId);
+    Check(trait.Text("effect") == effect && trait.Number("amount") == amount, adaptedId + " explicit gameplay effect");
+    Check(trait.Number("hp") == hp && !trait.Text("summary").Contains("no equivalent"), adaptedId + " documented drawback");
 }
 foreach (var gene in Design.Rows("starter_genes").Where(g => g.Text("id") != "cantattack"))
     Check(new[] { "damage", "block", "draw", "heal", "poison" }.All(key => gene.Number(key) == 0), "No overlapping starter bonuses: " + gene.Text("id"));

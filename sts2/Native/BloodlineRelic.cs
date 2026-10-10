@@ -21,7 +21,8 @@ public sealed class BloodlineRelic : CustomRelicModel
     public override RelicRarity Rarity => RelicRarity.Starter;
     protected override string IconBaseName => "burning_blood";
     public override List<(string,string)> Localization => [("title", "Family Bloodline"), ("description", "Your class, inherited traits and purchased manor upgrades shape this climb. Open the Family Manor to read every trait."), ("flavor", "Every climb ends. Your bloodline grows.")];
-    private bool firstSkill, firstAttack, shocked;
+    private bool firstSkill, firstAttack, firstHurt, shocked;
+    private readonly HashSet<Creature> firstAttackTargets = new();
     private int pendingEnergy;
     [SavedProperty] public string FamilyRunSnapshot { get; set; } = "";
     [SavedProperty] public string SelectedHeir { get; set; } = "";
@@ -47,13 +48,13 @@ public sealed class BloodlineRelic : CustomRelicModel
         }
     }
     private Task Apply(PlayerChoiceContext context, string key, Creature target, int value) => value == 0 ? Task.CompletedTask : CardEffects.Apply(context,key,target,value,Owner.Creature,null);
-    public override decimal ModifyHandDraw(Player player, decimal count) => player == Owner ? count + Runtime.Bonus("draw") + Inheritance.Stat("draw") : count;
+    public override decimal ModifyHandDraw(Player player, decimal count) => player == Owner ? count + Runtime.Bonus("draw") + Inheritance.Stat("draw") + (player.PlayerCombatState?.TurnNumber == 1 ? Inheritance.Amount("opening_draw_energy") : 0) : count;
     public override decimal ModifyMaxEnergy(Player player, decimal amount) => player == Owner ? amount + Inheritance.Amount("energy") + Inheritance.Amount("overcharge") : amount;
     public override decimal ModifyMerchantPrice(Player player, MerchantEntry entry, decimal cost) => player == Owner ? cost * (1 - Inheritance.Amount("shop") / 100m) : cost;
     public override bool ShouldPlay(CardModel card, AutoPlayType type) => card.Owner != Owner || !Inheritance.Has("pacifist") || card.Type != CardType.Attack;
     public override async Task BeforeCombatStart()
     {
-        firstSkill = firstAttack = true; shocked = false; pendingEnergy = 0;
+        firstSkill = firstAttack = firstHurt = true; firstAttackTargets.Clear(); shocked = false; pendingEnergy = 0;
         var context = new BlockingPlayerChoiceContext();
         await Apply(context,"strength",Owner.Creature,Runtime.Bonus("strength") + Inheritance.Stat("strength"));
         await Apply(context,"dexterity",Owner.Creature,Runtime.Bonus("dexterity") + Inheritance.Stat("dexterity"));
@@ -66,12 +67,14 @@ public sealed class BloodlineRelic : CustomRelicModel
             if (Inheritance.Amount("enemy_guard") > 0) await CreatureCmd.GainBlock(enemy,Inheritance.Amount("enemy_guard"),ValueProp.Unpowered,null);
         }
         await Apply(context,"thorns",Owner.Creature,Inheritance.Amount("thorns"));
+        await Apply(context,"weak",Owner.Creature,Inheritance.Amount("opening_weak"));
         if (Inheritance.Has("diva")) await Apply(context,"vulnerable",Owner.Creature,1);
     }
     public override async Task AfterPlayerTurnStart(PlayerChoiceContext context, Player player)
     {
         if (player != Owner) return;
-        firstSkill = firstAttack = true;
+        firstSkill = firstAttack = firstHurt = true; firstAttackTargets.Clear();
+        if (player.PlayerCombatState!.TurnNumber == 1 && Inheritance.Amount("opening_draw_energy") > 0) await PlayerCmd.LoseEnergy(Inheritance.Amount("opening_draw_energy"),player);
         if (Inheritance.Has("overcharge")) await Apply(context,"vulnerable",player.Creature,1);
         if (Inheritance.Has("exhausted") && player.PlayerCombatState!.TurnNumber % 2 == 0) await PlayerCmd.LoseEnergy(Inheritance.Amount("exhausted"),player);
         if (pendingEnergy > 0) { var amount = pendingEnergy; pendingEnergy = 0; await PlayerCmd.GainEnergy(amount,player); }
@@ -88,7 +91,9 @@ public sealed class BloodlineRelic : CustomRelicModel
         if (play.Card.Type == CardType.Skill)
         {
             if (Inheritance.Amount("skill_block") > 0) await CreatureCmd.GainBlock(Owner.Creature,Inheritance.Amount("skill_block"),ValueProp.Unpowered,null);
-            if (firstSkill) { firstSkill = false; if (Inheritance.Amount("skill_draw") > 0) await CardPileCmd.Draw(context,Inheritance.Amount("skill_draw"),Owner); }
+            if (firstSkill) { firstSkill = false;
+                if (Inheritance.Amount("first_skill_block") > 0) await CreatureCmd.GainBlock(Owner.Creature,Inheritance.Amount("first_skill_block"),ValueProp.Unpowered,null);
+                if (Inheritance.Amount("skill_draw") > 0) await CardPileCmd.Draw(context,Inheritance.Amount("skill_draw"),Owner); }
         }
         if (play.Card.Type == CardType.Attack && firstAttack)
         {
@@ -100,10 +105,20 @@ public sealed class BloodlineRelic : CustomRelicModel
     // Regular uses (creature, amount); public-beta adds choice context and remover.
     private static readonly System.Reflection.MethodInfo LoseBlockMethod = typeof(CreatureCmd).GetMethods()
         .Single(m => m.Name == nameof(CreatureCmd.LoseBlock));
-    private Task LoseInheritedBlock(PlayerChoiceContext context, int amount) =>
+    private Task LoseInheritedBlock(PlayerChoiceContext context, int amount) => LoseBlock(context,Owner.Creature,amount);
+    private Task LoseBlock(PlayerChoiceContext context, Creature target, int amount) =>
         (Task)LoseBlockMethod.Invoke(null,LoseBlockMethod.GetParameters().Length == 2
-            ? [Owner.Creature,(decimal)amount]
-            : [context,Owner.Creature,(decimal)amount,Owner.Creature])!;
+            ? [target,(decimal)amount]
+            : [context,target,(decimal)amount,Owner.Creature])!;
+    public override async Task BeforeDamageReceived(PlayerChoiceContext context, Creature target, decimal amount, ValueProp props, Creature? dealer, CardModel? card)
+    {
+        // Apply inherited first-Attack effects once per hit target, including multi-hit/AoE cards.
+        if (firstAttack && dealer == Owner.Creature && target.Side != Owner.Creature.Side && card?.Type == CardType.Attack && props.IsPoweredAttack() && amount > 0 && (Inheritance.Amount("first_attack_shred") > 0 || Inheritance.Amount("first_attack_weak") > 0) && firstAttackTargets.Add(target))
+        {
+            if (Inheritance.Amount("first_attack_shred") > 0) await LoseBlock(context,target,Inheritance.Amount("first_attack_shred"));
+            await Apply(context,"weak",target,Inheritance.Amount("first_attack_weak"));
+        }
+    }
     public override async Task AfterCardDrawn(PlayerChoiceContext context, CardModel card, bool fromHandDraw)
     {
         if (card.Owner != Owner || card.Type != CardType.Attack) return;
@@ -122,6 +137,11 @@ public sealed class BloodlineRelic : CustomRelicModel
     public override async Task AfterDamageReceived(PlayerChoiceContext context, Creature target, DamageResult result, ValueProp props, Creature? dealer, CardModel? card)
     {
         if (target != Owner.Creature || dealer == null || dealer == target || result.UnblockedDamage <= 0 || !props.IsPoweredAttack()) return;
+        if (firstHurt)
+        {
+            firstHurt = false;
+            if (target.IsAlive && Inheritance.Amount("first_hurt_block") > 0) await CreatureCmd.GainBlock(target,Inheritance.Amount("first_hurt_block"),ValueProp.Unpowered,null);
+        }
         pendingEnergy += Inheritance.Amount("hurt_energy");
         await Apply(context,"weak",target,Inheritance.Amount("hurt_weak"));
         if (Inheritance.Has("shock")) shocked = true;
