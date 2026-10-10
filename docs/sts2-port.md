@@ -99,3 +99,7 @@ The character picker uses a tightly cropped original vertical Heir portrait with
 ## 1.0.8 Ascension layout and Steam Input
 
 The Manor launcher sits beneath the character information and reserves the full visible Ascension panel bounds, including its icon and arrows. The Y shortcut observes held-state press edges for both the mapped accept action and the native north-face controller action, accommodating Steam Input events generated after the frame callback. Switching from touch/mouse to controller retains the selected Heir. D-pad/A entry and B exit remain available. Native checks exercise Ascension 5, non-overlapping control bounds and the north-face controller action on both branches; physical Deck confirmation remains a user check.
+
+## 1.0.9 trait playtesting
+
+Clumsy removes 2 Block after the first Attack each turn. Playing Attacks before defensive cards avoids the penalty. Hero Complex grants +100% legacy crowns alongside +40 maximum HP and disabled healing; the existing 200% total payout cap remains. Both trait changes apply to existing heirs. The 1.0.8 Ascension and controller fixes remain included.

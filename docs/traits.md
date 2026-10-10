@@ -32,3 +32,7 @@ Remove overlapping starter-card modifiers from Gigantism, Dwarfism, Combative, B
 Other selectable traits retain their existing, explicitly described card-game adaptations. Useful inherited traits are still allowed; the review removes unrelated benefits and redundant bonuses rather than making every trait a penalty. Crown modifiers inherited from the original catalog remain.
 
 Flame Barrier is now a 1-Energy defensive Skill: 5 Block and 2 retaliation per enemy attack this turn; upgraded, 7 Block and 3 retaliation. It uses native FlameBarrierPower, which expires after the enemy turn. It does not deal direct attack damage or grant permanent Thorns.
+
+## 1.0.9 trait playtesting
+
+Clumsy now loses 2 Block after the first Attack each turn, clamped to zero. Attacking before guarding avoids the penalty; further Attacks that turn do not remove more Block. This replaces its former cosmetic-only adaptation. Hero Complex keeps +40 maximum HP and disabled healing, and now adds +100% legacy crowns. Crown bonuses add together at settlement, subject to the existing 200% total payout cap, and do not increase run gold. Both changes apply to existing heirs with these trait IDs.

@@ -14,7 +14,7 @@ legacy=dict(YouAreLarge='large',YouAreSmall='small',DamageBoost='weapon',MagicBo
 design={
 'NoColor':dict(effect='gray',summary='Your heir is rendered in gray.'),
 'NoHealthBar':dict(hp=-8,summary='Reduced maximum HP; health remains visible for accessible card play.'),
-'EasyBreakables':dict(effect='none', amount=0, summary='No combat modifier. The original object-breaking mechanic has no equivalent on this climb.'),
+'EasyBreakables':dict(effect='first_attack_block_loss', amount=2, summary='After your first Attack each turn, lose 2 Block (minimum 0).'),
 'PlayerKnockedLow':dict(dexterity=1,summary='Gain 1 Dexterity for steadier defense.'),
 'PlayerKnockedFar':dict(dexterity=-1,summary='Lose 1 Dexterity; gain extra legacy crowns.'),
 'Disposition':dict(effect='nature',summary='Your heir wears a green family accent.'),
@@ -46,7 +46,7 @@ design={
 'MapReveal':dict(effect='none', amount=0, summary='No combat modifier. The Spire map is already visible; no extra gold is awarded.'),
 'NoImmunityWindow':dict(effect='algesia',amount=2,summary='Each enemy attack that penetrates Block deals 2 extra damage.'),
 'NoManaCap':dict(effect='overcharge', amount=1, hp=0, summary='Gain 1 extra Energy each turn, but start each turn with 1 Vulnerable.'),
-'MegaHealth':dict(hp=40,effect='no_heal',summary='Gain 40 maximum HP. Healing is disabled.'),
+'MegaHealth':dict(goldBonus=100, hp=40,effect='no_heal',summary='Gain 40 maximum HP. Healing is disabled. Earn 100% more legacy crowns.'),
 'ItemsGoFlying':dict(effect='coin_loss',amount=5,summary='Lose up to 5 gold after each battle.'),
 'ManaFromHurt':dict(effect='hurt_energy',amount=1,summary='After losing HP to an enemy attack, gain 1 Energy for your next turn.'),
 'BonusChestGold':dict(effect='treasure_gold', amount=20, hp=-8, summary='Lose 8 maximum HP. Gain 20 gold when entering a treasure room.'),

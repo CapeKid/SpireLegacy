@@ -85,8 +85,20 @@ public sealed class BloodlineRelic : CustomRelicModel
             if (Inheritance.Amount("skill_block") > 0) await CreatureCmd.GainBlock(Owner.Creature,Inheritance.Amount("skill_block"),ValueProp.Unpowered,null);
             if (firstSkill) { firstSkill = false; if (Inheritance.Amount("skill_draw") > 0) await CardPileCmd.Draw(context,Inheritance.Amount("skill_draw"),Owner); }
         }
-        if (play.Card.Type == CardType.Attack && firstAttack) { firstAttack = false; if (Inheritance.Amount("first_attack_block") > 0) await CreatureCmd.GainBlock(Owner.Creature,Inheritance.Amount("first_attack_block"),ValueProp.Unpowered,null); }
+        if (play.Card.Type == CardType.Attack && firstAttack)
+        {
+            firstAttack = false;
+            if (Inheritance.Amount("first_attack_block") > 0) await CreatureCmd.GainBlock(Owner.Creature,Inheritance.Amount("first_attack_block"),ValueProp.Unpowered,null);
+            if (Inheritance.Amount("first_attack_block_loss") > 0) await LoseInheritedBlock(context,Inheritance.Amount("first_attack_block_loss"));
+        }
     }
+    // Regular uses (creature, amount); public-beta adds choice context and remover.
+    private static readonly System.Reflection.MethodInfo LoseBlockMethod = typeof(CreatureCmd).GetMethods()
+        .Single(m => m.Name == nameof(CreatureCmd.LoseBlock));
+    private Task LoseInheritedBlock(PlayerChoiceContext context, int amount) =>
+        (Task)LoseBlockMethod.Invoke(null,LoseBlockMethod.GetParameters().Length == 2
+            ? [Owner.Creature,(decimal)amount]
+            : [context,Owner.Creature,(decimal)amount,Owner.Creature])!;
     public override async Task AfterCardDrawn(PlayerChoiceContext context, CardModel card, bool fromHandDraw)
     {
         if (card.Owner != Owner || card.Type != CardType.Attack) return;
