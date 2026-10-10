@@ -19,6 +19,16 @@ foreach (var upgrade in new[] { false, true })
     Check(!string.IsNullOrWhiteSpace(card.Rules()), card.Id + " full rules");
 }
 var traitIds = Design.Rows("traits").Where(r => r.Flag("enabled")).Select(r => r.Text("id")).ToArray();
+foreach (var upgraded in new[] { false, true })
+{
+    var ward = new CardDesign("mage_perfect_ward", upgraded);
+    Check(ward.Cost == 2 && ward.Magic == (upgraded ? 2 : 1) && ward.Row.Flag("exhaust"), "Ward has a bounded, single-use prevention budget");
+    var timing = new CardDesign("ranger_perfect_timing", upgraded);
+    Check(timing.Cost == (upgraded ? 2 : 3) && timing.Magic == 1 && timing.Amount("hpLoss") == 3, "Timing upgrade lowers setup cost without doubling recurring energy");
+    Check(timing.Rules().Contains("gain 1 Energy") && timing.Rules().Contains("Lose 3 HP"), "Timing text matches its recurring energy and HP price");
+    var tripwire = new CardDesign("ranger_tripwire", upgraded);
+    Check(tripwire.Block == (upgraded ? 5 : 3) && tripwire.Amount("weak") == 1, "Tripwire upgrades defense without extending Weak");
+}
 // Previously inert traits now expose explicit bounded gameplay effects.
 foreach (var (adaptedId,effect,amount,hp) in new[] {
     ("enemyknockedfar","first_attack_weak",1,0), ("fart","opening_weak",1,0), ("fmffan","first_skill_block",2,0),

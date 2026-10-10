@@ -41,3 +41,7 @@ Most direct damage, Block and repeated payoff amounts are reduced; upgrades no l
 Knight begins with 60 HP, Mage 52, Ranger 56. No class starts with bonus Strength, Dexterity or healing after fights. Counterguard adds 2 damage; Mage charges add 1 each, capped at two. Ranger retains its third-Attack rhythm. Living Quarters restores 20 HP at maximum; Blacksmith, Armory, Library and Garden supply damage, defense, draw and healing that the baseline lacks. Existing manor levels remain owned, and bonuses are snapshotted at the next run start.
 
 These are deliberate baseline deficits, not scripted losses. A skilled player can still win without the manor. Full-run win rates, pacing feel and physical Deck testing of this revision need playtesting; the crown editor supports that work. Automated tests do not establish final balance.
+
+## 1.0.13 targeted balance
+
+Perfect Ward remains a 2-Energy Exhaust Skill, but prevents 1 HP-loss event (2 upgraded), matching native Buffer amounts with the additional Exhaust limitation. Perfect Timing now costs 3 Energy (2 upgraded), always grants +1 Energy each subsequent turn, and retains its 3 HP play cost. Its upgrade no longer doubles recurring Energy; native Pyre was the energy-power reference. Tripwire retains 3 Block (5 upgraded), but applies only 1 Weak at either level. Shared-core membership, card IDs, and existing saves are preserved. The balance authoring pass retains these adjustments.

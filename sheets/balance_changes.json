@@ -10935,7 +10935,7 @@
   },
   {
     "id": "mage_perfect_ward",
-    "reference": "Native attack/defense cost and upgrade budgets; class passive included separately",
+    "reference": "Slay the Spire 2 Buffer / Pyre; controlled upgrade value",
     "before": {
       "cost": 2,
       "damage": 0,
@@ -10991,7 +10991,7 @@
       "nextDraw": 0,
       "nextBlock": 0,
       "power": "buffer",
-      "magic": 2,
+      "magic": 1,
       "special": "none",
       "specialAmount": 0,
       "exhaust": true,
@@ -11002,7 +11002,7 @@
       "upgradeCost": false,
       "upgradeDiscard": 0
     },
-    "reason": "Weaker no-manor baseline; avoid compounded effects/upgrades and free positive-draw cycles."
+    "reason": "1.0.13: lower hit prevention; fixed recurring Energy with a cost upgrade; Tripwire upgrades Block only."
   },
   {
     "id": "mage_mana_fountain",
@@ -12710,7 +12710,7 @@
   },
   {
     "id": "ranger_tripwire",
-    "reference": "Native attack/defense cost and upgrade budgets; class passive included separately",
+    "reference": "Slay the Spire 2 Buffer / Pyre; controlled upgrade value",
     "before": {
       "cost": 1,
       "damage": 0,
@@ -12772,12 +12772,12 @@
       "exhaust": false,
       "upgradeDamage": 0,
       "upgradeBlock": 2,
-      "upgradeMagic": 1,
+      "upgradeMagic": 0,
       "upgradeSpecial": 0,
       "upgradeCost": false,
       "upgradeDiscard": 0
     },
-    "reason": "Weaker no-manor baseline; avoid compounded effects/upgrades and free positive-draw cycles."
+    "reason": "1.0.13: lower hit prevention; fixed recurring Energy with a cost upgrade; Tripwire upgrades Block only."
   },
   {
     "id": "ranger_ambush",
@@ -15905,7 +15905,7 @@
   },
   {
     "id": "ranger_perfect_timing",
-    "reference": "Inflame / Footwork / Feel No Pain / After Image",
+    "reference": "Slay the Spire 2 Buffer / Pyre; controlled upgrade value",
     "before": {
       "cost": 2,
       "damage": 0,
@@ -15940,7 +15940,7 @@
       "upgradeDiscard": 0
     },
     "after": {
-      "cost": 2,
+      "cost": 3,
       "damage": 0,
       "block": 0,
       "hits": 1,
@@ -15967,12 +15967,12 @@
       "exhaust": false,
       "upgradeDamage": 0,
       "upgradeBlock": 0,
-      "upgradeMagic": 1,
+      "upgradeMagic": 0,
       "upgradeSpecial": 0,
-      "upgradeCost": false,
+      "upgradeCost": true,
       "upgradeDiscard": 0
     },
-    "reason": "Weaker no-manor baseline; avoid compounded effects/upgrades and free positive-draw cycles."
+    "reason": "1.0.13: lower hit prevention; fixed recurring Energy with a cost upgrade; Tripwire upgrades Block only."
   },
   {
     "id": "knight_buckler_jab",

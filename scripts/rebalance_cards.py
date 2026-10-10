@@ -63,6 +63,10 @@ def main():
                 row['discard']=max(row['discard'],row['draw'])
                 row['upgradeDiscard']=max(row['upgradeDiscard'],row['upgradeMagic'])
             else:row.update(cost=1,upgradeCost=False)
+        # 1.0.13: keep rare defensive/energy scaling below native Buffer/Pyre.
+        if row['id']=='mage_perfect_ward':row.update(magic=1,upgradeMagic=1)
+        if row['id']=='ranger_perfect_timing':row.update(cost=3,magic=1,upgradeMagic=0,upgradeCost=True)
+        if row['id']=='ranger_tripwire':row.update(upgradeMagic=0)
         reference='Native Strike / Defend / Iron Wave' if row['rarity']=='BASIC' else 'Prepared / Acrobatics / Backflip / Skim' if row['draw'] or row['discard'] else 'Inflame / Footwork / Feel No Pain / After Image' if row['type']=='POWER' else 'Native attack/defense cost and upgrade budgets; class passive included separately'
         changes.append(dict(id=row['id'],reference=reference,before=before,after={k:row[k] for k in FIELDS},reason='Weaker no-manor baseline; avoid compounded effects/upgrades and free positive-draw cycles.'))
     write('cards',cards);write('balance_changes',changes)
