@@ -52,7 +52,6 @@ public static class Runtime
         new Harmony("CapeKid.SpireLegacy2").PatchAll(Assembly.GetExecutingAssembly());
         NativeTestBridge.Initialize();
         HeirVisuals.Initialize();
-        ((SceneTree)Engine.GetMainLoop()).ProcessFrame += ManorUi.PollInput;
         GD.Print("Spire Legacy StS2 port initialized: ", Design.Rows("cards").Count, " card definitions.");
     }
     public static int Bonus(string effect) => Profile.active?.bonuses.GetValueOrDefault(effect) ?? Profile.Bonus(effect);

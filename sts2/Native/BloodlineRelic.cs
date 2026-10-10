@@ -48,7 +48,7 @@ public sealed class BloodlineRelic : CustomRelicModel
     }
     private Task Apply(PlayerChoiceContext context, string key, Creature target, int value) => value == 0 ? Task.CompletedTask : CardEffects.Apply(context,key,target,value,Owner.Creature,null);
     public override decimal ModifyHandDraw(Player player, decimal count) => player == Owner ? count + Runtime.Bonus("draw") + Inheritance.Stat("draw") : count;
-    public override decimal ModifyMaxEnergy(Player player, decimal amount) => player == Owner ? amount + Inheritance.Amount("energy") : amount;
+    public override decimal ModifyMaxEnergy(Player player, decimal amount) => player == Owner ? amount + Inheritance.Amount("energy") + Inheritance.Amount("overcharge") : amount;
     public override decimal ModifyMerchantPrice(Player player, MerchantEntry entry, decimal cost) => player == Owner ? cost * (1 - Inheritance.Amount("shop") / 100m) : cost;
     public override bool ShouldPlay(CardModel card, AutoPlayType type) => card.Owner != Owner || !Inheritance.Has("pacifist") || card.Type != CardType.Attack;
     public override async Task BeforeCombatStart()
@@ -72,6 +72,7 @@ public sealed class BloodlineRelic : CustomRelicModel
     {
         if (player != Owner) return;
         firstSkill = firstAttack = true;
+        if (Inheritance.Has("overcharge")) await Apply(context,"vulnerable",player.Creature,1);
         if (Inheritance.Has("exhausted") && player.PlayerCombatState!.TurnNumber % 2 == 0) await PlayerCmd.LoseEnergy(Inheritance.Amount("exhausted"),player);
         if (pendingEnergy > 0) { var amount = pendingEnergy; pendingEnergy = 0; await PlayerCmd.GainEnergy(amount,player); }
         if (Inheritance.Amount("turn_block") > 0) await CreatureCmd.GainBlock(player.Creature,Inheritance.Amount("turn_block"),ValueProp.Unpowered,null);
@@ -92,7 +93,7 @@ public sealed class BloodlineRelic : CustomRelicModel
         if (Inheritance.Has("costly") && !card.EnergyCost.CostsX) card.EnergyCost.AddThisTurn(1);
         if (shocked) { shocked = false; await CardCmd.Discard(context,card); }
     }
-    public decimal InheritedDamageAdditive(Creature? target, decimal amount, ValueProp props, Creature? dealer, CardModel? card) => dealer == Owner.Creature && props.IsPoweredAttack() ? Inheritance.Amount("piercing") : 0;
+    public decimal InheritedDamageAdditive(Creature? target, decimal amount, ValueProp props, Creature? dealer, CardModel? card) => dealer == Owner.Creature && props.IsPoweredAttack() ? Inheritance.Amount("piercing") + (firstAttack && card?.Type == CardType.Attack ? Inheritance.Amount("first_attack_damage") : 0) : 0;
     public decimal InheritedDamageMultiplicative(Creature? target, decimal amount, ValueProp props, Creature? dealer, CardModel? card)
     {
         if (dealer != Owner.Creature || !props.IsPoweredAttack()) return 1;
@@ -117,6 +118,7 @@ public sealed class BloodlineRelic : CustomRelicModel
     public override async Task AfterRoomEntered(AbstractRoom room)
     {
         if (room is TreasureRoom && Inheritance.Amount("chest") > 0) await CreatureCmd.Damage(new BlockingPlayerChoiceContext(),Owner.Creature,Inheritance.Amount("chest"),ValueProp.Unblockable | ValueProp.Unpowered,Owner.Creature);
+        if (room is TreasureRoom && !Owner.Creature.IsDead && Inheritance.Amount("treasure_gold") > 0) await PlayerCmd.GainGold(Inheritance.Amount("treasure_gold"),Owner);
         if (Runtime.Profile.active is {} run) { run.floors = Math.Max(run.floors,Owner.RunState.TotalFloor); FamilyRunSnapshot = JsonSerializer.Serialize(run,FamilyProfile.JsonOptions); Runtime.Profile.Save(Runtime.FamilyPath); }
     }
     public override async Task AfterCombatVictory(CombatRoom room)

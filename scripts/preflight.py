@@ -25,6 +25,7 @@ def validate():
     for row in sheets['classes']: ref('classes',row,'asset',assets); ref('classes',row,'signature',cards)
     traits={r['id'] for r in sheets['traits']}
     effects={'none','gray','skill_block','nature','poison','skill_draw','fragile','pacifist','turn_block','first_attack_block','weak','enemy_guard','costly','gold','shop','histrionic','sepia','enemy_strength','hurt_weak','rainbow','vegan','diva','algesia','energy','no_heal','coin_loss','hurt_energy','super_heal','relics','thorns','blue','perfectionist','shock','chest','explosions','medium','festive','kit','piercing','exhausted'}
+    effects.update({'treasure_gold','first_attack_damage','overcharge'})
     for row in sheets['traits']:
         if re.search(r'<[^>]+>|\{\d+\}',row['name']):errors.append('Unresolved trait name formatting '+row['id'])
         ref('traits',row,'asset',assets)

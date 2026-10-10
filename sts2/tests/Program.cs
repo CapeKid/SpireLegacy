@@ -19,6 +19,25 @@ foreach (var upgrade in new[] { false, true })
     Check(!string.IsNullOrWhiteSpace(card.Rules()), card.Id + " full rules");
 }
 var traitIds = Design.Rows("traits").Where(r => r.Flag("enabled")).Select(r => r.Text("id")).ToArray();
+// Cosmetic/platform-only traits must not quietly grant relic-like combat effects.
+foreach (var traitId in new[] { "easybreakables", "fart", "fmffan", "mushroomgrow", "projectilesnowalls", "mapreveal" })
+{
+    var trait = Design.Get("traits", traitId);
+    Check(trait.Text("effect") == "none" && trait.Number("amount") == 0, traitId + " has no invented combat effect");
+    Check(new[] { "hp", "strength", "dexterity", "draw", "heal" }.All(key => trait.Number(key) == 0), traitId + " has no hidden stats");
+}
+foreach (var gene in Design.Rows("starter_genes").Where(g => g.Text("id") != "cantattack"))
+    Check(new[] { "damage", "block", "draw", "heal", "poison" }.All(key => gene.Number(key) == 0), "No overlapping starter bonuses: " + gene.Text("id"));
+Check(Design.Get("traits", "revealallchests").Text("effect") == "treasure_gold" && Design.Get("traits", "bonuschestgold").Text("effect") == "treasure_gold", "Treasure traits reward treasure rooms");
+Check(Design.Get("traits", "bounceterrain").Number("hp") == -12, "Clownanthropy retains a health drawback");
+Check(Design.Get("traits", "nomanacap").Text("effect") == "overcharge", "Limitless energy carries combat risk");
+foreach (var upgraded in new[] { false, true })
+{
+    var barrier = new CardDesign("flame", upgraded);
+    Check(barrier.Row.Text("type") == "SKILL" && barrier.Damage == 0 && barrier.Block == (upgraded ? 7 : 5), "Flame Barrier is defensive");
+    Check(barrier.Row.Text("power") == "flame_barrier" && barrier.Magic == (upgraded ? 3 : 2), "Flame Barrier retaliation");
+    Check(barrier.Rules().Contains("this turn") && !barrier.Rules().Contains("Deal {Damage}"), "Flame Barrier text matches its effects");
+}
 foreach (var trait in traitIds)
 foreach (var cls in new[] { "knight", "mage", "ranger" })
 foreach (var card in Design.Get("decks", cls).List("cards").Distinct())

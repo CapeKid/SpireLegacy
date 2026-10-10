@@ -14,7 +14,7 @@ This is the native StS2 successor to Spire Legacy 0.5.0, created by CapeKid. It 
 - Family run identities, inherited card snapshots, atomic saves and backup recovery. A completed run settles crowns once.
 - Genuine class, trait and heir sprites read from your owned RL2 installation. No game assets are in the download.
 
-The previous balance is preserved: plain strikes deal 5 damage, guards supply 4 Block, and class HP starts at 60/52/56 before inheritance and manor bonuses. Upgraded drawing cards retain the safeguards from 0.5.0. Balance against StS2's enemies still needs full-run playtesting.
+The basic-card baseline remains: plain strikes deal 5 damage, guards supply 4 Block, and class HP starts at 60/52/56 before inheritance and manor bonuses. Upgraded drawing cards retain the safeguards from 0.5.0. Version 1.0.5 removes unrelated trait bonuses and overlapping starter modifiers, limits treasure income to treasure rooms, and makes Flame Barrier a defensive Skill with temporary retaliation. See [trait review](traits.md). Balance against StS2's enemies still needs full-run playtesting.
 
 StS2 adaptations preserve native encounters and rewards. Dusty Tome grants an upgraded rare card from the current heir's pool because the migrated set has no Ancient-rarity cards. Native relics that require a specific base-game starter card or relic keep their eligibility checks. Ancients use generic dialogue where available, with existing Ironclad dialogue as a fallback when the game supplies no custom-character dialogue, including the ending.
 
@@ -23,14 +23,18 @@ StS2 adaptations preserve native encounters and rewards. Dusty Tome grants an up
 1. Install owned Steam copies of Slay the Spire 2 and Rogue Legacy 2.
 2. Subscribe to [BaseLib](https://steamcommunity.com/sharedfiles/filedetails/?id=3737335127) and [Spire Legacy for StS2](https://steamcommunity.com/sharedfiles/filedetails/?id=3816525393). The new item is currently private for owner testing. The original StS1 Workshop item is a different mod.
 3. Start StS2 on your selected branch. Accept its mod notice and enable BaseLib and Spire Legacy in the mod list. Restart if requested.
-4. Select **The Heir**. **Family Manor & Heir Lab** appears beneath the character. Choose a family/heir and start a solo climb.
+4. Select **The Heir**. **Family Manor & Heir Lab** appears above the Heir portrait. Press Y, or move down from the portrait and press A. Choose a family/heir and start a solo climb.
 5. After a climb, return to the manor to choose another heir. Selecting upgrades only stages them; **Review purchases → Confirm and save** spends crowns.
 
 Spire Legacy supports solo play. Its character cannot embark in a multiplayer lobby.
 
+## Family Manor controls
+
+Use the D-pad or left stick to move through buttons and read trait descriptions; the page scrolls to the focused item. Hold a direction to keep moving. A selects, B returns from editors/reviews or closes the Manor, and LB/RB scroll a page at a time. The prominent **Close / Back (B)** button stays visible below the scrolling content. Selecting an upgrade retains your place. Closing with staged purchases still asks whether to discard them; crowns are spent only by **Confirm and save**. Keyboard/mouse input and the wider scrollbar remain available.
+
 ## Manual installation
 
-Extract `SpireLegacy-StS2-1.0.3.zip` into your StS2 install folder. Its layout is `mods/SpireLegacy/SpireLegacy.json`, `SpireLegacy.dll`, `content-reader.zip` and `heir/`. Subscribe to BaseLib separately, or use the Melty bundle, which includes BaseLib. Launch the normal game executable; no separate mod launcher is required.
+Extract `SpireLegacy-StS2-1.0.5.zip` into your StS2 install folder. Its layout is `mods/SpireLegacy/SpireLegacy.json`, `SpireLegacy.dll`, `content-reader.zip` and `heir/`. Subscribe to BaseLib separately, or use the Melty bundle, which includes BaseLib. Launch the normal game executable; no separate mod launcher is required.
 
 ## Steam Deck
 
@@ -42,13 +46,13 @@ RL2 discovery checks Steam's libraries, including `/home/deck/.local/share/Steam
 HEIR_RL2_DIR="/home/deck/.local/share/Steam/steamapps/common/Rogue Legacy 2" %command%
 ```
 
-The full content-preparation diagnostic appears in the game's log and in Family Manor when preparation fails. Use **Retry content preparation** after correcting the installation. Starting RL2 once is not required. Native Linux support is implemented; the user tested 1.0.2 on a physical Deck and reported lingering cards on beta. The 1.0.3 cleanup fix needs Deck retesting.
+The full content-preparation diagnostic appears in the game's log and in Family Manor when preparation fails. Use **Retry content preparation** after correcting the installation. Starting RL2 once is not required. Native Linux support is implemented; the user tested 1.0.2 on a physical Deck and reported lingering cards on beta. The user confirmed the 1.0.3 cleanup fix works on Deck. Version 1.0.5 Manor controls still need physical Deck retesting.
 
 If a card spends energy but never resolves, open **Family / Traits** after the failure. Version 1.0.3 shows the mod/game versions and the full failed card-action exception, including loaded mod versions, in Family Manor. **Copy card-play diagnostic** copies it for reporting. Version 1.0.3 adapts attack, card-sourced damage, exhaust and damage-modifier APIs across both branches. Retain this diagnostic if a card still fails.
 
 ## Melty
 
-`SpireLegacy-StS2-1.0.3-melty.zip` includes the mod, both readers and BaseLib 3.4.7. `sts2/melty.json` declares StS2 as the primary game and RL2 as the secondary game, installs the two mods and launches `SlayTheSpire2.exe`. This launcher mapping targets Windows. Melty must validate the uploaded mapping and observe a successful launch before publication. A prepared archive alone is not a verified Melty install.
+`SpireLegacy-StS2-1.0.5-melty.zip` includes the mod, both readers and BaseLib 3.4.7. `sts2/melty.json` declares StS2 as the primary game and RL2 as the secondary game, installs the two mods and launches `SlayTheSpire2.exe`. This launcher mapping targets Windows. Melty must validate the uploaded mapping and observe a successful launch before publication. A prepared archive alone is not a verified Melty install.
 
 The Workshop package uses Mega Crit's official StS2 uploader workspace format: `content/`, `workshop.json` and a PNG preview below 1 MB. Its visibility defaults to **private**. It creates a new StS2 item; do not supply the StS1 item's ID. BaseLib is a Required Item.
 
@@ -74,8 +78,20 @@ The reader packager consumes licensed `Reader/`, `ReaderLinux/` and `licenses/` 
 
 `scripts/sts2-lab.py` creates an isolated hardlinked owned-game oracle with separate saves and Steam Cloud writes disabled. `scripts/sts2-oracle.py` exercises the opt-in test bridge. Normal launches do not expose that bridge. Private game files, logs, extracted RL2 content and saves must remain ignored and must never be uploaded.
 
-Validation includes 2,406 core assertions; all 360 base cards and all 360 upgrades executed in native combat; 720 native stat/text/art checks; 549 inherited starter upgrade/save/downgrade round trips; six-choice rewards and shops for all three pools; class counters; native boss victory rewards; normal autosave/resume without duplicating Antique; staged manor purchases, family naming, banners and controller focus. Ancient compatibility adds 90 class-specific reward/serialization checks, actual upgraded reward acquisition and 36 dialogue checks. Shop and rest-site sprites were visually inspected. Full campaign balance, physical Deck play and Melty-installed launch validation remain separate release checks.
+Validation includes 2,434 core assertions; all 360 base cards and all 360 upgrades executed in native combat; 720 native stat/text/art checks; 549 inherited starter upgrade/save/downgrade round trips; six-choice rewards and shops for all three pools; class counters; native boss victory rewards; normal autosave/resume without duplicating Antique; staged manor purchases, family naming, banners and controller focus. Ancient compatibility adds 90 class-specific reward/serialization checks, actual upgraded reward acquisition and 36 dialogue checks. Shop and rest-site sprites were visually inspected. Full campaign balance, physical Deck play and Melty-installed launch validation remain separate release checks.
 
 ## Credits and license
 
 Original code and illustrations: CapeKid, MIT. Slay the Spire 2: Mega Crit. Rogue Legacy 2: Cellar Door Games. BaseLib: Alchyr and contributors, MIT. Content reader: UnityPy, Python, Pillow, PyInstaller and decoding dependencies, with their notices included. Their respective owners retain all rights to game content.
+
+## 1.0.6 startup and controller fixes
+
+Neow's scripted starting HP restoration is exempt from inherited healing modifiers. Hero Complex still prevents actual healing during the climb; Vegan and Super Healer still modify actual healing. Starting HP retains the native Ascension restriction.
+
+On character select, the Family Manor & Heir Lab button sits above the Heir portrait. Press Y to open it, or move down from the Heir portrait and press A. B closes the Manor and returns focus to the portrait. Static text cannot receive focus; only enabled buttons and editable fields are selectable. LB/RB scroll the page. The picker uses an original Heir portrait; generation details are recorded in `docs/heir-portrait.md` in the source repository.
+
+The owned-game regression script `scripts/sts2-startup-ui-check.py --profile-directory private/<lab-profile> --branch beta` checks actual Neow initialization, all three Hero Complex/Diva classes, native paid card cleanup, abandon, Vegan/Super Healer healing, Ascension starting HP, portrait replacement and controller navigation. Use the isolated opt-in lab described above. Regular and public-beta native checks passed; physical Steam Deck validation of 1.0.6 remains a user check.
+
+## 1.0.7 portrait refinement
+
+The character picker uses a tightly cropped original vertical Heir portrait with an opaque ochre background and broad painted shading. The artwork fills the existing portrait tile dimensions alongside native heroes. This replaces the 1.0.6 transparent square cutout. All startup, controller and gameplay fixes remain included.

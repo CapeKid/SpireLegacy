@@ -37,13 +37,13 @@ write('class_mechanics',[
  dict(id='ranger',name='Hunter Rhythm',effect='rhythm',amount=1,limit=3,summary='Every third Attack in a turn draws one card and applies one Vulnerable to its target.'),
 ])
 write('starter_genes',[
- dict(id='large',damage=3,block=-1,draw=0,heal=0,poison=0,mercy=False,summary='Starter attacks +3 damage; starter defenses -1 Block.'),
- dict(id='small',damage=-1,block=2,draw=0,heal=0,poison=0,mercy=False,summary='Starter attacks -1 damage; starter defenses +2 Block.'),
- dict(id='weapon',damage=2,block=-1,draw=0,heal=0,poison=0,mercy=False,summary='Starter attacks +2 damage; starter defenses -1 Block.'),
- dict(id='magic',damage=-1,block=0,draw=1,heal=0,poison=0,mercy=False,summary='Starter attacks -1 damage; starter Skills draw one extra card.'),
- dict(id='vampire',damage=0,block=0,draw=0,heal=1,poison=0,mercy=False,summary='Starter Attacks heal one HP when played.'),
- dict(id='smallhitbox',damage=0,block=-1,draw=1,heal=0,poison=0,mercy=False,summary='Starter Skills draw one extra card, with one less base Block.'),
- dict(id='lowergravity',damage=0,block=0,draw=1,heal=0,poison=0,mercy=False,summary='Starter Skills draw one extra card.'),
+ dict(id='large', damage=0, block=0, draw=0, heal=0, poison=0, mercy=False, summary='No additional starter-card modifiers; use the trait description.'),
+ dict(id='small', damage=0, block=0, draw=0, heal=0, poison=0, mercy=False, summary='No additional starter-card modifiers; use the trait description.'),
+ dict(id='weapon', damage=0, block=0, draw=0, heal=0, poison=0, mercy=False, summary='No additional starter-card modifiers; use the trait description.'),
+ dict(id='magic', damage=0, block=0, draw=0, heal=0, poison=0, mercy=False, summary='No additional starter-card modifiers; use the trait description.'),
+ dict(id='vampire', damage=0, block=0, draw=0, heal=0, poison=0, mercy=False, summary='No additional starter-card modifiers; use the trait description.'),
+ dict(id='smallhitbox', damage=0, block=0, draw=0, heal=0, poison=0, mercy=False, summary='No additional starter-card modifiers; use the trait description.'),
+ dict(id='lowergravity', damage=0, block=0, draw=0, heal=0, poison=0, mercy=False, summary='No additional starter-card modifiers; use the trait description.'),
  dict(id='cantattack',damage=0,block=4,draw=0,heal=0,poison=2,mercy=True,summary='Starter Attacks become Mercy Skills: gain four Block and apply two Poison instead of attacking.'),
 ])
 classes=read('classes')

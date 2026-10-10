@@ -2,7 +2,7 @@
 
 Every climb ends. Your bloodline grows.
 
-A solo custom character by **CapeKid** for the regular branch of **Slay the Spire 2**. Knight, Mage and Ranger heirs inherit traits and altered starters; crowns from each climb rebuild a permanent Family Manor.
+A solo custom character by **CapeKid** for the regular and public-beta branches of **Slay the Spire 2**. Knight, Mage and Ranger heirs inherit traits and altered starters; crowns from each climb rebuild a permanent Family Manor.
 
 - **75 cards per class:** 30 shared family cards and 45 class cards. All 360 historical definitions, upgrades and original illustrations are retained.
 - All 61 eligible Rogue Legacy 2 traits, compatible inheritance, three new heirs after each climb and the first family's quick start.
@@ -10,7 +10,7 @@ A solo custom character by **CapeKid** for the regular branch of **Slay the Spir
 - Native card, reward, shop and save integration; atomic family saves and backup recovery.
 - Windows and Linux x86_64 readers, including Steam Deck and Proton paths. Genuine RL2 sprites are read locally from your owned game. No game assets are distributed.
 
-Requires **Slay the Spire 2 v0.107.1**, **BaseLib 3.4.7** and an installed owned Steam copy of **Rogue Legacy 2**. The StS1 implementation remains as historical source; active releases now target StS2.
+Supports **Slay the Spire 2 regular v0.107.1 and public-beta v0.111.0**. Requires **BaseLib 3.4.7** and an installed owned Steam copy of **Rogue Legacy 2**. The StS1 implementation remains as historical source; active releases now target StS2.
 
 [Install, Steam Deck, Melty, Workshop, saves and build instructions](docs/sts2-port.md)
 

@@ -17,10 +17,11 @@ for art in illustrations:
     source=repo/'src/main/resources'/art['path']
     if hashlib.sha256(source.read_bytes()).hexdigest()!=art['sha256']: raise ValueError('Illustration hash mismatch: '+art['path'])
     copy(source,mod/art['path'])
-for art in ['select-icon.png','select-bg.png']:copy(repo/'src/main/resources/heir/ui'/art,mod/'heir/ui'/art)
+for art in ['select-icon.png','select-bg.png','heir-portrait.png']:copy(repo/'src/main/resources/heir/ui'/art,mod/'heir/ui'/art)
 copy(repo/'LICENSE',mod/'LICENSE')
 copy(repo/'private/sts2-baselib/LICENSE.txt',mod/'licenses/BaseLib-MIT.txt')
 copy(repo/'docs/sts2-port.md',mod/'README.md')
+copy(repo/'docs/traits.md',mod/'traits.md')
 def archive(root,target):
     with zipfile.ZipFile(target,'w',zipfile.ZIP_DEFLATED,compresslevel=6) as output:
         for path in sorted(root.rglob('*')):
@@ -40,6 +41,7 @@ workshop.mkdir(parents=True,exist_ok=True)
 shutil.copytree(mod,workshop/'content/SpireLegacy',dirs_exist_ok=True)
 copy(repo/'sts2/workshop.json',workshop/'workshop.json')
 copy(repo/'docs/sts2-port.md',workshop/'README.md')
+copy(repo/'docs/traits.md',workshop/'traits.md')
 Image.open(repo/'src/main/resources/heir/ui/select-bg.png').convert('RGB').resize((640,400),Image.Resampling.LANCZOS).save(workshop/'image.png',optimize=True)
 if (workshop/'image.png').stat().st_size>=1_000_000:raise ValueError('Workshop preview exceeds 1MB')
 deliveries.append(archive(workshop,dist/f'SpireLegacy-StS2-{version}-workshop.zip'))

@@ -2,8 +2,33 @@ Spire Legacy adapts the trait library from the locally installed Rogue Legacy 2 
 
 The audit found 85 library entries. Rogue Legacy 2's character generator includes rarity values 1–3; other rarity values are disabled or reserved. All 61 eligible entries have an adaptation, including Antique and the two seasonal appearances. The mod also understands the two old Healthy and Strong save IDs, but no longer generates them. Existing eight-trait save IDs are preserved. Only Heart is now named correctly; Hollow Bones is a separate trait.
 
-[trait_coverage.json](../sheets/trait_coverage.json) records every library entry, its source rarity and adaptation status. [traits.json](../sheets/traits.json) contains all exact modifiers, effects and incompatibilities. Cosmetic-only entries still affect appearance. Effects that depend on real-time platforming have explicit card-game substitutes rather than silently inactive names.
+[trait_coverage.json](../sheets/trait_coverage.json) records every library entry, its source rarity and adaptation status. [traits.json](../sheets/traits.json) contains all exact modifiers, effects and incompatibilities. Cosmetic-only entries still affect appearance. Platform-only traits without a meaningful card-game equivalent explicitly say they have no combat modifier. They retain their identity and appearance where supported, without invented combat rewards.
 
 The audit tools require the player's installed copy, UnityPy and TypeTreeGeneratorAPI. Extracted definitions, localization text and decompiled source stay under the ignored private directory. They are never distributed. Factual names and enum identifiers are used to identify the adaptations; descriptions and implementation are original mod content.
 
 Validation checks that every eligible source entry resolves to an adaptation, every effect is implemented, selected icons exist in the installed game, and 2,000 seeded offer generations exclude disabled entries and incompatible pairs. Physical gameplay testing remains necessary for balance across all three acts.
+
+## 1.0.5 trait review
+
+Reviewed all 61 selectable traits against the locally installed RL2 definitions and the StS2 hooks. These descriptions are original summaries; no extracted game text is distributed.
+
+| Trait | Correction |
+|---|---|
+| Clumsy | Remove the extra Block on every Skill; explicitly no combat modifier. |
+| IBS | Remove automatic enemy Poison. |
+| FMF Fan | Remove the unrelated HP penalty and enemy Weak; retain its original crown modifier. |
+| Mushroom Man | Keep compact appearance; remove Thorns. |
+| Inter-dimensional | Remove extra attack damage; there are no projectile-blocking walls in card combat. |
+| Cartographer | Remove gold after every battle; the native map already reveals routes. |
+| Spelunker | -6 maximum HP; +10 gold only upon entering a treasure room. |
+| Lootbox Addict | Keep -8 maximum HP; +20 gold only upon entering a treasure room. |
+| Aerodynamic | First Attack each turn deals +1 damage per hit, instead of granting 4 Block. |
+| Kanganthropy | First Attack each turn deals +2 damage per hit, instead of granting 6 Block. |
+| Clownanthropy | Restore a -12 maximum HP drawback; reduce first-Attack Block from 3 to 2. |
+| Limitless | +1 Energy each turn now comes with 1 Vulnerable at each player turn start, replacing an easily offset HP penalty. |
+
+Remove overlapping starter-card modifiers from Gigantism, Dwarfism, Combative, Bookish, Vampirism, Only Heart and Hollow Bones. Their stated trait effects still apply. Pacifist retains its Mercy starter conversion, which supplies playable cards when Attacks are forbidden. Stable trait/card IDs and saved trait snapshots remain supported.
+
+Other selectable traits retain their existing, explicitly described card-game adaptations. Useful inherited traits are still allowed; the review removes unrelated benefits and redundant bonuses rather than making every trait a penalty. Crown modifiers inherited from the original catalog remain.
+
+Flame Barrier is now a 1-Energy defensive Skill: 5 Block and 2 retaliation per enemy attack this turn; upgraded, 7 Block and 3 retaliation. It uses native FlameBarrierPower, which expires after the enemy turn. It does not deal direct attack damage or grant permanent Thorns.
