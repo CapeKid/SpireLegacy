@@ -114,6 +114,8 @@ public static class NativeTestBridge
                     result = StateSummary(); break;
                 case "state": result = StateSummary(); break;
                 case "visual": result = HeirVisuals.Diagnostic(); break;
+                case "room-visual":
+                    result = Descendants(Tree.Root).OfType<HeirSprite>().Where(s=>s.Name=="SpireLegacyRoomHeir" && s.IsVisibleInTree()).Select(s=>new {classId=s.ClassId,pose=s.Animation.ToString(),position=s.GlobalPosition.ToString(),scale=s.GlobalScale.ToString(),pixelHeight=Design.Get("character_art",s.ClassId).Number("height")*Math.Abs(s.GetGlobalTransformWithCanvas().Scale.Y * Tree.Root.GetFinalTransform().Scale.Y)}).ToArray();break;
                 case "injure":
                     var injured = RunState().Players.Single().Creature;
                     await CreatureCmd.Damage(new BlockingPlayerChoiceContext(),injured,request.GetProperty("amount").GetInt32(),MegaCrit.Sts2.Core.ValueProps.ValueProp.Unblockable | MegaCrit.Sts2.Core.ValueProps.ValueProp.Unpowered,injured.CombatState!.GetOpponentsOf(injured).First());

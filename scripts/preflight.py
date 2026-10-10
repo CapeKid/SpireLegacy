@@ -62,6 +62,16 @@ def validate():
             for x,y,w,h in art['regions']:
                 bounds=alpha.crop((x,y,x+w,y+h)).getbbox()
                 if not bounds or not (0<bounds[0]<bounds[2]<w and 0<bounds[1]<bounds[3]<h):errors.append('Character frame clips at a region edge: '+art['id'])
+        if isinstance(art.get('death'),dict):
+            death=art['death'];path=ROOT/'src/main/resources'/death['path']
+            if not path.is_file() or hashlib.sha256(path.read_bytes()).hexdigest()!=death['sha256']:errors.append('Death atlas missing/hash mismatch: '+art['id']);continue
+            with Image.open(path) as atlas:
+                if atlas.mode!='RGBA':errors.append('Death atlas must preserve transparency: '+art['id'])
+                alpha=atlas.getchannel('A').point(lambda value:255 if value>=16 else 0)
+                if len(death['regions'])!=4 or len(death['feet'])!=4 or death['height']<=0:errors.append('Death animation requires four grounded frames: '+art['id'])
+                for x,y,w,h in death['regions']:
+                    bounds=alpha.crop((x,y,x+w,y+h)).getbbox()
+                    if not bounds or not (0<bounds[0]<bounds[2]<w and 0<bounds[1]<bounds[3]<h):errors.append('Death frame clips at region edge: '+art['id'])
     for cls in classes:
         rows=[r for r in members if r['classId']==cls]
         if len(rows)!=len(membership[cls]):errors.append(cls+': duplicate pool membership')
