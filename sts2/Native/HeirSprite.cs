@@ -19,7 +19,7 @@ public partial class HeirSprite : AnimatedSprite2D
     private float deathScale = 1;
     private Vector2 normalScale;
     public List<int> DeathFrames { get; } = new();
-    private readonly ShaderMaterial material = new() { Shader = new Shader { Code = "shader_type canvas_item; uniform bool gray = false; void fragment() { vec4 c = texture(TEXTURE, UV) * COLOR; if (c.a < 0.06) { discard; } if (gray) { float g = dot(c.rgb, vec3(0.299,0.587,0.114)); c.rgb = vec3(g); } COLOR = c; }" } };
+    private readonly ShaderMaterial material = new() { Shader = new Shader { Code = "shader_type canvas_item; uniform bool gray = false; uniform float damage_flash = 0.0; void fragment() { vec4 c = texture(TEXTURE, UV) * COLOR; if (c.a < 0.06) { discard; } if (gray) { float g = dot(c.rgb, vec3(0.299,0.587,0.114)); c.rgb = vec3(g); } c.rgb = mix(c.rgb, vec3(1.0,0.2,0.2), damage_flash * 0.7); COLOR = c; }" } };
 
     public static HeirSprite Create(string classId, float size)
     {
@@ -63,6 +63,7 @@ public partial class HeirSprite : AnimatedSprite2D
         return sprite;
     }
     public void SetGray(bool gray) => material.SetShaderParameter("gray",gray);
+    public void SetDamageFlash(float amount) => material.SetShaderParameter("damage_flash",amount);
     public void PlayPose(string pose)
     {
         if (!Poses.ContainsKey(pose) || (Animation == "dead" && pose != "idle") || (Animation == pose && IsPlaying())) return;

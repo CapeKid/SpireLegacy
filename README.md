@@ -9,6 +9,7 @@ A solo custom character by **CapeKid** for the regular and public-beta branches 
 - Six manor upgrades, family naming, visible banner emblems, full trait descriptions, confirmed purchases and a temporary crown editor.
 - Native card, reward, shop and save integration; atomic family saves and backup recovery.
 - Original trait icons, class badges, portraits, sprites and card art included in the mod. No game assets or extraction tools are distributed; Rogue Legacy 2 is not required.
+- Synesthesia's animated rainbow ring and paired cosmetic accents appear in combat, rest sites and shops. See the [complete trait-effect audit](docs/trait-effect-audit.md).
 
 Supports **Slay the Spire 2 regular v0.107.1 and public-beta v0.111.0**. Requires **BaseLib 3.4.7**. The StS1 implementation remains as historical source; active releases now target StS2.
 
