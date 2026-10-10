@@ -19,6 +19,26 @@ foreach (var upgrade in new[] { false, true })
     Check(!string.IsNullOrWhiteSpace(card.Rules()), card.Id + " full rules");
 }
 var traitIds = Design.Rows("traits").Where(r => r.Flag("enabled")).Select(r => r.Text("id")).ToArray();
+foreach (var cls in new[] { "knight", "mage", "ranger" })
+foreach (var starterId in Design.Get("decks", cls).List("cards").Distinct())
+foreach (var upgraded in new[] { false, true })
+{
+    var ordinary = new CardDesign(starterId, upgraded);
+    var pacifist = new CardDesign(starterId, upgraded, ["cantattack"]);
+    if (ordinary.Row.Text("type") == "ATTACK")
+    {
+        Check(pacifist.Mercy && pacifist.Damage == 0 && pacifist.Block == 0 && pacifist.Cost == 1, starterId + " Mercy cannot supply free defense or damage");
+        Check(pacifist.MercyPoison == (upgraded ? 3 : 2) && pacifist.Rules().Contains($"Apply {pacifist.MercyPoison} Poison") && !pacifist.Rules().Contains("Block"), starterId + " Mercy upgrade improves only Poison");
+    }
+    else Check(!pacifist.Mercy && pacifist.Block == ordinary.Block && pacifist.Rules() == ordinary.Rules(), starterId + " Pacifist preserves separate defensive starters");
+}
+Inheritance.CurrentHeir = () => new() { classId = "ranger", traits = ["cantattack"] };
+Check(Inheritance.Has("pacifist") && Inheritance.Amount("pacifist") == 0, "Pacifist still forbids Attacks without granting opening Poison");
+Inheritance.CurrentHeir = () => new();
+Check(Design.Get("traits", "cantattack").Number("goldBonus") == 150, "Pacifist retains its requested crown bonus");
+var pacifistPayout = new FamilyProfile { selected = new() { classId = "ranger", traits = ["cantattack"] } };
+var pacifistRun = pacifistPayout.Begin(1);
+Check(pacifistPayout.Settle(pacifistRun.id, 50, 200, true) == 256, "Pacifist retains its existing capped double crown payout");
 foreach (var upgraded in new[] { false, true })
 {
     var ward = new CardDesign("mage_perfect_ward", upgraded);

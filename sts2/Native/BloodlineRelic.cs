@@ -61,7 +61,7 @@ public sealed class BloodlineRelic : CustomRelicModel
         await Apply(context,"class",Owner.Creature,1);
         foreach (var enemy in Owner.Creature.CombatState!.GetOpponentsOf(Owner.Creature).Where(e => e.IsAlive))
         {
-            await Apply(context,"poison",enemy,Inheritance.Amount("poison") + Inheritance.Amount("pacifist"));
+            await Apply(context,"poison",enemy,Inheritance.Amount("poison"));
             await Apply(context,"weak",enemy,Inheritance.Amount("weak"));
             await Apply(context,"strength",enemy,Inheritance.Amount("enemy_strength"));
             if (Inheritance.Amount("enemy_guard") > 0) await CreatureCmd.GainBlock(enemy,Inheritance.Amount("enemy_guard"),ValueProp.Unpowered,null);

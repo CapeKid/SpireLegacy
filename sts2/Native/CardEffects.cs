@@ -31,7 +31,7 @@ public static class CardEffects
   await Apply(context,"strength",creature,d.Amount("strength"),creature,card);await Apply(context,"dexterity",creature,d.Amount("dexterity"),creature,card);
   foreach(var enemy in enemies.Where(e=>e.IsAlive)){
    foreach(var key in new[]{"poison","weak","vulnerable"})await Apply(context,key,enemy,d.Amount(key),creature,card);
-   if(d.Mercy)await Apply(context,"poison",enemy,d.Gene("poison")+(card.IsUpgraded?1:0),creature,card);
+   if(d.Mercy)await Apply(context,"poison",enemy,d.MercyPoison,creature,card);
   }
   if(row.Text("power")!="none")await Apply(context,row.Text("power"),creature,d.Magic,creature,card);
   await Special(card,context,enemies);

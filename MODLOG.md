@@ -249,3 +249,12 @@ Owned RetainHandPower uses AfterSideTurnEnd Decrement, used as duration referenc
 User requested explicit description of the inherited Basic Attack conversion. Updated cantattack summary with 4 Block/2 Poison, upgraded 7 Block/3 Poison, non-Basic Attack restriction and 5 starting Poison per enemy. Data description only, stable trait/card IDs and mechanics unchanged. Version 1.0.15 metadata and packages prevent Workshop clients retaining old text. Build/preflight/package/delivery checks follow.
 
 - Sheet preflight and regular Release build pass with zero warnings/errors. Native/Workshop/Melty 1.0.15 archives pass CRC. Official uploader reached existing item 3816525393 but failed with k_EResultFail as Steam logged the PC out with Logged In Elsewhere at 16:02:23; SDK proof initialization then failed. No 1.0.15 delivery claimed. Requested Deck Steam exit before reopening PC Steam/retrying. Last verified Workshop delivery remains 1.0.14.
+
+
+## 1.0.16 Pacifist gameplay nerf, 2026-10-10
+
+User reported an easy Arrow-only Pacifist victory. Remove the 5 free opening Poison and the 4/7 Block from every converted Basic Attack, including Shield Bash. Mercy Skills still cost 1 Energy and apply 2/3 Poison; Steady Aim keeps its original draw. Other Attacks remain unplayable. Preserve the +150% crown bonus as requested and the existing total payout cap. Update trait/card text, generator and shared native/core upgrade handling; stable IDs and saved trait snapshots continue to read current balance values.
+
+Validation: 2,658 core assertions pass, including all three classes, upgraded Mercy stats, unaffected defensive starters and unchanged capped crowns. Regular v0.107.1 and beta v0.111.0 builds pass. Actual one-Energy starter play/discard, no opening Poison, base/upgraded converted attacks with no direct damage or Block, ordinary Guards and blocked reward Attacks pass on both owned isolated labs. All 720 native base/upgraded cards validate under each class with Pacifist (2,160 checks per branch). Both lab DLLs and the staged Workshop DLL byte-match the final release. Labs stopped. Sheet preflight and CRC-validated native/Workshop/Melty 1.0.16 bundles pass. Full-run difficulty remains subject to playtesting.
+
+Publication: ready PR #22 updated. Workshop upload pending: Steam is closed on this PC and the user has not yet confirmed releasing the Deck session. Last verified live Workshop remains 1.0.14. Melty bundle prepared only.
