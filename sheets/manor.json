@@ -15,7 +15,7 @@
     "name": "Blacksmith",
     "effect": "strength",
     "perLevel": 1,
-    "maxLevel": 3,
+    "maxLevel": 2,
     "baseCost": 120,
     "costStep": 80,
     "requires": "vitality",
@@ -26,7 +26,7 @@
     "name": "Armory",
     "effect": "dexterity",
     "perLevel": 1,
-    "maxLevel": 3,
+    "maxLevel": 2,
     "baseCost": 120,
     "costStep": 80,
     "requires": "vitality",
@@ -41,7 +41,7 @@
     "baseCost": 100,
     "costStep": 40,
     "requires": "none",
-    "summary": "+5% legacy earnings per level."
+    "summary": "+5% legacy earnings per level, applied after the trait bonus cap."
   },
   {
     "id": "library",
@@ -59,7 +59,7 @@
     "name": "Healing Garden",
     "effect": "heal",
     "perLevel": 1,
-    "maxLevel": 4,
+    "maxLevel": 2,
     "baseCost": 100,
     "costStep": 40,
     "requires": "none",

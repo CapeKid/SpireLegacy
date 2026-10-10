@@ -3,6 +3,20 @@ using System.Text.Json;
 
 var count = 0;
 void Check(bool value, string message) { count++; if (!value) throw new Exception(message); }
+var icons = Design.Rows("icon_art");
+Check(icons.Count == Design.Rows("traits").Count + 3, "Every saved trait ID and class has an original icon");
+Check(icons.Select(r => r.Text("sha256")).Distinct().Count() == icons.Count, "Original trait/class icons are distinct");
+foreach (var trait in Design.Rows("traits")) Check(Design.Get("icon_art", "trait_" + trait.Text("id")).Text("license") == "MIT", "Original trait icon " + trait.Text("id"));
+foreach (var cls in new[] { "knight", "mage", "ranger" }) Check(Design.Get("icon_art", "class_" + cls).Text("path").StartsWith("heir/icons/"), "Packaged original class icon " + cls);
+var endingScripts = new HashSet<string>();
+foreach (var cls in new[] { "knight", "mage", "ranger" })
+foreach (var firstEnding in new[] { false, true })
+{
+    var lines = ArchitectConversation.ForClass(cls, firstEnding);
+    Check(lines.Count == 4 && lines.Select(l => l.Architect).SequenceEqual(new[] { true, false, true, false }), cls + " ending alternates Architect and Heir");
+    Check(lines.All(l => !string.IsNullOrWhiteSpace(l.Text) && !l.Text.Contains('{')), cls + " ending has complete literal dialogue");
+    Check(endingScripts.Add(string.Join("\n", lines.Select(l => l.Text))), cls + " unique first/return ending");
+}
 Check(Design.Rows("cards").Count == 360, "Preserve every historical card");
 foreach (var cls in new[] { "knight", "mage", "ranger" })
 {
@@ -19,6 +33,60 @@ foreach (var upgrade in new[] { false, true })
     Check(!string.IsNullOrWhiteSpace(card.Rules()), card.Id + " full rules");
 }
 var traitIds = Design.Rows("traits").Where(r => r.Flag("enabled")).Select(r => r.Text("id")).ToArray();
+foreach (var cls in new[] { "knight", "mage", "ranger" })
+foreach (var starterId in Design.Get("decks", cls).List("cards").Distinct())
+foreach (var upgraded in new[] { false, true })
+{
+    var ordinary = new CardDesign(starterId, upgraded);
+    var pacifist = new CardDesign(starterId, upgraded, ["cantattack"]);
+    if (ordinary.Row.Text("type") == "ATTACK")
+    {
+        Check(pacifist.Mercy && pacifist.Damage == 0 && pacifist.Block == 0 && pacifist.Cost == 1, starterId + " Mercy cannot supply free defense or damage");
+        Check(pacifist.MercyPoison == (upgraded ? 3 : 2) && pacifist.Rules().Contains($"Apply {pacifist.MercyPoison} Poison") && !pacifist.Rules().Contains("Block"), starterId + " Mercy upgrade improves only Poison");
+    }
+    else Check(!pacifist.Mercy && pacifist.Block == ordinary.Block && pacifist.Rules() == ordinary.Rules(), starterId + " Pacifist preserves separate defensive starters");
+}
+Inheritance.CurrentHeir = () => new() { classId = "ranger", traits = ["cantattack"] };
+Check(Inheritance.Has("pacifist") && Inheritance.Amount("pacifist") == 0, "Pacifist still forbids Attacks without granting opening Poison");
+Inheritance.CurrentHeir = () => new();
+Check(Design.Get("traits", "cantattack").Number("goldBonus") == 150, "Pacifist retains its requested crown bonus");
+var pacifistPayout = new FamilyProfile { selected = new() { classId = "ranger", traits = ["cantattack"] } };
+var pacifistRun = pacifistPayout.Begin(1);
+Check(pacifistPayout.Settle(pacifistRun.id, 50, 200, true) == 256, "Pacifist retains its existing capped double crown payout");
+foreach (var upgraded in new[] { false, true })
+{
+    var ward = new CardDesign("mage_perfect_ward", upgraded);
+    Check(ward.Cost == 2 && ward.Magic == (upgraded ? 2 : 1) && ward.Row.Flag("exhaust"), "Ward has a bounded, single-use prevention budget");
+    var timing = new CardDesign("ranger_perfect_timing", upgraded);
+    Check(timing.Cost == (upgraded ? 2 : 3) && timing.Magic == 1 && timing.Amount("hpLoss") == 3, "Timing upgrade lowers setup cost without doubling recurring energy");
+    Check(timing.Rules().Contains("gain 1 Energy") && timing.Rules().Contains("Lose 3 HP"), "Timing text matches its recurring energy and HP price");
+    var tripwire = new CardDesign("ranger_tripwire", upgraded);
+    Check(tripwire.Block == (upgraded ? 5 : 3) && tripwire.Amount("weak") == 1, "Tripwire upgrades defense without extending Weak");
+}
+foreach (var cardId in Design.Rows("card_pools").Select(r => r.Text("cardId")).Distinct())
+{
+    var normal = new CardDesign(cardId); var upgraded = new CardDesign(cardId, true);
+    Check(normal.Cost != upgraded.Cost || normal.Damage != upgraded.Damage || normal.Block != upgraded.Block || normal.Rules() != upgraded.Rules(), cardId + " has an effective upgrade");
+}
+foreach (var upgraded in new[] { false, true })
+{
+    var angel = new CardDesign("knight_guardian_angel", upgraded);
+    Check(angel.Cost == (upgraded ? 1 : 2) && angel.Magic == 1, "Guardian Angel upgrades efficiency instead of prevention capacity");
+    var mantle = new CardDesign("mage_astral_mantle", upgraded);
+    Check(mantle.Cost == (upgraded ? 1 : 2) && mantle.Magic == 1, "Astral Mantle upgrades setup without doubling permanent Block");
+}
+Check(Design.Rows("cards").Where(c => c.Number("hits") > 1).All(c => c.Number("upgradeDamage") <= 1), "Multi-hit upgrade budget");
+foreach (var traitId in new[] { "nocolor", "oldyellowtint", "colortrails", "fmffan" }) Check(Design.Get("traits", traitId).Number("goldBonus") == 0, "No free crown bonus: " + traitId);
+var oldManor = new FamilyProfile { crowns = 5, manor = new() { ["smith"] = 3, ["armory"] = 3, ["garden"] = 4 } };
+Check(oldManor.RefundRetiredLevels() && oldManor.crowns == 965, "Refund retired levels at their original purchase prices");
+Check(oldManor.Bonus("strength") == 2 && oldManor.Bonus("dexterity") == 2 && oldManor.Bonus("heal") == 2, "Retuned manor stats");
+Check(!oldManor.RefundRetiredLevels() && oldManor.crowns == 965, "Refund migration is idempotent");
+var maxTraitTreasury = new FamilyProfile { selected = new() { classId = "knight", traits = ["megahealth"] }, manor = new() { ["vault"] = 4 } };
+var treasuryRun = maxTraitTreasury.Begin(1);
+Check(maxTraitTreasury.Settle(treasuryRun.id, 20, 100, false) == 105, "Treasury multiplies trait-capped earnings, rounding once");
+var ordinaryTreasury = new FamilyProfile { selected = new() { classId = "knight", traits = [] }, manor = new() { ["vault"] = 4 } };
+var ordinaryTreasuryRun = ordinaryTreasury.Begin(1);
+Check(ordinaryTreasury.Settle(ordinaryTreasuryRun.id, 20, 100, false) == 52, "Treasury remains useful without trait bonuses");
 // Previously inert traits now expose explicit bounded gameplay effects.
 foreach (var (adaptedId,effect,amount,hp) in new[] {
     ("enemyknockedfar","first_attack_weak",1,0), ("fart","opening_weak",1,0), ("fmffan","first_skill_block",2,0),
@@ -80,4 +148,16 @@ try { profile.CommitPurchases([id], Path.Combine(directory, "blocked")); throw n
 Check(profile.crowns == snapshot && profile.Level(id) == 1, "Failed save cannot spend crowns");
 File.WriteAllText(path, "broken");
 Check(FamilyProfile.Load(path).family == "Cape House", "Backup recovery");
+var migrationPath = Path.Combine(directory, "legacy-manor.json");
+var legacyProfile = new FamilyProfile { family = "Legacy Test", crowns = 5, manor = new() { ["smith"] = 3, ["armory"] = 3, ["garden"] = 4 } };
+var legacyRun = legacyProfile.Begin(1);
+legacyRun.bonuses["strength"] = 3; legacyRun.bonuses["heal"] = 4;
+legacyProfile.Save(migrationPath);
+var migrated = FamilyProfile.Load(migrationPath);
+Check(migrated.crowns == 965 && migrated.family == "Legacy Test" && migrated.Level("garden") == 2, "Loading migrates and persists legacy manor refunds");
+Check(migrated.active!.id == legacyRun.id && migrated.active.bonuses["strength"] == 3 && migrated.active.bonuses["heal"] == 4, "Migration preserves an unfinished run's bonus snapshot");
+Check(FamilyProfile.Load(migrationPath).crowns == 965, "Reload cannot award refunds again");
+Inheritance.CurrentHeir = () => new() { classId = "mage", traits = ["vampire", "superhealer"] };
+Check(Inheritance.Healing(Design.Get("manor", "garden").Number("maxLevel") + Inheritance.Stat("heal")) == 10, "Full Garden/Vampirism/Super Healer healing is reduced from 16 to 10");
+Inheritance.CurrentHeir = () => new();
 Console.WriteLine(JsonSerializer.Serialize(new { result = "passed", assertions = count, cards = 360, inheritedTraits = traitIds.Length, familyFixture = directory }));

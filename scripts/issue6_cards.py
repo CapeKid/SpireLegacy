@@ -44,7 +44,7 @@ write('starter_genes',[
  dict(id='vampire', damage=0, block=0, draw=0, heal=0, poison=0, mercy=False, summary='No additional starter-card modifiers; use the trait description.'),
  dict(id='smallhitbox', damage=0, block=0, draw=0, heal=0, poison=0, mercy=False, summary='No additional starter-card modifiers; use the trait description.'),
  dict(id='lowergravity', damage=0, block=0, draw=0, heal=0, poison=0, mercy=False, summary='No additional starter-card modifiers; use the trait description.'),
- dict(id='cantattack',damage=0,block=4,draw=0,heal=0,poison=2,mercy=True,summary='Starter Attacks become Mercy Skills: gain four Block and apply two Poison instead of attacking.'),
+ dict(id='cantattack',damage=0,block=0,draw=0,heal=0,poison=2,mercy=True,summary='Starter Attacks become Mercy Skills: apply two Poison (three upgraded), with no damage or Block.'),
 ])
 classes=read('classes')
 for row in classes:row['summary']=next(r['summary'] for r in read('class_mechanics') if r['id']==row['id'])

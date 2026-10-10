@@ -12,15 +12,15 @@ This is the native StS2 successor to Spire Legacy 0.5.0, created by CapeKid. It 
 - Six manor upgrades, slower crown earnings, staged purchases with an explicit confirmation, family naming, four visible banner emblems and a temporary playtest crown editor.
 - Full wrapped, scrolling trait descriptions, mouse tooltips and keyboard/controller navigation with an on-screen text keyboard.
 - Family run identities, inherited card snapshots, atomic saves and backup recovery. A completed run settles crowns once.
-- Genuine class, trait and heir sprites read from your owned RL2 installation. No game assets are in the download.
+- Original class sprites, portraits, card illustrations and 66 original trait/class vector icons included in the download. No game assets or content readers are distributed. Rogue Legacy 2 is not required.
 
 The basic-card baseline remains: plain strikes deal 5 damage, guards supply 4 Block, and class HP starts at 60/52/56 before inheritance and manor bonuses. Upgraded drawing cards retain the safeguards from 0.5.0. Version 1.0.5 removes unrelated trait bonuses and overlapping starter modifiers, limits treasure income to treasure rooms, and makes Flame Barrier a defensive Skill with temporary retaliation. See [trait review](traits.md). Balance against StS2's enemies still needs full-run playtesting.
 
-StS2 adaptations preserve native encounters and rewards. Dusty Tome grants an upgraded rare card from the current heir's pool because the migrated set has no Ancient-rarity cards. Native relics that require a specific base-game starter card or relic keep their eligibility checks. Ancients use generic dialogue where available, with existing Ironclad dialogue as a fallback when the game supplies no custom-character dialogue, including the ending.
+StS2 adaptations preserve native encounters and rewards. Dusty Tome grants an upgraded rare card from the current heir's pool because the migrated set has no Ancient-rarity cards. Native relics that require a specific base-game starter card or relic keep their eligibility checks. Ancients use generic dialogue where available, with existing Ironclad dialogue as a fallback when the game supplies no custom-character dialogue. The Architect ending uses original Knight, Mage and Ranger conversations, each with first-victory and returning-victory text. The active heir's class selects the dialogue; the game's existing Heir win count selects first or returning lines. Native speakers, response buttons and ending animations are preserved. These six conversations are currently in English.
 
 ## Workshop installation
 
-1. Install owned Steam copies of Slay the Spire 2 and Rogue Legacy 2.
+1. Install Slay the Spire 2. Rogue Legacy 2 is not required.
 2. Subscribe to [BaseLib](https://steamcommunity.com/sharedfiles/filedetails/?id=3737335127) and [Spire Legacy for StS2](https://steamcommunity.com/sharedfiles/filedetails/?id=3816525393). The new item is currently private for owner testing. The original StS1 Workshop item is a different mod.
 3. Start StS2 on your selected branch. Accept its mod notice and enable BaseLib and Spire Legacy in the mod list. Restart if requested.
 4. Select **The Heir**. **Family Manor & Heir Lab** appears beneath the character information, clear of Ascension. Press Y, or move down from the portrait and press A. Choose a family/heir and start a solo climb.
@@ -34,25 +34,19 @@ Use the D-pad or left stick to move through buttons and read trait descriptions;
 
 ## Manual installation
 
-Extract `SpireLegacy-StS2-1.0.5.zip` into your StS2 install folder. Its layout is `mods/SpireLegacy/SpireLegacy.json`, `SpireLegacy.dll`, `content-reader.zip` and `heir/`. Subscribe to BaseLib separately, or use the Melty bundle, which includes BaseLib. Launch the normal game executable; no separate mod launcher is required.
+Extract `SpireLegacy-StS2-1.0.18.zip` into your StS2 install folder. Its layout is `mods/SpireLegacy/SpireLegacy.json`, `SpireLegacy.dll` and `heir/`. Subscribe to BaseLib separately, or use the Melty bundle, which includes BaseLib. Launch the normal game executable; no separate mod launcher is required.
 
 ## Steam Deck
 
-Use the Workshop steps in Gaming Mode. Both the DLL and local reader have native Linux x86_64 support. Prefer StS2's native Linux version; Proton uses the included Windows reader. No system Python installation is required.
+Use the Workshop steps in Gaming Mode. The DLL and included original artwork support the native Linux game and Proton. No Python installation is required.
 
-RL2 discovery checks Steam's libraries, including `/home/deck/.local/share/Steam/steamapps/common/Rogue Legacy 2` and SD-card libraries. If automatic discovery fails, set this launch option:
-
-```sh
-HEIR_RL2_DIR="/home/deck/.local/share/Steam/steamapps/common/Rogue Legacy 2" %command%
-```
-
-The full content-preparation diagnostic appears in the game's log and in Family Manor when preparation fails. Use **Retry content preparation** after correcting the installation. Starting RL2 once is not required. Native Linux support is implemented; the user tested 1.0.2 on a physical Deck and reported lingering cards on beta. The user confirmed the 1.0.3 cleanup fix works on Deck. Version 1.0.5 Manor controls still need physical Deck retesting.
+Version 1.0.18 loads the included original artwork directly through Godot. No RL2 path, Python runtime, content reader or extracted-content cache is required. Old `HEIR_RL2_DIR` launch options can be removed. Existing reader/cache folders from older releases are unused and do not affect saved family progress. Native Linux and Proton share the same packaged icons; physical Deck retesting of this release remains needed.
 
 If a card spends energy but never resolves, open **Family / Traits** after the failure. Version 1.0.3 shows the mod/game versions and the full failed card-action exception, including loaded mod versions, in Family Manor. **Copy card-play diagnostic** copies it for reporting. Version 1.0.3 adapts attack, card-sourced damage, exhaust and damage-modifier APIs across both branches. Retain this diagnostic if a card still fails.
 
 ## Melty
 
-`SpireLegacy-StS2-1.0.5-melty.zip` includes the mod, both readers and BaseLib 3.4.7. `sts2/melty.json` declares StS2 as the primary game and RL2 as the secondary game, installs the two mods and launches `SlayTheSpire2.exe`. This launcher mapping targets Windows. Melty must validate the uploaded mapping and observe a successful launch before publication. A prepared archive alone is not a verified Melty install.
+`SpireLegacy-StS2-1.0.18-melty.zip` includes the standalone mod and BaseLib 3.4.7. `sts2/melty.json` declares only StS2, installs the two mods and launches `SlayTheSpire2.exe`. This launcher mapping targets Windows. Melty must validate the uploaded mapping and observe a successful launch before publication. A prepared archive alone is not a verified Melty install.
 
 The Workshop package uses Mega Crit's official StS2 uploader workspace format: `content/`, `workshop.json` and a PNG preview below 1 MB. Its visibility defaults to **private**. It creates a new StS2 item; do not supply the StS1 item's ID. BaseLib is a Required Item.
 
@@ -64,17 +58,16 @@ To migrate a family from StS1, finish or abandon the old climb, back up both fam
 
 ## Build and validation
 
-Requires .NET SDK 9 or later, your owned StS2 assemblies and the licensed content-reader runtimes. Set `Sts2DataDir` to the installed game's data directory when building outside the default Windows Steam location.
+Requires .NET SDK 9 or later and your owned StS2 assemblies. Set `Sts2DataDir` to the installed game's data directory when building outside the default Windows Steam location.
 
 ```powershell
 python scripts/sts2-generate.py
 dotnet build sts2/SpireLegacy.csproj -c Release -p:Sts2DataDir="C:/path/to/StS2/data_sts2_windows_x86_64"
 dotnet run --project sts2/tests/SpireLegacy.CoreChecks.csproj
-python scripts/sts2-reader-package.py
 python scripts/sts2-package.py
 ```
 
-The reader packager consumes licensed `Reader/`, `ReaderLinux/` and `licenses/` runtime folders. These are local build dependencies, not game content; see the script's `--runtime-source` option. A fresh clone does not include their binaries. Build the Windows reader from `scripts/load_rl.py` with Python 3.12, UnityPy, Pillow and PyInstaller. The Linux reader uses the pinned portable Python 3.12 runtime and corresponding Linux wheels documented in the historical Steam Deck build notes. No StS1 installation is needed for the StS2 build.
+Original icons are reproducible with `python scripts/author-heir-icons.py`; hashes and provenance are recorded in `sheets/icon_art.json` and [original-icons.md](original-icons.md). `scripts/preflight.py` validates the StS2 design and original artwork without an RL2 asset index or StS1 atlas. Historical source-asset validation is available only through `--historical-sts1-assets`.
 
 `scripts/sts2-lab.py` creates an isolated hardlinked owned-game oracle with separate saves and Steam Cloud writes disabled. `scripts/sts2-oracle.py` exercises the opt-in test bridge. Normal launches do not expose that bridge. Private game files, logs, extracted RL2 content and saves must remain ignored and must never be uploaded.
 
@@ -82,7 +75,7 @@ Validation includes 2,434 core assertions; all 360 base cards and all 360 upgrad
 
 ## Credits and license
 
-Original code and illustrations: CapeKid, MIT. Slay the Spire 2: Mega Crit. Rogue Legacy 2: Cellar Door Games. BaseLib: Alchyr and contributors, MIT. Content reader: UnityPy, Python, Pillow, PyInstaller and decoding dependencies, with their notices included. Their respective owners retain all rights to game content.
+Original code and illustrations: CapeKid, MIT. Slay the Spire 2: Mega Crit. Rogue Legacy 2: Cellar Door Games. BaseLib: Alchyr and contributors, MIT. Original trait/class SVG art: CapeKid, MIT. No extracted game content or reader runtimes are included; historical StS1 dependencies retain their separate notices.
 
 ## 1.0.6 startup and controller fixes
 
@@ -117,3 +110,8 @@ Inter-dimensional, Cartographer, IBS, FMF Fan, Mushroom Man and Hypergonadism no
 ## 1.0.12 visual fixes
 
 Mage now visibly collapses through four original death frames and holds the final defeated pose. All classes are enlarged at rest sites (2x previous size) and shops (1.75x), with ground anchors preserved. Native death timing remains unchanged.
+
+
+## 1.0.18 standalone artwork and installation
+
+The mod loads all trait and class icons from its own packaged SVG files. Existing original cards, portraits and animated sprites are preserved. Stable class/trait/card IDs and family/run snapshots are unchanged. The startup extraction process, RL2 discovery, preparation failure/retry UI and bundled readers are removed. Workshop/Melty metadata requires only StS2 and BaseLib. Old cached content is ignored; no cleanup of family saves is necessary.

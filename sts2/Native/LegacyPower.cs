@@ -30,9 +30,11 @@ public abstract class LegacyPower:CustomPowerModel
  public override string CustomBigIconPath=>ModelDb.Power<StrengthPower>().ResolvedBigIconPath;
  public override List<(string,string)> Localization=>[("title",Key=="class"?"{ClassTitle}":System.Globalization.CultureInfo.InvariantCulture.TextInfo.ToTitleCase(Key.Replace('_',' '))),("description",DescriptionText)];
  public override LocString Title {get {var title=base.Title;if(Key=="class")title.Add("ClassTitle",Design.Get("class_mechanics",Runtime.Heir.classId).Text("name"));return title;}}
- private string DescriptionText=>Key switch{"class"=>"{ClassRules} Current: {Counter}.","plated"=>"At turn end, gain {Amount} Block. Lose a stack when attacked for HP damage.","reservoir"=>"Each Arcane Charge adds {Amount} extra attack damage.","quiver"=>"Hunter Rhythm draws {Amount} additional cards.",_=>Design.Get("power_effects",Key).Text("summary").Replace("!M!","{Amount}")};
+ private string DescriptionText=>Key switch{"class"=>"{ClassRules} Current: {Counter}.","plated"=>"At turn end, gain {Amount} Block. Lose a stack when attacked for HP damage.","reservoir"=>"Each Arcane Charge adds {Amount} extra damage on the first hit to each enemy.","quiver"=>"Hunter Rhythm draws {Amount} additional cards.",_=>Design.Get("power_effects",Key).Text("summary").Replace("!M!","{Amount}")};
  private int plays;private bool discardPaid;private bool cyclingDamage;
  private int charges,attacks;
+ private HashSet<Creature> classBonusTargets=new();
+ protected override void DeepCloneFields(){base.DeepCloneFields();classBonusTargets=new();}
  [SavedProperty] public int Charges {get=>charges;set{charges=value;if(IsMutable)InvokeDisplayAmountChanged();}}
  [SavedProperty] public int AttacksThisTurn {get=>attacks;set{attacks=value;if(IsMutable)InvokeDisplayAmountChanged();}}
  public override int DisplayAmount=>Key=="class"?(Runtime.Heir.classId=="ranger"?AttacksThisTurn%3:Charges):Amount;
@@ -70,9 +72,19 @@ public abstract class LegacyPower:CustomPowerModel
   if((Key is "skill_block" or "skill_energy"&&card.Type==CardType.Skill)||(Key=="attack_vigor"&&card.Type==CardType.Attack)){
    if(++plays==3){plays=0;if(Key=="skill_block")await CreatureCmd.GainBlock(Owner,Amount,ValueProp.Unpowered,null);if(Key=="skill_energy")await CardEffects.Apply(context,"nextEnergy",Owner,Amount,Owner,card);if(Key=="attack_vigor")await CardEffects.Apply(context,"vigor",Owner,Amount,Owner,card);}}
  }
+ public override Task BeforeCardPlayed(CardPlay play)
+ {
+  if(Key=="class"&&play.Card.Owner.Creature==Owner)classBonusTargets.Clear();
+  return Task.CompletedTask;
+ }
+ public override Task AfterDamageGiven(PlayerChoiceContext context,Creature? dealer,DamageResult result,ValueProp props,Creature target,CardModel? cardSource)
+ {
+  if(Key=="class"&&dealer==Owner&&cardSource?.Type==CardType.Attack&&props.IsPoweredAttack())classBonusTargets.Add(target);
+  return Task.CompletedTask;
+ }
  public decimal InheritedDamageAdditive(Creature? target,decimal amount,ValueProp props,Creature? dealer,CardModel? card)
  {
-  if(Key!="class"||dealer!=Owner||!props.IsPoweredAttack())return 0;
+  if(Key!="class"||dealer!=Owner||!props.IsPoweredAttack()||target is null||classBonusTargets.Contains(target))return 0;
   return Runtime.Heir.classId switch{"knight"=>Charges>0?2:0,"mage"=>Charges*(1+FindAmount("reservoir")),_=>0};
  }
  private int FindAmount(string key)=>Owner.Powers.OfType<LegacyPower>().Where(p=>p.Key==key).Sum(p=>p.Amount);
@@ -95,7 +107,7 @@ public abstract class LegacyPower:CustomPowerModel
   if(Key=="establishment")foreach(var card in retained)if(!card.EnergyCost.CostsX)card.EnergyCost.SetThisCombat(Math.Max(0,card.EnergyCost.GetWithModifiers(CostModifiers.Local)-Amount));
  }
  public override bool ShouldFlush(Player player)=>Key!="equilibrium"||player!=Owner.Player;
- public override async Task AfterSideTurnEnd(PlayerChoiceContext context,CombatSide side,IEnumerable<Creature> participants){if(Key is "equilibrium" or "double_tap"&&participants.Contains(Owner))await PowerCmd.Remove(this);}
+ public override async Task AfterSideTurnEnd(PlayerChoiceContext context,CombatSide side,IEnumerable<Creature> participants){if(!participants.Contains(Owner))return;if(Key=="equilibrium")await PowerCmd.Decrement(this);else if(Key=="double_tap")await PowerCmd.Remove(this);}
  public override int ModifyCardPlayCount(CardModel card,Creature? target,int count)=>Key=="double_tap"&&card.Owner.Creature==Owner&&card.Type==CardType.Attack?count+1:count;
  public override async Task AfterModifyingCardPlayCount(CardModel card){if(Key=="double_tap")await PowerCmd.Decrement(this);}
  public override async Task AfterPowerAmountChanged(PlayerChoiceContext context,PowerModel power,decimal amount,Creature? applier,CardModel? card)

@@ -32,10 +32,10 @@ mod = lab / 'mods/SpireLegacy'
 mod.mkdir(parents=True, exist_ok=True)
 shutil.copy2(repo / f'sts2/bin/{configuration}/net9.0/SpireLegacy.dll', mod)
 shutil.copy2(repo / 'sts2/SpireLegacy.json', mod)
-reader_archive = repo / 'build/sts2/content-reader.zip'
-if reader_archive.exists(): shutil.copy2(reader_archive, mod)
+(mod/'content-reader.zip').unlink(missing_ok=True)
 resources = repo / 'src/main/resources/heir'
-for source in resources.rglob('*.png'):
+for source in resources.rglob('*'):
+    if source.suffix not in ('.png', '.svg'): continue
     target = mod / 'heir' / source.relative_to(resources)
     target.parent.mkdir(parents=True, exist_ok=True)
     shutil.copy2(source,target)

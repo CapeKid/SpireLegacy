@@ -46,6 +46,17 @@ public static class NativeTestBridge
             object result;
             switch (request.GetProperty("command").GetString())
             {
+                case "standalone-assets":
+                    if(File.Exists(Path.Combine(Runtime.ModDirectory,"content-reader.zip")) || Directory.Exists(Path.Combine(Runtime.DataDirectory,"cache")) || Directory.Exists(Path.Combine(Runtime.DataDirectory,"reader")))throw new InvalidDataException("Standalone lab contains old reader/cache content.");
+                    var iconFolder=Path.Combine(Runtime.DataDirectory,"icon-preview");Directory.CreateDirectory(iconFolder);
+                    var iconChecks=new List<object>();
+                    foreach(var icon in Design.Rows("icon_art")) {
+                        var iconImage=Runtime.Texture(icon.Text("path")).GetImage();
+                        if(iconImage.GetWidth()!=128 || iconImage.GetHeight()!=128 || iconImage.IsEmpty())throw new InvalidDataException("Invalid original icon: "+icon.Text("id"));
+                        iconImage.SavePng(Path.Combine(iconFolder,icon.Text("id")+".png"));
+                        iconChecks.Add(new{id=icon.Text("id"),path=icon.Text("path")});
+                    }
+                    result=new{count=iconChecks.Count,icons=iconChecks,readerPresent=false,cachePresent=false,rl2Override=System.Environment.GetEnvironmentVariable("HEIR_RL2_DIR"),Runtime.Profile.family,Runtime.Profile.crowns};break;
                 case "inspect":
                     result = new { userData = OS.GetUserDataDir(), character = ModelDb.Character<HeirCharacter>().Id.ToString(), cards = Design.Rows("cards").Select(r => NativeCards.Get(r.Text("id")).Id.ToString()).ToArray(), pools = new[] { ModelDb.CardPool<KnightCardPool>().AllCards.Count(), ModelDb.CardPool<MageCardPool>().AllCards.Count(), ModelDb.CardPool<RangerCardPool>().AllCards.Count() }, labels = Descendants(Tree.Root).OfType<Label>().Where(n=>n.IsVisibleInTree()).Select(n=>n.Text).ToArray() };
                     break;
@@ -99,7 +110,6 @@ public static class NativeTestBridge
                     Descendants(Tree.Root).OfType<LineEdit>().Single(b=>b.IsVisibleInTree()).Text = request.GetProperty("value").GetString();
                     result = new { edited=true }; break;
                 case "start":
-                    if (!ContentBootstrap.Ready) throw new InvalidDataException(ContentBootstrap.Failure);
                     NModalContainer.Instance?.Clear(); ManorUi.Close();
                     if(NRun.Instance != null) {
                         if(Runtime.Profile.active != null) await (Task)AccessTools.Method(typeof(RunManager),"AbandonInternal").Invoke(RunManager.Instance,[])!;
@@ -145,6 +155,32 @@ public static class NativeTestBridge
                 case "diagnostic":
                     try {await CardPlayDiagnostics.Observe(Task.FromException(new InvalidOperationException("Owned-game diagnostic fixture")),"TEST_ONLY");}catch(InvalidOperationException){}
                     ManorUi.Open();result=new{diagnostic=CardPlayDiagnostics.LastFailure};break;
+                case "architect-dialogues":
+                    var endingSet=ModelDb.Event<MegaCrit.Sts2.Core.Models.Events.TheArchitect>().DialogueSet;
+                    var endingClass=Runtime.Heir.classId; var endingChecks=new List<object>();
+                    try {
+                        foreach(var clsForEnding in new[]{"knight","mage","ranger"}) {
+                            Runtime.Heir.classId=clsForEnding;
+                            foreach(var winsForEnding in new[]{0,1,4,10,100}) {
+                                var ending=endingSet.GetValidDialogues(ModelDb.Character<HeirCharacter>().Id,winsForEnding,winsForEnding,false).Single();
+                                if(ending.EndAttackers!=MegaCrit.Sts2.Core.Entities.Ancients.ArchitectAttackers.Both)throw new InvalidDataException("Ending animation changed.");
+                                endingChecks.Add(new{classId=clsForEnding,wins=winsForEnding,lines=ending.Lines.Select(l=>new{speaker=l.Speaker.ToString(),key=l.LineText!.LocEntryKey,text=l.LineText.GetFormattedText(),next=l.NextButtonText?.GetFormattedText()}).ToArray()});
+                            }
+                        }
+                        var baseEnding=endingSet.GetValidDialogues(ModelDb.Character<MegaCrit.Sts2.Core.Models.Characters.Ironclad>().Id,0,0,false).First();
+                        if(baseEnding.Lines.Any(l=>l.LineText!.LocEntryKey.StartsWith("SPIRELEGACY")))throw new InvalidDataException("Base character ending changed.");
+                    } finally {Runtime.Heir.classId=endingClass;}
+                    result=endingChecks;break;
+                case "architect-state":
+                case "architect-next":
+                    var endingEvent=(MegaCrit.Sts2.Core.Models.Events.TheArchitect)((MegaCrit.Sts2.Core.Rooms.EventRoom)RunState().CurrentRoom!).LocalMutableEvent;
+                    var endingDialogue=(MegaCrit.Sts2.Core.Entities.Ancients.AncientDialogue)AccessTools.Field(endingEvent.GetType(),"_dialogue").GetValue(endingEvent)!;
+                    if(request.GetProperty("command").GetString()=="architect-next") {
+                        var currentEndingLine=(int)AccessTools.Field(endingEvent.GetType(),"_currentLineIndex").GetValue(endingEvent)!;
+                        if(currentEndingLine>=endingDialogue.Lines.Count-1)throw new InvalidDataException("Do not trigger victory from the dialogue fixture.");
+                        await (Task)AccessTools.Method(endingEvent.GetType(),"AdvanceDialogue").Invoke(endingEvent,[])!;
+                    }
+                    result=new{index=(int)AccessTools.Field(endingEvent.GetType(),"_currentLineIndex").GetValue(endingEvent)!,lines=endingDialogue.Lines.Select(l=>l.LineText!.GetFormattedText()).ToArray(),options=endingEvent.CurrentOptions.Select(o=>o.Title.GetFormattedText()).ToArray()};break;
                 case "ancients":
                     var ancientPlayer=RunState().Players.Single(); var originalClass=Runtime.Heir.classId; var ancientChecks=0;
                     try {
@@ -183,6 +219,7 @@ public static class NativeTestBridge
                     var encounter=roomType is MegaCrit.Sts2.Core.Rooms.RoomType.Monster or MegaCrit.Sts2.Core.Rooms.RoomType.Elite or MegaCrit.Sts2.Core.Rooms.RoomType.Boss ? RunState().Act.AllEncounters.First(e=>e.RoomType==roomType).ToMutable() : null;
                     AbstractModel? roomModel=encounter;
                     if(request.TryGetProperty("event",out var eventName) && eventName.GetString()=="Neow")roomModel=ModelDb.Event<MegaCrit.Sts2.Core.Models.Events.Neow>();
+                    if(request.TryGetProperty("event",out var endingName) && endingName.GetString()=="Architect")roomModel=ModelDb.Event<MegaCrit.Sts2.Core.Models.Events.TheArchitect>();
                     await RunManager.Instance.EnterRoomDebug(roomType,model:roomModel,showTransition:false);
                     RunManager.Instance.ActionExecutor.Unpause();
                     result = StateSummary(); break;
@@ -304,6 +341,29 @@ public static class NativeTestBridge
                     await CardPileCmd.Add(model,PileType.Hand,skipVisuals:true);
                     using (UseTestSelector()) await CardCmd.AutoPlay(new BlockingPlayerChoiceContext(),model,combat.GetOpponentsOf(actor.Creature).FirstOrDefault(e=>e.IsAlive));
                     result = StateSummary(); break;
+                case "discard-balance":
+                    var discardRun = RunState(); var discardActor = discardRun.Players.Single();
+                    await WaitForPlay(discardActor);
+                    var discardKey = request.GetProperty("card").GetString()!;
+                    var discardCard = (LegacyCard)discardActor.Creature.CombatState!.CreateCard(NativeCards.Get(discardKey),discardActor);
+                    CardCmd.Upgrade(discardCard);
+                    await CardPileCmd.Add(discardCard,PileType.Hand,skipVisuals:true);
+                    var energyBeforeDiscard = discardActor.PlayerCombatState!.Energy;
+                    var handBeforeDiscard = PileType.Hand.GetPile(discardActor).Cards.Count;
+                    await CardCmd.Discard(new BlockingPlayerChoiceContext(),discardCard);
+                    var firstEnergyReward = discardActor.PlayerCombatState.Energy-energyBeforeDiscard;
+                    var firstDrawReward = PileType.Hand.GetPile(discardActor).Cards.Count-handBeforeDiscard+1;
+                    var serializedDiscard = discardCard.ToSerializable();
+                    var restoredDiscard = (LegacyCard)discardRun.LoadCard(serializedDiscard,discardActor);
+                    discardRun.RemoveCard(restoredDiscard);
+                    discardActor.Creature.CombatState.AddCard(restoredDiscard,discardActor);
+                    await CardPileCmd.Add(restoredDiscard,PileType.Hand,skipVisuals:true);
+                    var energyBeforeRepeat = discardActor.PlayerCombatState.Energy;
+                    var handBeforeRepeat = PileType.Hand.GetPile(discardActor).Cards.Count;
+                    await CardCmd.Discard(new BlockingPlayerChoiceContext(),restoredDiscard);
+                    var secondEnergyReward = discardActor.PlayerCombatState.Energy-energyBeforeRepeat;
+                    var secondDrawReward = PileType.Hand.GetPile(discardActor).Cards.Count-handBeforeRepeat+1;
+                    result = new {firstEnergyReward,firstDrawReward,secondEnergyReward,secondDrawReward,rewardTurn=restoredDiscard.DiscardRewardTurn,turn=discardActor.PlayerCombatState.TurnNumber};break;
                 case "turn":
                     var turnPlayer = RunState().Players.Single();
                     MegaCrit.Sts2.Core.Combat.CombatManager.Instance.SetReadyToEndTurn(turnPlayer,false);

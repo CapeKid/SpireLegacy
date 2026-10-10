@@ -1,6 +1,6 @@
 Spire Legacy adapts the trait library from the locally installed Rogue Legacy 2 build 13303339 to turn-based card play. This is a gameplay adaptation: HP, Energy, Block, status effects and legacy crowns replace platforming and mana mechanics. The in-game tooltip describes the actual effect. Health and card information remain readable; traits that obscure the original game's display use stated combat penalties instead.
 
-The audit found 85 library entries. Rogue Legacy 2's character generator includes rarity values 1–3; other rarity values are disabled or reserved. All 61 eligible entries have an adaptation, including Antique and the two seasonal appearances. The mod also understands the two old Healthy and Strong save IDs, but no longer generates them. Existing eight-trait save IDs are preserved. Only Heart is now named correctly; Hollow Bones is a separate trait.
+The audit found 85 library entries. Rogue Legacy 2's character generator includes rarity values 1â€“3; other rarity values are disabled or reserved. All 61 eligible entries have an adaptation, including Antique and the two seasonal appearances. The mod also understands the two old Healthy and Strong save IDs, but no longer generates them. Existing eight-trait save IDs are preserved. Only Heart is now named correctly; Hollow Bones is a separate trait.
 
 [trait_coverage.json](../sheets/trait_coverage.json) records every library entry, its source rarity and adaptation status. [traits.json](../sheets/traits.json) contains all exact modifiers, effects and incompatibilities. Cosmetic-only entries still affect appearance. Previously inert platforming traits now have explicit card-combat adaptations, described below. Pure palette and appearance traits retain their visual effects.
 
@@ -16,7 +16,7 @@ Reviewed all 61 selectable traits against the locally installed RL2 definitions 
 |---|---|
 | Clumsy | Remove the extra Block on every Skill; explicitly no combat modifier. |
 | IBS | Remove automatic enemy Poison. |
-| FMF Fan | Remove the unrelated HP penalty and enemy Weak; retain its original crown modifier. |
+| FMF Fan | Remove the unrelated HP penalty and enemy Weak; its formerly free crown modifier was removed in 1.0.14. |
 | Mushroom Man | Keep compact appearance; remove Thorns. |
 | Inter-dimensional | Remove extra attack damage; there are no projectile-blocking walls in card combat. |
 | Cartographer | Remove gold after every battle; the native map already reveals routes. |
@@ -35,7 +35,7 @@ Flame Barrier is now a 1-Energy defensive Skill: 5 Block and 2 retaliation per e
 
 ## 1.0.9 trait playtesting
 
-Clumsy now loses 2 Block after the first Attack each turn, clamped to zero. Attacking before guarding avoids the penalty; further Attacks that turn do not remove more Block. This replaces its former cosmetic-only adaptation. Hero Complex keeps +40 maximum HP and disabled healing, and now adds +100% legacy crowns. Crown bonuses add together at settlement, subject to the existing 200% total payout cap, and do not increase run gold. Both changes apply to existing heirs with these trait IDs.
+Clumsy now loses 2 Block after the first Attack each turn, clamped to zero. Attacking before guarding avoids the penalty; further Attacks that turn do not remove more Block. This replaces its former cosmetic-only adaptation. Hero Complex keeps +40 maximum HP and disabled healing, and now adds +100% legacy crowns. Trait crown bonuses add together at settlement, subject to a 200% trait payout cap; Treasury multiplies the capped payout, and do not increase run gold. Both changes apply to existing heirs with these trait IDs.
 
 ## 1.0.11 formerly inert traits
 
@@ -48,3 +48,17 @@ Clumsy now loses 2 Block after the first Attack each turn, clamped to zero. Atta
 - **Mushroom Man**: Lose 6 maximum HP. After the first enemy Attack that damages you each turn, gain 3 Block. Your heir has a compact appearance.
 
 Inter-dimensional removes guard once per enemy hit by the first Attack, including multi-hit and area attacks. It does not add damage or remove guard again on subsequent hits. Mushroom Man triggers only when an enemy Attack causes actual HP loss, once per player turn; non-attack HP costs and fully blocked attacks do not trigger it. These changes apply to existing heirs with the same saved trait IDs. Crown bonuses remain unchanged.
+
+## 1.0.14 progression balance
+
+Colorblind, Nostalgic, Synesthesia and FMF Fan no longer grant crown bonuses without a gameplay drawback. Bookish retains +1 draw/-10 HP but no longer grants bonus crowns; Crippling Intellect retains +1 draw/-18 HP and now grants +50% crowns. Vampirism heals 3 after combat. Treasury remains effective above the trait bonus cap. Full Healing Garden (two levels) plus Vampirism and Super Healer heals 10 after combat. Existing trait IDs, gameplay abilities, cosmetic palettes and Hero Complex healing rules are preserved.
+
+## 1.0.15 Pacifist description
+
+Pacifist converts all Basic Attack cards across the three classes into Skills granting 4 Block and applying 2 Poison (7 Block and 3 Poison upgraded). Other Attack cards cannot be played. Every enemy also starts combat with 5 Poison. The trait description now states all three parts; gameplay is unchanged.
+
+## 1.0.16 Pacifist balance
+
+Pacifist's converted Basic Attacks now apply 2 Poison (3 upgraded) and grant no Block, including Shield Bash. Combat no longer starts with free Poison. Guards and other defensive Skills retain their usual effects, and other Attacks remain unplayable. The +150% crown bonus is unchanged (the existing total trait payout cap still applies). Existing heirs and saved starter trait snapshots use these updated values.
+
+Previously, repeating converted Arrows supplied both stacking damage and 4/7 Block while every enemy began with 5 Poison. The new conversion requires separate defense and stays below the native one-Energy Deadly Poison's 5/7 Poison. Steady Aim retains its original draw effect; class and other trait Skill triggers still apply. Full-run playtesting remains necessary to tune difficulty further.

@@ -61,7 +61,7 @@ public static class BeginBloodlineRun
 }
 
 [HarmonyPatch(typeof(MegaCrit.Sts2.Core.Nodes.Screens.CharacterSelect.NCharacterSelectScreen), "BeginRun")]
-public static class RequireOwnedContent
+public static class RequireSoloRun
 {
     public static bool Prefix(MegaCrit.Sts2.Core.Nodes.Screens.CharacterSelect.NCharacterSelectScreen __instance)
     {
@@ -73,8 +73,7 @@ public static class RequireOwnedContent
             ManorUi.Open(); return false;
         }
         ManorUi.Notice=null;
-        if(ContentBootstrap.Ready) return true;
-        ManorUi.Open(); return false;
+        return true;
     }
 }
 

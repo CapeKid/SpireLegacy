@@ -72,11 +72,11 @@
   {
     "id": "cantattack",
     "damage": 0,
-    "block": 4,
+    "block": 0,
     "draw": 0,
     "heal": 0,
     "poison": 2,
     "mercy": true,
-    "summary": "Starter Attacks become Mercy Skills: gain four Block and apply two Poison instead of attacking."
+    "summary": "Starter Attacks become Mercy Skills: apply two Poison (three upgraded), with no damage or Block."
   }
 ]
