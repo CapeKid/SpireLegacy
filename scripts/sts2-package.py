@@ -36,6 +36,7 @@ copy(repo/'LICENSE',mod/'LICENSE')
 copy(repo/'private/sts2-baselib/LICENSE.txt',mod/'licenses/BaseLib-MIT.txt')
 copy(repo/'docs/sts2-port.md',mod/'README.md')
 copy(repo/'docs/traits.md',mod/'traits.md')
+copy(repo/'docs/trait-effect-audit.md',mod/'trait-effect-audit.md')
 copy(repo/'docs/character-sprites.md',mod/'character-sprites.md')
 copy(repo/'docs/original-icons.md',mod/'original-icons.md')
 def archive(root,target):

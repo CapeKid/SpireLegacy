@@ -62,3 +62,7 @@ Pacifist converts all Basic Attack cards across the three classes into Skills gr
 Pacifist's converted Basic Attacks now apply 2 Poison (3 upgraded) and grant no Block, including Shield Bash. Combat no longer starts with free Poison. Guards and other defensive Skills retain their usual effects, and other Attacks remain unplayable. The +150% crown bonus is unchanged (the existing total trait payout cap still applies). Existing heirs and saved starter trait snapshots use these updated values.
 
 Previously, repeating converted Arrows supplied both stacking damage and 4/7 Block while every enemy began with 5 Poison. The new conversion requires separate defense and stays below the native one-Energy Deadly Poison's 5/7 Poison. Steady Aim retains its original draw effect; class and other trait Skill triggers still apply. Full-run playtesting remains necessary to tune difficulty further.
+
+## 1.0.19 cosmetic trait audit
+
+Synesthesia has six animated rainbow motes and a shifting colored ring around the heir's feet, visible alongside grayscale or other palettes. Cosmetic traits now apply at rest sites and shops as well as combat; inherited sprite size applies there too. Blue, Nature, Halloween and Christmas palettes retain distinct colored accents when paired. Histrionic briefly flashes red on real HP loss, then returns to the ordinary palette, even with Colorblind. HP and crown bonuses are unchanged; Synesthesia remains cosmetic with no crown bonus. See [the full 63-ID audit](trait-effect-audit.md) for each trait's gameplay or visual consumer.

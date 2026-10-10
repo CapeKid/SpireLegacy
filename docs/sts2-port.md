@@ -34,7 +34,7 @@ Use the D-pad or left stick to move through buttons and read trait descriptions;
 
 ## Manual installation
 
-Extract `SpireLegacy-StS2-1.0.18.zip` into your StS2 install folder. Its layout is `mods/SpireLegacy/SpireLegacy.json`, `SpireLegacy.dll` and `heir/`. Subscribe to BaseLib separately, or use the Melty bundle, which includes BaseLib. Launch the normal game executable; no separate mod launcher is required.
+Extract `SpireLegacy-StS2-1.0.19.zip` into your StS2 install folder. Its layout is `mods/SpireLegacy/SpireLegacy.json`, `SpireLegacy.dll` and `heir/`. Subscribe to BaseLib separately, or use the Melty bundle, which includes BaseLib. Launch the normal game executable; no separate mod launcher is required.
 
 ## Steam Deck
 
@@ -46,7 +46,7 @@ If a card spends energy but never resolves, open **Family / Traits** after the f
 
 ## Melty
 
-`SpireLegacy-StS2-1.0.18-melty.zip` includes the standalone mod and BaseLib 3.4.7. `sts2/melty.json` declares only StS2, installs the two mods and launches `SlayTheSpire2.exe`. This launcher mapping targets Windows. Melty must validate the uploaded mapping and observe a successful launch before publication. A prepared archive alone is not a verified Melty install.
+`SpireLegacy-StS2-1.0.19-melty.zip` includes the standalone mod and BaseLib 3.4.7. `sts2/melty.json` declares only StS2, installs the two mods and launches `SlayTheSpire2.exe`. This launcher mapping targets Windows. Melty must validate the uploaded mapping and observe a successful launch before publication. A prepared archive alone is not a verified Melty install.
 
 The Workshop package uses Mega Crit's official StS2 uploader workspace format: `content/`, `workshop.json` and a PNG preview below 1 MB. Its visibility defaults to **private**. It creates a new StS2 item; do not supply the StS1 item's ID. BaseLib is a Required Item.
 
@@ -115,3 +115,7 @@ Mage now visibly collapses through four original death frames and holds the fina
 ## 1.0.18 standalone artwork and installation
 
 The mod loads all trait and class icons from its own packaged SVG files. Existing original cards, portraits and animated sprites are preserved. Stable class/trait/card IDs and family/run snapshots are unchanged. The startup extraction process, RL2 discovery, preparation failure/retry UI and bundled readers are removed. Workshop/Melty metadata requires only StS2 and BaseLib. Old cached content is ignored; no cleanup of family saves is necessary.
+
+## 1.0.19 trait appearance
+
+Synesthesia has animated rainbow motes and a colored ring that stays visible alongside other palettes. Combat, rest and shop sprites use the same cosmetic effects and inherited scale. Paired palettes retain independent colored accents; Histrionic briefly flashes red on HP loss and recovers to its normal palette. No gameplay or crown bonuses change. See [trait-effect-audit.md](trait-effect-audit.md) for the complete runtime-consumer audit.

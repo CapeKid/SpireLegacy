@@ -136,6 +136,7 @@ public sealed class BloodlineRelic : CustomRelicModel
     public override decimal ModifyHpLostAfterOsty(Creature target, decimal amount, ValueProp props, Creature? dealer, CardModel? card) => target == Owner.Creature && amount > 0 && props.IsPoweredAttack() ? amount + Inheritance.Amount("algesia") : amount;
     public override async Task AfterDamageReceived(PlayerChoiceContext context, Creature target, DamageResult result, ValueProp props, Creature? dealer, CardModel? card)
     {
+        if(target==Owner.Creature && result.UnblockedDamage>0)HeirVisuals.DamageFlash(target);
         if (target != Owner.Creature || dealer == null || dealer == target || result.UnblockedDamage <= 0 || !props.IsPoweredAttack()) return;
         if (firstHurt)
         {

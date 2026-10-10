@@ -8,7 +8,7 @@ namespace SpireLegacy;
 
 public static class HeirVisuals
 {
-    private static readonly List<(NCreature creature, HeirSprite sprite, Polygon2D banner,Label symbol, HashSet<string> effects)> actors = new();
+    private static readonly List<(NCreature creature, HeirSprite sprite, Polygon2D banner,Label symbol, TraitAppearance appearance)> actors = new();
     private static readonly string[] Symbols=["☀","☾","✿","♣"];
     public static void Initialize() => ((SceneTree)Engine.GetMainLoop()).ProcessFrame += Update;
     public static void AttachRoomPortrait(Node2D visual)
@@ -16,10 +16,12 @@ public static class HeirVisuals
         foreach(var child in visual.GetChildren().OfType<Node2D>().Where(n=>n.GetClass()=="SpineSprite"))child.Visible=false;
         if (visual.GetNodeOrNull<Node>("SpireLegacyRoomHeir") != null) return;
         // Native rest-site roots shrink large Spine art; compensate for our smaller atlas.
-        var roomSize = visual is MegaCrit.Sts2.Core.Nodes.RestSite.NRestSiteCharacter ? 3.6f : 1.4f;
+        var factor = Inheritance.Traits.Aggregate(1f,(value,row)=>value * row.Json.GetProperty("scale").GetSingle());
+        var roomSize = (visual is MegaCrit.Sts2.Core.Nodes.RestSite.NRestSiteCharacter ? 3.6f : 1.4f) * factor;
         var portrait = HeirSprite.Create(Runtime.Heir.classId, roomSize);
         portrait.Name = "SpireLegacyRoomHeir"; portrait.Modulate = Colors.White;
         visual.AddChild(portrait);
+        TraitAppearance.Attach(visual,portrait,roomSize);
     }
     public static void Attach(NCreature creature)
     {
@@ -37,11 +39,15 @@ public static class HeirVisuals
         visuals.AddChild(banner);
         var symbol = new Label { Text = Symbols[Runtime.Profile.banner], Position = new(-184,-201), MouseFilter = Control.MouseFilterEnum.Ignore };
         symbol.AddThemeFontSizeOverride("font_size",32); banner.AddChild(symbol);
-        actors.Add((creature,sprite,banner,symbol,Inheritance.Traits.Select(r=>r.Text("effect")).ToHashSet()));
+        actors.Add((creature,sprite,banner,symbol,TraitAppearance.Attach(visuals,sprite,factor)));
     }
     public static void Animate(MegaCrit.Sts2.Core.Entities.Creatures.Creature creature, string pose)
     {
         foreach (var actor in actors.Where(a => GodotObject.IsInstanceValid(a.sprite) && a.creature.Entity == creature)) actor.sprite.PlayPose(pose);
+    }
+    public static void DamageFlash(MegaCrit.Sts2.Core.Entities.Creatures.Creature creature)
+    {
+        foreach(var actor in actors.Where(a=>GodotObject.IsInstanceValid(a.sprite) && a.creature.Entity==creature))actor.appearance.DamageFlash();
     }
     public static object Diagnostic() => actors.Where(a => GodotObject.IsInstanceValid(a.sprite)).Select(a => new {
         classId = a.sprite.ClassId, pose = a.sprite.Animation.ToString(), frame = a.sprite.Frame,
@@ -51,23 +57,13 @@ public static class HeirVisuals
     }).ToArray();
     private static void Update()
     {
+        TraitAppearance.Update();
         actors.RemoveAll(actor => !GodotObject.IsInstanceValid(actor.creature) || !GodotObject.IsInstanceValid(actor.sprite));
         foreach (var actor in actors)
         {
-            bool Has(string effect) => actor.effects.Contains(effect);
-            var color = Colors.White;
-            if (Has("gray")) color = Colors.LightGray;
-            else if (Has("blue")) color = Colors.Blue;
-            else if (Has("sepia")) color = new(.7f,.55f,.3f);
-            else if (Has("nature")) color = Colors.Green;
-            else if (Has("medium")) color = new(.65f,.45f,.9f);
-            else if (Has("festive")) color = Colors.Crimson;
-            else if (Has("rainbow")) { var t = Time.GetTicksMsec() % 6000 / 6000f * Mathf.Tau; color = new(.65f+.35f*Mathf.Sin(t),.65f+.35f*Mathf.Sin(t+2),.65f+.35f*Mathf.Sin(t+4)); }
-            else if (Has("histrionic") && actor.creature.Entity.CurrentHp < actor.creature.Entity.MaxHp) color = new(1,.5f,.5f);
             actor.creature.Visuals.GetCurrentBody().Visible = false;
-            actor.sprite.SetGray(Has("gray"));
             if (actor.creature.Entity.IsDead) actor.sprite.PlayPose("dead");
-            actor.sprite.Modulate = color; actor.banner.Color = ManorUi.BannerColor;
+            actor.banner.Color = ManorUi.BannerColor;
             actor.symbol.Text=Symbols[Runtime.Profile.banner];
         }
     }
