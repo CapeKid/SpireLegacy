@@ -39,7 +39,7 @@ public abstract class FamilyCardPool : CustomCardPoolModel
     public override string EnergyColorName => "ironclad";
     public override Color DeckEntryCardColor => new("C4A464");
     public override bool IsColorless => false;
-    protected override CardModel[] GenerateAllCards() => Design.Pool(ClassId).Select(r => NativeCards.Get(r.Text("id"))).ToArray();
+    protected override CardModel[] GenerateAllCards() => NativePoolParity.Rows(ClassId).Select(r => NativeCards.Get(r.Text("id"))).ToArray();
 }
 public sealed class KnightCardPool : FamilyCardPool { protected override string ClassId => "knight"; }
 public sealed class MageCardPool : FamilyCardPool { protected override string ClassId => "mage"; }

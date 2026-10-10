@@ -1348,5 +1348,185 @@
     "classId": "ranger",
     "cardId": "ranger_forest_oracle",
     "scope": "unique"
+  },
+  {
+    "id": "knight__oath",
+    "classId": "knight",
+    "cardId": "oath",
+    "scope": "shared"
+  },
+  {
+    "id": "mage__oath",
+    "classId": "mage",
+    "cardId": "oath",
+    "scope": "shared"
+  },
+  {
+    "id": "ranger__oath",
+    "classId": "ranger",
+    "cardId": "oath",
+    "scope": "shared"
+  },
+  {
+    "id": "knight__knight_ancestral_salvage",
+    "classId": "knight",
+    "cardId": "knight_ancestral_salvage",
+    "scope": "shared"
+  },
+  {
+    "id": "mage__knight_ancestral_salvage",
+    "classId": "mage",
+    "cardId": "knight_ancestral_salvage",
+    "scope": "shared"
+  },
+  {
+    "id": "ranger__knight_ancestral_salvage",
+    "classId": "ranger",
+    "cardId": "knight_ancestral_salvage",
+    "scope": "shared"
+  },
+  {
+    "id": "knight__mage_eternal_bookmark",
+    "classId": "knight",
+    "cardId": "mage_eternal_bookmark",
+    "scope": "shared"
+  },
+  {
+    "id": "mage__mage_eternal_bookmark",
+    "classId": "mage",
+    "cardId": "mage_eternal_bookmark",
+    "scope": "shared"
+  },
+  {
+    "id": "ranger__mage_eternal_bookmark",
+    "classId": "ranger",
+    "cardId": "mage_eternal_bookmark",
+    "scope": "shared"
+  },
+  {
+    "id": "knight__ranger_forest_remedy",
+    "classId": "knight",
+    "cardId": "ranger_forest_remedy",
+    "scope": "shared"
+  },
+  {
+    "id": "mage__ranger_forest_remedy",
+    "classId": "mage",
+    "cardId": "ranger_forest_remedy",
+    "scope": "shared"
+  },
+  {
+    "id": "ranger__ranger_forest_remedy",
+    "classId": "ranger",
+    "cardId": "ranger_forest_remedy",
+    "scope": "shared"
+  },
+  {
+    "id": "knight__knight_royal_execution",
+    "classId": "knight",
+    "cardId": "knight_royal_execution",
+    "scope": "unique"
+  },
+  {
+    "id": "knight__knight_meteor_hammer",
+    "classId": "knight",
+    "cardId": "knight_meteor_hammer",
+    "scope": "unique"
+  },
+  {
+    "id": "knight__knight_unbroken_wall",
+    "classId": "knight",
+    "cardId": "knight_unbroken_wall",
+    "scope": "unique"
+  },
+  {
+    "id": "knight__knight_battlefield_recovery",
+    "classId": "knight",
+    "cardId": "knight_battlefield_recovery",
+    "scope": "unique"
+  },
+  {
+    "id": "knight__knight_forge_memory",
+    "classId": "knight",
+    "cardId": "knight_forge_memory",
+    "scope": "unique"
+  },
+  {
+    "id": "knight__knight_king_s_ransom",
+    "classId": "knight",
+    "cardId": "knight_king_s_ransom",
+    "scope": "unique"
+  },
+  {
+    "id": "mage__mage_celestial_spear",
+    "classId": "mage",
+    "cardId": "mage_celestial_spear",
+    "scope": "unique"
+  },
+  {
+    "id": "mage__mage_grand_thesis",
+    "classId": "mage",
+    "cardId": "mage_grand_thesis",
+    "scope": "unique"
+  },
+  {
+    "id": "mage__mage_hourglass",
+    "classId": "mage",
+    "cardId": "mage_hourglass",
+    "scope": "unique"
+  },
+  {
+    "id": "mage__mage_infinite_script",
+    "classId": "mage",
+    "cardId": "mage_infinite_script",
+    "scope": "unique"
+  },
+  {
+    "id": "mage__mage_archmage_thesis",
+    "classId": "mage",
+    "cardId": "mage_archmage_thesis",
+    "scope": "unique"
+  },
+  {
+    "id": "mage__mage_returned_prophecy",
+    "classId": "mage",
+    "cardId": "mage_returned_prophecy",
+    "scope": "unique"
+  },
+  {
+    "id": "ranger__ranger_heartseeker",
+    "classId": "ranger",
+    "cardId": "ranger_heartseeker",
+    "scope": "unique"
+  },
+  {
+    "id": "ranger__ranger_serpent_oil",
+    "classId": "ranger",
+    "cardId": "ranger_serpent_oil",
+    "scope": "unique"
+  },
+  {
+    "id": "ranger__ranger_second_quiver",
+    "classId": "ranger",
+    "cardId": "ranger_second_quiver",
+    "scope": "unique"
+  },
+  {
+    "id": "ranger__ranger_empty_quiver",
+    "classId": "ranger",
+    "cardId": "ranger_empty_quiver",
+    "scope": "unique"
+  },
+  {
+    "id": "ranger__ranger_ghost_luggage",
+    "classId": "ranger",
+    "cardId": "ranger_ghost_luggage",
+    "scope": "unique"
+  },
+  {
+    "id": "ranger__ranger_hunt_without_end",
+    "classId": "ranger",
+    "cardId": "ranger_hunt_without_end",
+    "scope": "unique"
   }
 ]

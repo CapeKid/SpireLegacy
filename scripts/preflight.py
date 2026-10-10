@@ -77,7 +77,7 @@ def validate(historical_assets=False):
         if len(rows)!=len(membership[cls]):errors.append(cls+': duplicate pool membership')
         shared={r['cardId'] for r in rows if r['scope']=='shared'}
         unique={r['cardId'] for r in rows if r['scope']=='unique'}
-        if len(shared)!=30 or len(unique)!=45:errors.append(cls+': expected 30 shared and 45 unique')
+        if len(shared)!=34 or len(unique)!=51:errors.append(cls+': expected 34 shared and 51 unique')
         shared_sets.append(shared);active.update(membership[cls])
         for key in unique:
             if key not in cards:continue
@@ -88,7 +88,24 @@ def validate(historical_assets=False):
             card=next(r for r in sheets['cards'] if r['id']==key)
             if card['rarity']=='BASIC' or card['power'] in ('reservoir','quiver') or card['special']=='charge_gain':errors.append('Class-specific mechanic in shared core '+key)
     if any(shared!=shared_sets[0] for shared in shared_sets):errors.append('Shared core differs by class')
-    if len(active)!=165:errors.append('Expected 165 active cards across all classes')
+    if len(active)!=187:errors.append('Expected 187 regular active cards across all classes')
+    for row in sheets.get('branch_cards',[]):
+        ref('branch_cards',row,'classId',classes);ref('branch_cards',row,'cardId',cards)
+        if row['cardId'] in active:errors.append('Branch addition duplicates regular membership '+row['cardId'])
+        if row['scope']!='unique' or next((c['classId'] for c in sheets['cards'] if c['id']==row['cardId']),None)!=row['classId']:errors.append('Foreign beta class card '+row['id'])
+    if len({r['cardId'] for r in sheets.get('branch_cards',[])})!=9:errors.append('Expected nine class-unique beta additions')
+    for cls in classes:
+        extra=[r for r in sheets.get('branch_cards',[]) if r['classId']==cls]
+        if len(extra)!=3 or len({r['cardId'] for r in extra})!=3:errors.append(cls+': expected three distinct beta additions')
+        expanded=[r for r in sheets['cards'] if r['id'] in membership[cls]|{r['cardId'] for r in extra}]
+        for rarity,count in [('BASIC',3),('COMMON',20),('UNCOMMON',38),('RARE',27)]:
+            if sum(r['rarity']==rarity for r in expanded)!=count:errors.append(cls+': beta '+rarity+' parity mismatch')
+        signatures=set()
+        for card in expanded:
+            signature=tuple((k,str(card[k])) for k in sorted(card) if k not in ('id','name','asset','art','classId','rarity') and not k.startswith('upgrade'))
+            if signature in signatures:errors.append(cls+': duplicate beta mechanics '+card['id'])
+            signatures.add(signature)
+    active.update(r['cardId'] for r in sheets.get('branch_cards',[]))
     for row in sheets['cards']:
         if row['id'] not in active:continue
         for upgraded in (False,True):

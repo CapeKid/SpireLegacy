@@ -1,0 +1,56 @@
+[
+  {
+    "id": "knight__knight_serrated_spear",
+    "classId": "knight",
+    "cardId": "knight_serrated_spear",
+    "scope": "unique"
+  },
+  {
+    "id": "knight__knight_vengeful_armor",
+    "classId": "knight",
+    "cardId": "knight_vengeful_armor",
+    "scope": "unique"
+  },
+  {
+    "id": "knight__knight_castle_heart",
+    "classId": "knight",
+    "cardId": "knight_castle_heart",
+    "scope": "unique"
+  },
+  {
+    "id": "mage__mage_frozen_spear",
+    "classId": "mage",
+    "cardId": "mage_frozen_spear",
+    "scope": "unique"
+  },
+  {
+    "id": "mage__mage_cleanse_sigil",
+    "classId": "mage",
+    "cardId": "mage_cleanse_sigil",
+    "scope": "unique"
+  },
+  {
+    "id": "mage__mage_book_of_embers",
+    "classId": "mage",
+    "cardId": "mage_book_of_embers",
+    "scope": "unique"
+  },
+  {
+    "id": "ranger__ranger_scouting",
+    "classId": "ranger",
+    "cardId": "ranger_scouting",
+    "scope": "unique"
+  },
+  {
+    "id": "ranger__ranger_pocket_arsenal",
+    "classId": "ranger",
+    "cardId": "ranger_pocket_arsenal",
+    "scope": "unique"
+  },
+  {
+    "id": "ranger__ranger_unseen_hunter",
+    "classId": "ranger",
+    "cardId": "ranger_unseen_hunter",
+    "scope": "unique"
+  }
+]

@@ -17,7 +17,7 @@ public static class Design
         return Tables[table] = doc.RootElement.EnumerateArray().Select(e => new Row(e.Clone())).ToArray();
     }
     public static Row Get(string table, string id) => Rows(table).Single(r => r.Text("id") == id);
-    public static IEnumerable<Row> Pool(string classId) => Rows("card_pools").Where(r => r.Text("classId") == classId).Select(r => Get("cards", r.Text("cardId")));
+    public static IEnumerable<Row> Pool(string classId, bool expanded = false) => Rows("card_pools").Concat(expanded ? Rows("branch_cards") : []).Where(r => r.Text("classId") == classId).Select(r => Get("cards", r.Text("cardId")));
     public sealed record Row(JsonElement Json)
     {
         public string Text(string key) => Json.GetProperty(key).GetString()!;
