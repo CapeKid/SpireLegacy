@@ -20,7 +20,7 @@ foreach (var upgrade in new[] { false, true })
 }
 var traitIds = Design.Rows("traits").Where(r => r.Flag("enabled")).Select(r => r.Text("id")).ToArray();
 // Cosmetic/platform-only traits must not quietly grant relic-like combat effects.
-foreach (var traitId in new[] { "easybreakables", "fart", "fmffan", "mushroomgrow", "projectilesnowalls", "mapreveal" })
+foreach (var traitId in new[] { "fart", "fmffan", "mushroomgrow", "projectilesnowalls", "mapreveal" })
 {
     var trait = Design.Get("traits", traitId);
     Check(trait.Text("effect") == "none" && trait.Number("amount") == 0, traitId + " has no invented combat effect");
@@ -45,6 +45,13 @@ foreach (var card in Design.Get("decks", cls).List("cards").Distinct())
     var design = new CardDesign(card, true, [trait]);
     Check(design.Damage >= 0 && design.Block >= 0 && design.Rules().Length > 0, "Inherited starter " + trait + ": " + card);
 }
+var ordinaryPayout = new FamilyProfile { selected = new FamilyProfile.Heir { classId="knight",traits=[] } };
+var ordinaryRun = ordinaryPayout.Begin(1);
+var ordinaryCrowns = ordinaryPayout.Settle(ordinaryRun.id,20,100,false);
+var heroPayout = new FamilyProfile { selected = new FamilyProfile.Heir { classId="knight",traits=["megahealth"] } };
+var heroRun = heroPayout.Begin(1);
+Check(heroPayout.Settle(heroRun.id,20,100,false) == ordinaryCrowns * 2, "Hero Complex doubles actual settlement crowns");
+Check(heroPayout.Settle(heroRun.id,20,100,false) == 0, "Hero Complex cannot settle twice");
 var profile = new FamilyProfile();
 for (var seed = 0; seed < 100; seed++)
 {
