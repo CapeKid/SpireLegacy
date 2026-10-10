@@ -243,3 +243,7 @@ Owned RetainHandPower uses AfterSideTurnEnd Decrement, used as duration referenc
 - Beta carry-forward Ward/Timing/Tripwire regression passes too. Both lab DLLs and staged Workshop DLL byte-match final release SHA-256. Isolated lab PIDs 32816 (regular) and 22940 (beta) stopped after testing. PR22 remains ready/open. Steam PC is closed; Workshop 1.0.14 upload awaits reconnection, and Melty bundle is prepared only.
 
 - PC Steam opened on user request and signed in successfully. Official uploader published 1.0.14 to existing private Workshop item 3816525393/app 2868840. SDK download verifies unrestricted regular/public-beta support; downloaded manifest is 1.0.14 and all 375 staged files byte-match, including release DLL SHA-256 102ef43e48f8a5dc92cfd385fefa4a24ddeec2e736134b75854e13b091ae143b. Delivery proof: private/sts2-evidence/workshop114-delivery.json. Steam left running; no Melty upload.
+
+## 1.0.15 Pacifist description, 2026-10-10
+
+User requested explicit description of the inherited Basic Attack conversion. Updated cantattack summary with 4 Block/2 Poison, upgraded 7 Block/3 Poison, non-Basic Attack restriction and 5 starting Poison per enemy. Data description only, stable trait/card IDs and mechanics unchanged. Version 1.0.15 metadata and packages prevent Workshop clients retaining old text. Build/preflight/package/delivery checks follow.

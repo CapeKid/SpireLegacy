@@ -52,3 +52,7 @@ Inter-dimensional removes guard once per enemy hit by the first Attack, includin
 ## 1.0.14 progression balance
 
 Colorblind, Nostalgic, Synesthesia and FMF Fan no longer grant crown bonuses without a gameplay drawback. Bookish retains +1 draw/-10 HP but no longer grants bonus crowns; Crippling Intellect retains +1 draw/-18 HP and now grants +50% crowns. Vampirism heals 3 after combat. Treasury remains effective above the trait bonus cap. Full Healing Garden (two levels) plus Vampirism and Super Healer heals 10 after combat. Existing trait IDs, gameplay abilities, cosmetic palettes and Hero Complex healing rules are preserved.
+
+## 1.0.15 Pacifist description
+
+Pacifist converts all Basic Attack cards across the three classes into Skills granting 4 Block and applying 2 Poison (7 Block and 3 Poison upgraded). Other Attack cards cannot be played. Every enemy also starts combat with 5 Poison. The trait description now states all three parts; gameplay is unchanged.

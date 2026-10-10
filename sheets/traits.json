@@ -240,7 +240,7 @@
     "draw": 0,
     "goldBonus": 150,
     "scale": 1.0,
-    "summary": "Cannot play Attacks. Apply 5 Poison to each enemy at combat start.",
+    "summary": "Your Basic Attack cards become Skills that gain 4 Block and apply 2 Poison (7 Block and 3 Poison upgraded). Other Attacks cannot be played. At combat start, apply 5 Poison to every enemy.",
     "heal": 0,
     "source": "CantAttack",
     "enabled": true,
