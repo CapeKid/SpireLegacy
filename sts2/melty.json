@@ -2,13 +2,13 @@
   "schemaVersion": 1,
   "mode": "installed",
   "games": [{"slug":"slay-the-spire-2","role":"primary"},{"slug":"custom-rogue-legacy-2","role":"secondary"}],
-  "components": [{"id":"main","fileName":"SpireLegacy-StS2-1.0.5-melty.zip","label":"Spire Legacy for Slay the Spire 2, BaseLib and local content reader","kind":"main","required":true}],
+  "components": [{"id":"main","fileName":"SpireLegacy-StS2-1.0.6-melty.zip","label":"Spire Legacy for Slay the Spire 2, BaseLib and local content reader","kind":"main","required":true}],
   "requirements": [],
   "mappings": [{"component":"main","from":"mods/SpireLegacy/","to":"{game}/mods/SpireLegacy"},{"component":"main","from":"mods/BaseLib/","to":"{game}/mods/BaseLib"}],
   "launch": {"kind":"exe","path":"{game}/SlayTheSpire2.exe","cwd":"{game}"},
   "runtimeData": ["{localappdata}/SpireLegacy2"],
   "notes": {
     "beforeInstall":"Requires owned Steam installations of Slay the Spire 2 regular branch v0.107.1 or a compatible later version and Rogue Legacy 2. Includes BaseLib 3.4.7. No game content is included. This Melty launcher mapping targets Windows; the Workshop package also supports native Linux and Steam Deck.",
-    "firstLaunch":"Accept the game's mod notice and enable BaseLib and Spire Legacy. Choose The Heir; Family Manor & Heir Lab appears beneath that character. The first family run jumps into a fight. All later runs use normal maps and events."
+    "firstLaunch":"Accept the game's mod notice and enable BaseLib and Spire Legacy. Choose The Heir; Family Manor & Heir Lab appears above the Heir portrait; press Y to open it. The first family run jumps into a fight. All later runs use normal maps and events."
   }
 }

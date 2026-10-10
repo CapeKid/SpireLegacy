@@ -89,16 +89,34 @@ public static class ManorUi
         var id = screen.GetInstanceId();
         if (!launchers.TryGetValue(id,out var button) || !GodotObject.IsInstanceValid(button))
         {
-            button = MakeButton("Family Manor & Heir Lab",Open);
-            button.Name = "SpireLegacyManor"; button.Position = new(45,740); button.Size = new(485,60);
+            button = MakeButton("Family Manor & Heir Lab (Y)",Open);
+            button.Name = "SpireLegacyManor"; button.Size = new(440,60);
+            button.AddThemeFontSizeOverride("font_size",22);
             screen.AddChild(button); launchers[id] = button;
+            var captured=button;
+            void Poll() {
+                if(!GodotObject.IsInstanceValid(screen) || !screen.IsVisibleInTree() || !captured.Visible || IsOpen || ActiveScreenContext.Instance.GetCurrentScreen()!=screen)return;
+                var heir=Descendants(screen).OfType<NCharacterSelectButton>().FirstOrDefault(b=>b.Character is HeirCharacter);
+                if(heir is null)return;
+                HeirSelectIcon.Apply(heir);
+                var rect=heir.GetGlobalRect();
+                captured.GlobalPosition=new(Math.Clamp(rect.GetCenter().X-captured.Size.X/2,40,screen.GetGlobalRect().End.X-captured.Size.X-40),rect.Position.Y-captured.Size.Y-24);
+                heir.FocusNeighborBottom=captured.GetPath();captured.FocusNeighborTop=heir.GetPath();
+                if(Input.IsActionJustPressed("ui_accept"))Open();
+            }
+            Tree.ProcessFrame+=Poll;
+            screen.TreeExiting+=()=>{Tree.ProcessFrame-=Poll;launchers.Remove(id);};
         }
         button.Visible = character is HeirCharacter;
         if (character is not HeirCharacter) return;
         var background = (Control)AccessTools.Field(typeof(NCharacterSelectScreen),"_bgContainer").GetValue(screen)!;
         foreach (var child in background.GetChildren().OfType<CanvasItem>()) child.Visible = false;
-        var art = new TextureRect { Texture = Runtime.Texture("heir/ui/select-bg.png"), ExpandMode = TextureRect.ExpandModeEnum.IgnoreSize, StretchMode = TextureRect.StretchModeEnum.KeepAspectCovered, MouseFilter = Control.MouseFilterEnum.Ignore };
-        background.AddChild(art); art.SetAnchorsAndOffsetsPreset(Control.LayoutPreset.FullRect);
+        var art = background.GetNodeOrNull<TextureRect>("SpireLegacyBackground");
+        if(art is null) {
+            art = new TextureRect { Name="SpireLegacyBackground",Texture = Runtime.Texture("heir/ui/select-bg.png"), ExpandMode = TextureRect.ExpandModeEnum.IgnoreSize, StretchMode = TextureRect.StretchModeEnum.KeepAspectCovered, MouseFilter = Control.MouseFilterEnum.Ignore };
+            background.AddChild(art); art.SetAnchorsAndOffsetsPreset(Control.LayoutPreset.FullRect);
+        }
+        art.Visible=true;
     }
     public static Button MakeButton(string text, Action action)
     {
@@ -114,9 +132,7 @@ public static class ManorUi
     }
     private static Label Text(string value, int size = 23)
     {
-        var label = new Label { Text = value, AutowrapMode = TextServer.AutowrapMode.WordSmart, SizeFlagsHorizontal = Control.SizeFlags.ExpandFill, FocusMode=Control.FocusModeEnum.All };
-        label.FocusEntered += () => label.SelfModulate=new Color("FFE0A0");
-        label.FocusExited += () => label.SelfModulate=Colors.White;
+        var label = new Label { Text = value, AutowrapMode = TextServer.AutowrapMode.WordSmart, SizeFlagsHorizontal = Control.SizeFlags.ExpandFill, FocusMode=Control.FocusModeEnum.None };
         label.AddThemeFontSizeOverride("font_size",size); return label;
     }
     public static void Open()
@@ -284,8 +300,20 @@ public static class ManorUi
         if (selectionScreen is {} screen && GodotObject.IsInstanceValid(screen) && screen.IsVisibleInTree())
         {
             var button = (NCharacterSelectButton?)AccessTools.Field(typeof(NCharacterSelectScreen),"_selectedButton").GetValue(screen);
-            if (button?.Character is HeirCharacter) screen.SelectCharacter(button,button.Character);
+            if (button?.Character is HeirCharacter) {screen.SelectCharacter(button,button.Character);button.GrabFocus();}
         }
+    }
+}
+
+// A normally triggers Embark globally. Let it activate a focused Manor button instead.
+[HarmonyPatch(typeof(NCharacterSelectScreen),"OnEmbarkPressed")]
+public static class ManorSelectAction
+{
+    public static bool Prefix(NCharacterSelectScreen __instance)
+    {
+        if(ManorUi.IsOpen)return false;
+        if(__instance.GetViewport().GuiGetFocusOwner() is Button {Name:var name} && name=="SpireLegacyManor") {ManorUi.Open();return false;}
+        return true;
     }
 }
 

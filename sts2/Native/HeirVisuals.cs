@@ -97,16 +97,22 @@ public static class HeirCombatPortrait
     public static void Postfix(NCreature __instance) => HeirVisuals.Attach(__instance);
 }
 
-[HarmonyPatch(typeof(CharacterModel),"get_CharacterSelectIcon")]
+[HarmonyPatch(typeof(MegaCrit.Sts2.Core.Nodes.Screens.CharacterSelect.NCharacterSelectButton),"Init")]
 public static class HeirSelectIcon
 {
-    public static void Postfix(CharacterModel __instance, ref Texture2D __result) { if (__instance is HeirCharacter) __result = Runtime.Texture("heir/ui/select-icon.png"); }
-}
-
-[HarmonyPatch(typeof(CharacterModel),"get_CharacterSelectLockedIcon")]
-public static class HeirLockedSelectIcon
-{
-    public static void Postfix(CharacterModel __instance, ref Texture2D __result) { if (__instance is HeirCharacter) __result = Runtime.Texture("heir/ui/select-icon.png"); }
+    public static void Postfix(MegaCrit.Sts2.Core.Nodes.Screens.CharacterSelect.NCharacterSelectButton __instance) => Apply(__instance);
+    internal static void Apply(MegaCrit.Sts2.Core.Nodes.Screens.CharacterSelect.NCharacterSelectButton button)
+    {
+        if(button.Character is not HeirCharacter)return;
+        // Native model getters require CompressedTexture2D; external PNGs are ImageTexture.
+        // TextureRect accepts either, so replace the actual picker textures instead.
+        foreach(var field in new[]{"_icon","_iconAdd"})
+            if(AccessTools.Field(button.GetType(),field).GetValue(button) is TextureRect icon) {
+                icon.Texture=Runtime.Texture("heir/ui/heir-portrait.png");
+                icon.ExpandMode=TextureRect.ExpandModeEnum.IgnoreSize;
+                icon.StretchMode=TextureRect.StretchModeEnum.KeepAspectCentered;
+            }
+    }
 }
 
 [HarmonyPatch(typeof(NRun),nameof(NRun._Ready))]

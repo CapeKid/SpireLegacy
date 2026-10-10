@@ -21,10 +21,26 @@ public static class CaptureSelectedHeir
 [HarmonyPatch(typeof(CreatureCmd), nameof(CreatureCmd.Heal))]
 public static class InheritedHealing
 {
+    internal static readonly AsyncLocal<Creature?> StartingHp = new();
     public static void Prefix(Creature creature, ref decimal amount)
     {
-        if (creature.Player?.Character is HeirCharacter) amount = Inheritance.Healing(amount);
+        if (creature.Player?.Character is HeirCharacter && StartingHp.Value != creature) amount = Inheritance.Healing(amount);
     }
+}
+
+// Neow sets HP to zero before restoring the run's starting HP through Heal.
+// Scope the exception to that async initialization, including its continuations;
+// ordinary healing, later Ancients, and dead combat creatures remain unchanged.
+[HarmonyPatch(typeof(AncientEventModel), "BeforeEventStarted")]
+public static class HeirStartingHp
+{
+    public static void Prefix(AncientEventModel __instance, bool isPreFinished, out Creature? __state)
+    {
+        __state = InheritedHealing.StartingHp.Value;
+        if (!isPreFinished && __instance is MegaCrit.Sts2.Core.Models.Events.Neow && __instance.Owner?.Character is HeirCharacter)
+            InheritedHealing.StartingHp.Value = __instance.Owner.Creature;
+    }
+    public static void Finalizer(Creature? __state) => InheritedHealing.StartingHp.Value = __state;
 }
 
 [HarmonyPatch(typeof(RunManager), nameof(RunManager.SetUpNewSingleplayer))]

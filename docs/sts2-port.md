@@ -23,7 +23,7 @@ StS2 adaptations preserve native encounters and rewards. Dusty Tome grants an up
 1. Install owned Steam copies of Slay the Spire 2 and Rogue Legacy 2.
 2. Subscribe to [BaseLib](https://steamcommunity.com/sharedfiles/filedetails/?id=3737335127) and [Spire Legacy for StS2](https://steamcommunity.com/sharedfiles/filedetails/?id=3816525393). The new item is currently private for owner testing. The original StS1 Workshop item is a different mod.
 3. Start StS2 on your selected branch. Accept its mod notice and enable BaseLib and Spire Legacy in the mod list. Restart if requested.
-4. Select **The Heir**. **Family Manor & Heir Lab** appears beneath the character. Choose a family/heir and start a solo climb.
+4. Select **The Heir**. **Family Manor & Heir Lab** appears above the Heir portrait. Press Y, or move down from the portrait and press A. Choose a family/heir and start a solo climb.
 5. After a climb, return to the manor to choose another heir. Selecting upgrades only stages them; **Review purchases → Confirm and save** spends crowns.
 
 Spire Legacy supports solo play. Its character cannot embark in a multiplayer lobby.
@@ -83,3 +83,11 @@ Validation includes 2,434 core assertions; all 360 base cards and all 360 upgrad
 ## Credits and license
 
 Original code and illustrations: CapeKid, MIT. Slay the Spire 2: Mega Crit. Rogue Legacy 2: Cellar Door Games. BaseLib: Alchyr and contributors, MIT. Content reader: UnityPy, Python, Pillow, PyInstaller and decoding dependencies, with their notices included. Their respective owners retain all rights to game content.
+
+## 1.0.6 startup and controller fixes
+
+Neow's scripted starting HP restoration is exempt from inherited healing modifiers. Hero Complex still prevents actual healing during the climb; Vegan and Super Healer still modify actual healing. Starting HP retains the native Ascension restriction.
+
+On character select, the Family Manor & Heir Lab button sits above the Heir portrait. Press Y to open it, or move down from the Heir portrait and press A. B closes the Manor and returns focus to the portrait. Static text cannot receive focus; only enabled buttons and editable fields are selectable. LB/RB scroll the page. The picker uses an original Heir portrait; generation details are recorded in `docs/heir-portrait.md` in the source repository.
+
+The owned-game regression script `scripts/sts2-startup-ui-check.py --profile-directory private/<lab-profile> --branch beta` checks actual Neow initialization, all three Hero Complex/Diva classes, native paid card cleanup, abandon, Vegan/Super Healer healing, Ascension starting HP, portrait replacement and controller navigation. Use the isolated opt-in lab described above. Regular and public-beta native checks passed; physical Steam Deck validation of 1.0.6 remains a user check.

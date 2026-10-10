@@ -50,19 +50,29 @@ public static class NativeTestBridge
                     result = new { userData = OS.GetUserDataDir(), character = ModelDb.Character<HeirCharacter>().Id.ToString(), cards = Design.Rows("cards").Select(r => NativeCards.Get(r.Text("id")).Id.ToString()).ToArray(), pools = new[] { ModelDb.CardPool<KnightCardPool>().AllCards.Count(), ModelDb.CardPool<MageCardPool>().AllCards.Count(), ModelDb.CardPool<RangerCardPool>().AllCards.Count() }, labels = Descendants(Tree.Root).OfType<Label>().Where(n=>n.IsVisibleInTree()).Select(n=>n.Text).ToArray() };
                     break;
                 case "select":
+                    if(NRun.Instance != null)await NGame.Instance.ReturnToMainMenu();
                     NModalContainer.Instance?.Clear();
                     var menu = NGame.Instance.MainMenu!;
                     var screen = menu.SubmenuStack.GetSubmenuType<NCharacterSelectScreen>();
                     screen.InitializeSingleplayer(); menu.SubmenuStack.Push(screen);
                     var button = Descendants(screen).OfType<NCharacterSelectButton>().Single(b => b.Character is HeirCharacter);
                     screen.SelectCharacter(button,button.Character);
+                    button.GrabFocus();
                     result = new { selected = true }; break;
+                case "select-state":
+                    var picker=Descendants(Tree.Root).OfType<NCharacterSelectScreen>().Single(s=>s.IsVisibleInTree());
+                    result=new{focus=Tree.Root.GuiGetFocusOwner()?.Name.ToString(),controls=Descendants(picker).OfType<Control>().Where(c=>c.IsVisibleInTree() && (c is NCharacterSelectButton || c.Name=="SpireLegacyManor" || c.Name=="BackButton")).Select(c=>new{name=c.Name.ToString(),rect=c.GetGlobalRect().ToString(),portrait=c is NCharacterSelectButton hb && hb.Character is HeirCharacter ? ((TextureRect)AccessTools.Field(hb.GetType(),"_icon").GetValue(hb)!).Texture==Runtime.Texture("heir/ui/heir-portrait.png") : false}).ToArray()};break;
+                case "heal":
+                    var healingPlayer=RunState().Players.Single();
+                    healingPlayer.Creature.SetCurrentHpInternal(healingPlayer.Creature.MaxHp-10);
+                    await CreatureCmd.Heal(healingPlayer.Creature,10,false);
+                    result=StateSummary();break;
                 case "manor": ManorUi.Open(); result = new { open = true }; break;
                 case "manor-state":
                     var manor=Descendants(Tree.Root).OfType<ManorInput>().Single();
                     var manorScroll=Descendants(manor).OfType<ScrollContainer>().Single();
                     var focus=Tree.Root.GuiGetFocusOwner();
-                    result=new{open=ManorUi.IsOpen,paused=Tree.Paused,scroll=manorScroll.ScrollVertical,maxScroll=manorScroll.GetVScrollBar().MaxValue-manorScroll.GetVScrollBar().Page,focus=focus?.Name.ToString(),focusText=focus is Button focusButton?focusButton.Text:focus is Label focusLabel?focusLabel.Text:null,buttons=Descendants(manor).OfType<Button>().Select(b=>new{text=b.Text,disabled=b.Disabled,focused=b.HasFocus(),rect=b.GetGlobalRect().ToString(),visible=b.IsVisibleInTree()}).ToArray()};break;
+                    result=new{open=ManorUi.IsOpen,paused=Tree.Paused,scroll=manorScroll.ScrollVertical,maxScroll=manorScroll.GetVScrollBar().MaxValue-manorScroll.GetVScrollBar().Page,focus=focus?.Name.ToString(),focusText=focus is Button focusButton?focusButton.Text:focus is Label focusLabel?focusLabel.Text:null,focusableLabels=Descendants(manor).OfType<Label>().Count(l=>l.FocusMode!=Control.FocusModeEnum.None),buttons=Descendants(manor).OfType<Button>().Select(b=>new{text=b.Text,disabled=b.Disabled,focused=b.HasFocus(),rect=b.GetGlobalRect().ToString(),visible=b.IsVisibleInTree()}).ToArray()};break;
                 case "close": ManorUi.Close(); result = new { open = false }; break;
                 case "dismiss":
                     foreach (var ftue in Descendants(Tree.Root).OfType<MegaCrit.Sts2.Core.Nodes.Ftue.NCombatRulesFtue>().ToArray())
@@ -89,7 +99,7 @@ public static class NativeTestBridge
                     var cls = request.GetProperty("class").GetString()!;
                     Runtime.Profile.selected = new FamilyProfile.Heir { name="PortTester",classId=cls,traits=request.TryGetProperty("traits",out var traits) ? traits.EnumerateArray().Select(t=>t.GetString()!).ToList() : [] };
                     if(request.TryGetProperty("quick",out var quick)&&quick.GetBoolean() && Runtime.Profile.active==null)Runtime.Profile.generation=0;
-                    await NGame.Instance.StartNewSingleplayerRun(ModelDb.Character<HeirCharacter>(),true,ModelDb.ActsByIndex.Select(a=>a.First()).ToArray(),[],"SPIRELEGACY-PORT-TEST",GameMode.Standard);
+                    await NGame.Instance.StartNewSingleplayerRun(ModelDb.Character<HeirCharacter>(),true,ModelDb.ActsByIndex.Select(a=>a.First()).ToArray(),[],"SPIRELEGACY-PORT-TEST",GameMode.Standard,request.TryGetProperty("ascension",out var ascension)?ascension.GetInt32():0);
                     result = StateSummary(); break;
                 case "state": result = StateSummary(); break;
                 case "manual":
@@ -142,7 +152,9 @@ public static class NativeTestBridge
                     NModalContainer.Instance?.Clear();
                     var roomType=Enum.Parse<MegaCrit.Sts2.Core.Rooms.RoomType>(request.GetProperty("room").GetString()!);
                     var encounter=roomType is MegaCrit.Sts2.Core.Rooms.RoomType.Monster or MegaCrit.Sts2.Core.Rooms.RoomType.Elite or MegaCrit.Sts2.Core.Rooms.RoomType.Boss ? RunState().Act.AllEncounters.First(e=>e.RoomType==roomType).ToMutable() : null;
-                    await RunManager.Instance.EnterRoomDebug(roomType,model:encounter,showTransition:false);
+                    AbstractModel? roomModel=encounter;
+                    if(request.TryGetProperty("event",out var eventName) && eventName.GetString()=="Neow")roomModel=ModelDb.Event<MegaCrit.Sts2.Core.Models.Events.Neow>();
+                    await RunManager.Instance.EnterRoomDebug(roomType,model:roomModel,showTransition:false);
                     RunManager.Instance.ActionExecutor.Unpause();
                     result = StateSummary(); break;
                 case "advance":
