@@ -304,6 +304,29 @@ public static class NativeTestBridge
                     await CardPileCmd.Add(model,PileType.Hand,skipVisuals:true);
                     using (UseTestSelector()) await CardCmd.AutoPlay(new BlockingPlayerChoiceContext(),model,combat.GetOpponentsOf(actor.Creature).FirstOrDefault(e=>e.IsAlive));
                     result = StateSummary(); break;
+                case "discard-balance":
+                    var discardRun = RunState(); var discardActor = discardRun.Players.Single();
+                    await WaitForPlay(discardActor);
+                    var discardKey = request.GetProperty("card").GetString()!;
+                    var discardCard = (LegacyCard)discardActor.Creature.CombatState!.CreateCard(NativeCards.Get(discardKey),discardActor);
+                    CardCmd.Upgrade(discardCard);
+                    await CardPileCmd.Add(discardCard,PileType.Hand,skipVisuals:true);
+                    var energyBeforeDiscard = discardActor.PlayerCombatState!.Energy;
+                    var handBeforeDiscard = PileType.Hand.GetPile(discardActor).Cards.Count;
+                    await CardCmd.Discard(new BlockingPlayerChoiceContext(),discardCard);
+                    var firstEnergyReward = discardActor.PlayerCombatState.Energy-energyBeforeDiscard;
+                    var firstDrawReward = PileType.Hand.GetPile(discardActor).Cards.Count-handBeforeDiscard+1;
+                    var serializedDiscard = discardCard.ToSerializable();
+                    var restoredDiscard = (LegacyCard)discardRun.LoadCard(serializedDiscard,discardActor);
+                    discardRun.RemoveCard(restoredDiscard);
+                    discardActor.Creature.CombatState.AddCard(restoredDiscard,discardActor);
+                    await CardPileCmd.Add(restoredDiscard,PileType.Hand,skipVisuals:true);
+                    var energyBeforeRepeat = discardActor.PlayerCombatState.Energy;
+                    var handBeforeRepeat = PileType.Hand.GetPile(discardActor).Cards.Count;
+                    await CardCmd.Discard(new BlockingPlayerChoiceContext(),restoredDiscard);
+                    var secondEnergyReward = discardActor.PlayerCombatState.Energy-energyBeforeRepeat;
+                    var secondDrawReward = PileType.Hand.GetPile(discardActor).Cards.Count-handBeforeRepeat+1;
+                    result = new {firstEnergyReward,firstDrawReward,secondEnergyReward,secondDrawReward,rewardTurn=restoredDiscard.DiscardRewardTurn,turn=discardActor.PlayerCombatState.TurnNumber};break;
                 case "turn":
                     var turnPlayer = RunState().Players.Single();
                     MegaCrit.Sts2.Core.Combat.CombatManager.Instance.SetReadyToEndTurn(turnPlayer,false);

@@ -5,6 +5,7 @@ Native baseline rules are audited privately in the owned running game.
 """
 import json
 import math
+from balance_policy import balance_card, balance_manor, class_rules
 from pathlib import Path
 ROOT=Path(__file__).resolve().parents[1]
 read=lambda name:json.loads((ROOT/'sheets'/f'{name}.json').read_text())
@@ -63,10 +64,7 @@ def main():
                 row['discard']=max(row['discard'],row['draw'])
                 row['upgradeDiscard']=max(row['upgradeDiscard'],row['upgradeMagic'])
             else:row.update(cost=1,upgradeCost=False)
-        # 1.0.13: keep rare defensive/energy scaling below native Buffer/Pyre.
-        if row['id']=='mage_perfect_ward':row.update(magic=1,upgradeMagic=1)
-        if row['id']=='ranger_perfect_timing':row.update(cost=3,magic=1,upgradeMagic=0,upgradeCost=True)
-        if row['id']=='ranger_tripwire':row.update(upgradeMagic=0)
+        balance_card(row)
         reference='Native Strike / Defend / Iron Wave' if row['rarity']=='BASIC' else 'Prepared / Acrobatics / Backflip / Skim' if row['draw'] or row['discard'] else 'Inflame / Footwork / Feel No Pain / After Image' if row['type']=='POWER' else 'Native attack/defense cost and upgrade budgets; class passive included separately'
         changes.append(dict(id=row['id'],reference=reference,before=before,after={k:row[k] for k in FIELDS},reason='Weaker no-manor baseline; avoid compounded effects/upgrades and free positive-draw cycles.'))
     write('cards',cards);write('balance_changes',changes)
@@ -76,6 +74,7 @@ def main():
     for row in mechanics:
         if row['id']=='knight':row.update(amount=2,summary='Playing a Skill primes your next Attack for +2 damage. Attacking consumes the counter.')
         if row['id']=='mage':row.update(amount=1,limit=2,summary='Each Skill grants one charge, up to two. Your next Attack gains +1 damage per charge and consumes them.')
+        class_rules(row)
     for row in classes:row['summary']=next(m['summary'] for m in mechanics if m['id']==row['id'])
     write('classes',classes);write('class_mechanics',mechanics)
     manor=read('manor')
@@ -83,6 +82,7 @@ def main():
     for row in manor:
         row['baseCost'],row['costStep']=costs[row['id']]
         if row['id']=='vault':row.update(perLevel=5,summary='+5% legacy earnings per level.')
+        balance_manor(row)
     write('manor',manor)
     print('Balanced',len(changes),'cards, including legacy save/cross-color cards.')
 

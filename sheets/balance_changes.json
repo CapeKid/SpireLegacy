@@ -984,14 +984,14 @@
       "special": "none",
       "specialAmount": 0,
       "exhaust": true,
-      "upgradeDamage": 2,
+      "upgradeDamage": 1,
       "upgradeBlock": 0,
       "upgradeMagic": 0,
       "upgradeSpecial": 0,
       "upgradeCost": false,
       "upgradeDiscard": 0
     },
-    "reason": "Weaker no-manor baseline; avoid compounded effects/upgrades and free positive-draw cycles."
+    "reason": "1.0.14: bounded recurring effects, smaller multi-hit upgrades, and meaningful upgrade choices."
   },
   {
     "id": "flame",
@@ -1694,14 +1694,14 @@
       "special": "none",
       "specialAmount": 0,
       "exhaust": false,
-      "upgradeDamage": 2,
+      "upgradeDamage": 1,
       "upgradeBlock": 0,
       "upgradeMagic": 0,
       "upgradeSpecial": 0,
       "upgradeCost": false,
       "upgradeDiscard": 0
     },
-    "reason": "Weaker no-manor baseline; avoid compounded effects/upgrades and free positive-draw cycles."
+    "reason": "1.0.14: bounded recurring effects, smaller multi-hit upgrades, and meaningful upgrade choices."
   },
   {
     "id": "retreat",
@@ -1836,14 +1836,14 @@
       "special": "none",
       "specialAmount": 0,
       "exhaust": false,
-      "upgradeDamage": 2,
+      "upgradeDamage": 1,
       "upgradeBlock": 0,
       "upgradeMagic": 0,
       "upgradeSpecial": 0,
       "upgradeCost": false,
       "upgradeDiscard": 0
     },
-    "reason": "Weaker no-manor baseline; avoid compounded effects/upgrades and free positive-draw cycles."
+    "reason": "1.0.14: bounded recurring effects, smaller multi-hit upgrades, and meaningful upgrade choices."
   },
   {
     "id": "mark",
@@ -2901,14 +2901,14 @@
       "special": "none",
       "specialAmount": 0,
       "exhaust": false,
-      "upgradeDamage": 2,
+      "upgradeDamage": 1,
       "upgradeBlock": 0,
       "upgradeMagic": 0,
       "upgradeSpecial": 0,
       "upgradeCost": false,
       "upgradeDiscard": 0
     },
-    "reason": "Weaker no-manor baseline; avoid compounded effects/upgrades and free positive-draw cycles."
+    "reason": "1.0.14: bounded recurring effects, smaller multi-hit upgrades, and meaningful upgrade choices."
   },
   {
     "id": "knight_shoulder_check",
@@ -3966,14 +3966,14 @@
       "special": "none",
       "specialAmount": 0,
       "exhaust": false,
-      "upgradeDamage": 2,
+      "upgradeDamage": 1,
       "upgradeBlock": 0,
       "upgradeMagic": 0,
       "upgradeSpecial": 0,
       "upgradeCost": false,
       "upgradeDiscard": 0
     },
-    "reason": "Weaker no-manor baseline; avoid compounded effects/upgrades and free positive-draw cycles."
+    "reason": "1.0.14: bounded recurring effects, smaller multi-hit upgrades, and meaningful upgrade choices."
   },
   {
     "id": "knight_whirling_blade",
@@ -4747,14 +4747,14 @@
       "special": "none",
       "specialAmount": 0,
       "exhaust": false,
-      "upgradeDamage": 2,
+      "upgradeDamage": 1,
       "upgradeBlock": 0,
       "upgradeMagic": 0,
       "upgradeSpecial": 0,
       "upgradeCost": false,
       "upgradeDiscard": 0
     },
-    "reason": "Weaker no-manor baseline; avoid compounded effects/upgrades and free positive-draw cycles."
+    "reason": "1.0.14: bounded recurring effects, smaller multi-hit upgrades, and meaningful upgrade choices."
   },
   {
     "id": "knight_castle_cleaver",
@@ -6309,14 +6309,14 @@
       "special": "none",
       "specialAmount": 0,
       "exhaust": false,
-      "upgradeDamage": 2,
+      "upgradeDamage": 1,
       "upgradeBlock": 0,
       "upgradeMagic": 0,
       "upgradeSpecial": 0,
       "upgradeCost": false,
       "upgradeDiscard": 0
     },
-    "reason": "Weaker no-manor baseline; avoid compounded effects/upgrades and free positive-draw cycles."
+    "reason": "1.0.14: bounded recurring effects, smaller multi-hit upgrades, and meaningful upgrade choices."
   },
   {
     "id": "knight_kingbreaker",
@@ -6568,7 +6568,7 @@
       "upgradeDiscard": 0
     },
     "after": {
-      "cost": 1,
+      "cost": 2,
       "damage": 0,
       "block": 0,
       "hits": 1,
@@ -6595,12 +6595,12 @@
       "exhaust": true,
       "upgradeDamage": 0,
       "upgradeBlock": 0,
-      "upgradeMagic": 1,
+      "upgradeMagic": 0,
       "upgradeSpecial": 0,
-      "upgradeCost": false,
+      "upgradeCost": true,
       "upgradeDiscard": 0
     },
-    "reason": "Weaker no-manor baseline; avoid compounded effects/upgrades and free positive-draw cycles."
+    "reason": "1.0.14: bounded recurring effects, smaller multi-hit upgrades, and meaningful upgrade choices."
   },
   {
     "id": "knight_battlefield_recovery",
@@ -7303,14 +7303,14 @@
       "special": "random_attack",
       "specialAmount": 0,
       "exhaust": false,
-      "upgradeDamage": 2,
+      "upgradeDamage": 1,
       "upgradeBlock": 0,
       "upgradeMagic": 0,
       "upgradeSpecial": 0,
       "upgradeCost": false,
       "upgradeDiscard": 0
     },
-    "reason": "Weaker no-manor baseline; avoid compounded effects/upgrades and free positive-draw cycles."
+    "reason": "1.0.14: bounded recurring effects, smaller multi-hit upgrades, and meaningful upgrade choices."
   },
   {
     "id": "mage_witchfire",
@@ -7990,7 +7990,7 @@
     "after": {
       "cost": 0,
       "damage": 0,
-      "block": 0,
+      "block": 2,
       "hits": 1,
       "draw": 0,
       "discard": 0,
@@ -8014,13 +8014,13 @@
       "specialAmount": 1,
       "exhaust": true,
       "upgradeDamage": 0,
-      "upgradeBlock": 0,
+      "upgradeBlock": 2,
       "upgradeMagic": 0,
-      "upgradeSpecial": 1,
+      "upgradeSpecial": 0,
       "upgradeCost": false,
       "upgradeDiscard": 0
     },
-    "reason": "Weaker no-manor baseline; avoid compounded effects/upgrades and free positive-draw cycles."
+    "reason": "1.0.14: bounded recurring effects, smaller multi-hit upgrades, and meaningful upgrade choices."
   },
   {
     "id": "mage_ley_pulse",
@@ -8368,14 +8368,14 @@
       "special": "random_attack",
       "specialAmount": 0,
       "exhaust": false,
-      "upgradeDamage": 2,
+      "upgradeDamage": 1,
       "upgradeBlock": 0,
       "upgradeMagic": 0,
       "upgradeSpecial": 0,
       "upgradeCost": false,
       "upgradeDiscard": 0
     },
-    "reason": "Weaker no-manor baseline; avoid compounded effects/upgrades and free positive-draw cycles."
+    "reason": "1.0.14: bounded recurring effects, smaller multi-hit upgrades, and meaningful upgrade choices."
   },
   {
     "id": "mage_inferno_wave",
@@ -8723,14 +8723,14 @@
       "special": "none",
       "specialAmount": 0,
       "exhaust": false,
-      "upgradeDamage": 2,
+      "upgradeDamage": 1,
       "upgradeBlock": 0,
       "upgradeMagic": 0,
       "upgradeSpecial": 0,
       "upgradeCost": false,
       "upgradeDiscard": 0
     },
-    "reason": "Weaker no-manor baseline; avoid compounded effects/upgrades and free positive-draw cycles."
+    "reason": "1.0.14: bounded recurring effects, smaller multi-hit upgrades, and meaningful upgrade choices."
   },
   {
     "id": "mage_mystic_echo",
@@ -9007,14 +9007,14 @@
       "special": "none",
       "specialAmount": 0,
       "exhaust": false,
-      "upgradeDamage": 2,
+      "upgradeDamage": 1,
       "upgradeBlock": 0,
       "upgradeMagic": 0,
       "upgradeSpecial": 0,
       "upgradeCost": false,
       "upgradeDiscard": 0
     },
-    "reason": "Weaker no-manor baseline; avoid compounded effects/upgrades and free positive-draw cycles."
+    "reason": "1.0.14: bounded recurring effects, smaller multi-hit upgrades, and meaningful upgrade choices."
   },
   {
     "id": "mage_fracture_rune",
@@ -9483,7 +9483,7 @@
       "damage": 0,
       "block": 0,
       "hits": 1,
-      "draw": 0,
+      "draw": 1,
       "discard": 0,
       "energy": 0,
       "strength": 0,
@@ -9503,15 +9503,15 @@
       "magic": 0,
       "special": "charge_gain",
       "specialAmount": 2,
-      "exhaust": false,
+      "exhaust": true,
       "upgradeDamage": 0,
       "upgradeBlock": 0,
-      "upgradeMagic": 0,
-      "upgradeSpecial": 1,
+      "upgradeMagic": 1,
+      "upgradeSpecial": 0,
       "upgradeCost": false,
       "upgradeDiscard": 0
     },
-    "reason": "Weaker no-manor baseline; avoid compounded effects/upgrades and free positive-draw cycles."
+    "reason": "1.0.14: bounded recurring effects, smaller multi-hit upgrades, and meaningful upgrade choices."
   },
   {
     "id": "mage_rekindle",
@@ -10074,12 +10074,12 @@
       "exhaust": true,
       "upgradeDamage": 0,
       "upgradeBlock": 0,
-      "upgradeMagic": 0,
+      "upgradeMagic": 1,
       "upgradeSpecial": 0,
       "upgradeCost": false,
       "upgradeDiscard": 0
     },
-    "reason": "Weaker no-manor baseline; avoid compounded effects/upgrades and free positive-draw cycles."
+    "reason": "1.0.14: bounded recurring effects, smaller multi-hit upgrades, and meaningful upgrade choices."
   },
   {
     "id": "mage_enchanted_ink",
@@ -10782,14 +10782,14 @@
       "special": "none",
       "specialAmount": 0,
       "exhaust": false,
-      "upgradeDamage": 2,
+      "upgradeDamage": 1,
       "upgradeBlock": 0,
       "upgradeMagic": 0,
       "upgradeSpecial": 0,
       "upgradeCost": false,
       "upgradeDiscard": 0
     },
-    "reason": "Weaker no-manor baseline; avoid compounded effects/upgrades and free positive-draw cycles."
+    "reason": "1.0.14: bounded recurring effects, smaller multi-hit upgrades, and meaningful upgrade choices."
   },
   {
     "id": "mage_soulfire",
@@ -10924,14 +10924,14 @@
       "special": "random_attack",
       "specialAmount": 0,
       "exhaust": false,
-      "upgradeDamage": 2,
+      "upgradeDamage": 1,
       "upgradeBlock": 0,
       "upgradeMagic": 0,
       "upgradeSpecial": 0,
       "upgradeCost": false,
       "upgradeDiscard": 0
     },
-    "reason": "Weaker no-manor baseline; avoid compounded effects/upgrades and free positive-draw cycles."
+    "reason": "1.0.14: bounded recurring effects, smaller multi-hit upgrades, and meaningful upgrade choices."
   },
   {
     "id": "mage_perfect_ward",
@@ -10972,7 +10972,7 @@
     "after": {
       "cost": 2,
       "damage": 0,
-      "block": 0,
+      "block": 3,
       "hits": 1,
       "draw": 0,
       "discard": 0,
@@ -10996,7 +10996,7 @@
       "specialAmount": 0,
       "exhaust": true,
       "upgradeDamage": 0,
-      "upgradeBlock": 0,
+      "upgradeBlock": 2,
       "upgradeMagic": 1,
       "upgradeSpecial": 0,
       "upgradeCost": false,
@@ -11068,12 +11068,12 @@
       "exhaust": true,
       "upgradeDamage": 0,
       "upgradeBlock": 0,
-      "upgradeMagic": 0,
+      "upgradeMagic": 1,
       "upgradeSpecial": 0,
       "upgradeCost": false,
       "upgradeDiscard": 0
     },
-    "reason": "Weaker no-manor baseline; avoid compounded effects/upgrades and free positive-draw cycles."
+    "reason": "1.0.14: bounded recurring effects, smaller multi-hit upgrades, and meaningful upgrade choices."
   },
   {
     "id": "mage_grand_thesis",
@@ -11565,12 +11565,12 @@
       "exhaust": false,
       "upgradeDamage": 0,
       "upgradeBlock": 0,
-      "upgradeMagic": 1,
+      "upgradeMagic": 0,
       "upgradeSpecial": 0,
-      "upgradeCost": false,
+      "upgradeCost": true,
       "upgradeDiscard": 0
     },
-    "reason": "Weaker no-manor baseline; avoid compounded effects/upgrades and free positive-draw cycles."
+    "reason": "1.0.14: bounded recurring effects, smaller multi-hit upgrades, and meaningful upgrade choices."
   },
   {
     "id": "ranger_quick_nock",
@@ -12912,14 +12912,14 @@
       "special": "none",
       "specialAmount": 0,
       "exhaust": false,
-      "upgradeDamage": 2,
+      "upgradeDamage": 1,
       "upgradeBlock": 0,
       "upgradeMagic": 0,
       "upgradeSpecial": 0,
       "upgradeCost": false,
       "upgradeDiscard": 0
     },
-    "reason": "Weaker no-manor baseline; avoid compounded effects/upgrades and free positive-draw cycles."
+    "reason": "1.0.14: bounded recurring effects, smaller multi-hit upgrades, and meaningful upgrade choices."
   },
   {
     "id": "ranger_rapid_fire",
@@ -12983,14 +12983,14 @@
       "special": "none",
       "specialAmount": 0,
       "exhaust": false,
-      "upgradeDamage": 2,
+      "upgradeDamage": 1,
       "upgradeBlock": 0,
       "upgradeMagic": 0,
       "upgradeSpecial": 0,
       "upgradeCost": false,
       "upgradeDiscard": 0
     },
-    "reason": "Weaker no-manor baseline; avoid compounded effects/upgrades and free positive-draw cycles."
+    "reason": "1.0.14: bounded recurring effects, smaller multi-hit upgrades, and meaningful upgrade choices."
   },
   {
     "id": "ranger_razor_fletching",
@@ -13267,14 +13267,14 @@
       "special": "none",
       "specialAmount": 0,
       "exhaust": false,
-      "upgradeDamage": 2,
+      "upgradeDamage": 1,
       "upgradeBlock": 2,
       "upgradeMagic": 0,
       "upgradeSpecial": 0,
       "upgradeCost": false,
       "upgradeDiscard": 0
     },
-    "reason": "Weaker no-manor baseline; avoid compounded effects/upgrades and free positive-draw cycles."
+    "reason": "1.0.14: bounded recurring effects, smaller multi-hit upgrades, and meaningful upgrade choices."
   },
   {
     "id": "ranger_finishing_flurry",
@@ -13693,14 +13693,14 @@
       "special": "random_attack",
       "specialAmount": 0,
       "exhaust": false,
-      "upgradeDamage": 2,
+      "upgradeDamage": 1,
       "upgradeBlock": 0,
       "upgradeMagic": 0,
       "upgradeSpecial": 0,
       "upgradeCost": false,
       "upgradeDiscard": 0
     },
-    "reason": "Weaker no-manor baseline; avoid compounded effects/upgrades and free positive-draw cycles."
+    "reason": "1.0.14: bounded recurring effects, smaller multi-hit upgrades, and meaningful upgrade choices."
   },
   {
     "id": "ranger_snakebite",
@@ -14405,12 +14405,12 @@
       "exhaust": false,
       "upgradeDamage": 0,
       "upgradeBlock": 0,
-      "upgradeMagic": 0,
+      "upgradeMagic": 1,
       "upgradeSpecial": 0,
       "upgradeCost": false,
       "upgradeDiscard": 0
     },
-    "reason": "Weaker no-manor baseline; avoid compounded effects/upgrades and free positive-draw cycles."
+    "reason": "1.0.14: bounded recurring effects, smaller multi-hit upgrades, and meaningful upgrade choices."
   },
   {
     "id": "ranger_pocket_arsenal",
@@ -15113,14 +15113,14 @@
       "special": "none",
       "specialAmount": 0,
       "exhaust": false,
-      "upgradeDamage": 2,
+      "upgradeDamage": 1,
       "upgradeBlock": 0,
       "upgradeMagic": 0,
       "upgradeSpecial": 0,
       "upgradeCost": false,
       "upgradeDiscard": 0
     },
-    "reason": "Weaker no-manor baseline; avoid compounded effects/upgrades and free positive-draw cycles."
+    "reason": "1.0.14: bounded recurring effects, smaller multi-hit upgrades, and meaningful upgrade choices."
   },
   {
     "id": "ranger_assassinate",
@@ -15255,14 +15255,14 @@
       "special": "none",
       "specialAmount": 0,
       "exhaust": false,
-      "upgradeDamage": 2,
+      "upgradeDamage": 1,
       "upgradeBlock": 0,
       "upgradeMagic": 0,
       "upgradeSpecial": 0,
       "upgradeCost": false,
       "upgradeDiscard": 0
     },
-    "reason": "Weaker no-manor baseline; avoid compounded effects/upgrades and free positive-draw cycles."
+    "reason": "1.0.14: bounded recurring effects, smaller multi-hit upgrades, and meaningful upgrade choices."
   },
   {
     "id": "ranger_black_arrow",
@@ -16533,14 +16533,14 @@
       "special": "none",
       "specialAmount": 0,
       "exhaust": false,
-      "upgradeDamage": 2,
+      "upgradeDamage": 1,
       "upgradeBlock": 0,
       "upgradeMagic": 0,
       "upgradeSpecial": 0,
       "upgradeCost": false,
       "upgradeDiscard": 0
     },
-    "reason": "Weaker no-manor baseline; avoid compounded effects/upgrades and free positive-draw cycles."
+    "reason": "1.0.14: bounded recurring effects, smaller multi-hit upgrades, and meaningful upgrade choices."
   },
   {
     "id": "knight_measured_cut",
@@ -17030,14 +17030,14 @@
       "special": "none",
       "specialAmount": 0,
       "exhaust": false,
-      "upgradeDamage": 2,
+      "upgradeDamage": 1,
       "upgradeBlock": 0,
       "upgradeMagic": 0,
       "upgradeSpecial": 0,
       "upgradeCost": false,
       "upgradeDiscard": 0
     },
-    "reason": "Weaker no-manor baseline; avoid compounded effects/upgrades and free positive-draw cycles."
+    "reason": "1.0.14: bounded recurring effects, smaller multi-hit upgrades, and meaningful upgrade choices."
   },
   {
     "id": "knight_cathedral_guard",
@@ -17669,14 +17669,14 @@
       "special": "none",
       "specialAmount": 0,
       "exhaust": false,
-      "upgradeDamage": 2,
+      "upgradeDamage": 1,
       "upgradeBlock": 0,
       "upgradeMagic": 0,
       "upgradeSpecial": 0,
       "upgradeCost": false,
       "upgradeDiscard": 0
     },
-    "reason": "Weaker no-manor baseline; avoid compounded effects/upgrades and free positive-draw cycles."
+    "reason": "1.0.14: bounded recurring effects, smaller multi-hit upgrades, and meaningful upgrade choices."
   },
   {
     "id": "knight_crimson_banner",
@@ -17953,14 +17953,14 @@
       "special": "none",
       "specialAmount": 0,
       "exhaust": false,
-      "upgradeDamage": 2,
+      "upgradeDamage": 1,
       "upgradeBlock": 0,
       "upgradeMagic": 0,
       "upgradeSpecial": 0,
       "upgradeCost": false,
       "upgradeDiscard": 0
     },
-    "reason": "Weaker no-manor baseline; avoid compounded effects/upgrades and free positive-draw cycles."
+    "reason": "1.0.14: bounded recurring effects, smaller multi-hit upgrades, and meaningful upgrade choices."
   },
   {
     "id": "knight_weapons_master",
@@ -18947,14 +18947,14 @@
       "special": "none",
       "specialAmount": 0,
       "exhaust": false,
-      "upgradeDamage": 2,
+      "upgradeDamage": 1,
       "upgradeBlock": 0,
       "upgradeMagic": 0,
       "upgradeSpecial": 0,
       "upgradeCost": false,
       "upgradeDiscard": 0
     },
-    "reason": "Weaker no-manor baseline; avoid compounded effects/upgrades and free positive-draw cycles."
+    "reason": "1.0.14: bounded recurring effects, smaller multi-hit upgrades, and meaningful upgrade choices."
   },
   {
     "id": "knight_warlord_s_command",
@@ -20225,14 +20225,14 @@
       "special": "random_attack",
       "specialAmount": 0,
       "exhaust": false,
-      "upgradeDamage": 2,
+      "upgradeDamage": 1,
       "upgradeBlock": 0,
       "upgradeMagic": 0,
       "upgradeSpecial": 0,
       "upgradeCost": false,
       "upgradeDiscard": 0
     },
-    "reason": "Weaker no-manor baseline; avoid compounded effects/upgrades and free positive-draw cycles."
+    "reason": "1.0.14: bounded recurring effects, smaller multi-hit upgrades, and meaningful upgrade choices."
   },
   {
     "id": "mage_woven_incantation",
@@ -20509,14 +20509,14 @@
       "special": "none",
       "specialAmount": 0,
       "exhaust": false,
-      "upgradeDamage": 2,
+      "upgradeDamage": 1,
       "upgradeBlock": 0,
       "upgradeMagic": 0,
       "upgradeSpecial": 0,
       "upgradeCost": false,
       "upgradeDiscard": 0
     },
-    "reason": "Weaker no-manor baseline; avoid compounded effects/upgrades and free positive-draw cycles."
+    "reason": "1.0.14: bounded recurring effects, smaller multi-hit upgrades, and meaningful upgrade choices."
   },
   {
     "id": "mage_bookmark_ward",
@@ -22355,14 +22355,14 @@
       "special": "random_attack",
       "specialAmount": 0,
       "exhaust": true,
-      "upgradeDamage": 2,
+      "upgradeDamage": 1,
       "upgradeBlock": 0,
       "upgradeMagic": 0,
       "upgradeSpecial": 0,
       "upgradeCost": false,
       "upgradeDiscard": 0
     },
-    "reason": "Weaker no-manor baseline; avoid compounded effects/upgrades and free positive-draw cycles."
+    "reason": "1.0.14: bounded recurring effects, smaller multi-hit upgrades, and meaningful upgrade choices."
   },
   {
     "id": "ranger_loose_fletching",
@@ -23988,14 +23988,14 @@
       "special": "none",
       "specialAmount": 0,
       "exhaust": false,
-      "upgradeDamage": 2,
+      "upgradeDamage": 1,
       "upgradeBlock": 0,
       "upgradeMagic": 1,
       "upgradeSpecial": 0,
       "upgradeCost": false,
       "upgradeDiscard": 0
     },
-    "reason": "Weaker no-manor baseline; avoid compounded effects/upgrades and free positive-draw cycles."
+    "reason": "1.0.14: bounded recurring effects, smaller multi-hit upgrades, and meaningful upgrade choices."
   },
   {
     "id": "ranger_spreading_blight",
@@ -24556,14 +24556,14 @@
       "special": "none",
       "specialAmount": 0,
       "exhaust": false,
-      "upgradeDamage": 2,
+      "upgradeDamage": 1,
       "upgradeBlock": 0,
       "upgradeMagic": 0,
       "upgradeSpecial": 0,
       "upgradeCost": false,
       "upgradeDiscard": 0
     },
-    "reason": "Weaker no-manor baseline; avoid compounded effects/upgrades and free positive-draw cycles."
+    "reason": "1.0.14: bounded recurring effects, smaller multi-hit upgrades, and meaningful upgrade choices."
   },
   {
     "id": "ranger_pursuit_volley",
@@ -24627,14 +24627,14 @@
       "special": "marked_bonus",
       "specialAmount": 3,
       "exhaust": false,
-      "upgradeDamage": 2,
+      "upgradeDamage": 1,
       "upgradeBlock": 0,
       "upgradeMagic": 0,
       "upgradeSpecial": 0,
       "upgradeCost": false,
       "upgradeDiscard": 0
     },
-    "reason": "Weaker no-manor baseline; avoid compounded effects/upgrades and free positive-draw cycles."
+    "reason": "1.0.14: bounded recurring effects, smaller multi-hit upgrades, and meaningful upgrade choices."
   },
   {
     "id": "ranger_tracking_rhythm",

@@ -16,7 +16,7 @@ Reviewed all 61 selectable traits against the locally installed RL2 definitions 
 |---|---|
 | Clumsy | Remove the extra Block on every Skill; explicitly no combat modifier. |
 | IBS | Remove automatic enemy Poison. |
-| FMF Fan | Remove the unrelated HP penalty and enemy Weak; retain its original crown modifier. |
+| FMF Fan | Remove the unrelated HP penalty and enemy Weak; its formerly free crown modifier was removed in 1.0.14. |
 | Mushroom Man | Keep compact appearance; remove Thorns. |
 | Inter-dimensional | Remove extra attack damage; there are no projectile-blocking walls in card combat. |
 | Cartographer | Remove gold after every battle; the native map already reveals routes. |
@@ -35,7 +35,7 @@ Flame Barrier is now a 1-Energy defensive Skill: 5 Block and 2 retaliation per e
 
 ## 1.0.9 trait playtesting
 
-Clumsy now loses 2 Block after the first Attack each turn, clamped to zero. Attacking before guarding avoids the penalty; further Attacks that turn do not remove more Block. This replaces its former cosmetic-only adaptation. Hero Complex keeps +40 maximum HP and disabled healing, and now adds +100% legacy crowns. Crown bonuses add together at settlement, subject to the existing 200% total payout cap, and do not increase run gold. Both changes apply to existing heirs with these trait IDs.
+Clumsy now loses 2 Block after the first Attack each turn, clamped to zero. Attacking before guarding avoids the penalty; further Attacks that turn do not remove more Block. This replaces its former cosmetic-only adaptation. Hero Complex keeps +40 maximum HP and disabled healing, and now adds +100% legacy crowns. Trait crown bonuses add together at settlement, subject to a 200% trait payout cap; Treasury multiplies the capped payout, and do not increase run gold. Both changes apply to existing heirs with these trait IDs.
 
 ## 1.0.11 formerly inert traits
 
@@ -48,3 +48,7 @@ Clumsy now loses 2 Block after the first Attack each turn, clamped to zero. Atta
 - **Mushroom Man**: Lose 6 maximum HP. After the first enemy Attack that damages you each turn, gain 3 Block. Your heir has a compact appearance.
 
 Inter-dimensional removes guard once per enemy hit by the first Attack, including multi-hit and area attacks. It does not add damage or remove guard again on subsequent hits. Mushroom Man triggers only when an enemy Attack causes actual HP loss, once per player turn; non-attack HP costs and fully blocked attacks do not trigger it. These changes apply to existing heirs with the same saved trait IDs. Crown bonuses remain unchanged.
+
+## 1.0.14 progression balance
+
+Colorblind, Nostalgic, Synesthesia and FMF Fan no longer grant crown bonuses without a gameplay drawback. Bookish retains +1 draw/-10 HP but no longer grants bonus crowns; Crippling Intellect retains +1 draw/-18 HP and now grants +50% crowns. Vampirism heals 3 after combat. Treasury remains effective above the trait bonus cap. Full Healing Garden (two levels) plus Vampirism and Super Healer heals 10 after combat. Existing trait IDs, gameplay abilities, cosmetic palettes and Hero Complex healing rules are preserved.

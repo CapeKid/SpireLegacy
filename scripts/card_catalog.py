@@ -18,7 +18,7 @@ for cls in read('classes'):
         for key,label in [('block','Block'),('draw','draw'),('discard','discard'),('energy','Energy'),('strength','Strength'),('dexterity','Dexterity'),('weak','Weak'),('vulnerable','Vulnerable'),('poison','Poison'),('vigor','next Attack damage'),('thorns','Thorns'),('plated','Plated Armor'),('heal','healing'),('hpLoss','HP cost'),('nextDraw','draw next turn'),('nextEnergy','Energy next turn'),('nextBlock','Block next turn')]:
             if row[key]:effects.append(str(row[key])+' '+label+(' to all enemies' if row['aoe'] and key in ('weak','vulnerable','poison') else ''))
         if row['power'] in powers:effects.append(powers[row['power']].replace('!M!',str(row['magic'])))
-        if row['power']=='reservoir':effects.append('Each Arcane Charge adds '+str(row['magic'])+' extra attack damage.')
+        if row['power']=='reservoir':effects.append('Each Arcane Charge adds '+str(row['magic'])+' extra damage on the first hit to each enemy.')
         if row['power']=='quiver':effects.append('Hunter Rhythm draws '+str(row['magic'])+' extra card(s).')
         if row['special']!='none':
             text=special[row['special']].replace('{n}',str(row['specialAmount']))

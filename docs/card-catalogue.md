@@ -43,7 +43,7 @@ Each class has 75 cards: 3 basics and 72 rewards (20 common, 36 uncommon, 16 rar
 | Forged in Pain | Uncommon | Power | 1 | Class unique; Whenever you lose HP from a card, gain 1 Strength. |
 | Burnished Legacy | Uncommon | Power | 1 | Shared family card; Whenever you Exhaust a card, gain 2 Block. |
 | Veteran Training | Uncommon | Power | 1 | Class unique; At the start of your turn, lose 1 HP and draw 1 card(s). |
-| Guardian Angel | Rare | Skill | 1 | Shared family card; Prevent the next 1 time(s) you would lose HP.; Exhaust |
+| Guardian Angel | Rare | Skill | 2 | Shared family card; Prevent the next 1 time(s) you would lose HP.; Exhaust |
 | Living Fortress | Rare | Power | 3 | Class unique; Your Block is not removed at the start of your turn. |
 | Ancestral Fury | Rare | Power | 3 | Class unique; At the start of your turn, gain 2 Strength. |
 | Cold Read | Common | Skill | 0 | Shared family card; 1 draw; 1 discard |
@@ -55,7 +55,7 @@ Each class has 75 cards: 3 basics and 72 rewards (20 common, 36 uncommon, 16 rar
 | Tripwire | Common | Skill | 1 | Shared family card; 3 Block; 1 Weak |
 | Measured Breath | Uncommon | Power | 1 | Shared family card; At the end of your turn, Retain up to 1 card(s). |
 | Master Plan | Rare | Skill | 3 | Shared family card; Cards currently in your hand cost 0 this turn. You cannot draw additional cards this turn.; Exhaust |
-| Perfect Timing | Rare | Power | 2 | Shared family card; 3 HP cost; At the start of your turn, gain 1 Energy. |
+| Perfect Timing | Rare | Power | 3 | Shared family card; 3 HP cost; At the start of your turn, gain 1 Energy. |
 | Shield Drill | Common | Skill | 0 | Class unique; 2 Block; Exhaust 1 card(s) from your hand. |
 | Grit Teeth | Common | Skill | 0 | Class unique; 5 Block; 2 HP cost |
 | Splintered Pike | Common | Attack | 1 | Class unique; 9 damage; Shuffle 1 Wound(s) into your draw pile. |
@@ -89,7 +89,7 @@ Each class has 75 cards: 3 basics and 72 rewards (20 common, 36 uncommon, 16 rar
 | Spark | Basic | Attack | 1 | Class unique; 5 damage |
 | Ward | Basic | Skill | 1 | Class unique; 4 Block |
 | Challenge | Uncommon | Attack | 2 | Shared family card; 6 damage; 2 Vulnerable |
-| Flame Barrier | Basic | Attack | 1 | Class unique; 7 damage |
+| Flame Barrier | Basic | Skill | 1 | Class unique; 5 Block; When attacked this turn, deal 2 damage back. |
 | Fireball | Common | Attack | 2 | Class unique; 15 damage |
 | Study | Common | Skill | 1 | Shared family card; 2 draw |
 | Magic Barrier | Common | Skill | 1 | Class unique; 6 Block; 1 draw |
@@ -97,7 +97,7 @@ Each class has 75 cards: 3 basics and 72 rewards (20 common, 36 uncommon, 16 rar
 | Spell Surge | Rare | Power | 1 | Class unique; 2 Strength |
 | Nova | Rare | Attack | 3 | Class unique; 27 damage; Exhaust |
 | Meditate | Rare | Skill | 0 | Shared family card; 1 draw; 1 Energy; Exhaust |
-| Arcane Reservoir | Uncommon | Power | 1 | Class unique; Each Arcane Charge adds 1 extra attack damage. |
+| Arcane Reservoir | Uncommon | Power | 1 | Class unique; Each Arcane Charge adds 1 extra damage on the first hit to each enemy. |
 | Brave Advance | Common | Attack | 1 | Shared family card; 5 damage; 1 Energy next turn |
 | Long Reach | Common | Attack | 1 | Shared family card; 4 damage; 1 draw |
 | Reforge | Common | Skill | 1 | Shared family card; 3 Block; 1 draw; Exhaust 1 card(s) from your hand. |
@@ -107,7 +107,7 @@ Each class has 75 cards: 3 basics and 72 rewards (20 common, 36 uncommon, 16 rar
 | Last Stand | Uncommon | Skill | 0 | Shared family card; 9 Block; 3 HP cost; Exhaust |
 | Arms Vault | Uncommon | Skill | 1 | Shared family card; 1 draw; Return a card from your Exhaust pile to your hand.; Exhaust |
 | Burnished Legacy | Uncommon | Power | 1 | Shared family card; Whenever you Exhaust a card, gain 2 Block. |
-| Guardian Angel | Rare | Skill | 1 | Shared family card; Prevent the next 1 time(s) you would lose HP.; Exhaust |
+| Guardian Angel | Rare | Skill | 2 | Shared family card; Prevent the next 1 time(s) you would lose HP.; Exhaust |
 | Ember Dart | Common | Attack | 0 | Class unique; 3 damage |
 | Arcane Missile | Common | Attack | 1 | Class unique; 2 damage ×3; Hits target random enemies. |
 | Witchfire | Common | Attack | 1 | Class unique; 3 damage; 1 Poison |
@@ -115,14 +115,14 @@ Each class has 75 cards: 3 basics and 72 rewards (20 common, 36 uncommon, 16 rar
 | Mana Shield | Common | Skill | 1 | Class unique; 4 Block; 1 Energy next turn |
 | Cold Read | Common | Skill | 0 | Shared family card; 1 draw; 1 discard |
 | Spell Notes | Common | Skill | 1 | Class unique; 2 draw; 1 discard; Retain |
-| Kindle | Common | Skill | 0 | Class unique; Gain 1 Arcane Charge(s), up to the normal charge cap.; Exhaust |
+| Kindle | Common | Skill | 0 | Class unique; 2 Block; Gain 1 Arcane Charge(s), up to the normal charge cap.; Exhaust |
 | Thunderchain | Uncommon | Attack | 1 | Class unique; 2 damage ×4; Hits target random enemies. |
 | Inferno Wave | Uncommon | Attack | 2 | Class unique; 10 damage to all enemies |
 | Venom Rune | Uncommon | Attack | 1 | Class unique; 4 damage; 3 Poison |
 | Mana Burn | Uncommon | Attack | 0 | Class unique; 9 damage; 3 HP cost |
 | Rune Detonation | Uncommon | Attack | 1 | Class unique; 9 damage; Retain |
 | Toxic Cloud | Uncommon | Skill | 2 | Class unique; 3 Poison to all enemies |
-| Overcharge | Uncommon | Skill | 0 | Class unique; 3 HP cost; Gain 2 Arcane Charge(s), up to the normal charge cap. |
+| Overcharge | Uncommon | Skill | 0 | Class unique; 1 draw; 3 HP cost; Gain 2 Arcane Charge(s), up to the normal charge cap.; Exhaust |
 | Rewrite | Uncommon | Skill | 1 | Class unique; 2 draw; Exhaust 1 card(s) from your hand. |
 | Memory Prism | Uncommon | Skill | 1 | Shared family card; Return 1 card(s) from your discard pile to your hand.; Retain |
 | Spellweave | Uncommon | Skill | 1 | Shared family card; 2 draw next turn; 1 Energy next turn |
@@ -135,14 +135,14 @@ Each class has 75 cards: 3 basics and 72 rewards (20 common, 36 uncommon, 16 rar
 | Toxic Theory | Uncommon | Power | 1 | Class unique; Whenever you apply a debuff to an enemy, deal 2 damage to it. |
 | Starfall | Rare | Attack | 3 | Class unique; 6 damage ×3 to all enemies |
 | Soulfire | Rare | Attack | 2 | Class unique; 13 damage; 6 Poison |
-| Perfect Ward | Rare | Skill | 2 | Class unique; Prevent the next 2 time(s) you would lose HP.; Exhaust |
+| Perfect Ward | Rare | Skill | 2 | Class unique; 3 Block; Prevent the next 1 time(s) you would lose HP.; Exhaust |
 | Mana Fountain | Rare | Skill | 0 | Class unique; 3 Energy; Exhaust |
 | Transmutation | Rare | Skill | 1 | Class unique; 2 draw; 2 Energy; Exhaust 2 card(s) from your hand.; Exhaust |
 | Astral Mantle | Rare | Power | 2 | Class unique; Whenever you play a card, gain 1 Block. |
 | Tripwire | Common | Skill | 1 | Shared family card; 3 Block; 1 Weak |
 | Measured Breath | Uncommon | Power | 1 | Shared family card; At the end of your turn, Retain up to 1 card(s). |
 | Master Plan | Rare | Skill | 3 | Shared family card; Cards currently in your hand cost 0 this turn. You cannot draw additional cards this turn.; Exhaust |
-| Perfect Timing | Rare | Power | 2 | Shared family card; 3 HP cost; At the start of your turn, gain 1 Energy. |
+| Perfect Timing | Rare | Power | 3 | Shared family card; 3 HP cost; At the start of your turn, gain 1 Energy. |
 | Warding Verse | Common | Skill | 0 | Class unique; 2 Block; Retain |
 | Ash Reading | Common | Skill | 1 | Class unique; 1 draw; 1 HP cost; Exhaust 1 card(s) from your hand. |
 | Stored Ember | Common | Attack | 1 | Shared family card; 3 damage; Whenever this is Retained, gain 2 damage this combat.; Retain |
@@ -187,7 +187,7 @@ Each class has 75 cards: 3 basics and 72 rewards (20 common, 36 uncommon, 16 rar
 | Last Stand | Uncommon | Skill | 0 | Shared family card; 9 Block; 3 HP cost; Exhaust |
 | Arms Vault | Uncommon | Skill | 1 | Shared family card; 1 draw; Return a card from your Exhaust pile to your hand.; Exhaust |
 | Burnished Legacy | Uncommon | Power | 1 | Shared family card; Whenever you Exhaust a card, gain 2 Block. |
-| Guardian Angel | Rare | Skill | 1 | Shared family card; Prevent the next 1 time(s) you would lose HP.; Exhaust |
+| Guardian Angel | Rare | Skill | 2 | Shared family card; Prevent the next 1 time(s) you would lose HP.; Exhaust |
 | Cold Read | Common | Skill | 0 | Shared family card; 1 draw; 1 discard |
 | Memory Prism | Uncommon | Skill | 1 | Shared family card; Return 1 card(s) from your discard pile to your hand.; Retain |
 | Spellweave | Uncommon | Skill | 1 | Shared family card; 2 draw next turn; 1 Energy next turn |
@@ -218,25 +218,25 @@ Each class has 75 cards: 3 basics and 72 rewards (20 common, 36 uncommon, 16 rar
 | Black Arrow | Rare | Attack | 2 | Class unique; 13 damage; 6 Poison |
 | Master Plan | Rare | Skill | 3 | Shared family card; Cards currently in your hand cost 0 this turn. You cannot draw additional cards this turn.; Exhaust |
 | Poisoned Arsenal | Rare | Power | 2 | Class unique; Whenever an Attack deals unblocked damage, apply 1 Poison. |
-| Perfect Timing | Rare | Power | 2 | Shared family card; 3 HP cost; At the start of your turn, gain 1 Energy. |
+| Perfect Timing | Rare | Power | 3 | Shared family card; 3 HP cost; At the start of your turn, gain 1 Energy. |
 | Stored Ember | Common | Attack | 1 | Shared family card; 3 damage; Whenever this is Retained, gain 2 damage this combat.; Retain |
 | Crystal Seed | Common | Skill | 1 | Shared family card; 3 Block; Whenever this is Retained, gain 2 Block this combat.; Retain |
 | Woven Incantation | Uncommon | Power | 1 | Shared family card; Every third Skill you play each turn grants 3 Block. |
 | Alchemist's Patience | Uncommon | Power | 1 | Shared family card; At the start of your turn, apply 2 Poison to ALL enemies. |
 | Mirror Manuscript | Rare | Skill | 1 | Shared family card; Your next 1 Skill(s) this turn are played twice.; Retain; Exhaust |
 | Comet Calendar | Rare | Skill | 2 | Shared family card; 4 draw next turn; 3 Energy next turn; Exhaust |
-| Loose Fletching | Common | Attack | 1 | Class unique; 4 damage; When discarded during your turn, draw 1 card(s). |
-| Pocket Wind | Common | Skill | 1 | Class unique; 3 Block; When discarded during your turn, gain 1 Energy. |
+| Loose Fletching | Common | Attack | 1 | Class unique; 4 damage; When discarded during your turn, draw 1 card(s). Triggers at most once per copy each turn. |
+| Pocket Wind | Common | Skill | 1 | Class unique; 3 Block; When discarded during your turn, gain 1 Energy. Triggers at most once per copy each turn. |
 | Sort Quiver | Common | Skill | 1 | Class unique; 3 draw; 2 discard |
 | Light Pack | Uncommon | Power | 1 | Class unique; Whenever you discard a card during your turn, gain 2 Block. |
 | Tailwind | Uncommon | Power | 1 | Class unique; The first time you discard a card each turn, gain 1 Energy. |
-| Spring Nock | Uncommon | Attack | 1 | Class unique; 6 damage; When discarded during your turn, draw 2 card(s). |
+| Spring Nock | Uncommon | Attack | 1 | Class unique; 6 damage; When discarded during your turn, draw 2 card(s). Triggers at most once per copy each turn. |
 | Venom Reserve | Uncommon | Skill | 1 | Class unique; Double Poison on the target.; Retain; Exhaust |
 | Perch Discipline | Uncommon | Power | 2 | Class unique; Whenever a card is Retained, reduce its cost by 1 this combat. |
 | Pursuit Volley | Uncommon | Attack | 1 | Class unique; 1 damage ×2; Deal 3 additional damage if the target is Vulnerable or Poisoned. |
 | Tracking Rhythm | Uncommon | Power | 1 | Shared family card; Every third Attack you play each turn grants 2 Vigor for your NEXT Attack. |
 | Owl Watch | Uncommon | Power | 1 | Class unique; At the start of your turn, Scry 2. |
-| Falcon Courier | Rare | Attack | 2 | Class unique; 10 damage; When discarded during your turn, gain 3 Energy.; Exhaust |
+| Falcon Courier | Rare | Attack | 2 | Class unique; 10 damage; When discarded during your turn, gain 3 Energy. Triggers at most once per copy each turn.; Exhaust |
 | Venom Eclipse | Rare | Skill | 2 | Class unique; 7 Poison to all enemies; Exhaust |
 | Long Vigil | Rare | Attack | 3 | Class unique; 15 damage; Whenever this is Retained, gain 6 damage this combat.; Retain |
 | Arrow Cascade | Rare | Attack | 2 | Class unique; Deal 2 damage for each OTHER Attack played this turn to all enemies.; Exhaust |

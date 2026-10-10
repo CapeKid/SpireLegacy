@@ -22,6 +22,7 @@ public abstract class LegacyCard : CustomCardModel
 {
     public string Key => GetType().Name[2..];
     [SavedProperty] public string TraitSnapshot { get; set; } = "";
+    [SavedProperty] public int DiscardRewardTurn { get; set; } = -1;
     public CardDesign DesignCard => new(Key, IsUpgraded, IsMutable && TraitSnapshot.Length > 0 ? JsonSerializer.Deserialize<string[]>(TraitSnapshot)! : Runtime.Heir.traits);
     protected Design.Row Row => Design.Get("cards", Key);
     protected LegacyCard(string key) : base(Design.Get("cards", key).Number("cost"), Enum.Parse<CardType>(Design.Get("cards", key).Text("type"), true), Enum.Parse<CardRarity>(Design.Get("cards", key).Text("rarity"), true), GetTarget(key), autoAdd: false) { }
@@ -92,12 +93,17 @@ public abstract class LegacyCard : CustomCardModel
     }
     public override async Task AfterCardDiscarded(PlayerChoiceContext context, CardModel card)
     {
-        if (card != this || Owner.PlayerCombatState?.Phase == PlayerTurnPhase.End) return;
+        if (card != this || Owner.PlayerCombatState?.Phase != PlayerTurnPhase.Play || CombatState?.CurrentSide != Owner.Creature.Side) return;
+        if (Row.Text("special") is not ("discard_draw" or "discard_energy" or "discard_block")) return;
+        var turn = Owner.PlayerCombatState.TurnNumber;
+        if (DiscardRewardTurn == turn) return;
+        DiscardRewardTurn = turn; // Set before drawing: nested discard effects cannot re-enter the reward.
         var n = DesignCard.SpecialAmount;
         if (Row.Text("special") == "discard_draw") await CardPileCmd.Draw(context, n, Owner);
         if (Row.Text("special") == "discard_energy") await PlayerCmd.GainEnergy(n, Owner);
         if (Row.Text("special") == "discard_block") await CreatureCmd.GainBlock(Owner.Creature, n, ValueProp.Unpowered, null);
     }
+    public override Task BeforeCombatStart() { DiscardRewardTurn = -1; return Task.CompletedTask; }
     public override Task AfterFlush(PlayerChoiceContext context, Player player, IReadOnlyCollection<CardModel> flushed, IReadOnlyCollection<CardModel> retained)
     {
         if (player == Owner && retained.Contains(this)) {
