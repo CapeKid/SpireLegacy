@@ -51,6 +51,16 @@ def validate():
     for row in members:
         ref('card_pools',row,'classId',classes);ref('card_pools',row,'cardId',cards)
         if row['scope'] not in ('shared','unique'):errors.append('Invalid membership scope '+row['id'])
+    for art in sheets.get('character_art',[]):
+        path=ROOT/'src/main/resources'/art['path']
+        if not path.is_file() or hashlib.sha256(path.read_bytes()).hexdigest()!=art['sha256']:
+            errors.append('Character atlas missing/hash mismatch: '+art['id']);continue
+        with Image.open(path) as atlas:
+            if atlas.mode!='RGBA':errors.append('Character atlas must preserve transparency: '+art['id'])
+            alpha=atlas.getchannel('A').point(lambda value:255 if value>=16 else 0)
+            for x,y,w,h in art['regions']:
+                bounds=alpha.crop((x,y,x+w,y+h)).getbbox()
+                if not bounds or not (0<bounds[0]<bounds[2]<w and 0<bounds[1]<bounds[3]<h):errors.append('Character frame clips at a region edge: '+art['id'])
     for cls in classes:
         rows=[r for r in members if r['classId']==cls]
         if len(rows)!=len(membership[cls]):errors.append(cls+': duplicate pool membership')

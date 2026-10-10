@@ -113,6 +113,11 @@ public static class NativeTestBridge
                     await NGame.Instance.StartNewSingleplayerRun(ModelDb.Character<HeirCharacter>(),true,ModelDb.ActsByIndex.Select(a=>a.First()).ToArray(),[],"SPIRELEGACY-PORT-TEST",GameMode.Standard,request.TryGetProperty("ascension",out var ascension)?ascension.GetInt32():0);
                     result = StateSummary(); break;
                 case "state": result = StateSummary(); break;
+                case "visual": result = HeirVisuals.Diagnostic(); break;
+                case "injure":
+                    var injured = RunState().Players.Single().Creature;
+                    await CreatureCmd.Damage(new BlockingPlayerChoiceContext(),injured,request.GetProperty("amount").GetInt32(),MegaCrit.Sts2.Core.ValueProps.ValueProp.Unblockable | MegaCrit.Sts2.Core.ValueProps.ValueProp.Unpowered,injured.CombatState!.GetOpponentsOf(injured).First());
+                    result = StateSummary(); break;
                 case "manual":
                     var manualPlayer=RunState().Players.Single(); await WaitForPlay(manualPlayer);
                     var manualCard=manualPlayer.PlayerCombatState!.Hand.Cards.First(c=>c is LegacyCard lc && lc.Key==request.GetProperty("card").GetString());

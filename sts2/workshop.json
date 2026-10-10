@@ -2,7 +2,7 @@
   "title": "Spire Legacy",
   "description": "Every climb ends. Your bloodline grows.\n\nA solo Slay the Spire 2 character by CapeKid: Knight, Mage and Ranger heirs, 75 cards per class with a shared core, 360 registered illustrated cards and upgrades, all 61 eligible Rogue Legacy 2 inherited traits, genetic starter changes, and six permanent Family Manor upgrades. Name your family, choose its banner and select three new heirs after each climb. Manor purchases require explicit confirmation; a temporary crown editor supports progression playtesting.\n\nRequires BaseLib and owned Steam installations of Slay the Spire 2 and Rogue Legacy 2. Rogue Legacy 2 sprites are read locally from your installation; no game assets are distributed. Supports Windows and Linux x86_64, including Steam Deck. Solo play only.\n\nDevelopment port uses a shared regular/beta card-play compatibility path. Native gameplay tested on regular v0.107.1 and public-beta v0.111.0. Steam Deck users confirmed the prior card cleanup fix. Native 1.0.6 startup and controller checks pass on both branches; physical Deck retesting and full-run balance verification remain pending. Original code and illustrations: MIT, CapeKid. Game content remains owned by Mega Crit and Cellar Door Games.",
   "visibility": "private",
-  "changeNote": "1.0.9: Clumsy loses 2 Block after the first Attack each turn. Hero Complex grants +100% legacy crowns. Includes Ascension layout and native Steam Deck Y fixes.",
+  "changeNote": "1.0.10: Distinct original Knight, Mage and Ranger sprites with idle, attack, skill, hurt, death and victory animation. Class-specific sprites also appear at rest sites and shops. Includes prior trait, Ascension and Deck controller fixes.",
   "tags": [
     "Characters"
   ],

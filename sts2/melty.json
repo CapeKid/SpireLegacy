@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "mode": "installed",
   "games": [{"slug":"slay-the-spire-2","role":"primary"},{"slug":"custom-rogue-legacy-2","role":"secondary"}],
-  "components": [{"id":"main","fileName":"SpireLegacy-StS2-1.0.9-melty.zip","label":"Spire Legacy for Slay the Spire 2, BaseLib and local content reader","kind":"main","required":true}],
+  "components": [{"id":"main","fileName":"SpireLegacy-StS2-1.0.10-melty.zip","label":"Spire Legacy for Slay the Spire 2, BaseLib and local content reader","kind":"main","required":true}],
   "requirements": [],
   "mappings": [{"component":"main","from":"mods/SpireLegacy/","to":"{game}/mods/SpireLegacy"},{"component":"main","from":"mods/BaseLib/","to":"{game}/mods/BaseLib"}],
   "launch": {"kind":"exe","path":"{game}/SlayTheSpire2.exe","cwd":"{game}"},

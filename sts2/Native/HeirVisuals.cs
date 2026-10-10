@@ -8,40 +8,54 @@ namespace SpireLegacy;
 
 public static class HeirVisuals
 {
-    private static readonly List<(NCreature creature, Sprite2D sprite, Polygon2D banner,Label symbol)> actors = new();
+    private static readonly List<(NCreature creature, HeirSprite sprite, Polygon2D banner,Label symbol)> actors = new();
     private static readonly string[] Symbols=["☀","☾","✿","♣"];
     public static void Initialize() => ((SceneTree)Engine.GetMainLoop()).ProcessFrame += Update;
     public static void AttachRoomPortrait(Node2D visual)
     {
         if(!ContentBootstrap.Ready)return;
         foreach(var child in visual.GetChildren().OfType<Node2D>().Where(n=>n.GetClass()=="SpineSprite"))child.Visible=false;
-        var image=Runtime.CacheTexture("hero.png");
-        visual.AddChild(new Sprite2D {Name="SpireLegacyRoomHeir",Texture=image,Scale=Vector2.One*.75f,Position=new(0,-image.GetHeight()*.375f),Modulate=ManorUi.BannerColor});
+        if (visual.GetNodeOrNull<Node>("SpireLegacyRoomHeir") != null) return;
+        // Native rest-site roots shrink large Spine art; compensate for our smaller atlas.
+        var roomSize = visual is MegaCrit.Sts2.Core.Nodes.RestSite.NRestSiteCharacter ? 1.8f : .8f;
+        var portrait = HeirSprite.Create(Runtime.Heir.classId, roomSize);
+        portrait.Name = "SpireLegacyRoomHeir"; portrait.Modulate = Colors.White;
+        visual.AddChild(portrait);
     }
     public static void Attach(NCreature creature)
     {
         if (creature.Entity.Player?.Character is not HeirCharacter || !ContentBootstrap.Ready) return;
         var visuals = creature.Visuals;
         visuals.GetCurrentBody().Visible = false;
-        var texture = Runtime.CacheTexture("hero.png");
-        var factor = Inheritance.Traits.Aggregate(.5f,(value,row)=>value * row.Json.GetProperty("scale").GetSingle());
-        var sprite = new Sprite2D { Name = "SpireLegacyHeir", Texture = texture, Scale = Vector2.One * factor, Position = new(0,-texture.GetHeight() * factor / 2) };
-        if(Inheritance.Has("gray")) sprite.Material=new ShaderMaterial {Shader=new Shader {Code="shader_type canvas_item; void fragment() { vec4 c=texture(TEXTURE,UV)*COLOR; float g=dot(c.rgb,vec3(0.299,0.587,0.114)); COLOR=vec4(vec3(g),c.a); }"}};
+        if (visuals.GetNodeOrNull<Node>("SpireLegacyHeir") != null) return;
+        var factor = Inheritance.Traits.Aggregate(1f,(value,row)=>value * row.Json.GetProperty("scale").GetSingle());
+        var sprite = HeirSprite.Create(Runtime.Heir.classId, factor);
+        sprite.Name = "SpireLegacyHeir";
         visuals.AddChild(sprite);
-        var badge = new Sprite2D { Texture = Runtime.CacheTexture(Design.Get("classes",Runtime.Heir.classId).Text("asset") + ".png"), Position = new(0,-texture.GetHeight() * factor - 35), Scale = Vector2.One * .3f };
+        var badge = new Sprite2D { Texture = Runtime.CacheTexture(Design.Get("classes",Runtime.Heir.classId).Text("asset") + ".png"), Position = new(0,-230 * factor - 35), Scale = Vector2.One * .3f };
         visuals.AddChild(badge);
-        var banner = new Polygon2D { Name = "FamilyBanner", Polygon = [new(48,-165),new(115,-165),new(115,-85),new(81,-65),new(48,-85)], Color = ManorUi.BannerColor };
+        var banner = new Polygon2D { Name = "FamilyBanner", Polygon = [new(-190,-210),new(-135,-210),new(-135,-155),new(-163,-135),new(-190,-155)], Color = ManorUi.BannerColor, ZIndex = 2 };
         visuals.AddChild(banner);
-        var symbol = new Label { Text = Symbols[Runtime.Profile.banner], Position = new(57,-153), MouseFilter = Control.MouseFilterEnum.Ignore };
-        symbol.AddThemeFontSizeOverride("font_size",40); banner.AddChild(symbol);
+        var symbol = new Label { Text = Symbols[Runtime.Profile.banner], Position = new(-184,-201), MouseFilter = Control.MouseFilterEnum.Ignore };
+        symbol.AddThemeFontSizeOverride("font_size",32); banner.AddChild(symbol);
         actors.Add((creature,sprite,banner,symbol));
     }
+    public static void Animate(MegaCrit.Sts2.Core.Entities.Creatures.Creature creature, string pose)
+    {
+        foreach (var actor in actors.Where(a => GodotObject.IsInstanceValid(a.sprite) && a.creature.Entity == creature)) actor.sprite.PlayPose(pose);
+    }
+    public static object Diagnostic() => actors.Where(a => GodotObject.IsInstanceValid(a.sprite)).Select(a => new {
+        classId = a.sprite.ClassId, pose = a.sprite.Animation.ToString(), frame = a.sprite.Frame,
+        frames = a.sprite.SpriteFrames.GetFrameCount(a.sprite.Animation), events = a.sprite.Events.ToArray(),
+        position = a.sprite.GlobalPosition.ToString(), scale = a.sprite.Scale.ToString(), hp = a.creature.Entity.CurrentHp,
+        bannerVisible = a.banner.IsVisibleInTree(), bannerZ = a.banner.ZIndex
+    }).ToArray();
     private static void Update()
     {
         actors.RemoveAll(actor => !GodotObject.IsInstanceValid(actor.creature) || !GodotObject.IsInstanceValid(actor.sprite));
         foreach (var actor in actors)
         {
-            var color = ManorUi.BannerColor;
+            var color = Colors.White;
             if (Inheritance.Has("gray")) color = Colors.LightGray;
             else if (Inheritance.Has("blue")) color = Colors.Blue;
             else if (Inheritance.Has("sepia")) color = new(.7f,.55f,.3f);
@@ -50,6 +64,9 @@ public static class HeirVisuals
             else if (Inheritance.Has("festive")) color = Colors.Crimson;
             else if (Inheritance.Has("rainbow")) { var t = Time.GetTicksMsec() % 6000 / 6000f * Mathf.Tau; color = new(.65f+.35f*Mathf.Sin(t),.65f+.35f*Mathf.Sin(t+2),.65f+.35f*Mathf.Sin(t+4)); }
             else if (Inheritance.Has("histrionic") && actor.creature.Entity.CurrentHp < actor.creature.Entity.MaxHp) color = new(1,.5f,.5f);
+            actor.creature.Visuals.GetCurrentBody().Visible = false;
+            actor.sprite.SetGray(Inheritance.Has("gray"));
+            if (actor.creature.Entity.IsDead) actor.sprite.PlayPose("dead");
             actor.sprite.Modulate = color; actor.banner.Color = ManorUi.BannerColor;
             actor.symbol.Text=Symbols[Runtime.Profile.banner];
         }
@@ -152,5 +169,16 @@ public static class HeirBloodlineIcon
     public static bool Prefix(RelicModel __instance,ref Texture2D __result) {
         if(__instance is not BloodlineRelic) return true;
         __result=Runtime.Texture("heir/ui/select-icon.png");return false;
+    }
+}
+
+[HarmonyPatch(typeof(NCreature),nameof(NCreature.SetAnimationTrigger))]
+public static class HeirAnimationTrigger
+{
+    public static void Postfix(NCreature __instance, string trigger)
+    {
+        if (__instance.Entity.Player?.Character is not HeirCharacter) return;
+        var pose = trigger switch { "Attack" => "attack", "Cast" or "PowerUp" => "skill", "Hit" => "hurt", "Dead" => "dead", "Revive" => "idle", _ => null };
+        if (pose != null) HeirVisuals.Animate(__instance.Entity,pose);
     }
 }

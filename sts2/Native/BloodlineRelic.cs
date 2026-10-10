@@ -77,6 +77,11 @@ public sealed class BloodlineRelic : CustomRelicModel
         if (pendingEnergy > 0) { var amount = pendingEnergy; pendingEnergy = 0; await PlayerCmd.GainEnergy(amount,player); }
         if (Inheritance.Amount("turn_block") > 0) await CreatureCmd.GainBlock(player.Creature,Inheritance.Amount("turn_block"),ValueProp.Unpowered,null);
     }
+    public override Task BeforeCardPlayed(CardPlay play)
+    {
+        if (play.Card.Owner == Owner) HeirVisuals.Animate(Owner.Creature,play.Card.Type == CardType.Attack ? "attack" : "skill");
+        return Task.CompletedTask;
+    }
     public override async Task AfterCardPlayed(PlayerChoiceContext context, CardPlay play)
     {
         if (play.Card.Owner != Owner) return;
@@ -136,6 +141,7 @@ public sealed class BloodlineRelic : CustomRelicModel
     public override async Task AfterCombatVictory(CombatRoom room)
     {
         if (Owner.Creature.IsDead) return;
+        HeirVisuals.Animate(Owner.Creature,"victory");
         var heal = Runtime.Bonus("heal") + Inheritance.Stat("heal") + Design.Get("classes",Runtime.Heir.classId).Number("heal");
         if (heal > 0) await CreatureCmd.Heal(Owner.Creature,heal);
         if (Inheritance.Amount("gold") > 0) await PlayerCmd.GainGold(Inheritance.Amount("gold"),Owner);
