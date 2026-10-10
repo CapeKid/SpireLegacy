@@ -25,7 +25,7 @@
     "hook": "run_end",
     "amount": 2,
     "enabled": true,
-    "summary": "Earn 2 crowns per cleared floor; remaining gold converts at 25:1. Combined bonuses are capped at +100%."
+    "summary": "Earn 2 crowns per cleared floor; remaining gold converts at 25:1. Trait bonuses are capped at +100%; Treasury multiplies the capped payout."
   },
   {
     "id": "victory",

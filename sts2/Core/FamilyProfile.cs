@@ -57,9 +57,9 @@ public sealed class FamilyProfile
     public int Settle(string runId, int floors, int gold, bool victory)
     {
         if (active is null || active.id != runId || settledId == runId) return 0;
-        var percent = 100 + active.bonuses.GetValueOrDefault("gold") + active.heir.traits.Sum(id => Design.Get("traits", id).Number("goldBonus"));
+        var percent = Math.Clamp(100 + active.heir.traits.Sum(id => Design.Get("traits", id).Number("goldBonus")), 0, 200);
         long basis = (long)Math.Max(0, floors) * Design.Get("systems", "legacy").Number("amount") + Math.Max(0, gold) / Design.Get("systems", "gold_conversion").Number("amount") + (victory ? Design.Get("systems", "victory").Number("amount") : 0);
-        var earned = (int)Math.Min(int.MaxValue, basis * Math.Clamp(percent, 0, 200) / 100);
+        var earned = (int)Math.Min(int.MaxValue, basis * percent * (100L + active.bonuses.GetValueOrDefault("gold")) / 10000);
         crowns = (int)Math.Min(int.MaxValue, (long)crowns + earned);
         lastEarned = earned; generation++; settledId = runId; active = null;
         GenerateOffers(unchecked(generation * 1009 + StableHash(runId)));
@@ -98,10 +98,27 @@ public sealed class FamilyProfile
         if (value is null || value.family is null || value.manor is null || value.offers is null || value.crowns < 0) throw new InvalidDataException("Invalid family save");
         return value;
     }
+    public bool RefundRetiredLevels()
+    {
+        var changed = false;
+        foreach (var row in Design.Rows("manor"))
+        {
+            var id = row.Text("id"); var old = Level(id); var max = row.Number("maxLevel");
+            if (old <= max) continue;
+            if (old > 5) throw new InvalidDataException("Invalid legacy manor level: " + id);
+            long refund = 0;
+            for (var level = max; level < old; level++) refund += row.Number("baseCost") + (long)level * row.Number("costStep");
+            manor[id] = max; crowns = (int)Math.Min(int.MaxValue, crowns + refund); changed = true;
+        }
+        return changed;
+    }
     public static FamilyProfile Load(string path)
     {
         if (!File.Exists(path)) return new();
-        try { return Read(path); }
-        catch (Exception first) { try { return Read(path + ".bak"); } catch (Exception second) { throw new InvalidDataException("Family save and backup are damaged; both preserved.", new AggregateException(first, second)); } }
+        FamilyProfile profile;
+        try { profile = Read(path); }
+        catch (Exception first) { try { profile = Read(path + ".bak"); } catch (Exception second) { throw new InvalidDataException("Family save and backup are damaged; both preserved.", new AggregateException(first, second)); } }
+        if (profile.RefundRetiredLevels()) profile.Save(path);
+        return profile;
     }
 }
