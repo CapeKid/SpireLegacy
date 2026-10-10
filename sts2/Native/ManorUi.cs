@@ -3,6 +3,7 @@ using HarmonyLib;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Nodes.Screens.CharacterSelect;
 using MegaCrit.Sts2.Core.Nodes.Screens.ScreenContext;
+using MegaCrit.Sts2.Core.Nodes.CommonUi;
 
 namespace SpireLegacy;
 
@@ -10,6 +11,12 @@ public static class ManorUi
 {
     private static CanvasLayer? modal;
     private static VBoxContainer? content;
+    private static ScrollContainer? scroll;
+    private static Button? closeButton;
+    private static ManorInput? input;
+    private static Action back = RequestClose;
+    private static readonly Dictionary<Node,Node.ProcessModeEnum> inputModes=new();
+    private static int navigationGeneration;
     private static bool wasPaused;
     private static Input.MouseModeEnum mouseMode;
     private static NCharacterSelectScreen? selectionScreen;
@@ -21,16 +28,57 @@ public static class ManorUi
     public static readonly IScreenContext ScreenContext = new ManorContext();
     private sealed class ManorContext : IScreenContext
     {
-        public Control? DefaultFocusedControl => content == null ? null : Descendants(content).OfType<Button>().FirstOrDefault(b=>!b.Disabled);
+        public Control? DefaultFocusedControl => content == null ? null : NavigationControls().FirstOrDefault(c=>c is Button);
     }
     private static IEnumerable<Node> Descendants(Node root)
     {
         yield return root;
         foreach(var child in root.GetChildren()) foreach(var node in Descendants(child)) yield return node;
     }
-    public static void PollInput()
+    private static List<Control> NavigationControls() => content == null ? [] :
+        Descendants(content).OfType<Control>().Where(c=>c.FocusMode==Control.FocusModeEnum.All && c.IsVisibleInTree() && (c is not Button b || !b.Disabled)).Concat(closeButton is null ? [] : new Control[]{closeButton}).ToList();
+    internal static void Navigate(int direction)
     {
-        if (IsOpen && Input.IsActionJustPressed("ui_cancel")) RequestClose();
+        var controls=NavigationControls(); if(controls.Count==0)return;
+        var index=controls.IndexOf(Tree.Root.GuiGetFocusOwner());
+        controls[Math.Clamp(index+direction,0,controls.Count-1)].GrabFocus();
+    }
+    internal static void Page(int direction)
+    {
+        if(scroll is null)return;
+        var bar=scroll.GetVScrollBar();
+        scroll.ScrollVertical=(int)Math.Clamp(scroll.ScrollVertical+direction*scroll.Size.Y*.8f,0,Math.Max(0,bar.MaxValue-bar.Page));
+    }
+    internal static void GoBack() => back();
+    internal static void Activate()
+    {
+        if(Tree.Root.GuiGetFocusOwner() is Button {Disabled:false} button) button.EmitSignal(Button.SignalName.Pressed);
+    }
+    private static void ConfigureNavigation(string? restore=null,int position=0)
+    {
+        var controls=NavigationControls();
+        for(var i=0;i<controls.Count;i++)
+        {
+            var item=controls[i]; item.Name=$"ManorItem{i}";
+            // The frame callback handles directions once; disable simultaneous native GUI movement.
+            var path=item.GetPath();
+            item.FocusNeighborTop=path;item.FocusNeighborBottom=path;item.FocusNeighborLeft=path;item.FocusNeighborRight=path;
+            if(item!=closeButton) {
+                var captured=item;
+                item.FocusEntered += () => { if(scroll is not null && content!.IsAncestorOf(captured)) scroll.EnsureControlVisible(captured); };
+            }
+        }
+        var target=controls.FirstOrDefault(c=>c.Name.ToString()==restore) ?? ScreenContext.DefaultFocusedControl;
+        target?.GrabFocus(); RestoreAfterLayout(target,position,++navigationGeneration);
+    }
+    private static async void RestoreAfterLayout(Control? target,int position,int generation)
+    {
+        // Newly rebuilt container children have no layout yet; wait before scrolling to them.
+        await Tree.ToSignal(Tree,SceneTree.SignalName.ProcessFrame);
+        await Tree.ToSignal(Tree,SceneTree.SignalName.ProcessFrame);
+        if(generation!=navigationGeneration || !IsOpen || target is null || !GodotObject.IsInstanceValid(target))return;
+        scroll!.ScrollVertical=position;target.GrabFocus();
+        if(content!.IsAncestorOf(target))scroll.EnsureControlVisible(target);
     }
     public static readonly Color[] BannerColors = [new("D8AA47"),new("8798E6"),new("CD6681"),new("76A76C")];
     private static readonly string[] BannerNames = ["Sun", "Moon", "Rose", "Oak"];
@@ -55,39 +103,61 @@ public static class ManorUi
     public static Button MakeButton(string text, Action action)
     {
         var button = new Button { Text = text, CustomMinimumSize = new(0,54), FocusMode = Control.FocusModeEnum.All };
+        var normal=new StyleBoxFlat {BgColor=new("28344D"),BorderColor=new("526581"),BorderWidthLeft=1,BorderWidthRight=1,BorderWidthTop=1,BorderWidthBottom=1,CornerRadiusTopLeft=8,CornerRadiusTopRight=8,CornerRadiusBottomLeft=8,CornerRadiusBottomRight=8,ContentMarginLeft=18,ContentMarginRight=18,ContentMarginTop=10,ContentMarginBottom=10};
+        button.AddThemeStyleboxOverride("normal",normal);
+        var focus=new StyleBoxFlat {BgColor=Colors.Transparent,BorderColor=new("FFE0A0"),BorderWidthLeft=4,BorderWidthRight=4,BorderWidthTop=4,BorderWidthBottom=4,CornerRadiusTopLeft=8,CornerRadiusTopRight=8,CornerRadiusBottomLeft=8,CornerRadiusBottomRight=8};
+        button.AddThemeStyleboxOverride("focus",focus);
+        var hover=(StyleBoxFlat)normal.Duplicate(); hover.BgColor=new("3C4F70"); button.AddThemeStyleboxOverride("hover",hover);
+        button.AddThemeColorOverride("font_color",new("F5F3EC"));
         button.AddThemeFontSizeOverride("font_size",24); button.Pressed += action;
         return button;
     }
     private static Label Text(string value, int size = 23)
     {
-        var label = new Label { Text = value, AutowrapMode = TextServer.AutowrapMode.WordSmart, SizeFlagsHorizontal = Control.SizeFlags.ExpandFill };
+        var label = new Label { Text = value, AutowrapMode = TextServer.AutowrapMode.WordSmart, SizeFlagsHorizontal = Control.SizeFlags.ExpandFill, FocusMode=Control.FocusModeEnum.All };
+        label.FocusEntered += () => label.SelfModulate=new Color("FFE0A0");
+        label.FocusExited += () => label.SelfModulate=Colors.White;
         label.AddThemeFontSizeOverride("font_size",size); return label;
     }
     public static void Open()
     {
         if (IsOpen) return;
         cart.Clear(); wasPaused = Tree.Paused;
+        foreach(var node in new Node?[]{NInputManager.Instance,NControllerManager.Instance})
+            if(node is not null) {inputModes[node]=node.ProcessMode;node.ProcessMode=Node.ProcessModeEnum.Always;}
         mouseMode = Input.MouseMode; Input.MouseMode = Input.MouseModeEnum.Visible;
         modal = new CanvasLayer { Name = "SpireLegacyManorModal", Layer = 110, ProcessMode = Node.ProcessModeEnum.Always };
         Tree.Root.AddChild(modal);
-        var shade = new ColorRect { Color = new(0.025f,.035f,.07f,.97f), MouseFilter = Control.MouseFilterEnum.Stop };
+        var shade = input = new ManorInput();
         modal.AddChild(shade); shade.SetAnchorsAndOffsetsPreset(Control.LayoutPreset.FullRect);
+        var backdrop=new ColorRect {Color=new(0.025f,.035f,.07f,.97f),MouseFilter=Control.MouseFilterEnum.Ignore};
+        shade.AddChild(backdrop); backdrop.SetAnchorsAndOffsetsPreset(Control.LayoutPreset.FullRect);
         var margins = new MarginContainer(); shade.AddChild(margins); margins.SetAnchorsAndOffsetsPreset(Control.LayoutPreset.FullRect);
         foreach (var name in new[] {"margin_left","margin_right","margin_top","margin_bottom"}) margins.AddThemeConstantOverride(name,35);
-        var scroll = new ScrollContainer { SizeFlagsHorizontal = Control.SizeFlags.ExpandFill, SizeFlagsVertical = Control.SizeFlags.ExpandFill, FollowFocus = true };
-        margins.AddChild(scroll);
+        var frame=new VBoxContainer(); margins.AddChild(frame);
+        scroll = new ScrollContainer { Name="ManorScroll", SizeFlagsHorizontal = Control.SizeFlags.ExpandFill, SizeFlagsVertical = Control.SizeFlags.ExpandFill, FollowFocus = false, HorizontalScrollMode=ScrollContainer.ScrollMode.Disabled };
+        scroll.GetVScrollBar().CustomMinimumSize=new(28,0);
+        frame.AddChild(scroll);
         content = new VBoxContainer { SizeFlagsHorizontal = Control.SizeFlags.ExpandFill };
         content.AddThemeConstantOverride("separation",16); scroll.AddChild(content);
-        Tree.Paused = true; Render(); ActiveScreenContext.Instance.Update();
+        var footer=new HBoxContainer(); frame.AddChild(footer);
+        var help=Text("D-pad / left stick: move · A: select · B: back / close · LB / RB: scroll",18);
+        help.FocusMode=Control.FocusModeEnum.None; footer.AddChild(help);
+        closeButton=MakeButton("Close / Back (B)",GoBack); closeButton.CustomMinimumSize=new(245,60); footer.AddChild(closeButton);
+        var closeStyle=(StyleBoxFlat)closeButton.GetThemeStylebox("normal").Duplicate(); closeStyle.BgColor=new("674D21"); closeStyle.BorderColor=new("E4BB69"); closeButton.AddThemeStyleboxOverride("normal",closeStyle);
+        Tree.Paused = true; Render(); ActiveScreenContext.Instance.Update(); Tree.ProcessFrame+=input.Poll;
     }
     private static void Clear()
     {
         foreach (var child in content!.GetChildren()) { content.RemoveChild(child); child.QueueFree(); }
+        if(scroll is not null)scroll.ScrollVertical=0;
     }
     private static void AddButton(string text, Action action) => content!.AddChild(MakeButton(text,action));
     private static void AddText(string text, int size = 23) => content!.AddChild(Text(text,size));
     private static void Render()
     {
+        var restore=Tree.Root.GuiGetFocusOwner()?.Name.ToString();
+        var position=scroll?.ScrollVertical ?? 0; back=RequestClose;
         Clear(); var profile = Runtime.Profile;
         var heading = Text($"{profile.family} Family Manor — generation {profile.generation + 1}",32); heading.Modulate = BannerColor; content!.AddChild(heading);
         AddText($"Crowns: {profile.crowns} · Banner: {BannerNames[profile.banner]} · Last heir earned {profile.lastEarned}");
@@ -104,7 +174,7 @@ public static class ManorUi
             AddText(failure,20);
             AddButton("Retry content preparation",() => { ContentBootstrap.Prepare(); Render(); });
         }
-        var options = new HBoxContainer(); content.AddChild(options);
+        var options = new VBoxContainer(); content.AddChild(options);
         options.AddChild(MakeButton("Name your family",() => EditValue(false)));
         options.AddChild(MakeButton("Change banner",() => { profile.banner = (profile.banner + 1) % 4; profile.Save(Runtime.FamilyPath); Render(); }));
         if (Design.Get("systems","playtest_crowns").Flag("enabled")) options.AddChild(MakeButton("PLAYTEST: Set crowns",() => EditValue(true)));
@@ -135,7 +205,8 @@ public static class ManorUi
             AddButton("Review purchases",Review);
             AddButton("Clear selected upgrades",() => { cart.Clear(); Render(); });
         }
-        FocusFirst();
+        if(scroll is not null)scroll.ScrollVertical=position;
+        ConfigureNavigation(restore,position);
     }
     private static void HeirDetails(FamilyProfile.Heir heir, bool selectable)
     {
@@ -153,16 +224,18 @@ public static class ManorUi
     }
     private static void Review()
     {
+        back=Render;
         Clear(); var profile = Runtime.Profile; var trial = profile.PreviewPurchases(cart);
         if (trial == null) { cart.Clear(); Render(); return; }
         AddText("Confirm manor purchases",32);
         foreach (var group in cart.GroupBy(x => x)) AddText($"{Design.Get("manor",group.Key).Text("name")} × {group.Count()}");
         AddText($"Spend {profile.crowns - trial.crowns} crowns? You will have {trial.crowns} left.");
         AddButton("Confirm and save",() => { if (profile.CommitPurchases(cart,Runtime.FamilyPath)) cart.Clear(); Render(); });
-        AddButton("Back to selection",Render); FocusFirst();
+        AddButton("Back to selection",Render); ConfigureNavigation();
     }
     private static void EditValue(bool crowns)
     {
+        back=Render;
         Clear(); AddText(crowns ? "PLAYTEST: Set crown balance" : "Name your family",32);
         var entry = new LineEdit { Text = crowns ? Runtime.Profile.crowns.ToString() : Runtime.Profile.family, MaxLength = crowns ? 10 : 24, VirtualKeyboardEnabled = true, CustomMinimumSize = new(0,60) };
         entry.AddThemeFontSizeOverride("font_size",28); content!.AddChild(entry);
@@ -185,24 +258,28 @@ public static class ManorUi
         AddText("Keyboard / Steam Deck: type normally or use these on-screen keys.");
         foreach (var letters in crowns ? new[] {"1234567890"} : new[] {"ABCDEFGHIJKLM","NOPQRSTUVWXYZ","abcdefghijklm","nopqrstuvwxyz"})
         {
-            var keys = new HBoxContainer(); content.AddChild(keys);
+            var keys = new HFlowContainer(); content.AddChild(keys);
             foreach (var letter in letters) { var captured = letter; keys.AddChild(MakeButton(letter.ToString(),() => { if (entry.Text.Length < entry.MaxLength) entry.Text += captured; })); }
         }
         AddButton("Backspace",() => { if (entry.Text.Length > 0) entry.Text = entry.Text[..^1]; });
         if (!crowns) AddButton("Space",() => { if (entry.Text.Length < 24) entry.Text += " "; });
-        AddButton("Clear text",() => entry.Text = ""); entry.GrabFocus();
+        AddButton("Clear text",() => entry.Text = ""); ConfigureNavigation(); entry.GrabFocus();
     }
     private static void RequestClose()
     {
         if (cart.Count == 0) { Close(); return; }
+        back=Render;
         Clear(); AddText("Discard the selected upgrades? Your crowns have not been spent.",30);
-        AddButton("Keep selecting",Render); AddButton("Discard and close",Close); FocusFirst();
+        AddButton("Keep selecting",Render); AddButton("Discard and close",Close); ConfigureNavigation();
     }
-    private static void FocusFirst() => ScreenContext.DefaultFocusedControl?.GrabFocus();
     public static void Close()
     {
         if (!IsOpen) return;
-        cart.Clear(); modal?.QueueFree(); modal = null; Tree.Paused = wasPaused; Input.MouseMode = mouseMode;
+        navigationGeneration++;
+        if(input is not null)Tree.ProcessFrame-=input.Poll;
+        input=null;cart.Clear(); modal?.QueueFree(); modal = null; content=null;scroll=null;closeButton=null; Tree.Paused = wasPaused; Input.MouseMode = mouseMode;
+        foreach(var pair in inputModes)if(GodotObject.IsInstanceValid(pair.Key))pair.Key.ProcessMode=pair.Value;
+        inputModes.Clear();
         ActiveScreenContext.Instance.Update();
         if (selectionScreen is {} screen && GodotObject.IsInstanceValid(screen) && screen.IsVisibleInTree())
         {

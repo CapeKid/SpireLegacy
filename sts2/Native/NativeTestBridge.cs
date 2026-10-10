@@ -37,7 +37,11 @@ public static class NativeTestBridge
         busy = true;
         try
         {
-            using var doc = JsonDocument.Parse(File.ReadAllText(path)); File.Delete(path);
+            string serialized;
+            // Windows can briefly lock the atomically delivered request during a file scan.
+            // Retry before executing any command, so a transient lock cannot duplicate an action.
+            try {serialized=File.ReadAllText(path);File.Delete(path);}catch(IOException){return;}
+            using var doc = JsonDocument.Parse(serialized);
             var request = doc.RootElement;
             object result;
             switch (request.GetProperty("command").GetString())
@@ -54,6 +58,11 @@ public static class NativeTestBridge
                     screen.SelectCharacter(button,button.Character);
                     result = new { selected = true }; break;
                 case "manor": ManorUi.Open(); result = new { open = true }; break;
+                case "manor-state":
+                    var manor=Descendants(Tree.Root).OfType<ManorInput>().Single();
+                    var manorScroll=Descendants(manor).OfType<ScrollContainer>().Single();
+                    var focus=Tree.Root.GuiGetFocusOwner();
+                    result=new{open=ManorUi.IsOpen,paused=Tree.Paused,scroll=manorScroll.ScrollVertical,maxScroll=manorScroll.GetVScrollBar().MaxValue-manorScroll.GetVScrollBar().Page,focus=focus?.Name.ToString(),focusText=focus is Button focusButton?focusButton.Text:focus is Label focusLabel?focusLabel.Text:null,buttons=Descendants(manor).OfType<Button>().Select(b=>new{text=b.Text,disabled=b.Disabled,focused=b.HasFocus(),rect=b.GetGlobalRect().ToString(),visible=b.IsVisibleInTree()}).ToArray()};break;
                 case "close": ManorUi.Close(); result = new { open = false }; break;
                 case "dismiss":
                     foreach (var ftue in Descendants(Tree.Root).OfType<MegaCrit.Sts2.Core.Nodes.Ftue.NCombatRulesFtue>().ToArray())
@@ -169,7 +178,9 @@ public static class NativeTestBridge
                 case "input":
                     var action=request.GetProperty("action").GetString()!;
                     Input.ParseInputEvent(new InputEventAction {Action=action,Pressed=true,Strength=1});
-                    await Tree.ToSignal(Tree,SceneTree.SignalName.ProcessFrame);
+                    var holdFrames=request.TryGetProperty("frames",out var frames)?frames.GetInt32():3;
+                    var holdUntil=request.TryGetProperty("milliseconds",out var milliseconds)?Time.GetTicksMsec()+(ulong)milliseconds.GetInt32():0;
+                    for(var frame=0;frame<holdFrames || Time.GetTicksMsec()<holdUntil;frame++)await Tree.ToSignal(Tree,SceneTree.SignalName.ProcessFrame);
                     Input.ParseInputEvent(new InputEventAction {Action=action,Pressed=false});
                     result=new{focus=Tree.Root.GuiGetFocusOwner()?.Name.ToString(),labels=Descendants(Tree.Root).OfType<Label>().Where(n=>n.IsVisibleInTree()).Select(n=>n.Text).ToArray()}; break;
                 case "cards":
