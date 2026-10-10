@@ -65,10 +65,14 @@ public static class NativeTestBridge
                         }
                     screen.SelectCharacter(button,button.Character);
                     button.GrabFocus();
+                    if(request.TryGetProperty("previewAscension",out var previewAscension)) {
+                        var panel=(NAscensionPanel)AccessTools.Field(screen.GetType(),"_ascensionPanel").GetValue(screen)!;
+                        panel.SetMaxAscension(10);panel.SetAscensionLevel(previewAscension.GetInt32());panel.AnimIn();
+                    }
                     result = new { selected = true }; break;
                 case "select-state":
                     var picker=Descendants(Tree.Root).OfType<NCharacterSelectScreen>().Single(s=>s.IsVisibleInTree());
-                    result=new{focus=Tree.Root.GuiGetFocusOwner()?.Name.ToString(),controls=Descendants(picker).OfType<Control>().Where(c=>c.IsVisibleInTree() && (c is NCharacterSelectButton || c.Name=="SpireLegacyManor" || c.Name=="BackButton")).Select(c=>new{name=c.Name.ToString(),rect=c.GetGlobalRect().ToString(),portrait=c is NCharacterSelectButton hb && hb.Character is HeirCharacter ? ((TextureRect)AccessTools.Field(hb.GetType(),"_icon").GetValue(hb)!).Texture==Runtime.Texture("heir/ui/heir-portrait.png") : false}).ToArray()};break;
+                    result=new{focus=Tree.Root.GuiGetFocusOwner()?.Name.ToString(),controls=Descendants(picker).OfType<Control>().Where(c=>c.IsVisibleInTree() && (c is NCharacterSelectButton || c.Name=="SpireLegacyManor" || c.Name=="BackButton" || c is NAscensionPanel || c.Name=="InfoPanel")).Select(c=>new{name=c.Name.ToString(),rect=c.GetGlobalRect().ToString(),portrait=c is NCharacterSelectButton hb && hb.Character is HeirCharacter ? ((TextureRect)AccessTools.Field(hb.GetType(),"_icon").GetValue(hb)!).Texture==Runtime.Texture("heir/ui/heir-portrait.png") : false}).ToArray()};break;
                 case "heal":
                     var healingPlayer=RunState().Players.Single();
                     healingPlayer.Creature.SetCurrentHpInternal(healingPlayer.Creature.MaxHp-10);

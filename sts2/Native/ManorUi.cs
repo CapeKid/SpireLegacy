@@ -90,19 +90,31 @@ public static class ManorUi
         if (!launchers.TryGetValue(id,out var button) || !GodotObject.IsInstanceValid(button))
         {
             button = MakeButton("Family Manor & Heir Lab (Y)",Open);
-            button.Name = "SpireLegacyManor"; button.Size = new(440,60);
+            button.Name = "SpireLegacyManor"; button.Size = new(420,60);
             button.AddThemeFontSizeOverride("font_size",22);
             screen.AddChild(button); launchers[id] = button;
             var captured=button;
+            var shortcutWasHeld=false;
             void Poll() {
+                // Steam Input emits action events during the controller node's _Process,
+                // after SceneTree.ProcessFrame. Track held-state edges across frames.
+                var shortcutHeld=Input.IsActionPressed("ui_accept") || Input.IsActionPressed("controller_face_button_north");
+                var shortcutPressed=shortcutHeld && !shortcutWasHeld;shortcutWasHeld=shortcutHeld;
                 if(!GodotObject.IsInstanceValid(screen) || !screen.IsVisibleInTree() || !captured.Visible || IsOpen || ActiveScreenContext.Instance.GetCurrentScreen()!=screen)return;
                 var heir=Descendants(screen).OfType<NCharacterSelectButton>().FirstOrDefault(b=>b.Character is HeirCharacter);
                 if(heir is null)return;
                 HeirSelectIcon.Apply(heir);
                 var rect=heir.GetGlobalRect();
-                captured.GlobalPosition=new(Math.Clamp(rect.GetCenter().X-captured.Size.X/2,40,screen.GetGlobalRect().End.X-captured.Size.X-40),rect.Position.Y-captured.Size.Y-24);
+                var info=(Control)AccessTools.Field(typeof(NCharacterSelectScreen),"_infoPanel").GetValue(screen)!;
+                // Ascension occupies the band above the portraits. Reserve its right
+                // side and put the Manor under the character information on the left.
+                var ascension=(Control)AccessTools.Field(typeof(NCharacterSelectScreen),"_ascensionPanel").GetValue(screen)!;
+                var x=info.GetGlobalRect().Position.X;
+                // The native panel includes the Ascension icon to the left of its text.
+                if(ascension.Visible)x=Math.Min(x,ascension.GetGlobalRect().Position.X-captured.Size.X-40);
+                captured.GlobalPosition=new(x,rect.Position.Y-captured.Size.Y-24);
                 heir.FocusNeighborBottom=captured.GetPath();captured.FocusNeighborTop=heir.GetPath();
-                if(Input.IsActionJustPressed("ui_accept"))Open();
+                if(shortcutPressed)Open();
             }
             Tree.ProcessFrame+=Poll;
             screen.TreeExiting+=()=>{Tree.ProcessFrame-=Poll;launchers.Remove(id);};
@@ -331,4 +343,16 @@ public static class ManorControllerContext
 public static class ManorCharacterMenu
 {
     public static void Postfix(NCharacterSelectScreen __instance, CharacterModel characterModel) => ManorUi.Attach(__instance,characterModel);
+}
+
+[HarmonyPatch(typeof(NCharacterSelectScreen),"get_InitialFocusedControl")]
+public static class PreserveHeirControllerFocus
+{
+    public static void Postfix(NCharacterSelectScreen __instance,ref Control __result)
+    {
+        // Switching from touch/mouse to controller otherwise focuses the first
+        // portrait, selects Ironclad, and hides the Heir's shortcut before it runs.
+        var selected=(NCharacterSelectButton?)AccessTools.Field(typeof(NCharacterSelectScreen),"_selectedButton").GetValue(__instance);
+        if(selected?.Character is HeirCharacter)__result=selected;
+    }
 }
