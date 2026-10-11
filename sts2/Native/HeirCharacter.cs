@@ -11,7 +11,22 @@ public sealed class HeirCharacter : PlaceholderCharacterModel
 {
     public override Color NameColor => new("C4A464");
     public override CharacterGender Gender => CharacterGender.Neutral;
-    public override Control CustomIcon => new TextureRect { Texture = Runtime.Texture("heir/ui/select-icon.png"), CustomMinimumSize = new(64,64), ExpandMode = TextureRect.ExpandModeEnum.IgnoreSize, StretchMode = TextureRect.StretchModeEnum.KeepAspectCentered };
+    public override Control CustomIcon => new TextureRect { Texture = Runtime.ClassIcon(HeirPresentation.ClassId), CustomMinimumSize = new(64,64), ExpandMode = TextureRect.ExpandModeEnum.IgnoreSize, StretchMode = TextureRect.StretchModeEnum.KeepAspectCentered };
+    public override string CustomIconTexturePath=>HeirPresentation.IconPath;
+    public override string CustomIconOutlineTexturePath=>HeirPresentation.TexturePath(HeirPresentation.ClassId+"-outline");
+    public override CustomEnergyCounter? CustomEnergyCounter=>new(i=>HeirPresentation.TexturePath(HeirPresentation.ClassId+"-energy-"+i),new Color("20232D"),HeirPresentation.Accent());
+    public override string CustomTrailPath=>HeirPresentation.TrailPath;
+    public override string CustomCharacterSelectTransitionPath=>HeirPresentation.TransitionPath;
+    public override string CharacterSelectSfx=>HeirPresentation.Sound("select");
+    public override string CharacterTransitionSfx=>HeirPresentation.Sound("transition");
+    public override string CustomAttackSfx=>HeirPresentation.Sound("attack");
+    public override string CustomCastSfx=>HeirPresentation.Sound("cast");
+    public override string CustomDeathSfx=>HeirPresentation.Sound("die");
+    public override Color EnergyLabelOutlineColor=>new("20232D");
+    public override Color DialogueColor=>new("3E344A");
+    public override Color MapDrawingColor=>HeirPresentation.Accent();
+    public override Color RemoteTargetingLineColor=>HeirPresentation.Accent();
+    public override List<string> GetArchitectAttackVfx()=>Enumerable.Range(0,5).Select(i=>"spirelegacy/architect/"+HeirPresentation.ClassId+"/"+i).ToList();
     public override int StartingHp => Inheritance.MaxHp(Design.Get("classes", Runtime.Heir.classId).Number("hp") + Runtime.Bonus("hp"));
     public override CardPoolModel CardPool => Runtime.Heir.classId switch { "mage" => ModelDb.CardPool<MageCardPool>(), "ranger" => ModelDb.CardPool<RangerCardPool>(), _ => ModelDb.CardPool<KnightCardPool>() };
     public override RelicPoolModel RelicPool => ModelDb.RelicPool<HeirRelicPool>();
@@ -36,7 +51,9 @@ public abstract class FamilyCardPool : CustomCardPoolModel
 {
     protected abstract string ClassId { get; }
     public override string Title => "Spire Legacy";
-    public override string EnergyColorName => "ironclad";
+    public override string BigEnergyIconPath=>HeirPresentation.TexturePath(ClassId+"-energy-icon");
+    public override string TextEnergyIconPath=>BigEnergyIconPath;
+    public override Color ShaderColor=>HeirPresentation.Accent(ClassId);
     public override Color DeckEntryCardColor => new("C4A464");
     public override bool IsColorless => false;
     protected override CardModel[] GenerateAllCards() => NativePoolParity.Rows(ClassId).Select(r => NativeCards.Get(r.Text("id"))).ToArray();
@@ -44,9 +61,11 @@ public abstract class FamilyCardPool : CustomCardPoolModel
 public sealed class KnightCardPool : FamilyCardPool { protected override string ClassId => "knight"; }
 public sealed class MageCardPool : FamilyCardPool { protected override string ClassId => "mage"; }
 public sealed class RangerCardPool : FamilyCardPool { protected override string ClassId => "ranger"; }
-public sealed class HeirRelicPool : RelicPoolModel
+public sealed class HeirRelicPool : RelicPoolModel,ICustomEnergyIconPool
 {
-    public override string EnergyColorName => "ironclad";
+    public override string EnergyColorName=>BaseLib.Patches.UI.CustomEnergyIconPatches.GetEnergyColorName(Id);
+    public string BigEnergyIconPath=>HeirPresentation.TexturePath(HeirPresentation.ClassId+"-energy-icon");
+    public string TextEnergyIconPath=>BigEnergyIconPath;
     protected override RelicModel[] GenerateAllRelics() => [ModelDb.Relic<BloodlineRelic>(),..HeirDropRelics.All];
 }
 public static class NativeCards

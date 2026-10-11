@@ -21,6 +21,7 @@ public static class HeirVisuals
         var portrait = HeirSprite.Create(Runtime.Heir.classId, roomSize);
         portrait.Name = "SpireLegacyRoomHeir"; portrait.Modulate = Colors.White;
         visual.AddChild(portrait);
+        HeirRoomMotion.Attach(visual,portrait,visual is MegaCrit.Sts2.Core.Nodes.RestSite.NRestSiteCharacter);
         TraitAppearance.Attach(visual,portrait,roomSize);
     }
     public static void Attach(NCreature creature)
@@ -90,7 +91,7 @@ public static class HeirMerchantPortrait
 public static class HeirHistoryPortrait
 {
     public static void Postfix(CharacterModel __instance,ref Texture2D __result) {
-        if(__instance is HeirCharacter)__result=Runtime.Texture("heir/ui/select-icon.png");
+        if(__instance is HeirCharacter)__result=Runtime.ClassIcon(HeirPresentation.ClassId);
     }
 }
 

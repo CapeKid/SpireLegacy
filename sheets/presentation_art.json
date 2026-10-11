@@ -1,0 +1,434 @@
+[
+  {
+    "id": "knight-transition-material",
+    "path": "heir/presentation/knight-transition.tres",
+    "kind": "material",
+    "sha256": "fd64d2f9422a1345082e7335a442e372bdfd4880a0beef1241c3dd5c2964e216",
+    "author": "CapeKid",
+    "license": "MIT",
+    "provenance": "Original geometry / deterministic sine-and-noise synthesis; scripts/author-heir-presentation.py"
+  },
+  {
+    "id": "knight-trail-scene",
+    "path": "heir/presentation/knight-trail.tscn",
+    "kind": "scene",
+    "sha256": "7b95557e1ea52eddbd955fecd360a2f5a564b3fa9765aafa2d418edf6c286c8d",
+    "author": "CapeKid",
+    "license": "MIT",
+    "provenance": "Original geometry / deterministic sine-and-noise synthesis; scripts/author-heir-presentation.py"
+  },
+  {
+    "id": "knight-energy-1-vector",
+    "path": "heir/presentation/knight-energy-1.svg",
+    "kind": "vector",
+    "sha256": "452eb3060a8b29e3c48e758a6e80fc87c4008283d9e38d2ae9a80036cfcda34a",
+    "author": "CapeKid",
+    "license": "MIT",
+    "provenance": "Original geometry / deterministic sine-and-noise synthesis; scripts/author-heir-presentation.py"
+  },
+  {
+    "id": "knight-energy-2-vector",
+    "path": "heir/presentation/knight-energy-2.svg",
+    "kind": "vector",
+    "sha256": "ffa70623b565544df40b00f336035f904e3a3b51dd00a590f88c18f968b363f6",
+    "author": "CapeKid",
+    "license": "MIT",
+    "provenance": "Original geometry / deterministic sine-and-noise synthesis; scripts/author-heir-presentation.py"
+  },
+  {
+    "id": "knight-energy-3-vector",
+    "path": "heir/presentation/knight-energy-3.svg",
+    "kind": "vector",
+    "sha256": "c07e1197f10cf0dc202195e95f4567ffcd21e24585e435acc8f97c0955e4a5c6",
+    "author": "CapeKid",
+    "license": "MIT",
+    "provenance": "Original geometry / deterministic sine-and-noise synthesis; scripts/author-heir-presentation.py"
+  },
+  {
+    "id": "knight-energy-4-vector",
+    "path": "heir/presentation/knight-energy-4.svg",
+    "kind": "vector",
+    "sha256": "e3f72754b108a243d9e48989126bec388fd755ffb9d553c22dd9d26e79925844",
+    "author": "CapeKid",
+    "license": "MIT",
+    "provenance": "Original geometry / deterministic sine-and-noise synthesis; scripts/author-heir-presentation.py"
+  },
+  {
+    "id": "knight-energy-5-vector",
+    "path": "heir/presentation/knight-energy-5.svg",
+    "kind": "vector",
+    "sha256": "19b1d99809d464b310491f38143bfd4214ac0ed3e40fedfef4fb298981fd90c0",
+    "author": "CapeKid",
+    "license": "MIT",
+    "provenance": "Original geometry / deterministic sine-and-noise synthesis; scripts/author-heir-presentation.py"
+  },
+  {
+    "id": "knight-energy-icon-vector",
+    "path": "heir/presentation/knight-energy-icon.svg",
+    "kind": "vector",
+    "sha256": "0dd42bd06a0228234d3e922676ae41d6e8d5df0fa8769be2faa0db58fefbc082",
+    "author": "CapeKid",
+    "license": "MIT",
+    "provenance": "Original geometry / deterministic sine-and-noise synthesis; scripts/author-heir-presentation.py"
+  },
+  {
+    "id": "knight-cookie-vector",
+    "path": "heir/presentation/knight-cookie.svg",
+    "kind": "vector",
+    "sha256": "8e1b88162e2dff342a3502a5cb0ef5c2d168826ed4b055292bf8674b09395923",
+    "author": "CapeKid",
+    "license": "MIT",
+    "provenance": "Original geometry / deterministic sine-and-noise synthesis; scripts/author-heir-presentation.py"
+  },
+  {
+    "id": "knight-cookie-outline-vector",
+    "path": "heir/presentation/knight-cookie-outline.svg",
+    "kind": "vector",
+    "sha256": "f359b23a2ed6314345e34d0a4dbd92c94fbda12ae81d4823def74a059a25ef07",
+    "author": "CapeKid",
+    "license": "MIT",
+    "provenance": "Original geometry / deterministic sine-and-noise synthesis; scripts/author-heir-presentation.py"
+  },
+  {
+    "id": "knight-outline-vector",
+    "path": "heir/presentation/knight-outline.svg",
+    "kind": "vector",
+    "sha256": "537aa7aa4ce31f92a97b7ab9b3fbac24c1f376e9ec62ebe60cef423388a1d122",
+    "author": "CapeKid",
+    "license": "MIT",
+    "provenance": "Original geometry / deterministic sine-and-noise synthesis; scripts/author-heir-presentation.py"
+  },
+  {
+    "id": "knight-attack-audio",
+    "path": "heir/presentation/knight-attack.wav",
+    "kind": "audio",
+    "sha256": "332ba333dc21e9cccb9ece6f5d09e80569b5e6013dfbfaf68940ddb54a9b79b1",
+    "author": "CapeKid",
+    "license": "MIT",
+    "provenance": "Original geometry / deterministic sine-and-noise synthesis; scripts/author-heir-presentation.py"
+  },
+  {
+    "id": "knight-cast-audio",
+    "path": "heir/presentation/knight-cast.wav",
+    "kind": "audio",
+    "sha256": "cef420ae56b3018c6cb61e4547c4182a8588f123470f2ad00e725069f5511c38",
+    "author": "CapeKid",
+    "license": "MIT",
+    "provenance": "Original geometry / deterministic sine-and-noise synthesis; scripts/author-heir-presentation.py"
+  },
+  {
+    "id": "knight-die-audio",
+    "path": "heir/presentation/knight-die.wav",
+    "kind": "audio",
+    "sha256": "82866810b25657e0566ec3d917fcc0eee701d4eb041e88f097fcf65b2219b377",
+    "author": "CapeKid",
+    "license": "MIT",
+    "provenance": "Original geometry / deterministic sine-and-noise synthesis; scripts/author-heir-presentation.py"
+  },
+  {
+    "id": "knight-select-audio",
+    "path": "heir/presentation/knight-select.wav",
+    "kind": "audio",
+    "sha256": "116a5af5461125f062e929dd45e98d4b839896bbc115337c0b2b65c9eec2e9b6",
+    "author": "CapeKid",
+    "license": "MIT",
+    "provenance": "Original geometry / deterministic sine-and-noise synthesis; scripts/author-heir-presentation.py"
+  },
+  {
+    "id": "knight-transition-audio",
+    "path": "heir/presentation/knight-transition.wav",
+    "kind": "audio",
+    "sha256": "c9f10eff79088f172a4fb577b7eb79949c02d55a5b5bbce57a98ed411d07aee1",
+    "author": "CapeKid",
+    "license": "MIT",
+    "provenance": "Original geometry / deterministic sine-and-noise synthesis; scripts/author-heir-presentation.py"
+  },
+  {
+    "id": "mage-transition-material",
+    "path": "heir/presentation/mage-transition.tres",
+    "kind": "material",
+    "sha256": "fdae510de659b654aa471bd662efa856d1a252bd2267b0e1086f5434baec66e8",
+    "author": "CapeKid",
+    "license": "MIT",
+    "provenance": "Original geometry / deterministic sine-and-noise synthesis; scripts/author-heir-presentation.py"
+  },
+  {
+    "id": "mage-trail-scene",
+    "path": "heir/presentation/mage-trail.tscn",
+    "kind": "scene",
+    "sha256": "d76f2007748d435e57802180af82d50cfe78f6a1e38516754d0231eaa8370e8e",
+    "author": "CapeKid",
+    "license": "MIT",
+    "provenance": "Original geometry / deterministic sine-and-noise synthesis; scripts/author-heir-presentation.py"
+  },
+  {
+    "id": "mage-energy-1-vector",
+    "path": "heir/presentation/mage-energy-1.svg",
+    "kind": "vector",
+    "sha256": "925692546c7be45ce85130b0251421a18d597427d8f92e3b3a94a7fc669de2dc",
+    "author": "CapeKid",
+    "license": "MIT",
+    "provenance": "Original geometry / deterministic sine-and-noise synthesis; scripts/author-heir-presentation.py"
+  },
+  {
+    "id": "mage-energy-2-vector",
+    "path": "heir/presentation/mage-energy-2.svg",
+    "kind": "vector",
+    "sha256": "eb629d315a7c0bbbf3d367de2260df29850a4c271b37cd934af0a4695aaeeb27",
+    "author": "CapeKid",
+    "license": "MIT",
+    "provenance": "Original geometry / deterministic sine-and-noise synthesis; scripts/author-heir-presentation.py"
+  },
+  {
+    "id": "mage-energy-3-vector",
+    "path": "heir/presentation/mage-energy-3.svg",
+    "kind": "vector",
+    "sha256": "f5c26685fe7d281bf3dd4b9dab0dce363c1530f186e15609e4eaf7cf195c9da2",
+    "author": "CapeKid",
+    "license": "MIT",
+    "provenance": "Original geometry / deterministic sine-and-noise synthesis; scripts/author-heir-presentation.py"
+  },
+  {
+    "id": "mage-energy-4-vector",
+    "path": "heir/presentation/mage-energy-4.svg",
+    "kind": "vector",
+    "sha256": "f48d959fc0554055aa880cf7e2221c314bd5e9734553f1d15deebc8086102b07",
+    "author": "CapeKid",
+    "license": "MIT",
+    "provenance": "Original geometry / deterministic sine-and-noise synthesis; scripts/author-heir-presentation.py"
+  },
+  {
+    "id": "mage-energy-5-vector",
+    "path": "heir/presentation/mage-energy-5.svg",
+    "kind": "vector",
+    "sha256": "5de44907b8b8bc55773c018208f99a6977d13d718016ed0150b608ff480e8ad6",
+    "author": "CapeKid",
+    "license": "MIT",
+    "provenance": "Original geometry / deterministic sine-and-noise synthesis; scripts/author-heir-presentation.py"
+  },
+  {
+    "id": "mage-energy-icon-vector",
+    "path": "heir/presentation/mage-energy-icon.svg",
+    "kind": "vector",
+    "sha256": "31b717788250ba66513f98ab799845f98e7153c69f1a9815465e6c90da025bba",
+    "author": "CapeKid",
+    "license": "MIT",
+    "provenance": "Original geometry / deterministic sine-and-noise synthesis; scripts/author-heir-presentation.py"
+  },
+  {
+    "id": "mage-cookie-vector",
+    "path": "heir/presentation/mage-cookie.svg",
+    "kind": "vector",
+    "sha256": "5f63fcce4ef61bc1ddfbc24d5940886ff72d2837171a9e752ac2169c1594dfde",
+    "author": "CapeKid",
+    "license": "MIT",
+    "provenance": "Original geometry / deterministic sine-and-noise synthesis; scripts/author-heir-presentation.py"
+  },
+  {
+    "id": "mage-cookie-outline-vector",
+    "path": "heir/presentation/mage-cookie-outline.svg",
+    "kind": "vector",
+    "sha256": "f359b23a2ed6314345e34d0a4dbd92c94fbda12ae81d4823def74a059a25ef07",
+    "author": "CapeKid",
+    "license": "MIT",
+    "provenance": "Original geometry / deterministic sine-and-noise synthesis; scripts/author-heir-presentation.py"
+  },
+  {
+    "id": "mage-outline-vector",
+    "path": "heir/presentation/mage-outline.svg",
+    "kind": "vector",
+    "sha256": "537aa7aa4ce31f92a97b7ab9b3fbac24c1f376e9ec62ebe60cef423388a1d122",
+    "author": "CapeKid",
+    "license": "MIT",
+    "provenance": "Original geometry / deterministic sine-and-noise synthesis; scripts/author-heir-presentation.py"
+  },
+  {
+    "id": "mage-attack-audio",
+    "path": "heir/presentation/mage-attack.wav",
+    "kind": "audio",
+    "sha256": "5b959e48cea0c6cf2d2239bc9b52f86f4759b60a7a4496a926f2d48c1652d552",
+    "author": "CapeKid",
+    "license": "MIT",
+    "provenance": "Original geometry / deterministic sine-and-noise synthesis; scripts/author-heir-presentation.py"
+  },
+  {
+    "id": "mage-cast-audio",
+    "path": "heir/presentation/mage-cast.wav",
+    "kind": "audio",
+    "sha256": "96d974363d4c7d16046d84fdeb7a0b9271d2b306dfd2933956047023b6c1357e",
+    "author": "CapeKid",
+    "license": "MIT",
+    "provenance": "Original geometry / deterministic sine-and-noise synthesis; scripts/author-heir-presentation.py"
+  },
+  {
+    "id": "mage-die-audio",
+    "path": "heir/presentation/mage-die.wav",
+    "kind": "audio",
+    "sha256": "5e6094755788113fdbb9139b817e3f106606a5e2249384c603e6b1ebca7535b6",
+    "author": "CapeKid",
+    "license": "MIT",
+    "provenance": "Original geometry / deterministic sine-and-noise synthesis; scripts/author-heir-presentation.py"
+  },
+  {
+    "id": "mage-select-audio",
+    "path": "heir/presentation/mage-select.wav",
+    "kind": "audio",
+    "sha256": "3a7921b15fa188798f1bc12f99be8c9b615ed788d82de51eea9fd5231092e39b",
+    "author": "CapeKid",
+    "license": "MIT",
+    "provenance": "Original geometry / deterministic sine-and-noise synthesis; scripts/author-heir-presentation.py"
+  },
+  {
+    "id": "mage-transition-audio",
+    "path": "heir/presentation/mage-transition.wav",
+    "kind": "audio",
+    "sha256": "28d3fe5026dba96bda3d5dd8f048aa6e43491b29441d2057bc1f4a4bd4c3cf49",
+    "author": "CapeKid",
+    "license": "MIT",
+    "provenance": "Original geometry / deterministic sine-and-noise synthesis; scripts/author-heir-presentation.py"
+  },
+  {
+    "id": "ranger-transition-material",
+    "path": "heir/presentation/ranger-transition.tres",
+    "kind": "material",
+    "sha256": "4ab4d1d71ae7a163a9d973de42084c20b3c947cfaf2fa8044d5d105b220e4a84",
+    "author": "CapeKid",
+    "license": "MIT",
+    "provenance": "Original geometry / deterministic sine-and-noise synthesis; scripts/author-heir-presentation.py"
+  },
+  {
+    "id": "ranger-trail-scene",
+    "path": "heir/presentation/ranger-trail.tscn",
+    "kind": "scene",
+    "sha256": "3d2bda8d8af160592d99630e14594b1b4308c800ec248686381327eaf53ecf8a",
+    "author": "CapeKid",
+    "license": "MIT",
+    "provenance": "Original geometry / deterministic sine-and-noise synthesis; scripts/author-heir-presentation.py"
+  },
+  {
+    "id": "ranger-energy-1-vector",
+    "path": "heir/presentation/ranger-energy-1.svg",
+    "kind": "vector",
+    "sha256": "4071eec3a45091b7c126cf4e79479dc02017ddd98b26b09e008a16779e7a6e09",
+    "author": "CapeKid",
+    "license": "MIT",
+    "provenance": "Original geometry / deterministic sine-and-noise synthesis; scripts/author-heir-presentation.py"
+  },
+  {
+    "id": "ranger-energy-2-vector",
+    "path": "heir/presentation/ranger-energy-2.svg",
+    "kind": "vector",
+    "sha256": "685c77fa0344fc36acdfba6aa10ff005f23d05173b16ade3e65e4130517bcc88",
+    "author": "CapeKid",
+    "license": "MIT",
+    "provenance": "Original geometry / deterministic sine-and-noise synthesis; scripts/author-heir-presentation.py"
+  },
+  {
+    "id": "ranger-energy-3-vector",
+    "path": "heir/presentation/ranger-energy-3.svg",
+    "kind": "vector",
+    "sha256": "2c0e34f78510e7ec6cfb366aeb53a9e57b8d37deabe8fefb55bae50475cfbf60",
+    "author": "CapeKid",
+    "license": "MIT",
+    "provenance": "Original geometry / deterministic sine-and-noise synthesis; scripts/author-heir-presentation.py"
+  },
+  {
+    "id": "ranger-energy-4-vector",
+    "path": "heir/presentation/ranger-energy-4.svg",
+    "kind": "vector",
+    "sha256": "b3091f2b30139d339fad3f6e443031a1fc7fd2f5165085ada6b42b2316464545",
+    "author": "CapeKid",
+    "license": "MIT",
+    "provenance": "Original geometry / deterministic sine-and-noise synthesis; scripts/author-heir-presentation.py"
+  },
+  {
+    "id": "ranger-energy-5-vector",
+    "path": "heir/presentation/ranger-energy-5.svg",
+    "kind": "vector",
+    "sha256": "cd53659081f9329d2270d6b6a5253257c6f42dd315cdcccaf9f9d4288ddf5dde",
+    "author": "CapeKid",
+    "license": "MIT",
+    "provenance": "Original geometry / deterministic sine-and-noise synthesis; scripts/author-heir-presentation.py"
+  },
+  {
+    "id": "ranger-energy-icon-vector",
+    "path": "heir/presentation/ranger-energy-icon.svg",
+    "kind": "vector",
+    "sha256": "92612cf7933e1c777c7084b07b6a5545cd94ac3eb603a56fb96ed6dbea055de3",
+    "author": "CapeKid",
+    "license": "MIT",
+    "provenance": "Original geometry / deterministic sine-and-noise synthesis; scripts/author-heir-presentation.py"
+  },
+  {
+    "id": "ranger-cookie-vector",
+    "path": "heir/presentation/ranger-cookie.svg",
+    "kind": "vector",
+    "sha256": "3652e8850cd88f24aa0fd10b967a2a94a97315bcfa4cadc4a14a1b39b01e7297",
+    "author": "CapeKid",
+    "license": "MIT",
+    "provenance": "Original geometry / deterministic sine-and-noise synthesis; scripts/author-heir-presentation.py"
+  },
+  {
+    "id": "ranger-cookie-outline-vector",
+    "path": "heir/presentation/ranger-cookie-outline.svg",
+    "kind": "vector",
+    "sha256": "f359b23a2ed6314345e34d0a4dbd92c94fbda12ae81d4823def74a059a25ef07",
+    "author": "CapeKid",
+    "license": "MIT",
+    "provenance": "Original geometry / deterministic sine-and-noise synthesis; scripts/author-heir-presentation.py"
+  },
+  {
+    "id": "ranger-outline-vector",
+    "path": "heir/presentation/ranger-outline.svg",
+    "kind": "vector",
+    "sha256": "537aa7aa4ce31f92a97b7ab9b3fbac24c1f376e9ec62ebe60cef423388a1d122",
+    "author": "CapeKid",
+    "license": "MIT",
+    "provenance": "Original geometry / deterministic sine-and-noise synthesis; scripts/author-heir-presentation.py"
+  },
+  {
+    "id": "ranger-attack-audio",
+    "path": "heir/presentation/ranger-attack.wav",
+    "kind": "audio",
+    "sha256": "929d4bac4416c492185a74138a6c25dcd4a6bc3f8319a8994ba2651754c6b499",
+    "author": "CapeKid",
+    "license": "MIT",
+    "provenance": "Original geometry / deterministic sine-and-noise synthesis; scripts/author-heir-presentation.py"
+  },
+  {
+    "id": "ranger-cast-audio",
+    "path": "heir/presentation/ranger-cast.wav",
+    "kind": "audio",
+    "sha256": "fc09413884024617a8f783f5ec20faa919377a04837788103d9793b46c611f71",
+    "author": "CapeKid",
+    "license": "MIT",
+    "provenance": "Original geometry / deterministic sine-and-noise synthesis; scripts/author-heir-presentation.py"
+  },
+  {
+    "id": "ranger-die-audio",
+    "path": "heir/presentation/ranger-die.wav",
+    "kind": "audio",
+    "sha256": "faf68c18c2749ebca6eb20ba0decabf34face0ef73abc064365c8938ec2c5d75",
+    "author": "CapeKid",
+    "license": "MIT",
+    "provenance": "Original geometry / deterministic sine-and-noise synthesis; scripts/author-heir-presentation.py"
+  },
+  {
+    "id": "ranger-select-audio",
+    "path": "heir/presentation/ranger-select.wav",
+    "kind": "audio",
+    "sha256": "49dbd0298d39c65fd029a46caffa6973479d3fb866b3b95b389d29e58735ddc2",
+    "author": "CapeKid",
+    "license": "MIT",
+    "provenance": "Original geometry / deterministic sine-and-noise synthesis; scripts/author-heir-presentation.py"
+  },
+  {
+    "id": "ranger-transition-audio",
+    "path": "heir/presentation/ranger-transition.wav",
+    "kind": "audio",
+    "sha256": "4e9583fb3fa8dc3ab6d93b3254856d510dd5031d064d598f709cea85c430f77f",
+    "author": "CapeKid",
+    "license": "MIT",
+    "provenance": "Original geometry / deterministic sine-and-noise synthesis; scripts/author-heir-presentation.py"
+  }
+]
