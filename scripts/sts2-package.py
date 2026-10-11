@@ -51,6 +51,7 @@ for art in json.loads((repo/'sheets/presentation_art.json').read_text()):
     source=repo/'src/main/resources'/art['path']
     if hashlib.sha256(source.read_bytes()).hexdigest()!=art['sha256']:raise ValueError('Presentation asset hash mismatch: '+art['id'])
     copy(source,mod/art['path'])
+copy(repo/'docs/heir-ancient-cards.md',mod/'heir-ancient-cards.md')
 for art in json.loads((repo/'sheets/potion_art.json').read_text()):
     for field,hashfield in [('path','sha256'),('outline','outlineSha256')]:
         source=repo/'src/main/resources'/art[field]

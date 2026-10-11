@@ -36,6 +36,7 @@ public sealed class P_noxious : LegacyPower { }
 public sealed class P_foresight : LegacyPower { }
 public sealed class P_scry_block : LegacyPower { }
 public sealed class P_flame_barrier : LegacyPower { }
+public sealed class P_arcane_echo : LegacyPower { }
 public sealed class P_plated : LegacyPower { }
 public sealed class P_reservoir : LegacyPower { }
 public sealed class P_quiver : LegacyPower { }

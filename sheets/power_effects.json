@@ -142,5 +142,9 @@
   {
     "id": "flame_barrier",
     "summary": "When attacked this turn, deal !M! damage back."
+  },
+  {
+    "id": "arcane_echo",
+    "summary": "The first Skill you play each turn draws !M! card(s) and grants 1 Arcane Charge (up to 2)."
   }
 ]

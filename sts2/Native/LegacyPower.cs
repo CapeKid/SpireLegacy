@@ -70,6 +70,7 @@ public abstract class LegacyPower:CustomPowerModel
      foreach(var enemy in targets.Where(e=>e.IsAlive))await CardEffects.Apply(context,"vulnerable",enemy,1,Owner,card);}}
   }
   if(Key=="power_draw"&&card.Type==CardType.Power)await CardPileCmd.Draw(context,Amount,Owner.Player!);
+  if(Key=="arcane_echo"&&card.Type==CardType.Skill&&++plays==1){if(Owner.GetPower<P_class>() is {} charge&&Runtime.Heir.classId=="mage")charge.Charges=Math.Min(2,charge.Charges+1);await CardPileCmd.Draw(context,Amount,Owner.Player!);}
   if(Key=="thousand_cuts")await DamageAll(context,Amount);
   if((Key is "skill_block" or "skill_energy"&&card.Type==CardType.Skill)||(Key=="attack_vigor"&&card.Type==CardType.Attack)){
    if(++plays==3){plays=0;if(Key=="skill_block")await CreatureCmd.GainBlock(Owner,Amount,ValueProp.Unpowered,null);if(Key=="skill_energy")await CardEffects.Apply(context,"nextEnergy",Owner,Amount,Owner,card);if(Key=="attack_vigor")await CardEffects.Apply(context,"vigor",Owner,Amount,Owner,card);}}

@@ -56,7 +56,7 @@ public abstract class FamilyCardPool : CustomCardPoolModel
     public override Color ShaderColor=>HeirPresentation.Accent(ClassId);
     public override Color DeckEntryCardColor => new("C4A464");
     public override bool IsColorless => false;
-    protected override CardModel[] GenerateAllCards() => NativePoolParity.Rows(ClassId).Select(r => NativeCards.Get(r.Text("id"))).ToArray();
+    protected override CardModel[] GenerateAllCards() => NativePoolParity.Rows(ClassId).Concat(Design.Rows("ancient_cards").Where(r=>r.Text("classId")==ClassId).Select(r=>Design.Get("cards",r.Text("cardId")))).Select(r => NativeCards.Get(r.Text("id"))).ToArray();
 }
 public sealed class KnightCardPool : FamilyCardPool { protected override string ClassId => "knight"; }
 public sealed class MageCardPool : FamilyCardPool { protected override string ClassId => "mage"; }
