@@ -5,6 +5,7 @@ namespace SpireLegacy;
 /// <summary>Compatible family JSON; game run saves remain owned by the StS2 engine.</summary>
 public sealed class FamilyProfile
 {
+    public string familyId = Guid.NewGuid().ToString();
     public string family = "Ashford";
     public int banner, generation, crowns, lastEarned;
     public Dictionary<string, int> manor = new();
@@ -21,6 +22,10 @@ public sealed class FamilyProfile
     public sealed class FamilyRun
     {
         public string id = "";
+        public string familyId = "", family = "", motto = "";
+        public ulong ownerNetId;
+        public int generation, banner;
+        public bool coop;
         public Heir heir = new();
         public int floors;
         public Dictionary<string, int> bonuses = new();
@@ -51,7 +56,7 @@ public sealed class FamilyProfile
     {
         if (active is not null && active.id != settledId) throw new InvalidOperationException("Resume or abandon the unfinished heir first.");
         if (offers.Count == 0) GenerateOffers(seed);
-        active = new FamilyRun { id = Guid.NewGuid().ToString(), heir = selected ?? offers[new Random(seed).Next(offers.Count)], quick = generation == 0 };
+        active = FamilySnapshot.Freeze(this,selected ?? offers[new Random(seed).Next(offers.Count)]);
         FamilyChronicle.Reconcile(this);
         active.chronicleRelics=FamilyChronicle.Relics(this).ToList();
         foreach (var effect in new[] { "hp", "strength", "dexterity", "draw", "gold", "heal" }) active.bonuses[effect] = Bonus(effect);
@@ -60,7 +65,7 @@ public sealed class FamilyProfile
     }
     public int Settle(string runId, int floors, int gold, bool victory)
     {
-        if (active is null || active.id != runId || settledId == runId) return 0;
+        if (active is null || active.id != runId || settledId == runId || chronicle.settledRuns.Contains(runId)) return 0;
         var percent = Math.Clamp(100 + active.heir.traits.Sum(id => Design.Get("traits", id).Number("goldBonus")), 0, 200);
         long basis = (long)Math.Max(0, floors) * Design.Get("systems", "legacy").Number("amount") + Math.Max(0, gold) / Design.Get("systems", "gold_conversion").Number("amount") + (victory ? Design.Get("systems", "victory").Number("amount") : 0);
         var earned = (int)Math.Min(int.MaxValue, basis * percent * (100L + active.bonuses.GetValueOrDefault("gold")) / 10000);
@@ -100,9 +105,12 @@ public sealed class FamilyProfile
     }
     private static FamilyProfile Read(string path)
     {
-        var value = JsonSerializer.Deserialize<FamilyProfile>(File.ReadAllText(path), JsonOptions);
+        var serialized=File.ReadAllText(path);
+        var value = JsonSerializer.Deserialize<FamilyProfile>(serialized, JsonOptions);
         if (value is null || value.family is null || value.manor is null || value.offers is null || value.crowns < 0) throw new InvalidDataException("Invalid family save");
         if(value.chronicle is {} history&&(history.classes is null||history.unlocked is null||history.read is null||history.settledRuns is null||history.motto is null||history.classes.Any(p=>p.Value is null||p.Value.returns<0||p.Value.maxFloor<0||p.Value.wins<0)))throw new InvalidDataException("Invalid family Chronicle; backup will be tried.");
+        using var document=JsonDocument.Parse(serialized);
+        if(!document.RootElement.TryGetProperty("familyId",out _))value.familyId="";
         return value;
     }
     public bool RefundRetiredLevels()
@@ -126,6 +134,7 @@ public sealed class FamilyProfile
         try { profile = Read(path); }
         catch (Exception first) { try { profile = Read(path + ".bak"); } catch (Exception second) { throw new InvalidDataException("Family save and backup are damaged; both preserved.", new AggregateException(first, second)); } }
         var changed=profile.RefundRetiredLevels();changed|=FamilyChronicle.Reconcile(profile);
+        if(string.IsNullOrEmpty(profile.familyId)){profile.familyId=Guid.NewGuid().ToString();changed=true;}
         if (changed) profile.Save(path);
         return profile;
     }

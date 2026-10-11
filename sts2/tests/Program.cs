@@ -3,6 +3,39 @@ using System.Text.Json;
 
 var count = 0;
 void Check(bool value, string message) { count++; if (!value) throw new Exception(message); }
+var coopFamilies=new[]{new FamilyProfile{family="First family",generation=3},new FamilyProfile{family="Second family",generation=7}};
+var coopHeirs=new[]{new FamilyProfile.Heir{name="First",classId="knight",traits=["easybreakables"]},new FamilyProfile.Heir{name="Second",classId="mage",traits=[]}};
+var coopRuns=coopFamilies.Select((p,i)=>FamilySnapshot.Freeze(p,coopHeirs[i],(ulong)(i+1),true)).ToArray();
+for(var i=0;i<coopRuns.Length;i++) {
+    var coopRun=coopRuns[i];var family=coopFamilies[i];family.active=coopRun;
+    var restored=FamilySnapshot.ReadNetwork(FamilySnapshot.Serialize(coopRun),coopRun.ownerNetId);
+    Check(restored.heir.classId==coopHeirs[i].classId&&restored.familyId==family.familyId&&!restored.quick,"Co-op heir identity and no quick-start");
+    Check(FamilySnapshot.CanSettle(family,coopRun,coopRun.ownerNetId),"Owner may settle its active co-op climb");
+    Check(!FamilySnapshot.CanSettle(family,coopRun,coopRun.ownerNetId+1),"Another player cannot settle the family");
+    Check(!FamilySnapshot.CanSettle(coopFamilies[1-i],coopRun,coopRun.ownerNetId),"Other family cannot settle the coopRun");
+    family.Settle(coopRun.id,3,0,false);
+    Check(!FamilySnapshot.CanSettle(family,coopRun,coopRun.ownerNetId),"Settlement cannot repeat");
+}
+Check(coopRuns[0].familyId!=coopRuns[1].familyId&&coopRuns[0].id!=coopRuns[1].id,"Independent family and run IDs");
+coopFamilies[0].selected=new(){classId="knight",traits=[]};var newerCoopRun=coopFamilies[0].Begin(3);coopFamilies[0].Settle(newerCoopRun.id,2,0,false);
+var replayCrowns=coopFamilies[0].crowns;coopFamilies[0].active=coopRuns[0];
+Check(!FamilySnapshot.CanSettle(coopFamilies[0],coopRuns[0],1),"Older settled snapshot cannot replay after another climb");
+Check(coopFamilies[0].Settle(coopRuns[0].id,50,999,true)==0&&coopFamilies[0].crowns==replayCrowns,"Recorded run IDs prevent crown replay after an intervening settlement");
+coopFamilies[0].active=null;
+coopHeirs[0].traits.Clear();coopFamilies[0].family="Changed later";
+Check(coopRuns[0].heir.traits.SequenceEqual(new[]{"easybreakables"})&&coopRuns[0].family=="First family","Ready snapshot is independent of later UI edits");
+void RejectCoop(FamilyProfile.FamilyRun run,ulong sender,string reason) {
+    var rejected=false;try{FamilySnapshot.ReadNetwork(FamilySnapshot.Serialize(run),sender);}catch{rejected=true;}
+    Check(rejected,reason);
+}
+RejectCoop(coopRuns[0],99,"Authenticated sender must match snapshot owner");
+var invalidCoop=FamilySnapshot.Read(FamilySnapshot.Serialize(coopRuns[0]));invalidCoop.bonuses["strength"]=999;
+RejectCoop(invalidCoop,1,"Manor bonuses must stay within design limits");
+invalidCoop=FamilySnapshot.Read(FamilySnapshot.Serialize(coopRuns[0]));invalidCoop.chronicleRelics.Add("invented_relic");
+RejectCoop(invalidCoop,1,"Only original Chronicle unlocks synchronize");
+invalidCoop=FamilySnapshot.Read(FamilySnapshot.Serialize(coopRuns[0]));invalidCoop.heir.traits.Add("easybreakables");
+RejectCoop(invalidCoop,1,"Duplicate traits cannot synchronize");
+Check(new HeirInheritance(coopRuns[0].heir).Has("first_attack_block_loss")&&!new HeirInheritance(coopRuns[1].heir).Has("first_attack_block_loss"),"Inherited mechanics are independent per owner");
 var ancientScripts=new HashSet<string>();
 Check(Design.Rows("ancient_dialogue").Count==48,"Eight Ancients, three classes, two visit conversations");
 foreach(var npc in AncientConversation.Supported)foreach(var cls in new[]{"knight","mage","ranger"})foreach(var visits in new[]{0,1,4,10,100}) {

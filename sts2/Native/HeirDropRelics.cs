@@ -28,6 +28,7 @@ public static class HeirDropRelics
 /// <summary>Bounded, owner-scoped family synergies. Claims precede asynchronous effects.</summary>
 public abstract class FamilyDropRelic : CustomRelicModel
 {
+    private HeirInheritance Inheritance=>PlayerBloodlines.Traits(Owner);
     protected FamilyDropRelic():base(false) { }
     public string Key=>GetType().Name[2..];
     public Design.Row Row=>Design.Get("heir_relics",Key);
@@ -53,9 +54,8 @@ public abstract class FamilyDropRelic : CustomRelicModel
             if(Key is "training_dummy" or "triune_crest" or "trail_compass")yield return HoverTipFactory.FromPower<VigorPower>();
         }
     }
-    public override bool IsAllowed(IRunState runState)=>runState.Players.Any(p=>p.Character is HeirCharacter)
-        &&FamilyChronicle.RelicAvailable(Runtime.Profile,Key)
-        &&!(Inheritance.Has("pacifist")&&(Key is "training_dummy" or "family_seal" or "guardian_knot" or "trail_compass" || Key=="triune_crest"&&Runtime.Heir.classId=="ranger"));
+    public override bool IsAllowed(IRunState runState)=>PlayerBloodlines.EligibilityOwner.Value is {} player
+        ?PlayerBloodlines.Eligible(player,Key):runState.Players.Any(p=>PlayerBloodlines.Eligible(p,Key));
     [SavedProperty] public bool CombatClaimed { get; set; }
     [SavedProperty] public int TriggerTurn { get; set; }=-1;
     [SavedProperty] public int TypeMask { get; set; }
@@ -108,7 +108,7 @@ public abstract class FamilyDropRelic : CustomRelicModel
             case "training_dummy" when play.Card.Type==CardType.Attack&&Owner.Creature.Block>0:
                 if(ClaimTurn())await CardEffects.Apply(context,"vigor",Owner.Creature,Row.Number("amount"),Owner.Creature,null);break;
             case "triune_crest":
-                var cls=Runtime.Heir.classId;
+                var cls=PlayerBloodlines.Heir(Owner).classId;
                 if((cls=="ranger"?play.Card.Type==CardType.Attack:play.Card.Type==CardType.Skill)&&ClaimCombat())
                 {
                     if(cls=="knight")await Block(Row.Number("amount"));

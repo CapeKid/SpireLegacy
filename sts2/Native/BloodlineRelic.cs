@@ -17,6 +17,7 @@ namespace SpireLegacy;
 /// <summary>Run-wide inheritance hooks; the visible manor panel supplies the full trait descriptions.</summary>
 public sealed class BloodlineRelic : CustomRelicModel
 {
+    private HeirInheritance Inheritance=>PlayerBloodlines.Traits(Owner);
     public BloodlineRelic() : base(false) { }
     public override RelicRarity Rarity => RelicRarity.Starter;
     private string IdentityClass=>IsMutable&&Owner!=null?HeirPresentation.ClassFor(Owner):HeirPresentation.ClassId;
@@ -42,7 +43,7 @@ public sealed class BloodlineRelic : CustomRelicModel
                 await RelicCmd.Obtain(relic.ToMutable(),Owner);
             }
         }
-        if (Runtime.Profile.active is { quick:true } run && Owner.RunState.TotalFloor == 0)
+        if (PlayerBloodlines.State(Owner) is { quick:true,coop:false } run && Owner.RunState.TotalFloor == 0)
         {
             run.quick = false;
             FamilyRunSnapshot = JsonSerializer.Serialize(run,FamilyProfile.JsonOptions);
@@ -51,7 +52,7 @@ public sealed class BloodlineRelic : CustomRelicModel
         }
     }
     private Task Apply(PlayerChoiceContext context, string key, Creature target, int value) => value == 0 ? Task.CompletedTask : CardEffects.Apply(context,key,target,value,Owner.Creature,null);
-    public override decimal ModifyHandDraw(Player player, decimal count) => player == Owner ? count + Runtime.Bonus("draw") + Inheritance.Stat("draw") + (player.PlayerCombatState?.TurnNumber == 1 ? Inheritance.Amount("opening_draw_energy") : 0) : count;
+    public override decimal ModifyHandDraw(Player player, decimal count) => player == Owner ? count + PlayerBloodlines.Bonus(Owner,"draw") + Inheritance.Stat("draw") + (player.PlayerCombatState?.TurnNumber == 1 ? Inheritance.Amount("opening_draw_energy") : 0) : count;
     public override decimal ModifyMaxEnergy(Player player, decimal amount) => player == Owner ? amount + Inheritance.Amount("energy") + Inheritance.Amount("overcharge") : amount;
     public override decimal ModifyMerchantPrice(Player player, MerchantEntry entry, decimal cost) => player == Owner ? cost * (1 - Inheritance.Amount("shop") / 100m) : cost;
     public override bool ShouldPlay(CardModel card, AutoPlayType type) => card.Owner != Owner || !Inheritance.Has("pacifist") || card.Type != CardType.Attack;
@@ -59,8 +60,8 @@ public sealed class BloodlineRelic : CustomRelicModel
     {
         firstSkill = firstAttack = firstHurt = true; firstAttackTargets.Clear(); shocked = false; pendingEnergy = 0;
         var context = new BlockingPlayerChoiceContext();
-        await Apply(context,"strength",Owner.Creature,Runtime.Bonus("strength") + Inheritance.Stat("strength"));
-        await Apply(context,"dexterity",Owner.Creature,Runtime.Bonus("dexterity") + Inheritance.Stat("dexterity"));
+        await Apply(context,"strength",Owner.Creature,PlayerBloodlines.Bonus(Owner,"strength") + Inheritance.Stat("strength"));
+        await Apply(context,"dexterity",Owner.Creature,PlayerBloodlines.Bonus(Owner,"dexterity") + Inheritance.Stat("dexterity"));
         await Apply(context,"class",Owner.Creature,1);
         foreach (var enemy in Owner.Creature.CombatState!.GetOpponentsOf(Owner.Creature).Where(e => e.IsAlive))
         {
@@ -160,13 +161,16 @@ public sealed class BloodlineRelic : CustomRelicModel
     {
         if (room is TreasureRoom && Inheritance.Amount("chest") > 0) await CreatureCmd.Damage(new BlockingPlayerChoiceContext(),Owner.Creature,Inheritance.Amount("chest"),ValueProp.Unblockable | ValueProp.Unpowered,Owner.Creature);
         if (room is TreasureRoom && !Owner.Creature.IsDead && Inheritance.Amount("treasure_gold") > 0) await PlayerCmd.GainGold(Inheritance.Amount("treasure_gold"),Owner);
-        if (Runtime.Profile.active is {} run) { run.floors = Math.Max(run.floors,Owner.RunState.TotalFloor); FamilyRunSnapshot = JsonSerializer.Serialize(run,FamilyProfile.JsonOptions); Runtime.Profile.Save(Runtime.FamilyPath); }
+        if (PlayerBloodlines.State(Owner) is {} run) {
+            run.floors=Math.Max(run.floors,Owner.RunState.TotalFloor);FamilyRunSnapshot=FamilySnapshot.Serialize(run);
+            if(FamilySnapshot.CanSettle(Runtime.Profile,run,MegaCrit.Sts2.Core.Runs.RunManager.Instance.NetService.NetId))Runtime.Profile.Save(Runtime.FamilyPath);
+        }
     }
     public override async Task AfterCombatVictory(CombatRoom room)
     {
         if (Owner.Creature.IsDead) return;
         HeirVisuals.Animate(Owner.Creature,"victory");
-        var heal = Runtime.Bonus("heal") + Inheritance.Stat("heal") + Design.Get("classes",Runtime.Heir.classId).Number("heal");
+        var heal = PlayerBloodlines.Bonus(Owner,"heal") + Inheritance.Stat("heal") + Design.Get("classes",PlayerBloodlines.Heir(Owner).classId).Number("heal");
         if (heal > 0) await CreatureCmd.Heal(Owner.Creature,heal);
         if (Inheritance.Amount("gold") > 0) await PlayerCmd.GainGold(Inheritance.Amount("gold"),Owner);
         if (Inheritance.Amount("coin_loss") > 0) await PlayerCmd.LoseGold(Inheritance.Amount("coin_loss"),Owner);

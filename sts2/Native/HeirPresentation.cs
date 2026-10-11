@@ -44,13 +44,14 @@ public static class HeirPresentation
     public static string ClassId
     {
         get {
-            if(NRun.Instance!=null && AccessTools.Property(typeof(RunManager),"State").GetValue(RunManager.Instance) is RunState run)
-                return ClassFor(run.Players.FirstOrDefault(p=>p.Character is HeirCharacter));
+            if(NRun.Instance!=null && PlayerBloodlines.LocalPlayer is {} player)
+                return ClassFor(player);
             return Runtime.Heir.classId;
         }
     }
     public static string ClassFor(Player? player)
     {
+        if(PlayerBloodlines.State(player) is {} run)return run.heir.classId;
         var saved=player?.Relics.OfType<BloodlineRelic>().FirstOrDefault()?.SelectedHeir;
         if(!string.IsNullOrEmpty(saved)) {
             try {if(JsonSerializer.Deserialize<FamilyProfile.Heir>(saved,FamilyProfile.JsonOptions) is {} h && h.classId is "knight" or "mage" or "ranger")return h.classId;}
@@ -66,13 +67,15 @@ public static class HeirPresentation
     }
     public static string IconPath
     {
-        get {var tex=Runtime.ClassIcon(ClassId);var path="res://SpireLegacy/heir/identity/"+ClassId+".svg";if(tex.ResourcePath!=path)tex.TakeOverPath(path);return path;}
+        get => IconFor(ClassId);
     }
+    public static string IconFor(string cls){var tex=Runtime.ClassIcon(cls);var path="res://SpireLegacy/heir/identity/"+cls+".svg";if(tex.ResourcePath!=path)tex.TakeOverPath(path);return path;}
     public static RelicIconData Cookie(string? cls=null)
     {
         var c=cls??ClassId;var p=TexturePath(c+"-cookie");return new(p,p,TexturePath(c+"-cookie-outline"));
     }
     public static string Sound(string role)=>"spirelegacy://"+ClassId+"/"+role;
+    public static string SoundFor(string cls,string role)=>"spirelegacy://"+cls+"/"+role;
     public static bool PlaySound(string path,float volume)
     {
         if(!path.StartsWith("spirelegacy://",StringComparison.Ordinal))return false;
@@ -94,6 +97,8 @@ public static class HeirPresentation
     // File-backed resources survive the native loader's deferred disposal boundaries.
     public static string TransitionPath=>Path.Combine(Runtime.ModDirectory,"heir/presentation/"+ClassId+"-transition.tres").Replace('\\','/');
     public static string TrailPath=>Path.Combine(Runtime.ModDirectory,"heir/presentation/"+ClassId+"-trail.tscn").Replace('\\','/');
+    public static string TransitionFor(string cls)=>Path.Combine(Runtime.ModDirectory,"heir/presentation/"+cls+"-transition.tres").Replace('\\','/');
+    public static string TrailFor(string cls)=>Path.Combine(Runtime.ModDirectory,"heir/presentation/"+cls+"-trail.tscn").Replace('\\','/');
     public static void ArchitectBurst(Node parent,Vector2 position,string cls)
     {
         var root=new Node2D{Name="HeirArchitect"+cls,Position=position};root.SetMeta("spirelegacy_architect",cls);parent.AddChild(root);
@@ -124,7 +129,7 @@ public static class HeirMapMarker
 [HarmonyPatch(typeof(CharacterModel),"get_IconOutlineTexture")]
 public static class HeirAuxOutline
 {
-    public static void Postfix(CharacterModel __instance,ref Texture2D __result) {if(__instance is HeirCharacter)__result=Runtime.Texture("heir/presentation/"+HeirPresentation.ClassId+"-outline.svg");}
+    public static void Postfix(CharacterModel __instance,ref Texture2D __result) {if(__instance is HeirCharacter heir)__result=Runtime.Texture("heir/presentation/"+heir.ClassId+"-outline.svg");}
 }
 [HarmonyPatch(typeof(MegaCrit.Sts2.Core.Commands.VfxCmd),"PlayOnCreatureCenter")]
 public static class HeirArchitectEffects

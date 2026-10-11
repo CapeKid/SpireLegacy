@@ -23,7 +23,7 @@ public abstract class LegacyCard : CustomCardModel
     public string Key => GetType().Name[2..];
     [SavedProperty] public string TraitSnapshot { get; set; } = "";
     [SavedProperty] public int DiscardRewardTurn { get; set; } = -1;
-    public CardDesign DesignCard => new(Key, IsUpgraded, IsMutable && TraitSnapshot.Length > 0 ? JsonSerializer.Deserialize<string[]>(TraitSnapshot)! : Runtime.Heir.traits);
+    public CardDesign DesignCard => new(Key, IsUpgraded, IsMutable && TraitSnapshot.Length > 0 ? JsonSerializer.Deserialize<string[]>(TraitSnapshot)! : IsMutable && Owner!=null ? PlayerBloodlines.Heir(Owner).traits : PlayerBloodlines.Creating.Value?.heir.traits ?? Runtime.Heir.traits);
     protected Design.Row Row => Design.Get("cards", Key);
     protected LegacyCard(string key) : base(Design.Get("cards", key).Number("cost"), Enum.Parse<CardType>(Design.Get("cards", key).Text("type"), true), Enum.Parse<CardRarity>(Design.Get("cards", key).Text("rarity"), true), GetTarget(key), autoAdd: false) { }
     private static TargetType GetTarget(string key)
@@ -32,7 +32,7 @@ public abstract class LegacyCard : CustomCardModel
         if (row.Flag("aoe") || row.Text("special") == "random_attack") return TargetType.AllEnemies;
         return row.Text("type") == "ATTACK" || row.Number("poison") + row.Number("weak") + row.Number("vulnerable") > 0 || row.Text("special") == "double_poison" ? TargetType.AnyEnemy : TargetType.Self;
     }
-    public override CardPoolModel Pool => ModelDb.Character<HeirCharacter>().CardPool;
+    public override CardPoolModel Pool => IsMutable && Owner?.Character is HeirCharacter heir ? heir.CardPool : ModelDb.Character<HeirCharacter>().CardPool;
     public override CardType Type => DesignCard.Mercy ? CardType.Skill : base.Type;
     // BaseLib infers this from the presence of a BlockVar, including our zero-value
     // compatibility slot. Enchantment eligibility must reflect actual card effects.
@@ -61,7 +61,13 @@ public abstract class LegacyCard : CustomCardModel
     {
         base.DeepCloneFields();
         if (TraitSnapshot.Length > 0) return;
-        TraitSnapshot = JsonSerializer.Serialize(Runtime.Heir.traits);
+        if (PlayerBloodlines.Creating.Value is not {} creating) return;
+        TraitSnapshot = JsonSerializer.Serialize(creating.heir.traits);
+        RefreshInheritedStats();
+    }
+    public void CaptureOwnerTraits() {
+        if(TraitSnapshot.Length>0)return;
+        TraitSnapshot=JsonSerializer.Serialize(PlayerBloodlines.Heir(Owner).traits);
         RefreshInheritedStats();
     }
     protected override void AfterDeserialized() { base.AfterDeserialized(); RefreshInheritedStats(); }

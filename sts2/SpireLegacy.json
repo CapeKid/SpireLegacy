@@ -3,7 +3,7 @@
   "name": "Spire Legacy",
   "author": "CapeKid",
   "description": "A family of Knight, Mage and Ranger heirs with inherited traits, permanent manor progression and original artwork. Requires Slay the Spire 2 and BaseLib.",
-  "version": "1.0.24",
+  "version": "1.0.25",
   "has_pck": false,
   "has_dll": true,
   "affects_gameplay": true,
