@@ -23,7 +23,7 @@ public static class HeirDustyTome
     }
 }
 
-// Use original class-specific Heir endings; retain the existing fallback for other Ancients.
+// Original Heir dialogue only; native characters and reward logic are untouched.
 [HarmonyPatch(typeof(AncientDialogueSet), nameof(AncientDialogueSet.GetValidDialogues))]
 public static class HeirAncientDialogue
 {
@@ -36,7 +36,6 @@ public static class HeirAncientDialogue
             __result = [HeirArchitectDialogue.Create(Runtime.Heir.classId, charVisits)];
             return;
         }
-        if (__result.Any()) return;
-        __result = __instance.GetValidDialogues(ModelDb.Character<Ironclad>().Id, charVisits, totalVisits, allowAnyCharacterDialogues);
+        if(HeirAncientConversations.TryCreate(__instance,Runtime.Heir.classId,charVisits,out var conversation))__result=[conversation];
     }
 }

@@ -201,6 +201,13 @@ public static class NativeTestBridge
                         if(baseEnding.Lines.Any(l=>l.LineText!.LocEntryKey.StartsWith("SPIRELEGACY")))throw new InvalidDataException("Base character ending changed.");
                     } finally {Runtime.Heir.classId=endingClass;}
                     result=endingChecks;break;
+                case "ancient-dialogues":result=AncientDialogueOracle.Inspect();break;
+                case "ancient-state":result=AncientDialogueOracle.State(false);break;
+                case "ancient-next":result=AncientDialogueOracle.State(true);break;
+                case "ancient-enter":
+                    var ancientModel=AncientDialogueOracle.Prepare(request.GetProperty("ancient").GetString()!,request.GetProperty("visits").GetInt32());
+                    await RunManager.Instance.EnterRoomDebug(MegaCrit.Sts2.Core.Rooms.RoomType.Event,model:ancientModel,showTransition:false);
+                    RunManager.Instance.ActionExecutor.Unpause();result=AncientDialogueOracle.State(false);break;
                 case "architect-state":
                 case "architect-next":
                     var endingEvent=(MegaCrit.Sts2.Core.Models.Events.TheArchitect)((MegaCrit.Sts2.Core.Rooms.EventRoom)RunState().CurrentRoom!).LocalMutableEvent;

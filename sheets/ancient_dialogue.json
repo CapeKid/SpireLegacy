@@ -1,0 +1,482 @@
+[
+  {
+    "id": "neow_knight_first",
+    "ancient": "NEOW",
+    "classId": "knight",
+    "visit": "first",
+    "opening": "Another name on an old family tree. What will this branch become?",
+    "reply": "A shield for those who follow.",
+    "followup": "Then carry more home than your scars.",
+    "closing": "I will leave them a house that stands."
+  },
+  {
+    "id": "neow_mage_first",
+    "ancient": "NEOW",
+    "classId": "mage",
+    "visit": "first",
+    "opening": "Another name on an old family tree. What will this branch become?",
+    "reply": "A record of what we learn here.",
+    "followup": "Then carry more home than your scars.",
+    "closing": "The next heir will have my notes."
+  },
+  {
+    "id": "neow_ranger_first",
+    "ancient": "NEOW",
+    "classId": "ranger",
+    "visit": "first",
+    "opening": "Another name on an old family tree. What will this branch become?",
+    "reply": "A trail back to the people waiting for me.",
+    "followup": "Then carry more home than your scars.",
+    "closing": "I will mark the dangerous turns."
+  },
+  {
+    "id": "neow_knight_return",
+    "ancient": "NEOW",
+    "classId": "knight",
+    "visit": "return",
+    "opening": "Your family's banner again. Does each heir remember the climb?",
+    "reply": "We remember the promises.",
+    "followup": "Let memory guide you, but take your own steps.",
+    "closing": "This oath is mine to keep."
+  },
+  {
+    "id": "neow_mage_return",
+    "ancient": "NEOW",
+    "classId": "mage",
+    "visit": "return",
+    "opening": "Your family's banner again. Does each heir remember the climb?",
+    "reply": "We trade journals, including the mistakes.",
+    "followup": "Let memory guide you, but take your own steps.",
+    "closing": "I have room for another correction."
+  },
+  {
+    "id": "neow_ranger_return",
+    "ancient": "NEOW",
+    "classId": "ranger",
+    "visit": "return",
+    "opening": "Your family's banner again. Does each heir remember the climb?",
+    "reply": "We learn the old tracks, then choose our route.",
+    "followup": "Let memory guide you, but take your own steps.",
+    "closing": "This trail still has surprises."
+  },
+  {
+    "id": "darv_knight_first",
+    "ancient": "DARV",
+    "classId": "knight",
+    "visit": "first",
+    "opening": "You look like someone with an attic full of heirlooms. Anything interesting?",
+    "reply": "Only this sword. I promised to bring it back.",
+    "followup": "A family that keeps everything! We should get along.",
+    "closing": "A gift would be easier to explain than a missing sword."
+  },
+  {
+    "id": "darv_mage_first",
+    "ancient": "DARV",
+    "classId": "mage",
+    "visit": "first",
+    "opening": "You look like someone with an attic full of heirlooms. Anything interesting?",
+    "reply": "My family keeps experiments in the attic.",
+    "followup": "A family that keeps everything! We should get along.",
+    "closing": "I could label anything you give me. For safety."
+  },
+  {
+    "id": "darv_ranger_first",
+    "ancient": "DARV",
+    "classId": "ranger",
+    "visit": "first",
+    "opening": "You look like someone with an attic full of heirlooms. Anything interesting?",
+    "reply": "Mostly maps and arrows with stories attached.",
+    "followup": "A family that keeps everything! We should get along.",
+    "closing": "Something light would fit beside the maps."
+  },
+  {
+    "id": "darv_knight_return",
+    "ancient": "DARV",
+    "classId": "knight",
+    "visit": "return",
+    "opening": "More of that family! Did the last present make it home?",
+    "reply": "Its story did. The armory remembers.",
+    "followup": "Good. A proper collection needs a little excitement.",
+    "closing": "I will try to bring back both this time."
+  },
+  {
+    "id": "darv_mage_return",
+    "ancient": "DARV",
+    "classId": "mage",
+    "visit": "return",
+    "opening": "More of that family! Did the last present make it home?",
+    "reply": "There is a detailed entry in the family journal.",
+    "followup": "Good. A proper collection needs a little excitement.",
+    "closing": "Preferably excitement that survives a jar."
+  },
+  {
+    "id": "darv_ranger_return",
+    "ancient": "DARV",
+    "classId": "ranger",
+    "visit": "return",
+    "opening": "More of that family! Did the last present make it home?",
+    "reply": "It left a mark on the trail.",
+    "followup": "Good. A proper collection needs a little excitement.",
+    "closing": "I am getting better at finding the way back."
+  },
+  {
+    "id": "tezcatara_knight_first",
+    "ancient": "TEZCATARA",
+    "classId": "knight",
+    "visit": "first",
+    "opening": "Come in, heir. Even an old family cannot climb on an empty stomach.",
+    "reply": "I was taught to eat after everyone else.",
+    "followup": "A place at the table is worth inheriting too.",
+    "closing": "I suppose the others need me strong."
+  },
+  {
+    "id": "tezcatara_mage_first",
+    "ancient": "TEZCATARA",
+    "classId": "mage",
+    "visit": "first",
+    "opening": "Come in, heir. Even an old family cannot climb on an empty stomach.",
+    "reply": "I packed books and forgot the provisions.",
+    "followup": "A place at the table is worth inheriting too.",
+    "closing": "I will add that to the packing list."
+  },
+  {
+    "id": "tezcatara_ranger_first",
+    "ancient": "TEZCATARA",
+    "classId": "ranger",
+    "visit": "first",
+    "opening": "Come in, heir. Even an old family cannot climb on an empty stomach.",
+    "reply": "I have been living on whatever fits in my cloak.",
+    "followup": "A place at the table is worth inheriting too.",
+    "closing": "This smells much better than trail rations."
+  },
+  {
+    "id": "tezcatara_knight_return",
+    "ancient": "TEZCATARA",
+    "classId": "knight",
+    "visit": "return",
+    "opening": "Another of your house. I hope someone taught you to rest.",
+    "reply": "They did. I am still learning to listen.",
+    "followup": "Then take a little warmth with you for the climb.",
+    "closing": "I will tell the next heir that rest is not surrender."
+  },
+  {
+    "id": "tezcatara_mage_return",
+    "ancient": "TEZCATARA",
+    "classId": "mage",
+    "visit": "return",
+    "opening": "Another of your house. I hope someone taught you to rest.",
+    "reply": "The family journal now has a chapter on supper.",
+    "followup": "Then take a little warmth with you for the climb.",
+    "closing": "Some lessons deserve to be repeated."
+  },
+  {
+    "id": "tezcatara_ranger_return",
+    "ancient": "TEZCATARA",
+    "classId": "ranger",
+    "visit": "return",
+    "opening": "Another of your house. I hope someone taught you to rest.",
+    "reply": "I know when a trail needs a campfire.",
+    "followup": "Then take a little warmth with you for the climb.",
+    "closing": "I will save the warmth for a cold stretch."
+  },
+  {
+    "id": "orobas_knight_first",
+    "ancient": "OROBAS",
+    "classId": "knight",
+    "visit": "first",
+    "opening": "A little heir with a long shadow. How much of your family do you carry?",
+    "reply": "Their hopes are heavier than the armor.",
+    "followup": "The tide keeps some things and returns others. Choose what you hold.",
+    "closing": "I can put down the weight without dropping the promise."
+  },
+  {
+    "id": "orobas_mage_first",
+    "ancient": "OROBAS",
+    "classId": "mage",
+    "visit": "first",
+    "opening": "A little heir with a long shadow. How much of your family do you carry?",
+    "reply": "Questions that have passed through many hands.",
+    "followup": "The tide keeps some things and returns others. Choose what you hold.",
+    "closing": "An unanswered question can still be a useful inheritance."
+  },
+  {
+    "id": "orobas_ranger_first",
+    "ancient": "OROBAS",
+    "classId": "ranger",
+    "visit": "first",
+    "opening": "A little heir with a long shadow. How much of your family do you carry?",
+    "reply": "Their routes, their warnings, and a few knots.",
+    "followup": "The tide keeps some things and returns others. Choose what you hold.",
+    "closing": "I know which knots to loosen."
+  },
+  {
+    "id": "orobas_knight_return",
+    "ancient": "OROBAS",
+    "classId": "knight",
+    "visit": "return",
+    "opening": "Your house sends another traveler to the edge of the water.",
+    "reply": "We are learning which burdens to leave behind.",
+    "followup": "Then let this meeting be a new current, not an old anchor.",
+    "closing": "I will carry what helps us stand."
+  },
+  {
+    "id": "orobas_mage_return",
+    "ancient": "OROBAS",
+    "classId": "mage",
+    "visit": "return",
+    "opening": "Your house sends another traveler to the edge of the water.",
+    "reply": "The journals disagree about you.",
+    "followup": "Then let this meeting be a new current, not an old anchor.",
+    "closing": "I will leave room for a different answer."
+  },
+  {
+    "id": "orobas_ranger_return",
+    "ancient": "OROBAS",
+    "classId": "ranger",
+    "visit": "return",
+    "opening": "Your house sends another traveler to the edge of the water.",
+    "reply": "The old tracks ended here, but mine can continue.",
+    "followup": "Then let this meeting be a new current, not an old anchor.",
+    "closing": "I will watch where the current bends."
+  },
+  {
+    "id": "pael_knight_first",
+    "ancient": "PAEL",
+    "classId": "knight",
+    "visit": "first",
+    "opening": "Your blood remembers shapes that your mind has forgotten. Will you change?",
+    "reply": "I can change my stance without losing my oath.",
+    "followup": "Growth does not ask the old branches for permission.",
+    "closing": "Then I will learn to guard the new growth."
+  },
+  {
+    "id": "pael_mage_first",
+    "ancient": "PAEL",
+    "classId": "mage",
+    "visit": "first",
+    "opening": "Your blood remembers shapes that your mind has forgotten. Will you change?",
+    "reply": "Inheritance is a beginning, not a finished formula.",
+    "followup": "Growth does not ask the old branches for permission.",
+    "closing": "I will observe carefully before calling it progress."
+  },
+  {
+    "id": "pael_ranger_first",
+    "ancient": "PAEL",
+    "classId": "ranger",
+    "visit": "first",
+    "opening": "Your blood remembers shapes that your mind has forgotten. Will you change?",
+    "reply": "Every season changes the hunter and the trail.",
+    "followup": "Growth does not ask the old branches for permission.",
+    "closing": "I can follow a living trail."
+  },
+  {
+    "id": "pael_knight_return",
+    "ancient": "PAEL",
+    "classId": "knight",
+    "visit": "return",
+    "opening": "The family returns, and no two branches grow alike.",
+    "reply": "We share a banner, not the same armor.",
+    "followup": "Good. A bloodline should become more than its roots.",
+    "closing": "There is room beneath it for someone different."
+  },
+  {
+    "id": "pael_mage_return",
+    "ancient": "PAEL",
+    "classId": "mage",
+    "visit": "return",
+    "opening": "The family returns, and no two branches grow alike.",
+    "reply": "The differences are where the discoveries begin.",
+    "followup": "Good. A bloodline should become more than its roots.",
+    "closing": "I will write down what this branch learns."
+  },
+  {
+    "id": "pael_ranger_return",
+    "ancient": "PAEL",
+    "classId": "ranger",
+    "visit": "return",
+    "opening": "The family returns, and no two branches grow alike.",
+    "reply": "The next heir may see tracks I miss.",
+    "followup": "Good. A bloodline should become more than its roots.",
+    "closing": "I will leave space for their path."
+  },
+  {
+    "id": "nonupeipe_knight_first",
+    "ancient": "NONUPEIPE",
+    "classId": "knight",
+    "visit": "first",
+    "opening": "Oh! A family hero! Is that your inherited look, or did you make it yourself?",
+    "reply": "The dents in the armor are definitely mine.",
+    "followup": "Then let us find something worthy of the family portrait!",
+    "closing": "Preferably something that survives the next dent."
+  },
+  {
+    "id": "nonupeipe_mage_first",
+    "ancient": "NONUPEIPE",
+    "classId": "mage",
+    "visit": "first",
+    "opening": "Oh! A family hero! Is that your inherited look, or did you make it yourself?",
+    "reply": "The hat is tradition. The scorch marks are new.",
+    "followup": "Then let us find something worthy of the family portrait!",
+    "closing": "I should take the portrait before the next experiment."
+  },
+  {
+    "id": "nonupeipe_ranger_first",
+    "ancient": "NONUPEIPE",
+    "classId": "ranger",
+    "visit": "first",
+    "opening": "Oh! A family hero! Is that your inherited look, or did you make it yourself?",
+    "reply": "The cloak is old. I chose the feathers.",
+    "followup": "Then let us find something worthy of the family portrait!",
+    "closing": "A portrait is easier to carry than another cloak."
+  },
+  {
+    "id": "nonupeipe_knight_return",
+    "ancient": "NONUPEIPE",
+    "classId": "knight",
+    "visit": "return",
+    "opening": "A new face from the same splendid family! Shall we improve the collection?",
+    "reply": "The armory has a shelf for the things we cannot wear.",
+    "followup": "Wonderful! A family should never run out of beautiful stories.",
+    "closing": "I will try to give this one a good ending."
+  },
+  {
+    "id": "nonupeipe_mage_return",
+    "ancient": "NONUPEIPE",
+    "classId": "mage",
+    "visit": "return",
+    "opening": "A new face from the same splendid family! Shall we improve the collection?",
+    "reply": "The portrait gallery is becoming an excellent study of variation.",
+    "followup": "Wonderful! A family should never run out of beautiful stories.",
+    "closing": "And perhaps fewer scorch marks."
+  },
+  {
+    "id": "nonupeipe_ranger_return",
+    "ancient": "NONUPEIPE",
+    "classId": "ranger",
+    "visit": "return",
+    "opening": "A new face from the same splendid family! Shall we improve the collection?",
+    "reply": "I have been collecting stories along the trail.",
+    "followup": "Wonderful! A family should never run out of beautiful stories.",
+    "closing": "I know a few worth bringing home."
+  },
+  {
+    "id": "tanx_knight_first",
+    "ancient": "TANX",
+    "classId": "knight",
+    "visit": "first",
+    "opening": "An heir! Show me what your family calls a weapon.",
+    "reply": "A sword kept sharp through generations.",
+    "followup": "Then find something here that deserves another story.",
+    "closing": "The next heir should inherit a blade, not just a boast."
+  },
+  {
+    "id": "tanx_mage_first",
+    "ancient": "TANX",
+    "classId": "mage",
+    "visit": "first",
+    "opening": "An heir! Show me what your family calls a weapon.",
+    "reply": "A staff, and the patience to aim it properly.",
+    "followup": "Then find something here that deserves another story.",
+    "closing": "I will test the grip before testing the explosion."
+  },
+  {
+    "id": "tanx_ranger_first",
+    "ancient": "TANX",
+    "classId": "ranger",
+    "visit": "first",
+    "opening": "An heir! Show me what your family calls a weapon.",
+    "reply": "A bow that knows my hands, and arrows that do not come back.",
+    "followup": "Then find something here that deserves another story.",
+    "closing": "I will make the first shot count."
+  },
+  {
+    "id": "tanx_knight_return",
+    "ancient": "TANX",
+    "classId": "knight",
+    "visit": "return",
+    "opening": "Your family's weapons have found their way here again!",
+    "reply": "We repair them between climbs.",
+    "followup": "Good! An heir should learn a new trick before handing things down.",
+    "closing": "I will make sure the lesson survives the battle."
+  },
+  {
+    "id": "tanx_mage_return",
+    "ancient": "TANX",
+    "classId": "mage",
+    "visit": "return",
+    "opening": "Your family's weapons have found their way here again!",
+    "reply": "We improve the designs between disasters.",
+    "followup": "Good! An heir should learn a new trick before handing things down.",
+    "closing": "The family workshop could use a safer trick."
+  },
+  {
+    "id": "tanx_ranger_return",
+    "ancient": "TANX",
+    "classId": "ranger",
+    "visit": "return",
+    "opening": "Your family's weapons have found their way here again!",
+    "reply": "We remember every shot that missed.",
+    "followup": "Good! An heir should learn a new trick before handing things down.",
+    "closing": "I have been saving a space in the quiver."
+  },
+  {
+    "id": "vakuu_knight_first",
+    "ancient": "VAKUU",
+    "classId": "knight",
+    "visit": "first",
+    "opening": "You dress for a battle, but your family has sent you into a story.",
+    "reply": "Then I will play the part that gets them home.",
+    "followup": "Every house needs someone willing to step onto the stage.",
+    "closing": "I can stand in the light without forgetting who is behind me."
+  },
+  {
+    "id": "vakuu_mage_first",
+    "ancient": "VAKUU",
+    "classId": "mage",
+    "visit": "first",
+    "opening": "You dress for a battle, but your family has sent you into a story.",
+    "reply": "I would rather understand the machinery behind the scenery.",
+    "followup": "Every house needs someone willing to step onto the stage.",
+    "closing": "I suppose someone must also take notes."
+  },
+  {
+    "id": "vakuu_ranger_first",
+    "ancient": "VAKUU",
+    "classId": "ranger",
+    "visit": "first",
+    "opening": "You dress for a battle, but your family has sent you into a story.",
+    "reply": "I prefer a quiet entrance and a clear exit.",
+    "followup": "Every house needs someone willing to step onto the stage.",
+    "closing": "I will keep an eye on the wings."
+  },
+  {
+    "id": "vakuu_knight_return",
+    "ancient": "VAKUU",
+    "classId": "knight",
+    "visit": "return",
+    "opening": "Another heir takes the stage. Does your house know how this story ends?",
+    "reply": "We know how to stand up after a bad ending.",
+    "followup": "Then make the next scene worth remembering.",
+    "closing": "I will give the next heir something to build on."
+  },
+  {
+    "id": "vakuu_mage_return",
+    "ancient": "VAKUU",
+    "classId": "mage",
+    "visit": "return",
+    "opening": "Another heir takes the stage. Does your house know how this story ends?",
+    "reply": "We have revised the ending several times.",
+    "followup": "Then make the next scene worth remembering.",
+    "closing": "This draft may still surprise us."
+  },
+  {
+    "id": "vakuu_ranger_return",
+    "ancient": "VAKUU",
+    "classId": "ranger",
+    "visit": "return",
+    "opening": "Another heir takes the stage. Does your house know how this story ends?",
+    "reply": "We know a few exits, and none of them are easy.",
+    "followup": "Then make the next scene worth remembering.",
+    "closing": "I will leave the trail visible."
+  }
+]
