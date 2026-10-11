@@ -189,6 +189,14 @@ public static class NativeTestBridge
                 case "potion-focus":result=await HeirPotionOracle.Focus(request.GetProperty("potion").GetString()!);break;
                 case "potion-clear":foreach(var potion in RunState().Players.Single().Potions.ToArray())await MegaCrit.Sts2.Core.Commands.PotionCmd.Discard(potion);result=new{cleared=true};break;
                 case "potion-slots":result=RunState().Players.Single().PotionSlots.Select(p=>p?.Id.ToString()).ToArray();break;
+                case "vigor-room":
+                    await WaitForPlay(RunState().Players.Single());
+                    await RunManager.Instance.EnterRoomDebug(MegaCrit.Sts2.Core.Rooms.RoomType.Monster,model:ModelDb.Encounter<MegaCrit.Sts2.Core.Models.Encounters.NibbitsNormal>().ToMutable(),showTransition:false);
+                    RunManager.Instance.ActionExecutor.Unpause();
+                    await WaitForPlay(RunState().Players.Single());result=new{ready=true};break;
+                case "vigor-check":
+                    await WaitForPlay(RunState().Players.Single());
+                    result=await VigorOracle.Check(RunState(),request.GetProperty("card").GetString()!,request.GetProperty("upgrade").GetBoolean(),UseTestSelector());break;
                 case "expansion-play":
                     await WaitForPlay(RunState().Players.Single());
                     result=await PoolExpansionOracle.Play(RunState(),request.GetProperty("card").GetString()!,request.GetProperty("upgrade").GetBoolean(),UseTestSelector());break;

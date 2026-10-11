@@ -1,5 +1,5 @@
 {
-  "sourceSha": "96ab2367cab5c4f1a72cdb45a5b07a88a169b2c7",
+  "sourceSha": "fff78e1b1a6cfe4317dc713fddac3c07c1a5cf21",
   "files": [
     {
       "path": ".gitattributes",
@@ -1578,6 +1578,10 @@
       "primaryIssue": 62
     },
     {
+      "path": "docs/vigor-multi-hit.md",
+      "primaryIssue": 62
+    },
+    {
       "path": "docs/workshop.md",
       "primaryIssue": 62
     },
@@ -2111,6 +2115,10 @@
     },
     {
       "path": "scripts/sts2-trait-check.py",
+      "primaryIssue": 47
+    },
+    {
+      "path": "scripts/sts2-vigor-check.py",
       "primaryIssue": 47
     },
     {
@@ -6094,6 +6102,10 @@
       "primaryIssue": 58
     },
     {
+      "path": "sts2/Native/VigorOracle.cs",
+      "primaryIssue": 47
+    },
+    {
       "path": "sts2/SpireLegacy.csproj",
       "primaryIssue": 59
     },
@@ -6127,10 +6139,10 @@
     }
   ],
   "counts": {
-    "62": 52,
+    "62": 53,
     "63": 415,
     "58": 923,
-    "47": 49,
+    "47": 51,
     "59": 10,
     "61": 56,
     "60": 2,
