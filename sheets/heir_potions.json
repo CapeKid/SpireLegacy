@@ -1,0 +1,5 @@
+[
+  {"id":"borrowed_breath","title":"Borrowed Breath","rarity":"Common","target":"Self","amount":6,"extra":1,"description":"Gain 6 Block. Draw 1 card.","baseline":"Block Potion: 12 Block; Swift Potion: draw 3. Smaller flexible mix."},
+  {"id":"briar_vial","title":"Briar Vial","rarity":"Uncommon","target":"AnyEnemy","amount":4,"extra":1,"description":"Apply 4 Poison and 1 Weak to an enemy.","baseline":"Poison Potion: 6 Poison; Weak Potion: 3 Weak. Reduced combined offense and defense."},
+  {"id":"triune_draught","title":"Triune Draught","rarity":"Uncommon","target":"Self","amount":8,"extra":2,"description":"Knight: gain 8 Block and 2 Vigor. Mage: gain 2 Arcane Charges (maximum 2) and draw 1 card. Ranger: gain 3 Vigor and draw 2 cards.","baseline":"Block Potion: 12 Block; Swift Potion: draw 3. One-use class resource, no persistent Strength/Dexterity."}
+]

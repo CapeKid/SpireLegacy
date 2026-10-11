@@ -15,7 +15,7 @@ public sealed class HeirCharacter : PlaceholderCharacterModel
     public override int StartingHp => Inheritance.MaxHp(Design.Get("classes", Runtime.Heir.classId).Number("hp") + Runtime.Bonus("hp"));
     public override CardPoolModel CardPool => Runtime.Heir.classId switch { "mage" => ModelDb.CardPool<MageCardPool>(), "ranger" => ModelDb.CardPool<RangerCardPool>(), _ => ModelDb.CardPool<KnightCardPool>() };
     public override RelicPoolModel RelicPool => ModelDb.RelicPool<HeirRelicPool>();
-    public override PotionPoolModel PotionPool => ModelDb.PotionPool<SharedPotionPool>();
+    public override PotionPoolModel PotionPool => ModelDb.PotionPool<HeirPotionPool>();
     public override IReadOnlyList<RelicModel> StartingRelics => [ModelDb.Relic<BloodlineRelic>()];
     public override IEnumerable<CardModel> StartingDeck
     {

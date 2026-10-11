@@ -8,6 +8,7 @@ A solo custom character by **CapeKid** for the regular and public-beta branches 
 - All 61 eligible Rogue Legacy 2 traits, compatible inheritance, three new heirs after each climb and the first family's quick start.
 - Six manor upgrades, family naming, visible banner emblems, full trait descriptions, confirmed purchases and a temporary crown editor.
 - Seven [Heir-exclusive relic drops](docs/heir-relics.md) support guarded attacks, exhaust, discard, mixed card types and class resources.
+- Three [Heir potions](docs/heir-potions.md) support flexible defense, targeted Poison/Weak and one-use class resources, alongside a single shared potion pool.
 - Native card, reward, shop and save integration; atomic family saves and backup recovery.
 - Original trait icons, class badges, portraits, sprites and card art included in the mod. No game assets or extraction tools are distributed; Rogue Legacy 2 is not required.
 - Synesthesia's animated rainbow ring and paired cosmetic accents appear in combat, rest sites and shops. See the [complete trait-effect audit](docs/trait-effect-audit.md).
