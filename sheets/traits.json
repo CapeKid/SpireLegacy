@@ -428,7 +428,7 @@
     "draw": 1,
     "goldBonus": 50,
     "scale": 1.0,
-    "summary": "Draw 1 extra card each turn; lose 18 maximum HP. Earn 50% more legacy crowns.",
+    "summary": "Draw 1 extra card each turn; lose 18 maximum HP.",
     "heal": 0,
     "source": "BonusMagicStrength",
     "enabled": true,
