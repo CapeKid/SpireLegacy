@@ -85,9 +85,10 @@ public abstract class LegacyCard : CustomCardModel
     {
         var design = DesignCard;
         if (!design.Mercy && (DynamicVars.Damage.BaseValue > 0 || Row.Text("special") is "block_damage" or "chain_damage"))
-            for (var hit = 0; hit < Row.Number("hits"); hit++)
             {
-                var attack = DamageCmd.Attack(DynamicVars.Damage.BaseValue).FromCardCompatibility(this, play);
+                // Native Vigor and other attack-scoped effects last for the complete
+                // multi-hit command, rather than being consumed by its first hit.
+                var attack = DamageCmd.Attack(DynamicVars.Damage.BaseValue).WithHitCount(Row.Number("hits")).FromCardCompatibility(this, play);
                 if (Row.Flag("aoe")) attack.TargetingAllOpponents(CombatState!);
                 else if (Row.Text("special") == "random_attack") attack.TargetingRandomOpponents(CombatState!);
                 else attack.Targeting(play.Target!);
