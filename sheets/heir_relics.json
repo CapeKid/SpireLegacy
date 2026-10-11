@@ -82,5 +82,41 @@
     "flavor": "Not all branches look alike. They still share the same roots.",
     "route": "Mixed-type sequences",
     "baseline": "Three distinct types required; Ornamental Fan grants 4 Block per three Attacks and Letter Opener deals 5 to all per three Skills."
+  },
+  {
+    "id": "guardian_knot",
+    "title": "Guardian Knot",
+    "rarity": "Uncommon",
+    "amount": 3,
+    "threshold": 1,
+    "extra": 0,
+    "description": "Once per combat, after you play an Attack while you have Block, gain 3 Block.",
+    "flavor": "A cord tied around a lesson the family means to keep.",
+    "route": "Guarded preparation",
+    "baseline": "Only 3 Block once per combat after an Attack with existing Block; Anchor grants 10 immediately."
+  },
+  {
+    "id": "scholar_bookmark",
+    "title": "Scholar Bookmark",
+    "rarity": "Uncommon",
+    "amount": 1,
+    "threshold": 1,
+    "extra": 0,
+    "description": "Once per combat, after you play a Power, draw 1 card.",
+    "flavor": "A feather left in the margin where the next question begins.",
+    "route": "Power setup",
+    "baseline": "One draw per combat after paying for a Power; no energy refund or unlimited draw loop."
+  },
+  {
+    "id": "trail_compass",
+    "title": "Trail Compass",
+    "rarity": "Uncommon",
+    "amount": 3,
+    "threshold": 2,
+    "extra": 0,
+    "description": "At the start of turn 2, gain 3 Vigor. Once per combat.",
+    "flavor": "It points toward a chance, never a promise.",
+    "route": "Delayed attack",
+    "baseline": "One delayed +3 damage bonus to the next Attack, including its hits; not permanent Strength."
   }
 ]

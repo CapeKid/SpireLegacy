@@ -20,7 +20,7 @@ namespace SpireLegacy;
 [HarmonyPatch(typeof(MegaCrit.Sts2.Core.Assets.AssetCache), nameof(MegaCrit.Sts2.Core.Assets.AssetCache.CreateSession))]
 public static class HeirRuntimeTexturePreload
 {
-    public static bool Owns(string path)=>path.StartsWith("res://SpireLegacy/heir/identity/",StringComparison.Ordinal)||path.StartsWith("res://SpireLegacy/heir/presentation/",StringComparison.Ordinal);
+    public static bool Owns(string path)=>path.StartsWith("res://SpireLegacy/heir/identity/",StringComparison.Ordinal)||path.StartsWith("res://SpireLegacy/heir/presentation/",StringComparison.Ordinal)||path.StartsWith("res://SpireLegacy/heir/relics/",StringComparison.Ordinal);
     public static void Prefix(ref IEnumerable<string> paths)=>paths=paths.Where(p=>!Owns(p)).ToArray();
 }
 [HarmonyPatch(typeof(MegaCrit.Sts2.Core.Assets.AssetCache), nameof(MegaCrit.Sts2.Core.Assets.AssetCache.GetTexture2D))]

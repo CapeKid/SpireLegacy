@@ -198,6 +198,8 @@ public static class ManorUi
         if(Notice is {} notice) AddText(notice,26);
         var options = new VBoxContainer(); content.AddChild(options);
         options.AddChild(MakeButton("Name your family",() => EditValue(false)));
+        var unread=Design.Rows("family_chronicle").Count(r=>profile.chronicle.unlocked.Contains(r.Text("id"))&&!profile.chronicle.read.Contains(r.Text("id")));
+        options.AddChild(MakeButton($"Family Chronicle · {unread} unread",ShowChronicle));
         options.AddChild(MakeButton("Change banner",() => { profile.banner = (profile.banner + 1) % 4; profile.Save(Runtime.FamilyPath); Render(); }));
         if (Design.Get("systems","playtest_crowns").Flag("enabled")) options.AddChild(MakeButton("PLAYTEST: Set crowns",() => EditValue(true)));
         options.AddChild(MakeButton("Close",RequestClose));
@@ -243,6 +245,43 @@ public static class ManorUi
             detail.AddChild(Text($"{trait.Text("name")}: {trait.Text("summary")}\nCrown bonus: {trait.Number("goldBonus")}%"));
         }
         if (selectable) AddButton(selected ? "Selected for next climb" : "Choose this heir",() => { Runtime.Profile.selected = heir; Runtime.Profile.Save(Runtime.FamilyPath); Render(); });
+    }
+    public static void ShowChronicle()
+    {
+        back=Render;Clear();var profile=Runtime.Profile;
+        AddText($"{profile.family} · Family Chronicle",32);
+        AddText("Family history and class lessons. Finish a climb to record its milestones; new relics enter future climbs. Existing cards, relics and potions remain available.");
+        AddText("D-pad / stick: choose an entry · A: read · LB / RB: scroll · B: return",20);
+        foreach(var row in Design.Rows("family_chronicle")) {
+            var id=row.Text("id");var unlocked=profile.chronicle.unlocked.Contains(id);
+            AddText(row.Text("requirement"));
+            if(!unlocked)AddText(FamilyChronicle.Progress(profile,row),20);
+            AddText(FamilyChronicle.Reward(row),20);
+            var button=MakeButton((unlocked?profile.chronicle.read.Contains(id)?"Read: ":"NEW · Read: ":"Locked: ")+row.Text("title"),()=>ReadChronicle(id));
+            button.Disabled=!unlocked;content!.AddChild(button);
+        }
+        if(profile.chronicle.motto.Length>0)AddButton("Clear family motto",()=>{SaveMotto("");ShowChronicle();});
+        AddButton("Back to Family Manor",Render);ConfigureNavigation();
+    }
+    public static void ReadChronicle(string id)
+    {
+        var profile=Runtime.Profile;if(!profile.chronicle.unlocked.Contains(id))return;
+        var row=Design.Get("family_chronicle",id);
+        // Persist before rendering, so a failed write cannot silently mark a story read.
+        var wasRead=profile.chronicle.read.Contains(id);profile.chronicle.read.Add(id);
+        try {profile.Save(Runtime.FamilyPath);}catch {if(!wasRead)profile.chronicle.read.Remove(id);throw;}
+        back=ShowChronicle;Clear();AddText(row.Text("title"),32);
+        AddText(row.Text("story").Replace("{Family}",profile.family),25);
+        AddText(FamilyChronicle.Reward(row),23);
+        if(row.Text("rewardKind")=="relic")AddText(Design.Get("heir_relics",row.Text("rewardId")).Text("description"));
+        if(row.Text("rewardKind")=="motto")AddButton("Use family motto: "+row.Text("rewardId"),()=>{SaveMotto(row.Text("rewardId"));ReadChronicle(id);});
+        AddButton("Back to Chronicle",ShowChronicle);ConfigureNavigation();
+    }
+    private static void SaveMotto(string motto)
+    {
+        var profile=Runtime.Profile;var old=profile.chronicle.motto;
+        if(!FamilyChronicle.SelectMotto(profile,motto))return;
+        try{profile.Save(Runtime.FamilyPath);}catch{profile.chronicle.motto=old;throw;}
     }
     private static void Review()
     {

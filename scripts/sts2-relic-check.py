@@ -40,7 +40,7 @@ try:
     for cls in ['knight','mage','ranger']:
         send('start',**{'class':cls,'traits':[],'quick':True});ready()
         info=send('relic-info');assert len(info['drops'])==len(info['shops'])==7
-        assert len(info['own'])==8 and sum(r['rarity']=='Starter' for r in info['own'])==1
+        assert len(info['own'])==11 and sum(r['rarity']=='Starter' for r in info['own'])==1
         assert all(not any('SPIRELEGACY-R_' in r['id'] for r in c['relics']) for c in info['native'])
         if cls not in completed:
             a=fresh('heirloom_brooch',True);b=play('knight_forge_memory');assert b['block']-a['block']==9
@@ -76,7 +76,8 @@ try:
             a=b;play('knight_forge_memory');play(cls+'_guard');b=play(cls+'_strike');assert b['block']-a['block']==12 and len(b['hand'])==len(a['hand'])+1,b
         send('start',**{'class':cls,'traits':[],'quick':True});ready()
         send('relic-clear');send('enter',room='Boss');ready()
-        for row in json.loads((root/'sheets/heir_relics.json').read_text()):send('relic-obtain',relic=row['id'])
+        for row in json.loads((root/'sheets/heir_relics.json').read_text()):
+            if row['id'] not in {'guardian_knot','scholar_bookmark','trail_compass'}:send('relic-obtain',relic=row['id'])
         send('save');send('resume');ready();assert len(send('relic-counters'))==7
         time.sleep(1);focus=send('relic-focus',relic='triune_crest');assert focus['focused'] and focus['right'],focus
         shot=send('screenshot');shutil.copy2(shot['path'],root/'private/sts2-evidence'/f'relic121-{tag}-{cls}.png')

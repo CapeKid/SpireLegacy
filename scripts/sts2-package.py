@@ -47,6 +47,7 @@ for art in json.loads((repo/'sheets/relic_art.json').read_text()):
         copy(source,mod/art[field])
 copy(repo/'docs/heir-potions.md',mod/'heir-potions.md')
 copy(repo/'docs/heir-ancient-dialogue.md',mod/'heir-ancient-dialogue.md')
+copy(repo/'docs/family-chronicle.md',mod/'family-chronicle.md')
 copy(repo/'docs/heir-presentation.md',mod/'heir-presentation.md')
 for art in json.loads((repo/'sheets/presentation_art.json').read_text()):
     source=repo/'src/main/resources'/art['path']

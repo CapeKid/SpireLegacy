@@ -1,0 +1,83 @@
+[
+  {
+    "id": "founding",
+    "title": "A name above the door",
+    "requirement": "Available to every family.",
+    "story": "The old house had no grand portrait, only a place above the door where a name could be carved. The first heir chose {Family}. A sword, a notebook and a bow rested against the same wall. None could promise to return. Together they promised that the next heir would have somewhere to begin.",
+    "rewardKind": "story",
+    "rewardId": "none",
+    "classId": "none"
+  },
+  {
+    "id": "first_return",
+    "title": "What comes home",
+    "requirement": "Finish your first climb. Death or abandonment counts.",
+    "story": "The house waited for a hero and received a bundle of belongings. Someone cleaned the blade. Someone untied the bowstring. Someone read the unfinished notes. By morning, grief had become a task: leave the next heir a warning, a tool, and a reason to go on. The family began to measure a climb by what it taught them.",
+    "rewardKind": "story",
+    "rewardId": "none",
+    "classId": "none"
+  },
+  {
+    "id": "restoration",
+    "title": "The first repaired beam",
+    "requirement": "Confirm at least one manor upgrade.",
+    "story": "They argued over the first repair. The armory wanted steel, the garden needed water, and the roof answered every rainstorm. In the end they worked together. Nothing about the Spire had changed, but the next heir left a house that stood a little straighter. Every purchase would have to earn its place in the family plan.",
+    "rewardKind": "story",
+    "rewardId": "none",
+    "classId": "none"
+  },
+  {
+    "id": "knight_lesson",
+    "title": "A guard worth inheriting",
+    "requirement": "Finish a Knight climb after reaching floor 6 or higher.",
+    "story": "The Knight returned in the family records with a simple correction: a shield is useful only if you leave room to strike. A strip of cord marked the page. The next heir knotted it around the hilt to remember the lesson. The knot would not stop a battle on its own. It would remind a guarded hand to keep working.",
+    "rewardKind": "relic",
+    "rewardId": "guardian_knot",
+    "classId": "knight"
+  },
+  {
+    "id": "mage_lesson",
+    "title": "Margins full of mistakes",
+    "requirement": "Finish a Mage climb after reaching floor 6 or higher.",
+    "story": "The Mage left a notebook with more crossed-out lines than answers. Beside one careful formula lay a feather used as a bookmark. Do not rush the first preparation, the margin said. Give it a moment to reveal what you missed. The family kept the bookmark where every heir could find it. Learning did not belong to a single hat.",
+    "rewardKind": "relic",
+    "rewardId": "scholar_bookmark",
+    "classId": "mage"
+  },
+  {
+    "id": "ranger_lesson",
+    "title": "The second morning",
+    "requirement": "Finish a Ranger climb after reaching floor 6 or higher.",
+    "story": "The Ranger mapped no perfect route. Instead, a small compass accompanied a list of places where stopping had helped. On the second morning, check your bearings before the next shot. The family passed the compass between hands. Its needle pointed toward opportunity, never a guarantee. There was still room on the map for another path.",
+    "rewardKind": "relic",
+    "rewardId": "trail_compass",
+    "classId": "ranger"
+  },
+  {
+    "id": "knight_victory",
+    "title": "The oath outlives the armor",
+    "requirement": "Win a Knight climb.",
+    "story": "The Knight stood before the family door without raising a sword. The armor needed repairs; the oath did not. We held long enough for someone else to follow, the heir said. The family wrote those words beneath the banner. Victory had not ended their work. It had proved that a promise could survive the climb.",
+    "rewardKind": "motto",
+    "rewardId": "Unbroken Oath",
+    "classId": "knight"
+  },
+  {
+    "id": "mage_victory",
+    "title": "A journal with another page",
+    "requirement": "Win a Mage climb.",
+    "story": "The Mage arrived carrying an answer and immediately wrote three new questions. Around the table, the family laughed for the first time that evening. The victorious heir left the final page blank for a different hand. An archive that could no longer change was only a monument. Their house would keep learning.",
+    "rewardKind": "motto",
+    "rewardId": "Living Archive",
+    "classId": "mage"
+  },
+  {
+    "id": "ranger_victory",
+    "title": "A path that stays open",
+    "requirement": "Win a Ranger climb.",
+    "story": "The Ranger reached the house before sunset and took down the oldest map. No route was crossed out. Instead, the heir added a small opening at its edge, where the next traveler might choose to go farther. The family kept the trail open. Coming home had made room for someone else to leave.",
+    "rewardKind": "motto",
+    "rewardId": "Open Trail",
+    "classId": "ranger"
+  }
+]

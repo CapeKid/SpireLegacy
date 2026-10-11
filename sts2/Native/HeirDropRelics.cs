@@ -49,12 +49,13 @@ public abstract class FamilyDropRelic : CustomRelicModel
     {
         get
         {
-            if(Key is "heirloom_brooch" or "wayfarer_ribbon" or "triune_crest" or "family_seal")yield return HoverTipFactory.Static(StaticHoverTip.Block);
-            if(Key is "training_dummy" or "triune_crest")yield return HoverTipFactory.FromPower<VigorPower>();
+            if(Key is "heirloom_brooch" or "wayfarer_ribbon" or "triune_crest" or "family_seal" or "guardian_knot")yield return HoverTipFactory.Static(StaticHoverTip.Block);
+            if(Key is "training_dummy" or "triune_crest" or "trail_compass")yield return HoverTipFactory.FromPower<VigorPower>();
         }
     }
     public override bool IsAllowed(IRunState runState)=>runState.Players.Any(p=>p.Character is HeirCharacter)
-        &&!(Inheritance.Has("pacifist")&&(Key is "training_dummy" or "family_seal" || Key=="triune_crest"&&Runtime.Heir.classId=="ranger"));
+        &&FamilyChronicle.RelicAvailable(Runtime.Profile,Key)
+        &&!(Inheritance.Has("pacifist")&&(Key is "training_dummy" or "family_seal" or "guardian_knot" or "trail_compass" || Key=="triune_crest"&&Runtime.Heir.classId=="ranger"));
     [SavedProperty] public bool CombatClaimed { get; set; }
     [SavedProperty] public int TriggerTurn { get; set; }=-1;
     [SavedProperty] public int TypeMask { get; set; }
@@ -90,6 +91,8 @@ public abstract class FamilyDropRelic : CustomRelicModel
             await PlayerCmd.GainEnergy(Row.Number("amount"),Owner);
             await CardPileCmd.Draw(context,Row.Number("extra"),Owner);
         }
+        if(Key=="trail_compass"&&player.PlayerCombatState!.TurnNumber==Row.Number("threshold")&&ClaimCombat())
+            await CardEffects.Apply(context,"vigor",Owner.Creature,Row.Number("amount"),Owner.Creature,null);
     }
     public override async Task AfterCardPlayed(PlayerChoiceContext context,CardPlay play)
     {
@@ -98,6 +101,10 @@ public abstract class FamilyDropRelic : CustomRelicModel
         {
             case "heirloom_brooch" when play.Card.Type==CardType.Power:
                 if(ClaimCombat())await Block(Row.Number("amount"));break;
+            case "guardian_knot" when play.Card.Type==CardType.Attack&&Owner.Creature.Block>0:
+                if(ClaimCombat())await Block(Row.Number("amount"));break;
+            case "scholar_bookmark" when play.Card.Type==CardType.Power:
+                if(ClaimCombat())await CardPileCmd.Draw(context,Row.Number("amount"),Owner);break;
             case "training_dummy" when play.Card.Type==CardType.Attack&&Owner.Creature.Block>0:
                 if(ClaimTurn())await CardEffects.Apply(context,"vigor",Owner.Creature,Row.Number("amount"),Owner.Creature,null);break;
             case "triune_crest":
@@ -136,6 +143,9 @@ public sealed class R_wayfarer_ribbon : FamilyDropRelic { }
 public sealed class R_triune_crest : FamilyDropRelic { }
 public sealed class R_legacy_hourglass : FamilyDropRelic { }
 public sealed class R_family_seal : FamilyDropRelic { }
+public sealed class R_guardian_knot : FamilyDropRelic { }
+public sealed class R_scholar_bookmark : FamilyDropRelic { }
+public sealed class R_trail_compass : FamilyDropRelic { }
 
 // Load distributed SVGs directly, as with the original trait icons. Only our drop
 // relics are affected; native relics and the existing Bloodline icon retain their hooks.
