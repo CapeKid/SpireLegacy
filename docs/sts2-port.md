@@ -35,7 +35,7 @@ Use the D-pad or left stick to move through buttons and read trait descriptions;
 
 ## Manual installation
 
-Extract `SpireLegacy-StS2-1.0.25.zip` into your StS2 install folder. Its layout is `mods/SpireLegacy/SpireLegacy.json`, `SpireLegacy.dll` and `heir/`. Subscribe to BaseLib separately, or use the Melty bundle, which includes BaseLib. Launch the normal game executable; no separate mod launcher is required.
+Extract `SpireLegacy-StS2-1.0.26.zip` into your StS2 install folder. Its layout is `mods/SpireLegacy/SpireLegacy.json`, `SpireLegacy.dll` and `heir/`. Subscribe to BaseLib separately, or use the Melty bundle, which includes BaseLib. Launch the normal game executable; no separate mod launcher is required.
 
 ## Steam Deck
 
@@ -47,7 +47,7 @@ If a card spends energy but never resolves, open **Family / Traits** after the f
 
 ## Melty
 
-`SpireLegacy-StS2-1.0.25-melty.zip` includes the standalone mod and BaseLib 3.4.7. `sts2/melty.json` declares only StS2, installs the two mods and launches `SlayTheSpire2.exe`. This launcher mapping targets Windows. Melty must validate the uploaded mapping and observe a successful launch before publication. A prepared archive alone is not a verified Melty install.
+`SpireLegacy-StS2-1.0.26-melty.zip` includes the standalone mod and BaseLib 3.4.7. `sts2/melty.json` declares only StS2, installs the two mods and launches `SlayTheSpire2.exe`. This launcher mapping targets Windows. Melty must validate the uploaded mapping and observe a successful launch before publication. A prepared archive alone is not a verified Melty install.
 
 The Workshop package uses Mega Crit's official StS2 uploader workspace format: `content/`, `workshop.json` and a PNG preview below 1 MB. Its visibility defaults to **private**. It creates a new StS2 item; do not supply the StS1 item's ID. BaseLib is a Required Item.
 
@@ -142,3 +142,8 @@ Measured Breath uses its own bounded retention power on both branches: at turn e
 ## 1.0.23 run-ending sprites
 
 Abandoning outside combat now shows the ended Knight, Mage or Ranger's original death sprite. Startup and rest-site game-over clones preserve inherited size and trait appearance; shop endings use the existing heir sprite. The ended run's saved heir determines the class even after the family selects a successor. Regular and public-beta use the same fix.
+
+
+## 1.0.26 inline energy layout
+
+Inline energy symbols in descriptions and Neow options match native 24px text artwork. Large card cost symbols and animated energy counters retain their original size.

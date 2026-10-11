@@ -56,7 +56,7 @@ public abstract class FamilyCardPool : CustomCardPoolModel
     protected abstract string ClassId { get; }
     public override string Title => "Spire Legacy";
     public override string BigEnergyIconPath=>HeirPresentation.TexturePath(ClassId+"-energy-icon");
-    public override string TextEnergyIconPath=>BigEnergyIconPath;
+    public override string TextEnergyIconPath=>HeirPresentation.TexturePath(ClassId+"-energy-text");
     public override Color ShaderColor=>HeirPresentation.Accent(ClassId);
     public override Color DeckEntryCardColor => new("C4A464");
     public override bool IsColorless => false;
@@ -69,7 +69,7 @@ public sealed class HeirRelicPool : RelicPoolModel,ICustomEnergyIconPool
 {
     public override string EnergyColorName=>BaseLib.Patches.UI.CustomEnergyIconPatches.GetEnergyColorName(Id);
     public string BigEnergyIconPath=>HeirPresentation.TexturePath(HeirPresentation.ClassId+"-energy-icon");
-    public string TextEnergyIconPath=>BigEnergyIconPath;
+    public string TextEnergyIconPath=>HeirPresentation.TexturePath(HeirPresentation.ClassId+"-energy-text");
     protected override RelicModel[] GenerateAllRelics() => [ModelDb.Relic<BloodlineRelic>(),..HeirDropRelics.All];
     public override IEnumerable<RelicModel> GetUnlockedRelics(MegaCrit.Sts2.Core.Unlocks.UnlockState unlockState)=>AllRelics.Where(r=>r is not FamilyDropRelic relic||(PlayerBloodlines.EligibilityOwner.Value is {} player ? PlayerBloodlines.Eligible(player,relic.Key) : FamilyChronicle.RelicAvailable(Runtime.Profile,relic.Key)));
 }
