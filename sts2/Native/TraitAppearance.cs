@@ -18,10 +18,10 @@ public partial class TraitAppearance : Node2D
         ["blue"] = new(.25f,.55f,1), ["nature"] = new(.3f,.9f,.4f),
         ["medium"] = new(.75f,.45f,1), ["festive"] = new(1,.3f,.35f)
     };
-    public static TraitAppearance Attach(Node2D parent, HeirSprite sprite, float size)
+    public static TraitAppearance Attach(Node2D parent, HeirSprite sprite, float size,FamilyProfile.Heir? heir=null)
     {
         var appearance = new TraitAppearance { Name = "HeirTraitAppearance", sprite = sprite,
-            effects = Inheritance.Traits.Select(r=>r.Text("effect")).ToHashSet(), Scale = Vector2.One * size };
+            effects = (heir==null?Inheritance.Traits:Inheritance.Rows(heir)).Select(r=>r.Text("effect")).ToHashSet(), Scale = Vector2.One * size };
         parent.AddChild(appearance);
         instances.Add(appearance);
         foreach (var (effect,color) in AccentColors.Where(pair=>appearance.effects.Contains(pair.Key)))

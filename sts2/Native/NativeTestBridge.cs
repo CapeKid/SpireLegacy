@@ -152,6 +152,7 @@ public static class NativeTestBridge
                     var poolPlayer=RunState().Players.Single();var available=poolPlayer.Character.CardPool.GetUnlockedCards(poolPlayer.UnlockState,poolPlayer.RunState.CardMultiplayerConstraint).OfType<LegacyCard>().ToArray();
                     result=new{expanded=NativePoolParity.Expanded,ids=available.Select(c=>c.Key).ToArray(),compendium=available.All(c=>ModelDb.AllCards.Any(m=>m.Id==c.Id))};break;
                 case "visual": result = HeirVisuals.Diagnostic(); break;
+                case "ending-visual":result=HeirEndingVisuals.Diagnostic();break;
                 case "trait-appearance": result = Descendants(Tree.Root).OfType<TraitAppearance>().Where(a=>a.IsVisibleInTree()).Select(a=>a.Diagnostic()).ToArray(); break;
                 case "room-visual":
                     result = Descendants(Tree.Root).OfType<HeirSprite>().Where(s=>s.Name=="SpireLegacyRoomHeir" && s.IsVisibleInTree()).Select(s=>new {classId=s.ClassId,pose=s.Animation.ToString(),position=s.GlobalPosition.ToString(),scale=s.GlobalScale.ToString(),pixelHeight=Design.Get("character_art",s.ClassId).Number("height")*Math.Abs(s.GetGlobalTransformWithCanvas().Scale.Y * Tree.Root.GetFinalTransform().Scale.Y)}).ToArray();break;
