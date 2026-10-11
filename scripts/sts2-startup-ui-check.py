@@ -1,5 +1,6 @@
 """Regression checks for an opt-in isolated owned-game lab (HEIR_TEST_MODE=1)."""
 import argparse,json,re,time
+from oracle_protocol import call
 from pathlib import Path
 root=Path(__file__).resolve().parents[1]
 parser=argparse.ArgumentParser(description=__doc__)
@@ -7,19 +8,12 @@ parser.add_argument('--profile-directory',required=True)
 parser.add_argument('--branch',choices=['regular','beta'],required=True)
 args=parser.parse_args();profile=(root/args.profile_directory).resolve();tag=args.branch;evidence=[]
 if not profile.is_relative_to((root/'private').resolve()):raise SystemExit('Use an isolated private lab profile.')
-def send(command,**args):
- out=profile/'response.json'
- if out.exists():out.unlink()
- assert not (profile/'request.json').exists()
- (profile/'request.pending').write_text(json.dumps(dict(command=command,**args)),encoding='utf-8')
- (profile/'request.pending').replace(profile/'request.json')
- end=time.monotonic()+60
- while not out.exists():
-  if time.monotonic()>end:raise TimeoutError(command)
-  time.sleep(.05)
- r=json.loads(out.read_text(encoding='utf-8'));assert r['ok'],r
- evidence.append(dict(command=command,args=args,result=r['result']))
- return r['result']
+def send(command, **args):
+    record=call(profile,dict(command=command,**args),timeout=90)
+    reply=record['response']
+    assert reply['ok'],reply
+    evidence.append(dict(command=command,args=args,result=reply['result'],metadata=reply['metadata']))
+    return reply['result']
 def key(action):
  s=send('input',action=action);time.sleep(.15);return s
 try:

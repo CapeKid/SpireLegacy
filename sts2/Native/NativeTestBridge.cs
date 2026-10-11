@@ -12,6 +12,7 @@ using MegaCrit.Sts2.Core.Runs;
 using MegaCrit.Sts2.Core.TestSupport;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using HarmonyLib;
+using MegaCrit.Sts2.Core.Debug;
 
 namespace SpireLegacy;
 
@@ -19,6 +20,10 @@ namespace SpireLegacy;
 public static class NativeTestBridge
 {
     private static bool busy;
+    private static readonly TestRequestLedger receipts=new();
+    private static string? requestId;
+    private static string? commandName;
+    private static string? dllHash;
     private static SceneTree Tree => (SceneTree)Engine.GetMainLoop();
     public static void Initialize()
     {
@@ -35,6 +40,7 @@ public static class NativeTestBridge
         var path = Path.Combine(Runtime.DataDirectory,"request.json");
         if (busy || !File.Exists(path) || NGame.Instance == null || (NGame.Instance.MainMenu == null && NRun.Instance == null)) return;
         busy = true;
+        requestId=null;commandName=null;
         try
         {
             string serialized;
@@ -43,15 +49,32 @@ public static class NativeTestBridge
             try {serialized=File.ReadAllText(path);File.Delete(path);}catch(IOException){return;}
             using var doc = JsonDocument.Parse(serialized);
             var request = doc.RootElement;
+            requestId=request.TryGetProperty("requestId",out var id)?id.GetString():Guid.NewGuid().ToString("N");
+            commandName=request.GetProperty("command").GetString();
+            receipts.Claim(requestId!,Path.Combine(Runtime.DataDirectory,"oracle-receipts.txt"));
             object result;
-            switch (request.GetProperty("command").GetString())
+            switch (commandName)
             {
+                case "harness-failure":await HarnessFailure();result=new{unexpected=true};break;
+                case "harness-facts":result=new{completed=true,gameStore=AccessTools.Field(typeof(MegaCrit.Sts2.Core.Saves.SaveManager),"_saveStore").GetValue(MegaCrit.Sts2.Core.Saves.SaveManager.Instance)?.GetType().Name,userDirectory=OS.GetUserDataDir(),familyPath=Runtime.FamilyPath};break;
+                case "harness-production-gate":
+                    var originalMode=System.Environment.GetEnvironmentVariable("HEIR_TEST_MODE");
+                    var subscriptions=Tree.GetSignalConnectionList(SceneTree.SignalName.ProcessFrame).Count;
+                    try {foreach(var mode in new string?[]{null,"0"}){System.Environment.SetEnvironmentVariable("HEIR_TEST_MODE",mode);Initialize();if(Tree.GetSignalConnectionList(SceneTree.SignalName.ProcessFrame).Count!=subscriptions)throw new InvalidDataException("Production exposed the test bridge.");}}
+                    finally{System.Environment.SetEnvironmentVariable("HEIR_TEST_MODE",originalMode);}
+                    result=new{productionSubscribed=false};break;
+                case "harness-owner-diagnostic":
+                    var diagnosticOwner=RunState().Players.Single(p=>p.NetId==request.GetProperty("owner").GetUInt64());
+                    var originalFailure=new InvalidOperationException("Synthetic owner diagnostic",new ArgumentException("Inner owner diagnostic"));
+                    try{await CardPlayDiagnostics.Observe(Task.FromException(originalFailure),"harness-fixture",diagnosticOwner);throw new InvalidDataException("Failure was swallowed.");}
+                    catch(InvalidOperationException failure){result=new{originalPreserved=ReferenceEquals(failure,originalFailure),text=CardPlayDiagnostics.LastFailure};}
+                    break;
                 case "coop-host":result=await CoopOracle.Lobby(request,true);break;
                 case "coop-join":result=await CoopOracle.Lobby(request,false);break;
                 case "coop-ready":CoopBloodlines.Lobby!.SetReady(request.TryGetProperty("ready",out var coopReady)?coopReady.GetBoolean():true);result=CoopOracle.State();break;
                 case "coop-state":result=CoopOracle.State();break;
                 case "coop-vote":result=CoopOracle.Vote();break;
-                case "coop-play":result=CoopOracle.Play();break;
+                case "coop-play":result=await CoopOracle.Play();break;
                 case "coop-roundtrip":result=CoopOracle.RoundTrip();break;
                 case "coop-turn":MegaCrit.Sts2.Core.Combat.CombatManager.Instance.SetReadyToEndTurn(PlayerBloodlines.LocalPlayer!,false);result=CoopOracle.State();break;
                 case "coop-save-quit":await MegaCrit.Sts2.Core.Saves.SaveManager.Instance.SaveRun(null);await NGame.Instance!.ReturnToMainMenu();result=new{saved=true};break;
@@ -455,14 +478,28 @@ public static class NativeTestBridge
                     result = new { path = filename, error = error.ToString() }; break;
                 default: throw new InvalidDataException("Unknown owned-game test command.");
             }
-            WriteResponse(new {ok=true,result});
+            await WriteResponse(new {ok=true,result});
         }
-        catch (Exception e) { GD.PushError(e.ToString()); WriteResponse(new {ok=false,error=e.ToString()}); }
+        catch (Exception e) { var detail=DiagnosticText.Describe(e,()=>"Owned-game oracle command: "+commandName);GD.PushError(detail);await WriteResponse(new {ok=false,error=detail}); }
         finally { busy = false; }
     }
-    private static void WriteResponse(object response) {
-        var temporary=Path.Combine(Runtime.DataDirectory,"response.pending");File.WriteAllText(temporary,JsonSerializer.Serialize(response));File.Move(temporary,Path.Combine(Runtime.DataDirectory,"response.json"),true);
+    private static async Task WriteResponse(object response) {
+        var body=JsonSerializer.SerializeToElement(response);
+        object? ReadFact(Func<object?> read) {try{return read();}catch(Exception e){return new{unavailable=e.GetType().Name};}}
+        var metadata=new {requestId,command=commandName,utc=DateTime.UtcNow.ToString("O"),dllSha256=ReadFact(()=>dllHash??=Convert.ToHexString(System.Security.Cryptography.SHA256.HashData(File.ReadAllBytes(typeof(Runtime).Assembly.Location))).ToLowerInvariant()),
+            sourceSha=System.Environment.GetEnvironmentVariable("HEIR_TEST_SOURCE_SHA"),sourcePatchSha256=System.Environment.GetEnvironmentVariable("HEIR_TEST_PATCH_SHA256"),seed=ReadFact(()=>((RunState?)AccessTools.Property(typeof(RunManager),"State").GetValue(RunManager.Instance))?.Rng.StringSeed),game=ReadFact(()=>ReleaseInfoManager.Instance.ReleaseInfo?.Version),mod=ReadFact(()=>CardPlayDiagnostics.Version),
+            platform=System.Runtime.InteropServices.RuntimeInformation.OSDescription,profile=Runtime.DataDirectory,
+            mods=ReadFact(()=>MegaCrit.Sts2.Core.Modding.ModManager.Mods.Where(m=>m.state==MegaCrit.Sts2.Core.Modding.ModLoadState.Loaded).Select(m=>new{id=m.manifest?.id,version=m.manifest?.version}).ToArray())};
+        var envelope=new Dictionary<string,object?>{{"requestId",requestId},{"metadata",metadata}};
+        foreach(var property in body.EnumerateObject())envelope[property.Name]=property.Value;
+        var serialized=JsonSerializer.Serialize(envelope);
+        var temporary=Path.Combine(Runtime.DataDirectory,"response.pending");
+        for(var attempt=0;attempt<5;attempt++) {
+            try{File.WriteAllText(temporary,serialized);File.Move(temporary,Path.Combine(Runtime.DataDirectory,"response.json"),true);return;}
+            catch(Exception error) when(error is IOException or UnauthorizedAccessException){if(attempt==4){GD.PushWarning("Oracle result publication failed; do not replay the claimed command: "+error.Message);return;}await Task.Delay(50);}
+        }
     }
+    private static async Task HarnessFailure(){await Task.Delay(1);throw new InvalidOperationException("Awaited harness fixture",new ArgumentException("Inner harness fixture"));}
     private static async Task WaitForPlay(Player player) {
         var deadline=Time.GetTicksMsec()+15000;
         while(player.PlayerCombatState?.Phase!=MegaCrit.Sts2.Core.Combat.PlayerTurnPhase.Play) {

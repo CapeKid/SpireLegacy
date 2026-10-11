@@ -63,13 +63,24 @@ public static class CoopOracle
         RunManager.Instance.ActionQueueSynchronizer.RequestEnqueue(new MegaCrit.Sts2.Core.GameActions.VoteForMapCoordAction(PlayerBloodlines.LocalPlayer!,run.MapLocation,vote));
         return new{voted=next.coord.ToString()};
     }
-    public static object Play()
+    public static async Task<object> Play()
     {
         var player=PlayerBloodlines.LocalPlayer!;
         var combat=player.Creature.CombatState!;
         var card=player.PlayerCombatState!.Hand.Cards.First(c=>c.CanPlay());
-        var target=combat.GetOpponentsOf(player.Creature).FirstOrDefault(c=>c.IsAlive);
-        return new{played=card.TryManualPlay(target),card=card.Id.ToString()};
+        var target=card.TargetType==MegaCrit.Sts2.Core.Entities.Cards.TargetType.AnyEnemy?combat.GetOpponentsOf(player.Creature).First(c=>c.IsAlive):null;
+        if(!card.TryManualPlay(target))throw new InvalidDataException("Native co-op manual play refused "+card.Id);
+        var tree=(SceneTree)Engine.GetMainLoop();var deadline=Time.GetTicksMsec()+15000;
+        while(card.Pile?.Type is MegaCrit.Sts2.Core.Entities.Cards.PileType.Hand or MegaCrit.Sts2.Core.Entities.Cards.PileType.Play){
+            if(Time.GetTicksMsec()>deadline)throw new TimeoutException("Native co-op card did not resolve: "+card.Id);
+            await tree.ToSignal(tree,SceneTree.SignalName.ProcessFrame);
+        }
+        deadline=Time.GetTicksMsec()+2500;
+        while(MegaCrit.Sts2.Core.Nodes.Cards.NCard.FindOnTable(card)!=null){
+            if(Time.GetTicksMsec()>deadline)throw new InvalidDataException("Native co-op card remains on the table: "+card.Id);
+            await tree.ToSignal(tree,SceneTree.SignalName.ProcessFrame);
+        }
+        return new{played=true,card=card.Id.ToString(),pile=card.Pile?.Type.ToString(),tableNodePresent=false};
     }
     public static object RoundTrip()
     {

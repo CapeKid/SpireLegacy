@@ -1,5 +1,6 @@
 """Verify native paired cosmetic traits, room rendering, and real damage flashes."""
 import json
+from oracle_protocol import call
 import shutil
 import sys
 import time
@@ -16,18 +17,10 @@ while not startup.exists() or 'Time to main menu' not in startup.read_text(encod
     if time.monotonic()>deadline: raise TimeoutError('main menu')
     time.sleep(.5)
 def send(command, **args):
-    out=profile/'response.json'; out.unlink(missing_ok=True)
-    assert not (profile/'request.json').exists()
-    pending=profile/'request.pending'
-    pending.write_text(json.dumps(dict(command=command, **args)),encoding='utf-8')
-    pending.replace(profile/'request.json')
-    deadline=time.monotonic()+50
-    while not out.exists():
-        if time.monotonic()>deadline: raise TimeoutError(command)
-        time.sleep(.05)
-    reply=json.loads(out.read_text(encoding='utf-8'))
+    record=call(profile,dict(command=command,**args),timeout=90)
+    reply=record['response']
     assert reply['ok'],reply
-    evidence.append(dict(command=command,args=args,result=reply['result']))
+    evidence.append(dict(command=command,args=args,result=reply['result'],metadata=reply['metadata']))
     return reply['result']
 def ready():
     for _ in range(150):

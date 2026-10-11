@@ -276,4 +276,18 @@ Check(FamilyProfile.Load(migrationPath).crowns == 965, "Reload cannot award refu
 Inheritance.CurrentHeir = () => new() { classId = "mage", traits = ["vampire", "superhealer"] };
 Check(Inheritance.Healing(Design.Get("manor", "garden").Number("maxLevel") + Inheritance.Stat("heal")) == 10, "Full Garden/Vampirism/Super Healer healing is reduced from 16 to 10");
 Inheritance.CurrentHeir = () => new();
+var isolatedRoot=Path.Combine(directory,"isolation");Directory.CreateDirectory(isolatedRoot);
+Check(!TestIsolation.Validate(null,"personal",null,null),"Normal launches never enable testing");
+Check(!TestIsolation.Validate("0","personal",null,null),"Explicit disabled test mode");
+Check(TestIsolation.Validate("1","C:/User/SpireLegacy2PortLabOwned",Path.Combine(isolatedRoot,"family"),isolatedRoot),"Dedicated profile accepts child family directory");
+foreach(var bad in new[]{"true","yes","2"}) {var rejected=false;try{TestIsolation.Validate(bad,"SpireLegacy2PortLab",Path.Combine(isolatedRoot,"child"),isolatedRoot);}catch(InvalidOperationException){rejected=true;}Check(rejected,"Invalid mode fails closed");}
+foreach(var pair in new[]{("personal",Path.Combine(isolatedRoot,"child"),isolatedRoot),("SpireLegacy2PortLab",(string?)null,isolatedRoot),("SpireLegacy2PortLab",Path.Combine(isolatedRoot,"child"),(string?)null),("SpireLegacy2PortLab",isolatedRoot,isolatedRoot),("SpireLegacy2PortLab",Path.Combine(isolatedRoot,"..","outside"),isolatedRoot),("SpireLegacy2PortLab","relative",isolatedRoot)}) {
+ var rejected=false;try{TestIsolation.Validate("1",pair.Item1,pair.Item2,pair.Item3);}catch(InvalidOperationException){rejected=true;}Check(rejected,"Unsafe test profile rejected before access");
+}
+var receiptPath=Path.Combine(directory,"receipts.txt");var receiptId=Guid.NewGuid().ToString("N");new TestRequestLedger().Claim(receiptId,receiptPath);
+var replayRejected=false;try{new TestRequestLedger().Claim(receiptId,receiptPath);}catch(InvalidDataException){replayRejected=true;}Check(replayRejected,"Restart cannot replay a claimed mutation");
+var originalDiagnostic=new InvalidOperationException("Original fixture",new ArgumentException("Inner fixture"));
+var textDiagnostic=DiagnosticText.Describe(originalDiagnostic,()=>throw new FileNotFoundException("Missing manifest"));
+Check(textDiagnostic.Contains("Original fixture")&&textDiagnostic.Contains("Inner fixture")&&textDiagnostic.Contains("metadata unavailable"),"Diagnostic metadata failure preserves original and inner exception");
+Check(!DiagnosticText.Describe(new Exception("api_key=fixtureSecret token=fixtureToken"),()=>"Bearer fixtureAuth").Contains("fixtureSecret"),"Diagnostic secrets redacted");
 Console.WriteLine(JsonSerializer.Serialize(new { result = "passed", assertions = count, cards = 360, inheritedTraits = traitIds.Length, familyFixture = directory }));

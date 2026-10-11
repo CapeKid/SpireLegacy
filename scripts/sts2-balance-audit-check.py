@@ -1,20 +1,16 @@
 """Native regression for balance audit fixes; requires an opt-in private rendered lab."""
 import json, sys, time
+from oracle_protocol import call
 from pathlib import Path
 
 root=Path(__file__).resolve().parents[1]; profile=(root/sys.argv[1]).resolve(); tag=sys.argv[2]; evidence=[]
 assert profile.is_relative_to((root/'private').resolve())
 def send(command, **args):
-    out=profile/'response.json'
-    if out.exists(): out.unlink()
-    assert not (profile/'request.json').exists()
-    pending=profile/'request.pending'; pending.write_text(json.dumps(dict(command=command,**args)),encoding='utf-8'); pending.replace(profile/'request.json')
-    deadline=time.monotonic()+40
-    while not out.exists():
-        if time.monotonic()>deadline: raise TimeoutError(command)
-        time.sleep(.05)
-    r=json.loads(out.read_text(encoding='utf-8')); assert r['ok'],r
-    evidence.append(dict(command=command,args=args,result=r['result'])); return r['result']
+    record=call(profile,dict(command=command,**args),timeout=90)
+    reply=record['response']
+    assert reply['ok'],reply
+    evidence.append(dict(command=command,args=args,result=reply['result'],metadata=reply['metadata']))
+    return reply['result']
 def ready(turn=1):
     for _ in range(150):
         s=send('state')

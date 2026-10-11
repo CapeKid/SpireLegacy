@@ -34,7 +34,8 @@ public static class Runtime
     public static Texture2D ClassIcon(string id) => Texture(Design.Get("icon_art", "class_" + id).Text("path"));
     public static void Initialize()
     {
-        if (System.Environment.GetEnvironmentVariable("HEIR_TEST_MODE") == "1")
+        if (TestIsolation.Validate(System.Environment.GetEnvironmentVariable("HEIR_TEST_MODE"),OS.GetUserDataDir(),
+            System.Environment.GetEnvironmentVariable("HEIR_DATA_DIR"),System.Environment.GetEnvironmentVariable("HEIR_TEST_ROOT")))
         {
             var existingSettings = MegaCrit.Sts2.Core.Saves.SaveManager.Instance.SettingsSave;
             var labId=Convert.ToHexString(System.Security.Cryptography.SHA256.HashData(System.Text.Encoding.UTF8.GetBytes(Path.GetFullPath(DataDirectory)))).Substring(0,16);
@@ -48,7 +49,6 @@ public static class Runtime
             manager.SettingsSave.WindowSize = new(1280,800);
             manager.SettingsSave.ModSettings = existingSettings.ModSettings;
             GD.Print("Spire Legacy isolated test profile: ", OS.GetUserDataDir(), "; Steam Cloud save backend disabled.");
-            if (!OS.GetUserDataDir().Contains("SpireLegacy2PortLab")) throw new InvalidOperationException("Refusing test launch without the isolated Godot user directory.");
         }
         Profile = FamilyProfile.Load(FamilyPath);
         Inheritance.CurrentHeir = () => Heir;
