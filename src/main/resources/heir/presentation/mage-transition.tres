@@ -1,0 +1,9 @@
+[gd_resource type="ShaderMaterial" load_steps=2 format=3]
+
+[sub_resource type="Shader" id="Shader_family"]
+code = "shader_type canvas_item; uniform float threshold = 0.0; uniform vec4 tint : source_color; void fragment() { float edge = UV.x * 0.65 + UV.y * 0.25 + abs(fract(UV.y * 7.0) - 0.5) * 0.1; float a = threshold < 0.001 ? 0.0 : smoothstep(edge - 0.015, edge + 0.015, threshold); COLOR = vec4(tint.rgb * 0.22, a); }"
+
+[resource]
+shader = SubResource("Shader_family")
+shader_parameter/threshold = 0.0
+shader_parameter/tint = Color(0.73333, 0.58039, 0.91373, 1)
