@@ -1,5 +1,6 @@
 """Native Neow inline-image/layout regression in an opted-in isolated lab."""
 import argparse,json,time,shutil
+from oracle_protocol import call
 from pathlib import Path
 
 parser=argparse.ArgumentParser();parser.add_argument('branch',choices=['regular','beta']);args=parser.parse_args()
@@ -10,16 +11,12 @@ while not log.exists() or 'Time to main menu' not in log.read_text(encoding='utf
     if time.monotonic()>deadline:raise TimeoutError('isolated main menu')
     time.sleep(.2)
 
-def send(command,**values):
-    response=profile/'response.json';response.unlink(missing_ok=True)
-    assert not (profile/'request.json').exists(),'pending oracle request'
-    pending=profile/'request.pending';pending.write_text(json.dumps(dict(command=command,**values)),encoding='utf-8');pending.replace(profile/'request.json')
-    deadline=time.monotonic()+55
-    while not response.exists():
-        if time.monotonic()>deadline:raise TimeoutError(command)
-        time.sleep(.05)
-    reply=json.loads(response.read_text(encoding='utf-8'));assert reply['ok'],reply
-    evidence.append(dict(command=command,args=values,result=reply['result']));return reply['result']
+def send(command, **values):
+    record=call(profile,dict(command=command,**values),timeout=90)
+    reply=record['response']
+    assert reply['ok'],reply
+    evidence.append(dict(command=command,args=values,result=reply['result'],metadata=reply['metadata']))
+    return reply['result']
 
 def ready():
     deadline=time.monotonic()+30

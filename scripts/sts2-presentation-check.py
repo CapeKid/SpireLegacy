@@ -1,19 +1,18 @@
 """Native presentation/resource/card checks in an isolated owned-game profile."""
 import json,sys,time,shutil
+from oracle_protocol import call
 from pathlib import Path
 root=Path(__file__).resolve().parents[1];tag=sys.argv[1];profile=(root/'private'/f'sts2-presentation-{tag}-profile').resolve();evidence=[]
 deadline=time.monotonic()+140;log=root/'private'/f'presentation-{tag}.out.log'
 while not log.exists() or 'Time to main menu' not in log.read_text(encoding='utf-8',errors='replace'):
     if time.monotonic()>deadline:raise TimeoutError('main menu')
     time.sleep(.5)
-def send(command,**args):
-    out=profile/'response.json';out.unlink(missing_ok=True);assert not (profile/'request.json').exists()
-    pending=profile/'request.pending';pending.write_text(json.dumps(dict(command=command,**args)));pending.replace(profile/'request.json');deadline=time.monotonic()+90
-    while not out.exists():
-        if time.monotonic()>deadline:raise TimeoutError(command)
-        time.sleep(.05)
-    reply=json.loads(out.read_text(encoding='utf-8'));assert reply['ok'],reply
-    evidence.append(dict(command=command,args=args,result=reply['result']));return reply['result']
+def send(command, **args):
+    record=call(profile,dict(command=command,**args),timeout=90)
+    reply=record['response']
+    assert reply['ok'],reply
+    evidence.append(dict(command=command,args=args,result=reply['result'],metadata=reply['metadata']))
+    return reply['result']
 def ready():
     for _ in range(200):
         state=send('state')

@@ -1,5 +1,6 @@
 """Standalone icon/render/start/save checks with no content reader or extracted cache."""
 import json
+from oracle_protocol import call
 import shutil
 import sys
 import time
@@ -13,20 +14,10 @@ evidence = []
 
 
 def send(command, **args):
-    out = profile / 'response.json'
-    out.unlink(missing_ok=True)
-    assert not (profile / 'request.json').exists()
-    pending = profile / 'request.pending'
-    pending.write_text(json.dumps(dict(command=command, **args)), encoding='utf-8')
-    pending.replace(profile / 'request.json')
-    deadline = time.monotonic() + 50
-    while not out.exists():
-        if time.monotonic() > deadline:
-            raise TimeoutError(command)
-        time.sleep(.05)
-    reply = json.loads(out.read_text(encoding='utf-8'))
-    assert reply['ok'], reply
-    evidence.append(dict(command=command, args=args, result=reply['result']))
+    record=call(profile,dict(command=command,**args),timeout=90)
+    reply=record['response']
+    assert reply['ok'],reply
+    evidence.append(dict(command=command,args=args,result=reply['result'],metadata=reply['metadata']))
     return reply['result']
 
 

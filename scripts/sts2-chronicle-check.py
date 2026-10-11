@@ -1,18 +1,18 @@
 """Family Chronicle native gating, bounded relics, persistence and controller routes."""
 import json,sys,time,shutil
+from oracle_protocol import call
 from pathlib import Path
 root=Path(__file__).resolve().parents[1];tag=sys.argv[1];profile=(root/'private'/f'sts2-chronicle-{tag}-profile').resolve();evidence=[]
 log=root/'private'/f'chronicle-{tag}.out.log';deadline=time.monotonic()+140
 while not log.exists() or 'Time to main menu' not in log.read_text(encoding='utf-8',errors='replace'):
     if time.monotonic()>deadline:raise TimeoutError('main menu')
     time.sleep(.5)
-def send(command,**args):
-    out=profile/'response.json';out.unlink(missing_ok=True);assert not (profile/'request.json').exists()
-    p=profile/'request.pending';p.write_text(json.dumps(dict(command=command,**args)),encoding='utf-8');p.replace(profile/'request.json');end=time.monotonic()+90
-    while not out.exists():
-        if time.monotonic()>end:raise TimeoutError(command)
-        time.sleep(.05)
-    r=json.loads(out.read_text(encoding='utf-8'));assert r['ok'],r;evidence.append(dict(command=command,args=args,result=r['result']));return r['result']
+def send(command, **args):
+    record=call(profile,dict(command=command,**args),timeout=90)
+    reply=record['response']
+    assert reply['ok'],reply
+    evidence.append(dict(command=command,args=args,result=reply['result'],metadata=reply['metadata']))
+    return reply['result']
 def ready(turn=None):
     for _ in range(200):
         r=send('state')
