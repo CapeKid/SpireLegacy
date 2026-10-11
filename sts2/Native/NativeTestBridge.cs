@@ -135,6 +135,13 @@ public static class NativeTestBridge
                     var holder=Descendants(Tree.Root).OfType<MegaCrit.Sts2.Core.Nodes.Relics.NRelicInventoryHolder>().First(h=>Descendants(h).OfType<MegaCrit.Sts2.Core.Nodes.Relics.NRelic>().Any(n=>n.Model is FamilyDropRelic r&&r.Key==focusKey));
                     holder.GrabFocus();await Tree.ToSignal(Tree,SceneTree.SignalName.ProcessFrame);
                     result=new{focused=holder.HasFocus(),focusMode=holder.FocusMode.ToString(),right=holder.FocusNeighborRight.ToString()};break;
+                case "potion-info":result=HeirPotionOracle.Inspect(RunState());break;
+                case "potion-obtain":result=await HeirPotionOracle.Obtain(RunState(),request.GetProperty("potion").GetString()!,request.TryGetProperty("shop",out var potionShop)&&potionShop.GetBoolean());break;
+                case "potion-use":await WaitForPlay(RunState().Players.Single());result=await HeirPotionOracle.Use(RunState(),request.GetProperty("potion").GetString()!);break;
+                case "potion-controller-use":await WaitForPlay(RunState().Players.Single());result=await HeirPotionOracle.Use(RunState(),request.GetProperty("potion").GetString()!,true);break;
+                case "potion-focus":result=await HeirPotionOracle.Focus(request.GetProperty("potion").GetString()!);break;
+                case "potion-clear":foreach(var potion in RunState().Players.Single().Potions.ToArray())await MegaCrit.Sts2.Core.Commands.PotionCmd.Discard(potion);result=new{cleared=true};break;
+                case "potion-slots":result=RunState().Players.Single().PotionSlots.Select(p=>p?.Id.ToString()).ToArray();break;
                 case "expansion-play":
                     await WaitForPlay(RunState().Players.Single());
                     result=await PoolExpansionOracle.Play(RunState(),request.GetProperty("card").GetString()!,request.GetProperty("upgrade").GetBoolean(),UseTestSelector());break;

@@ -13,6 +13,15 @@ foreach(var relic in dropRelics)
 }
 Check(Design.Rows("relic_art").Select(r=>r.Text("sha256")).Distinct().Count()==7,"Distinct relic silhouettes");
 var icons = Design.Rows("icon_art");
+var familyPotions=Design.Rows("heir_potions");
+Check(familyPotions.Count==3&&familyPotions.Select(r=>r.Text("id")).Distinct().Count()==3,"Three exclusive potion identities");
+foreach(var potion in familyPotions)
+{
+    Check(new[]{"Common","Uncommon","Rare"}.Contains(potion.Text("rarity"))&&new[]{"Self","AnyEnemy"}.Contains(potion.Text("target")),"Valid native potion rarity/target "+potion.Text("id"));
+    Check(!potion.Text("description").Contains('{')&&potion.Number("amount")>0&&potion.Number("extra")>0,"Complete potion text/resources "+potion.Text("id"));
+    Check(Design.Get("potion_art",potion.Text("id")).Text("license")=="MIT","Original potion artwork "+potion.Text("id"));
+}
+Check(Design.Rows("potion_art").Select(r=>r.Text("sha256")).Distinct().Count()==3,"Distinct potion silhouettes");
 Check(icons.Count == Design.Rows("traits").Count + 3, "Every saved trait ID and class has an original icon");
 Check(icons.Select(r => r.Text("sha256")).Distinct().Count() == icons.Count, "Original trait/class icons are distinct");
 foreach (var trait in Design.Rows("traits")) Check(Design.Get("icon_art", "trait_" + trait.Text("id")).Text("license") == "MIT", "Original trait icon " + trait.Text("id"));

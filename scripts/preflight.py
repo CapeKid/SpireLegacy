@@ -198,6 +198,18 @@ def validate(historical_assets=False):
             svg=ET.fromstring(path.read_text())
             if svg.get('viewBox')!='0 0 128 128' or any(e.tag.split('}')[-1] in {'image','text','script','foreignObject'} for e in svg.iter()):errors.append('Relic icon is not self-contained '+art['id'])
     if len({r['sha256'] for r in relic_art.values()})!=7:errors.append('Relic artwork must be distinct')
+    potions=sheets.get('heir_potions',[]);potion_art={r['id']:r for r in sheets.get('potion_art',[])}
+    if len(potions)!=3 or set(potion_art)!={r['id'] for r in potions}:errors.append('Three original exclusive potions/icons required')
+    for row in potions:
+        if row['rarity'] not in {'Common','Uncommon','Rare'} or row['target'] not in {'Self','AnyEnemy'} or '{' in row['description'] or row['amount']<=0 or not row['baseline']:errors.append('Incomplete potion rules '+row['id'])
+    for art in potion_art.values():
+        if art['license']!='MIT' or art['author']!='CapeKid':errors.append('Missing original potion provenance '+art['id'])
+        for field,hashfield in [('path','sha256'),('outline','outlineSha256')]:
+            path=ROOT/'src/main/resources'/art[field]
+            if not path.is_file() or hashlib.sha256(path.read_bytes()).hexdigest()!=art[hashfield]:errors.append('Potion icon hash mismatch '+art['id']);continue
+            svg=ET.fromstring(path.read_text())
+            if svg.get('viewBox')!='0 0 128 128' or any(e.tag.split('}')[-1] in {'image','text','script','foreignObject'} for e in svg.iter()):errors.append('Potion icon is not self-contained '+art['id'])
+    if len({r['sha256'] for r in potion_art.values()})!=3:errors.append('Potion artwork must be distinct')
     # Historical StS1 asset inspection is optional and never needed for the StS2 build.
     index=ROOT/'private'/'rl_asset_index.json'
     if historical_assets and not index.exists(): errors.append('Historical Rogue Legacy 2 inspection missing')
