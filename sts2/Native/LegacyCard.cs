@@ -34,13 +34,29 @@ public abstract class LegacyCard : CustomCardModel
     }
     public override CardPoolModel Pool => ModelDb.Character<HeirCharacter>().CardPool;
     public override CardType Type => DesignCard.Mercy ? CardType.Skill : base.Type;
+    // BaseLib infers this from the presence of a BlockVar, including our zero-value
+    // compatibility slot. Enchantment eligibility must reflect actual card effects.
+    public override bool GainsBlock => DesignCard.Block > 0 || Row.Number("nextBlock") > 0 || HasSpecialBlock || Row.Text("special") == "double_block";
+    public bool HasSpecialBlock => Row.Text("special") is "discard_block" or "exhaust_block" or "exhaust_nonattacks";
+    public BlockVar NextBlock => (BlockVar)DynamicVars["BlockNextTurn"];
+    public BlockVar SpecialBlock => (BlockVar)DynamicVars["SpecialBlock"];
     public override Texture2D CustomPortrait => Runtime.Texture(Design.Get("card_art", Row.Text("art")).Text("path"));
     public override string PortraitPath => MissingPortraitPath;
     public override string BetaPortraitPath => MissingPortraitPath;
     public override IEnumerable<string> AllPortraitPaths => [];
     public override List<(string, string)> Localization => [("title", Row.Text("name")), ("description", "{Rules}"),("returnPrompt","Choose cards to return to your hand.")];
-    protected override void AddExtraArgsToDescription(LocString description) => description.Add("Rules", DesignCard.Rules().Replace("{Damage}", DynamicVars.Damage.ToHighlightedString(false)).Replace("{Block}", DynamicVars.Block.ToHighlightedString(false)));
-    protected override IEnumerable<DynamicVar> CanonicalVars => [new DamageVar(new CardDesign(Key).Damage, ValueProp.Move), new BlockVar(new CardDesign(Key).Block, ValueProp.Move)];
+    protected override void AddExtraArgsToDescription(LocString description) => description.Add("Rules", DesignCard.Rules(
+        Row.Number("nextBlock") > 0 ? NextBlock.ToHighlightedString(false) : null,
+        HasSpecialBlock ? SpecialBlock.ToHighlightedString(false) : null).Replace("{Damage}", DynamicVars.Damage.ToHighlightedString(false)).Replace("{Block}", DynamicVars.Block.ToHighlightedString(false)));
+    protected override IEnumerable<DynamicVar> CanonicalVars {
+        get {
+            var design = new CardDesign(Key);
+            yield return new DamageVar(design.Damage, ValueProp.Move);
+            yield return new BlockVar(design.Block, ValueProp.Move);
+            if (Row.Number("nextBlock") > 0) yield return new BlockVar("BlockNextTurn", design.Amount("nextBlock"), ValueProp.Move);
+            if (HasSpecialBlock) yield return new BlockVar("SpecialBlock", design.SpecialAmount, ValueProp.Unpowered);
+        }
+    }
     protected override void DeepCloneFields()
     {
         base.DeepCloneFields();
@@ -54,6 +70,8 @@ public abstract class LegacyCard : CustomCardModel
     {
         DynamicVars.Damage.BaseValue = DesignCard.Damage;
         DynamicVars.Block.BaseValue = DesignCard.Block;
+        if (Row.Number("nextBlock") > 0) NextBlock.BaseValue = DesignCard.Amount("nextBlock");
+        if (HasSpecialBlock) SpecialBlock.BaseValue = DesignCard.SpecialAmount;
     }
     public override IEnumerable<CardKeyword> CanonicalKeywords => new[] { ("exhaust", CardKeyword.Exhaust), ("retain", CardKeyword.Retain), ("ethereal", CardKeyword.Ethereal), ("innate", CardKeyword.Innate) }.Where(e => Row.Flag(e.Item1)).Select(e => e.Item2);
     protected override HashSet<CardTag> CanonicalTags => Key.EndsWith("_strike") ? [CardTag.Strike] : Key.EndsWith("_guard") ? [CardTag.Defend] : [];
@@ -76,6 +94,8 @@ public abstract class LegacyCard : CustomCardModel
     {
         if (!DesignCard.Mercy) DynamicVars.Damage.UpgradeValueBy(Row.Number("upgradeDamage"));
         if (!DesignCard.Mercy) DynamicVars.Block.UpgradeValueBy(Row.Number("upgradeBlock"));
+        if (Row.Number("nextBlock") > 0) NextBlock.UpgradeValueBy(Row.Number("upgradeMagic"));
+        if (HasSpecialBlock) SpecialBlock.UpgradeValueBy(Row.Number("upgradeSpecial"));
         if (Row.Flag("upgradeCost")) EnergyCost.UpgradeBy(-1);
     }
     public decimal InheritedDamageAdditive(Creature? target, decimal amount, ValueProp props, Creature? dealer, CardModel? source)
@@ -101,7 +121,16 @@ public abstract class LegacyCard : CustomCardModel
         var n = DesignCard.SpecialAmount;
         if (Row.Text("special") == "discard_draw") await CardPileCmd.Draw(context, n, Owner);
         if (Row.Text("special") == "discard_energy") await PlayerCmd.GainEnergy(n, Owner);
-        if (Row.Text("special") == "discard_block") await CreatureCmd.GainBlock(Owner.Creature, n, ValueProp.Unpowered, null);
+        if (Row.Text("special") == "discard_block") {
+            // This is a discard trigger rather than a card play. Resolve the card's
+            // enchantment once, then deliver the result without powered Block hooks.
+            decimal block = SpecialBlock.BaseValue;
+            if (Enchantment is {} enchantment) {
+                block += enchantment.EnchantBlockAdditive(block);
+                block *= enchantment.EnchantBlockMultiplicative(block);
+            }
+            await CreatureCmd.GainBlock(Owner.Creature, block, ValueProp.Unpowered, null);
+        }
     }
     public override Task BeforeCombatStart() { DiscardRewardTurn = -1; return Task.CompletedTask; }
     public override Task AfterFlush(PlayerChoiceContext context, Player player, IReadOnlyCollection<CardModel> flushed, IReadOnlyCollection<CardModel> retained)

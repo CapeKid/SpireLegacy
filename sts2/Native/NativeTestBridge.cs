@@ -145,6 +145,10 @@ public static class NativeTestBridge
                 case "expansion-play":
                     await WaitForPlay(RunState().Players.Single());
                     result=await PoolExpansionOracle.Play(RunState(),request.GetProperty("card").GetString()!,request.GetProperty("upgrade").GetBoolean(),UseTestSelector());break;
+                case "nimble-eligibility":result=NimbleOracle.Eligibility(RunState());break;
+                case "nimble-play":
+                    await WaitForPlay(RunState().Players.Single());
+                    result=await NimbleOracle.Play(RunState(),request.GetProperty("card").GetString()!,request.GetProperty("upgrade").GetBoolean(),UseTestSelector());break;
                 case "pool-parity":
                     object PoolCounts(CardPoolModel pool) {var cards=pool.AllCards.ToArray();return new {pool=pool.Id.ToString(),total=cards.Length,unique=cards.Select(c=>c.Id).Distinct().Count(),ordinary=cards.Count(c=>c.Rarity is CardRarity.Common or CardRarity.Uncommon or CardRarity.Rare),common=cards.Count(c=>c.Rarity==CardRarity.Common),uncommon=cards.Count(c=>c.Rarity==CardRarity.Uncommon),rare=cards.Count(c=>c.Rarity==CardRarity.Rare),basic=cards.Count(c=>c.Rarity==CardRarity.Basic),ancient=cards.Count(c=>c.Rarity==CardRarity.Ancient)};}
                     result=new{native=ModelDb.AllCharacters.Where(c=>c is not HeirCharacter).Select(c=>PoolCounts(c.CardPool)).ToArray(),heirs=new[]{PoolCounts(ModelDb.CardPool<KnightCardPool>()),PoolCounts(ModelDb.CardPool<MageCardPool>()),PoolCounts(ModelDb.CardPool<RangerCardPool>())}};break;
