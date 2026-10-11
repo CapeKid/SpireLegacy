@@ -11,7 +11,7 @@ public static class NativePoolParity
     // avoids recursive mod-pool enumeration while ModelDb initializes custom pools.
     private static readonly Lazy<bool> expanded = new(()=> {
         var pool=ModelDb.CardPool<IroncladCardPool>();
-        var cards=(CardModel[])AccessTools.Method(pool.GetType(),"GenerateAllCards").Invoke(pool,[])!;
+        var cards=(CardModel[])ApiContract.Invoke(ApiContract.Require(pool.GetType(),"GenerateAllCards",typeof(CardModel[]),Type.EmptyTypes),pool,[])!;
         return cards.Count(c=>c.Rarity==CardRarity.Uncommon)>36 || cards.Count(c=>c.Rarity==CardRarity.Rare)>26;
     });
     public static bool Expanded => expanded.Value;

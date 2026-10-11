@@ -11,6 +11,7 @@ public static class HeirVisuals
     private static readonly List<(NCreature creature, HeirSprite sprite, Polygon2D banner,Label symbol, TraitAppearance appearance)> actors = new();
     private static readonly string[] Symbols=["☀","☾","✿","♣"];
     public static void Initialize() => ((SceneTree)Engine.GetMainLoop()).ProcessFrame += Update;
+    public static void Shutdown()=>((SceneTree)Engine.GetMainLoop()).ProcessFrame-=Update;
     public static void AttachRoomPortrait(Node2D visual,MegaCrit.Sts2.Core.Entities.Players.Player player)
     {
         foreach(var child in visual.GetChildren().OfType<Node2D>().Where(n=>n.GetClass()=="SpineSprite"))child.Visible=false;

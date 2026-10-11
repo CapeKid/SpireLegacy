@@ -30,6 +30,7 @@ public static class NativeTestBridge
         if (System.Environment.GetEnvironmentVariable("HEIR_TEST_MODE") != "1") return;
         Tree.ProcessFrame += Poll;
     }
+    public static void Shutdown()=>Tree.ProcessFrame-=Poll;
     public static IEnumerable<Node> Descendants(Node node)
     {
         yield return node;
@@ -55,6 +56,12 @@ public static class NativeTestBridge
             object result;
             switch (commandName)
             {
+                case "compat-reinitialize":result=CompatibilityOracle.Reinitialize();break;
+                case "compat-rollback":result=CompatibilityOracle.Rollback();break;
+                case "compat-scopes":result=CompatibilityOracle.Scopes(RunState().Players.Single());break;
+                case "compat-control":result=await CompatibilityOracle.NativeControl(request.GetProperty("patches").GetBoolean(),request.GetProperty("upgrade").GetBoolean());break;
+                case "compat-export-player":result=await CompatibilityOracle.ExportPlayer(RunState().Players.Single());break;
+                case "compat-import-player":result=CompatibilityOracle.ImportPlayer();break;
                 case "harness-failure":await HarnessFailure();result=new{unexpected=true};break;
                 case "harness-facts":result=new{completed=true,gameStore=AccessTools.Field(typeof(MegaCrit.Sts2.Core.Saves.SaveManager),"_saveStore").GetValue(MegaCrit.Sts2.Core.Saves.SaveManager.Instance)?.GetType().Name,userDirectory=OS.GetUserDataDir(),familyPath=Runtime.FamilyPath};break;
                 case "harness-production-gate":

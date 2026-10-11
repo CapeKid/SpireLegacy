@@ -57,7 +57,12 @@ public static class BindNewPlayerBloodline
 [HarmonyPatch]
 public static class BindSavedPlayerCharacter
 {
-    public static System.Reflection.MethodBase TargetMethod()=>typeof(Player).GetConstructors(System.Reflection.BindingFlags.Instance|System.Reflection.BindingFlags.NonPublic).Single(c=>c.GetParameters()[0].ParameterType==typeof(CharacterModel));
+    public static System.Reflection.MethodBase TargetMethod(){
+        var available=typeof(Player).GetConstructors(System.Reflection.BindingFlags.Instance|System.Reflection.BindingFlags.NonPublic);
+        var supported=available.Where(c=>c.GetParameters().Length>0&&c.GetParameters()[0].ParameterType==typeof(CharacterModel)).ToArray();
+        if(supported.Length!=1)throw new MissingMethodException("Unsupported native Player constructor layout. Available: "+string.Join("; ",available.Select(c=>c.ToString())));
+        return supported[0];
+    }
     public static void Prefix(ref CharacterModel character)
     {
         if(character is HeirCharacter&&PlayerBloodlines.Creating.Value is {} saved)character=PlayerBloodlines.Bind(character,saved);
