@@ -102,5 +102,13 @@
   {
     "id": "exhaust_block",
     "summary": "Gain {n} Block per card in your Exhaust pile (up to 10 cards)."
+  },
+  {
+    "id": "guarded_strength",
+    "summary": "If you have Block, gain {n} Strength."
+  },
+  {
+    "id": "upgrade_attacks",
+    "summary": "Upgrade all Attacks in your hand for this combat."
   }
 ]

@@ -46,6 +46,7 @@ for art in json.loads((repo/'sheets/relic_art.json').read_text()):
         if hashlib.sha256(source.read_bytes()).hexdigest()!=art[hashfield]:raise ValueError('Relic icon hash mismatch: '+art['id'])
         copy(source,mod/art[field])
 copy(repo/'docs/heir-potions.md',mod/'heir-potions.md')
+copy(repo/'docs/heir-ancient-cards.md',mod/'heir-ancient-cards.md')
 for art in json.loads((repo/'sheets/potion_art.json').read_text()):
     for field,hashfield in [('path','sha256'),('outline','outlineSha256')]:
         source=repo/'src/main/resources'/art[field]
