@@ -19,7 +19,10 @@ public sealed class BloodlineRelic : CustomRelicModel
 {
     public BloodlineRelic() : base(false) { }
     public override RelicRarity Rarity => RelicRarity.Starter;
-    protected override string IconBaseName => "burning_blood";
+    private string IdentityClass=>IsMutable&&Owner!=null?HeirPresentation.ClassFor(Owner):HeirPresentation.ClassId;
+    public override string PackedIconPath=>HeirPresentation.TexturePath(IdentityClass+"-energy-icon");
+    protected override string PackedIconOutlinePath=>HeirPresentation.TexturePath(IdentityClass+"-outline");
+    protected override string BigIconPath=>PackedIconPath;
     public override List<(string,string)> Localization => [("title", "Family Bloodline"), ("description", "Your class, inherited traits and purchased manor upgrades shape this climb. Open the Family Manor to read every trait."), ("flavor", "Every climb ends. Your bloodline grows.")];
     private bool firstSkill, firstAttack, firstHurt, shocked;
     private readonly HashSet<Creature> firstAttackTargets = new();

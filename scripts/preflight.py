@@ -210,6 +210,17 @@ def validate(historical_assets=False):
             svg=ET.fromstring(path.read_text())
             if svg.get('viewBox')!='0 0 128 128' or any(e.tag.split('}')[-1] in {'image','text','script','foreignObject'} for e in svg.iter()):errors.append('Potion icon is not self-contained '+art['id'])
     if len({r['sha256'] for r in potion_art.values()})!=3:errors.append('Potion artwork must be distinct')
+    for art in sheets.get('presentation_art',[]):
+        path=ROOT/'src/main/resources'/art['path']
+        if art['license']!='MIT' or art['author']!='CapeKid' or not path.is_file() or hashlib.sha256(path.read_bytes()).hexdigest()!=art['sha256']:
+            errors.append('Unverified original presentation asset '+art['id']);continue
+        if art['kind']=='vector':
+            svg=ET.fromstring(path.read_text())
+            if svg.get('viewBox')!='0 0 128 128' or any(e.tag.split('}')[-1] in {'image','text','script','foreignObject'} for e in svg.iter()):errors.append('Presentation vector is not self-contained '+art['id'])
+        elif art['kind']=='audio':
+            import wave
+            with wave.open(str(path),'rb') as wav:
+                if wav.getparams()[:3]!=(1,2,22050) or not 4000<=wav.getnframes()<=16000:errors.append('Wrong presentation PCM format '+art['id'])
     # Historical StS1 asset inspection is optional and never needed for the StS2 build.
     index=ROOT/'private'/'rl_asset_index.json'
     if historical_assets and not index.exists(): errors.append('Historical Rogue Legacy 2 inspection missing')

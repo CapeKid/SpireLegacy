@@ -13,6 +13,17 @@ foreach(var npc in AncientConversation.Supported)foreach(var cls in new[]{"knigh
     else Check(lines.SequenceEqual(AncientConversation.For(npc,cls,1)),"Safe shared visit count "+npc+cls);
 }
 Check(AncientConversation.For("FUTURE_ANCIENT","unknown",100).All(l=>!string.IsNullOrWhiteSpace(l.Text)),"Original fallback for a future Ancient/class");
+var ancients=Design.Rows("ancient_cards");
+Check(ancients.Count==6&&ancients.Select(r=>r.Text("cardId")).Distinct().Count()==6,"Six distinct Ancient rewards");
+foreach(var cls in new[]{"knight","mage","ranger"}) {
+    var ancientPool=ancients.Where(r=>r.Text("classId")==cls).Select(r=>Design.Get("cards",r.Text("cardId"))).ToArray();
+    Check(ancientPool.Length==2&&ancientPool.All(r=>r.Text("rarity")=="ANCIENT"&&r.Text("classId")==cls),cls+" dedicated Ancient rewards");
+    foreach(var card in ancientPool) {
+        Check(!Design.Pool(cls,true).Any(r=>r.Text("id")==card.Text("id")),"Ancient excluded from ordinary parity "+card.Text("id"));
+        var normal=new CardDesign(card.Text("id"));var up=new CardDesign(card.Text("id"),true);
+        Check(normal.Rules()!=up.Rules()||normal.Cost!=up.Cost||normal.Block!=up.Block||normal.Damage!=up.Damage,"Ancient useful upgrade "+card.Text("id"));
+    }
+}
 var dropRelics=Design.Rows("heir_relics");
 Check(dropRelics.Count==7&&dropRelics.Select(r=>r.Text("id")).Distinct().Count()==7,"Seven distinct exclusive relic drops");
 Check(dropRelics.All(r=>new[]{"Common","Uncommon","Rare"}.Contains(r.Text("rarity"))),"No starter in ordinary drop definitions");

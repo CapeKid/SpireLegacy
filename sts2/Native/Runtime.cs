@@ -16,7 +16,9 @@ public static class Runtime
     private static readonly Dictionary<string, Texture2D> Textures = new();
     public static Texture2D Texture(string path)
     {
-        if (Textures.TryGetValue(path, out var texture)) return texture;
+        // Native preloader explicitly disposes resources between menu/run scenes.
+        // A managed dictionary reference does not keep that disposed Godot object usable.
+        if (Textures.TryGetValue(path, out var texture) && GodotObject.IsInstanceValid(texture)) return texture;
         var fullPath = Path.Combine(ModDirectory, path);
         var image = new Image();
         if (Path.GetExtension(path).Equals(".svg", StringComparison.OrdinalIgnoreCase))

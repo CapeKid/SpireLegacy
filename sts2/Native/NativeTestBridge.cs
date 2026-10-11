@@ -152,10 +152,17 @@ public static class NativeTestBridge
                     var poolPlayer=RunState().Players.Single();var available=poolPlayer.Character.CardPool.GetUnlockedCards(poolPlayer.UnlockState,poolPlayer.RunState.CardMultiplayerConstraint).OfType<LegacyCard>().ToArray();
                     result=new{expanded=NativePoolParity.Expanded,ids=available.Select(c=>c.Key).ToArray(),compendium=available.All(c=>ModelDb.AllCards.Any(m=>m.Id==c.Id))};break;
                 case "visual": result = HeirVisuals.Diagnostic(); break;
+                case "presentation":result=await HeirPresentationOracle.Inspect(RunState());break;
+                case "presentation-rest":result=await HeirPresentationOracle.Rest(RunState());break;
+                case "presentation-transition":
+                    var transitionPath=HeirPresentation.TransitionPath;
+                    await NGame.Instance.Transition.FadeOut(.15f,transitionPath);
+                    await NGame.Instance.Transition.FadeIn(.15f,transitionPath);
+                    result=new{path=transitionPath,complete=!NGame.Instance.Transition.InTransition};break;
                 case "ending-visual":result=HeirEndingVisuals.Diagnostic();break;
                 case "trait-appearance": result = Descendants(Tree.Root).OfType<TraitAppearance>().Where(a=>a.IsVisibleInTree()).Select(a=>a.Diagnostic()).ToArray(); break;
                 case "room-visual":
-                    result = Descendants(Tree.Root).OfType<HeirSprite>().Where(s=>s.Name=="SpireLegacyRoomHeir" && s.IsVisibleInTree()).Select(s=>new {classId=s.ClassId,pose=s.Animation.ToString(),position=s.GlobalPosition.ToString(),scale=s.GlobalScale.ToString(),pixelHeight=Design.Get("character_art",s.ClassId).Number("height")*Math.Abs(s.GetGlobalTransformWithCanvas().Scale.Y * Tree.Root.GetFinalTransform().Scale.Y)}).ToArray();break;
+                    result = Descendants(Tree.Root).OfType<HeirSprite>().Where(s=>s.Name=="SpireLegacyRoomHeir" && s.IsVisibleInTree()).Select(s=>new {classId=s.ClassId,pose=s.Animation.ToString(),events=s.Events.ToArray(),position=s.GlobalPosition.ToString(),scale=s.GlobalScale.ToString(),pixelHeight=Design.Get("character_art",s.ClassId).Number("height")*Math.Abs(s.GetGlobalTransformWithCanvas().Scale.Y * Tree.Root.GetFinalTransform().Scale.Y)}).ToArray();break;
                 case "injure":
                     var injured = RunState().Players.Single().Creature;
                     await CreatureCmd.Damage(new BlockingPlayerChoiceContext(),injured,request.GetProperty("amount").GetInt32(),MegaCrit.Sts2.Core.ValueProps.ValueProp.Unblockable | MegaCrit.Sts2.Core.ValueProps.ValueProp.Unpowered,injured.CombatState!.GetOpponentsOf(injured).First());
@@ -218,6 +225,7 @@ public static class NativeTestBridge
                         await (Task)AccessTools.Method(endingEvent.GetType(),"AdvanceDialogue").Invoke(endingEvent,[])!;
                     }
                     result=new{index=(int)AccessTools.Field(endingEvent.GetType(),"_currentLineIndex").GetValue(endingEvent)!,lines=endingDialogue.Lines.Select(l=>l.LineText!.GetFormattedText()).ToArray(),options=endingEvent.CurrentOptions.Select(o=>o.Title.GetFormattedText()).ToArray()};break;
+                case "ancient-play":result=await AncientCardOracle.Check(RunState(),request.GetProperty("card").GetString()!,request.GetProperty("upgrade").GetBoolean(),UseTestSelector());break;
                 case "ancients":
                     var ancientPlayer=RunState().Players.Single(); var originalClass=Runtime.Heir.classId; var ancientChecks=0;
                     try {
@@ -227,7 +235,7 @@ public static class NativeTestBridge
                                 var tome=(MegaCrit.Sts2.Core.Models.Relics.DustyTome)ModelDb.Relic<MegaCrit.Sts2.Core.Models.Relics.DustyTome>().ToMutable();
                                 tome.SetupForPlayer(ancientPlayer);
                                 var chosen=ModelDb.GetById<CardModel>(tome.AncientCard!);
-                                if(chosen is not LegacyCard legacyRare || chosen.Rarity!=CardRarity.Rare || !NativePoolParity.Rows(heirClass).Any(r=>r.Text("id")==legacyRare.Key))throw new InvalidDataException("Wrong heir Ancient reward.");
+                                if(chosen is not LegacyCard legacyRare || chosen.Rarity!=CardRarity.Ancient || !Design.Rows("ancient_cards").Any(r=>r.Text("classId")==heirClass&&r.Text("cardId")==legacyRare.Key))throw new InvalidDataException("Wrong heir Ancient reward.");
                                 var restoredTome=(MegaCrit.Sts2.Core.Models.Relics.DustyTome)RelicModel.FromSerializable(tome.ToSerializable());
                                 if(restoredTome.AncientCard!=tome.AncientCard)throw new InvalidDataException("Ancient relic save mismatch.");
                                 ancientChecks++;

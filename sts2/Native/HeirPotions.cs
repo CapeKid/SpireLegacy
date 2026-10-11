@@ -15,7 +15,8 @@ namespace SpireLegacy;
 
 public sealed class HeirPotionPool : CustomPotionPoolModel
 {
-    public override string EnergyColorName=>"ironclad";
+    public override string BigEnergyIconPath=>HeirPresentation.TexturePath(HeirPresentation.ClassId+"-energy-icon");
+    public override string TextEnergyIconPath=>BigEnergyIconPath;
     public override Color LabOutlineColor=>new("C4A464");
     protected override IEnumerable<PotionModel> GenerateAllPotions()=>HeirPotions.All;
 }

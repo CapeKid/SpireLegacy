@@ -46,6 +46,8 @@ public static class CardEffects
  {
   var row=card.DesignCard.Row;var amount=card.DesignCard.SpecialAmount;var player=card.Owner;var creature=player.Creature;var hand=PileType.Hand.GetPile(player);
   switch(row.Text("special")){
+   case "guarded_strength":if(creature.Block>0)await Apply(context,"strength",creature,amount,creature,card);return;
+   case "upgrade_attacks":foreach(var held in hand.Cards.Where(c=>c.Type==CardType.Attack&&c.IsUpgradable).ToArray())CardCmd.Upgrade(held);return;
    case "none":case "block_damage":case "chain_damage":case "random_attack":case "execute":case "guard_bonus":case "marked_bonus":case "scry":case "exhaust_damage":case "retain_damage":case "retain_block":case "discard_draw":case "discard_energy":case "discard_block":return;
    case "wounds":for(var i=0;i<amount;i++)await CardPileCmd.AddGeneratedCardToCombat(card.CombatState!.CreateCard(ModelDb.Card<MegaCrit.Sts2.Core.Models.Cards.Wound>(),player),PileType.Draw,player,CardPilePosition.Random);break;
    case "refill_hand":var count=hand.Cards.Count;await CardCmd.Discard(context,hand.Cards.ToArray());await CardPileCmd.Draw(context,count,player);break;
