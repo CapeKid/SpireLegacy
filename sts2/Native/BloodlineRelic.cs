@@ -107,13 +107,9 @@ public sealed class BloodlineRelic : CustomRelicModel
         }
     }
     // Regular uses (creature, amount); public-beta adds choice context and remover.
-    private static readonly System.Reflection.MethodInfo LoseBlockMethod = typeof(CreatureCmd).GetMethods()
-        .Single(m => m.Name == nameof(CreatureCmd.LoseBlock));
     private Task LoseInheritedBlock(PlayerChoiceContext context, int amount) => LoseBlock(context,Owner.Creature,amount);
     private Task LoseBlock(PlayerChoiceContext context, Creature target, int amount) =>
-        (Task)LoseBlockMethod.Invoke(null,LoseBlockMethod.GetParameters().Length == 2
-            ? [target,(decimal)amount]
-            : [context,target,(decimal)amount,Owner.Creature])!;
+        BranchCommands.LoseBlock(context,target,amount,Owner.Creature);
     public override async Task BeforeDamageReceived(PlayerChoiceContext context, Creature target, decimal amount, ValueProp props, Creature? dealer, CardModel? card)
     {
         // Apply inherited first-Attack effects once per hit target, including multi-hit/AoE cards.

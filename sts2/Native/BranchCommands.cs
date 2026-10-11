@@ -13,15 +13,17 @@ namespace SpireLegacy;
 public static class BranchCommands
 {
     // Beta adds CardPlay to card-sourced damage. Resolve once against the running game.
-    private static readonly MethodInfo CardDamage = AccessTools.Method(typeof(CreatureCmd), "Damage",
-        [typeof(PlayerChoiceContext), typeof(Creature), typeof(decimal), typeof(ValueProp), typeof(Creature), typeof(CardModel), typeof(CardPlay)])
-        ?? AccessTools.Method(typeof(CreatureCmd), "Damage",
-        [typeof(PlayerChoiceContext), typeof(Creature), typeof(decimal), typeof(ValueProp), typeof(Creature), typeof(CardModel)])
-        ?? throw new MissingMethodException("No supported card-sourced CreatureCmd.Damage overload was found.");
+    private static readonly MethodInfo CardDamage = ApiContract.Require(typeof(CreatureCmd), "Damage",typeof(Task<IEnumerable<DamageResult>>),
+        [typeof(PlayerChoiceContext), typeof(Creature), typeof(decimal), typeof(ValueProp), typeof(Creature), typeof(CardModel), typeof(CardPlay)],
+        [typeof(PlayerChoiceContext), typeof(Creature), typeof(decimal), typeof(ValueProp), typeof(Creature), typeof(CardModel)]);
 
     // Beta returns Task<CardPileAddResult?> instead of Task; await either as Task.
-    private static readonly MethodInfo ExhaustMethod = AccessTools.Method(typeof(CardCmd), "Exhaust",
+    private static readonly MethodInfo ExhaustMethod = ApiContract.Require(typeof(CardCmd), "Exhaust",typeof(Task),
         [typeof(PlayerChoiceContext), typeof(CardModel), typeof(bool), typeof(bool)]);
+    private static readonly MethodInfo LoseBlockMethod=ApiContract.Require(typeof(CreatureCmd),"LoseBlock",typeof(Task),
+        [typeof(PlayerChoiceContext),typeof(Creature),typeof(decimal),typeof(Creature)], [typeof(Creature),typeof(decimal)]);
+    public static void Validate(){_ = CardDamage;_ = ExhaustMethod;_ = LoseBlockMethod;}
+    public static Task LoseBlock(PlayerChoiceContext context,Creature target,decimal amount,Creature remover)=>(Task)ApiContract.Invoke(LoseBlockMethod,null,LoseBlockMethod.GetParameters().Length==2?[target,amount]:[context,target,amount,remover])!;
     public static Task Exhaust(PlayerChoiceContext context, CardModel card)
     {
         try { return (Task)ExhaustMethod.Invoke(null, [context, card, false, false])!; }
@@ -46,8 +48,9 @@ public static class BranchCommands
 [HarmonyPatch]
 public static class InheritedDamageHooks
 {
-    public static IEnumerable<MethodBase> TargetMethods() => AccessTools.GetDeclaredMethods(typeof(AbstractModel))
-        .Where(m => m.Name is "ModifyDamageAdditive" or "ModifyDamageMultiplicative");
+    public static IEnumerable<MethodBase> TargetMethods() => new[]{"ModifyDamageAdditive","ModifyDamageMultiplicative"}.Select(name=>ApiContract.Require(typeof(AbstractModel),name,typeof(decimal),
+        [typeof(Creature),typeof(decimal),typeof(ValueProp),typeof(Creature),typeof(CardModel),typeof(CardPlay)],
+        [typeof(Creature),typeof(decimal),typeof(ValueProp),typeof(Creature),typeof(CardModel)]));
 
     public static bool Prefix(AbstractModel __instance, MethodBase __originalMethod, object?[] __args, ref decimal __result)
     {

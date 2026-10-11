@@ -1,5 +1,5 @@
 {
-  "sourceSha": "a16dfe77dd09241690220cb75a7af468bba6a7ef",
+  "sourceSha": "96ab2367cab5c4f1a72cdb45a5b07a88a169b2c7",
   "files": [
     {
       "path": ".gitattributes",
@@ -1490,6 +1490,10 @@
       "primaryIssue": 47
     },
     {
+      "path": "docs/adversarial-startup.md",
+      "primaryIssue": 59
+    },
+    {
       "path": "docs/card-catalogue.md",
       "primaryIssue": 62
     },
@@ -2014,6 +2018,10 @@
       "primaryIssue": 47
     },
     {
+      "path": "scripts/sts2-compatibility-check.py",
+      "primaryIssue": 59
+    },
+    {
       "path": "scripts/sts2-ending-check.py",
       "primaryIssue": 47
     },
@@ -2088,6 +2096,10 @@
     {
       "path": "scripts/sts2-standalone-check.py",
       "primaryIssue": 47
+    },
+    {
+      "path": "scripts/sts2-startup-negative-check.ps1",
+      "primaryIssue": 59
     },
     {
       "path": "scripts/sts2-startup-ui-check.py",
@@ -5870,6 +5882,10 @@
       "primaryIssue": 56
     },
     {
+      "path": "sts2/Core/ApiContract.cs",
+      "primaryIssue": 59
+    },
+    {
       "path": "sts2/Core/ArchitectConversation.cs",
       "primaryIssue": 56
     },
@@ -5904,6 +5920,10 @@
     {
       "path": "sts2/Core/Inheritance.cs",
       "primaryIssue": 51
+    },
+    {
+      "path": "sts2/Core/StartupGate.cs",
+      "primaryIssue": 59
     },
     {
       "path": "sts2/Core/TestIsolation.cs",
@@ -5956,6 +5976,10 @@
     {
       "path": "sts2/Native/ChronicleOracle.cs",
       "primaryIssue": 47
+    },
+    {
+      "path": "sts2/Native/CompatibilityOracle.cs",
+      "primaryIssue": 59
     },
     {
       "path": "sts2/Native/CoopBloodlines.cs",
@@ -6034,6 +6058,10 @@
       "primaryIssue": 54
     },
     {
+      "path": "sts2/Native/NativeStartup.cs",
+      "primaryIssue": 59
+    },
+    {
       "path": "sts2/Native/NativeTestBridge.cs",
       "primaryIssue": 47
     },
@@ -6103,6 +6131,7 @@
     "63": 415,
     "58": 923,
     "47": 49,
+    "59": 10,
     "61": 56,
     "60": 2,
     "56": 5,
@@ -6110,7 +6139,6 @@
     "48": 2,
     "51": 2,
     "55": 3,
-    "59": 3,
     "52": 2,
     "54": 2,
     "50": 2,

@@ -290,4 +290,26 @@ var originalDiagnostic=new InvalidOperationException("Original fixture",new Argu
 var textDiagnostic=DiagnosticText.Describe(originalDiagnostic,()=>throw new FileNotFoundException("Missing manifest"));
 Check(textDiagnostic.Contains("Original fixture")&&textDiagnostic.Contains("Inner fixture")&&textDiagnostic.Contains("metadata unavailable"),"Diagnostic metadata failure preserves original and inner exception");
 Check(!DiagnosticText.Describe(new Exception("api_key=fixtureSecret token=fixtureToken"),()=>"Bearer fixtureAuth").Contains("fixtureSecret"),"Diagnostic secrets redacted");
+var startup=new StartupGate();var starts=0;
+Check(startup.Run(()=>starts++),"First startup executes");Check(!startup.Run(()=>starts++)&&starts==1,"Repeated startup adds no side effects");
+var parallelGate=new StartupGate();var parallelCount=0;Parallel.For(0,12,_=>parallelGate.Run(()=>parallelCount++));Check(parallelCount==1,"Concurrent initialization executes once");
+var failedGate=new StartupGate();var startupFailure=new InvalidOperationException("Fixture API missing");
+try{failedGate.Run(()=>throw startupFailure);}catch(InvalidOperationException e){Check(ReferenceEquals(e,startupFailure),"Startup preserves original failure");}
+try{failedGate.Run(()=>starts++);Check(false,"Failed startup cannot retry");}catch(InvalidOperationException e){Check(ReferenceEquals(e.InnerException,startupFailure)&&starts==1,"Failed startup cannot resume partially");}
+var recursiveGate=new StartupGate();try{recursiveGate.Run(()=>recursiveGate.Run(()=>{}));Check(false,"Recursive startup rejected");}catch(InvalidOperationException){Check(true,"Recursive initialization fails clearly");}
+var resolved=ApiContract.Require(typeof(ApiFixture),"Operation",typeof(Task),[typeof(int)]);
+Check(resolved.GetParameters().Single().ParameterType==typeof(int),"Exact signature ignores unrelated overloads");
+Check(ApiContract.Require(typeof(ApiFixture),"GenericTask",typeof(Task),Type.EmptyTypes).ReturnType==typeof(Task<int>),"Generic Task return remains compatible");
+foreach(var name in new[]{"Missing","WrongReturn"})try{ApiContract.Require(typeof(ApiFixture),name,typeof(Task),Type.EmptyTypes);Check(false,"Drift must fail");}catch(MissingMethodException e){Check(e.Message.Contains(name)&&e.Message.Contains("Expected")&&e.Message.Contains("Available"),"API failure identifies expected and available signatures");}
+try{ApiContract.Invoke(typeof(ApiFixture).GetMethod("ThrowOriginal")!,null,[]);Check(false,"Reflection must propagate failure");}catch(InvalidOperationException e){Check(ReferenceEquals(e,ApiFixture.Failure),"Reflection preserves original exception identity");}
 Console.WriteLine(JsonSerializer.Serialize(new { result = "passed", assertions = count, cards = 360, inheritedTraits = traitIds.Length, familyFixture = directory }));
+
+public static class ApiFixture
+{
+ public static readonly InvalidOperationException Failure=new("Original reflected exception");
+ public static Task Operation(int value)=>Task.CompletedTask;
+ public static Task Operation(string value)=>Task.CompletedTask;
+ public static Task<int> GenericTask()=>Task.FromResult(1);
+ public static int WrongReturn()=>0;
+ public static void ThrowOriginal()=>throw Failure;
+}
