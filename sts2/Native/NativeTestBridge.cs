@@ -231,6 +231,7 @@ public static class NativeTestBridge
                     result=endingChecks;break;
                 case "ancient-dialogues":result=AncientDialogueOracle.Inspect();break;
                 case "ancient-state":result=AncientDialogueOracle.State(false);break;
+                case "neow-energy":result=await HeirPresentationOracle.NeowEnergy(RunState());break;
                 case "ancient-next":result=AncientDialogueOracle.State(true);break;
                 case "ancient-enter":
                     var ancientModel=AncientDialogueOracle.Prepare(request.GetProperty("ancient").GetString()!,request.GetProperty("visits").GetInt32());

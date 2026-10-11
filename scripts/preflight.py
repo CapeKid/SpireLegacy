@@ -224,6 +224,7 @@ def validate(historical_assets=False):
         if art['kind']=='vector':
             svg=ET.fromstring(path.read_text())
             if svg.get('viewBox')!='0 0 128 128' or any(e.tag.split('}')[-1] in {'image','text','script','foreignObject'} for e in svg.iter()):errors.append('Presentation vector is not self-contained '+art['id'])
+            if path.stem.endswith('-energy-text') and (svg.get('width'),svg.get('height'))!=('24','24'):errors.append('Inline energy artwork must match native 24px text icons '+art['id'])
         elif art['kind']=='audio':
             import wave
             with wave.open(str(path),'rb') as wav:

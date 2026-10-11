@@ -4,8 +4,8 @@ from pathlib import Path
 root=Path(__file__).resolve().parents[1];out=root/'src/main/resources/heir/presentation';out.mkdir(parents=True,exist_ok=True);rows=[]
 def record(path,kind):
     rows.append(dict(id=path.stem+'-'+kind,path=path.relative_to(root/'src/main/resources').as_posix(),kind=kind,sha256=hashlib.sha256(path.read_bytes()).hexdigest(),author='CapeKid',license='MIT',provenance='Original geometry / deterministic sine-and-noise synthesis; scripts/author-heir-presentation.py'))
-def svg(name,body):
-    p=out/(name+'.svg');p.write_text('<svg xmlns="http://www.w3.org/2000/svg" width="128" height="128" viewBox="0 0 128 128">'+body+'</svg>');record(p,'vector')
+def svg(name,body,size=128):
+    p=out/(name+'.svg');p.write_text(f'<svg xmlns="http://www.w3.org/2000/svg" width="{size}" height="{size}" viewBox="0 0 128 128">'+body+'</svg>');record(p,'vector')
 for cls,color in [('knight','#dfb968'),('mage','#bb94e9'),('ranger','#83c690')]:
     rgb=tuple(int(color[i:i+2],16)/255 for i in [1,3,5]);tint=', '.join(str(round(v,5)) for v in rgb)
     shader='shader_type canvas_item; uniform float threshold = 0.0; uniform vec4 tint : source_color; void fragment() { float edge = UV.x * 0.65 + UV.y * 0.25 + abs(fract(UV.y * 7.0) - 0.5) * 0.1; float a = threshold < 0.001 ? 0.0 : smoothstep(edge - 0.015, edge + 0.015, threshold); COLOR = vec4(tint.rgb * 0.22, a); }'
@@ -41,7 +41,11 @@ color = Color('''+tint+''', 0.45)
       f'<path d="M44 23l-3-16 14 8 9-12 9 12 14-8-3 16z" fill="{color}" stroke="#111820" stroke-width="3"/>',
       f'<path d="M41 105q23 16 46 0l-4 11q-19 9-38 0z" fill="{color}" stroke="#111820" stroke-width="2"/>']
     for i,b in enumerate(layers,1):svg(f'{cls}-energy-{i}',b)
-    svg(cls+'-energy-icon',f'<circle cx="64" cy="64" r="54" fill="#28313b" stroke="{color}" stroke-width="10"/><path d="M39 35l-4-16 19 8 10-18 10 18 19-8-4 16z" fill="{color}"/>')
+    energy_symbol=f'<circle cx="64" cy="64" r="54" fill="#28313b" stroke="{color}" stroke-width="10"/><path d="M39 35l-4-16 19 8 10-18 10 18 19-8-4 16z" fill="{color}"/>'
+    svg(cls+'-energy-icon',energy_symbol)
+    # Unsized [img] tags use the intrinsic dimensions, including native text measurement.
+    # Match the native sprite-font icons without shrinking card costs or counter layers.
+    svg(cls+'-energy-text',energy_symbol,size=24)
     symbol={'knight':'<path d="M48 48h32v24L64 85 48 72z"/>','mage':'<path d="M64 43l6 16 17 5-17 6-6 17-6-17-17-6 17-5z"/>','ranger':'<path d="M46 82l32-32m-19 0h19v19m-30 5l7 7" fill="none" stroke-width="7"/>'}[cls]
     svg(cls+'-cookie',f'<circle cx="64" cy="64" r="51" fill="#c99558" stroke="#533628" stroke-width="6"/><circle cx="64" cy="64" r="40" fill="{color}"/><g fill="#654531" stroke="#654531">{symbol}</g><g fill="#593a29"><circle cx="34" cy="39" r="4"/><circle cx="96" cy="48" r="4"/><circle cx="30" cy="84" r="4"/><circle cx="91" cy="94" r="4"/></g>')
     svg(cls+'-cookie-outline','<circle cx="64" cy="64" r="56" fill="white"/>')

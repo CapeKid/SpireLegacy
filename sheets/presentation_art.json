@@ -72,6 +72,15 @@
     "provenance": "Original geometry / deterministic sine-and-noise synthesis; scripts/author-heir-presentation.py"
   },
   {
+    "id": "knight-energy-text-vector",
+    "path": "heir/presentation/knight-energy-text.svg",
+    "kind": "vector",
+    "sha256": "3a87689eb8d213f896902b8a57054f5286ceef47fdf106a2cb731fa694841d07",
+    "author": "CapeKid",
+    "license": "MIT",
+    "provenance": "Original geometry / deterministic sine-and-noise synthesis; scripts/author-heir-presentation.py"
+  },
+  {
     "id": "knight-cookie-vector",
     "path": "heir/presentation/knight-cookie.svg",
     "kind": "vector",
@@ -216,6 +225,15 @@
     "provenance": "Original geometry / deterministic sine-and-noise synthesis; scripts/author-heir-presentation.py"
   },
   {
+    "id": "mage-energy-text-vector",
+    "path": "heir/presentation/mage-energy-text.svg",
+    "kind": "vector",
+    "sha256": "5c600cdaf221a7ae60a15057f2d006274931033d1f6ceec74350bffe03dd6a49",
+    "author": "CapeKid",
+    "license": "MIT",
+    "provenance": "Original geometry / deterministic sine-and-noise synthesis; scripts/author-heir-presentation.py"
+  },
+  {
     "id": "mage-cookie-vector",
     "path": "heir/presentation/mage-cookie.svg",
     "kind": "vector",
@@ -355,6 +373,15 @@
     "path": "heir/presentation/ranger-energy-icon.svg",
     "kind": "vector",
     "sha256": "92612cf7933e1c777c7084b07b6a5545cd94ac3eb603a56fb96ed6dbea055de3",
+    "author": "CapeKid",
+    "license": "MIT",
+    "provenance": "Original geometry / deterministic sine-and-noise synthesis; scripts/author-heir-presentation.py"
+  },
+  {
+    "id": "ranger-energy-text-vector",
+    "path": "heir/presentation/ranger-energy-text.svg",
+    "kind": "vector",
+    "sha256": "de09d3f7e3abd59bf07000fa2e3f8315349e3e9e3934a711ac8ca394e0d33b92",
     "author": "CapeKid",
     "license": "MIT",
     "provenance": "Original geometry / deterministic sine-and-noise synthesis; scripts/author-heir-presentation.py"

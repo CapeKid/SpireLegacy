@@ -13,6 +13,42 @@ namespace SpireLegacy;
 // Inspect actual native widgets and resource loads in isolated owned-game tests.
 public static class HeirPresentationOracle
 {
+    public static async Task<object> NeowEnergy(RunState run)
+    {
+        var player=run.Players.Single();var cls=HeirPresentation.ClassFor(player);
+        var tree=(SceneTree)Engine.GetMainLoop();
+        var layout=NativeTestBridge.Descendants(tree.Root).OfType<MegaCrit.Sts2.Core.Nodes.Events.NAncientEventLayout>().Single(l=>l.IsVisibleInTree());
+        var neow=(MegaCrit.Sts2.Core.Models.Events.Neow)AccessTools.Field(layout.GetType(),"_ancientEvent").GetValue(layout)!;
+        var native=Runtime.Texture("heir/presentation/"+cls+"-energy-text.svg");
+        var reference=MegaCrit.Sts2.Core.Assets.PreloadManager.Cache.GetTexture2D("res://images/packed/sprite_fonts/ironclad_energy_icon.png");
+        if(native.GetSize()!=reference.GetSize())throw new InvalidDataException("Inline energy size differs from native: "+native.GetSize()+" / "+reference.GetSize());
+        var pool=(FamilyCardPool)player.Character.CardPool;
+        var relicPool=ModelDb.RelicPool<HeirRelicPool>();
+        if(pool.TextEnergyIconPath==pool.BigEnergyIconPath||relicPool.TextEnergyIconPath==relicPool.BigEnergyIconPath)throw new InvalidDataException("Text still uses large energy artwork.");
+        if(Runtime.Texture("heir/presentation/"+cls+"-energy-icon.svg").GetSize()!=new Vector2(128,128))throw new InvalidDataException("Large energy artwork changed.");
+        // Use actual Neow option models and native widgets, forcing an energy-bearing choice.
+        layout.ClearOptions();
+        layout.AddOptions(neow.AllPossibleOptions.Where(o=>o.Relic is BoomingConch or PhialHolster or SmallCapsule));
+        layout.OnSetupComplete();
+        for(var i=0;i<3;i++){AncientDialogueOracle.State(true);await Task.Delay(250);}
+        await Task.Delay(800);
+        var energy=layout.OptionButtons.Single(b=>b.Option.Relic is BoomingConch);
+        var label=energy.GetNode<MegaCrit.Sts2.addons.mega_text.MegaRichTextLabel>("%Text");
+        var text=label.Text;
+        if(!text.Contains("-energy-text.svg"))throw new InvalidDataException("Neow did not format the small inline icon.");
+        var height=label.GetContentHeight();
+        // Recreate the old unsized image in the same widget; this must increase its text height.
+        label.Text=text.Replace("-energy-text.svg","-energy-icon.svg");
+        await tree.ToSignal(tree,SceneTree.SignalName.ProcessFrame);
+        var oldHeight=label.GetContentHeight();
+        label.Text=text;
+        await tree.ToSignal(tree,SceneTree.SignalName.ProcessFrame);
+        if(oldHeight<=height||height>label.Size.Y+1)throw new InvalidDataException("Neow inline layout: fixed="+height+", old="+oldHeight+", box="+label.Size);
+        // Native button roots include overlapping decorative glow/padding. Measure text.
+        var boxes=layout.OptionButtons.Select(b=>b.GetNode<MegaCrit.Sts2.addons.mega_text.MegaRichTextLabel>("%Text")).Select(l=>new Rect2(l.GlobalPosition,new Vector2(l.Size.X,l.GetContentHeight()))).ToArray();
+        for(var i=1;i<boxes.Length;i++)if(boxes[i-1].Intersects(boxes[i]))throw new InvalidDataException("Neow option boxes overlap.");
+        return new{cls,inlineSize=native.GetSize().ToString(),nativeSize=reference.GetSize().ToString(),height,oldHeight,text,options=boxes.Select(b=>b.ToString()).ToArray(),focusable=AncientDialogueOracle.State(false)};
+    }
     public static async Task<object> Inspect(RunState run)
     {
         var player=run.Players.Single();var model=player.Character;var tree=(SceneTree)Engine.GetMainLoop();var cls=HeirPresentation.ClassId;
