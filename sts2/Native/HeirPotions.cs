@@ -66,7 +66,7 @@ public abstract class FamilyPotion : CustomPotionModel
             await CreatureCmd.GainBlock(target,Row.Number("amount"),ValueProp.Unpowered,null);
             await CardPileCmd.Draw(context,Row.Number("extra"),Owner);return;
         }
-        switch(Runtime.Heir.classId)
+        switch(PlayerBloodlines.Heir(Owner).classId)
         {
             case "knight":
                 await CreatureCmd.GainBlock(target,Row.Number("amount"),ValueProp.Unpowered,null);

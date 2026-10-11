@@ -2,7 +2,7 @@
 
 Every climb ends. Your bloodline grows.
 
-A solo custom character by **CapeKid** for the regular and public-beta branches of **Slay the Spire 2**. Knight, Mage and Ranger heirs inherit traits and altered starters; crowns from each climb rebuild a permanent Family Manor.
+A custom character by **CapeKid** for solo and co-op on the regular and public-beta branches of **Slay the Spire 2**. Knight, Mage and Ranger heirs inherit traits and altered starters; crowns from each climb rebuild a permanent Family Manor. See [co-op setup and progression](docs/coop.md).
 
 - **82 reward cards per class on regular, 85 on public-beta**, plus three basics. Each includes 34 shared family cards alongside class specialties. All 360 historical definitions, saved IDs and original illustrations are retained.
 - All 61 eligible Rogue Legacy 2 traits, compatible inheritance, three new heirs after each climb and the first family's quick start.

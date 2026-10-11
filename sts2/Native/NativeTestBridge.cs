@@ -46,6 +46,20 @@ public static class NativeTestBridge
             object result;
             switch (request.GetProperty("command").GetString())
             {
+                case "coop-host":result=await CoopOracle.Lobby(request,true);break;
+                case "coop-join":result=await CoopOracle.Lobby(request,false);break;
+                case "coop-ready":CoopBloodlines.Lobby!.SetReady(request.TryGetProperty("ready",out var coopReady)?coopReady.GetBoolean():true);result=CoopOracle.State();break;
+                case "coop-state":result=CoopOracle.State();break;
+                case "coop-vote":result=CoopOracle.Vote();break;
+                case "coop-play":result=CoopOracle.Play();break;
+                case "coop-roundtrip":result=CoopOracle.RoundTrip();break;
+                case "coop-turn":MegaCrit.Sts2.Core.Combat.CombatManager.Instance.SetReadyToEndTurn(PlayerBloodlines.LocalPlayer!,false);result=CoopOracle.State();break;
+                case "coop-save-quit":await MegaCrit.Sts2.Core.Saves.SaveManager.Instance.SaveRun(null);await NGame.Instance!.ReturnToMainMenu();result=new{saved=true};break;
+                case "coop-resume-host":result=await CoopOracle.Resume(request,true);break;
+                case "coop-resume-join":result=await CoopOracle.Resume(request,false);break;
+                case "coop-resume-ready":CoopOracle.SavedLobby!.SetReady(true);result=new{ready=true};break;
+                case "coop-abandon":RunManager.Instance.Abandon();result=new{abandoning=true};break;
+                case "coop-leave":NGame.Instance!.MainMenu!.SubmenuStack.Pop();result=new{left=true};break;
                 case "standalone-assets":
                     if(File.Exists(Path.Combine(Runtime.ModDirectory,"content-reader.zip")) || Directory.Exists(Path.Combine(Runtime.DataDirectory,"cache")) || Directory.Exists(Path.Combine(Runtime.DataDirectory,"reader")))throw new InvalidDataException("Standalone lab contains old reader/cache content.");
                     var iconFolder=Path.Combine(Runtime.DataDirectory,"icon-preview");Directory.CreateDirectory(iconFolder);

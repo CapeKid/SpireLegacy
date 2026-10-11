@@ -9,26 +9,30 @@ namespace SpireLegacy;
 
 public sealed class HeirCharacter : PlaceholderCharacterModel
 {
+    internal FamilyProfile.FamilyRun? Bloodline {get;set;}
+    public string ClassId=>Bloodline?.heir.classId??Runtime.Heir.classId;
+    private HeirInheritance Inheritance=>new(Bloodline?.heir??Runtime.Heir);
+    private int Bonus(string effect)=>Bloodline?.bonuses.GetValueOrDefault(effect)??Runtime.Bonus(effect);
     public override Color NameColor => new("C4A464");
     public override CharacterGender Gender => CharacterGender.Neutral;
-    public override Control CustomIcon => new TextureRect { Texture = Runtime.ClassIcon(HeirPresentation.ClassId), CustomMinimumSize = new(64,64), ExpandMode = TextureRect.ExpandModeEnum.IgnoreSize, StretchMode = TextureRect.StretchModeEnum.KeepAspectCentered };
-    public override string CustomIconTexturePath=>HeirPresentation.IconPath;
-    public override string CustomIconOutlineTexturePath=>HeirPresentation.TexturePath(HeirPresentation.ClassId+"-outline");
-    public override CustomEnergyCounter? CustomEnergyCounter=>new(i=>HeirPresentation.TexturePath(HeirPresentation.ClassId+"-energy-"+i),new Color("20232D"),HeirPresentation.Accent());
-    public override string CustomTrailPath=>HeirPresentation.TrailPath;
-    public override string CustomCharacterSelectTransitionPath=>HeirPresentation.TransitionPath;
-    public override string CharacterSelectSfx=>HeirPresentation.Sound("select");
-    public override string CharacterTransitionSfx=>HeirPresentation.Sound("transition");
-    public override string CustomAttackSfx=>HeirPresentation.Sound("attack");
-    public override string CustomCastSfx=>HeirPresentation.Sound("cast");
-    public override string CustomDeathSfx=>HeirPresentation.Sound("die");
+    public override Control CustomIcon => new TextureRect { Texture = Runtime.ClassIcon(ClassId), CustomMinimumSize = new(64,64), ExpandMode = TextureRect.ExpandModeEnum.IgnoreSize, StretchMode = TextureRect.StretchModeEnum.KeepAspectCentered };
+    public override string CustomIconTexturePath=>HeirPresentation.IconFor(ClassId);
+    public override string CustomIconOutlineTexturePath=>HeirPresentation.TexturePath(ClassId+"-outline");
+    public override CustomEnergyCounter? CustomEnergyCounter=>new(i=>HeirPresentation.TexturePath(ClassId+"-energy-"+i),new Color("20232D"),HeirPresentation.Accent(ClassId));
+    public override string CustomTrailPath=>HeirPresentation.TrailFor(ClassId);
+    public override string CustomCharacterSelectTransitionPath=>HeirPresentation.TransitionFor(ClassId);
+    public override string CharacterSelectSfx=>HeirPresentation.SoundFor(ClassId,"select");
+    public override string CharacterTransitionSfx=>HeirPresentation.SoundFor(ClassId,"transition");
+    public override string CustomAttackSfx=>HeirPresentation.SoundFor(ClassId,"attack");
+    public override string CustomCastSfx=>HeirPresentation.SoundFor(ClassId,"cast");
+    public override string CustomDeathSfx=>HeirPresentation.SoundFor(ClassId,"die");
     public override Color EnergyLabelOutlineColor=>new("20232D");
     public override Color DialogueColor=>new("3E344A");
-    public override Color MapDrawingColor=>HeirPresentation.Accent();
-    public override Color RemoteTargetingLineColor=>HeirPresentation.Accent();
-    public override List<string> GetArchitectAttackVfx()=>Enumerable.Range(0,5).Select(i=>"spirelegacy/architect/"+HeirPresentation.ClassId+"/"+i).ToList();
-    public override int StartingHp => Inheritance.MaxHp(Design.Get("classes", Runtime.Heir.classId).Number("hp") + Runtime.Bonus("hp"));
-    public override CardPoolModel CardPool => Runtime.Heir.classId switch { "mage" => ModelDb.CardPool<MageCardPool>(), "ranger" => ModelDb.CardPool<RangerCardPool>(), _ => ModelDb.CardPool<KnightCardPool>() };
+    public override Color MapDrawingColor=>HeirPresentation.Accent(ClassId);
+    public override Color RemoteTargetingLineColor=>HeirPresentation.Accent(ClassId);
+    public override List<string> GetArchitectAttackVfx()=>Enumerable.Range(0,5).Select(i=>"spirelegacy/architect/"+ClassId+"/"+i).ToList();
+    public override int StartingHp => Inheritance.MaxHp(Design.Get("classes", ClassId).Number("hp") + Bonus("hp"));
+    public override CardPoolModel CardPool => ClassId switch { "mage" => ModelDb.CardPool<MageCardPool>(), "ranger" => ModelDb.CardPool<RangerCardPool>(), _ => ModelDb.CardPool<KnightCardPool>() };
     public override RelicPoolModel RelicPool => ModelDb.RelicPool<HeirRelicPool>();
     public override PotionPoolModel PotionPool => ModelDb.PotionPool<HeirPotionPool>();
     public override IReadOnlyList<RelicModel> StartingRelics => [ModelDb.Relic<BloodlineRelic>()];
@@ -36,8 +40,8 @@ public sealed class HeirCharacter : PlaceholderCharacterModel
     {
         get
         {
-            var cls = Runtime.Heir.classId;
-            foreach (var key in Inheritance.Deck(cls, Runtime.Profile.generation)) yield return NativeCards.Get(key);
+            var cls = ClassId;
+            foreach (var key in Inheritance.Deck(cls, Bloodline?.generation??Runtime.Profile.generation)) yield return NativeCards.Get(key);
         }
     }
     public override List<(string, string)> Localization => [
@@ -67,7 +71,7 @@ public sealed class HeirRelicPool : RelicPoolModel,ICustomEnergyIconPool
     public string BigEnergyIconPath=>HeirPresentation.TexturePath(HeirPresentation.ClassId+"-energy-icon");
     public string TextEnergyIconPath=>BigEnergyIconPath;
     protected override RelicModel[] GenerateAllRelics() => [ModelDb.Relic<BloodlineRelic>(),..HeirDropRelics.All];
-    public override IEnumerable<RelicModel> GetUnlockedRelics(MegaCrit.Sts2.Core.Unlocks.UnlockState unlockState)=>AllRelics.Where(r=>r is not FamilyDropRelic relic||FamilyChronicle.RelicAvailable(Runtime.Profile,relic.Key));
+    public override IEnumerable<RelicModel> GetUnlockedRelics(MegaCrit.Sts2.Core.Unlocks.UnlockState unlockState)=>AllRelics.Where(r=>r is not FamilyDropRelic relic||(PlayerBloodlines.EligibilityOwner.Value is {} player ? PlayerBloodlines.Eligible(player,relic.Key) : FamilyChronicle.RelicAvailable(Runtime.Profile,relic.Key)));
 }
 public static class NativeCards
 {

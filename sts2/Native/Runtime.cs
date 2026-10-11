@@ -37,7 +37,8 @@ public static class Runtime
         if (System.Environment.GetEnvironmentVariable("HEIR_TEST_MODE") == "1")
         {
             var existingSettings = MegaCrit.Sts2.Core.Saves.SaveManager.Instance.SettingsSave;
-            var localStore = new MegaCrit.Sts2.Core.Saves.GodotFileIo(MegaCrit.Sts2.Core.Saves.UserDataPathProvider.GetAccountScopedBasePath(null));
+            var labId=Convert.ToHexString(System.Security.Cryptography.SHA256.HashData(System.Text.Encoding.UTF8.GetBytes(Path.GetFullPath(DataDirectory)))).Substring(0,16);
+            var localStore = new MegaCrit.Sts2.Core.Saves.GodotFileIo("user://coop-labs/"+labId);
             var manager = new MegaCrit.Sts2.Core.Saves.SaveManager(localStore);
             MegaCrit.Sts2.Core.Saves.SaveManager.MockInstanceForTesting(manager);
             manager.InitSettingsDataForTest();

@@ -31,7 +31,7 @@ public abstract class LegacyPower:CustomPowerModel
  public override string CustomPackedIconPath=>ModelDb.Power<StrengthPower>().PackedIconPath;
  public override string CustomBigIconPath=>ModelDb.Power<StrengthPower>().ResolvedBigIconPath;
  public override List<(string,string)> Localization=>[("title",Key=="class"?"{ClassTitle}":Key=="well_laid"?"Measured Breath":System.Globalization.CultureInfo.InvariantCulture.TextInfo.ToTitleCase(Key.Replace('_',' '))),("description",DescriptionText),("selectionScreenPrompt","Choose up to {Amount} card(s) to Retain this turn.")];
- public override LocString Title {get {var title=base.Title;if(Key=="class")title.Add("ClassTitle",Design.Get("class_mechanics",Runtime.Heir.classId).Text("name"));return title;}}
+ public override LocString Title {get {var title=base.Title;if(Key=="class")title.Add("ClassTitle",Design.Get("class_mechanics",PlayerBloodlines.Heir(Owner.Player).classId).Text("name"));return title;}}
  private string DescriptionText=>Key switch{"class"=>"{ClassRules} Current: {Counter}.","plated"=>"At turn end, gain {Amount} Block. Lose a stack when attacked for HP damage.","reservoir"=>"Each Arcane Charge adds {Amount} extra damage on the first hit to each enemy.","quiver"=>"Hunter Rhythm draws {Amount} additional cards.",_=>Design.Get("power_effects",Key).Text("summary").Replace("!M!","{Amount}")};
  private int plays;private bool discardPaid;private bool cyclingDamage;
  private int charges,attacks;
@@ -39,8 +39,8 @@ public abstract class LegacyPower:CustomPowerModel
  protected override void DeepCloneFields(){base.DeepCloneFields();classBonusTargets=new();}
  [SavedProperty] public int Charges {get=>charges;set{charges=value;if(IsMutable)InvokeDisplayAmountChanged();}}
  [SavedProperty] public int AttacksThisTurn {get=>attacks;set{attacks=value;if(IsMutable)InvokeDisplayAmountChanged();}}
- public override int DisplayAmount=>Key=="class"?(Runtime.Heir.classId=="ranger"?AttacksThisTurn%3:Charges):Amount;
- public override LocString Description {get{var text=base.Description;text.Add("Amount",Amount);text.Add("ClassRules",Design.Get("classes",Runtime.Heir.classId).Text("summary"));text.Add("Counter",DisplayAmount);return text;}}
+ public override int DisplayAmount=>Key=="class"?(PlayerBloodlines.Heir(Owner.Player).classId=="ranger"?AttacksThisTurn%3:Charges):Amount;
+ public override LocString Description {get{var text=base.Description;text.Add("Amount",Amount);text.Add("ClassRules",Design.Get("classes",PlayerBloodlines.Heir(Owner.Player).classId).Text("summary"));text.Add("Counter",DisplayAmount);return text;}}
  public override async Task AfterPlayerTurnStart(PlayerChoiceContext context,Player player)
  {
   if(player!=Owner.Player!)return;plays=0;discardPaid=false;AttacksThisTurn=0;
@@ -60,9 +60,9 @@ public abstract class LegacyPower:CustomPowerModel
  {
   var card=play.Card;if(card.Owner.Creature!=Owner)return;
   if(Key=="class"){
-   if(card.Type==CardType.Skill){if(Runtime.Heir.classId=="knight")Charges=1;if(Runtime.Heir.classId=="mage")Charges=Math.Min(2,Charges+1);}
-   if(card.Type==CardType.Attack){AttacksThisTurn++;if(Runtime.Heir.classId is "knight" or "mage")Charges=0;
-    if(Runtime.Heir.classId=="ranger"&&AttacksThisTurn%3==0){
+   if(card.Type==CardType.Skill){if(PlayerBloodlines.Heir(Owner.Player).classId=="knight")Charges=1;if(PlayerBloodlines.Heir(Owner.Player).classId=="mage")Charges=Math.Min(2,Charges+1);}
+   if(card.Type==CardType.Attack){AttacksThisTurn++;if(PlayerBloodlines.Heir(Owner.Player).classId is "knight" or "mage")Charges=0;
+    if(PlayerBloodlines.Heir(Owner.Player).classId=="ranger"&&AttacksThisTurn%3==0){
      await CardPileCmd.Draw(context,1+FindAmount("quiver"),Owner.Player!);
      var opponents=Owner.CombatState!.GetOpponentsOf(Owner).Where(e=>e.IsAlive).ToArray();
      var random=card is LegacyCard legacy&&legacy.DesignCard.Row.Text("special")=="random_attack";
@@ -70,7 +70,7 @@ public abstract class LegacyPower:CustomPowerModel
      foreach(var enemy in targets.Where(e=>e.IsAlive))await CardEffects.Apply(context,"vulnerable",enemy,1,Owner,card);}}
   }
   if(Key=="power_draw"&&card.Type==CardType.Power)await CardPileCmd.Draw(context,Amount,Owner.Player!);
-  if(Key=="arcane_echo"&&card.Type==CardType.Skill&&++plays==1){if(Owner.GetPower<P_class>() is {} charge&&Runtime.Heir.classId=="mage")charge.Charges=Math.Min(2,charge.Charges+1);await CardPileCmd.Draw(context,Amount,Owner.Player!);}
+  if(Key=="arcane_echo"&&card.Type==CardType.Skill&&++plays==1){if(Owner.GetPower<P_class>() is {} charge&&PlayerBloodlines.Heir(Owner.Player).classId=="mage")charge.Charges=Math.Min(2,charge.Charges+1);await CardPileCmd.Draw(context,Amount,Owner.Player!);}
   if(Key=="thousand_cuts")await DamageAll(context,Amount);
   if((Key is "skill_block" or "skill_energy"&&card.Type==CardType.Skill)||(Key=="attack_vigor"&&card.Type==CardType.Attack)){
    if(++plays==3){plays=0;if(Key=="skill_block")await CreatureCmd.GainBlock(Owner,Amount,ValueProp.Unpowered,null);if(Key=="skill_energy")await CardEffects.Apply(context,"nextEnergy",Owner,Amount,Owner,card);if(Key=="attack_vigor")await CardEffects.Apply(context,"vigor",Owner,Amount,Owner,card);}}
@@ -88,7 +88,7 @@ public abstract class LegacyPower:CustomPowerModel
  public decimal InheritedDamageAdditive(Creature? target,decimal amount,ValueProp props,Creature? dealer,CardModel? card)
  {
   if(Key!="class"||dealer!=Owner||!props.IsPoweredAttack()||target is null||classBonusTargets.Contains(target))return 0;
-  return Runtime.Heir.classId switch{"knight"=>Charges>0?2:0,"mage"=>Charges*(1+FindAmount("reservoir")),_=>0};
+  return PlayerBloodlines.Heir(Owner.Player).classId switch{"knight"=>Charges>0?2:0,"mage"=>Charges*(1+FindAmount("reservoir")),_=>0};
  }
  private int FindAmount(string key)=>Owner.Powers.OfType<LegacyPower>().Where(p=>p.Key==key).Sum(p=>p.Amount);
  public override async Task AfterCardDiscarded(PlayerChoiceContext context,CardModel card)

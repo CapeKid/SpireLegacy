@@ -27,7 +27,7 @@ StS2 adaptations preserve native encounters and rewards. Dusty Tome grants an up
 4. Select **The Heir**. **Family Manor & Heir Lab** appears beneath the character information, clear of Ascension. Press Y, or move down from the portrait and press A. Choose a family/heir and start a solo climb.
 5. After a climb, return to the manor to choose another heir. Selecting upgrades only stages them; **Review purchases ÃƒÂ¢Ã¢â‚¬Â Ã¢â‚¬â„¢ Confirm and save** spends crowns.
 
-Spire Legacy supports solo play. Its character cannot embark in a multiplayer lobby.
+Spire Legacy supports solo and co-op. Each Heir brings their own frozen class, traits and manor bonuses; crowns stay with their local family. All players need matching game/mod versions. See [co-op setup and progression](coop.md).
 
 ## Family Manor controls
 

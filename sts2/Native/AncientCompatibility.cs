@@ -18,9 +18,24 @@ public static class HeirAncientDialogue
         if (characterId != ModelDb.Character<HeirCharacter>().Id) return;
         if (HeirArchitectDialogue.IsEnding(__instance))
         {
-            __result = [HeirArchitectDialogue.Create(Runtime.Heir.classId, charVisits)];
+            __result = [HeirArchitectDialogue.Create(PlayerBloodlines.Heir(PlayerBloodlines.EligibilityOwner.Value??PlayerBloodlines.LocalPlayer).classId, charVisits)];
             return;
         }
-        if(HeirAncientConversations.TryCreate(__instance,Runtime.Heir.classId,charVisits,out var conversation))__result=[conversation];
+        if(HeirAncientConversations.TryCreate(__instance,PlayerBloodlines.Heir(PlayerBloodlines.EligibilityOwner.Value??PlayerBloodlines.LocalPlayer).classId,charVisits,out var conversation))__result=[conversation];
     }
+}
+
+[HarmonyPatch]
+public static class OwnerAncientDialogue
+{
+    public static IEnumerable<System.Reflection.MethodBase> TargetMethods()=>[
+        AccessTools.Method(typeof(MegaCrit.Sts2.Core.Nodes.Rooms.NEventRoom),"SetupLayout"),
+        AccessTools.Method(typeof(MegaCrit.Sts2.Core.Models.Events.TheArchitect),"LoadDialogue")];
+    public static void Prefix(object __instance,out Player? __state)
+    {
+        __state=PlayerBloodlines.EligibilityOwner.Value;
+        var model=__instance as EventModel??AccessTools.Field(__instance.GetType(),"_event")?.GetValue(__instance) as EventModel;
+        if(model?.Owner is {} owner)PlayerBloodlines.EligibilityOwner.Value=owner;
+    }
+    public static void Finalizer(Player? __state)=>PlayerBloodlines.EligibilityOwner.Value=__state;
 }

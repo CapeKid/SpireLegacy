@@ -14,7 +14,11 @@ public static class CaptureSelectedHeir
 {
     public static void Postfix(Player __result)
     {
-        if (__result.Character is HeirCharacter) __result.Relics.OfType<BloodlineRelic>().Single().SelectedHeir = JsonSerializer.Serialize(Runtime.Heir,FamilyProfile.JsonOptions);
+        if (__result.Character is HeirCharacter) {
+            var relic=__result.Relics.OfType<BloodlineRelic>().Single();
+            relic.SelectedHeir=JsonSerializer.Serialize(PlayerBloodlines.Heir(__result),FamilyProfile.JsonOptions);
+            relic.FamilyRunSnapshot=FamilySnapshot.Serialize(PlayerBloodlines.State(__result)!);
+        }
     }
 }
 
@@ -24,7 +28,7 @@ public static class InheritedHealing
     internal static readonly AsyncLocal<Creature?> StartingHp = new();
     public static void Prefix(Creature creature, ref decimal amount)
     {
-        if (creature.Player?.Character is HeirCharacter && StartingHp.Value != creature) amount = Inheritance.Healing(amount);
+        if (creature.Player?.Character is HeirCharacter && StartingHp.Value != creature) amount = PlayerBloodlines.Traits(creature.Player).Healing(amount);
     }
 }
 
@@ -43,6 +47,15 @@ public static class HeirStartingHp
     public static void Finalizer(Creature? __state) => InheritedHealing.StartingHp.Value = __state;
 }
 
+// Native co-op revives defeated players to one HP before tearing down combat.
+// Hero Complex suppresses ordinary healing, not this required initialization.
+[HarmonyPatch(typeof(Player),nameof(Player.ReviveBeforeCombatEnd))]
+public static class HeirCoopRevival
+{
+    public static void Prefix(Player __instance,out Creature? __state){__state=InheritedHealing.StartingHp.Value;InheritedHealing.StartingHp.Value=__instance.Creature;}
+    public static void Finalizer(Creature? __state)=>InheritedHealing.StartingHp.Value=__state;
+}
+
 [HarmonyPatch(typeof(RunManager), nameof(RunManager.SetUpNewSingleplayer))]
 public static class BeginBloodlineRun
 {
@@ -53,15 +66,17 @@ public static class BeginBloodlineRun
         // Keep the character chosen for this new run rather than replacing it with the new offers.
         var relic = state.Players.First(p => p.Character is HeirCharacter).Relics.OfType<BloodlineRelic>().Single();
         if (relic.SelectedHeir.Length > 0) Runtime.Profile.selected = JsonSerializer.Deserialize<FamilyProfile.Heir>(relic.SelectedHeir,FamilyProfile.JsonOptions);
-        var run = Runtime.Profile.Begin(System.Environment.TickCount);
-        relic.FamilyRunSnapshot = JsonSerializer.Serialize(run,FamilyProfile.JsonOptions);
+        var player=state.Players.First(p=>p.Character is HeirCharacter);
+        var run=PlayerBloodlines.State(player)!;
+        Runtime.Profile.active=run;Runtime.Profile.selected=null;
+        relic.FamilyRunSnapshot=FamilySnapshot.Serialize(run);
         Runtime.Profile.Save(Runtime.FamilyPath);
-        if (state.Players.Any(p => p.Character is HeirCharacter) && Runtime.Profile.active?.quick == true) state.ExtraFields.StartedWithNeow = false;
+        if(run.quick)state.ExtraFields.StartedWithNeow=false;
     }
 }
 
 [HarmonyPatch(typeof(MegaCrit.Sts2.Core.Nodes.Screens.CharacterSelect.NCharacterSelectScreen), "BeginRun")]
-public static class RequireSoloRun
+public static class RequireSynchronizedRun
 {
     public static bool Prefix(MegaCrit.Sts2.Core.Nodes.Screens.CharacterSelect.NCharacterSelectScreen __instance)
     {
@@ -69,8 +84,10 @@ public static class RequireSoloRun
         if (button?.Character is not HeirCharacter) return true;
         if (__instance.Lobby.NetService.Type != MegaCrit.Sts2.Core.Multiplayer.Game.NetGameType.Singleplayer)
         {
-            ManorUi.Notice="Spire Legacy is a solo character. Start a singleplayer climb to use your family and manor.";
-            ManorUi.Open(); return false;
+            if(!CoopBloodlines.Complete(__instance.Lobby)) {
+                ManorUi.Notice="Waiting for the other players' heir selections to synchronize.";
+                ManorUi.Open();return false;
+            }
         }
         ManorUi.Notice=null;
         return true;
@@ -83,12 +100,9 @@ public static class ResumeBloodlineRun
     public static void Postfix(Player __result)
     {
         if (__result.Character is not HeirCharacter) return;
-        var snapshot = __result.Relics.OfType<BloodlineRelic>().Single().FamilyRunSnapshot;
-        if (snapshot.Length == 0) throw new InvalidDataException("This heir save is missing its family snapshot.");
-        var run = JsonSerializer.Deserialize<FamilyProfile.FamilyRun>(snapshot,FamilyProfile.JsonOptions)!;
-        if (run.id == Runtime.Profile.settledId) throw new InvalidDataException("This heir has already completed its climb.");
-        Runtime.Profile.active = run;
-        Runtime.Profile.Save(Runtime.FamilyPath);
+        var snapshot=PlayerBloodlines.State(__result);
+        if(snapshot==null)throw new InvalidDataException("This heir save is missing its family snapshot.");
+        // Loading a remote/preview player must never write the local family file.
     }
 }
 
@@ -98,8 +112,8 @@ public static class SettleBloodlineRun
     public static void Postfix(RunManager __instance, bool isVictory)
     {
         var state = (RunState?)AccessTools.Property(typeof(RunManager), "State").GetValue(__instance);
-        var player = state?.Players.FirstOrDefault(p => p.Character is HeirCharacter);
-        if (player == null || Runtime.Profile.active is not {} run) return;
+        var player = state?.Players.FirstOrDefault(p => p.Character is HeirCharacter && p.NetId==__instance.NetService.NetId);
+        if (player == null || PlayerBloodlines.State(player) is not {} run || !FamilySnapshot.CanSettle(Runtime.Profile,run,__instance.NetService.NetId)) return;
         Runtime.Profile.Settle(run.id,state!.TotalFloor,player.Gold,isVictory);
         Runtime.Profile.Save(Runtime.FamilyPath);
     }

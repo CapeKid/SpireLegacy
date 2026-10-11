@@ -82,6 +82,7 @@ public static class ManorUi
     }
     public static readonly Color[] BannerColors = [new("D8AA47"),new("8798E6"),new("CD6681"),new("76A76C")];
     private static readonly string[] BannerNames = ["Sun", "Moon", "Rose", "Oak"];
+    public static Color BannerColorFor(int banner)=>BannerColors[Math.Clamp(banner,0,3)];
     public static Color BannerColor => BannerColors[Math.Clamp(Runtime.Profile.banner,0,3)];
     public static void Attach(NCharacterSelectScreen screen, CharacterModel character)
     {
@@ -173,7 +174,9 @@ public static class ManorUi
         help.FocusMode=Control.FocusModeEnum.None; footer.AddChild(help);
         closeButton=MakeButton("Close / Back (B)",GoBack); closeButton.CustomMinimumSize=new(245,60); footer.AddChild(closeButton);
         var closeStyle=(StyleBoxFlat)closeButton.GetThemeStylebox("normal").Duplicate(); closeStyle.BgColor=new("674D21"); closeStyle.BorderColor=new("E4BB69"); closeButton.AddThemeStyleboxOverride("normal",closeStyle);
-        Tree.Paused = true; Render(); ActiveScreenContext.Instance.Update(); Tree.ProcessFrame+=input.Poll;
+        var multiplayer=CoopBloodlines.Lobby?.NetService.Type is MegaCrit.Sts2.Core.Multiplayer.Game.NetGameType.Host or MegaCrit.Sts2.Core.Multiplayer.Game.NetGameType.Client
+            || PlayerBloodlines.State(PlayerBloodlines.LocalPlayer)?.coop==true;
+        Tree.Paused = multiplayer?wasPaused:true; Render(); ActiveScreenContext.Instance.Update(); Tree.ProcessFrame+=input.Poll;
     }
     private static void Clear()
     {
@@ -203,7 +206,9 @@ public static class ManorUi
         options.AddChild(MakeButton("Change banner",() => { profile.banner = (profile.banner + 1) % 4; profile.Save(Runtime.FamilyPath); Render(); }));
         if (Design.Get("systems","playtest_crowns").Flag("enabled")) options.AddChild(MakeButton("PLAYTEST: Set crowns",() => EditValue(true)));
         options.AddChild(MakeButton("Close",RequestClose));
-        if (profile.active is {} active)
+        var playing=PlayerBloodlines.State(PlayerBloodlines.LocalPlayer)??profile.active;
+        var ready=CoopBloodlines.Lobby is {} lobby&&CoopBloodlines.IsReady(CoopBloodlines.Local(lobby));
+        if (playing is {} active)
         {
             AddText("A climb is in progress. Manor purchases and heir selection are available after it ends.");
             HeirDetails(active.heir,false);
@@ -211,7 +216,8 @@ public static class ManorUi
         else
         {
             AddText("Choose your next heir",28);
-            foreach (var heir in profile.offers) HeirDetails(heir,true);
+            if(ready)AddText("Unready in the lobby before changing your heir or manor. Ready freezes your selection for every player.");
+            foreach (var heir in profile.offers) HeirDetails(heir,!ready);
         }
         AddText("Manor upgrades — select upgrades, then review and confirm to spend crowns",28);
         var trial = profile.PreviewPurchases(cart) ?? profile;
@@ -220,7 +226,7 @@ public static class ManorUi
             var id = row.Text("id");
             AddText($"{row.Text("name")} · level {trial.Level(id)}/{row.Number("maxLevel")} · {row.Text("summary")}");
             var button = MakeButton($"Select upgrade — {trial.Cost(row)} crowns",() => { if (profile.PreviewPurchases(cart.Append(id)) is not null) { cart.Add(id); Render(); } });
-            button.Disabled = profile.active != null || profile.PreviewPurchases(cart.Append(id)) is null;
+            button.Disabled = playing != null || ready || profile.PreviewPurchases(cart.Append(id)) is null;
             content.AddChild(button);
         }
         if (cart.Count > 0)
@@ -345,7 +351,7 @@ public static class ManorUi
         if (selectionScreen is {} screen && GodotObject.IsInstanceValid(screen) && screen.IsVisibleInTree())
         {
             var button = (NCharacterSelectButton?)AccessTools.Field(typeof(NCharacterSelectScreen),"_selectedButton").GetValue(screen);
-            if (button?.Character is HeirCharacter) {screen.SelectCharacter(button,button.Character);button.GrabFocus();}
+            if (button?.Character is HeirCharacter && !CoopBloodlines.IsReady(CoopBloodlines.Local(screen.Lobby))) {screen.SelectCharacter(button,button.Character);button.GrabFocus();}
         }
     }
 }
@@ -358,6 +364,9 @@ public static class ManorSelectAction
     {
         if(ManorUi.IsOpen)return false;
         if(__instance.GetViewport().GuiGetFocusOwner() is Button {Name:var name} && name=="SpireLegacyManor") {ManorUi.Open();return false;}
+        if(__instance.Lobby.NetService.Type!=MegaCrit.Sts2.Core.Multiplayer.Game.NetGameType.Singleplayer && Runtime.Profile.active!=null && CoopBloodlines.Character(CoopBloodlines.Local(__instance.Lobby)) is HeirCharacter or MegaCrit.Sts2.Core.Models.Characters.RandomCharacter) {
+            ManorUi.Notice="Resume or abandon your unfinished family climb before starting a co-op run.";ManorUi.Open();return false;
+        }
         return true;
     }
 }

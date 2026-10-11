@@ -22,7 +22,7 @@ public static class HeirEndingVisuals
             try {if(JsonSerializer.Deserialize<FamilyProfile.Heir>(saved,FamilyProfile.JsonOptions) is {} heir&&Design.Rows("classes").Any(r=>r.Text("id")==heir.classId))return heir;}
             catch(JsonException) { }
         }
-        return Runtime.Heir;
+        return PlayerBloodlines.Heir(player);
     }
     public static void Postfix(NGameOverScreen __instance)
     {
