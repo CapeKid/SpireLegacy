@@ -3,6 +3,15 @@ using System.Text.Json;
 
 var count = 0;
 void Check(bool value, string message) { count++; if (!value) throw new Exception(message); }
+var dropRelics=Design.Rows("heir_relics");
+Check(dropRelics.Count==7&&dropRelics.Select(r=>r.Text("id")).Distinct().Count()==7,"Seven distinct exclusive relic drops");
+Check(dropRelics.All(r=>new[]{"Common","Uncommon","Rare"}.Contains(r.Text("rarity"))),"No starter in ordinary drop definitions");
+foreach(var relic in dropRelics)
+{
+    Check(!relic.Text("description").Contains('{')&&relic.Number("extra")<=1,"Complete bounded relic text/resources "+relic.Text("id"));
+    Check(Design.Get("relic_art",relic.Text("id")).Text("license")=="MIT","Original relic artwork "+relic.Text("id"));
+}
+Check(Design.Rows("relic_art").Select(r=>r.Text("sha256")).Distinct().Count()==7,"Distinct relic silhouettes");
 var icons = Design.Rows("icon_art");
 Check(icons.Count == Design.Rows("traits").Count + 3, "Every saved trait ID and class has an original icon");
 Check(icons.Select(r => r.Text("sha256")).Distinct().Count() == icons.Count, "Original trait/class icons are distinct");

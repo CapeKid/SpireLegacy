@@ -185,6 +185,19 @@ def validate(historical_assets=False):
         import xml.etree.ElementTree as ET
         svg=ET.fromstring(path.read_text())
         if svg.get('viewBox')!='0 0 128 128' or any(e.tag.split('}')[-1] in {'image','text','script','foreignObject'} for e in svg.iter()):errors.append('Icon is not self-contained vector art '+row['id'])
+    relics=sheets.get('heir_relics',[]);relic_art={r['id']:r for r in sheets.get('relic_art',[])}
+    if len(relics)!=7 or set(relic_art)!={r['id'] for r in relics}:errors.append('Seven original exclusive relics/icons required')
+    if sorted(r['rarity'] for r in relics)!=sorted(['Common']*2+['Uncommon']*3+['Rare']*2):errors.append('Wrong exclusive relic rarity distribution')
+    for row in relics:
+        if '{' in row['description'] or not row['flavor'] or row['amount']<=0:errors.append('Incomplete relic rules '+row['id'])
+    for art in relic_art.values():
+        if art['license']!='MIT' or art['author']!='CapeKid':errors.append('Missing original relic provenance '+art['id'])
+        for field,hashfield in [('path','sha256'),('outline','outlineSha256')]:
+            path=ROOT/'src/main/resources'/art[field]
+            if not path.is_file() or hashlib.sha256(path.read_bytes()).hexdigest()!=art[hashfield]:errors.append('Relic icon hash mismatch '+art['id']);continue
+            svg=ET.fromstring(path.read_text())
+            if svg.get('viewBox')!='0 0 128 128' or any(e.tag.split('}')[-1] in {'image','text','script','foreignObject'} for e in svg.iter()):errors.append('Relic icon is not self-contained '+art['id'])
+    if len({r['sha256'] for r in relic_art.values()})!=7:errors.append('Relic artwork must be distinct')
     # Historical StS1 asset inspection is optional and never needed for the StS2 build.
     index=ROOT/'private'/'rl_asset_index.json'
     if historical_assets and not index.exists(): errors.append('Historical Rogue Legacy 2 inspection missing')

@@ -47,7 +47,7 @@ public sealed class RangerCardPool : FamilyCardPool { protected override string 
 public sealed class HeirRelicPool : RelicPoolModel
 {
     public override string EnergyColorName => "ironclad";
-    protected override RelicModel[] GenerateAllRelics() => [ModelDb.Relic<BloodlineRelic>()];
+    protected override RelicModel[] GenerateAllRelics() => [ModelDb.Relic<BloodlineRelic>(),..HeirDropRelics.All];
 }
 public static class NativeCards
 {
