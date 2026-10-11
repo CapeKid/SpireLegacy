@@ -7,6 +7,7 @@ using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Models.Powers;
 using MegaCrit.Sts2.Core.ValueProps;
+using MegaCrit.Sts2.Core.Hooks;
 namespace SpireLegacy;
 public static class CardEffects
 {
@@ -23,7 +24,14 @@ public static class CardEffects
   IEnumerable<Creature> enemies=row.Flag("aoe")?card.CombatState!.GetOpponentsOf(creature):play.Target is {} target?new[]{target}:[];
   if(d.Amount("hpLoss")>0)await BranchCommands.DamageFromCard(context,creature,d.Amount("hpLoss"),ValueProp.Unblockable|ValueProp.Unpowered,creature,card,play);
   if(d.Amount("heal")+d.Gene("heal")>0)await CreatureCmd.Heal(creature,d.Amount("heal")+d.Gene("heal"));
-  foreach(var key in new[]{"vigor","thorns","plated","nextEnergy","nextDraw","nextBlock"})await Apply(context,key,creature,d.Amount(key),creature,card);
+  foreach(var key in new[]{"vigor","thorns","plated","nextEnergy","nextDraw"})await Apply(context,key,creature,d.Amount(key),creature,card);
+  // Match native delayed-Block cards: apply enchantments and powered modifiers at
+  // play time. BlockNextTurnPower delivers that amount unpowered next turn.
+  if(row.Number("nextBlock")>0) {
+   var block=card.NextBlock;
+   var amount=Hook.ModifyBlock(card.CombatState!,creature,block.BaseValue,block.Props,card,play,out _);
+   await PowerCmd.Apply<BlockNextTurnPower>(context,creature,Math.Max(0,amount),creature,card);
+  }
   if(row.Text("special")=="scry")await Scry(card,context,d.SpecialAmount);
   if(d.Amount("draw")>0)await CardPileCmd.Draw(context,d.Amount("draw"),player);
   if(d.Amount("discard")>0)await CardCmd.Discard(context,await CardSelectCmd.FromHandForDiscard(context,player,new CardSelectorPrefs(CardSelectorPrefs.DiscardSelectionPrompt,d.Amount("discard")),null,card));
@@ -34,7 +42,7 @@ public static class CardEffects
    if(d.Mercy)await Apply(context,"poison",enemy,d.MercyPoison,creature,card);
   }
   if(row.Text("power")!="none")await Apply(context,row.Text("power"),creature,d.Magic,creature,card);
-  await Special(card,context,enemies);
+  await Special(card,context,play,enemies);
  }
  public static async Task Scry(CardModel card,PlayerChoiceContext context,int amount)
  {
@@ -42,7 +50,7 @@ public static class CardEffects
   if(top.Length>0){var chosen=await CardSelectCmd.FromSimpleGrid(context,top,card.Owner,new CardSelectorPrefs(CardSelectorPrefs.DiscardSelectionPrompt,0,top.Length));foreach(var selected in chosen)await CardPileCmd.Add(selected,PileType.Discard);}
   foreach(var engine in card.Owner.Creature.Powers.OfType<LegacyPower>().Where(p=>p.Key=="scry_block"))await CreatureCmd.GainBlock(card.Owner.Creature,engine.Amount,ValueProp.Unpowered,null);
  }
- private static async Task Special(LegacyCard card,PlayerChoiceContext context,IEnumerable<Creature> enemies)
+ private static async Task Special(LegacyCard card,PlayerChoiceContext context,CardPlay play,IEnumerable<Creature> enemies)
  {
   var row=card.DesignCard.Row;var amount=card.DesignCard.SpecialAmount;var player=card.Owner;var creature=player.Creature;var hand=PileType.Hand.GetPile(player);
   switch(row.Text("special")){
@@ -51,9 +59,15 @@ public static class CardEffects
    case "none":case "block_damage":case "chain_damage":case "random_attack":case "execute":case "guard_bonus":case "marked_bonus":case "scry":case "exhaust_damage":case "retain_damage":case "retain_block":case "discard_draw":case "discard_energy":case "discard_block":return;
    case "wounds":for(var i=0;i<amount;i++)await CardPileCmd.AddGeneratedCardToCombat(card.CombatState!.CreateCard(ModelDb.Card<MegaCrit.Sts2.Core.Models.Cards.Wound>(),player),PileType.Draw,player,CardPilePosition.Random);break;
    case "refill_hand":var count=hand.Cards.Count;await CardCmd.Discard(context,hand.Cards.ToArray());await CardPileCmd.Draw(context,count,player);break;
-   case "exhaust_block":await CreatureCmd.GainBlock(creature,Math.Min(10,PileType.Exhaust.GetPile(player).Cards.Count)*amount,ValueProp.Unpowered,null);break;
-   case "exhaust_nonattacks":foreach(var fuel in hand.Cards.Where(c=>c.Type!=CardType.Attack).ToArray()){await BranchCommands.Exhaust(context,fuel);await CreatureCmd.GainBlock(creature,amount,ValueProp.Unpowered,null);}break;
-   case "double_block":await CreatureCmd.GainBlock(creature,creature.Block,ValueProp.Unpowered,null);break;
+   case "exhaust_block":
+    var exhausted=Math.Min(10,PileType.Exhaust.GetPile(player).Cards.Count);
+    // Keep the original single unpowered gain, with the enchantment included in
+    // its printed per-card amount. Do not turn it into multiple relic triggers.
+    var perCard=Hook.ModifyBlock(card.CombatState!,creature,card.SpecialBlock.BaseValue,card.SpecialBlock.Props,card,play,out _);
+    if(exhausted>0)await CreatureCmd.GainBlock(creature,Math.Max(0,perCard)*exhausted,ValueProp.Unpowered,null);
+    break;
+   case "exhaust_nonattacks":foreach(var fuel in hand.Cards.Where(c=>c.Type!=CardType.Attack).ToArray()){await BranchCommands.Exhaust(context,fuel);await CreatureCmd.GainBlock(creature,card.SpecialBlock,play);}break;
+   case "double_block":await CreatureCmd.GainBlock(creature,creature.Block,ValueProp.Unpowered,play);break;
    case "cleanse":foreach(var power in creature.Powers.Where(p=>p.Type==PowerType.Debuff).ToArray())await PowerCmd.Remove(power);break;
    case "exhaust_one":foreach(var fuel in await CardSelectCmd.FromHand(context,player,new CardSelectorPrefs(CardSelectorPrefs.ExhaustSelectionPrompt,amount),null,card))await BranchCommands.Exhaust(context,fuel);break;
    case "retrieve":case "exhume":var pile=row.Text("special")=="retrieve"?PileType.Discard:PileType.Exhaust;var selected=await CardSelectCmd.FromCombatPile(context,pile.GetPile(player),player,new CardSelectorPrefs(new MegaCrit.Sts2.Core.Localization.LocString("cards",card.Id.Entry+".returnPrompt"),amount));foreach(var retrieved in selected)await CardPileCmd.Add(retrieved,PileType.Hand);break;
