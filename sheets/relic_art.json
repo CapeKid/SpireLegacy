@@ -68,5 +68,35 @@
     "author": "CapeKid",
     "license": "MIT",
     "provenance": "Original hand-authored vector geometry; scripts/author-heir-relics.py; no game-derived or external assets."
+  },
+  {
+    "id": "guardian_knot",
+    "path": "heir/relics/guardian_knot.svg",
+    "sha256": "d9e6ba8aeaabaccfbc4a05e531b29b936960059bc95ecdeba1f0030ddc67ffb5",
+    "outline": "heir/relics/guardian_knot-outline.svg",
+    "outlineSha256": "df6446676fdd2ca7e41811325da9e03052e32f40500305cd1ac6bb8893590893",
+    "author": "CapeKid",
+    "license": "MIT",
+    "provenance": "Original hand-authored vector geometry; scripts/author-heir-relics.py; no game-derived or external assets."
+  },
+  {
+    "id": "scholar_bookmark",
+    "path": "heir/relics/scholar_bookmark.svg",
+    "sha256": "48c0264efe959b960ea79ff5effdcee5af2a76464f45a8368ac84dd5976e4672",
+    "outline": "heir/relics/scholar_bookmark-outline.svg",
+    "outlineSha256": "7042ae5957544d6da0e75392b46926c3ebbd4c91e086c43928385aba67906213",
+    "author": "CapeKid",
+    "license": "MIT",
+    "provenance": "Original hand-authored vector geometry; scripts/author-heir-relics.py; no game-derived or external assets."
+  },
+  {
+    "id": "trail_compass",
+    "path": "heir/relics/trail_compass.svg",
+    "sha256": "8a1ac26e8b65597fe54b36a40bd603768563479a16e0c8844f4b36e9a54cb82e",
+    "outline": "heir/relics/trail_compass-outline.svg",
+    "outlineSha256": "9626d491097cd9a03b07f273fb269bba9e8b4720e342f204a173fe1b053509bb",
+    "author": "CapeKid",
+    "license": "MIT",
+    "provenance": "Original hand-authored vector geometry; scripts/author-heir-relics.py; no game-derived or external assets."
   }
 ]

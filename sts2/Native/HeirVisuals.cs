@@ -40,6 +40,8 @@ public static class HeirVisuals
         visuals.AddChild(banner);
         var symbol = new Label { Text = Symbols[Runtime.Profile.banner], Position = new(-184,-201), MouseFilter = Control.MouseFilterEnum.Ignore };
         symbol.AddThemeFontSizeOverride("font_size",32); banner.AddChild(symbol);
+        var motto=new Label {Name="FamilyMotto",Text=Runtime.Profile.chronicle.motto,Position=new(-225,-125),Size=new(220,50),AutowrapMode=TextServer.AutowrapMode.WordSmart,MouseFilter=Control.MouseFilterEnum.Ignore};
+        motto.AddThemeFontSizeOverride("font_size",18);banner.AddChild(motto);
         actors.Add((creature,sprite,banner,symbol,TraitAppearance.Attach(visuals,sprite,factor)));
     }
     public static void Animate(MegaCrit.Sts2.Core.Entities.Creatures.Creature creature, string pose)
@@ -66,6 +68,7 @@ public static class HeirVisuals
             if (actor.creature.Entity.IsDead) actor.sprite.PlayPose("dead");
             actor.banner.Color = ManorUi.BannerColor;
             actor.symbol.Text=Symbols[Runtime.Profile.banner];
+            actor.banner.GetNode<Label>("FamilyMotto").Text=Runtime.Profile.chronicle.motto;
         }
     }
 }

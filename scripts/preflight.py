@@ -186,8 +186,15 @@ def validate(historical_assets=False):
         svg=ET.fromstring(path.read_text())
         if svg.get('viewBox')!='0 0 128 128' or any(e.tag.split('}')[-1] in {'image','text','script','foreignObject'} for e in svg.iter()):errors.append('Icon is not self-contained vector art '+row['id'])
     relics=sheets.get('heir_relics',[]);relic_art={r['id']:r for r in sheets.get('relic_art',[])}
-    if len(relics)!=7 or set(relic_art)!={r['id'] for r in relics}:errors.append('Seven original exclusive relics/icons required')
-    if sorted(r['rarity'] for r in relics)!=sorted(['Common']*2+['Uncommon']*3+['Rare']*2):errors.append('Wrong exclusive relic rarity distribution')
+    chronicle=sheets.get('family_chronicle',[])
+    if len(chronicle)!=9 or len({r['id'] for r in chronicle})!=9:errors.append('Nine distinct Chronicle entries required')
+    unlocks=[r['rewardId'] for r in chronicle if r['rewardKind']=='relic']
+    if set(unlocks)!={'guardian_knot','scholar_bookmark','trail_compass'}:errors.append('Three class lesson unlocks required')
+    for entry in chronicle:
+        if not 200<len(entry['story'])<1200 or entry['rewardKind'] not in {'story','relic','motto'}:errors.append('Incomplete Chronicle entry '+entry['id'])
+        if entry['rewardKind']=='relic' and entry['rewardId'] not in relic_art:errors.append('Missing Chronicle reward/icon '+entry['id'])
+    if len(relics)!=10 or set(relic_art)!={r['id'] for r in relics}:errors.append('Ten original exclusive relics/icons required')
+    if sorted(r['rarity'] for r in relics)!=sorted(['Common']*2+['Uncommon']*6+['Rare']*2):errors.append('Wrong exclusive relic rarity distribution')
     for row in relics:
         if '{' in row['description'] or not row['flavor'] or row['amount']<=0:errors.append('Incomplete relic rules '+row['id'])
     for art in relic_art.values():
@@ -197,7 +204,7 @@ def validate(historical_assets=False):
             if not path.is_file() or hashlib.sha256(path.read_bytes()).hexdigest()!=art[hashfield]:errors.append('Relic icon hash mismatch '+art['id']);continue
             svg=ET.fromstring(path.read_text())
             if svg.get('viewBox')!='0 0 128 128' or any(e.tag.split('}')[-1] in {'image','text','script','foreignObject'} for e in svg.iter()):errors.append('Relic icon is not self-contained '+art['id'])
-    if len({r['sha256'] for r in relic_art.values()})!=7:errors.append('Relic artwork must be distinct')
+    if len({r['sha256'] for r in relic_art.values()})!=10:errors.append('Relic artwork must be distinct')
     potions=sheets.get('heir_potions',[]);potion_art={r['id']:r for r in sheets.get('potion_art',[])}
     if len(potions)!=3 or set(potion_art)!={r['id'] for r in potions}:errors.append('Three original exclusive potions/icons required')
     for row in potions:

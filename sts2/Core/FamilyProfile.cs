@@ -12,6 +12,7 @@ public sealed class FamilyProfile
     public Heir? selected;
     public FamilyRun? active;
     public string settledId = "";
+    public ChronicleState chronicle = new();
     public sealed class Heir
     {
         public string name = "", classId = "knight";
@@ -24,6 +25,7 @@ public sealed class FamilyProfile
         public int floors;
         public Dictionary<string, int> bonuses = new();
         public bool quick;
+        public List<string> chronicleRelics = new();
     }
     public static readonly JsonSerializerOptions JsonOptions = new() { IncludeFields = true, WriteIndented = true };
     private static readonly string[] Names = ["Ada", "Rowan", "Mira", "Alden", "Kit", "Iris", "Bram", "Sage", "Wren", "Theo", "June", "Vale"];
@@ -50,6 +52,8 @@ public sealed class FamilyProfile
         if (active is not null && active.id != settledId) throw new InvalidOperationException("Resume or abandon the unfinished heir first.");
         if (offers.Count == 0) GenerateOffers(seed);
         active = new FamilyRun { id = Guid.NewGuid().ToString(), heir = selected ?? offers[new Random(seed).Next(offers.Count)], quick = generation == 0 };
+        FamilyChronicle.Reconcile(this);
+        active.chronicleRelics=FamilyChronicle.Relics(this).ToList();
         foreach (var effect in new[] { "hp", "strength", "dexterity", "draw", "gold", "heal" }) active.bonuses[effect] = Bonus(effect);
         selected = null;
         return active;
@@ -61,7 +65,8 @@ public sealed class FamilyProfile
         long basis = (long)Math.Max(0, floors) * Design.Get("systems", "legacy").Number("amount") + Math.Max(0, gold) / Design.Get("systems", "gold_conversion").Number("amount") + (victory ? Design.Get("systems", "victory").Number("amount") : 0);
         var earned = (int)Math.Min(int.MaxValue, basis * percent * (100L + active.bonuses.GetValueOrDefault("gold")) / 10000);
         crowns = (int)Math.Min(int.MaxValue, (long)crowns + earned);
-        lastEarned = earned; generation++; settledId = runId; active = null;
+        lastEarned = earned; generation++; settledId = runId;
+        FamilyChronicle.Record(this,active,floors,victory);active = null;
         GenerateOffers(unchecked(generation * 1009 + StableHash(runId)));
         return earned;
     }
@@ -83,7 +88,8 @@ public sealed class FamilyProfile
     {
         var trial = PreviewPurchases(ids);
         if (ids.Count == 0 || trial is null) return false;
-        trial.Save(path); crowns = trial.crowns; manor = trial.manor; return true;
+        FamilyChronicle.Reconcile(trial);
+        trial.Save(path); crowns = trial.crowns; manor = trial.manor; chronicle=trial.chronicle; return true;
     }
     public void Save(string path)
     {
@@ -96,6 +102,7 @@ public sealed class FamilyProfile
     {
         var value = JsonSerializer.Deserialize<FamilyProfile>(File.ReadAllText(path), JsonOptions);
         if (value is null || value.family is null || value.manor is null || value.offers is null || value.crowns < 0) throw new InvalidDataException("Invalid family save");
+        if(value.chronicle is {} history&&(history.classes is null||history.unlocked is null||history.read is null||history.settledRuns is null||history.motto is null||history.classes.Any(p=>p.Value is null||p.Value.returns<0||p.Value.maxFloor<0||p.Value.wins<0)))throw new InvalidDataException("Invalid family Chronicle; backup will be tried.");
         return value;
     }
     public bool RefundRetiredLevels()
@@ -114,11 +121,12 @@ public sealed class FamilyProfile
     }
     public static FamilyProfile Load(string path)
     {
-        if (!File.Exists(path)) return new();
+        if (!File.Exists(path)) {var fresh=new FamilyProfile();FamilyChronicle.Reconcile(fresh);return fresh;}
         FamilyProfile profile;
         try { profile = Read(path); }
         catch (Exception first) { try { profile = Read(path + ".bak"); } catch (Exception second) { throw new InvalidDataException("Family save and backup are damaged; both preserved.", new AggregateException(first, second)); } }
-        if (profile.RefundRetiredLevels()) profile.Save(path);
+        var changed=profile.RefundRetiredLevels();changed|=FamilyChronicle.Reconcile(profile);
+        if (changed) profile.Save(path);
         return profile;
     }
 }

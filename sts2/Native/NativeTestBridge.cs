@@ -90,6 +90,9 @@ public static class NativeTestBridge
                     await CreatureCmd.Heal(healingPlayer.Creature,10,false);
                     result=StateSummary();break;
                 case "manor": ManorUi.Open(); result = new { open = true }; break;
+                case "chronicle-fixture":result=ChronicleOracle.Fixture(request.GetProperty("unlocked").GetBoolean());break;
+                case "chronicle-state":result=ChronicleOracle.State();break;
+                case "chronicle-eligibility":result=ChronicleOracle.RunEligibility(RunState());break;
                 case "manor-state":
                     var manor=Descendants(Tree.Root).OfType<ManorInput>().Single();
                     var manorScroll=Descendants(manor).OfType<ScrollContainer>().Single();

@@ -25,14 +25,42 @@ foreach(var cls in new[]{"knight","mage","ranger"}) {
     }
 }
 var dropRelics=Design.Rows("heir_relics");
-Check(dropRelics.Count==7&&dropRelics.Select(r=>r.Text("id")).Distinct().Count()==7,"Seven distinct exclusive relic drops");
+var stories=Design.Rows("family_chronicle");
+Check(stories.Count==9&&stories.Select(r=>r.Text("id")).Distinct().Count()==9,"Nine original Chronicle entries");
+Check(stories.All(r=>r.Text("story").Length is >200 and <1200&&!r.Text("story").Contains("Ironclad")),"Original readable story entries");
+var freshStory=new FamilyProfile();FamilyChronicle.Reconcile(freshStory);
+Check(freshStory.chronicle.unlocked.SetEquals(["founding"])&&!FamilyChronicle.Relics(freshStory).Any(),"Fresh family baseline story, three relics locked");
+Check(!FamilyChronicle.SelectMotto(freshStory,"Unbroken Oath"),"Locked motto cannot be selected");
+foreach(var storyClass in new[]{"knight","mage","ranger"}) {
+    freshStory.selected=new(){classId=storyClass,traits=[]};var lessonRun=freshStory.Begin(81);
+    Check(lessonRun.chronicleRelics.Count==FamilyChronicle.Relics(freshStory).Count(),"Run unlock snapshot");
+    freshStory.Settle(lessonRun.id,5,0,false);
+    Check(!freshStory.chronicle.unlocked.Contains(storyClass+"_lesson"),"Five floors below class lesson threshold");
+    freshStory.selected=new(){classId=storyClass,traits=[]};lessonRun=freshStory.Begin(82);
+    var priorCrowns=freshStory.crowns;freshStory.Settle(lessonRun.id,6,0,false);
+    Check(freshStory.chronicle.unlocked.Contains(storyClass+"_lesson")&&!freshStory.chronicle.unlocked.Contains(storyClass+"_victory"),"Completed failed climb unlocks lesson without invented victory");
+    var recorded=freshStory.chronicle.classes[storyClass].returns;
+    Check(freshStory.Settle(lessonRun.id,50,999,true)==0&&freshStory.chronicle.classes[storyClass].returns==recorded,"Repeat settlement cannot add wins or rewards");
+    Check(freshStory.chronicle.classes[storyClass].wins==0&&freshStory.crowns-priorCrowns==6*Design.Get("systems","legacy").Number("amount"),"Story adds no crown bonus");
+    freshStory.selected=new(){classId=storyClass,traits=[]};var wonStoryRun=freshStory.Begin(83);
+    freshStory.Settle(wonStoryRun.id,50,0,true);
+    var victoryStory=Design.Get("family_chronicle",storyClass+"_victory");
+    Check(freshStory.chronicle.unlocked.Contains(storyClass+"_victory")&&FamilyChronicle.SelectMotto(freshStory,victoryStory.Text("rewardId")),"Victory unlocks original motto");
+}
+Check(FamilyChronicle.Relics(freshStory).Distinct().Count()==3,"All class lessons unlock three shared family relics");
+var frozenStory=new FamilyProfile();FamilyChronicle.Reconcile(frozenStory);frozenStory.selected=new(){classId="mage",traits=[]};var frozenStoryRun=frozenStory.Begin(1);
+frozenStory.chronicle.classes["knight"]=new(){maxFloor=6};FamilyChronicle.Reconcile(frozenStory);
+Check(!FamilyChronicle.RelicAvailable(frozenStory,"guardian_knot"),"New family unlock cannot alter active run eligibility");
+frozenStory.Settle(frozenStoryRun.id,1,0,false);frozenStory.Begin(2);
+Check(FamilyChronicle.RelicAvailable(frozenStory,"guardian_knot"),"Next run captures unlocked family relic");
+Check(dropRelics.Count==10&&dropRelics.Select(r=>r.Text("id")).Distinct().Count()==10,"Ten distinct exclusive relic drops, seven baseline plus three Chronicle unlocks");
 Check(dropRelics.All(r=>new[]{"Common","Uncommon","Rare"}.Contains(r.Text("rarity"))),"No starter in ordinary drop definitions");
 foreach(var relic in dropRelics)
 {
     Check(!relic.Text("description").Contains('{')&&relic.Number("extra")<=1,"Complete bounded relic text/resources "+relic.Text("id"));
     Check(Design.Get("relic_art",relic.Text("id")).Text("license")=="MIT","Original relic artwork "+relic.Text("id"));
 }
-Check(Design.Rows("relic_art").Select(r=>r.Text("sha256")).Distinct().Count()==7,"Distinct relic silhouettes");
+Check(Design.Rows("relic_art").Select(r=>r.Text("sha256")).Distinct().Count()==10,"Distinct relic silhouettes");
 var icons = Design.Rows("icon_art");
 var familyPotions=Design.Rows("heir_potions");
 Check(familyPotions.Count==3&&familyPotions.Select(r=>r.Text("id")).Distinct().Count()==3,"Three exclusive potion identities");
@@ -179,11 +207,23 @@ Check(profile.Settle(run.id, 50, 200, true) == 128, "Slower victory crowns");
 Check(profile.Settle(run.id, 50, 200, true) == 0 && profile.generation == 1, "Idempotent settlement");
 var directory = Path.Combine(Path.GetTempPath(), "SpireLegacy2Checks-" + Guid.NewGuid());
 var path = Path.Combine(directory, "family.json");
+var storyPath=Path.Combine(directory,"chronicle.json");freshStory.chronicle.read.Add("mage_lesson");freshStory.Save(storyPath);
+var savedStory=FamilyProfile.Load(storyPath);
+Check(savedStory.chronicle.unlocked.SetEquals(freshStory.chronicle.unlocked)&&savedStory.chronicle.read.Contains("mage_lesson")&&savedStory.chronicle.motto=="Open Trail"&&savedStory.chronicle.classes["mage"].wins==1,"Chronicle, read state, motto and class records survive reload");
+var oldStoryPath=Path.Combine(directory,"pre-chronicle.json");
+var oldStory=new FamilyProfile{family="Old House",generation=8,crowns=777,manor=new(){["smith"]=1},selected=new(){name="Old Heir",classId="mage",traits=[]}};
+var oldStoryRun=oldStory.Begin(44);oldStoryRun.bonuses["hp"]=17;
+var oldStoryJson=System.Text.Json.Nodes.JsonNode.Parse(JsonSerializer.Serialize(oldStory,FamilyProfile.JsonOptions))!;oldStoryJson.AsObject().Remove("chronicle");oldStoryJson["active"]!.AsObject().Remove("chronicleRelics");File.WriteAllText(oldStoryPath,oldStoryJson.ToJsonString());
+var adoptedStory=FamilyProfile.Load(oldStoryPath);
+Check(adoptedStory.family=="Old House"&&adoptedStory.crowns==777&&adoptedStory.Level("smith")==1&&adoptedStory.active!.id==oldStoryRun.id&&adoptedStory.active.bonuses["hp"]==17,"Old family and active bonuses preserved");
+Check(adoptedStory.chronicle.unlocked.SetEquals(["founding","first_return","restoration"])&&adoptedStory.chronicle.classes.Count==0&&adoptedStory.active!.chronicleRelics.Count==0,"Truthful legacy migration cannot invent class feats or alter old run pools");
+Check(!FamilyChronicle.Reconcile(adoptedStory)&&FamilyProfile.Load(oldStoryPath).crowns==777,"Repeated migration is idempotent");
 profile.family = "Cape House"; profile.crowns = 1000; profile.Save(path);
 var first = Design.Rows("manor").First(r => r.Text("requires") == "none");
 var id = first.Text("id"); var price = profile.Cost(first);
 Check(profile.PreviewPurchases([id])!.crowns == 1000 - price && profile.crowns == 1000 && profile.Level(id) == 0, "Staging cannot mutate");
 Check(profile.CommitPurchases([id], path) && profile.crowns == 1000 - price && profile.Level(id) == 1, "Confirmed atomic purchase");
+Check(profile.chronicle.unlocked.Contains("restoration")&&FamilyProfile.Load(path).chronicle.unlocked.Contains("restoration"),"Only confirmed upgrade unlocks restoration story");
 Check(FamilyProfile.Load(path).family == "Cape House" && FamilyProfile.Load(path).Level(id) == 1, "Persist family and manor");
 var snapshot = profile.crowns;
 Directory.CreateDirectory(Path.Combine(directory, "blocked"));
