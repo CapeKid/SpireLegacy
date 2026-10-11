@@ -135,3 +135,7 @@ Seven original relics expand Power setup, guarded attacks, exhaust, manual disca
 ## 1.0.22 Heir potion pool
 
 Borrowed Breath grants 6 Block and one draw; Briar Vial applies 4 Poison and 1 Weak to an enemy; Triune Draught supplies a one-use class resource. A dedicated three-potion character pool keeps the shared pool available once. Native rewards, shops, combat generation, targeting, belt consumption and saved IDs apply. All artwork is original and packaged, with no new content dependency. See [potion rules and comparisons](heir-potions.md).
+
+## Measured Breath on regular and public-beta
+
+Measured Breath uses its own bounded retention power on both branches: at turn end, choose up to one card, or two when upgraded. Stacks increase the limit. Each choice lasts for that turn only; an unchosen card discards normally on the following turn. Cards already retaining themselves do not consume a choice. Other effects that retain the entire hand still apply normally. Beta's native Well-Laid Plans remains unchanged for native characters.

@@ -11,12 +11,14 @@ using MegaCrit.Sts2.Core.Models.Powers;
 using MegaCrit.Sts2.Core.ValueProps;
 using MegaCrit.Sts2.Core.Saves.Runs;
 using MegaCrit.Sts2.Core.Localization;
+using MegaCrit.Sts2.Core.CardSelection;
+using MegaCrit.Sts2.Core.Hooks;
 namespace SpireLegacy;
 public static class LegacyPowers
 {
  private static readonly Dictionary<string,string> NativeNames=new(){
   ["strength"]="StrengthPower",["dexterity"]="DexterityPower",["poison"]="PoisonPower",["weak"]="WeakPower",["vulnerable"]="VulnerablePower",["vigor"]="VigorPower",["thorns"]="ThornsPower",["nextEnergy"]="EnergyNextTurnPower",["nextDraw"]="DrawCardsNextTurnPower",["nextBlock"]="BlockNextTurnPower",["no_draw"]="NoDrawPower",
-  ["juggernaut"]="JuggernautPower",["rupture"]="RupturePower",["feel_no_pain"]="FeelNoPainPower",["barricade"]="BarricadePower",["demon_form"]="DemonFormPower",["dark_embrace"]="DarkEmbracePower",["buffer"]="BufferPower",["panache"]="PanachePower",["tools"]="ToolsOfTheTradePower",["after_image"]="AfterimagePower",["well_laid"]="WellLaidPlansPower",["envenom"]="EnvenomPower",["burst"]="BurstPower",["noxious"]="NoxiousFumesPower"};
+  ["juggernaut"]="JuggernautPower",["rupture"]="RupturePower",["feel_no_pain"]="FeelNoPainPower",["barricade"]="BarricadePower",["demon_form"]="DemonFormPower",["dark_embrace"]="DarkEmbracePower",["buffer"]="BufferPower",["panache"]="PanachePower",["tools"]="ToolsOfTheTradePower",["after_image"]="AfterimagePower",["envenom"]="EnvenomPower",["burst"]="BurstPower",["noxious"]="NoxiousFumesPower"};
  private static readonly Dictionary<string,Type> CustomTypes=typeof(LegacyPower).Assembly.GetTypes().Where(t=>!t.IsAbstract&&typeof(LegacyPower).IsAssignableFrom(t)).ToDictionary(t=>t.Name[2..]);
  static LegacyPowers() { NativeNames["flame_barrier"] = "FlameBarrierPower"; }
  public static PowerModel Get(string key){var type=NativeNames.TryGetValue(key,out var name)?typeof(PowerModel).Assembly.GetType("MegaCrit.Sts2.Core.Models.Powers."+name,true)!:CustomTypes[key];return ModelDb.GetById<PowerModel>(ModelDb.GetId(type));}
@@ -28,7 +30,7 @@ public abstract class LegacyPower:CustomPowerModel
  public override PowerStackType StackType=>PowerStackType.Counter;
  public override string CustomPackedIconPath=>ModelDb.Power<StrengthPower>().PackedIconPath;
  public override string CustomBigIconPath=>ModelDb.Power<StrengthPower>().ResolvedBigIconPath;
- public override List<(string,string)> Localization=>[("title",Key=="class"?"{ClassTitle}":System.Globalization.CultureInfo.InvariantCulture.TextInfo.ToTitleCase(Key.Replace('_',' '))),("description",DescriptionText)];
+ public override List<(string,string)> Localization=>[("title",Key=="class"?"{ClassTitle}":Key=="well_laid"?"Measured Breath":System.Globalization.CultureInfo.InvariantCulture.TextInfo.ToTitleCase(Key.Replace('_',' '))),("description",DescriptionText),("selectionScreenPrompt","Choose up to {Amount} card(s) to Retain this turn.")];
  public override LocString Title {get {var title=base.Title;if(Key=="class")title.Add("ClassTitle",Design.Get("class_mechanics",Runtime.Heir.classId).Text("name"));return title;}}
  private string DescriptionText=>Key switch{"class"=>"{ClassRules} Current: {Counter}.","plated"=>"At turn end, gain {Amount} Block. Lose a stack when attacked for HP damage.","reservoir"=>"Each Arcane Charge adds {Amount} extra damage on the first hit to each enemy.","quiver"=>"Hunter Rhythm draws {Amount} additional cards.",_=>Design.Get("power_effects",Key).Text("summary").Replace("!M!","{Amount}")};
  private int plays;private bool discardPaid;private bool cyclingDamage;
@@ -105,6 +107,14 @@ public abstract class LegacyPower:CustomPowerModel
  {
   if(player!=Owner.Player!)return;
   if(Key=="establishment")foreach(var card in retained)if(!card.EnergyCost.CostsX)card.EnergyCost.SetThisCombat(Math.Max(0,card.EnergyCost.GetWithModifiers(CostModifiers.Local)-Amount));
+ }
+ public override async Task BeforeFlushLate(PlayerChoiceContext context,Player player)
+ {
+  if(Key!="well_laid"||player!=Owner.Player||player.Creature.CombatState is not {} combat||!Hook.ShouldFlush(combat,player))return;
+  // Beta's native Well-Laid Plans now keeps the whole hand. Measured Breath
+  // instead offers a fresh bounded choice each turn, without permanent keywords.
+  var chosen=await CardSelectCmd.FromHand(context,player,new CardSelectorPrefs(SelectionScreenPrompt,0,Amount),c=>!c.ShouldRetainThisTurn,this);
+  foreach(var card in chosen)card.GiveSingleTurnRetain();
  }
  public override bool ShouldFlush(Player player)=>Key!="equilibrium"||player!=Owner.Player;
  public override async Task AfterSideTurnEnd(PlayerChoiceContext context,CombatSide side,IEnumerable<Creature> participants){if(!participants.Contains(Owner))return;if(Key=="equilibrium")await PowerCmd.Decrement(this);else if(Key=="double_tap")await PowerCmd.Remove(this);}
