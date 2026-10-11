@@ -3,6 +3,16 @@ using System.Text.Json;
 
 var count = 0;
 void Check(bool value, string message) { count++; if (!value) throw new Exception(message); }
+var ancientScripts=new HashSet<string>();
+Check(Design.Rows("ancient_dialogue").Count==48,"Eight Ancients, three classes, two visit conversations");
+foreach(var npc in AncientConversation.Supported)foreach(var cls in new[]{"knight","mage","ranger"})foreach(var visits in new[]{0,1,4,10,100}) {
+    var lines=AncientConversation.For(npc,cls,visits);
+    Check(lines.Count==4&&lines.Select(l=>l.Ancient).SequenceEqual(new[]{true,false,true,false}),"Ancient/Heir speakers "+npc+cls);
+    Check(lines.All(l=>l.Text.Length is >0 and <=160&&!l.Text.Contains('{')),"Readable literal dialogue "+npc+cls);
+    if(visits<2)Check(ancientScripts.Add(string.Join("\n",lines.Select(l=>l.Text))),"Distinct first/return class dialogue "+npc+cls);
+    else Check(lines.SequenceEqual(AncientConversation.For(npc,cls,1)),"Safe shared visit count "+npc+cls);
+}
+Check(AncientConversation.For("FUTURE_ANCIENT","unknown",100).All(l=>!string.IsNullOrWhiteSpace(l.Text)),"Original fallback for a future Ancient/class");
 var ancients=Design.Rows("ancient_cards");
 Check(ancients.Count==6&&ancients.Select(r=>r.Text("cardId")).Distinct().Count()==6,"Six distinct Ancient rewards");
 foreach(var cls in new[]{"knight","mage","ranger"}) {

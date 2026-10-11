@@ -15,6 +15,27 @@ using System.Text.Json;
 
 namespace SpireLegacy;
 
+// These runtime SVG textures are owned by the mod, not imported Godot resources.
+// Keep them out of native threaded loading/disposal and resolve them on demand.
+[HarmonyPatch(typeof(MegaCrit.Sts2.Core.Assets.AssetCache), nameof(MegaCrit.Sts2.Core.Assets.AssetCache.CreateSession))]
+public static class HeirRuntimeTexturePreload
+{
+    public static bool Owns(string path)=>path.StartsWith("res://SpireLegacy/heir/identity/",StringComparison.Ordinal)||path.StartsWith("res://SpireLegacy/heir/presentation/",StringComparison.Ordinal);
+    public static void Prefix(ref IEnumerable<string> paths)=>paths=paths.Where(p=>!Owns(p)).ToArray();
+}
+[HarmonyPatch(typeof(MegaCrit.Sts2.Core.Assets.AssetCache), nameof(MegaCrit.Sts2.Core.Assets.AssetCache.GetTexture2D))]
+public static class HeirRuntimeTextureLookup
+{
+    public static bool Prefix(string path,ref Texture2D __result)
+    {
+        if(!HeirRuntimeTexturePreload.Owns(path))return true;
+        __result=path.StartsWith("res://SpireLegacy/heir/identity/",StringComparison.Ordinal)
+            ?Runtime.ClassIcon(Path.GetFileNameWithoutExtension(path))
+            :Runtime.Texture(path["res://SpireLegacy/".Length..]);
+        return false;
+    }
+}
+
 // Keep native gameplay containers; replace their visible identity with original assets.
 public static class HeirPresentation
 {

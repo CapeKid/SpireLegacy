@@ -44,4 +44,3 @@ try:
     send('abandon')
 finally:
     (root/'private/sts2-evidence'/f'ancient-{tag}.json').write_text(json.dumps(evidence,indent=2),encoding='utf-8')
-
