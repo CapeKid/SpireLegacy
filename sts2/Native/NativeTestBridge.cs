@@ -211,6 +211,7 @@ public static class NativeTestBridge
                         await (Task)AccessTools.Method(endingEvent.GetType(),"AdvanceDialogue").Invoke(endingEvent,[])!;
                     }
                     result=new{index=(int)AccessTools.Field(endingEvent.GetType(),"_currentLineIndex").GetValue(endingEvent)!,lines=endingDialogue.Lines.Select(l=>l.LineText!.GetFormattedText()).ToArray(),options=endingEvent.CurrentOptions.Select(o=>o.Title.GetFormattedText()).ToArray()};break;
+                case "ancient-play":result=await AncientCardOracle.Check(RunState(),request.GetProperty("card").GetString()!,request.GetProperty("upgrade").GetBoolean(),UseTestSelector());break;
                 case "ancients":
                     var ancientPlayer=RunState().Players.Single(); var originalClass=Runtime.Heir.classId; var ancientChecks=0;
                     try {
@@ -220,7 +221,7 @@ public static class NativeTestBridge
                                 var tome=(MegaCrit.Sts2.Core.Models.Relics.DustyTome)ModelDb.Relic<MegaCrit.Sts2.Core.Models.Relics.DustyTome>().ToMutable();
                                 tome.SetupForPlayer(ancientPlayer);
                                 var chosen=ModelDb.GetById<CardModel>(tome.AncientCard!);
-                                if(chosen is not LegacyCard legacyRare || chosen.Rarity!=CardRarity.Rare || !NativePoolParity.Rows(heirClass).Any(r=>r.Text("id")==legacyRare.Key))throw new InvalidDataException("Wrong heir Ancient reward.");
+                                if(chosen is not LegacyCard legacyRare || chosen.Rarity!=CardRarity.Ancient || !Design.Rows("ancient_cards").Any(r=>r.Text("classId")==heirClass&&r.Text("cardId")==legacyRare.Key))throw new InvalidDataException("Wrong heir Ancient reward.");
                                 var restoredTome=(MegaCrit.Sts2.Core.Models.Relics.DustyTome)RelicModel.FromSerializable(tome.ToSerializable());
                                 if(restoredTome.AncientCard!=tome.AncientCard)throw new InvalidDataException("Ancient relic save mismatch.");
                                 ancientChecks++;

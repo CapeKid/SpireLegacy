@@ -1,0 +1,50 @@
+[
+  {
+    "id": "knight_kingbreaker",
+    "classId": "knight",
+    "cardId": "knight_kingbreaker",
+    "reference": "Native character Ancient cards: Corruption / Relax / Tools of the Trade; two Ancient identities per pool",
+    "role": "guarded finisher",
+    "reason": "Paid Exhaust attack earns a small combat Strength bonus only when already guarded; no recurring free resources."
+  },
+  {
+    "id": "knight_royal_arsenal",
+    "classId": "knight",
+    "cardId": "knight_royal_arsenal",
+    "reference": "Native character Ancient cards: Corruption / Relax / Tools of the Trade; two Ancient identities per pool",
+    "role": "hand preparation",
+    "reason": "Paid Exhaust setup upgrades current hand Attacks for this combat; no permanent deck or manor upgrades."
+  },
+  {
+    "id": "mage_arcane_conductor",
+    "classId": "mage",
+    "cardId": "mage_arcane_conductor",
+    "reference": "Native character Ancient cards: Corruption / Relax / Tools of the Trade; two Ancient identities per pool",
+    "role": "charge sequencing",
+    "reason": "Paid Power draws once on the first Skill each turn; Arcane Charge stays capped at two."
+  },
+  {
+    "id": "mage_elixir_of_life",
+    "classId": "mage",
+    "cardId": "mage_elixir_of_life",
+    "reference": "Native character Ancient cards: Corruption / Relax / Tools of the Trade; two Ancient identities per pool",
+    "role": "limited recovery",
+    "reason": "One-use paid healing and Block; inherited healing restrictions still apply."
+  },
+  {
+    "id": "ranger_ancient_canopy",
+    "classId": "ranger",
+    "cardId": "ranger_ancient_canopy",
+    "reference": "Native character Ancient cards: Corruption / Relax / Tools of the Trade; two Ancient identities per pool",
+    "role": "banked protection",
+    "reason": "Retain grows one future paid Exhaust defense, with bounded next-turn Block rather than a recurring engine."
+  },
+  {
+    "id": "ranger_perfect_escape",
+    "classId": "ranger",
+    "cardId": "ranger_perfect_escape",
+    "reference": "Native character Ancient cards: Corruption / Relax / Tools of the Trade; two Ancient identities per pool",
+    "role": "one-use escape",
+    "reason": "Paid Exhaust Buffer and draw, with a setup-cost upgrade rather than extra Buffer stacks."
+  }
+]
