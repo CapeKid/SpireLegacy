@@ -396,6 +396,17 @@ public static class NativeTestBridge
                     var secondEnergyReward = discardActor.PlayerCombatState.Energy-energyBeforeRepeat;
                     var secondDrawReward = PileType.Hand.GetPile(discardActor).Cards.Count-handBeforeRepeat+1;
                     result = new {firstEnergyReward,firstDrawReward,secondEnergyReward,secondDrawReward,rewardTurn=restoredDiscard.DiscardRewardTurn,turn=discardActor.PlayerCombatState.TurnNumber};break;
+                case "retention-check":
+                    result=await RetentionOracle.Check(RunState(),request.GetProperty("upgrade").GetBoolean(),request.GetProperty("stack").GetBoolean(),request.GetProperty("intrinsic").GetBoolean(),request.GetProperty("fullHand").GetBoolean());break;
+                case "retention-confirm":
+                    // Hidden labs cannot receive global hotkeys (native focus guard).
+                    // Drive the same native selection/release callbacks instead.
+                    var selectingHand=MegaCrit.Sts2.Core.Nodes.Combat.NPlayerHand.Instance!;
+                    var selections=(List<CardModel>)AccessTools.Field(selectingHand.GetType(),"_selectedCards").GetValue(selectingHand)!;
+                    if(selections.Count==0)AccessTools.Method(selectingHand.GetType(),"SelectCardInSimpleMode").Invoke(selectingHand,[Descendants(selectingHand).OfType<MegaCrit.Sts2.Core.Nodes.Cards.Holders.NHandCardHolder>().First(h=>h.IsVisibleInTree())]);
+                    var confirming=(MegaCrit.Sts2.Core.Nodes.CommonUi.NConfirmButton)AccessTools.Field(selectingHand.GetType(),"_selectModeConfirmButton").GetValue(selectingHand)!;
+                    confirming.EmitSignal(MegaCrit.Sts2.Core.Nodes.GodotExtensions.NClickableControl.SignalName.Released,confirming);
+                    result=new{confirmed=true};break;
                 case "turn":
                     var turnPlayer = RunState().Players.Single();
                     MegaCrit.Sts2.Core.Combat.CombatManager.Instance.SetReadyToEndTurn(turnPlayer,false);
