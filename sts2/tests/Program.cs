@@ -1,6 +1,7 @@
 using SpireLegacy;
 using System.Text.Json;
 
+if(PersistenceChecks.Child(args))return;
 var count = 0;
 void Check(bool value, string message) { count++; if (!value) throw new Exception(message); }
 var coopFamilies=new[]{new FamilyProfile{family="First family",generation=3},new FamilyProfile{family="Second family",generation=7}};
@@ -302,6 +303,7 @@ Check(resolved.GetParameters().Single().ParameterType==typeof(int),"Exact signat
 Check(ApiContract.Require(typeof(ApiFixture),"GenericTask",typeof(Task),Type.EmptyTypes).ReturnType==typeof(Task<int>),"Generic Task return remains compatible");
 foreach(var name in new[]{"Missing","WrongReturn"})try{ApiContract.Require(typeof(ApiFixture),name,typeof(Task),Type.EmptyTypes);Check(false,"Drift must fail");}catch(MissingMethodException e){Check(e.Message.Contains(name)&&e.Message.Contains("Expected")&&e.Message.Contains("Available"),"API failure identifies expected and available signatures");}
 try{ApiContract.Invoke(typeof(ApiFixture).GetMethod("ThrowOriginal")!,null,[]);Check(false,"Reflection must propagate failure");}catch(InvalidOperationException e){Check(ReferenceEquals(e,ApiFixture.Failure),"Reflection preserves original exception identity");}
+PersistenceChecks.Run(Check,directory);
 Console.WriteLine(JsonSerializer.Serialize(new { result = "passed", assertions = count, cards = 360, inheritedTraits = traitIds.Length, familyFixture = directory }));
 
 public static class ApiFixture

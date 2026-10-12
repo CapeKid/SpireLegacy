@@ -1,5 +1,5 @@
 {
-  "sourceSha": "fff78e1b1a6cfe4317dc713fddac3c07c1a5cf21",
+  "sourceSha": "7740305ea0efafb3156a63768f9a978c5e2a7a2f",
   "files": [
     {
       "path": ".gitattributes",
@@ -1490,6 +1490,10 @@
       "primaryIssue": 47
     },
     {
+      "path": "docs/adversarial-persistence.md",
+      "primaryIssue": 48
+    },
+    {
       "path": "docs/adversarial-startup.md",
       "primaryIssue": 59
     },
@@ -2068,6 +2072,10 @@
     {
       "path": "scripts/sts2-package.py",
       "primaryIssue": 62
+    },
+    {
+      "path": "scripts/sts2-persistence-check.py",
+      "primaryIssue": 48
     },
     {
       "path": "scripts/sts2-pool-evidence.py",
@@ -5914,11 +5922,19 @@
       "primaryIssue": 49
     },
     {
+      "path": "sts2/Core/FamilyData.cs",
+      "primaryIssue": 48
+    },
+    {
       "path": "sts2/Core/FamilyProfile.cs",
       "primaryIssue": 48
     },
     {
       "path": "sts2/Core/FamilySnapshot.cs",
+      "primaryIssue": 48
+    },
+    {
+      "path": "sts2/Core/FamilyStore.cs",
       "primaryIssue": 48
     },
     {
@@ -6078,6 +6094,10 @@
       "primaryIssue": 47
     },
     {
+      "path": "sts2/Native/PersistenceOracle.cs",
+      "primaryIssue": 48
+    },
+    {
       "path": "sts2/Native/PlayerBloodlines.cs",
       "primaryIssue": 50
     },
@@ -6118,6 +6138,10 @@
       "primaryIssue": 62
     },
     {
+      "path": "sts2/tests/PersistenceChecks.cs",
+      "primaryIssue": 47
+    },
+    {
       "path": "sts2/tests/Program.cs",
       "primaryIssue": 47
     },
@@ -6142,13 +6166,13 @@
     "62": 53,
     "63": 415,
     "58": 923,
-    "47": 51,
+    "47": 52,
+    "48": 7,
     "59": 10,
     "61": 56,
     "60": 2,
     "56": 5,
     "49": 2,
-    "48": 2,
     "51": 2,
     "55": 3,
     "52": 2,
