@@ -16,6 +16,32 @@ public static class TraitAuditOracle
 {
     private static void Require(bool value,string message){if(!value)throw new InvalidDataException(message);}
     private static LegacyCard? redrawCard;
+    public static async Task<object> Triggers(RunState run)
+    {
+        var player=run.Players.Single();var rules=PlayerBloodlines.Traits(player);
+        var relic=player.Relics.OfType<BloodlineRelic>().Single();var context=new BlockingPlayerChoiceContext();
+        var enemy=player.Creature.CombatState!.GetOpponentsOf(player.Creature).First(c=>c.IsAlive);
+        var checks=new List<string>();
+        if(rules.Has("hurt_energy")) {
+            await CreatureCmd.Damage(context,player.Creature,2,ValueProp.Move,enemy);
+            var energy=player.PlayerCombatState!.Energy;
+            await relic.AfterPlayerTurnStart(context,player);Require(player.PlayerCombatState.Energy==energy+rules.Amount("hurt_energy"),"Pending hurt Energy not delivered.");
+            energy=player.PlayerCombatState.Energy;await relic.AfterPlayerTurnStart(context,player);Require(player.PlayerCombatState.Energy==energy,"Pending Energy delivered twice.");checks.Add("hurt_energy");
+        }
+        if(rules.Has("coin_loss")||rules.Stat("heal")>0) {
+            var gold=player.Gold;player.Creature.SetCurrentHpInternal(player.Creature.MaxHp-10);var hp=player.Creature.CurrentHp;
+            await relic.AfterCombatVictory((MegaCrit.Sts2.Core.Rooms.CombatRoom)run.CurrentRoom!);
+            Require(player.Gold==Math.Max(0,gold-rules.Amount("coin_loss")),"Victory gold loss mismatch.");
+            Require(player.Creature.CurrentHp==hp+rules.Healing(rules.Stat("heal")),"Victory inherited healing mismatch.");checks.Add("victory");
+        }
+        if(rules.Has("diva")||rules.Has("explosions")) {
+            var hp=player.Creature.CurrentHp;var gold=player.Gold;
+            await CreatureCmd.Kill(enemy);
+            Require(player.Gold==gold+rules.Amount("diva"),"Enemy death gold mismatch.");
+            Require(player.Creature.CurrentHp==hp-rules.Amount("explosions"),"Enemy death explosion mismatch.");checks.Add("native_death");
+        }
+        return new{checks};
+    }
     public static async Task<object> Redraw(RunState run,bool reuse=false)
     {
         var player=run.Players.Single();var context=new BlockingPlayerChoiceContext();
@@ -52,7 +78,13 @@ public static class TraitAuditOracle
             var rebound=card.Type==MegaCrit.Sts2.Core.Entities.Cards.CardType.Attack&&card.DynamicVars.Damage.BaseValue==expected.Damage&&card.TraitSnapshot=="[]";
             card.Owner=null!;card.Owner=pacifist;
             var returned=card.Type==MegaCrit.Sts2.Core.Entities.Cards.CardType.Skill&&card.DynamicVars.Damage.BaseValue==0;
-            checks.Add(new{card.Key,upgrade,source,rebound,returned});
+            var method=AccessTools.Method(typeof(CardModel),"CreateDupe");
+            var duplicate=(LegacyCard)method.Invoke(card,method.GetParameters().Select(p=>p.ParameterType==typeof(Player)?ordinary:p.HasDefaultValue?p.DefaultValue:throw new MissingMethodException("Unsupported duplicate parameter: "+p)).ToArray())!;
+            if(duplicate.Owner!=ordinary){duplicate.Owner=null!;duplicate.Owner=ordinary;}
+            var duplicatedRecipient=duplicate.Type==CardType.Attack&&duplicate.DynamicVars.Damage.BaseValue==expected.Damage;
+            card.DynamicVars.Damage.BaseValue+=2;card.Owner=null!;card.Owner=ordinary;
+            var preservesBuff=card.DynamicVars.Damage.BaseValue==expected.Damage+2;
+            checks.Add(new{card.Key,upgrade,source,rebound,returned,duplicatedRecipient,preservesBuff});
         }
         return checks;
     }
@@ -94,7 +126,7 @@ public static class TraitAuditOracle
                 }
                 Check(card);
                 var duplicateMethod=AccessTools.Method(typeof(CardModel),"CreateDupe");
-                var duplicate=(LegacyCard)duplicateMethod.Invoke(card,duplicateMethod.GetParameters().Select(p=>p.HasDefaultValue?p.DefaultValue:throw new MissingMethodException("Unsupported duplicate parameter: "+p)).ToArray())!;
+                var duplicate=(LegacyCard)duplicateMethod.Invoke(card,duplicateMethod.GetParameters().Select(p=>p.ParameterType==typeof(Player)?player:p.HasDefaultValue?p.DefaultValue:throw new MissingMethodException("Unsupported duplicate parameter: "+p)).ToArray())!;
                 if(duplicate.Owner==null)duplicate.Owner=player;Check(duplicate);
                 var loaded=(LegacyCard)run.LoadCard(card.ToSerializable(),player);Check(loaded);run.RemoveCard(loaded);
             }

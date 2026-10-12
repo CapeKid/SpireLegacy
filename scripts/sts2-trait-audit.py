@@ -28,12 +28,13 @@ if 'baseline' in tag:
     if 'cost' not in tag:assert any(not r['rebound'] for r in transfers),transfers
     start('knight',['manacostanddamageup']);redraw=send('trait-redraw');assert not redraw['repeatedDrawStable'],redraw
     send('abandon');print(tag,'reproduced stale recipient inheritance and repeated-draw cost stacking',flush=True);sys.exit(0)
-assert all(r['rebound'] and r['returned'] for r in transfers),transfers
+assert all(r['rebound'] and r['returned'] and r['duplicatedRecipient'] and r['preservesBuff'] for r in transfers),transfers
 traits=json.loads((root/'sheets/traits.json').read_text())
 mutations=6*sum(r['rarity']=='BASIC' for r in json.loads((root/'sheets/cards.json').read_text()))
 for index,trait in enumerate(traits):
     cls=['knight','mage','ranger'][index%3]
     start(cls,[trait['id']]);result=send('trait-audit');assert result['mutations']==mutations,result
+    assert not any(result['scopes'].values()),result
     look=send('trait-appearance')
     assert look and any(v['classId']==cls and v['visible'] for v in look)
     if trait['effect']=='rainbow':assert any(v['rainbow'] and v['motes']==6 for v in look)
@@ -67,6 +68,7 @@ for index,trait in enumerate(traits):
         for upgraded in [False,True]:
             played=send('expansion-play',card=cls+'_strike',upgrade=upgraded)
             assert played['pile']=='Discard' and not played['tableNodePresent']
+    if trait['effect'] in ['hurt_energy','coin_loss','diva','explosions'] or trait['heal']>0:send('trait-triggers')
     if index%10==9:print(tag,index+1,'trait probes pass',flush=True)
 for cls in ['knight','mage','ranger']:
     for pair in [['megahealth','cheeronkills'],['superhealer','nomeat'],['cantattack','breakpropsformana']]:

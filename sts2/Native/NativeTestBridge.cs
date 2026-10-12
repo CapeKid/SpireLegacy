@@ -157,6 +157,7 @@ public static class NativeTestBridge
                 case "trait-audit":result=await TraitAuditOracle.Probe(RunState());break;
                 case "trait-transfer":result=TraitAuditOracle.Transfer(RunState());break;
                 case "trait-redraw":result=await TraitAuditOracle.Redraw(RunState(),request.TryGetProperty("reuse",out var reuseDraw)&&reuseDraw.GetBoolean());break;
+                case "trait-triggers":result=await TraitAuditOracle.Triggers(RunState());break;
                 case "trait-speed":
                     var auditSpeed=request.GetProperty("value").GetDouble();if(auditSpeed<1||auditSpeed>8)throw new ArgumentOutOfRangeException("value");
                     Engine.TimeScale=auditSpeed;result=new{speed=auditSpeed};break;
