@@ -1,0 +1,105 @@
+{
+  "issue": 49,
+  "baselineSourceSha": "f9f0e093c51109d21717c0a999b55d74b49dcf06",
+  "runtimeSourceSha": "d5fea27824a4e6a9d1b78d803c250239621f91f0",
+  "dllSha256": "fb2b91fa3806ac708d3f40f7e91f6fbcaac6d0858a863325fd2aa803249aa7f5",
+  "coreAssertions": 26080,
+  "referenceModelSeeds": 12,
+  "referenceModelTransitions": 1200,
+  "interruptedTransactionCases": 42,
+  "actualProcessTerminationBoundaries": 4,
+  "chronicleClassThresholdCases": 27,
+  "traitTreasuryFormulaCases": 14560,
+  "preflight": {
+    "sheets": 32,
+    "rows": 2062,
+    "cells": 26477
+  },
+  "fixedIssues": [
+    103,
+    104
+  ],
+  "deferredFinding": 105,
+  "branches": [
+    {
+      "branch": "regular",
+      "game": "v0.107.1",
+      "mod": "1.0.28",
+      "baseLib": "3.4.7",
+      "platform": "Windows 10.0.26300",
+      "dllSha256": "fb2b91fa3806ac708d3f40f7e91f6fbcaac6d0858a863325fd2aa803249aa7f5",
+      "nativeCompletionScenarios": 12,
+      "actualDeathAndAbandonScenarios": 6,
+      "chronicleUiClasses": [
+        "knight",
+        "mage",
+        "ranger"
+      ],
+      "baseAndUpgradedPaidCards": true,
+      "coopOwnerIsolation": true,
+      "coopDurableSettlement": true,
+      "immediateAbandon": {
+        "room": "MapRoom",
+        "floor": 0,
+        "gold": 99,
+        "crowns": 3
+      },
+      "seeds": [
+        "6XY4N9AEMF",
+        "SPIRELEGACY-LIFECYCLE-49"
+      ],
+      "evidenceFiles": [
+        "lifecycle-lifecycle-regular-release.json",
+        "lifecycle-ui-lifecycle-regular-release-ui.json",
+        "lifecycle-ui-lifecycle-regular-release-observation.json",
+        "harness-lifecycle-regular-release-coop-coop.json"
+      ],
+      "correlatedResponses": 964,
+      "allResponsesPassed": true
+    },
+    {
+      "branch": "beta",
+      "game": "v0.111.0",
+      "mod": "1.0.28",
+      "baseLib": "3.4.7",
+      "platform": "Windows 10.0.26300",
+      "dllSha256": "fb2b91fa3806ac708d3f40f7e91f6fbcaac6d0858a863325fd2aa803249aa7f5",
+      "nativeCompletionScenarios": 12,
+      "actualDeathAndAbandonScenarios": 6,
+      "chronicleUiClasses": [
+        "knight",
+        "mage",
+        "ranger"
+      ],
+      "baseAndUpgradedPaidCards": true,
+      "coopOwnerIsolation": true,
+      "coopDurableSettlement": true,
+      "immediateAbandon": {
+        "room": "MapRoom",
+        "floor": 0,
+        "gold": 99,
+        "crowns": 3
+      },
+      "seeds": [
+        "SPIRELEGACY-LIFECYCLE-49",
+        "YDLP1LYLNRMZ"
+      ],
+      "evidenceFiles": [
+        "lifecycle-lifecycle-beta-release.json",
+        "lifecycle-ui-lifecycle-beta-release-ui.json",
+        "lifecycle-ui-lifecycle-beta-release-observation.json",
+        "harness-lifecycle-beta-release-coop-coop.json"
+      ],
+      "correlatedResponses": 1076,
+      "allResponsesPassed": true
+    }
+  ],
+  "untested": [
+    "physical Steam Deck/Linux",
+    "hardware power loss and cloud conflicts",
+    "full campaigns and reconnects",
+    "cross-branch native save migration"
+  ],
+  "published": false,
+  "merged": false
+}

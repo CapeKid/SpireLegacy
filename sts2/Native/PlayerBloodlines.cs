@@ -116,11 +116,11 @@ public static class AdoptLocalBloodline
         if(((run.coop||run.ownerNetId!=0)&&run.ownerNetId!=player.NetId)||run.familyId!=Runtime.Profile.familyId) {
             ManorUi.Notice="This saved heir belongs to a family on another device. Its run effects are preserved; your local crown bank is unchanged.";return;
         }
-        if(run.id==Runtime.Profile.settledId||Runtime.Profile.chronicle.settledRuns.Contains(run.id))throw new InvalidDataException("This family has already settled the saved climb.");
-        if(Runtime.Profile.active is {} active&&active.id!=run.id)throw new InvalidDataException("A different local family climb is unfinished.");
-        var previousActive=Runtime.Profile.active;var previousSelected=Runtime.Profile.selected;
-        try{Runtime.Profile.active=run;Runtime.Profile.selected=null;Runtime.Profile.Save(Runtime.FamilyPath);}
-        catch{Runtime.Profile.active=previousActive;Runtime.Profile.selected=previousSelected;throw;}
+        try {Runtime.Profile.CommitAdoption(run,player.NetId,Runtime.FamilyPath);}
+        finally {
+            if(Runtime.Profile.active is {} committed&&committed.id==run.id)
+                ((HeirCharacter)player.Character).Bloodline=committed;
+        }
     }
 }
 

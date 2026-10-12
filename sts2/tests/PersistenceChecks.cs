@@ -18,13 +18,13 @@ public static class PersistenceChecks
         File.WriteAllText(args[2],"loaded");var deadline=DateTime.UtcNow.AddSeconds(20);while(!File.Exists(args[3])){if(DateTime.UtcNow>deadline)return true;Thread.Sleep(20);}
         profile.crowns+=int.Parse(args[4]);try{profile.Save(args[1]);File.WriteAllText(args[2]+".result","saved");}catch(IOException){File.WriteAllText(args[2]+".result","conflict");}return true;
     }
-    private static Process Spawn(params string[] args)
+    internal static Process Spawn(params string[] args)
     {
         var exe=Environment.ProcessPath!;var info=new ProcessStartInfo(exe){UseShellExecute=false,CreateNoWindow=true};
         if(Path.GetFileNameWithoutExtension(exe)=="dotnet")info.ArgumentList.Add(Assembly.GetEntryAssembly()!.Location);
         foreach(var arg in args)info.ArgumentList.Add(arg);return Process.Start(info)!;
     }
-    private static void AwaitFile(string path,Process p)
+    internal static void AwaitFile(string path,Process p)
     {
         var deadline=DateTime.UtcNow.AddSeconds(20);while(!File.Exists(path)){if(p.HasExited||DateTime.UtcNow>deadline)throw new Exception("Fixture child failed before marker: "+path);Thread.Sleep(20);}
     }

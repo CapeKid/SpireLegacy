@@ -1,7 +1,7 @@
 using SpireLegacy;
 using System.Text.Json;
 
-if(PersistenceChecks.Child(args))return;
+if(LifecycleChecks.Child(args)||PersistenceChecks.Child(args))return;
 var count = 0;
 void Check(bool value, string message) { count++; if (!value) throw new Exception(message); }
 var coopFamilies=new[]{new FamilyProfile{family="First family",generation=3},new FamilyProfile{family="Second family",generation=7}};
@@ -375,6 +375,7 @@ foreach(var upgraded in new[]{false,true}){
     Check(spellweave.Amount("nextEnergy")==1&&spellweave.Amount("nextDraw")==2,"Spellweave upgrade cannot increase delayed resource payout");
     Check(spellweave.Block==(upgraded?2:0)&&!spellweave.Row.Flag("exhaust"),"Spellweave upgrades modest immediate protection while remaining reusable");
 }
+LifecycleChecks.Run(Check,directory);
 PersistenceChecks.Run(Check,directory);
 Console.WriteLine(JsonSerializer.Serialize(new { result = "passed", assertions = count, cards = 360, inheritedTraits = traitIds.Length, familyFixture = directory }));
 

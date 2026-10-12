@@ -5,6 +5,8 @@ from pathlib import Path
 root=Path(__file__).resolve().parents[1]
 def owner(path):
     name=Path(path).name
+    if name in {'LifecycleChecks.cs','LifecycleOracle.cs','sts2-lifecycle-check.py','sts2-lifecycle-ui-check.py','adversarial-lifecycle.md','adversarial-lifecycle-evidence.json'}:return 49
+    if name in {'PilotHealth.cs','PilotRewards.cs','PilotCardInfo.cs','PilotPotions.cs','TacticalPilot.cs'}:return 47
     if name in {'FamilyData.cs','FamilyStore.cs','PersistenceOracle.cs','sts2-persistence-check.py','adversarial-persistence.md'}:return 48
     if name in {'ApiContract.cs','StartupGate.cs','NativeStartup.cs','CompatibilityOracle.cs','sts2-compatibility-check.py','sts2-startup-negative-check.ps1','adversarial-startup.md'}:return 59
     if path.startswith('sts2/tests/') or name.endswith('Oracle.cs') or name in {'NativeTestBridge.cs','TestIsolation.cs','TestRequestLedger.cs','DiagnosticText.cs','CardPlayDiagnostics.cs','oracle_protocol.py','test_command.py','audit-coverage.py','adversarial-harness.md','adversarial-audit-coverage.json'}:return 47

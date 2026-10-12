@@ -1,5 +1,5 @@
 {
-  "sourceSha": "987c876644b5ec1e43d4c7b3a1ee293413385608",
+  "sourceSha": "d5fea27824a4e6a9d1b78d803c250239621f91f0",
   "files": [
     {
       "path": ".gitattributes",
@@ -1490,6 +1490,14 @@
       "primaryIssue": 47
     },
     {
+      "path": "docs/adversarial-lifecycle-evidence.json",
+      "primaryIssue": 49
+    },
+    {
+      "path": "docs/adversarial-lifecycle.md",
+      "primaryIssue": 49
+    },
+    {
       "path": "docs/adversarial-persistence.md",
       "primaryIssue": 48
     },
@@ -1498,11 +1506,115 @@
       "primaryIssue": 59
     },
     {
+      "path": "docs/balance-campaign-cards.csv",
+      "primaryIssue": 62
+    },
+    {
+      "path": "docs/balance-campaign-pilot.md",
+      "primaryIssue": 62
+    },
+    {
+      "path": "docs/balance-campaigns.csv",
+      "primaryIssue": 62
+    },
+    {
+      "path": "docs/balance-conditional-decisions.md",
+      "primaryIssue": 62
+    },
+    {
+      "path": "docs/balance-defensive-ablation-cards.csv",
+      "primaryIssue": 62
+    },
+    {
+      "path": "docs/balance-defensive-ablation.md",
+      "primaryIssue": 62
+    },
+    {
+      "path": "docs/balance-defensive-ablations.csv",
+      "primaryIssue": 62
+    },
+    {
+      "path": "docs/balance-defensive-policy.md",
+      "primaryIssue": 62
+    },
+    {
+      "path": "docs/balance-defensive-prefix.json",
+      "primaryIssue": 62
+    },
+    {
+      "path": "docs/balance-defensive-trial-cards.csv",
+      "primaryIssue": 62
+    },
+    {
+      "path": "docs/balance-defensive-trials.csv",
+      "primaryIssue": 62
+    },
+    {
       "path": "docs/balance-encounters.csv",
       "primaryIssue": 62
     },
     {
+      "path": "docs/balance-engine-comparison-cards.csv",
+      "primaryIssue": 62
+    },
+    {
+      "path": "docs/balance-engine-comparisons.csv",
+      "primaryIssue": 62
+    },
+    {
+      "path": "docs/balance-engine-comparisons.md",
+      "primaryIssue": 62
+    },
+    {
+      "path": "docs/balance-finisher-payoffs.csv",
+      "primaryIssue": 62
+    },
+    {
+      "path": "docs/balance-finishers-and-potions.md",
+      "primaryIssue": 62
+    },
+    {
       "path": "docs/balance-followup.md",
+      "primaryIssue": 62
+    },
+    {
+      "path": "docs/balance-hp-aware-control-cards.csv",
+      "primaryIssue": 62
+    },
+    {
+      "path": "docs/balance-hp-aware-controls.csv",
+      "primaryIssue": 62
+    },
+    {
+      "path": "docs/balance-hp-cost-decisions.md",
+      "primaryIssue": 62
+    },
+    {
+      "path": "docs/balance-native-control-cards.csv",
+      "primaryIssue": 62
+    },
+    {
+      "path": "docs/balance-native-controls.csv",
+      "primaryIssue": 62
+    },
+    {
+      "path": "docs/balance-tactical-campaign-cards.csv",
+      "primaryIssue": 62
+    },
+    {
+      "path": "docs/balance-tactical-campaigns.csv",
+      "primaryIssue": 62
+    },
+    {
+      "path": "docs/balance-tactical-pilot.md",
+      "primaryIssue": 62
+    },
+    {
+      "path": "docs/balance-targeted-finishers.md",
+      "primaryIssue": 62
+    },
+    {
+      "path": "docs/balance-vanilla-controls.md",
       "primaryIssue": 62
     },
     {
@@ -1574,6 +1686,26 @@
       "primaryIssue": 62
     },
     {
+      "path": "docs/release-1.0.28-validation.json",
+      "primaryIssue": 62
+    },
+    {
+      "path": "docs/release-1.0.28.md",
+      "primaryIssue": 62
+    },
+    {
+      "path": "docs/six-card-balance-review.md",
+      "primaryIssue": 62
+    },
+    {
+      "path": "docs/six-card-review-cases.csv",
+      "primaryIssue": 62
+    },
+    {
+      "path": "docs/spellweave-balance.md",
+      "primaryIssue": 62
+    },
+    {
       "path": "docs/steam-deck.md",
       "primaryIssue": 62
     },
@@ -1595,6 +1727,10 @@
     },
     {
       "path": "docs/vigor-multi-hit.md",
+      "primaryIssue": 62
+    },
+    {
+      "path": "docs/workshop-1.0.28-delivery.json",
       "primaryIssue": 62
     },
     {
@@ -1914,6 +2050,14 @@
       "primaryIssue": 60
     },
     {
+      "path": "scripts/check-sts2-release.py",
+      "primaryIssue": 63
+    },
+    {
+      "path": "scripts/compare-balance-prefix.py",
+      "primaryIssue": 63
+    },
+    {
       "path": "scripts/create_sheets.py",
       "primaryIssue": 61
     },
@@ -2014,6 +2158,10 @@
       "primaryIssue": 61
     },
     {
+      "path": "scripts/run-balance-campaign.ps1",
+      "primaryIssue": 63
+    },
+    {
       "path": "scripts/sts2-ancient-check.py",
       "primaryIssue": 47
     },
@@ -2027,6 +2175,10 @@
     },
     {
       "path": "scripts/sts2-balance-audit-check.py",
+      "primaryIssue": 47
+    },
+    {
+      "path": "scripts/sts2-balance-campaign.py",
       "primaryIssue": 47
     },
     {
@@ -2050,7 +2202,15 @@
       "primaryIssue": 59
     },
     {
+      "path": "scripts/sts2-delayed-reward-check.py",
+      "primaryIssue": 47
+    },
+    {
       "path": "scripts/sts2-ending-check.py",
+      "primaryIssue": 47
+    },
+    {
+      "path": "scripts/sts2-finisher-payoff-check.py",
       "primaryIssue": 47
     },
     {
@@ -2072,6 +2232,14 @@
     {
       "path": "scripts/sts2-lab.py",
       "primaryIssue": 47
+    },
+    {
+      "path": "scripts/sts2-lifecycle-check.py",
+      "primaryIssue": 49
+    },
+    {
+      "path": "scripts/sts2-lifecycle-ui-check.py",
+      "primaryIssue": 49
     },
     {
       "path": "scripts/sts2-neow-layout-check.py",
@@ -2118,11 +2286,23 @@
       "primaryIssue": 47
     },
     {
+      "path": "scripts/sts2-release-check.py",
+      "primaryIssue": 47
+    },
+    {
       "path": "scripts/sts2-relic-check.py",
       "primaryIssue": 47
     },
     {
       "path": "scripts/sts2-retention-check.py",
+      "primaryIssue": 47
+    },
+    {
+      "path": "scripts/sts2-reward-intervention-check.py",
+      "primaryIssue": 47
+    },
+    {
+      "path": "scripts/sts2-six-candidates-check.py",
       "primaryIssue": 47
     },
     {
@@ -2135,6 +2315,10 @@
     },
     {
       "path": "scripts/sts2-startup-ui-check.py",
+      "primaryIssue": 47
+    },
+    {
+      "path": "scripts/sts2-tactical-check.py",
       "primaryIssue": 47
     },
     {
@@ -2156,6 +2340,10 @@
     {
       "path": "scripts/sts2-visual-fix-check.py",
       "primaryIssue": 47
+    },
+    {
+      "path": "scripts/summarize-balance-campaigns.py",
+      "primaryIssue": 63
     },
     {
       "path": "scripts/summarize_rl_traits.py",
@@ -5970,6 +6158,14 @@
       "primaryIssue": 51
     },
     {
+      "path": "sts2/Core/PilotHealth.cs",
+      "primaryIssue": 47
+    },
+    {
+      "path": "sts2/Core/PilotRewards.cs",
+      "primaryIssue": 47
+    },
+    {
       "path": "sts2/Core/StartupGate.cs",
       "primaryIssue": 59
     },
@@ -6014,6 +6210,10 @@
       "primaryIssue": 59
     },
     {
+      "path": "sts2/Native/CampaignOracle.cs",
+      "primaryIssue": 47
+    },
+    {
       "path": "sts2/Native/CardEffects.cs",
       "primaryIssue": 52
     },
@@ -6032,6 +6232,10 @@
     {
       "path": "sts2/Native/CompatibilityOracle.cs",
       "primaryIssue": 59
+    },
+    {
+      "path": "sts2/Native/ControlPilotOracle.cs",
+      "primaryIssue": 47
     },
     {
       "path": "sts2/Native/CoopBloodlines.cs",
@@ -6098,6 +6302,10 @@
       "primaryIssue": 53
     },
     {
+      "path": "sts2/Native/LifecycleOracle.cs",
+      "primaryIssue": 49
+    },
+    {
       "path": "sts2/Native/ManorInput.cs",
       "primaryIssue": 57
     },
@@ -6126,6 +6334,14 @@
       "primaryIssue": 48
     },
     {
+      "path": "sts2/Native/PilotCardInfo.cs",
+      "primaryIssue": 47
+    },
+    {
+      "path": "sts2/Native/PilotPotions.cs",
+      "primaryIssue": 47
+    },
+    {
       "path": "sts2/Native/PlayerBloodlines.cs",
       "primaryIssue": 50
     },
@@ -6144,6 +6360,10 @@
     {
       "path": "sts2/Native/Runtime.cs",
       "primaryIssue": 59
+    },
+    {
+      "path": "sts2/Native/TacticalPilot.cs",
+      "primaryIssue": 47
     },
     {
       "path": "sts2/Native/TraitAppearance.cs",
@@ -6166,7 +6386,15 @@
       "primaryIssue": 62
     },
     {
+      "path": "sts2/tests/LifecycleChecks.cs",
+      "primaryIssue": 49
+    },
+    {
       "path": "sts2/tests/PersistenceChecks.cs",
+      "primaryIssue": 47
+    },
+    {
+      "path": "sts2/tests/PilotRewardChecks.cs",
       "primaryIssue": 47
     },
     {
@@ -6191,16 +6419,16 @@
     }
   ],
   "counts": {
-    "62": 56,
-    "63": 415,
+    "62": 88,
+    "63": 419,
     "58": 923,
-    "47": 55,
+    "47": 70,
+    "49": 8,
     "48": 7,
     "59": 10,
     "61": 56,
     "60": 3,
     "56": 5,
-    "49": 2,
     "51": 2,
     "55": 3,
     "52": 2,

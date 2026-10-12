@@ -73,13 +73,28 @@ try:
         for profile in [host,guest]:assert len(send(profile,'coop-roundtrip'))==2
         diagnostic=send(host,'harness-owner-diagnostic',owner=2)
         assert diagnostic['originalPreserved'] and 'Heir: mage; traits: cantattack' in diagnostic['text'] and 'Inner owner diagnostic' in diagnostic['text'],diagnostic
-        time.sleep(3);send(host,'coop-vote');send(guest,'coop-vote');peers('Play')
+        time.sleep(12);send(host,'coop-vote');send(guest,'coop-vote');peers('Play')
         for profile in [host,guest]:
             played=send(profile,'coop-play')
             assert played['played'] and played['pile']=='Discard' and not played['tableNodePresent'],played
             time.sleep(1)
         a,b=peers();assert a['active']==ids[0] and b['active']==ids[1]
+        family_before={}
+        for profile in [host,guest]:
+            isolation=send(profile,'lifecycle-owners');assert isolation['checkedOwners']==1,isolation
+            family_before[profile]=send(profile,'lifecycle-state')['profile']
         send(host,'coop-abandon')
+        for profile in [host,guest]:
+            deadline=time.monotonic()+30
+            while True:
+                final=send(profile,'lifecycle-state')
+                if final['profile']['active'] is None:break
+                if time.monotonic()>deadline:raise TimeoutError('Co-op family settlement '+profile)
+                time.sleep(.2)
+            initial=family_before[profile];current=final['profile'];run_id=initial['active']['id']
+            assert current==final['persisted'] and current['generation']==initial['generation']+1,final
+            assert current['settledId']==run_id and current['chronicle']['settledRuns'].count(run_id)==1,final
+            assert current['crowns']>=initial['crowns'] and current['familyId']==initial['familyId'],final
     else:raise ValueError(mode)
     print(tag+': '+mode+' native harness baseline passed')
 finally:
