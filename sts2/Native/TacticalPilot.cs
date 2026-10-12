@@ -24,7 +24,7 @@ public static class TacticalPilot
         if(card is LegacyCard mercy&&mercy.DesignCard.Mercy)return 0;
         if(!card.DynamicVars.TryGetValue("Damage",out var variable))return 0;
         var old=variable.PreviewValue;
-        try{variable.UpdateCardPreview(card,CardPreviewMode.Normal,target,true);return Math.Max(0,variable.PreviewValue)*(card is LegacyCard legacy?Math.Max(1,legacy.DesignCard.Row.Number("hits")):1);}
+        try{variable.UpdateCardPreview(card,CardPreviewMode.Normal,target,true);return Math.Max(0,variable.PreviewValue)*PilotCardInfo.Hits(card);}
         finally{variable.PreviewValue=old;}
     }
     private static double Block(CardModel card,Creature owner)
@@ -46,26 +46,26 @@ public static class TacticalPilot
                 var damage=target!=null?(double)Damage(card,target):card.TargetType==TargetType.AllEnemies?enemies.Sum(e=>(double)Damage(card,e)):card.TargetType==TargetType.RandomEnemy&&enemies.Length>0?enemies.Average(e=>(double)Damage(card,e)):0;
                 var score=damage/Math.Max(1,cost);
                 score+=Math.Min(need,Block(card,player.Creature))*1.6/Math.Max(1,cost);
-                if(card is LegacyCard lc){
-                    var d=lc.DesignCard;
-                    score+=d.Amount("draw")*3+d.Amount("energy")*8;
+                {
+                    int Amount(string effect)=>PilotCardInfo.Amount(card,effect);
+                    score+=Amount("draw")*3+Amount("energy")*8;
                     if(card.Type==CardType.Power)score+=8;
-                    if(target!=null&&d.Amount("vulnerable")>0&&target.GetPowerAmount<VulnerablePower>()==0){
+                    if(target!=null&&Amount("vulnerable")>0&&target.GetPowerAmount<VulnerablePower>()==0){
                         // Account for one affordable follow-up and one future attack, not a full tree search.
                         var follow=hand.Where(c=>c!=card&&c.Type==CardType.Attack&&Cost(c)<=energy-cost).Select(c=>(double)Damage(c,target)).DefaultIfEmpty(0).Max();
-                        score+=(follow*.5+(d.Amount("vulnerable")>1?follow*.5:0))/Math.Max(1,cost);
+                        score+=(follow*.5+(Amount("vulnerable")>1?follow*.5:0))/Math.Max(1,cost);
                         if(follow>0)reason="vulnerable-follow-up";
                     }
-                    if(target!=null&&d.Amount("weak")>0)score+=need*.25;
-                    if(d.Amount("poison")>0)score+=d.Amount("poison")*1.5/Math.Max(1,cost)*(card.TargetType==TargetType.AllEnemies?enemies.Length:1);
-                    if(lc.DesignCard.Row.Text("special") is "exhaust_one" or "exhaust_nonattacks"){
+                    if(target!=null&&Amount("weak")>0)score+=need*.25;
+                    if(Amount("poison")>0)score+=Amount("poison")*1.5/Math.Max(1,cost)*(card.TargetType==TargetType.AllEnemies?enemies.Length:1);
+                    if(PilotCardInfo.ExhaustsOthers(card)){
                         var engine=player.Creature.GetPowerAmount<FeelNoPainPower>()+player.Creature.Powers.OfType<LegacyPower>().Where(p=>p.Key=="exhaust_damage").Sum(p=>p.Amount);
                         var fuel=hand.Any(c=>c!=card&&c.Type is CardType.Status or CardType.Curse);
                         score+=engine*3+(fuel?4:0);
                         if(engine>0&&fuel)reason="exhaust-engine-fuel";
                     }
                     // Single-hit estimates only. Multi-hit/execute/reflect/phase effects need a richer solver.
-                    if(target!=null&&lc.DesignCard.Row.Number("hits")==1&&lc.DesignCard.Row.Text("special")=="none"&&damage>=target.CurrentHp+target.Block){score+=100;reason="estimated-lethal";}
+                    if(target!=null&&PilotCardInfo.SimpleAttack(card)&&damage>=target.CurrentHp+target.Block){score+=100;reason="estimated-lethal";}
                 }
                 choices.Add(new(card,target,score,reason));
             }

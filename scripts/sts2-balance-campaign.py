@@ -15,17 +15,19 @@ root = Path(__file__).resolve().parents[1]
 profile = Path(sys.argv[1]).resolve()
 tag, cls, tier, policy = sys.argv[2:6]
 tier = int(tier)
-assert cls in {'knight', 'mage', 'ranger'} and tier in range(3)
+assert cls in {'knight', 'mage', 'ranger','ironclad'} and tier in range(3)
 assert policy in {'defense', 'attack', 'tactical'}
 seed = sys.argv[6] if len(sys.argv) > 6 else 'SPIRELEGACY-CAMPAIGN-1'
 ascension = int(sys.argv[7]) if len(sys.argv) > 7 else 0
-traits = sys.argv[8].split(',') if len(sys.argv) > 8 and sys.argv[8] else []
+traits = sys.argv[8].split(',') if len(sys.argv) > 8 and sys.argv[8] not in {'','-'} else []
+reward_policy=sys.argv[9] if len(sys.argv)>9 else 'standalone'
+assert reward_policy in {'standalone','deck'}
 assert tag and all(c.isalnum() or c in '-_' for c in tag)
 expected = hashlib.sha256((root/'sts2/bin/Release/net9.0/SpireLegacy.dll').read_bytes()).hexdigest()
 output = root/'private/sts2-evidence'/f'balance-campaign-{tag}.json'
 assert not output.exists(), 'Choose a new tag; never overwrite campaign evidence.'
 evidence = []
-report = dict(cls=cls, tier=tier, policy=policy, seed=seed, ascension=ascension, traits=traits,
+report = dict(cls=cls, tier=tier, policy=policy, rewardPolicy=reward_policy, seed=seed, ascension=ascension, traits=traits,
               status='running', evidence=evidence)
 
 def save():
@@ -51,7 +53,7 @@ try:
         if time.monotonic() > deadline:
             report['status'] = 'time-cap'
             break
-        result = send('balance-campaign-step', policy=policy)
+        result = send('balance-campaign-step', policy=policy,rewardPolicy=reward_policy)
         action = result['action']
         report['lastState'] = result['state']
         print(tag, step, action, result['state']['act'], result['state']['floor'], result['state']['hp'], flush=True)

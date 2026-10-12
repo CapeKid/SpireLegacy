@@ -31,11 +31,11 @@ for tag in arguments:
     state = journal['lastState']
     base = dict(tag=tag, game=next(iter(games)), cls=journal['cls'], tier=journal['tier'],
                 policy=journal['policy'], seed=journal['seed'], ascension=journal['ascension'],
-                traits=';'.join(journal['traits']))
+                traits=';'.join(journal['traits']),rewardPolicy=journal.get('rewardPolicy','standalone'))
     trials.append(dict(**base, status=journal['status'], act=state['act'], floor=state['floor'],
                        dead=state['hp'] == 0 and not state.get('wins', 0), wins=state.get('wins', 0), finalHp=state['hp'], maxHp=state['maxHp'],
                        crowns=state['lastEarned'], deckSize=len(state['deck']),
-                       turns=len(turns), rewardChoices=len(rewards), dllSha256=next(iter(hashes))))
+                       turns=len(turns), rewardChoices=len(rewards),skippedRewards=sum(r.get('skip',False) for r in rewards), dllSha256=next(iter(hashes))))
     entries, played, left, offers, picks = (Counter() for _ in range(5))
     for turn in turns:
         entries.update(turn['detail']['entries'])
@@ -43,7 +43,7 @@ for tag in arguments:
         left.update(turn['detail']['unplayed'])
     for reward in rewards:
         offers.update(c['id'] for c in reward['offers'])
-        picks.update([reward['picked']])
+        if reward['picked'] is not None:picks.update([reward['picked']])
     for card in sorted(entries.keys() | played.keys() | left.keys() | offers.keys() | picks.keys()):
         observations.append(dict(**base, card=card, handEntries=entries[card], plays=played[card],
                                  unplayedAtTurnEnd=left[card], offered=offers[card], picked=picks[card]))
