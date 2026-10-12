@@ -1,0 +1,7 @@
+tag,game,cls,tier,policy,seed,ascension,traits,rewardPolicy,status,act,floor,dead,wins,finalHp,maxHp,crowns,deckSize,turns,rewardChoices,skippedRewards,dllSha256
+deck-knight-zero-seed1,v0.107.1,knight,0,tactical,SPIRELEGACY-CAMPAIGN-1,0,,deck,finished,1,6,True,0,0,60,18,14,25,4,0,8909d4d96f27da7d3b93a97fa5171bb7243461789cdd5c21d819a37421802619
+deck-knight-zero-seed2,v0.107.1,knight,0,tactical,SPIRELEGACY-CAMPAIGN-2,0,,deck,finished,1,14,True,0,0,60,30,16,36,6,0,8909d4d96f27da7d3b93a97fa5171bb7243461789cdd5c21d819a37421802619
+deck-knight-full-seed1,v0.107.1,knight,2,tactical,SPIRELEGACY-CAMPAIGN-1,0,,deck,finished,2,27,True,0,0,80,88,22,97,15,3,8909d4d96f27da7d3b93a97fa5171bb7243461789cdd5c21d819a37421802619
+deck-knight-full-seed2,v0.107.1,knight,2,tactical,SPIRELEGACY-CAMPAIGN-2,0,,deck,finished,2,25,True,0,0,80,74,24,76,12,0,8909d4d96f27da7d3b93a97fa5171bb7243461789cdd5c21d819a37421802619
+deck-full-ironclad-seed1,v0.107.1,ironclad,0,tactical,SPIRELEGACY-CAMPAIGN-1,0,,deck,finished,1,17,True,0,0,80,0,19,46,9,0,ecb72d14a594156e5418b11138f342822fb3652f0ce08ba85ebd530a004e7349
+deck-full-ironclad-seed2,v0.107.1,ironclad,0,tactical,SPIRELEGACY-CAMPAIGN-2,0,,deck,finished,1,17,True,0,0,80,0,18,46,8,0,ecb72d14a594156e5418b11138f342822fb3652f0ce08ba85ebd530a004e7349

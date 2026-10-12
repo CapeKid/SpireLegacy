@@ -1,0 +1,26 @@
+using MegaCrit.Sts2.Core.Entities.Cards;
+using MegaCrit.Sts2.Core.Models;
+
+namespace SpireLegacy;
+
+public static class PilotCardInfo
+{
+    // Native variable names verified against owned card models. Some complex/generator cards lack these.
+    public static int Amount(CardModel card,string effect)
+    {
+        if(card is LegacyCard lc)return lc.DesignCard.Row.Text("power")==effect?Math.Max(lc.DesignCard.Amount(effect),lc.DesignCard.Magic):lc.DesignCard.Amount(effect);
+        var name=effect switch{"draw"=>"Cards","energy"=>"Energy","weak"=>"WeakPower","vulnerable"=>"VulnerablePower","poison"=>"PoisonPower","strength"=>"StrengthPower",_=>effect};
+        return card.DynamicVars.TryGetValue(name,out var value)?Math.Max(0,(int)value.BaseValue):0;
+    }
+    public static bool ExhaustsOthers(CardModel card)=>card is LegacyCard lc?lc.DesignCard.Row.Text("special") is "exhaust_one" or "exhaust_nonattacks":card.GetType().Name is "BurningPact" or "TrueGrit" or "SecondWind" or "FiendFire";
+    public static bool Engine(CardModel card)=>card is LegacyCard lc?lc.DesignCard.Row.Text("power") is "exhaust_damage" or "evolve" or "fire_breathing":card.GetType().Name is "FeelNoPain" or "DarkEmbrace" or "Evolve" or "FireBreathing";
+    public static bool SimpleAttack(CardModel card)=>card is LegacyCard lc?lc.DesignCard.Row.Number("hits")==1&&lc.DesignCard.Row.Text("special")=="none":card.GetType().Name is "StrikeIronclad" or "Bash" or "Anger" or "Cleave";
+    public static int Hits(CardModel card)=>card is LegacyCard lc?Math.Max(1,lc.DesignCard.Row.Number("hits")):card.GetType().Name=="TwinStrike"?2:card.DynamicVars.TryGetValue("Repeat",out var repeat)?Math.Max(1,(int)repeat.BaseValue):1;
+    public static PilotRewards.Card Describe(CardModel card)
+    {
+        double Value(string name)=>card.DynamicVars.TryGetValue(name,out var v)?Math.Max(0,(double)v.BaseValue):0;
+        var damage=Value("Damage")*Hits(card);
+        var cost=card.EnergyCost.CostsX?3:Math.Max(0,card.EnergyCost.GetWithModifiers(CostModifiers.All));
+        return new(card is LegacyCard legacy?legacy.Key:card.Id.ToString(),cost,damage,Value("Block"),Amount(card,"draw"),Amount(card,"energy"),Amount(card,"poison"),Amount(card,"strength"),card.Type==CardType.Power,ExhaustsOthers(card),Engine(card),Amount(card,"weak"),Amount(card,"vulnerable"));
+    }
+}

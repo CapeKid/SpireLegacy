@@ -1,5 +1,7 @@
 # Tactical balance pilot
 
+The following stage adds native Ironclad controls, deck-aware rewards and self-inflicted-death reporting: [balance-vanilla-controls.md](balance-vanilla-controls.md).
+
 This continues the natural-run stage after PRs #87 and #88 were merged. It improves the diagnostic player rather than changing card stats. The earlier pilot's low use of Challenge and Reforge mixed card value with poor ordering and fuel selection.
 
 The new `tactical` policy uses the owned game's damage and Block previews, modified Energy costs, visible incoming attacks and all hittable targets. It values an affordable follow-up after Vulnerable, totals area attacks across enemies, estimates Weak/Poison utility and recognizes exhaust-engine triggers with status/curse fuel. Mandatory hand discard/exhaust choices prefer low immediate-value cards; recovery prefers higher-value cards. Each manual play records its decision reason and selected enemy model. Attack-first and defense-first remain available for controls, and reward selection still uses the earlier standalone-utility policy.
