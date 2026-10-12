@@ -1,0 +1,4 @@
+tag,game,cls,tier,policy,seed,ascension,traits,rewardPolicy,status,act,floor,dead,wins,finalHp,maxHp,crowns,deckSize,turns,potionUses,rewardChoices,skippedRewards,forcedReward,forcedRewardFloor,interventions,dllSha256
+delayed-knight-full-seed1,v0.107.1,knight,2,tactical,SPIRELEGACY-CAMPAIGN-1,0,,deck,finished,2,27,True,0,0,80,88,23,96,0,15,2,,0,0,fe307b45652dcfdffb4a61855c3768c7421b5ca78f82f3badd1f78b081b536ae
+delayed-knight-full-seed2,v0.107.1,knight,2,tactical,SPIRELEGACY-CAMPAIGN-2,0,,deck,finished,1,17,True,0,0,80,45,18,41,0,8,0,,0,0,fe307b45652dcfdffb4a61855c3768c7421b5ca78f82f3badd1f78b081b536ae
+fortify-knight-full-seed2,v0.107.1,knight,2,tactical,SPIRELEGACY-CAMPAIGN-2,0,,deck,finished,2,25,True,0,0,80,74,24,76,0,12,0,fortify,12,1,fe307b45652dcfdffb4a61855c3768c7421b5ca78f82f3badd1f78b081b536ae

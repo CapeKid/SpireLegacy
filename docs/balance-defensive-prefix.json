@@ -1,0 +1,31 @@
+{
+  "left": "delayed-knight-full-seed2",
+  "right": "fortify-knight-full-seed2",
+  "floor": 12,
+  "game": "v0.107.1",
+  "dllSha256": "fe307b45652dcfdffb4a61855c3768c7421b5ca78f82f3badd1f78b081b536ae",
+  "identicalRecordedPrefix": true,
+  "leftDecisions": 67,
+  "rightDecisions": 67,
+  "leftPrefixSha256": "469b1cd156e226c93a85a8b33b0d36555e1146de6dd30e2ccc256bce24a70925",
+  "rightPrefixSha256": "469b1cd156e226c93a85a8b33b0d36555e1146de6dd30e2ccc256bce24a70925",
+  "offers": [
+    {
+      "id": "knight_counter_lunge",
+      "upgraded": false,
+      "score": 9
+    },
+    {
+      "id": "fortify",
+      "upgraded": false,
+      "score": 7
+    },
+    {
+      "id": "study",
+      "upgraded": false,
+      "score": 6
+    }
+  ],
+  "leftPick": "knight_counter_lunge",
+  "rightPick": "fortify"
+}

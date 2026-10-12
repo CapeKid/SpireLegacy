@@ -1,5 +1,7 @@
 # Engine-policy campaign comparisons and delayed rewards
 
+The next stage tests the corrected policy and a matched defensive choice: [balance-defensive-ablation.md](balance-defensive-ablation.md).
+
 This stage follows merged PR #94. Six natural runs test the merged finisher/emergency-potion policy. Their results are preserved separately from a subsequent reward-scoring correction. Production cards, traits, manor bonuses, crown values and release packages are unchanged.
 
 ## Six natural runs
