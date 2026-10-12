@@ -16,6 +16,7 @@ namespace SpireLegacy;
 
 public static class ControlPilotOracle
 {
+    private sealed class BorrowedSelector : IDisposable { public void Dispose(){} }
     public static async Task<object> Probe(RunState run,string kind)
     {
         using(TacticalPilot.Selector()){
@@ -48,13 +49,13 @@ public static class ControlPilotOracle
             if(kind=="skip"){
                 var count=player.Deck.Cards.Count;
                 var options=Enumerable.Range(0,3).Select(_=>run.CreateCard(ModelDb.Card<StrikeIronclad>(),player)).ToArray();
-                var reward=new CardReward(options,CardCreationSource.Encounter,player,new CardCreationOptions([],CardCreationSource.Encounter,CardRarityOddsType.Uniform));
+                var reward=new CardReward(options,CardCreationSource.Encounter,player,CardCreationOptions.ForRoom(player,run.CurrentRoom!));
                 var set=new RewardsSet(player);set.Rewards.Add(reward);var offering=set.Offer();
                 for(var frame=0;frame<20&&NOverlayStack.Instance?.Peek() is not NRewardsScreen;frame++)await tree.ToSignal(tree,SceneTree.SignalName.ProcessFrame);
-                await CampaignOracle.Step(run,"tactical",TacticalPilot.Selector(),"deck");
-                var skipped=System.Text.Json.JsonSerializer.SerializeToElement(await CampaignOracle.Step(run,"tactical",TacticalPilot.Selector(),"deck"));
+                await CampaignOracle.Step(run,"tactical",new BorrowedSelector(),"deck");
+                var skipped=System.Text.Json.JsonSerializer.SerializeToElement(await CampaignOracle.Step(run,"tactical",new BorrowedSelector(),"deck"));
                 if(!skipped.GetProperty("detail").GetProperty("skip").GetBoolean())throw new InvalidDataException("Weak duplicate reward did not skip");
-                await CampaignOracle.Step(run,"tactical",TacticalPilot.Selector(),"deck");
+                await CampaignOracle.Step(run,"tactical",new BorrowedSelector(),"deck");
                 await offering.WaitAsync(TimeSpan.FromSeconds(10));
                 return new{kind,unchangedDeck=player.Deck.Cards.Count==count,successfullySelected=reward.SuccessfullySelected,closed=NOverlayStack.Instance?.Peek() is not NRewardsScreen};
             }
