@@ -1,0 +1,16 @@
+{
+  "item": 3816525393,
+  "app": 2868840,
+  "version": "1.0.28",
+  "sourceSha": "f1ea06006faa38a76d977ed3aff1022818ac4f15",
+  "visibility": "private",
+  "regularAllowed": true,
+  "betaAllowed": true,
+  "branchRangeCount": 0,
+  "stagedFiles": 530,
+  "allFilesMatch": true,
+  "dllSha256": "41cb18e424592a067b4626d77a8ebc920763c12770af79d1f12ff08541254e2a",
+  "nativeCases": 72,
+  "coreAssertions": 3833,
+  "verifiedUtc": "2026-10-12T16:51:46.813381+00:00"
+}

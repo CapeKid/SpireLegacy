@@ -1,14 +1,17 @@
 # Spire Legacy 1.0.28
 
-Follow-ups before publication: [Spellweave's paid upgrade](spellweave-balance.md) and [six further card corrections](six-card-balance-review.md). The archived candidate and exact hashes below precede those fixes; regenerate and validate packages from the reviewed updated source before uploading.
+The refreshed Workshop package is built from merged main `f1ea060`, including [Spellweave's paid upgrade](https://github.com/CapeKid/SpireLegacy/blob/main/docs/spellweave-balance.md) and [six further card corrections](https://github.com/CapeKid/SpireLegacy/blob/main/docs/six-card-balance-review.md). The older candidate hashes in the historical regression section below describe the earlier build, not this refreshed package.
 
-Release candidate for Slay the Spire 2 regular v0.107.1 and public-beta v0.111.0, with BaseLib 3.4.7. This package includes the merged balancing and recovery work through PR #98.
+Release for Slay the Spire 2 regular v0.107.1 and public-beta v0.111.0, with BaseLib 3.4.7. This package includes the merged balancing and recovery work through PR #101.
 
 ## Player changes
 
 - Royal Execution now deals 20/26 damage before its half-health execute bonus, at the same three-Energy cost.
 - Celestial Spear now deals 26/34 damage, at the same three-Energy cost.
 - Arrow Cascade now deals four damage per preceding Attack to each enemy. It still Exhausts and costs 2/1 Energy.
+- Spellweave and Slow Incantation stay at one Energy when upgraded; each upgrade adds two immediate Block instead of free setup.
+- Second Quiver draws two cards at both levels, while still granting 1/2 Energy. Mana Fountain grants 2/3 Energy.
+- Eternal Bookmark costs one Energy and retains 2/3 chosen cards. Battlefield Recovery costs one Energy; Iron Avalanche costs two.
 - Includes the earlier targeted draw, exhaust-recovery, Poison and retention corrections, discounted recovery-cycle safeguards, and Vigor applying throughout multi-hit attacks.
 - Includes hardened family-save validation and backup recovery from the merged persistence work.
 
@@ -22,9 +25,9 @@ The Workshop item remains private and keeps BaseLib as a required item. Update e
 
 See [installation and Deck controls](https://github.com/CapeKid/SpireLegacy/blob/main/docs/sts2-port.md), [targeted finisher evidence](https://github.com/CapeKid/SpireLegacy/blob/main/docs/balance-targeted-finishers.md), and [defensive pilot comparisons](https://github.com/CapeKid/SpireLegacy/blob/main/docs/balance-defensive-policy.md). Native branch regressions cover the release DLL; physical Steam Deck testing and human full-campaign balance feedback remain separate checks.
 
-## Final regression results
+## Earlier candidate regression results
 
-The exact packaged DLL, SHA-256 `56380292b9026c3065d2ddbb2bdec2f27dbede6d46d9654ddfe48bcd8211c483`, passes the following existing native fixtures on both owned Windows game branches. Test source is `f138a138975a2c41a25a4f5660557474c6e5009e`, based on merged main `212dd2c`; later changes only add packaging inspection and release documentation. Both clients report Spire Legacy **1.0.28**, BaseLib **3.4.7**, and their actual game versions.
+The earlier candidate DLL, SHA-256 `56380292b9026c3065d2ddbb2bdec2f27dbede6d46d9654ddfe48bcd8211c483`, passed the following existing native fixtures on both owned Windows game branches. Test source was `f138a138975a2c41a25a4f5660557474c6e5009e`, based on merged main `212dd2c`. This table predates the Spellweave and six-card follow-ups. Both clients reported Spire Legacy **1.0.28**, BaseLib **3.4.7**, and their actual game versions.
 
 | Suite | Regular v0.107.1 | Beta v0.111.0 |
 | --- | ---: | ---: |
@@ -41,4 +44,4 @@ Also passed: 3,454 Core assertions including persistence fault/concurrency check
 
 Raw journals remain private under tags `release128-payoffs-{regular,beta}` and `release128-regression-{regular,beta}`. The public [validation record](https://github.com/CapeKid/SpireLegacy/blob/main/docs/release-1.0.28-validation.json) retains counts and immutable package/DLL hashes without private save paths or game files. All tests use independent game copies, fresh isolated profiles and verified client-PID cleanup; installed games, real saves and Steam branches remain untouched.
 
-This completes all three planned passes: defensive policy comparisons, targeted card payoffs, and final regression/package preparation. Further balance changes should follow concrete playtest feedback rather than continuing the diagnostic-pilot sequence. Workshop and Melty publication have not been performed in this pass.
+The refreshed main DLL is `41cb18e424592a067b4626d77a8ebc920763c12770af79d1f12ff08541254e2a`. The publication run checks this exact build's six-card and delayed-effect fixtures on both branches, 3,833 Core assertions, preflight and authoring regeneration, then inspects the refreshed archives. Steam delivery verification is recorded separately from the older candidate validation record. Melty publication and physical Deck retesting remain separate.
