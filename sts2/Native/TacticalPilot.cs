@@ -125,15 +125,16 @@ public static class TacticalPilot
                 if(scenario=="delayed-spellweave"){
                     var firstEnergy=player.PlayerCombatState.Energy;var firstHand=hand.Cards.Count;
                     var restored=(LegacyCard)run.LoadCard(delayed.ToSerializable(),player);
-                    var roundTrip=restored.DesignCard.Cost==1&&restored.DesignCard.Rules()==delayed.DesignCard.Rules();run.RemoveCard(restored);
+                    var roundTrip=restored.EnergyCost.GetWithModifiers(CostModifiers.All)==1&&restored.DesignCard.Rules()==delayed.DesignCard.Rules();run.RemoveCard(restored);
                     if(delayed.Pile?.Type!=PileType.Discard)throw new InvalidDataException("Spellweave must remain reusable");
                     await CardPileCmd.Add(delayed,PileType.Hand,skipVisuals:true);
                     energy=player.PlayerCombatState.Energy;await BalanceOracle.Play(delayed);
                     var replaySpent=energy-player.PlayerCombatState.Energy;
+                    var replayPile=delayed.Pile?.Type.ToString();
                     await BalanceOracle.End(player,true);
                     return new{kind,key,upgraded,immediateEnergy,immediateBlock,firstEnergy,firstHand,replaySpent,
                         secondEnergy=player.PlayerCombatState.Energy,secondHand=hand.Cards.Count,queuedEnergy=player.Creature.GetPowerAmount<EnergyNextTurnPower>(),
-                        queuedDraw=player.Creature.GetPowerAmount<DrawCardsNextTurnPower>(),roundTrip,pile=delayed.Pile?.Type.ToString()};
+                        queuedDraw=player.Creature.GetPowerAmount<DrawCardsNextTurnPower>(),roundTrip,pile=replayPile};
                 }
                 return new{kind,key,upgraded,chosen,description.NextEnergy,description.NextDraw,description.NextBlock,immediateEnergy,deliveredEnergy=player.PlayerCombatState.Energy,deliveredHand=hand.Cards.Count,deliveredBlock=player.Creature.Block};
             }
