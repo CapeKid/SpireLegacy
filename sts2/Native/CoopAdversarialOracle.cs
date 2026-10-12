@@ -41,6 +41,11 @@ public static class CoopAdversarialOracle
         if(!completeFields)Inject(CoopBloodlines.Protocol,original);
         Inject(-1,original);Inject(CoopBloodlines.Protocol,new string('x',8193));
         if(ledger!=null)Inject(CoopBloodlines.Protocol,original,Guid.NewGuid().ToString());
+        if(ledger!=null) {
+            var unknown=FamilySnapshot.Read(original);unknown.ownerNetId=999;
+            CoopBloodlines.Accept(CoopBloodlines.Protocol,session,1,FamilySnapshot.Serialize(unknown),999);
+            Require(!CoopBloodlines.Pending.ContainsKey(999),"Non-roster sender occupied the selection ledger.");
+        }
         Require(FamilySnapshot.Serialize(CoopBloodlines.Pending[owner])==original,"Bad lobby packet changed owned snapshot.");
         return new{owner,immutableReady=immutable,requiredFrozenFields=completeFields,badPacketsStable=true};
     }
@@ -109,7 +114,9 @@ public static class CoopAdversarialOracle
             var seed=MegaCrit.Sts2.Core.Helpers.SeedHelper.CanonicalizeSeed("CAUD"+i);
             var hash=AccessTools.Method(typeof(MegaCrit.Sts2.Core.Helpers.StringHelper),"GetDeterministicHashCode").Invoke(null,[seed])!;
             var constructor=typeof(MegaCrit.Sts2.Core.Random.Rng).GetConstructors().Single(c=>c.GetParameters().Length==2&&c.GetParameters()[1].ParameterType==typeof(string));
-            object value=constructor.GetParameters()[0].ParameterType==typeof(uint)?hash is int signed?unchecked((uint)signed):unchecked((uint)Convert.ToUInt64(hash)):Convert.ToUInt64(hash);
+            object value;
+            if(constructor.GetParameters()[0].ParameterType==typeof(uint))value=hash is int signed?unchecked((uint)signed):unchecked((uint)Convert.ToUInt64(hash));
+            else value=hash is long signedLong?unchecked((ulong)signedLong):Convert.ToUInt64(hash);
             var rng=(MegaCrit.Sts2.Core.Random.Rng)constructor.Invoke([value,"act_selection"]);
             MegaCrit.Sts2.Core.Models.ActModel.GetRandomList(rng,unlock,true);
             var resolutions=CoopBloodlines.Players(lobby).Where(p=>CoopBloodlines.Character(p) is MegaCrit.Sts2.Core.Models.Characters.RandomCharacter).Select(p=>rng.NextItem(ModelDb.AllCharacters)).ToArray();

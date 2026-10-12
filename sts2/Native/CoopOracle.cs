@@ -98,6 +98,16 @@ public static class CoopOracle
             var restored=Player.FromSerializable(data);
             if(player.Character is not HeirCharacter){if(restored.Character.Id!=player.Character.Id||PlayerBloodlines.State(restored)!=null)throw new InvalidDataException("Native player inherited a bloodline.");checks.Add(new{player.NetId,native=true});continue;}
             var expected=FamilySnapshot.Serialize(PlayerBloodlines.State(player)!);
+            var bag=player.RelicGrabBag.ToSerializable().RelicIdLists.Values.SelectMany(v=>v).ToHashSet();
+            var eligibility=PlayerBloodlines.EligibilityOwner.Value;
+            try {
+                PlayerBloodlines.EligibilityOwner.Value=player;
+                foreach(var relic in HeirDropRelics.All.OfType<FamilyDropRelic>()) {
+                    var allowed=PlayerBloodlines.Eligible(player,relic.Key);
+                    if(relic.IsAllowed(run)!=allowed||bag.Contains(relic.Id)!=allowed)
+                        throw new InvalidDataException("Relic eligibility leaked another owner's Chronicle: "+relic.Key);
+                }
+            }finally {PlayerBloodlines.EligibilityOwner.Value=eligibility;}
             if(FamilySnapshot.Serialize(PlayerBloodlines.State(restored)!)!=expected)throw new InvalidDataException("Owner snapshot changed during native player serialization.");
             var expectedTraits=JsonSerializer.Serialize(PlayerBloodlines.Heir(player).traits);
             if(restored.Deck.Cards.OfType<LegacyCard>().Any(c=>c.TraitSnapshot!=expectedTraits))throw new InvalidDataException("A restored card inherited another player's traits.");

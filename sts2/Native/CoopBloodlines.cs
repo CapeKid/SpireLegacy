@@ -112,7 +112,7 @@ public static class CoopBloodlines
         if(protocol!=Protocol){ManorUi.Notice="Every player needs the same Spire Legacy co-op version.";return;}
         try {
             var peer=Players(lobby).FirstOrDefault(p=>Id(p)==sender);
-            if(!Selections.Receive(protocol,session,rev,data,sender,peer!=null&&IsReady(peer)))return;
+            if(peer==null||!Selections.Receive(protocol,session,rev,data,sender,IsReady(peer)))return;
             AccessTools.Method(typeof(StartRunLobby),"BeginRunForAllPlayersIfAllReady").Invoke(lobby,[]);
         }catch(Exception error){GD.PushWarning("Rejected co-op heir snapshot: "+error.Message);ManorUi.Notice="A co-op heir could not synchronize. Unready and choose your heir again.";}
     }
