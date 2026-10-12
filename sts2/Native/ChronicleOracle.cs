@@ -20,7 +20,7 @@ public static class ChronicleOracle
             var count=profile.chronicle.classes[cls].returns;profile.Settle(run.id,50,999,true);
             if(profile.chronicle.classes[cls].returns!=count)throw new InvalidDataException("Duplicated Chronicle settlement.");
         }
-        profile.GenerateOffers(5);profile.Save(Runtime.FamilyPath);
+        profile.GenerateOffers(5);profile.CopyStorage(Runtime.Profile);profile.Save(Runtime.FamilyPath);
         AccessTools.Property(typeof(Runtime),nameof(Runtime.Profile)).SetValue(null,FamilyProfile.Load(Runtime.FamilyPath));
         if(epochs!=System.Text.Json.JsonSerializer.Serialize(SaveManager.Instance.Progress.Epochs))throw new InvalidDataException("Chronicle altered native Timeline.");
         return State();
