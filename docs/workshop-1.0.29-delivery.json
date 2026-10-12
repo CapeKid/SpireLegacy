@@ -1,0 +1,73 @@
+{
+  "item": 3816525393,
+  "app": 2868840,
+  "version": "1.0.29",
+  "sourceSha": "ad8561f2ee8f4457d77ddf5bb40b9e7d365a68bf",
+  "visibility": "private",
+  "regularAllowed": true,
+  "betaAllowed": true,
+  "branchRangeCount": 0,
+  "stagedFiles": 530,
+  "allFilesMatch": true,
+  "dllSha256": "7f7638eb74912072e8bc1574fa328b36683834c774d1c052e57246199aebf299",
+  "coreAssertions": 124044,
+  "preflight": {
+    "sheets": 32,
+    "rows": 2062,
+    "cells": 26477
+  },
+  "harnessChecks": 20,
+  "nativeReleaseEvidence": [
+    {
+      "branch": "regular",
+      "game": "v0.107.1",
+      "files": [
+        "trait-audit-workshop129-regular-smoke.json",
+        "harness-workshop129-owner-regular-settled-coop.json"
+      ],
+      "correlatedReplies": [
+        107,
+        71
+      ],
+      "traitProbes": 9,
+      "geneticModelChecks": 486,
+      "coopOwnerIsolation": true
+    },
+    {
+      "branch": "beta",
+      "game": "v0.111.0",
+      "files": [
+        "trait-audit-workshop129-beta-smoke.json",
+        "harness-workshop129-owner-beta-settled-coop.json"
+      ],
+      "correlatedReplies": [
+        107,
+        66
+      ],
+      "traitProbes": 9,
+      "geneticModelChecks": 486,
+      "coopOwnerIsolation": true
+    }
+  ],
+  "packages": [
+    {
+      "kind": "standalone",
+      "file": "SpireLegacy-StS2-1.0.29.zip",
+      "sha256": "bdab28f22d4177c2bc875420e255dd4229a9afaf70bfd41421fa3a1102fdc479",
+      "files": 530
+    },
+    {
+      "kind": "workshop",
+      "file": "SpireLegacy-StS2-1.0.29-workshop.zip",
+      "sha256": "dcb5e4e62e9e54ba7b8e16163e9fd94c943e402cea0e1ed1107719be80422a26",
+      "files": 534
+    },
+    {
+      "kind": "melty",
+      "file": "SpireLegacy-StS2-1.0.29-melty.zip",
+      "sha256": "7e84e2f2dd640ad3bb9e6202a958894ad9af6196688ea9942e53c3451dd830a6",
+      "files": 534
+    }
+  ],
+  "verifiedUtc": "2026-10-12T22:47:25.699132+00:00"
+}
