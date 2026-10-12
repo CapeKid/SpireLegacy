@@ -109,7 +109,7 @@ public static class CoopAdversarialOracle
             var seed=MegaCrit.Sts2.Core.Helpers.SeedHelper.CanonicalizeSeed("CAUD"+i);var rng=new MegaCrit.Sts2.Core.Random.Rng((uint)MegaCrit.Sts2.Core.Helpers.StringHelper.GetDeterministicHashCode(seed),"act_selection");
             MegaCrit.Sts2.Core.Models.ActModel.GetRandomList(rng,unlock,true);
             var resolutions=CoopBloodlines.Players(lobby).Where(p=>CoopBloodlines.Character(p) is MegaCrit.Sts2.Core.Models.Characters.RandomCharacter).Select(p=>rng.NextItem(ModelDb.AllCharacters)).ToArray();
-            if(resolutions.Length>0&&resolutions.All(p=>p is HeirCharacter)){lobby.SetSeed(seed);return new{seed,resolvedHeirs=resolutions.Length};}
+            if(resolutions.Length>0&&resolutions.All(p=>p is HeirCharacter)){MegaCrit.Sts2.Core.Nodes.NGame.Instance!.DebugSeedOverride=seed;return new{seed,resolvedHeirs=resolutions.Length};}
         }
         throw new InvalidDataException("No native random-Heir seed found.");
     }
