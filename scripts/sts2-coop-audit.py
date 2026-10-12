@@ -27,6 +27,7 @@ def synced(count,phase=None):
         states=[send(i,'coop-state') for i in range(count)]
         players=states[0]['players']
         if not players or len(players)!=count:return False
+        if any(s['actionRunning'] for s in states):return False
         if phase and any(p['phase']!=phase for s in states for p in s['players']):return False
         return states if all(s['players']==players for s in states) else False
     return wait(poll)

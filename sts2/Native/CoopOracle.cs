@@ -82,6 +82,11 @@ public static class CoopOracle
             if(Time.GetTicksMsec()>deadline)throw new InvalidDataException("Native co-op card remains on the table: "+card.Id);
             await tree.ToSignal(tree,SceneTree.SignalName.ProcessFrame);
         }
+        deadline=Time.GetTicksMsec()+15000;
+        while(RunManager.Instance.ActionExecutor.IsRunning){
+            if(Time.GetTicksMsec()>deadline)throw new TimeoutException("Card action did not finish: "+card.Id);
+            await tree.ToSignal(tree,SceneTree.SignalName.ProcessFrame);
+        }
         return new{played=true,card=card.Id.ToString(),upgraded=card.IsUpgraded,cost,energyBefore=energy,energyAfter=player.PlayerCombatState.Energy,pile=card.Pile?.Type.ToString(),tableNodePresent=false};
     }
     public static object RoundTrip()
@@ -154,6 +159,7 @@ public static class CoopOracle
         var run=AccessTools.Property(typeof(RunManager),"State").GetValue(RunManager.Instance) as RunState;
         return new{local=run==null?CoopBloodlines.Lobby?.NetService.NetId:RunManager.Instance.NetService.NetId,
             paused=((SceneTree)Engine.GetMainLoop()).Paused,pending=CoopBloodlines.Pending.Keys.ToArray(),
+            actionRunning=run!=null&&RunManager.Instance.ActionExecutor.IsRunning,
             session=CoopBloodlines.Selections.Session,protocol=CoopBloodlines.Protocol,
             family=Runtime.Profile.family,familyId=Runtime.Profile.familyId,crowns=Runtime.Profile.crowns,active=Runtime.Profile.active?.id,
             lobby=run==null&&CoopBloodlines.Lobby is {} lobby?CoopBloodlines.Players(lobby).Select(p=>new{id=CoopBloodlines.Id(p),character=CoopBloodlines.Character(p).Id.ToString(),ready=CoopBloodlines.IsReady(p),snapshot=CoopBloodlines.Pending.GetValueOrDefault(CoopBloodlines.Id(p))?.heir.classId}).ToArray():null,
