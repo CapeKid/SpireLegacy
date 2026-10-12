@@ -23,6 +23,7 @@ public abstract class LegacyCard : CustomCardModel
     public string Key => GetType().Name[2..];
     [SavedProperty] public string TraitSnapshot { get; set; } = "";
     [SavedProperty] public int DiscardRewardTurn { get; set; } = -1;
+    [SavedProperty] public int RetainedGrowth { get; set; }
     public CardDesign DesignCard => new(Key, IsUpgraded, IsMutable && TraitSnapshot.Length > 0 ? JsonSerializer.Deserialize<string[]>(TraitSnapshot)! : IsMutable && Owner!=null ? PlayerBloodlines.Heir(Owner).traits : PlayerBloodlines.Creating.Value?.heir.traits ?? Runtime.Heir.traits);
     protected Design.Row Row => Design.Get("cards", Key);
     protected LegacyCard(string key) : base(Design.Get("cards", key).Number("cost"), Enum.Parse<CardType>(Design.Get("cards", key).Text("type"), true), Enum.Parse<CardRarity>(Design.Get("cards", key).Text("rarity"), true), GetTarget(key), autoAdd: false) { }
@@ -74,8 +75,8 @@ public abstract class LegacyCard : CustomCardModel
     protected override void AfterDowngraded() { base.AfterDowngraded(); RefreshInheritedStats(); }
     private void RefreshInheritedStats()
     {
-        DynamicVars.Damage.BaseValue = DesignCard.Damage;
-        DynamicVars.Block.BaseValue = DesignCard.Block;
+        DynamicVars.Damage.BaseValue = DesignCard.Damage + (Row.Text("special")=="retain_damage" ? RetainedGrowth : 0);
+        DynamicVars.Block.BaseValue = DesignCard.Block + (Row.Text("special")=="retain_block" ? RetainedGrowth : 0);
         if (Row.Number("nextBlock") > 0) NextBlock.BaseValue = DesignCard.Amount("nextBlock");
         if (HasSpecialBlock) SpecialBlock.BaseValue = DesignCard.SpecialAmount;
     }
@@ -139,12 +140,22 @@ public abstract class LegacyCard : CustomCardModel
             await CreatureCmd.GainBlock(Owner.Creature, block, ValueProp.Unpowered, null);
         }
     }
-    public override Task BeforeCombatStart() { DiscardRewardTurn = -1; return Task.CompletedTask; }
+    public override Task BeforeCombatStart() {
+        DiscardRewardTurn = -1;
+        if(Row.Text("special")=="retain_damage")DynamicVars.Damage.BaseValue-=RetainedGrowth;
+        if(Row.Text("special")=="retain_block")DynamicVars.Block.BaseValue-=RetainedGrowth;
+        RetainedGrowth=0;
+        return Task.CompletedTask;
+    }
     public override Task AfterFlush(PlayerChoiceContext context, Player player, IReadOnlyCollection<CardModel> flushed, IReadOnlyCollection<CardModel> retained)
     {
         if (player == Owner && retained.Contains(this)) {
-            if (Row.Text("special") == "retain_damage") DynamicVars.Damage.BaseValue += DesignCard.SpecialAmount;
-            if (Row.Text("special") == "retain_block") DynamicVars.Block.BaseValue += DesignCard.SpecialAmount;
+            if(Row.Text("special") is "retain_damage" or "retain_block") {
+                var next=(int)Math.Min(int.MaxValue,(long)RetainedGrowth+DesignCard.SpecialAmount);
+                var added=next-RetainedGrowth;RetainedGrowth=next;
+                if (Row.Text("special") == "retain_damage") DynamicVars.Damage.BaseValue += added;
+                if (Row.Text("special") == "retain_block") DynamicVars.Block.BaseValue += added;
+            }
         }
         return Task.CompletedTask;
     }

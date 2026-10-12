@@ -29,7 +29,7 @@
   },
   {
     "id": "retrieve",
-    "summary": "Return {n} card(s) from your discard pile to your hand."
+    "summary": "Return {n} card(s) from your discard pile to your hand. Cannot return other recovery cards."
   },
   {
     "id": "cleanse",
@@ -37,7 +37,7 @@
   },
   {
     "id": "exhume",
-    "summary": "Return a card from your Exhaust pile to your hand."
+    "summary": "Return a card from your Exhaust pile to your hand. Cannot return cards with this effect."
   },
   {
     "id": "charge_gain",

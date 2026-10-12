@@ -10,6 +10,9 @@ public sealed class CardDesign(string id, bool upgraded = false, IEnumerable<str
     public int MercyPoison => Mercy ? Gene("poison") + (upgraded ? 1 : 0) : 0;
     public int Cost => Row.Number("cost") - (upgraded && Row.Flag("upgradeCost") ? 1 : 0);
     public int SpecialAmount => Row.Number("specialAmount") + (upgraded ? Row.Number("upgradeSpecial") : 0);
+    // Recovery cards cannot retrieve one another after being discounted to zero.
+    public bool RecoverableFromExhaust => Row.Text("special") != "exhume";
+    public bool RecoverableFromDiscard => Row.Text("special") is not ("exhume" or "retrieve");
     private IEnumerable<Design.Row> Genes => Row.Text("rarity") == "BASIC" ? Design.Rows("starter_genes").Where(r => inherited?.Contains(r.Text("id")) == true) : [];
     public bool Mercy => Row.Text("type") == "ATTACK" && Genes.Any(r => r.Flag("mercy"));
     public int Gene(string key) => Genes.Where(r => Row.Text("type") == "ATTACK" ? key is "damage" or "heal" or "poison" || key == "block" && r.Flag("mercy") : key is "block" or "draw").Sum(r => r.Number(key));

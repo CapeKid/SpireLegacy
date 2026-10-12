@@ -93,7 +93,7 @@
     "classId": "mage",
     "availability": "all",
     "build": "draw and Arcane Charge",
-    "reference": "Skim: more expensive and one-use; also grants one bounded Arcane Charge."
+    "reference": "Skim: one-Energy, one-use draw; also grants one bounded Arcane Charge."
   },
   {
     "id": "mage_hourglass",
@@ -125,7 +125,7 @@
     "classId": "mage",
     "availability": "all",
     "build": "exhaust recovery and draw",
-    "reference": "Skim: smaller draw for 2 Energy plus one exhausted card recovered, once; cannot recover itself."
+    "reference": "One-Energy rare draw and Exhaust recovery, once; cannot recover cards with Exhaust-recovery effects."
   },
   {
     "id": "ranger_heartseeker",
@@ -148,8 +148,8 @@
     "cardId": "ranger_second_quiver",
     "classId": "ranger",
     "availability": "all",
-    "build": "HP for draw and Energy",
-    "reference": "Adrenaline/Offering: one-use resource burst with four HP loss and smaller draw."
+    "build": "draw and Energy",
+    "reference": "Adrenaline: one-use draw and Energy burst without an HP cost."
   },
   {
     "id": "ranger_empty_quiver",

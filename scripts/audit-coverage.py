@@ -15,7 +15,7 @@ def owner(path):
     if path.startswith('scripts/'):
         if name=='sts2-package.py':return 62
         if name.startswith('author-') or name in {'sts2-generate.py','sts2-pool-expansion.py','preflight.py','card_catalog.py','create_sheets.py','curate_shared_pools.py','expand_card_pools.py','expand_traits.py','expand_build_choices.py','export_expansion_art.py','prepare_card_art.py','prepare_ui_art.py','make_ui_assets.py','review_card_art.py','review_added_art.py'}:return 61
-        if name in {'balance_policy.py','rebalance_cards.py'}:return 60
+        if name in {'balance_policy.py','rebalance_cards.py','check-balance-regeneration.py'}:return 60
         if name.startswith('sts2-'):return 47
         return 63
     groups={48:{'FamilyProfile.cs','FamilySnapshot.cs'},49:{'FamilyChronicle.cs','RunHooks.cs'},50:{'CoopBloodlines.cs','PlayerBloodlines.cs'},51:{'Inheritance.cs','HeirInheritance.cs'},52:{'LegacyCard.cs','CardEffects.cs'},53:{'LegacyPower.cs','HeirCharacter.cs'},54:{'CardRegistry.cs','NativePoolParity.cs'},55:{'HeirDropRelics.cs','HeirPotions.cs','BloodlineRelic.cs'},56:{'AncientConversation.cs','ArchitectConversation.cs','AncientCompatibility.cs','HeirArchitectDialogue.cs','HeirAncientConversations.cs'},57:{'ManorUi.cs','ManorInput.cs'},58:{'HeirVisuals.cs','HeirEndingVisuals.cs','HeirSprite.cs','HeirPresentation.cs','TraitAppearance.cs'},59:{'Runtime.cs','BranchCommands.cs','SpireLegacy.csproj'},61:{'Design.cs','CardDesign.cs'},62:{'SpireLegacy.json','workshop.json','melty.json'}}

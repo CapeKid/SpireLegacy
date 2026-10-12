@@ -5,6 +5,7 @@ Run after historical authoring scripts, before sts2-generate.py.
 """
 import json
 from pathlib import Path
+from balance_policy import CARD_OVERRIDES
 root=Path(__file__).resolve().parents[1]
 def read(name):return json.loads((root/'sheets'/f'{name}.json').read_text(encoding='utf-8-sig'))
 def write(name,rows):(root/'sheets'/f'{name}.json').write_text(json.dumps(rows,indent=2)+'\n',encoding='utf-8')
@@ -21,14 +22,14 @@ plan=[
  ('knight_forge_memory','knight','exhaust draw engine','Dark Embrace: paid one-card-per-Exhaust engine with four initial Block.',dict(type='POWER',cost=2,block=4,power='dark_embrace',magic=1,upgradeCost=True)),
  ('knight_king_s_ransom','knight','HP for Energy','Offering: trades HP for Energy once; draws no cards.',dict(cost=0,energy=2,hpLoss=4,exhaust=True,upgradeMagic=1)),
  ('mage_celestial_spear','mage','heavy attack','Bludgeon: smaller repeatable damage budget, benefiting from bounded Arcane Charge.',dict(type='ATTACK',cost=3,damage=24,upgradeDamage=6)),
- ('mage_grand_thesis','mage','draw and Arcane Charge','Skim: more expensive and one-use; also grants one bounded Arcane Charge.',dict(cost=2,draw=3,special='charge_gain',specialAmount=1,exhaust=True,upgradeMagic=1,upgradeSpecial=1)),
+ ('mage_grand_thesis','mage','draw and Arcane Charge','Skim: one-Energy, one-use draw; also grants one bounded Arcane Charge.',dict(cost=2,draw=3,special='charge_gain',specialAmount=1,exhaust=True,upgradeMagic=1,upgradeSpecial=1)),
  ('mage_hourglass','mage','temporary discounts','Bullet Time: discounts only two random eligible cards by one, once, rather than freeing the hand.',dict(cost=1,special='discount_hand',specialAmount=2,exhaust=True,upgradeSpecial=1)),
  ('mage_infinite_script','mage','HP for sustained draw','Paid setup, one HP per turn for one extra card, plus one next-turn card; neither free nor HP-neutral.',dict(type='POWER',cost=2,power='brutality',magic=1,nextDraw=1,upgradeCost=True)),
  ('mage_archmage_thesis','mage','three-Skill defense engine','Afterimage: triggers only every third Skill; paid setup includes modest initial Block.',dict(type='POWER',cost=2,block=6,power='skill_block',magic=4,upgradeBlock=3)),
- ('mage_returned_prophecy','mage','exhaust recovery and draw','Skim: smaller draw for 2 Energy plus one exhausted card recovered, once; cannot recover itself.',dict(cost=2,draw=1,special='exhume',specialAmount=1,exhaust=True,upgradeMagic=1)),
+ ('mage_returned_prophecy','mage','exhaust recovery and draw','One-Energy rare draw and Exhaust recovery, once; cannot recover cards with Exhaust-recovery effects.',dict(cost=2,draw=1,special='exhume',specialAmount=1,exhaust=True,upgradeMagic=1)),
  ('ranger_heartseeker','ranger','retained multi-hit','Twin Strike: slower retained three-hit attack; per-hit upgrade stays at one.',dict(type='ATTACK',cost=2,damage=5,hits=3,retain=True,upgradeDamage=1)),
  ('ranger_serpent_oil','ranger','poison seed and multiplier','Existing Double Dose: paid small Poison seed followed by doubling, once; upgrade improves only the seed.',dict(cost=2,poison=2,special='double_poison',exhaust=True,upgradeMagic=1)),
- ('ranger_second_quiver','ranger','HP for draw and Energy','Adrenaline/Offering: one-use resource burst with four HP loss and smaller draw.',dict(cost=0,draw=1,energy=1,hpLoss=4,exhaust=True,upgradeMagic=1)),
+ ('ranger_second_quiver','ranger','draw and Energy','Adrenaline: one-use draw and Energy burst without an HP cost.',dict(cost=0,draw=1,energy=1,hpLoss=4,exhaust=True,upgradeMagic=1)),
  ('ranger_empty_quiver','ranger','discard and redraw','Calculated Gamble: costs one Energy, offers modest Block; redraw excludes the played card.',dict(cost=1,block=4,special='refill_hand',upgradeBlock=3)),
  ('ranger_ghost_luggage','ranger','discard defense engine','Afterimage/Light Pack: paid two-Block discard engine with small initial defense.',dict(type='POWER',cost=2,block=5,power='discard_block',magic=2,upgradeMagic=1)),
  ('ranger_hunt_without_end','ranger','three-Attack Vigor engine','Tracking Rhythm: slower setup with initial Vigor; subsequent Vigor only every third Attack.',dict(type='POWER',cost=2,vigor=3,power='attack_vigor',magic=3,upgradeMagic=1)),
@@ -59,5 +60,7 @@ for cardid,scope,build,reference,stats in plan:
             if not any(r['id']==id for r in members):members.append(dict(id=id,classId=cls,cardId=cardid,scope='shared' if scope=='shared' else 'unique'))
 targets=read('pool_targets')
 for row in targets:row.update(reference='StS2 regular v0.107.1: 82 rewards; public-beta v0.111.0: 85 rewards with branch additions',basic=3,common=20,uncommon=36,rare=26,total=85)
+for row in cards:
+    row.update(CARD_OVERRIDES.get(row['id'], {}))
 write('cards',cards);write('card_pools',members);write('pool_targets',targets);write('branch_cards',branch);write('pool_expansion',expansion)
 print('Activated 22 original rare cards (4 shared + 6/class) and 9 beta additions (2 uncommon + 1 rare/class); saved model IDs and illustration paths preserved.')
