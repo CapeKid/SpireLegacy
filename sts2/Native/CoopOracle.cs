@@ -109,7 +109,7 @@ public static class CoopOracle
         var player=run.Players.Single(p=>p.NetId==owner);
         var card=player.PlayerCombatState!.Hand.Cards.Where(c=>c.CanPlay()).OrderBy(c=>c.Type==MegaCrit.Sts2.Core.Entities.Cards.CardType.Attack?1:0).First();
         MegaCrit.Sts2.Core.Commands.CardCmd.Upgrade(card);
-        return new{owner,card=card.Id.ToString(),index=player.PlayerCombatState.Hand.Cards.IndexOf(card),upgraded=card.IsUpgraded};
+        return new{owner,card=card.Id.ToString(),index=player.PlayerCombatState.Hand.Cards.ToList().IndexOf(card),upgraded=card.IsUpgraded};
     }
     public static async Task<object> Lobby(JsonElement request,bool host)
     {
