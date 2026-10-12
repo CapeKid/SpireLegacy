@@ -1,5 +1,5 @@
 {
-  "sourceSha": "7740305ea0efafb3156a63768f9a978c5e2a7a2f",
+  "sourceSha": "5d3ab10b1220b8ea6c56a39ea33956b64417341f",
   "files": [
     {
       "path": ".gitattributes",
@@ -1510,6 +1510,10 @@
       "primaryIssue": 62
     },
     {
+      "path": "docs/card-under-tuning-fixes.md",
+      "primaryIssue": 62
+    },
+    {
       "path": "docs/character-sprites.md",
       "primaryIssue": 62
     },
@@ -2123,6 +2127,10 @@
     },
     {
       "path": "scripts/sts2-trait-check.py",
+      "primaryIssue": 47
+    },
+    {
+      "path": "scripts/sts2-undertuning-check.py",
       "primaryIssue": 47
     },
     {
@@ -6163,10 +6171,10 @@
     }
   ],
   "counts": {
-    "62": 53,
+    "62": 54,
     "63": 415,
     "58": 923,
-    "47": 52,
+    "47": 53,
     "48": 7,
     "59": 10,
     "61": 56,

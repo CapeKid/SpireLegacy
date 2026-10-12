@@ -181,6 +181,28 @@ foreach (var upgraded in new[] { false, true })
     Check(mantle.Cost == (upgraded ? 1 : 2) && mantle.Magic == 1, "Astral Mantle upgrades setup without doubling permanent Block");
 }
 Check(Design.Rows("cards").Where(c => c.Number("hits") > 1).All(c => c.Number("upgradeDamage") <= 1), "Multi-hit upgrade budget");
+// Recovery text must correspond to a non-empty native selection at both levels.
+foreach (var row in Design.Rows("card_pools").Concat(Design.Rows("branch_cards")).Select(r => r.Text("cardId")).Distinct().Select(id => Design.Get("cards", id)).Where(r => r.Text("special") is "exhume" or "retrieve"))
+foreach (var upgraded in new[] { false, true })
+    Check(new CardDesign(row.Text("id"), upgraded).SpecialAmount > 0, row.Text("id") + " recovery selects at least one card");
+foreach (var upgraded in new[] { false, true })
+{
+    var quiver = new CardDesign("ranger_second_quiver", upgraded);
+    var meditate = new CardDesign("meditate", upgraded);
+    Check(quiver.Cost == meditate.Cost && quiver.Amount("draw") >= meditate.Amount("draw") && quiver.Amount("energy") >= meditate.Amount("energy") && quiver.Amount("hpLoss") == 0, "Second Quiver avoids a strictly worse shared resource card");
+    var reading = new CardDesign("mage_ash_reading", upgraded);
+    Check(reading.Cost == 0 && reading.Amount("hpLoss") == 0 && reading.Row.Flag("exhaust") && reading.SpecialAmount == 1, "Free positive-draw Ash Reading is single use and exhausts fuel");
+    var meditation = new CardDesign("knight_battle_meditation", upgraded);
+    Check(meditation.Cost > 0 && meditation.Amount("discard") == 1, "Paid Battle Meditation keeps a fixed discard price");
+    var prophecy = new CardDesign("mage_returned_prophecy", upgraded);
+    var vault = new CardDesign("knight_arms_vault", upgraded);
+    Check(prophecy.Cost == vault.Cost && prophecy.SpecialAmount == vault.SpecialAmount && prophecy.Amount("draw") > vault.Amount("draw"), "Rare recovery offers extra draw over uncommon recovery");
+    var thesis = new CardDesign("mage_grand_thesis", upgraded);
+    Check(thesis.Cost == 1 && thesis.Row.Flag("exhaust") && thesis.SpecialAmount == 1, "Grand Thesis has affordable draw without a wasted charge upgrade");
+}
+var baseMeditation = new CardDesign("knight_battle_meditation");
+var upgradedMeditation = new CardDesign("knight_battle_meditation", true);
+Check(upgradedMeditation.Amount("draw") - upgradedMeditation.Amount("discard") > baseMeditation.Amount("draw") - baseMeditation.Amount("discard"), "Battle Meditation upgrade improves net hand size");
 foreach (var traitId in new[] { "nocolor", "oldyellowtint", "colortrails", "fmffan" }) Check(Design.Get("traits", traitId).Number("goldBonus") == 0, "No free crown bonus: " + traitId);
 var oldManor = new FamilyProfile { crowns = 5, manor = new() { ["smith"] = 3, ["armory"] = 3, ["garden"] = 4 } };
 Check(oldManor.RefundRetiredLevels() && oldManor.crowns == 965, "Refund retired levels at their original purchase prices");
