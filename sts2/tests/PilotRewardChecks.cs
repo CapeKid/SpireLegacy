@@ -24,5 +24,17 @@ public static class PilotRewardChecks
         var tie=new[]{Attack("z"),Attack("a")};
         check(tie[PilotRewards.Pick(tie,balanced)!.Value].Id=="a","Reward tie breaks deterministically by stable ID");
         check(PilotRewards.Pick([],balanced)==null,"Empty reward offer is safe");
+        var counter=Attack("counter") with{Special="guard_bonus",SpecialAmount=10};
+        check(PilotRewards.Pick([Attack("hit",12),counter],balanced)==1,"Block support makes guarded reward competitive");
+        check(PilotRewards.Pick([Attack("hit",12),counter],attacks)==0,"No Block support does not promise guarded bonus");
+        var ambush=counter with{Id="ambush",Special="marked_bonus"};
+        check(PilotRewards.Pick([Attack("hit",12),ambush],[poison,poison])==1,"Poison supports marked reward");
+        check(PilotRewards.Pick([Attack("hit",12),ambush],[Attack("mark") with{Vulnerable=2}])==1,"Vulnerable supports marked reward");
+        check(PilotRewards.Pick([Attack("hit",12),ambush],[Attack("weak") with{Weak=2}])==0,"Weak alone does not activate marked bonus");
+        check(PilotRewards.Pick([Attack("hit",10) with{Cost=2},Attack("axe",9) with{Cost=2,Special="execute",SpecialAmount=2}],balanced)==1,"Partial execution value can distinguish otherwise similar rewards");
+        var retained=Attack("retained",3) with{Special="retain_damage",SpecialAmount=6};
+        check(PilotRewards.Pick([Attack("hit",5),retained],balanced)==1,"Retention growth has discounted reward value");
+        check(PilotRewards.Score(counter,[])==PilotRewards.Score(counter with{Special="none"},[]),"Empty deck provides no guarded support");
+        check(PilotRewards.Score(ambush with{Special="unknown"},balanced)==PilotRewards.Score(ambush with{Special="none"},balanced),"Unmodeled conditions are not guessed");
     }
 }

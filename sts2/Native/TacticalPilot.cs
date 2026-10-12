@@ -66,7 +66,8 @@ public static class TacticalPilot
                         score+=engine*3+(fuel?4:0);
                         if(engine>0&&fuel)reason="exhaust-engine-fuel";
                     }
-                    // Single-hit estimates only. Multi-hit/execute/reflect/phase effects need a richer solver.
+                    // Known single-hit paths only; the native preview already includes conditional bonuses.
+                    // Multi-hit, reflect and phase effects need a richer solver.
                     if(target!=null&&PilotCardInfo.SimpleAttack(card)&&damage>=target.CurrentHp+target.Block){score+=100;reason="estimated-lethal";}
                 }
                 score-=PilotHealth.Penalty(player.Creature.CurrentHp,hpLoss);
@@ -92,7 +93,41 @@ public static class TacticalPilot
             foreach(var card in hand.Cards.ToArray())await CardPileCmd.Add(card,PileType.Draw,skipVisuals:true);
             var enemies=player.Creature.CombatState!.HittableEnemies.ToArray();
             foreach(var enemy in enemies){enemy.SetMaxHpInternal(1000);enemy.SetCurrentHpInternal(1000);}
-            async Task<LegacyCard> Add(string key){var card=(LegacyCard)player.Creature.CombatState.CreateCard(NativeCards.Get(key),player);await CardPileCmd.Add(card,PileType.Hand,skipVisuals:true);return card;}
+            async Task<LegacyCard> Add(string key,bool upgraded=false){var card=(LegacyCard)player.Creature.CombatState.CreateCard(NativeCards.Get(key),player);if(upgraded)CardCmd.Upgrade(card);await CardPileCmd.Add(card,PileType.Hand,skipVisuals:true);return card;}
+            var upgraded=kind.EndsWith("-upgraded",StringComparison.Ordinal);
+            var scenario=upgraded?kind[..^9]:kind;
+            if(scenario is "execute" or "guarded" or "marked" or "retained"){
+                var key=scenario switch{"execute"=>"knight_executioner_axe","guarded"=>"knight_counter_lunge","marked"=>"ranger_ambush",_=>"knight_patient_riposte"};
+                var conditional=await Add(key,upgraded);await Add("knight_strike");
+                var target=enemies.Last();var design=conditional.DesignCard;
+                var expected=design.Damage;
+                var beforeReason="";
+                if(scenario=="execute"){
+                    expected*=design.SpecialAmount;
+                    // Distinguish the exact half-health boundary from one HP above it.
+                    enemies[0].SetMaxHpInternal(expected*2);enemies[0].SetCurrentHpInternal(expected+1);
+                    target.SetMaxHpInternal(expected*2);target.SetCurrentHpInternal(expected);
+                }else if(scenario is "guarded" or "marked"){
+                    expected+=design.SpecialAmount;target.SetCurrentHpInternal(expected);
+                    beforeReason=Choose(player,0)!.Reason;
+                    if(beforeReason=="estimated-lethal")throw new InvalidDataException("Inactive condition received lethal priority");
+                    if(scenario=="guarded")await CreatureCmd.GainBlock(player.Creature,2,MegaCrit.Sts2.Core.ValueProps.ValueProp.Unpowered,null);
+                    else await PowerCmd.Apply<PoisonPower>(new BlockingPlayerChoiceContext(),target,1,player.Creature,null);
+                }else{
+                    // Real turn flushing applies intrinsic Retain growth; no direct growth injection.
+                    await CreatureCmd.GainBlock(player.Creature,999,MegaCrit.Sts2.Core.ValueProps.ValueProp.Unpowered,null);
+                    await BalanceOracle.End(player,false);
+                    foreach(var other in hand.Cards.Where(c=>c!=conditional).ToArray())await CardPileCmd.Add(other,PileType.Draw,skipVisuals:true);
+                    if(!hand.Cards.Contains(conditional)||conditional.RetainedGrowth!=design.SpecialAmount)throw new InvalidDataException("Native retention growth missing");
+                    expected+=design.SpecialAmount;target.SetCurrentHpInternal(expected);
+                }
+                var decision=Choose(player,0)!;
+                if(decision.Card!=conditional||decision.Target!=target||decision.Reason!="estimated-lethal")throw new InvalidDataException("Conditional lethal priority missing");
+                var description=PilotCardInfo.Describe(conditional);
+                if(description.Special!=design.Row.Text("special")||description.SpecialAmount!=design.SpecialAmount)throw new InvalidDataException("Reward adapter lost conditional metadata");
+                var hp=target.CurrentHp;await BalanceOracle.Play(conditional,target);
+                return new{kind,key,upgraded,expected,damage=hp-target.CurrentHp,targetDead=!target.IsAlive,beforeReason,decision.Reason,growth=conditional.RetainedGrowth,rewardSpecial=description.Special,rewardAmount=description.SpecialAmount};
+            }
             if(kind=="vulnerable"){
                 var challenge=await Add("challenge");var strike=await Add("knight_strike");await Add("knight_guard");
                 var energy=player.PlayerCombatState!.Energy;var first=Choose(player,0)!;
