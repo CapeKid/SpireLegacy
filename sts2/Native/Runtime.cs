@@ -59,6 +59,7 @@ public static class Runtime
         NativeStartup.Install(NativeStartup.Owner,NativeStartup.PatchClasses,System.Environment.GetEnvironmentVariable("HEIR_TEST_MODE")=="1"?System.Environment.GetEnvironmentVariable("HEIR_TEST_FAIL_PATCH"):null);
         try {
             Profile = FamilyProfile.Load(FamilyPath);
+            if(Profile.RecoveryNotice is {} recovery){ManorUi.Notice=recovery;GD.Print(recovery);}
             Inheritance.CurrentHeir = () => Heir;
             if (Profile.offers.Count == 0) { Profile.GenerateOffers(System.Environment.TickCount); Profile.Save(FamilyPath); }
             NativeTestBridge.Initialize();

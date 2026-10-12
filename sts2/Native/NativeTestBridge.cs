@@ -56,6 +56,9 @@ public static class NativeTestBridge
             object result;
             switch (commandName)
             {
+                case "persistence-state":result=PersistenceOracle.Snapshot(RunState());break;
+                case "persistence-menu":result=PersistenceOracle.ChangeMenu(RunState());break;
+                case "persistence-adoption":result=PersistenceOracle.Adoption(RunState());break;
                 case "compat-reinitialize":result=CompatibilityOracle.Reinitialize();break;
                 case "compat-rollback":result=CompatibilityOracle.Rollback();break;
                 case "compat-scopes":result=CompatibilityOracle.Scopes(RunState().Players.Single());break;

@@ -24,6 +24,7 @@ public static class PlayerBloodlines
     public static FamilyProfile.FamilyRun? Saved(SerializablePlayer save)
     {
         var data=save.Relics.FirstOrDefault(r=>r.Id==ModelDb.Relic<BloodlineRelic>().Id)?.Props?.strings?.FirstOrDefault(p=>p.name==nameof(BloodlineRelic.FamilyRunSnapshot)).value;
+        if(string.IsNullOrEmpty(data)&&save.CharacterId==ModelDb.Character<HeirCharacter>().Id)throw new InvalidDataException("This Heir save has no frozen family snapshot. The native save is preserved; restore a compatible backup or use its original mod version.");
         return string.IsNullOrEmpty(data)?null:FamilySnapshot.Read(data);
     }
     public static bool Eligible(Player player,string relic)
@@ -112,12 +113,14 @@ public static class AdoptLocalBloodline
     {
         var player=PlayerBloodlines.LocalPlayer;
         if(player?.Character is not HeirCharacter||PlayerBloodlines.State(player) is not {} run)return;
-        if(run.coop&&(run.ownerNetId!=player.NetId||run.familyId!=Runtime.Profile.familyId)) {
+        if(((run.coop||run.ownerNetId!=0)&&run.ownerNetId!=player.NetId)||run.familyId!=Runtime.Profile.familyId) {
             ManorUi.Notice="This saved heir belongs to a family on another device. Its run effects are preserved; your local crown bank is unchanged.";return;
         }
         if(run.id==Runtime.Profile.settledId||Runtime.Profile.chronicle.settledRuns.Contains(run.id))throw new InvalidDataException("This family has already settled the saved climb.");
         if(Runtime.Profile.active is {} active&&active.id!=run.id)throw new InvalidDataException("A different local family climb is unfinished.");
-        Runtime.Profile.active=run;Runtime.Profile.selected=null;Runtime.Profile.Save(Runtime.FamilyPath);
+        var previousActive=Runtime.Profile.active;var previousSelected=Runtime.Profile.selected;
+        try{Runtime.Profile.active=run;Runtime.Profile.selected=null;Runtime.Profile.Save(Runtime.FamilyPath);}
+        catch{Runtime.Profile.active=previousActive;Runtime.Profile.selected=previousSelected;throw;}
     }
 }
 

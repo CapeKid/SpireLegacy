@@ -5,6 +5,12 @@ namespace SpireLegacy;
 /// <summary>Compatible family JSON; game run saves remain owned by the StS2 engine.</summary>
 public sealed class FamilyProfile
 {
+    public int schema=1;
+    private string? storagePath, storageRevision;
+    [System.Text.Json.Serialization.JsonIgnore] public string? RecoveryNotice {get; internal set;}
+    internal void Track(string path,string? revision){storagePath=path;storageRevision=revision;}
+    internal bool Expected(string path,string? revision)=>storagePath==path?storageRevision==revision:revision==null;
+    internal void CopyStorage(FamilyProfile other){storagePath=other.storagePath;storageRevision=other.storageRevision;}
     public string familyId = Guid.NewGuid().ToString();
     public string family = "Ashford";
     public int banner, generation, crowns, lastEarned;
@@ -70,7 +76,7 @@ public sealed class FamilyProfile
         long basis = (long)Math.Max(0, floors) * Design.Get("systems", "legacy").Number("amount") + Math.Max(0, gold) / Design.Get("systems", "gold_conversion").Number("amount") + (victory ? Design.Get("systems", "victory").Number("amount") : 0);
         var earned = (int)Math.Min(int.MaxValue, basis * percent * (100L + active.bonuses.GetValueOrDefault("gold")) / 10000);
         crowns = (int)Math.Min(int.MaxValue, (long)crowns + earned);
-        lastEarned = earned; generation++; settledId = runId;
+        lastEarned = earned; generation=(int)Math.Min(int.MaxValue,(long)generation+1); settledId = runId;
         FamilyChronicle.Record(this,active,floors,victory);active = null;
         GenerateOffers(unchecked(generation * 1009 + StableHash(runId)));
         return earned;
@@ -86,6 +92,7 @@ public sealed class FamilyProfile
     public FamilyProfile? PreviewPurchases(IEnumerable<string> ids)
     {
         var trial = JsonSerializer.Deserialize<FamilyProfile>(JsonSerializer.Serialize(this, JsonOptions), JsonOptions)!;
+        trial.CopyStorage(this);
         foreach (var id in ids) if (!trial.Purchase(id)) return null;
         return trial;
     }
@@ -94,25 +101,9 @@ public sealed class FamilyProfile
         var trial = PreviewPurchases(ids);
         if (ids.Count == 0 || trial is null) return false;
         FamilyChronicle.Reconcile(trial);
-        trial.Save(path); crowns = trial.crowns; manor = trial.manor; chronicle=trial.chronicle; return true;
+        trial.Save(path); crowns = trial.crowns; manor = trial.manor; chronicle=trial.chronicle; CopyStorage(trial); return true;
     }
-    public void Save(string path)
-    {
-        Directory.CreateDirectory(Path.GetDirectoryName(Path.GetFullPath(path))!);
-        var temp = path + ".tmp";
-        using (var stream = new FileStream(temp, FileMode.Create, FileAccess.Write, FileShare.None)) { JsonSerializer.Serialize(stream, this, JsonOptions); stream.Flush(true); }
-        if (File.Exists(path)) File.Replace(temp, path, path + ".bak"); else File.Move(temp, path);
-    }
-    private static FamilyProfile Read(string path)
-    {
-        var serialized=File.ReadAllText(path);
-        var value = JsonSerializer.Deserialize<FamilyProfile>(serialized, JsonOptions);
-        if (value is null || value.family is null || value.manor is null || value.offers is null || value.crowns < 0) throw new InvalidDataException("Invalid family save");
-        if(value.chronicle is {} history&&(history.classes is null||history.unlocked is null||history.read is null||history.settledRuns is null||history.motto is null||history.classes.Any(p=>p.Value is null||p.Value.returns<0||p.Value.maxFloor<0||p.Value.wins<0)))throw new InvalidDataException("Invalid family Chronicle; backup will be tried.");
-        using var document=JsonDocument.Parse(serialized);
-        if(!document.RootElement.TryGetProperty("familyId",out _))value.familyId="";
-        return value;
-    }
+    public void Save(string path)=>FamilyStore.Save(this,path);
     public bool RefundRetiredLevels()
     {
         var changed = false;
@@ -127,15 +118,5 @@ public sealed class FamilyProfile
         }
         return changed;
     }
-    public static FamilyProfile Load(string path)
-    {
-        if (!File.Exists(path)) {var fresh=new FamilyProfile();FamilyChronicle.Reconcile(fresh);return fresh;}
-        FamilyProfile profile;
-        try { profile = Read(path); }
-        catch (Exception first) { try { profile = Read(path + ".bak"); } catch (Exception second) { throw new InvalidDataException("Family save and backup are damaged; both preserved.", new AggregateException(first, second)); } }
-        var changed=profile.RefundRetiredLevels();changed|=FamilyChronicle.Reconcile(profile);
-        if(string.IsNullOrEmpty(profile.familyId)){profile.familyId=Guid.NewGuid().ToString();changed=true;}
-        if (changed) profile.Save(path);
-        return profile;
-    }
+    public static FamilyProfile Load(string path)=>FamilyStore.Load(path);
 }

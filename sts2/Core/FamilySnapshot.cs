@@ -18,7 +18,7 @@ public static class FamilySnapshot
         return run;
     }
     public static string Serialize(FamilyProfile.FamilyRun run)=>JsonSerializer.Serialize(run,FamilyProfile.JsonOptions);
-    public static FamilyProfile.FamilyRun Read(string json)=>JsonSerializer.Deserialize<FamilyProfile.FamilyRun>(json,FamilyProfile.JsonOptions)??throw new InvalidDataException("Missing family snapshot.");
+    public static FamilyProfile.FamilyRun Read(string json){using var doc=FamilyData.Document(json);FamilyData.Required(doc.RootElement,"id","familyId","heir","bonuses");FamilyData.HeirFields(doc.RootElement.GetProperty("heir"));var run=JsonSerializer.Deserialize<FamilyProfile.FamilyRun>(json,FamilyProfile.JsonOptions)??throw new InvalidDataException("Missing family snapshot.");FamilyData.Run(run);return run;}
     public static FamilyProfile.FamilyRun ReadNetwork(string json,ulong sender)
     {
         if(json.Length>8192)throw new InvalidDataException("Family snapshot exceeds network limit.");
@@ -36,5 +36,5 @@ public static class FamilySnapshot
         return run;
     }
     public static bool CanSettle(FamilyProfile profile,FamilyProfile.FamilyRun run,ulong localNetId)=>
-        (!run.coop||run.ownerNetId==localNetId)&&(!run.coop||run.familyId==profile.familyId)&&profile.active?.id==run.id&&profile.settledId!=run.id&&!profile.chronicle.settledRuns.Contains(run.id);
+        (run.ownerNetId==localNetId||!run.coop&&run.ownerNetId==0)&&run.familyId==profile.familyId&&profile.active?.id==run.id&&profile.settledId!=run.id&&!profile.chronicle.settledRuns.Contains(run.id);
 }
