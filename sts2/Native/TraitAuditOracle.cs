@@ -27,10 +27,10 @@ public static class TraitAuditOracle
         foreach(var cls in new[]{"knight","mage","ranger"})foreach(var upgrade in new[]{false,true}) {
             var card=(LegacyCard)NativeCards.Get(cls+"_strike").ToMutable();card.Owner=pacifist;
             if(upgrade)CardCmd.Upgrade(card);
-            var source=card.Type.ToString();card.Owner=ordinary;
+            var source=card.Type.ToString();card.Owner=null!;card.Owner=ordinary;
             var expected=new CardDesign(card.Key,upgrade,[]);
             var rebound=card.Type==MegaCrit.Sts2.Core.Entities.Cards.CardType.Attack&&card.DynamicVars.Damage.BaseValue==expected.Damage&&card.TraitSnapshot=="[]";
-            card.Owner=pacifist;
+            card.Owner=null!;card.Owner=pacifist;
             var returned=card.Type==MegaCrit.Sts2.Core.Entities.Cards.CardType.Skill&&card.DynamicVars.Damage.BaseValue==0;
             checks.Add(new{card.Key,upgrade,source,rebound,returned});
         }
@@ -71,7 +71,7 @@ public static class TraitAuditOracle
                     mutations++;
                 }
                 Check(card);
-                var duplicate=(LegacyCard)card.CreateDupe();duplicate.Owner=player;Check(duplicate);
+                var duplicate=(LegacyCard)card.CreateDupe();if(duplicate.Owner==null)duplicate.Owner=player;Check(duplicate);
                 var loaded=(LegacyCard)run.LoadCard(card.ToSerializable(),player);Check(loaded);run.RemoveCard(loaded);
             }
             CardCmd.Downgrade(card);Require(card.DynamicVars.Damage.BaseValue==new CardDesign(card.Key,false,heir.traits).Damage,"Downgraded gene mismatch.");run.RemoveCard(card);
