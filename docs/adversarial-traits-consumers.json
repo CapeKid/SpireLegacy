@@ -1,0 +1,1156 @@
+{
+  "issue": 51,
+  "baselineSourceSha": "093c75644d978e38c18ee1db2f1cfcd315968c0f",
+  "traits": [
+    {
+      "id": "nocolor",
+      "name": "Colorblind",
+      "effect": "gray",
+      "amount": 0,
+      "statFields": {},
+      "consumers": [
+        "sts2/Core/HeirInheritance.cs",
+        "sts2/Native/HeirCharacter.cs",
+        "sts2/Native/BloodlineRelic.cs",
+        "sts2/Native/TraitAppearance.cs",
+        "sts2/Native/HeirVisuals.cs"
+      ],
+      "summary": "Your heir is rendered in gray.",
+      "nativeEvidence": "trait-audit probe and live appearance; hook-specific assertions in sts2-trait-audit.py and existing interaction drivers",
+      "geneticEvidence": "nine Basics: native base/upgraded/duplicate/save/load/downgrade/removal, 54 checks per probe",
+      "pairEvidence": "TraitChecks: all 1820 enabled compatible pairs; native risky pairs separately recorded"
+    },
+    {
+      "id": "nohealthbar",
+      "name": "C.I.P",
+      "effect": "none",
+      "amount": 0,
+      "statFields": {
+        "hp": -8,
+        "goldBonus": 25
+      },
+      "consumers": [
+        "sts2/Core/HeirInheritance.cs",
+        "sts2/Native/HeirCharacter.cs",
+        "sts2/Native/BloodlineRelic.cs",
+        "sts2/Core/FamilyProfile.cs:Settle"
+      ],
+      "summary": "Reduced maximum HP; health remains visible for accessible card play.",
+      "nativeEvidence": "trait-audit probe and live appearance; hook-specific assertions in sts2-trait-audit.py and existing interaction drivers",
+      "geneticEvidence": "nine Basics: native base/upgraded/duplicate/save/load/downgrade/removal, 54 checks per probe",
+      "pairEvidence": "TraitChecks: all 1820 enabled compatible pairs; native risky pairs separately recorded"
+    },
+    {
+      "id": "easybreakables",
+      "name": "Clumsy",
+      "effect": "first_attack_block_loss",
+      "amount": 2,
+      "statFields": {},
+      "consumers": [
+        "sts2/Core/HeirInheritance.cs",
+        "sts2/Native/HeirCharacter.cs",
+        "sts2/Native/BloodlineRelic.cs"
+      ],
+      "summary": "After your first Attack each turn, lose 2 Block (minimum 0).",
+      "nativeEvidence": "trait-audit probe and live appearance; hook-specific assertions in sts2-trait-audit.py and existing interaction drivers",
+      "geneticEvidence": "nine Basics: native base/upgraded/duplicate/save/load/downgrade/removal, 54 checks per probe",
+      "pairEvidence": "TraitChecks: all 1820 enabled compatible pairs; native risky pairs separately recorded"
+    },
+    {
+      "id": "small",
+      "name": "Dwarfism",
+      "effect": "none",
+      "amount": 0,
+      "statFields": {
+        "hp": -10,
+        "dexterity": 2,
+        "goldBonus": 15,
+        "scale": 0.8
+      },
+      "consumers": [
+        "sts2/Core/HeirInheritance.cs",
+        "sts2/Native/HeirCharacter.cs",
+        "sts2/Native/BloodlineRelic.cs",
+        "sts2/Native/HeirVisuals.cs",
+        "sts2/Core/FamilyProfile.cs:Settle"
+      ],
+      "summary": "Less health, but more Dexterity.",
+      "nativeEvidence": "trait-audit probe and live appearance; hook-specific assertions in sts2-trait-audit.py and existing interaction drivers",
+      "geneticEvidence": "nine Basics: native base/upgraded/duplicate/save/load/downgrade/removal, 54 checks per probe",
+      "pairEvidence": "TraitChecks: all 1820 enabled compatible pairs; native risky pairs separately recorded"
+    },
+    {
+      "id": "playerknockedlow",
+      "name": "Endomorph",
+      "effect": "none",
+      "amount": 0,
+      "statFields": {
+        "dexterity": 1
+      },
+      "consumers": [
+        "sts2/Core/HeirInheritance.cs",
+        "sts2/Native/HeirCharacter.cs",
+        "sts2/Native/BloodlineRelic.cs"
+      ],
+      "summary": "Gain 1 Dexterity for steadier defense.",
+      "nativeEvidence": "trait-audit probe and live appearance; hook-specific assertions in sts2-trait-audit.py and existing interaction drivers",
+      "geneticEvidence": "nine Basics: native base/upgraded/duplicate/save/load/downgrade/removal, 54 checks per probe",
+      "pairEvidence": "TraitChecks: all 1820 enabled compatible pairs; native risky pairs separately recorded"
+    },
+    {
+      "id": "playerknockedfar",
+      "name": "Ectomorph",
+      "effect": "none",
+      "amount": 0,
+      "statFields": {
+        "dexterity": -1,
+        "goldBonus": 25
+      },
+      "consumers": [
+        "sts2/Core/HeirInheritance.cs",
+        "sts2/Native/HeirCharacter.cs",
+        "sts2/Native/BloodlineRelic.cs",
+        "sts2/Core/FamilyProfile.cs:Settle"
+      ],
+      "summary": "Lose 1 Dexterity; gain extra legacy crowns.",
+      "nativeEvidence": "trait-audit probe and live appearance; hook-specific assertions in sts2-trait-audit.py and existing interaction drivers",
+      "geneticEvidence": "nine Basics: native base/upgraded/duplicate/save/load/downgrade/removal, 54 checks per probe",
+      "pairEvidence": "TraitChecks: all 1820 enabled compatible pairs; native risky pairs separately recorded"
+    },
+    {
+      "id": "disposition",
+      "name": "Nature",
+      "effect": "nature",
+      "amount": 0,
+      "statFields": {},
+      "consumers": [
+        "sts2/Core/HeirInheritance.cs",
+        "sts2/Native/HeirCharacter.cs",
+        "sts2/Native/BloodlineRelic.cs",
+        "sts2/Native/TraitAppearance.cs",
+        "sts2/Native/HeirVisuals.cs"
+      ],
+      "summary": "Your heir wears a green family accent.",
+      "nativeEvidence": "trait-audit probe and live appearance; hook-specific assertions in sts2-trait-audit.py and existing interaction drivers",
+      "geneticEvidence": "nine Basics: native base/upgraded/duplicate/save/load/downgrade/removal, 54 checks per probe",
+      "pairEvidence": "TraitChecks: all 1820 enabled compatible pairs; native risky pairs separately recorded"
+    },
+    {
+      "id": "large",
+      "name": "Gigantism",
+      "effect": "none",
+      "amount": 0,
+      "statFields": {
+        "hp": 12,
+        "dexterity": -1,
+        "goldBonus": 15,
+        "scale": 1.3
+      },
+      "consumers": [
+        "sts2/Core/HeirInheritance.cs",
+        "sts2/Native/HeirCharacter.cs",
+        "sts2/Native/BloodlineRelic.cs",
+        "sts2/Native/HeirVisuals.cs",
+        "sts2/Core/FamilyProfile.cs:Settle"
+      ],
+      "summary": "More health, but less Dexterity.",
+      "nativeEvidence": "trait-audit probe and live appearance; hook-specific assertions in sts2-trait-audit.py and existing interaction drivers",
+      "geneticEvidence": "nine Basics: native base/upgraded/duplicate/save/load/downgrade/removal, 54 checks per probe",
+      "pairEvidence": "TraitChecks: all 1820 enabled compatible pairs; native risky pairs separately recorded"
+    },
+    {
+      "id": "fart",
+      "name": "IBS",
+      "effect": "opening_weak",
+      "amount": 1,
+      "statFields": {},
+      "consumers": [
+        "sts2/Core/HeirInheritance.cs",
+        "sts2/Native/HeirCharacter.cs",
+        "sts2/Native/BloodlineRelic.cs"
+      ],
+      "summary": "Start each combat with 1 Weak.",
+      "nativeEvidence": "trait-audit probe and live appearance; hook-specific assertions in sts2-trait-audit.py and existing interaction drivers",
+      "geneticEvidence": "nine Basics: native base/upgraded/duplicate/save/load/downgrade/removal, 54 checks per probe",
+      "pairEvidence": "TraitChecks: all 1820 enabled compatible pairs; native risky pairs separately recorded"
+    },
+    {
+      "id": "enemyknockedlow",
+      "name": "Muscle Weakness",
+      "effect": "none",
+      "amount": 0,
+      "statFields": {
+        "strength": -1,
+        "goldBonus": 25
+      },
+      "consumers": [
+        "sts2/Core/HeirInheritance.cs",
+        "sts2/Native/HeirCharacter.cs",
+        "sts2/Native/BloodlineRelic.cs",
+        "sts2/Core/FamilyProfile.cs:Settle"
+      ],
+      "summary": "Lose 1 Strength; gain extra legacy crowns.",
+      "nativeEvidence": "trait-audit probe and live appearance; hook-specific assertions in sts2-trait-audit.py and existing interaction drivers",
+      "geneticEvidence": "nine Basics: native base/upgraded/duplicate/save/load/downgrade/removal, 54 checks per probe",
+      "pairEvidence": "TraitChecks: all 1820 enabled compatible pairs; native risky pairs separately recorded"
+    },
+    {
+      "id": "breakpropsformana",
+      "name": "Breaker",
+      "effect": "skill_draw",
+      "amount": 1,
+      "statFields": {},
+      "consumers": [
+        "sts2/Core/HeirInheritance.cs",
+        "sts2/Native/HeirCharacter.cs",
+        "sts2/Native/BloodlineRelic.cs"
+      ],
+      "summary": "The first Skill played each turn draws 1 card.",
+      "nativeEvidence": "trait-audit probe and live appearance; hook-specific assertions in sts2-trait-audit.py and existing interaction drivers",
+      "geneticEvidence": "nine Basics: native base/upgraded/duplicate/save/load/downgrade/removal, 54 checks per probe",
+      "pairEvidence": "TraitChecks: all 1820 enabled compatible pairs; native risky pairs separately recorded"
+    },
+    {
+      "id": "onehitdeath",
+      "name": "Fragile",
+      "effect": "fragile",
+      "amount": 0,
+      "statFields": {
+        "goldBonus": 200
+      },
+      "consumers": [
+        "sts2/Core/HeirInheritance.cs",
+        "sts2/Native/HeirCharacter.cs",
+        "sts2/Native/BloodlineRelic.cs",
+        "sts2/Core/FamilyProfile.cs:Settle"
+      ],
+      "summary": "Maximum HP is 1, overriding all other HP bonuses.",
+      "nativeEvidence": "trait-audit probe and live appearance; hook-specific assertions in sts2-trait-audit.py and existing interaction drivers",
+      "geneticEvidence": "nine Basics: native base/upgraded/duplicate/save/load/downgrade/removal, 54 checks per probe",
+      "pairEvidence": "TraitChecks: all 1820 enabled compatible pairs; native risky pairs separately recorded"
+    },
+    {
+      "id": "cantattack",
+      "name": "Pacifist",
+      "effect": "pacifist",
+      "amount": 0,
+      "statFields": {
+        "goldBonus": 150
+      },
+      "consumers": [
+        "sts2/Core/HeirInheritance.cs",
+        "sts2/Native/HeirCharacter.cs",
+        "sts2/Native/BloodlineRelic.cs",
+        "sts2/Core/CardDesign.cs",
+        "sts2/Native/LegacyCard.cs",
+        "sts2/Native/CardEffects.cs",
+        "sts2/Native/PlayerBloodlines.cs",
+        "sts2/Core/FamilyProfile.cs:Settle"
+      ],
+      "summary": "Your Basic Attack cards become Skills that apply 2 Poison (3 upgraded), with no damage or Block. Other Attacks cannot be played. No free Poison at combat start.",
+      "nativeEvidence": "trait-audit probe and live appearance; hook-specific assertions in sts2-trait-audit.py and existing interaction drivers",
+      "geneticEvidence": "nine Basics: native base/upgraded/duplicate/save/load/downgrade/removal, 54 checks per probe",
+      "pairEvidence": "TraitChecks: all 1820 enabled compatible pairs; native risky pairs separately recorded"
+    },
+    {
+      "id": "omnidash",
+      "name": "Superfluid",
+      "effect": "turn_block",
+      "amount": 2,
+      "statFields": {},
+      "consumers": [
+        "sts2/Core/HeirInheritance.cs",
+        "sts2/Native/HeirCharacter.cs",
+        "sts2/Native/BloodlineRelic.cs"
+      ],
+      "summary": "Gain 2 Block at the start of each turn.",
+      "nativeEvidence": "trait-audit probe and live appearance; hook-specific assertions in sts2-trait-audit.py and existing interaction drivers",
+      "geneticEvidence": "nine Basics: native base/upgraded/duplicate/save/load/downgrade/removal, 54 checks per probe",
+      "pairEvidence": "TraitChecks: all 1820 enabled compatible pairs; native risky pairs separately recorded"
+    },
+    {
+      "id": "highjump",
+      "name": "High Jumper",
+      "effect": "none",
+      "amount": 0,
+      "statFields": {
+        "hp": -8,
+        "dexterity": 2
+      },
+      "consumers": [
+        "sts2/Core/HeirInheritance.cs",
+        "sts2/Native/HeirCharacter.cs",
+        "sts2/Native/BloodlineRelic.cs"
+      ],
+      "summary": "Gain 2 Dexterity, but lose 8 maximum HP.",
+      "nativeEvidence": "trait-audit probe and live appearance; hook-specific assertions in sts2-trait-audit.py and existing interaction drivers",
+      "geneticEvidence": "nine Basics: native base/upgraded/duplicate/save/load/downgrade/removal, 54 checks per probe",
+      "pairEvidence": "TraitChecks: all 1820 enabled compatible pairs; native risky pairs separately recorded"
+    },
+    {
+      "id": "gaindownstrike",
+      "name": "Aerodynamic",
+      "effect": "first_attack_damage",
+      "amount": 1,
+      "statFields": {},
+      "consumers": [
+        "sts2/Core/HeirInheritance.cs",
+        "sts2/Native/HeirCharacter.cs",
+        "sts2/Native/BloodlineRelic.cs"
+      ],
+      "summary": "The first Attack played each turn deals 1 additional damage per hit.",
+      "nativeEvidence": "trait-audit probe and live appearance; hook-specific assertions in sts2-trait-audit.py and existing interaction drivers",
+      "geneticEvidence": "nine Basics: native base/upgraded/duplicate/save/load/downgrade/removal, 54 checks per probe",
+      "pairEvidence": "TraitChecks: all 1820 enabled compatible pairs; native risky pairs separately recorded"
+    },
+    {
+      "id": "weapon",
+      "name": "Combative",
+      "effect": "none",
+      "amount": 0,
+      "statFields": {
+        "hp": -12,
+        "strength": 2,
+        "goldBonus": 20
+      },
+      "consumers": [
+        "sts2/Core/HeirInheritance.cs",
+        "sts2/Native/HeirCharacter.cs",
+        "sts2/Native/BloodlineRelic.cs",
+        "sts2/Core/FamilyProfile.cs:Settle"
+      ],
+      "summary": "More Strength, but less health.",
+      "nativeEvidence": "trait-audit probe and live appearance; hook-specific assertions in sts2-trait-audit.py and existing interaction drivers",
+      "geneticEvidence": "nine Basics: native base/upgraded/duplicate/save/load/downgrade/removal, 54 checks per probe",
+      "pairEvidence": "TraitChecks: all 1820 enabled compatible pairs; native risky pairs separately recorded"
+    },
+    {
+      "id": "magic",
+      "name": "Bookish",
+      "effect": "none",
+      "amount": 0,
+      "statFields": {
+        "hp": -10,
+        "draw": 1
+      },
+      "consumers": [
+        "sts2/Core/HeirInheritance.cs",
+        "sts2/Native/HeirCharacter.cs",
+        "sts2/Native/BloodlineRelic.cs"
+      ],
+      "summary": "Draw another card each turn, but lose health.",
+      "nativeEvidence": "trait-audit probe and live appearance; hook-specific assertions in sts2-trait-audit.py and existing interaction drivers",
+      "geneticEvidence": "nine Basics: native base/upgraded/duplicate/save/load/downgrade/removal, 54 checks per probe",
+      "pairEvidence": "TraitChecks: all 1820 enabled compatible pairs; native risky pairs separately recorded"
+    },
+    {
+      "id": "enemyknockedfar",
+      "name": "Hypergonadism",
+      "effect": "first_attack_weak",
+      "amount": 1,
+      "statFields": {},
+      "consumers": [
+        "sts2/Core/HeirInheritance.cs",
+        "sts2/Native/HeirCharacter.cs",
+        "sts2/Native/BloodlineRelic.cs"
+      ],
+      "summary": "The first Attack each turn applies 1 Weak to each enemy it hits, before damage.",
+      "nativeEvidence": "trait-audit probe and live appearance; hook-specific assertions in sts2-trait-audit.py and existing interaction drivers",
+      "geneticEvidence": "nine Basics: native base/upgraded/duplicate/save/load/downgrade/removal, 54 checks per probe",
+      "pairEvidence": "TraitChecks: all 1820 enabled compatible pairs; native risky pairs separately recorded"
+    },
+    {
+      "id": "longercd",
+      "name": "Exhausted",
+      "effect": "exhausted",
+      "amount": 1,
+      "statFields": {
+        "goldBonus": 25
+      },
+      "consumers": [
+        "sts2/Core/HeirInheritance.cs",
+        "sts2/Native/HeirCharacter.cs",
+        "sts2/Native/BloodlineRelic.cs",
+        "sts2/Core/FamilyProfile.cs:Settle"
+      ],
+      "summary": "Lose 1 Energy on even-numbered combat turns.",
+      "nativeEvidence": "trait-audit probe and live appearance; hook-specific assertions in sts2-trait-audit.py and existing interaction drivers",
+      "geneticEvidence": "nine Basics: native base/upgraded/duplicate/save/load/downgrade/removal, 54 checks per probe",
+      "pairEvidence": "TraitChecks: all 1820 enabled compatible pairs; native risky pairs separately recorded"
+    },
+    {
+      "id": "bonusmagicstrength",
+      "name": "Crippling Intellect",
+      "effect": "none",
+      "amount": 0,
+      "statFields": {
+        "hp": -18,
+        "draw": 1,
+        "goldBonus": 50
+      },
+      "consumers": [
+        "sts2/Core/HeirInheritance.cs",
+        "sts2/Native/HeirCharacter.cs",
+        "sts2/Native/BloodlineRelic.cs",
+        "sts2/Core/FamilyProfile.cs:Settle"
+      ],
+      "summary": "Draw 1 extra card each turn; lose 18 maximum HP.",
+      "nativeEvidence": "trait-audit probe and live appearance; hook-specific assertions in sts2-trait-audit.py and existing interaction drivers",
+      "geneticEvidence": "nine Basics: native base/upgraded/duplicate/save/load/downgrade/removal, 54 checks per probe",
+      "pairEvidence": "TraitChecks: all 1820 enabled compatible pairs; native risky pairs separately recorded"
+    },
+    {
+      "id": "fmffan",
+      "name": "FMF Fan",
+      "effect": "first_skill_block",
+      "amount": 2,
+      "statFields": {},
+      "consumers": [
+        "sts2/Core/HeirInheritance.cs",
+        "sts2/Native/HeirCharacter.cs",
+        "sts2/Native/BloodlineRelic.cs"
+      ],
+      "summary": "The first Skill played each turn grants 2 Block.",
+      "nativeEvidence": "trait-audit probe and live appearance; hook-specific assertions in sts2-trait-audit.py and existing interaction drivers",
+      "geneticEvidence": "nine Basics: native base/upgraded/duplicate/save/load/downgrade/removal, 54 checks per probe",
+      "pairEvidence": "TraitChecks: all 1820 enabled compatible pairs; native risky pairs separately recorded"
+    },
+    {
+      "id": "noenemyhealthbar",
+      "name": "Unempathetic",
+      "effect": "enemy_guard",
+      "amount": 4,
+      "statFields": {
+        "goldBonus": 25
+      },
+      "consumers": [
+        "sts2/Core/HeirInheritance.cs",
+        "sts2/Native/HeirCharacter.cs",
+        "sts2/Native/BloodlineRelic.cs",
+        "sts2/Core/FamilyProfile.cs:Settle"
+      ],
+      "summary": "Each enemy starts with 4 Block; enemy HP remains visible.",
+      "nativeEvidence": "trait-audit probe and live appearance; hook-specific assertions in sts2-trait-audit.py and existing interaction drivers",
+      "geneticEvidence": "nine Basics: native base/upgraded/duplicate/save/load/downgrade/removal, 54 checks per probe",
+      "pairEvidence": "TraitChecks: all 1820 enabled compatible pairs; native risky pairs separately recorded"
+    },
+    {
+      "id": "manacostanddamageup",
+      "name": "Overcompensation",
+      "effect": "costly",
+      "amount": 50,
+      "statFields": {},
+      "consumers": [
+        "sts2/Core/HeirInheritance.cs",
+        "sts2/Native/HeirCharacter.cs",
+        "sts2/Native/BloodlineRelic.cs"
+      ],
+      "summary": "Attacks deal 50% more damage and cost 1 extra Energy when drawn.",
+      "nativeEvidence": "trait-audit probe and live appearance; hook-specific assertions in sts2-trait-audit.py and existing interaction drivers",
+      "geneticEvidence": "nine Basics: native base/upgraded/duplicate/save/load/downgrade/removal, 54 checks per probe",
+      "pairEvidence": "TraitChecks: all 1820 enabled compatible pairs; native risky pairs separately recorded"
+    },
+    {
+      "id": "revealallchests",
+      "name": "Spelunker",
+      "effect": "treasure_gold",
+      "amount": 10,
+      "statFields": {
+        "hp": -6
+      },
+      "consumers": [
+        "sts2/Core/HeirInheritance.cs",
+        "sts2/Native/HeirCharacter.cs",
+        "sts2/Native/BloodlineRelic.cs"
+      ],
+      "summary": "Lose 6 maximum HP. Gain 10 gold when entering a treasure room.",
+      "nativeEvidence": "trait-audit probe and live appearance; hook-specific assertions in sts2-trait-audit.py and existing interaction drivers",
+      "geneticEvidence": "nine Basics: native base/upgraded/duplicate/save/load/downgrade/removal, 54 checks per probe",
+      "pairEvidence": "TraitChecks: all 1820 enabled compatible pairs; native risky pairs separately recorded"
+    },
+    {
+      "id": "bounceterrain",
+      "name": "Clownanthropy",
+      "effect": "first_attack_block",
+      "amount": 2,
+      "statFields": {
+        "hp": -12
+      },
+      "consumers": [
+        "sts2/Core/HeirInheritance.cs",
+        "sts2/Native/HeirCharacter.cs",
+        "sts2/Native/BloodlineRelic.cs"
+      ],
+      "summary": "Lose 12 maximum HP. The first Attack played each turn grants 2 Block.",
+      "nativeEvidence": "trait-audit probe and live appearance; hook-specific assertions in sts2-trait-audit.py and existing interaction drivers",
+      "geneticEvidence": "nine Basics: native base/upgraded/duplicate/save/load/downgrade/removal, 54 checks per probe",
+      "pairEvidence": "TraitChecks: all 1820 enabled compatible pairs; native risky pairs separately recorded"
+    },
+    {
+      "id": "lowerstoreprice",
+      "name": "Charismatic",
+      "effect": "shop",
+      "amount": 20,
+      "statFields": {},
+      "consumers": [
+        "sts2/Core/HeirInheritance.cs",
+        "sts2/Native/HeirCharacter.cs",
+        "sts2/Native/BloodlineRelic.cs"
+      ],
+      "summary": "Shop cards, relics, and potions cost 20% less.",
+      "nativeEvidence": "trait-audit probe and live appearance; hook-specific assertions in sts2-trait-audit.py and existing interaction drivers",
+      "geneticEvidence": "nine Basics: native base/upgraded/duplicate/save/load/downgrade/removal, 54 checks per probe",
+      "pairEvidence": "TraitChecks: all 1820 enabled compatible pairs; native risky pairs separately recorded"
+    },
+    {
+      "id": "fakeselfdamage",
+      "name": "Histrionic",
+      "effect": "histrionic",
+      "amount": 0,
+      "statFields": {},
+      "consumers": [
+        "sts2/Core/HeirInheritance.cs",
+        "sts2/Native/HeirCharacter.cs",
+        "sts2/Native/BloodlineRelic.cs",
+        "sts2/Native/TraitAppearance.cs",
+        "sts2/Native/HeirVisuals.cs"
+      ],
+      "summary": "Your heir flashes red after taking damage; HP reports stay accurate.",
+      "nativeEvidence": "trait-audit probe and live appearance; hook-specific assertions in sts2-trait-audit.py and existing interaction drivers",
+      "geneticEvidence": "nine Basics: native base/upgraded/duplicate/save/load/downgrade/removal, 54 checks per probe",
+      "pairEvidence": "TraitChecks: all 1820 enabled compatible pairs; native risky pairs separately recorded"
+    },
+    {
+      "id": "oldyellowtint",
+      "name": "Nostalgic",
+      "effect": "sepia",
+      "amount": 0,
+      "statFields": {},
+      "consumers": [
+        "sts2/Core/HeirInheritance.cs",
+        "sts2/Native/HeirCharacter.cs",
+        "sts2/Native/BloodlineRelic.cs",
+        "sts2/Native/TraitAppearance.cs",
+        "sts2/Native/HeirVisuals.cs"
+      ],
+      "summary": "Your heir is rendered in a nostalgic sepia palette.",
+      "nativeEvidence": "trait-audit probe and live appearance; hook-specific assertions in sts2-trait-audit.py and existing interaction drivers",
+      "geneticEvidence": "nine Basics: native base/upgraded/duplicate/save/load/downgrade/removal, 54 checks per probe",
+      "pairEvidence": "TraitChecks: all 1820 enabled compatible pairs; native risky pairs separately recorded"
+    },
+    {
+      "id": "enemiescensored",
+      "name": "Puritan",
+      "effect": "enemy_guard",
+      "amount": 5,
+      "statFields": {
+        "goldBonus": 25
+      },
+      "consumers": [
+        "sts2/Core/HeirInheritance.cs",
+        "sts2/Native/HeirCharacter.cs",
+        "sts2/Native/BloodlineRelic.cs",
+        "sts2/Core/FamilyProfile.cs:Settle"
+      ],
+      "summary": "Enemies start with 5 Block, representing difficulty reading opponents.",
+      "nativeEvidence": "trait-audit probe and live appearance; hook-specific assertions in sts2-trait-audit.py and existing interaction drivers",
+      "geneticEvidence": "nine Basics: native base/upgraded/duplicate/save/load/downgrade/removal, 54 checks per probe",
+      "pairEvidence": "TraitChecks: all 1820 enabled compatible pairs; native risky pairs separately recorded"
+    },
+    {
+      "id": "enemiesblackfill",
+      "name": "Associative Agnosia",
+      "effect": "enemy_strength",
+      "amount": 1,
+      "statFields": {
+        "goldBonus": 25
+      },
+      "consumers": [
+        "sts2/Core/HeirInheritance.cs",
+        "sts2/Native/HeirCharacter.cs",
+        "sts2/Native/BloodlineRelic.cs",
+        "sts2/Core/FamilyProfile.cs:Settle"
+      ],
+      "summary": "Enemies start with 1 Strength, representing harder-to-read opponents.",
+      "nativeEvidence": "trait-audit probe and live appearance; hook-specific assertions in sts2-trait-audit.py and existing interaction drivers",
+      "geneticEvidence": "nine Basics: native base/upgraded/duplicate/save/load/downgrade/removal, 54 checks per probe",
+      "pairEvidence": "TraitChecks: all 1820 enabled compatible pairs; native risky pairs separately recorded"
+    },
+    {
+      "id": "lowergravity",
+      "name": "Hollow Bones",
+      "effect": "none",
+      "amount": 0,
+      "statFields": {
+        "hp": -12,
+        "dexterity": 2,
+        "scale": 0.9
+      },
+      "consumers": [
+        "sts2/Core/HeirInheritance.cs",
+        "sts2/Native/HeirCharacter.cs",
+        "sts2/Native/BloodlineRelic.cs",
+        "sts2/Native/HeirVisuals.cs"
+      ],
+      "summary": "Lose 12 maximum HP; gain 2 Dexterity and a lighter appearance.",
+      "nativeEvidence": "trait-audit probe and live appearance; hook-specific assertions in sts2-trait-audit.py and existing interaction drivers",
+      "geneticEvidence": "nine Basics: native base/upgraded/duplicate/save/load/downgrade/removal, 54 checks per probe",
+      "pairEvidence": "TraitChecks: all 1820 enabled compatible pairs; native risky pairs separately recorded"
+    },
+    {
+      "id": "bluronhit",
+      "name": "Stressed",
+      "effect": "hurt_weak",
+      "amount": 1,
+      "statFields": {
+        "goldBonus": 50
+      },
+      "consumers": [
+        "sts2/Core/HeirInheritance.cs",
+        "sts2/Native/HeirCharacter.cs",
+        "sts2/Native/BloodlineRelic.cs",
+        "sts2/Core/FamilyProfile.cs:Settle"
+      ],
+      "summary": "After losing HP to an enemy attack, gain 1 Weak.",
+      "nativeEvidence": "trait-audit probe and live appearance; hook-specific assertions in sts2-trait-audit.py and existing interaction drivers",
+      "geneticEvidence": "nine Basics: native base/upgraded/duplicate/save/load/downgrade/removal, 54 checks per probe",
+      "pairEvidence": "TraitChecks: all 1820 enabled compatible pairs; native risky pairs separately recorded"
+    },
+    {
+      "id": "colortrails",
+      "name": "Synesthesia",
+      "effect": "rainbow",
+      "amount": 0,
+      "statFields": {},
+      "consumers": [
+        "sts2/Core/HeirInheritance.cs",
+        "sts2/Native/HeirCharacter.cs",
+        "sts2/Native/BloodlineRelic.cs",
+        "sts2/Native/TraitAppearance.cs",
+        "sts2/Native/HeirVisuals.cs"
+      ],
+      "summary": "Rainbow motes orbit your heir above a shifting colorful ring, including at rest sites and shops. Visible alongside other palette traits. Cosmetic only; no crown bonus.",
+      "nativeEvidence": "trait-audit probe and live appearance; hook-specific assertions in sts2-trait-audit.py and existing interaction drivers",
+      "geneticEvidence": "nine Basics: native base/upgraded/duplicate/save/load/downgrade/removal, 54 checks per probe",
+      "pairEvidence": "TraitChecks: all 1820 enabled compatible pairs; native risky pairs separately recorded"
+    },
+    {
+      "id": "nomeat",
+      "name": "Vegan",
+      "effect": "vegan",
+      "amount": 0,
+      "statFields": {
+        "goldBonus": 75
+      },
+      "consumers": [
+        "sts2/Core/HeirInheritance.cs",
+        "sts2/Native/HeirCharacter.cs",
+        "sts2/Native/BloodlineRelic.cs",
+        "sts2/Native/RunHooks.cs:InheritedHealing",
+        "sts2/Core/FamilyProfile.cs:Settle"
+      ],
+      "summary": "All healing is halved, rounded down.",
+      "nativeEvidence": "trait-audit probe and live appearance; hook-specific assertions in sts2-trait-audit.py and existing interaction drivers",
+      "geneticEvidence": "nine Basics: native base/upgraded/duplicate/save/load/downgrade/removal, 54 checks per probe",
+      "pairEvidence": "TraitChecks: all 1820 enabled compatible pairs; native risky pairs separately recorded"
+    },
+    {
+      "id": "smallhitbox",
+      "name": "Only Heart",
+      "effect": "none",
+      "amount": 0,
+      "statFields": {
+        "hp": -16,
+        "dexterity": 3,
+        "goldBonus": 25,
+        "scale": 0.9
+      },
+      "consumers": [
+        "sts2/Core/HeirInheritance.cs",
+        "sts2/Native/HeirCharacter.cs",
+        "sts2/Native/BloodlineRelic.cs",
+        "sts2/Native/HeirVisuals.cs",
+        "sts2/Core/FamilyProfile.cs:Settle"
+      ],
+      "summary": "Excellent Dexterity, but fragile.",
+      "nativeEvidence": "trait-audit probe and live appearance; hook-specific assertions in sts2-trait-audit.py and existing interaction drivers",
+      "geneticEvidence": "nine Basics: native base/upgraded/duplicate/save/load/downgrade/removal, 54 checks per probe",
+      "pairEvidence": "TraitChecks: all 1820 enabled compatible pairs; native risky pairs separately recorded"
+    },
+    {
+      "id": "cheeronkills",
+      "name": "Diva",
+      "effect": "diva",
+      "amount": 2,
+      "statFields": {
+        "goldBonus": 75
+      },
+      "consumers": [
+        "sts2/Core/HeirInheritance.cs",
+        "sts2/Native/HeirCharacter.cs",
+        "sts2/Native/BloodlineRelic.cs",
+        "sts2/Core/FamilyProfile.cs:Settle"
+      ],
+      "summary": "Gain 2 gold whenever an enemy dies; start combat Vulnerable for 1 turn.",
+      "nativeEvidence": "trait-audit probe and live appearance; hook-specific assertions in sts2-trait-audit.py and existing interaction drivers",
+      "geneticEvidence": "nine Basics: native base/upgraded/duplicate/save/load/downgrade/removal, 54 checks per probe",
+      "pairEvidence": "TraitChecks: all 1820 enabled compatible pairs; native risky pairs separately recorded"
+    },
+    {
+      "id": "superfart",
+      "name": "Super IBS",
+      "effect": "poison",
+      "amount": 3,
+      "statFields": {},
+      "consumers": [
+        "sts2/Core/HeirInheritance.cs",
+        "sts2/Native/HeirCharacter.cs",
+        "sts2/Native/BloodlineRelic.cs"
+      ],
+      "summary": "At combat start, apply 3 Poison to every enemy.",
+      "nativeEvidence": "trait-audit probe and live appearance; hook-specific assertions in sts2-trait-audit.py and existing interaction drivers",
+      "geneticEvidence": "nine Basics: native base/upgraded/duplicate/save/load/downgrade/removal, 54 checks per probe",
+      "pairEvidence": "TraitChecks: all 1820 enabled compatible pairs; native risky pairs separately recorded"
+    },
+    {
+      "id": "vampire",
+      "name": "Vampirism",
+      "effect": "none",
+      "amount": 0,
+      "statFields": {
+        "hp": -14,
+        "heal": 3,
+        "goldBonus": 25
+      },
+      "consumers": [
+        "sts2/Core/HeirInheritance.cs",
+        "sts2/Native/HeirCharacter.cs",
+        "sts2/Native/BloodlineRelic.cs",
+        "sts2/Core/FamilyProfile.cs:Settle"
+      ],
+      "summary": "Heal 3 after combat, but have less health.",
+      "nativeEvidence": "trait-audit probe and live appearance; hook-specific assertions in sts2-trait-audit.py and existing interaction drivers",
+      "geneticEvidence": "nine Basics: native base/upgraded/duplicate/save/load/downgrade/removal, 54 checks per probe",
+      "pairEvidence": "TraitChecks: all 1820 enabled compatible pairs; native risky pairs separately recorded"
+    },
+    {
+      "id": "mapreveal",
+      "name": "Cartographer",
+      "effect": "opening_draw_energy",
+      "amount": 1,
+      "statFields": {
+        "goldBonus": 25
+      },
+      "consumers": [
+        "sts2/Core/HeirInheritance.cs",
+        "sts2/Native/HeirCharacter.cs",
+        "sts2/Native/BloodlineRelic.cs",
+        "sts2/Core/FamilyProfile.cs:Settle"
+      ],
+      "summary": "On the first turn of each combat, draw 1 extra card but lose 1 Energy.",
+      "nativeEvidence": "trait-audit probe and live appearance; hook-specific assertions in sts2-trait-audit.py and existing interaction drivers",
+      "geneticEvidence": "nine Basics: native base/upgraded/duplicate/save/load/downgrade/removal, 54 checks per probe",
+      "pairEvidence": "TraitChecks: all 1820 enabled compatible pairs; native risky pairs separately recorded"
+    },
+    {
+      "id": "noimmunitywindow",
+      "name": "Algesia",
+      "effect": "algesia",
+      "amount": 2,
+      "statFields": {
+        "goldBonus": 50
+      },
+      "consumers": [
+        "sts2/Core/HeirInheritance.cs",
+        "sts2/Native/HeirCharacter.cs",
+        "sts2/Native/BloodlineRelic.cs",
+        "sts2/Core/FamilyProfile.cs:Settle"
+      ],
+      "summary": "Each enemy attack that penetrates Block deals 2 extra damage.",
+      "nativeEvidence": "trait-audit probe and live appearance; hook-specific assertions in sts2-trait-audit.py and existing interaction drivers",
+      "geneticEvidence": "nine Basics: native base/upgraded/duplicate/save/load/downgrade/removal, 54 checks per probe",
+      "pairEvidence": "TraitChecks: all 1820 enabled compatible pairs; native risky pairs separately recorded"
+    },
+    {
+      "id": "nomanacap",
+      "name": "Limitless",
+      "effect": "overcharge",
+      "amount": 1,
+      "statFields": {},
+      "consumers": [
+        "sts2/Core/HeirInheritance.cs",
+        "sts2/Native/HeirCharacter.cs",
+        "sts2/Native/BloodlineRelic.cs"
+      ],
+      "summary": "Gain 1 extra Energy each turn, but start each turn with 1 Vulnerable.",
+      "nativeEvidence": "trait-audit probe and live appearance; hook-specific assertions in sts2-trait-audit.py and existing interaction drivers",
+      "geneticEvidence": "nine Basics: native base/upgraded/duplicate/save/load/downgrade/removal, 54 checks per probe",
+      "pairEvidence": "TraitChecks: all 1820 enabled compatible pairs; native risky pairs separately recorded"
+    },
+    {
+      "id": "megahealth",
+      "name": "Hero Complex",
+      "effect": "no_heal",
+      "amount": 0,
+      "statFields": {
+        "hp": 40,
+        "goldBonus": 100
+      },
+      "consumers": [
+        "sts2/Core/HeirInheritance.cs",
+        "sts2/Native/HeirCharacter.cs",
+        "sts2/Native/BloodlineRelic.cs",
+        "sts2/Native/RunHooks.cs:InheritedHealing",
+        "sts2/Core/FamilyProfile.cs:Settle"
+      ],
+      "summary": "Gain 40 maximum HP. Healing is disabled. Earn 100% more legacy crowns.",
+      "nativeEvidence": "trait-audit probe and live appearance; hook-specific assertions in sts2-trait-audit.py and existing interaction drivers",
+      "geneticEvidence": "nine Basics: native base/upgraded/duplicate/save/load/downgrade/removal, 54 checks per probe",
+      "pairEvidence": "TraitChecks: all 1820 enabled compatible pairs; native risky pairs separately recorded"
+    },
+    {
+      "id": "itemsgoflying",
+      "name": "Butter Fingers",
+      "effect": "coin_loss",
+      "amount": 5,
+      "statFields": {
+        "goldBonus": 25
+      },
+      "consumers": [
+        "sts2/Core/HeirInheritance.cs",
+        "sts2/Native/HeirCharacter.cs",
+        "sts2/Native/BloodlineRelic.cs",
+        "sts2/Core/FamilyProfile.cs:Settle"
+      ],
+      "summary": "Lose up to 5 gold after each battle.",
+      "nativeEvidence": "trait-audit probe and live appearance; hook-specific assertions in sts2-trait-audit.py and existing interaction drivers",
+      "geneticEvidence": "nine Basics: native base/upgraded/duplicate/save/load/downgrade/removal, 54 checks per probe",
+      "pairEvidence": "TraitChecks: all 1820 enabled compatible pairs; native risky pairs separately recorded"
+    },
+    {
+      "id": "manafromhurt",
+      "name": "Masochism",
+      "effect": "hurt_energy",
+      "amount": 1,
+      "statFields": {
+        "goldBonus": 25
+      },
+      "consumers": [
+        "sts2/Core/HeirInheritance.cs",
+        "sts2/Native/HeirCharacter.cs",
+        "sts2/Native/BloodlineRelic.cs",
+        "sts2/Core/FamilyProfile.cs:Settle"
+      ],
+      "summary": "After losing HP to an enemy attack, gain 1 Energy for your next turn.",
+      "nativeEvidence": "trait-audit probe and live appearance; hook-specific assertions in sts2-trait-audit.py and existing interaction drivers",
+      "geneticEvidence": "nine Basics: native base/upgraded/duplicate/save/load/downgrade/removal, 54 checks per probe",
+      "pairEvidence": "TraitChecks: all 1820 enabled compatible pairs; native risky pairs separately recorded"
+    },
+    {
+      "id": "bonuschestgold",
+      "name": "Lootbox Addict",
+      "effect": "treasure_gold",
+      "amount": 20,
+      "statFields": {
+        "hp": -8,
+        "goldBonus": 50
+      },
+      "consumers": [
+        "sts2/Core/HeirInheritance.cs",
+        "sts2/Native/HeirCharacter.cs",
+        "sts2/Native/BloodlineRelic.cs",
+        "sts2/Core/FamilyProfile.cs:Settle"
+      ],
+      "summary": "Lose 8 maximum HP. Gain 20 gold when entering a treasure room.",
+      "nativeEvidence": "trait-audit probe and live appearance; hook-specific assertions in sts2-trait-audit.py and existing interaction drivers",
+      "geneticEvidence": "nine Basics: native base/upgraded/duplicate/save/load/downgrade/removal, 54 checks per probe",
+      "pairEvidence": "TraitChecks: all 1820 enabled compatible pairs; native risky pairs separately recorded"
+    },
+    {
+      "id": "superhealer",
+      "name": "Super Healer",
+      "effect": "super_heal",
+      "amount": 2,
+      "statFields": {
+        "hp": -15
+      },
+      "consumers": [
+        "sts2/Core/HeirInheritance.cs",
+        "sts2/Native/HeirCharacter.cs",
+        "sts2/Native/BloodlineRelic.cs",
+        "sts2/Native/RunHooks.cs:InheritedHealing"
+      ],
+      "summary": "Lose 15 maximum HP; all healing is doubled.",
+      "nativeEvidence": "trait-audit probe and live appearance; hook-specific assertions in sts2-trait-audit.py and existing interaction drivers",
+      "geneticEvidence": "nine Basics: native base/upgraded/duplicate/save/load/downgrade/removal, 54 checks per probe",
+      "pairEvidence": "TraitChecks: all 1820 enabled compatible pairs; native risky pairs separately recorded"
+    },
+    {
+      "id": "twinrelics",
+      "name": "Hoarder",
+      "effect": "relics",
+      "amount": 2,
+      "statFields": {},
+      "consumers": [
+        "sts2/Core/HeirInheritance.cs",
+        "sts2/Native/HeirCharacter.cs",
+        "sts2/Native/BloodlineRelic.cs"
+      ],
+      "summary": "Start the run with two random common relics.",
+      "nativeEvidence": "trait-audit probe and live appearance; hook-specific assertions in sts2-trait-audit.py and existing interaction drivers",
+      "geneticEvidence": "nine Basics: native base/upgraded/duplicate/save/load/downgrade/removal, 54 checks per probe",
+      "pairEvidence": "TraitChecks: all 1820 enabled compatible pairs; native risky pairs separately recorded"
+    },
+    {
+      "id": "mushroomgrow",
+      "name": "Mushroom Man",
+      "effect": "first_hurt_block",
+      "amount": 3,
+      "statFields": {
+        "hp": -6,
+        "scale": 0.85
+      },
+      "consumers": [
+        "sts2/Core/HeirInheritance.cs",
+        "sts2/Native/HeirCharacter.cs",
+        "sts2/Native/BloodlineRelic.cs",
+        "sts2/Native/HeirVisuals.cs"
+      ],
+      "summary": "Lose 6 maximum HP. After the first enemy Attack that damages you each turn, gain 3 Block. Your heir has a compact appearance.",
+      "nativeEvidence": "trait-audit probe and live appearance; hook-specific assertions in sts2-trait-audit.py and existing interaction drivers",
+      "geneticEvidence": "nine Basics: native base/upgraded/duplicate/save/load/downgrade/removal, 54 checks per probe",
+      "pairEvidence": "TraitChecks: all 1820 enabled compatible pairs; native risky pairs separately recorded"
+    },
+    {
+      "id": "youareblue",
+      "name": "Blue",
+      "effect": "blue",
+      "amount": 0,
+      "statFields": {},
+      "consumers": [
+        "sts2/Core/HeirInheritance.cs",
+        "sts2/Native/HeirCharacter.cs",
+        "sts2/Native/BloodlineRelic.cs",
+        "sts2/Native/TraitAppearance.cs",
+        "sts2/Native/HeirVisuals.cs"
+      ],
+      "summary": "Your heir is rendered blue.",
+      "nativeEvidence": "trait-audit probe and live appearance; hook-specific assertions in sts2-trait-audit.py and existing interaction drivers",
+      "geneticEvidence": "nine Basics: native base/upgraded/duplicate/save/load/downgrade/removal, 54 checks per probe",
+      "pairEvidence": "TraitChecks: all 1820 enabled compatible pairs; native risky pairs separately recorded"
+    },
+    {
+      "id": "skillcritsonly",
+      "name": "Perfectionist",
+      "effect": "perfectionist",
+      "amount": 50,
+      "statFields": {
+        "goldBonus": 50
+      },
+      "consumers": [
+        "sts2/Core/HeirInheritance.cs",
+        "sts2/Native/HeirCharacter.cs",
+        "sts2/Native/BloodlineRelic.cs",
+        "sts2/Core/FamilyProfile.cs:Settle"
+      ],
+      "summary": "Attacks deal 50% more damage while you have Block, and 25% less otherwise.",
+      "nativeEvidence": "trait-audit probe and live appearance; hook-specific assertions in sts2-trait-audit.py and existing interaction drivers",
+      "geneticEvidence": "nine Basics: native base/upgraded/duplicate/save/load/downgrade/removal, 54 checks per probe",
+      "pairEvidence": "TraitChecks: all 1820 enabled compatible pairs; native risky pairs separately recorded"
+    },
+    {
+      "id": "disarmonhurt",
+      "name": "Shocked",
+      "effect": "shock",
+      "amount": 0,
+      "statFields": {
+        "goldBonus": 50
+      },
+      "consumers": [
+        "sts2/Core/HeirInheritance.cs",
+        "sts2/Native/HeirCharacter.cs",
+        "sts2/Native/BloodlineRelic.cs",
+        "sts2/Core/FamilyProfile.cs:Settle"
+      ],
+      "summary": "After an enemy attack damages you, discard the next Attack you draw.",
+      "nativeEvidence": "trait-audit probe and live appearance; hook-specific assertions in sts2-trait-audit.py and existing interaction drivers",
+      "geneticEvidence": "nine Basics: native base/upgraded/duplicate/save/load/downgrade/removal, 54 checks per probe",
+      "pairEvidence": "TraitChecks: all 1820 enabled compatible pairs; native risky pairs separately recorded"
+    },
+    {
+      "id": "explosivechests",
+      "name": "Explosive Chests",
+      "effect": "chest",
+      "amount": 5,
+      "statFields": {
+        "goldBonus": 25
+      },
+      "consumers": [
+        "sts2/Core/HeirInheritance.cs",
+        "sts2/Native/HeirCharacter.cs",
+        "sts2/Native/BloodlineRelic.cs",
+        "sts2/Core/FamilyProfile.cs:Settle"
+      ],
+      "summary": "Lose 5 HP when entering a treasure room; this can kill the heir.",
+      "nativeEvidence": "trait-audit probe and live appearance; hook-specific assertions in sts2-trait-audit.py and existing interaction drivers",
+      "geneticEvidence": "nine Basics: native base/upgraded/duplicate/save/load/downgrade/removal, 54 checks per probe",
+      "pairEvidence": "TraitChecks: all 1820 enabled compatible pairs; native risky pairs separately recorded"
+    },
+    {
+      "id": "explosiveenemies",
+      "name": "Explosive Enemies",
+      "effect": "explosions",
+      "amount": 2,
+      "statFields": {
+        "goldBonus": 50
+      },
+      "consumers": [
+        "sts2/Core/HeirInheritance.cs",
+        "sts2/Native/HeirCharacter.cs",
+        "sts2/Native/BloodlineRelic.cs",
+        "sts2/Core/FamilyProfile.cs:Settle"
+      ],
+      "summary": "When an enemy dies, lose 2 HP from its explosion.",
+      "nativeEvidence": "trait-audit probe and live appearance; hook-specific assertions in sts2-trait-audit.py and existing interaction drivers",
+      "geneticEvidence": "nine Basics: native base/upgraded/duplicate/save/load/downgrade/removal, 54 checks per probe",
+      "pairEvidence": "TraitChecks: all 1820 enabled compatible pairs; native risky pairs separately recorded"
+    },
+    {
+      "id": "halloweenholiday",
+      "name": "Medium",
+      "effect": "medium",
+      "amount": 0,
+      "statFields": {},
+      "consumers": [
+        "sts2/Core/HeirInheritance.cs",
+        "sts2/Native/HeirCharacter.cs",
+        "sts2/Native/BloodlineRelic.cs",
+        "sts2/Native/TraitAppearance.cs",
+        "sts2/Native/HeirVisuals.cs"
+      ],
+      "summary": "Your heir wears a ghostly violet palette.",
+      "nativeEvidence": "trait-audit probe and live appearance; hook-specific assertions in sts2-trait-audit.py and existing interaction drivers",
+      "geneticEvidence": "nine Basics: native base/upgraded/duplicate/save/load/downgrade/removal, 54 checks per probe",
+      "pairEvidence": "TraitChecks: all 1820 enabled compatible pairs; native risky pairs separately recorded"
+    },
+    {
+      "id": "christmasholiday",
+      "name": "Festive",
+      "effect": "festive",
+      "amount": 0,
+      "statFields": {},
+      "consumers": [
+        "sts2/Core/HeirInheritance.cs",
+        "sts2/Native/HeirCharacter.cs",
+        "sts2/Native/BloodlineRelic.cs",
+        "sts2/Native/TraitAppearance.cs",
+        "sts2/Native/HeirVisuals.cs"
+      ],
+      "summary": "Your heir wears a festive red palette.",
+      "nativeEvidence": "trait-audit probe and live appearance; hook-specific assertions in sts2-trait-audit.py and existing interaction drivers",
+      "geneticEvidence": "nine Basics: native base/upgraded/duplicate/save/load/downgrade/removal, 54 checks per probe",
+      "pairEvidence": "TraitChecks: all 1820 enabled compatible pairs; native risky pairs separately recorded"
+    },
+    {
+      "id": "randomizekit",
+      "name": "Innovator",
+      "effect": "kit",
+      "amount": 0,
+      "statFields": {
+        "goldBonus": 25
+      },
+      "consumers": [
+        "sts2/Core/HeirInheritance.cs",
+        "sts2/Native/HeirCharacter.cs",
+        "sts2/Native/BloodlineRelic.cs",
+        "sts2/Core/HeirInheritance.cs:Deck",
+        "sts2/Core/FamilyProfile.cs:Settle"
+      ],
+      "summary": "Your starting deck is a seeded mixture of all three heir classes.",
+      "nativeEvidence": "trait-audit probe and live appearance; hook-specific assertions in sts2-trait-audit.py and existing interaction drivers",
+      "geneticEvidence": "nine Basics: native base/upgraded/duplicate/save/load/downgrade/removal, 54 checks per probe",
+      "pairEvidence": "TraitChecks: all 1820 enabled compatible pairs; native risky pairs separately recorded"
+    },
+    {
+      "id": "superspinkick",
+      "name": "Kanganthropy",
+      "effect": "first_attack_damage",
+      "amount": 2,
+      "statFields": {},
+      "consumers": [
+        "sts2/Core/HeirInheritance.cs",
+        "sts2/Native/HeirCharacter.cs",
+        "sts2/Native/BloodlineRelic.cs"
+      ],
+      "summary": "The first Attack played each turn deals 2 additional damage per hit.",
+      "nativeEvidence": "trait-audit probe and live appearance; hook-specific assertions in sts2-trait-audit.py and existing interaction drivers",
+      "geneticEvidence": "nine Basics: native base/upgraded/duplicate/save/load/downgrade/removal, 54 checks per probe",
+      "pairEvidence": "TraitChecks: all 1820 enabled compatible pairs; native risky pairs separately recorded"
+    },
+    {
+      "id": "cointimer",
+      "name": "Forgetful",
+      "effect": "coin_loss",
+      "amount": 10,
+      "statFields": {
+        "goldBonus": 25
+      },
+      "consumers": [
+        "sts2/Core/HeirInheritance.cs",
+        "sts2/Native/HeirCharacter.cs",
+        "sts2/Native/BloodlineRelic.cs",
+        "sts2/Core/FamilyProfile.cs:Settle"
+      ],
+      "summary": "Lose up to 10 gold after each battle.",
+      "nativeEvidence": "trait-audit probe and live appearance; hook-specific assertions in sts2-trait-audit.py and existing interaction drivers",
+      "geneticEvidence": "nine Basics: native base/upgraded/duplicate/save/load/downgrade/removal, 54 checks per probe",
+      "pairEvidence": "TraitChecks: all 1820 enabled compatible pairs; native risky pairs separately recorded"
+    },
+    {
+      "id": "projectilesnowalls",
+      "name": "Inter-dimensional",
+      "effect": "first_attack_shred",
+      "amount": 3,
+      "statFields": {
+        "hp": -6,
+        "goldBonus": 50
+      },
+      "consumers": [
+        "sts2/Core/HeirInheritance.cs",
+        "sts2/Native/HeirCharacter.cs",
+        "sts2/Native/BloodlineRelic.cs",
+        "sts2/Core/FamilyProfile.cs:Settle"
+      ],
+      "summary": "Lose 6 maximum HP. The first Attack each turn removes up to 3 Block from each enemy it hits, before damage.",
+      "nativeEvidence": "trait-audit probe and live appearance; hook-specific assertions in sts2-trait-audit.py and existing interaction drivers",
+      "geneticEvidence": "nine Basics: native base/upgraded/duplicate/save/load/downgrade/removal, 54 checks per probe",
+      "pairEvidence": "TraitChecks: all 1820 enabled compatible pairs; native risky pairs separately recorded"
+    },
+    {
+      "id": "antique",
+      "name": "Antique",
+      "effect": "relics",
+      "amount": 1,
+      "statFields": {},
+      "consumers": [
+        "sts2/Core/HeirInheritance.cs",
+        "sts2/Native/HeirCharacter.cs",
+        "sts2/Native/BloodlineRelic.cs"
+      ],
+      "summary": "Start the run with one random common relic.",
+      "nativeEvidence": "trait-audit probe and live appearance; hook-specific assertions in sts2-trait-audit.py and existing interaction drivers",
+      "geneticEvidence": "nine Basics: native base/upgraded/duplicate/save/load/downgrade/removal, 54 checks per probe",
+      "pairEvidence": "TraitChecks: all 1820 enabled compatible pairs; native risky pairs separately recorded"
+    }
+  ],
+  "disabledHistoricalTraits": [
+    "health",
+    "strength"
+  ],
+  "disabledPolicy": "Excluded from new offers/network selections; known IDs preserved in historical local/player saves",
+  "limits": [
+    "Native stat/modifier/model checks are not 61 full campaign outcomes",
+    "Cosmetic node/parameter checks are not physical Deck visual QA",
+    "Full multiplayer campaign and physical Deck/Linux remain untested"
+  ]
+}
