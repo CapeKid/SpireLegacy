@@ -10,9 +10,15 @@ public static class LifecycleOracle
 {
     private static string State()=>JsonSerializer.Serialize(Runtime.Profile,FamilyProfile.JsonOptions);
     private static void Require(bool condition,string message){if(!condition)throw new InvalidDataException(message);}
+    private static FamilyProfile Persisted()
+    {
+        // Diagnostics must not run Load's migration writes behind the live revision.
+        var text=File.ReadAllText(Runtime.FamilyPath);using var doc=FamilyData.Document(text);
+        var stored=JsonSerializer.Deserialize<FamilyProfile>(text,FamilyProfile.JsonOptions)!;FamilyData.Profile(stored);return stored;
+    }
     public static object Inspect()=>new {
         profile=JsonSerializer.SerializeToElement(Runtime.Profile,FamilyProfile.JsonOptions),
-        persisted=JsonSerializer.SerializeToElement(FamilyProfile.Load(Runtime.FamilyPath),FamilyProfile.JsonOptions),
+        persisted=JsonSerializer.SerializeToElement(Persisted(),FamilyProfile.JsonOptions),
         snapshot=PlayerBloodlines.State(PlayerBloodlines.LocalPlayer) is {} frozen?JsonSerializer.SerializeToElement(frozen,FamilyProfile.JsonOptions):(JsonElement?)null,
         nativeRuns=SaveManager.Instance.Progress.NumberOfRuns,
         nativeSave=SaveManager.Instance.LoadRunSave().Success
@@ -35,14 +41,14 @@ public static class LifecycleOracle
             Require(SaveManager.Instance.Progress.NumberOfRuns==nativeRuns,"Failed family write ran native end-of-run history.");
             var retained=SaveManager.Instance.LoadRunSave();
             Require(retained.Success&&JsonSerializer.Serialize(retained.SaveData!,JsonSerializationUtility.GetTypeInfo<SerializableRun>())==oldNative,"Interrupted completion deleted or rewrote the native resumable save.");
-            Require(State()==JsonSerializer.Serialize(FamilyProfile.Load(Runtime.FamilyPath),FamilyProfile.JsonOptions),"Live/durable family disagree after interruption.");
+            Require(State()==JsonSerializer.Serialize(Persisted(),FamilyProfile.JsonOptions),"Live/durable family disagree after interruption.");
             Require(fault=="after-commit"?profile.generation==generation+1:State()==before,"Incorrect family commit boundary.");
         }
         RunManager.Instance.OnEnded(victory);
         Require(profile.generation==generation+1&&profile.crowns==bank+expected&&profile.active==null,"Wrong completion payout/generation.");
         Require(profile.chronicle.settledRuns.Contains(id)&&profile.settledId==id,"Missing settlement receipt.");
         var settled=State();RunManager.Instance.OnEnded(victory);
-        Require(State()==settled&&State()==JsonSerializer.Serialize(FamilyProfile.Load(Runtime.FamilyPath),FamilyProfile.JsonOptions),"Repeated callback changed completed family.");
+        Require(State()==settled&&State()==JsonSerializer.Serialize(Persisted(),FamilyProfile.JsonOptions),"Repeated callback changed completed family.");
         Require(profile.CommitSettlement(run,player.NetId,50,999,true,Runtime.FamilyPath)==0,"Older snapshot received another payout.");
         Require(SaveManager.Instance.Progress.NumberOfRuns==nativeRuns+1&&!SaveManager.Instance.LoadRunSave().Success,"Native completion history/deletion did not occur exactly once.");
         return new {id,heir=run.heir.classId,victory,fault,expected,bankBefore=bank,bankAfter=profile.crowns,generationBefore=generation,generationAfter=profile.generation,floors=state.TotalFloor,gold=player.Gold,repeatStable=true,nativeSaveRetainedDuringFailure=fault!="none",nativeHistoryExactlyOnce=true};

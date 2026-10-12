@@ -110,6 +110,7 @@ public static class CoopOracle
         Runtime.Profile.generation=host?2:4;
         if(request.TryGetProperty("manor",out var manor))Runtime.Profile.manor=manor.EnumerateObject().ToDictionary(p=>p.Name,p=>p.Value.GetInt32());
         Runtime.Profile.crowns=host?123:234;
+        FamilyChronicle.Reconcile(Runtime.Profile);
         Runtime.Profile.Save(Runtime.FamilyPath);
         foreach(var key in new[]{"accept_tutorials_ftue","map_select_ftue","combat_rules_ftue","shuffle_ftue","multiplayer_ftue"})MegaCrit.Sts2.Core.Saves.SaveManager.Instance.MarkFtueAsComplete(key);
         var tree=(SceneTree)Engine.GetMainLoop();
