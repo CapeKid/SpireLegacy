@@ -16,7 +16,7 @@ profile = Path(sys.argv[1]).resolve()
 tag, cls, tier, policy = sys.argv[2:6]
 tier = int(tier)
 assert cls in {'knight', 'mage', 'ranger'} and tier in range(3)
-assert policy in {'defense', 'attack'}
+assert policy in {'defense', 'attack', 'tactical'}
 seed = sys.argv[6] if len(sys.argv) > 6 else 'SPIRELEGACY-CAMPAIGN-1'
 ascension = int(sys.argv[7]) if len(sys.argv) > 7 else 0
 traits = sys.argv[8].split(',') if len(sys.argv) > 8 and sys.argv[8] else []

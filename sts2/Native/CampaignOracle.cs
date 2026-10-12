@@ -30,7 +30,7 @@ public static class CampaignOracle
     public static async Task<object> Step(RunState run,string policy,IDisposable selector)
     {
         using(selector){
-            if(policy is not ("defense" or "attack"))throw new ArgumentException("Unknown campaign policy.");
+            if(policy is not ("defense" or "attack" or "tactical"))throw new ArgumentException("Unknown campaign policy.");
             var player=run.Players.Single();
             object Snapshot()=>new{act=run.CurrentActIndex+1,floor=run.TotalFloor,room=run.CurrentRoom?.RoomType.ToString(),hp=player.Creature.CurrentHp,maxHp=player.Creature.MaxHp,gold=player.Gold,crowns=Runtime.Profile.crowns,lastEarned=Runtime.Profile.lastEarned,wins=Runtime.Profile.chronicle.classes.Values.Sum(h=>h.wins),manor=Runtime.Profile.manor,deck=player.Deck.Cards.Select(Key).ToArray(),relics=player.Relics.Select(r=>r.Id.ToString()).ToArray()};
             object Result(string action,object? detail=null)=>new{action,detail,state=Snapshot()};
@@ -80,12 +80,13 @@ public static class CampaignOracle
                         if(!player.Creature.IsAlive||CombatManager.Instance.IsEnding||!combat.GetOpponentsOf(player.Creature).Any(e=>e.IsAlive))break;
                         var incoming=combat.GetOpponentsOf(player.Creature).Where(e=>e.IsAlive).Sum(e=>e.Monster!.NextMove.Intents.OfType<MegaCrit.Sts2.Core.MonsterMoves.Intents.AttackIntent>().Sum(a=>a.GetTotalDamage(new[]{player.Creature},e)));
                         var hand=PileType.Hand.GetPile(player);
-                        var next=hand.Cards.Where(c=>c.CanPlay()).OrderByDescending(c=>policy=="attack"&&c.Type==CardType.Attack?200+BalanceOracle.Score(c,0):BalanceOracle.Score(c,incoming-player.Creature.Block)).ThenBy(Key,StringComparer.Ordinal).FirstOrDefault();
+                        var decision=policy=="tactical"?TacticalPilot.Choose(player,incoming):null;
+                        var next=policy=="tactical"?decision?.Card:hand.Cards.Where(c=>c.CanPlay()).OrderByDescending(c=>policy=="attack"&&c.Type==CardType.Attack?200+BalanceOracle.Score(c,0):BalanceOracle.Score(c,incoming-player.Creature.Block)).ThenBy(Key,StringComparer.Ordinal).FirstOrDefault();
                         if(next==null)break;
                         if(i==49)return Result("play-cap",new{turn,entries,plays});
                         var energy=player.PlayerCombatState.Energy;var hp=player.Creature.CurrentHp;
-                        await BalanceOracle.Play(next);Observe();
-                        plays.Add(new{id=Key(next),upgraded=next.IsUpgraded,netEnergy=energy-player.PlayerCombatState.Energy,netHpLost=hp-player.Creature.CurrentHp});
+                        await BalanceOracle.Play(next,decision?.Target);Observe();
+                        plays.Add(new{id=Key(next),upgraded=next.IsUpgraded,netEnergy=energy-player.PlayerCombatState.Energy,netHpLost=hp-player.Creature.CurrentHp,reason=decision?.Reason,target=decision?.Target?.Monster?.Id.ToString()});
                     }
                     var unplayed=PileType.Hand.GetPile(player).Cards.Select(Key).ToArray();
                     // Next turn's draw belongs to the next decision, not this turn's sightings.
