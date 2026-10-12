@@ -67,9 +67,15 @@ public abstract class LegacyCard : CustomCardModel
         RefreshInheritedStats();
     }
     public void CaptureOwnerTraits() {
-        if(TraitSnapshot.Length>0)return;
-        TraitSnapshot=JsonSerializer.Serialize(PlayerBloodlines.Heir(Owner).traits);
-        RefreshInheritedStats();
+        if(Owner==null)return;
+        var traits=JsonSerializer.Serialize(PlayerBloodlines.Heir(Owner).traits);
+        if(TraitSnapshot==traits)return;
+        // Rebinding replaces the inherited contribution without erasing
+        // card-local buffs, enchantments or retained growth.
+        var previous=new CardDesign(Key,IsUpgraded,TraitSnapshot.Length>0?JsonSerializer.Deserialize<string[]>(TraitSnapshot)!:[]);
+        TraitSnapshot=traits;
+        DynamicVars.Damage.BaseValue+=DesignCard.Damage-previous.Damage;
+        DynamicVars.Block.BaseValue+=DesignCard.Block-previous.Block;
     }
     protected override void AfterDeserialized() { base.AfterDeserialized(); RefreshInheritedStats(); }
     protected override void AfterDowngraded() { base.AfterDowngraded(); RefreshInheritedStats(); }
