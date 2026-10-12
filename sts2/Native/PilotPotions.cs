@@ -1,4 +1,5 @@
 using Godot;
+using HarmonyLib;
 using MegaCrit.Sts2.Core.Combat;
 using MegaCrit.Sts2.Core.Entities.Players;
 using MegaCrit.Sts2.Core.Models.Potions;
@@ -9,11 +10,12 @@ namespace SpireLegacy;
 // Opt-in pilot only. Deliberately supports one verified defensive potion, not a generic potion solver.
 public static class PilotPotions
 {
+    private static readonly System.Reflection.PropertyInfo Permission=AccessTools.Property(typeof(Player),"CanUseOrRemovePotions")??AccessTools.Property(typeof(Player),"CanRemovePotions")??throw new MissingMemberException("Native potion permission property unavailable");
     public record Used(string Id,int Incoming,int Hp,int PreviousBlock,int GainedBlock);
     public static async Task<Used?> EmergencyBlock(Player player,int incoming)
     {
         // Match native combat-use restrictions without accessing a popup that may not exist.
-        if(!CombatManager.Instance.IsInProgress||CombatManager.Instance.PlayerActionsDisabled||player.PlayerCombatState?.Phase!=PlayerTurnPhase.Play||player.Creature.CombatState?.CurrentSide!=player.Creature.Side||!player.CanRemovePotions||NOverlayStack.Instance?.Peek()!=null||!PilotHealth.NeedsEmergencyBlock(player.Creature.CurrentHp,player.Creature.Block,incoming))return null;
+        if(!CombatManager.Instance.IsInProgress||CombatManager.Instance.PlayerActionsDisabled||player.PlayerCombatState?.Phase!=PlayerTurnPhase.Play||player.Creature.CombatState?.CurrentSide!=player.Creature.Side||!(bool)Permission.GetValue(player)!||NOverlayStack.Instance?.Peek()!=null||!PilotHealth.NeedsEmergencyBlock(player.Creature.CurrentHp,player.Creature.Block,incoming))return null;
         var tree=(SceneTree)Engine.GetMainLoop();
         var potion=player.Potions.OfType<BlockPotion>().FirstOrDefault(p=>!p.IsQueued&&p.PassesCustomUsabilityCheck&&p.IsValidTarget(player.Creature));
         if(potion==null)return null;

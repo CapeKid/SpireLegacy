@@ -29,13 +29,20 @@ public static class ControlPilotOracle
             foreach(var card in hand.Cards.ToArray())await CardPileCmd.Add(card,PileType.Draw,skipVisuals:true);
             var enemies=player.Creature.CombatState!.HittableEnemies.ToArray();foreach(var enemy in enemies){enemy.SetMaxHpInternal(1000);enemy.SetCurrentHpInternal(1000);}
             async Task<CardModel> Add<T>() where T:CardModel {var card=player.Creature.CombatState.CreateCard(ModelDb.Card<T>(),player);await CardPileCmd.Add(card,PileType.Hand,skipVisuals:true);return card;}
-            if(kind is "potion-danger" or "potion-healthy" or "potion-covered" or "potion-campaign"){
+            if(kind is "potion-danger" or "potion-healthy" or "potion-covered" or "potion-disabled" or "potion-campaign"){
                 var potion=ModelDb.Potion<MegaCrit.Sts2.Core.Models.Potions.BlockPotion>().ToMutable();
                 if(!(await PotionCmd.TryToProcure(potion,player)).success)throw new InvalidDataException("Fixture potion procurement failed");
                 for(var frame=0;frame<4;frame++)await tree.ToSignal(tree,SceneTree.SignalName.ProcessFrame);
                 player.Creature.SetCurrentHpInternal(kind=="potion-healthy"?80:1);
                 if(kind=="potion-covered")await CreatureCmd.GainBlock(player.Creature,12,MegaCrit.Sts2.Core.ValueProps.ValueProp.Unpowered,null);
                 var energy=player.PlayerCombatState!.Energy;var hp=player.Creature.CurrentHp;
+                if(kind=="potion-disabled"){
+                    var permission=HarmonyLib.AccessTools.Property(typeof(Player),"CanUseOrRemovePotions")??HarmonyLib.AccessTools.Property(typeof(Player),"CanRemovePotions");
+                    permission!.SetValue(player,false);
+                    try{if(await PilotPotions.EmergencyBlock(player,12)!=null)throw new InvalidDataException("Pilot bypassed native potion permission");}
+                    finally{permission.SetValue(player,true);}
+                    return new{kind,used=false,consumed=!player.Potions.Contains(potion),block=player.Creature.Block,energySpent=energy-player.PlayerCombatState.Energy,hpLost=hp-player.Creature.CurrentHp};
+                }
                 if(kind=="potion-campaign"){
                     var incoming=TacticalPilot.Incoming(player);
                     if(incoming<=0||incoming>12)throw new InvalidDataException("Fixture incoming is outside Block Potion rescue range");

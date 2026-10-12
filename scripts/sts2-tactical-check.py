@@ -24,11 +24,11 @@ def send(command,**args):
     assert {m['id'] for m in reply['metadata']['mods']}=={'BaseLib','SpireLegacy'}
     return reply['result']
 # Exercise the new queue integration first, before the longer retained-card regressions.
-for kind in ['potion-danger','potion-healthy','potion-covered','potion-campaign']:
+for kind in ['potion-danger','potion-healthy','potion-covered','potion-disabled','potion-campaign']:
     send('start',**{'class':'ironclad','manorTier':0,'quick':False,'traits':[],'seed':'SPIRELEGACY-CONTROL-CHECK'})
     r=send('balance-control-probe',kind=kind)
     if kind=='potion-danger':assert r['used'] and r['consumed'] and r['block']==12 and r['energySpent']==r['hpLost']==0,r
-    elif kind in {'potion-healthy','potion-covered'}:assert not r['used'] and not r['consumed'] and r['energySpent']==r['hpLost']==0,r
+    elif kind in {'potion-healthy','potion-covered','potion-disabled'}:assert not r['used'] and not r['consumed'] and r['energySpent']==r['hpLost']==0,r
     else:assert r['consumed'] and r['alive'] and r['hp']==1 and r['journaled'],r
     print(tag,r,flush=True)
 for kind in ['vulnerable','exhaust','lethal','area','execute','execute-upgraded','guarded','guarded-upgraded','marked','marked-upgraded','retained','retained-upgraded','block-finisher','block-finisher-upgraded','chain-finisher','chain-finisher-upgraded','exhaust-finisher','exhaust-finisher-upgraded']:
