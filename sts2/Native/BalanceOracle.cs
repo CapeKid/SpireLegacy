@@ -91,7 +91,7 @@ public static class BalanceOracle
                     var fuel=new List<LegacyCard>();for(var i=0;i<4;i++)fuel.Add(await Add(player,"mage_guard"));
                     var automatic=await Add(player,"mage_crystal_guard");
                     var amount=player.Creature.Powers.OfType<LegacyPower>().Single(p=>p.Key=="well_laid").Amount;
-                    using(MaxChoices())await CompleteProtectedTurn(player);
+                    await CompleteProtectedTurn(player);
                     return new{key,upgraded,energyDelta,amount,retained=fuel.Count(c=>hand.Cards.Contains(c)),automaticRetained=hand.Cards.Contains(automatic),roundTrip,pile};
                 }
                 return new{key,upgraded,supported,energyDelta,blockDelta,healing,drawn,damage,setupSpent,roundTrip,pile};
@@ -221,7 +221,7 @@ public static class BalanceOracle
         }
     }
     private static void Count(Dictionary<string,int> counts,CardModel card){var key=card is LegacyCard lc?lc.Key:card.Id.ToString();counts[key]=counts.GetValueOrDefault(key)+1;}
-    private static IDisposable MaxChoices(){
+    public static IDisposable MaxChoices(){
         var method=AccessTools.Method(typeof(CardSelectCmd),"UseSelector",[typeof(ICardSelector),typeof(bool)])??AccessTools.Method(typeof(CardSelectCmd),"UseSelector",[typeof(ICardSelector)]);
         return (IDisposable)method.Invoke(null,method.GetParameters().Length==2?[new MaximumSelector(),false]:[new MaximumSelector()])!;
     }
