@@ -58,6 +58,14 @@ try:
         send(host,'coop-host',**{'class':'knight','traits':['easybreakables'],'port':port,'manor':{'vitality':1}})
         send(host,'coop-ready')
         send(guest,'coop-join',**{'class':'mage','traits':['cantattack'],'port':port,'manor':{}})
+        # Ready is correctly refused until the authenticated lobby session arrives.
+        # Wait for that boundary instead of racing the native message pump.
+        deadline=time.monotonic()+30
+        while time.monotonic()<deadline:
+            a=send(host,'coop-state');b=send(guest,'coop-state')
+            if a['session'] and a['session']==b['session'] and len(a['lobby'])==len(b['lobby'])==2:break
+            time.sleep(.2)
+        else:raise TimeoutError('Authenticated lobby session')
         send(guest,'coop-ready')
         def peers(phase=None):
             deadline=time.monotonic()+45
