@@ -18,7 +18,7 @@ public static class TraitAuditOracle
     public static async Task<object> Redraw(RunState run)
     {
         var player=run.Players.Single();var context=new BlockingPlayerChoiceContext();
-        var card=(LegacyCard)run.CreateCard(NativeCards.Get(PlayerBloodlines.Heir(player).classId+"_strike"),player);
+        var card=(LegacyCard)player.Creature.CombatState!.CreateCard(NativeCards.Get(PlayerBloodlines.Heir(player).classId+"_strike"),player);
         await CardPileCmd.Add(card,PileType.Draw,CardPilePosition.Top,skipVisuals:true);
         await CardPileCmd.Draw(context,1,player);
         var first=card.EnergyCost.GetWithModifiers(CostModifiers.All);
