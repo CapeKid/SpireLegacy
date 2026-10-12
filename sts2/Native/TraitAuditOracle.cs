@@ -16,6 +16,26 @@ public static class TraitAuditOracle
 {
     private static void Require(bool value,string message){if(!value)throw new InvalidDataException(message);}
     private static LegacyCard? redrawCard;
+    public static async Task<object> Restrictions(RunState run)
+    {
+        var player=run.Players.Single();var combat=player.Creature.CombatState!;
+        var context=new BlockingPlayerChoiceContext();await PlayerCmd.GainEnergy(20,player);
+        var results=new List<object>();
+        foreach(var canonical in new CardModel[]{ModelDb.Card<MegaCrit.Sts2.Core.Models.Cards.FlashOfSteel>(),ModelDb.Card<MegaCrit.Sts2.Core.Models.Cards.StrikeIronclad>(),NativeCards.Get("ranger_barbed_arrow"),ModelDb.Card<MegaCrit.Sts2.Core.Models.Cards.Finesse>()}) {
+            var card=combat.CreateCard(canonical,player);await CardPileCmd.Add(card,PileType.Hand,skipVisuals:true);
+            var allowed=!(PlayerBloodlines.Traits(player).Has("pacifist")&&card.Type==CardType.Attack);
+            var energy=player.PlayerCombatState!.Energy;var target=card.TargetType==TargetType.AnyEnemy?combat.GetOpponentsOf(player.Creature).First(c=>c.IsAlive):null;
+            var accepted=card.TryManualPlay(target);Require(accepted==allowed,"Pacifist native/colorless play restriction disagrees: "+card.Id);
+            if(accepted) {
+                var tree=(SceneTree)Engine.GetMainLoop();var deadline=Time.GetTicksMsec()+15000;
+                while(card.Pile?.Type is PileType.Hand or PileType.Play||MegaCrit.Sts2.Core.Runs.RunManager.Instance.ActionExecutor.IsRunning) {
+                    if(Time.GetTicksMsec()>deadline)throw new TimeoutException("Native/colorless card did not resolve.");await tree.ToSignal(tree,SceneTree.SignalName.ProcessFrame);
+                }
+            }else Require(card.Pile?.Type==PileType.Hand&&player.PlayerCombatState.Energy==energy,"Rejected Attack spent energy or left hand.");
+            results.Add(new{card=card.Id.ToString(),allowed,accepted,energyBefore=energy,energyAfter=player.PlayerCombatState.Energy,pile=card.Pile?.Type.ToString()});
+        }
+        return results;
+    }
     public static async Task<object> Triggers(RunState run)
     {
         var player=run.Players.Single();var rules=PlayerBloodlines.Traits(player);
@@ -70,21 +90,25 @@ public static class TraitAuditOracle
             var peer=Player.FromSerializable(data);peer.RunState=run;return peer;
         }
         var pacifist=Peer(991,["cantattack"]);var ordinary=Peer(992,[]);var checks=new List<object>();
+        void Assign(LegacyCard card,Player owner) {
+            var give=AccessTools.Method(typeof(CardModel),"GiveToAnotherPlayer");
+            if(give!=null)give.Invoke(card,[owner]);else {card.Owner=null!;card.Owner=owner;}
+        }
         foreach(var row in Design.Rows("cards").Where(r=>r.Text("rarity")=="BASIC"))foreach(var upgrade in new[]{false,true}) {
             var card=(LegacyCard)run.CreateCard(NativeCards.Get(row.Text("id")),pacifist);
             if(upgrade)CardCmd.Upgrade(card);
-            var source=card.Type.ToString();card.Owner=null!;card.Owner=ordinary;
+            var source=card.Type.ToString();Assign(card,ordinary);
             var expected=new CardDesign(card.Key,upgrade,[]);
             var normalType=Enum.Parse<CardType>(row.Text("type"),true);
             var rebound=card.Type==normalType&&card.DynamicVars.Damage.BaseValue==expected.Damage&&card.DynamicVars.Block.BaseValue==expected.Block&&card.TraitSnapshot=="[]";
-            card.Owner=null!;card.Owner=pacifist;
+            Assign(card,pacifist);
             var mercy=new CardDesign(card.Key,upgrade,["cantattack"]);
             var returned=card.Type==(mercy.Mercy?CardType.Skill:normalType)&&card.DynamicVars.Damage.BaseValue==mercy.Damage&&card.DynamicVars.Block.BaseValue==mercy.Block;
             var method=AccessTools.Method(typeof(CardModel),"CreateDupe");
             var duplicate=(LegacyCard)method.Invoke(card,method.GetParameters().Select(p=>p.ParameterType==typeof(Player)?ordinary:p.HasDefaultValue?p.DefaultValue:throw new MissingMethodException("Unsupported duplicate parameter: "+p)).ToArray())!;
             if(duplicate.Owner!=ordinary){duplicate.Owner=null!;duplicate.Owner=ordinary;}
             var duplicatedRecipient=duplicate.Type==normalType&&duplicate.DynamicVars.Damage.BaseValue==expected.Damage&&duplicate.DynamicVars.Block.BaseValue==expected.Block;
-            card.DynamicVars.Damage.BaseValue+=2;card.Owner=null!;card.Owner=ordinary;
+            card.DynamicVars.Damage.BaseValue+=2;Assign(card,ordinary);
             var preservesBuff=card.DynamicVars.Damage.BaseValue==expected.Damage+2;
             checks.Add(new{card.Key,upgrade,source,rebound,returned,duplicatedRecipient,preservesBuff});
             run.RemoveCard(duplicate);run.RemoveCard(card);

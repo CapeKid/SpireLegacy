@@ -30,7 +30,7 @@ if 'baseline' in tag:
     send('abandon');print(tag,'reproduced stale recipient inheritance and repeated-draw cost stacking',flush=True);sys.exit(0)
 assert all(r['rebound'] and r['returned'] and r['duplicatedRecipient'] and r['preservesBuff'] for r in transfers),transfers
 traits=json.loads((root/'sheets/traits.json').read_text())
-if 'smoke' in tag:traits=[r for r in traits if r['id'] in ['nocolor','manacostanddamageup','disarmonhurt','manafromhurt','vampire','cheeronkills','itemsgoflying','explosiveenemies']]
+if 'smoke' in tag:traits=[r for r in traits if r['id'] in ['nocolor','cantattack','manacostanddamageup','disarmonhurt','manafromhurt','vampire','cheeronkills','itemsgoflying','explosiveenemies']]
 mutations=6*sum(r['rarity']=='BASIC' for r in json.loads((root/'sheets/cards.json').read_text()))
 for index,trait in enumerate(traits):
     cls=['knight','mage','ranger'][index%3]
@@ -64,6 +64,7 @@ for index,trait in enumerate(traits):
     if trait['effect']=='histrionic':
         send('trait-hit',amount=2)
         assert any(v['flash']>0 for v in send('trait-appearance'))
+    if trait['effect']=='pacifist':send('trait-restrictions')
     if trait['effect'] not in ['fragile','treasure_gold','chest','histrionic','costly','shock']:
         send('trait-guard',amount=100)
         for upgraded in [False,True]:
@@ -73,6 +74,7 @@ for index,trait in enumerate(traits):
     if index%10==9:print(tag,index+1,'trait probes pass',flush=True)
 if 'smoke' in tag:
     send('abandon');print(tag,'focused native trigger and ownership smoke passes',flush=True);sys.exit(0)
+start('ironclad',[]);send('trait-restrictions')
 for cls in ['knight','mage','ranger']:
     for pair in [['megahealth','cheeronkills'],['superhealer','nomeat'],['cantattack','breakpropsformana']]:
         start(cls,pair);send('trait-audit')

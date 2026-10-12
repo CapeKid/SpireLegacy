@@ -90,6 +90,23 @@ public static class CaptureOwnerInheritance
     }
 }
 
+// Public-beta's owner-aware APIs write the native backing field directly.
+// Regular has neither method; keep those native branch differences optional.
+[HarmonyPatch]
+public static class CaptureCopiedOwnerInheritance
+{
+    public static bool Prepare()=>AccessTools.Method(typeof(CardModel),"CreateCloneForPlayer")!=null;
+    public static System.Reflection.MethodBase TargetMethod()=>AccessTools.Method(typeof(CardModel),"CreateCloneForPlayer");
+    public static void Postfix(CardModel __result){if(__result is LegacyCard card)card.CaptureOwnerTraits();}
+}
+[HarmonyPatch]
+public static class CaptureTransferredOwnerInheritance
+{
+    public static bool Prepare()=>AccessTools.Method(typeof(CardModel),"GiveToAnotherPlayer")!=null;
+    public static System.Reflection.MethodBase TargetMethod()=>AccessTools.Method(typeof(CardModel),"GiveToAnotherPlayer");
+    public static void Postfix(CardModel __instance){if(__instance is LegacyCard card)card.CaptureOwnerTraits();}
+}
+
 [HarmonyPatch(typeof(Player),nameof(Player.SyncWithSerializedPlayer))]
 public static class SyncSavedBloodline
 {
