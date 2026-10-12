@@ -20,7 +20,7 @@ public static class PilotRewards
             _=>0
         };
     }
-    public static double Score(Card offer,IReadOnlyList<Card> deck)
+    public static double Score(Card offer,IReadOnlyList<Card> deck,bool defensive=false)
     {
         var cost=Math.Max(1,offer.Cost);
         var score=(offer.Damage+offer.Block)/cost+offer.Draw*3+offer.Energy*4+offer.Poison*2+offer.Strength*4+offer.Weak*2+offer.Vulnerable*2+(offer.Power?6:0);
@@ -32,12 +32,19 @@ public static class PilotRewards
         if(deck.Any(c=>c.Engine)&&offer.Exhaust)score+=4;
         if(deck.Count(c=>c.Exhaust)>=2&&offer.Engine)score+=6;
         score-=deck.Count(c=>c.Id==offer.Id)*3;
+        if(defensive&&deck.Count>0){
+            // Quality/affordability matter as well as the count of defensive cards.
+            // Three immediate Block per average draw is an explicit heuristic target.
+            var density=deck.Average(c=>c.Block/Math.Max(1,c.Cost));
+            var pressure=Math.Clamp(3-density,0,.5);
+            score+=Math.Min(3,offer.Block/cost*pressure);
+        }
         return score;
     }
-    public static int? Pick(IReadOnlyList<Card> offers,IReadOnlyList<Card> deck)
+    public static int? Pick(IReadOnlyList<Card> offers,IReadOnlyList<Card> deck,bool defensive=false)
     {
         if(offers.Count==0)return null;
-        var best=Enumerable.Range(0,offers.Count).OrderByDescending(i=>Score(offers[i],deck)).ThenBy(i=>offers[i].Id,StringComparer.Ordinal).First();
-        return Score(offers[best],deck)>=5?best:null;
+        var best=Enumerable.Range(0,offers.Count).OrderByDescending(i=>Score(offers[i],deck,defensive)).ThenBy(i=>offers[i].Id,StringComparer.Ordinal).First();
+        return Score(offers[best],deck,defensive)>=5?best:null;
     }
 }

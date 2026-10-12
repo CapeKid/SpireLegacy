@@ -21,10 +21,10 @@ seed = sys.argv[6] if len(sys.argv) > 6 else 'SPIRELEGACY-CAMPAIGN-1'
 ascension = int(sys.argv[7]) if len(sys.argv) > 7 else 0
 traits = sys.argv[8].split(',') if len(sys.argv) > 8 and sys.argv[8] not in {'','-'} else []
 reward_policy=sys.argv[9] if len(sys.argv)>9 else 'standalone'
-assert reward_policy in {'standalone','deck'}
+assert reward_policy in {'standalone','deck','defensive'}
 forced_reward=sys.argv[10] if len(sys.argv)>10 and sys.argv[10]!='-' else None
 forced_floor=int(sys.argv[11]) if len(sys.argv)>11 else 0
-assert forced_reward is None or (reward_policy=='deck' and forced_floor>0)
+assert forced_reward is None or (reward_policy!='standalone' and forced_floor>0)
 assert tag and all(c.isalnum() or c in '-_' for c in tag)
 expected = hashlib.sha256((root/'sts2/bin/Release/net9.0/SpireLegacy.dll').read_bytes()).hexdigest()
 output = root/'private/sts2-evidence'/f'balance-campaign-{tag}.json'

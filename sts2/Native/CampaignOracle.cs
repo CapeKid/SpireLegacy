@@ -35,8 +35,8 @@ public static class CampaignOracle
     {
         using(selector){
             if(policy is not ("defense" or "attack" or "tactical"))throw new ArgumentException("Unknown campaign policy.");
-            if(rewardPolicy is not ("standalone" or "deck"))throw new ArgumentException("Unknown reward policy.");
-            if(forcedReward!=null&&(rewardPolicy!="deck"||forcedRewardFloor<=0))throw new ArgumentException("Reward intervention requires deck policy and a positive floor.");
+            if(rewardPolicy is not ("standalone" or "deck" or "defensive"))throw new ArgumentException("Unknown reward policy.");
+            if(forcedReward!=null&&(rewardPolicy=="standalone"||forcedRewardFloor<=0))throw new ArgumentException("Reward intervention requires deck policy and a positive floor.");
             var player=run.Players.Single();
             object Snapshot()=>new{character=player.Character.Id.ToString(),act=run.CurrentActIndex+1,floor=run.TotalFloor,room=run.CurrentRoom?.RoomType.ToString(),hp=player.Creature.CurrentHp,maxHp=player.Creature.MaxHp,gold=player.Gold,crowns=Runtime.Profile.crowns,lastEarned=Runtime.Profile.lastEarned,wins=player.Character is HeirCharacter?Runtime.Profile.chronicle.classes.Values.Sum(h=>h.wins):run.IsGameOver&&run.CurrentRoom is MegaCrit.Sts2.Core.Rooms.EventRoom e&&e.LocalMutableEvent is MegaCrit.Sts2.Core.Models.Events.TheArchitect?1:0,manor=Runtime.Profile.manor,deck=player.Deck.Cards.Select(Key).ToArray(),relics=player.Relics.Select(r=>r.Id.ToString()).ToArray()};
             object Result(string action,object? detail=null)=>new{action,detail,state=Snapshot()};
@@ -52,13 +52,13 @@ public static class CampaignOracle
                 var holders=UiHelper.FindAll<NCardHolder>(cards).Where(h=>h.CardModel!=null).ToArray();
                 if(holders.Length==0)return Result("wait");
                 var deck=player.Deck.Cards.Select(PilotCardInfo.Describe).ToArray();
-                double Score(CardModel c)=>rewardPolicy=="deck"?PilotRewards.Score(PilotCardInfo.Describe(c),deck):BalanceOracle.Score(c,0);
+                double Score(CardModel c)=>rewardPolicy!="standalone"?PilotRewards.Score(PilotCardInfo.Describe(c),deck,rewardPolicy=="defensive"):BalanceOracle.Score(c,0);
                 var offers=holders.Select(h=>new{id=Key(h.CardModel!),upgraded=h.CardModel!.IsUpgraded,score=Score(h.CardModel!)}).ToArray();
                 var interventionKey=$"{forcedRewardFloor}:{forcedReward}";
                 var forced=forcedReward!=null&&run.TotalFloor==forcedRewardFloor&&!appliedInterventions.GetOrCreateValue(run).Contains(interventionKey)?holders.FirstOrDefault(h=>Key(h.CardModel!)==forcedReward):null;
-                var index=forced!=null?Array.IndexOf(holders,forced):rewardPolicy=="deck"?PilotRewards.Pick(holders.Select(h=>PilotCardInfo.Describe(h.CardModel!)).ToArray(),deck):0;
+                var index=forced!=null?Array.IndexOf(holders,forced):rewardPolicy!="standalone"?PilotRewards.Pick(holders.Select(h=>PilotCardInfo.Describe(h.CardModel!)).ToArray(),deck,rewardPolicy=="defensive"):0;
                 var parent=NativeTestBridge.Descendants(Tree.Root).OfType<NRewardButton>().Select(b=>b.Reward).OfType<CardReward>().FirstOrDefault(r=>r.Cards.Any(c=>c==holders[0].CardModel));
-                if(rewardPolicy=="deck"&&index==null&&parent?.CanSkip==true){
+                if(rewardPolicy!="standalone"&&index==null&&parent?.CanSkip==true){
                     // Resolve the same nullable choice consumed by native cancellation. Let CardReward close its own screen.
                     var pending=(TaskCompletionSource<int?>)AccessTools.Field(cards.GetType(),"_completionSource").GetValue(cards)!;
                     if(!pending.TrySetResult(null))return Result("wait");

@@ -13,11 +13,11 @@ param(
     [switch]$RewardChecks,
     [string]$ForcedReward='',
     [int]$ForcedRewardFloor=0,
-    [ValidateSet('standalone','deck')][string]$Rewards='standalone'
+    [ValidateSet('standalone','deck','defensive')][string]$Rewards='standalone'
 )
 $ErrorActionPreference='Stop'
 if(([int]$Checks.IsPresent+[int]$DelayedChecks.IsPresent+[int]$RewardChecks.IsPresent) -gt 1){throw 'Select one fixture driver.'}
-if($ForcedReward -and ($ForcedRewardFloor -le 0 -or $Rewards -ne 'deck')){throw 'Interventions require deck rewards and a positive floor.'}
+if($ForcedReward -and ($ForcedRewardFloor -le 0 -or $Rewards -eq 'standalone')){throw 'Interventions require deck rewards and a positive floor.'}
 $repoPath=Split-Path $PSScriptRoot -Parent
 $privatePath=(Resolve-Path (Join-Path $repoPath 'private')).Path
 $labPath=(Resolve-Path (Join-Path $repoPath $Lab)).Path
