@@ -36,5 +36,8 @@ public static class FamilySnapshot
         return run;
     }
     public static bool CanSettle(FamilyProfile profile,FamilyProfile.FamilyRun run,ulong localNetId)=>
-        (run.ownerNetId==localNetId||!run.coop&&run.ownerNetId==0)&&run.familyId==profile.familyId&&profile.active?.id==run.id&&profile.settledId!=run.id&&!profile.chronicle.settledRuns.Contains(run.id);
+        (run.ownerNetId==localNetId||!run.coop&&run.ownerNetId==0)&&run.familyId==profile.familyId&&
+        profile.active is {} active&&active.id==run.id&&active.familyId==profile.familyId&&
+        active.ownerNetId==run.ownerNetId&&active.coop==run.coop&&
+        profile.settledId!=run.id&&!profile.chronicle.settledRuns.Contains(run.id);
 }

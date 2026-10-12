@@ -62,15 +62,18 @@ public static class BeginBloodlineRun
     public static void Postfix(RunState state)
     {
         if (!state.Players.Any(p => p.Character is HeirCharacter)) return;
-        if (Runtime.Profile.active is {} previous) Runtime.Profile.Settle(previous.id, previous.floors, 0, false);
-        // Keep the character chosen for this new run rather than replacing it with the new offers.
-        var relic = state.Players.First(p => p.Character is HeirCharacter).Relics.OfType<BloodlineRelic>().Single();
-        if (relic.SelectedHeir.Length > 0) Runtime.Profile.selected = JsonSerializer.Deserialize<FamilyProfile.Heir>(relic.SelectedHeir,FamilyProfile.JsonOptions);
         var player=state.Players.First(p=>p.Character is HeirCharacter);
+        var relic=player.Relics.OfType<BloodlineRelic>().Single();
         var run=PlayerBloodlines.State(player)!;
-        Runtime.Profile.active=run;Runtime.Profile.selected=null;
-        relic.FamilyRunSnapshot=FamilySnapshot.Serialize(run);
-        Runtime.Profile.Save(Runtime.FamilyPath);
+        try {
+            if(!Runtime.Profile.CommitRunStart(run,Runtime.FamilyPath))throw new InvalidDataException("Cannot begin an already settled or foreign family climb.");
+        } finally {
+            // A failure after the durable write still committed the embarkation.
+            if(Runtime.Profile.active is {} committed&&committed.id==run.id) {
+                run=committed;((HeirCharacter)player.Character).Bloodline=run;
+                relic.FamilyRunSnapshot=FamilySnapshot.Serialize(run);
+            }
+        }
         if(run.quick)state.ExtraFields.StartedWithNeow=false;
     }
 }
@@ -109,12 +112,12 @@ public static class ResumeBloodlineRun
 [HarmonyPatch(typeof(RunManager), nameof(RunManager.OnEnded))]
 public static class SettleBloodlineRun
 {
-    public static void Postfix(RunManager __instance, bool isVictory)
+    // Commit the crown bank before native OnEnded can delete the resumable run.
+    public static void Prefix(RunManager __instance, bool isVictory)
     {
         var state = (RunState?)AccessTools.Property(typeof(RunManager), "State").GetValue(__instance);
         var player = state?.Players.FirstOrDefault(p => p.Character is HeirCharacter && p.NetId==__instance.NetService.NetId);
         if (player == null || PlayerBloodlines.State(player) is not {} run || !FamilySnapshot.CanSettle(Runtime.Profile,run,__instance.NetService.NetId)) return;
-        Runtime.Profile.Settle(run.id,state!.TotalFloor,player.Gold,isVictory);
-        Runtime.Profile.Save(Runtime.FamilyPath);
+        Runtime.Profile.CommitSettlement(run,__instance.NetService.NetId,state!.TotalFloor,player.Gold,isVictory,Runtime.FamilyPath);
     }
 }

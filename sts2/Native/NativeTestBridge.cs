@@ -148,6 +148,9 @@ public static class NativeTestBridge
                 case "manor": ManorUi.Open(); result = new { open = true }; break;
                 case "chronicle-fixture":result=ChronicleOracle.Fixture(request.GetProperty("unlocked").GetBoolean());break;
                 case "chronicle-state":result=ChronicleOracle.State();break;
+                case "lifecycle-state":result=LifecycleOracle.Inspect();break;
+                case "lifecycle-complete":result=LifecycleOracle.Completion(RunState(),request.GetProperty("victory").GetBoolean(),request.GetProperty("fault").GetString()!);break;
+                case "lifecycle-owners":result=LifecycleOracle.OwnerIsolation(RunState());break;
                 case "chronicle-eligibility":result=ChronicleOracle.RunEligibility(RunState());break;
                 case "manor-state":
                     var manor=Descendants(Tree.Root).OfType<ManorInput>().Single();
