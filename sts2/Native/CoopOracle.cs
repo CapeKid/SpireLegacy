@@ -158,6 +158,8 @@ public static class CoopOracle
         }
         menu.SubmenuStack.Push(screen);
         var button=NativeTestBridge.Descendants(screen).OfType<NCharacterSelectButton>().Single(b=>choice=="ironclad"?b.Character is MegaCrit.Sts2.Core.Models.Characters.Ironclad:choice=="random"?b.Character is MegaCrit.Sts2.Core.Models.Characters.RandomCharacter:b.Character is HeirCharacter);
+        // The cached submenu built this button before the fixture revealed epochs.
+        if(choice=="random")button.DebugUnlock();
         screen.SelectCharacter(button,button.Character);
         return State();
     }
