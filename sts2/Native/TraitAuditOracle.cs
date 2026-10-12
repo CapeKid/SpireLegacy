@@ -1,9 +1,13 @@
 using System.Text.Json;
 using Godot;
+using HarmonyLib;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Players;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Runs;
+using MegaCrit.Sts2.Core.Entities.Cards;
+using MegaCrit.Sts2.Core.GameActions.Multiplayer;
+using MegaCrit.Sts2.Core.ValueProps;
 
 namespace SpireLegacy;
 
@@ -11,6 +15,19 @@ namespace SpireLegacy;
 public static class TraitAuditOracle
 {
     private static void Require(bool value,string message){if(!value)throw new InvalidDataException(message);}
+    public static async Task<object> Redraw(RunState run)
+    {
+        var player=run.Players.Single();var context=new BlockingPlayerChoiceContext();
+        var card=(LegacyCard)run.CreateCard(NativeCards.Get(PlayerBloodlines.Heir(player).classId+"_strike"),player);
+        await CardPileCmd.Add(card,PileType.Draw,CardPilePosition.Top,skipVisuals:true);
+        await CardPileCmd.Draw(context,1,player);
+        var first=card.EnergyCost.GetWithModifiers(CostModifiers.All);
+        await CardCmd.Discard(context,card);
+        await CardPileCmd.Add(card,PileType.Draw,CardPilePosition.Top,skipVisuals:true);
+        await CardPileCmd.Draw(context,1,player);
+        var second=card.EnergyCost.GetWithModifiers(CostModifiers.All);
+        return new{first,second,repeatedDrawStable=first==second};
+    }
     public static object Transfer(RunState run)
     {
         var local=run.Players.First(p=>p.Character is HeirCharacter);
@@ -42,6 +59,8 @@ public static class TraitAuditOracle
         var relic=player.Relics.OfType<BloodlineRelic>().Single();
         var expectedHp=rows.Any(r=>r.Text("effect")=="fragile")?1:Math.Max(20,Design.Get("classes",heir.classId).Number("hp")+rows.Sum(r=>r.Number("hp")));
         Require(player.Creature.MaxHp==expectedHp,"Native starting HP disagrees with trait fields.");
+        Require(player.Creature.GetPowerAmount<MegaCrit.Sts2.Core.Models.Powers.StrengthPower>()==rows.Sum(r=>r.Number("strength")),"Starting inherited Strength mismatch.");
+        Require(player.Creature.GetPowerAmount<MegaCrit.Sts2.Core.Models.Powers.DexterityPower>()==rows.Sum(r=>r.Number("dexterity")),"Starting inherited Dexterity mismatch.");
         var before=player.Creature.CurrentHp;
         decimal expectedHeal=9;
         if(rows.Any(r=>r.Text("effect")=="no_heal"))expectedHeal=0;
@@ -71,7 +90,9 @@ public static class TraitAuditOracle
                     mutations++;
                 }
                 Check(card);
-                var duplicate=(LegacyCard)card.CreateDupe();if(duplicate.Owner==null)duplicate.Owner=player;Check(duplicate);
+                var duplicateMethod=AccessTools.Method(typeof(CardModel),"CreateDupe");
+                var duplicate=(LegacyCard)duplicateMethod.Invoke(card,duplicateMethod.GetParameters().Select(p=>p.HasDefaultValue?p.DefaultValue:throw new MissingMethodException("Unsupported duplicate parameter: "+p)).ToArray())!;
+                if(duplicate.Owner==null)duplicate.Owner=player;Check(duplicate);
                 var loaded=(LegacyCard)run.LoadCard(card.ToSerializable(),player);Check(loaded);run.RemoveCard(loaded);
             }
             CardCmd.Downgrade(card);Require(card.DynamicVars.Damage.BaseValue==new CardDesign(card.Key,false,heir.traits).Damage,"Downgraded gene mismatch.");run.RemoveCard(card);

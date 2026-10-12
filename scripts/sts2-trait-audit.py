@@ -24,19 +24,33 @@ def start(cls,traits,quick=True):
 start('knight',[])
 transfers=send('trait-transfer')
 if 'baseline' in tag:
-    assert any(not r['rebound'] for r in transfers),transfers
-    send('abandon');print(tag,'reproduced stale recipient inheritance',flush=True);sys.exit(0)
+    if 'cost' not in tag:assert any(not r['rebound'] for r in transfers),transfers
+    start('knight',['manacostanddamageup']);redraw=send('trait-redraw');assert not redraw['repeatedDrawStable'],redraw
+    send('abandon');print(tag,'reproduced stale recipient inheritance and repeated-draw cost stacking',flush=True);sys.exit(0)
 assert all(r['rebound'] and r['returned'] for r in transfers),transfers
 traits=json.loads((root/'sheets/traits.json').read_text())
+mutations=6*sum(r['rarity']=='BASIC' for r in json.loads((root/'sheets/cards.json').read_text()))
 for index,trait in enumerate(traits):
     cls=['knight','mage','ranger'][index%3]
-    start(cls,[trait['id']]);result=send('trait-audit');assert result['mutations']==36,result
+    start(cls,[trait['id']]);result=send('trait-audit');assert result['mutations']==mutations,result
     look=send('trait-appearance')
     assert look and any(v['classId']==cls and v['visible'] for v in look)
     if trait['effect']=='rainbow':assert any(v['rainbow'] and v['motes']==6 for v in look)
     if trait['effect']=='gray':assert any(v['gray'] for v in look)
     if trait['effect']=='sepia':assert any(v['sepia'] for v in look)
     if trait['effect'] in ['nature','blue','medium','festive']:assert any(trait['effect'] in v['accents'] for v in look)
+    state=send('state')
+    if trait['effect']=='costly':assert send('trait-redraw')['repeatedDrawStable']
+    if trait['effect']=='algesia':assert send('trait-hit',amount=2)['hp']==state['hp']-4
+    if trait['effect']=='hurt_weak':assert any('WEAK' in p['id'] and p['amount']==1 for p in send('trait-hit',amount=2)['powers'])
+    if trait['effect']=='opening_weak':assert any('WEAK' in p['id'] and p['amount']==1 for p in state['powers'])
+    if trait['effect']=='enemy_guard':assert all(e['block']==trait['amount'] for e in state['enemies'])
+    if trait['effect']=='enemy_strength':assert all(any('STRENGTH' in p['id'] and p['amount']==trait['amount'] for p in e['powers']) for e in state['enemies'])
+    if trait['effect']=='poison':assert all(any('POISON' in p['id'] and p['amount']==trait['amount'] for p in e['powers']) for e in state['enemies'])
+    if trait['effect'] in ['treasure_gold','chest']:
+        send('enter',room='Treasure');after=send('state')
+        assert after['gold']==state['gold']+(trait['amount'] if trait['effect']=='treasure_gold' else 0)
+        assert after['hp']==state['hp']-(trait['amount'] if trait['effect']=='chest' else 0)
     if index%10==9:print(tag,index+1,'trait probes pass',flush=True)
 for cls in ['knight','mage','ranger']:
     for pair in [['megahealth','cheeronkills'],['superhealer','nomeat'],['cantattack','breakpropsformana']]:
