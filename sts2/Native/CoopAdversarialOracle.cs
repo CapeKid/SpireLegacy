@@ -106,7 +106,11 @@ public static class CoopAdversarialOracle
         var lobby=CoopBloodlines.Lobby!;
         var unlock=(MegaCrit.Sts2.Core.Unlocks.UnlockState)AccessTools.Method(typeof(MegaCrit.Sts2.Core.Multiplayer.Game.Lobby.StartRunLobby),"GetUnlockState").Invoke(lobby,[])!;
         for(var i=0;i<1000;i++) {
-            var seed=MegaCrit.Sts2.Core.Helpers.SeedHelper.CanonicalizeSeed("CAUD"+i);var rng=new MegaCrit.Sts2.Core.Random.Rng((uint)MegaCrit.Sts2.Core.Helpers.StringHelper.GetDeterministicHashCode(seed),"act_selection");
+            var seed=MegaCrit.Sts2.Core.Helpers.SeedHelper.CanonicalizeSeed("CAUD"+i);
+            var hash=AccessTools.Method(typeof(MegaCrit.Sts2.Core.Helpers.StringHelper),"GetDeterministicHashCode").Invoke(null,[seed])!;
+            var constructor=typeof(MegaCrit.Sts2.Core.Random.Rng).GetConstructors().Single(c=>c.GetParameters().Length==2&&c.GetParameters()[1].ParameterType==typeof(string));
+            object value=constructor.GetParameters()[0].ParameterType==typeof(uint)?hash is int signed?unchecked((uint)signed):unchecked((uint)Convert.ToUInt64(hash)):Convert.ToUInt64(hash);
+            var rng=(MegaCrit.Sts2.Core.Random.Rng)constructor.Invoke([value,"act_selection"]);
             MegaCrit.Sts2.Core.Models.ActModel.GetRandomList(rng,unlock,true);
             var resolutions=CoopBloodlines.Players(lobby).Where(p=>CoopBloodlines.Character(p) is MegaCrit.Sts2.Core.Models.Characters.RandomCharacter).Select(p=>rng.NextItem(ModelDb.AllCharacters)).ToArray();
             if(resolutions.Length>0&&resolutions.All(p=>p is HeirCharacter)){MegaCrit.Sts2.Core.Nodes.NGame.Instance!.DebugSeedOverride=seed;return new{seed,resolvedHeirs=resolutions.Length};}
