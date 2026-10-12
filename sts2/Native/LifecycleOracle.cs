@@ -13,7 +13,7 @@ public static class LifecycleOracle
     public static object Inspect()=>new {
         profile=JsonSerializer.SerializeToElement(Runtime.Profile,FamilyProfile.JsonOptions),
         persisted=JsonSerializer.SerializeToElement(FamilyProfile.Load(Runtime.FamilyPath),FamilyProfile.JsonOptions),
-        snapshot=PlayerBloodlines.State(PlayerBloodlines.LocalPlayer),
+        snapshot=PlayerBloodlines.State(PlayerBloodlines.LocalPlayer) is {} frozen?JsonSerializer.SerializeToElement(frozen,FamilyProfile.JsonOptions):(JsonElement?)null,
         nativeRuns=SaveManager.Instance.Progress.NumberOfRuns,
         nativeSave=SaveManager.Instance.LoadRunSave().Success
     };
