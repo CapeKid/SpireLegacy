@@ -1,0 +1,3 @@
+tag,game,cls,tier,policy,seed,ascension,traits,rewardPolicy,status,act,floor,dead,wins,finalHp,maxHp,crowns,deckSize,turns,rewardChoices,skippedRewards,dllSha256
+hp-aware-ironclad-seed1,v0.107.1,ironclad,0,tactical,SPIRELEGACY-CAMPAIGN-1,0,,deck,finished,1,17,True,0,0,80,0,19,46,9,0,5d01a68a6bb5e3eaa933e7575487046897a054a6b128089c08d0d722c0faddab
+hp-aware-ironclad-seed2,v0.107.1,ironclad,0,tactical,SPIRELEGACY-CAMPAIGN-2,0,,deck,finished,1,17,True,0,0,80,0,18,46,8,0,5d01a68a6bb5e3eaa933e7575487046897a054a6b128089c08d0d722c0faddab

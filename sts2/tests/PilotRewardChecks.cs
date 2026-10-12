@@ -36,5 +36,9 @@ public static class PilotRewardChecks
         check(PilotRewards.Pick([Attack("hit",5),retained],balanced)==1,"Retention growth has discounted reward value");
         check(PilotRewards.Score(counter,[])==PilotRewards.Score(counter with{Special="none"},[]),"Empty deck provides no guarded support");
         check(PilotRewards.Score(ambush with{Special="unknown"},balanced)==PilotRewards.Score(ambush with{Special="none"},balanced),"Unmodeled conditions are not guessed");
+        var repeated=Attack("repeated",12) with{Special="marked_bonus",SpecialAmount=2,Hits=2};
+        check(PilotRewards.Pick([Attack("flat",14),repeated],[poison])==1,"Supported marked bonus values each hit of a reward");
+        check(PilotRewards.Pick([Attack("flat",14),repeated],attacks)==0,"Repeated marked reward still needs support");
+        check(PilotRewards.Pick([Guard("flat",5),Guard("stored",3) with{Special="retain_block",SpecialAmount=6}],balanced)==1,"Retained Block growth is valued without inventing damage");
     }
 }
