@@ -46,6 +46,23 @@ public static class ControlPilotOracle
                 if(decision.Card!=twin)throw new InvalidDataException("Native repeat damage not recognized");
                 var hp=decision.Target!.CurrentHp;await BalanceOracle.Play(twin,decision.Target);return new{kind,damage=hp-decision.Target.CurrentHp,hits=PilotCardInfo.Hits(twin)};
             }
+            if(kind is "avoid-offering" or "avoid-bloodletting" or "avoid-hemokinesis" or "safe-offering" or "only-fatal"){
+                var safe=kind=="safe-offering";
+                var loss=kind=="avoid-bloodletting"?3:kind=="avoid-hemokinesis"?2:6;
+                player.Creature.SetCurrentHpInternal(safe?80:loss);
+                // A large Block stack must not make an unblockable cost seem affordable.
+                await CreatureCmd.GainBlock(player.Creature,50,MegaCrit.Sts2.Core.ValueProps.ValueProp.Unpowered,null);
+                var paid=kind=="avoid-bloodletting"?await Add<Bloodletting>():kind=="avoid-hemokinesis"?await Add<Hemokinesis>():await Add<Offering>();
+                CardModel? strike=kind=="only-fatal"?null:await Add<StrikeIronclad>();
+                var decision=TacticalPilot.Choose(player,0);
+                if(kind=="only-fatal"){
+                    if(decision!=null)throw new InvalidDataException("Pilot selected its only fatal card");
+                    return new{kind,declined=true,hp=player.Creature.CurrentHp};
+                }
+                if(decision==null||decision.Card!=(safe?paid:strike))throw new InvalidDataException("HP-cost pilot choice incorrect");
+                var hp=player.Creature.CurrentHp;await BalanceOracle.Play(decision.Card,decision.Target);
+                return new{kind,alive=player.Creature.IsAlive,hpLost=hp-player.Creature.CurrentHp,paidSelected=decision.Card==paid};
+            }
             if(kind=="lethal-cost"){
                 player.Creature.SetCurrentHpInternal(5);var offering=await Add<Offering>();
                 await BalanceOracle.Play(offering);
