@@ -9,7 +9,7 @@ public static class PilotRewardChecks
         check(PilotHealth.Affordable(7,6),"Survivable HP cost remains available");
         check(PilotHealth.Affordable(1,0),"Low health permits cards without immediate HP cost");
         check(PilotHealth.Penalty(7,6)>PilotHealth.Penalty(80,6),"Near-death self-damage has higher opportunity cost");
-        PilotRewards.Card Attack(string id,int damage=6)=>new(id,1,damage,0,0,0,0,0,false,false,false);
+        PilotRewards.Card Attack(string id,int damage=6)=>new(id,1,damage,0,0,0,0,0,false,false,false,Attack:true);
         PilotRewards.Card Guard(string id,int block=5)=>new(id,1,0,block,0,0,0,0,false,false,false);
         var balanced=Enumerable.Range(0,6).Select(i=>Attack("a"+i)).Concat(Enumerable.Range(0,4).Select(i=>Guard("g"+i))).ToArray();
         var attacks=balanced.Where(c=>c.Damage>0).ToArray();
@@ -40,5 +40,18 @@ public static class PilotRewardChecks
         check(PilotRewards.Pick([Attack("flat",14),repeated],[poison])==1,"Supported marked bonus values each hit of a reward");
         check(PilotRewards.Pick([Attack("flat",14),repeated],attacks)==0,"Repeated marked reward still needs support");
         check(PilotRewards.Pick([Guard("flat",5),Guard("stored",3) with{Special="retain_block",SpecialAmount=6}],balanced)==1,"Retained Block growth is valued without inventing damage");
+        var shield=Attack("slam",0) with{Special="block_damage"};
+        check(PilotRewards.Pick([Attack("flat",11),shield],[Guard("large",16)])==1,"Large Block support gives a Block finisher prospective value");
+        check(PilotRewards.Pick([shield],attacks)==null,"Unsupported Block finisher can be skipped");
+        var chain=Attack("chain",0) with{Special="chain_damage",SpecialAmount=4};
+        check(PilotRewards.Pick([Attack("flat",5),chain],attacks)==1,"Cheap attacks support a chain finisher");
+        check(PilotRewards.Pick([chain],balanced.Select(c=>c with{Cost=3}).ToArray())==null,"Expensive attacks do not promise chain fuel");
+        var ash=Attack("ash",3) with{Special="exhaust_damage",SpecialAmount=3};
+        var expendable=balanced.Select(c=>c with{SelfExhaust=true}).ToArray();
+        check(PilotRewards.Pick([Attack("flat",8),ash],expendable)==1,"Self-exhausting cards support exhaust damage rewards");
+        check(PilotRewards.Pick([Attack("flat",8),ash],attacks)==0,"Ordinary attacks do not promise exhaust buildup");
+        check(PilotHealth.NeedsEmergencyBlock(5,2,7),"Exactly lethal incoming damage requests emergency Block");
+        check(!PilotHealth.NeedsEmergencyBlock(5,3,7),"Survivable damage conserves emergency potion");
+        check(!PilotHealth.NeedsEmergencyBlock(1,12,12),"Existing Block avoids redundant potion use");
     }
 }

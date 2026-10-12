@@ -23,7 +23,15 @@ def send(command,**args):
     assert reply['ok'],reply
     assert {m['id'] for m in reply['metadata']['mods']}=={'BaseLib','SpireLegacy'}
     return reply['result']
-for kind in ['vulnerable','exhaust','lethal','area','execute','execute-upgraded','guarded','guarded-upgraded','marked','marked-upgraded','retained','retained-upgraded']:
+# Exercise the new queue integration first, before the longer retained-card regressions.
+for kind in ['potion-danger','potion-healthy','potion-covered','potion-disabled','potion-campaign']:
+    send('start',**{'class':'ironclad','manorTier':0,'quick':False,'traits':[],'seed':'SPIRELEGACY-CONTROL-CHECK'})
+    r=send('balance-control-probe',kind=kind)
+    if kind=='potion-danger':assert r['used'] and r['consumed'] and r['block']==12 and r['energySpent']==r['hpLost']==0,r
+    elif kind in {'potion-healthy','potion-covered','potion-disabled'}:assert not r['used'] and not r['consumed'] and r['energySpent']==r['hpLost']==0,r
+    else:assert r['consumed'] and r['alive'] and r['hp']==1 and r['journaled'],r
+    print(tag,r,flush=True)
+for kind in ['vulnerable','exhaust','lethal','area','execute','execute-upgraded','guarded','guarded-upgraded','marked','marked-upgraded','retained','retained-upgraded','block-finisher','block-finisher-upgraded','chain-finisher','chain-finisher-upgraded','exhaust-finisher','exhaust-finisher-upgraded']:
     send('start',**{'class':'knight','manorTier':0,'quick':True,'traits':[],'seed':'SPIRELEGACY-TACTICAL-CHECK'})
     deadline=time.monotonic()+30
     while send('state')['phase']!='Play':
@@ -36,7 +44,9 @@ for kind in ['vulnerable','exhaust','lethal','area','execute','execute-upgraded'
     elif kind=='area':assert len(r['damage'])>1 and all(d==3 for d in r['damage']),r
     else:
         assert r['targetDead'] and r['damage']==r['expected'] and r['Reason']=='estimated-lethal',r
-        assert r['rewardSpecial'] in {'execute','guard_bonus','marked_bonus','retain_damage'},r
+        if 'finisher' in kind:
+            if not kind.startswith('exhaust'):assert r['dormantDeclined'],r
+        else:assert r['rewardSpecial'] in {'execute','guard_bonus','marked_bonus','retain_damage'},r
     print(tag,r,flush=True)
 for kind in ['bash','shrug','repeat','skip','lethal-cost','avoid-offering','avoid-bloodletting','avoid-hemokinesis','safe-offering','only-fatal']:
     send('start',**{'class':'ironclad','manorTier':0,'quick':False,'traits':[],'seed':'SPIRELEGACY-CONTROL-CHECK'})

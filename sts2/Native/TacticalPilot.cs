@@ -18,6 +18,7 @@ namespace SpireLegacy;
 public static class TacticalPilot
 {
     public record Decision(CardModel Card,Creature? Target,double Score,string Reason);
+    public static int Incoming(Player player)=>player.Creature.CombatState!.GetOpponentsOf(player.Creature).Where(e=>e.IsAlive).Sum(e=>e.Monster!.NextMove.Intents.OfType<MegaCrit.Sts2.Core.MonsterMoves.Intents.AttackIntent>().Sum(a=>a.GetTotalDamage(new[]{player.Creature},e)));
     private static int Cost(CardModel card)=>card.EnergyCost.CostsX?card.Owner.PlayerCombatState!.Energy:Math.Max(0,card.EnergyCost.GetWithModifiers(CostModifiers.All));
     private static decimal Damage(CardModel card,Creature target)
     {
@@ -71,6 +72,8 @@ public static class TacticalPilot
                     if(target!=null&&PilotCardInfo.SimpleAttack(card)&&damage>=target.CurrentHp+target.Block){score+=100;reason="estimated-lethal";}
                 }
                 score-=PilotHealth.Penalty(player.Creature.CurrentHp,hpLoss);
+                // Do not spend a dormant Block/chain finisher for no estimated payoff.
+                if(card is LegacyCard dormant&&dormant.DesignCard.Row.Text("special") is "block_damage" or "chain_damage"&&score<=0)continue;
                 choices.Add(new(card,target,score,reason));
             }
         }
@@ -96,6 +99,34 @@ public static class TacticalPilot
             async Task<LegacyCard> Add(string key,bool upgraded=false){var card=(LegacyCard)player.Creature.CombatState.CreateCard(NativeCards.Get(key),player);if(upgraded)CardCmd.Upgrade(card);await CardPileCmd.Add(card,PileType.Hand,skipVisuals:true);return card;}
             var upgraded=kind.EndsWith("-upgraded",StringComparison.Ordinal);
             var scenario=upgraded?kind[..^9]:kind;
+            if(scenario is "block-finisher" or "chain-finisher" or "exhaust-finisher"){
+                var key=scenario switch{"block-finisher"=>"knight_shield_slam","chain-finisher"=>"ranger_finishing_flurry",_=>"knight_ashen_advance"};
+                var finisher=await Add(key,upgraded);var target=enemies.Last();
+                var before=Choose(player,0);
+                if(scenario!="exhaust-finisher"&&before!=null)throw new InvalidDataException("Dormant finisher was selected with zero payoff");
+                var expected=0;
+                if(scenario=="block-finisher"){
+                    expected=8;await CreatureCmd.GainBlock(player.Creature,expected,MegaCrit.Sts2.Core.ValueProps.ValueProp.Unpowered,null);
+                }else if(scenario=="chain-finisher"){
+                    // Paid attacks establish the real class counter before evaluating the finisher.
+                    for(var i=0;i<2;i++){var fuel=await Add("knight_strike");await BalanceOracle.Play(fuel,enemies[0]);}
+                    if(player.Creature.GetPower<P_class>()?.AttacksThisTurn!=2)throw new InvalidDataException("Native chain fuel counter missing");
+                    expected=finisher.DesignCard.SpecialAmount*2;
+                }else{
+                    // Native exhaust commands establish a pile, including its damage cap boundary.
+                    for(var i=0;i<11;i++){
+                        var fuel=player.Creature.CombatState.CreateCard(ModelDb.Card<MegaCrit.Sts2.Core.Models.Cards.Wound>(),player);
+                        await CardPileCmd.Add(fuel,PileType.Hand,skipVisuals:true);
+                        await BranchCommands.Exhaust(new BlockingPlayerChoiceContext(),fuel);
+                    }
+                    expected=finisher.DesignCard.Damage+finisher.DesignCard.SpecialAmount*10;
+                }
+                target.SetCurrentHpInternal(expected);
+                var decision=Choose(player,0)!;
+                if(decision.Card!=finisher||decision.Target!=target||decision.Reason!="estimated-lethal")throw new InvalidDataException("Active finisher lethal priority missing");
+                var hp=target.CurrentHp;await BalanceOracle.Play(finisher,target);
+                return new{kind,key,upgraded,expected,damage=hp-target.CurrentHp,targetDead=!target.IsAlive,dormantDeclined=before==null,decision.Reason};
+            }
             if(scenario is "execute" or "guarded" or "marked" or "retained"){
                 var key=scenario switch{"execute"=>"knight_executioner_axe","guarded"=>"knight_counter_lunge","marked"=>"ranger_ambush",_=>"knight_patient_riposte"};
                 var conditional=await Add(key,upgraded);await Add("knight_strike");
