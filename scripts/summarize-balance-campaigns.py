@@ -35,7 +35,7 @@ for tag in arguments:
     trials.append(dict(**base, status=journal['status'], act=state['act'], floor=state['floor'],
                        dead=state['hp'] == 0 and not state.get('wins', 0), wins=state.get('wins', 0), finalHp=state['hp'], maxHp=state['maxHp'],
                        crowns=state['lastEarned'], deckSize=len(state['deck']),
-                       turns=len(turns), potionUses=sum(len(t['detail'].get('potions',[])) for t in turns), rewardChoices=len(rewards),skippedRewards=sum(r.get('skip',False) for r in rewards), dllSha256=next(iter(hashes))))
+                       turns=len(turns), potionUses=sum(len(t['detail'].get('potions',[])) for t in turns), rewardChoices=len(rewards),skippedRewards=sum(r.get('skip',False) for r in rewards),forcedReward=journal.get('forcedReward') or '',forcedRewardFloor=journal.get('forcedRewardFloor',0),interventions=journal.get('interventions',0),dllSha256=next(iter(hashes))))
     entries, played, left, offers, picks = (Counter() for _ in range(5))
     for turn in turns:
         entries.update(turn['detail']['entries'])

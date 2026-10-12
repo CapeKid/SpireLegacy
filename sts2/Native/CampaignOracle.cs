@@ -30,11 +30,13 @@ public static class CampaignOracle
     private static SceneTree Tree=>(SceneTree)Engine.GetMainLoop();
     private static string Key(CardModel c)=>c is LegacyCard lc?lc.Key:c.Id.ToString();
     private static readonly ConditionalWeakTable<RunState,HashSet<Reward>> skippedRewards=new();
-    public static async Task<object> Step(RunState run,string policy,IDisposable selector,string rewardPolicy="standalone")
+    private static readonly ConditionalWeakTable<RunState,HashSet<string>> appliedInterventions=new();
+    public static async Task<object> Step(RunState run,string policy,IDisposable selector,string rewardPolicy="standalone",string? forcedReward=null,int forcedRewardFloor=0)
     {
         using(selector){
             if(policy is not ("defense" or "attack" or "tactical"))throw new ArgumentException("Unknown campaign policy.");
             if(rewardPolicy is not ("standalone" or "deck"))throw new ArgumentException("Unknown reward policy.");
+            if(forcedReward!=null&&(rewardPolicy!="deck"||forcedRewardFloor<=0))throw new ArgumentException("Reward intervention requires deck policy and a positive floor.");
             var player=run.Players.Single();
             object Snapshot()=>new{character=player.Character.Id.ToString(),act=run.CurrentActIndex+1,floor=run.TotalFloor,room=run.CurrentRoom?.RoomType.ToString(),hp=player.Creature.CurrentHp,maxHp=player.Creature.MaxHp,gold=player.Gold,crowns=Runtime.Profile.crowns,lastEarned=Runtime.Profile.lastEarned,wins=player.Character is HeirCharacter?Runtime.Profile.chronicle.classes.Values.Sum(h=>h.wins):run.IsGameOver&&run.CurrentRoom is MegaCrit.Sts2.Core.Rooms.EventRoom e&&e.LocalMutableEvent is MegaCrit.Sts2.Core.Models.Events.TheArchitect?1:0,manor=Runtime.Profile.manor,deck=player.Deck.Cards.Select(Key).ToArray(),relics=player.Relics.Select(r=>r.Id.ToString()).ToArray()};
             object Result(string action,object? detail=null)=>new{action,detail,state=Snapshot()};
@@ -52,7 +54,9 @@ public static class CampaignOracle
                 var deck=player.Deck.Cards.Select(PilotCardInfo.Describe).ToArray();
                 double Score(CardModel c)=>rewardPolicy=="deck"?PilotRewards.Score(PilotCardInfo.Describe(c),deck):BalanceOracle.Score(c,0);
                 var offers=holders.Select(h=>new{id=Key(h.CardModel!),upgraded=h.CardModel!.IsUpgraded,score=Score(h.CardModel!)}).ToArray();
-                var index=rewardPolicy=="deck"?PilotRewards.Pick(holders.Select(h=>PilotCardInfo.Describe(h.CardModel!)).ToArray(),deck):0;
+                var interventionKey=$"{forcedRewardFloor}:{forcedReward}";
+                var forced=forcedReward!=null&&run.TotalFloor==forcedRewardFloor&&!appliedInterventions.GetOrCreateValue(run).Contains(interventionKey)?holders.FirstOrDefault(h=>Key(h.CardModel!)==forcedReward):null;
+                var index=forced!=null?Array.IndexOf(holders,forced):rewardPolicy=="deck"?PilotRewards.Pick(holders.Select(h=>PilotCardInfo.Describe(h.CardModel!)).ToArray(),deck):0;
                 var parent=NativeTestBridge.Descendants(Tree.Root).OfType<NRewardButton>().Select(b=>b.Reward).OfType<CardReward>().FirstOrDefault(r=>r.Cards.Any(c=>c==holders[0].CardModel));
                 if(rewardPolicy=="deck"&&index==null&&parent?.CanSkip==true){
                     // Resolve the same nullable choice consumed by native cancellation. Let CardReward close its own screen.
@@ -61,11 +65,12 @@ public static class CampaignOracle
                     skippedRewards.GetOrCreateValue(run).Add(parent);await Task.Delay(300);
                     return Result("card-reward",new{offers,picked=(string?)null,skip=true,rewardPolicy});
                 }
-                var choice=holders.OrderByDescending(h=>Score(h.CardModel!)).ThenBy(h=>Key(h.CardModel!),StringComparer.Ordinal).First();
+                var choice=forced??holders.OrderByDescending(h=>Score(h.CardModel!)).ThenBy(h=>Key(h.CardModel!),StringComparer.Ordinal).First();
                 var picked=Key(choice.CardModel!);
                 choice.EmitSignal(NCardHolder.SignalName.Pressed,choice);
+                if(forced!=null)appliedInterventions.GetOrCreateValue(run).Add(interventionKey);
                 await Task.Delay(300);
-                return Result("card-reward",new{offers,picked,skip=false,rewardPolicy});
+                return Result("card-reward",new{offers,picked,skip=false,rewardPolicy,intervention=forced!=null});
             }
             if(overlay is NRewardsScreen rewards){
                 var reward=UiHelper.FindAll<NRewardButton>(rewards).FirstOrDefault(b=>b.IsEnabled&&b.IsVisibleInTree()&&b.Reward!=null&&!skippedRewards.GetOrCreateValue(run).Contains(b.Reward)&&(b.Reward is not PotionReward||player.HasOpenPotionSlots));
