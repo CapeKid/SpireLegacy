@@ -1,0 +1,133 @@
+{
+  "issue": 50,
+  "baselineSourceSha": "bc4ffcdae4a6f79817a042d4edca185c0b56ae52",
+  "runtimeSourceSha": "e984d412066128264461ae3b488c727f5b0389c3",
+  "dllSha256": "410a3968bf135da3a61d0ff48e4c502e0afcf2c4bfd5a6b6673dfa40bbe4bc16",
+  "protocol": 2,
+  "coreAssertions": 41958,
+  "referenceModelSeeds": 40,
+  "referenceModelTransitions": 4000,
+  "missingNetworkFields": 15,
+  "harnessChecks": 20,
+  "preflight": {
+    "sheets": 32,
+    "rows": 2062,
+    "cells": 26477
+  },
+  "fixedIssues": [
+    107,
+    108,
+    109
+  ],
+  "deferredValidationIssue": 110,
+  "unchangedProgressionFinding": 105,
+  "branches": [
+    {
+      "branch": "regular",
+      "game": "v0.107.1",
+      "mod": "1.0.29",
+      "baseLib": "3.4.7",
+      "platform": "Microsoft Windows 10.0.26300",
+      "dllSha256": "410a3968bf135da3a61d0ff48e4c502e0afcf2c4bfd5a6b6673dfa40bbe4bc16",
+      "evidenceFiles": [
+        "coop-audit-regular-final.json",
+        "lifecycle-ui-coop-final-solo-regular.json"
+      ],
+      "correlatedResponses": 803,
+      "allResponsesPassed": true,
+      "peerCounts": [
+        2,
+        3,
+        4
+      ],
+      "coopPaidCards": 15,
+      "fourPeerSaveQuitRejoin": true,
+      "ownerScopedNativeRelicBags": true,
+      "wrongOwnerReconnectRefusalsPerProbe": 3,
+      "localSettlementScenarios": 4,
+      "soloClasses": [
+        "knight",
+        "mage",
+        "ranger"
+      ],
+      "baseAndUpgraded": true,
+      "seeds": [
+        "0E5TKNQU1S",
+        "CAUD19",
+        "CCDF6U62BF",
+        "SPIRELEGACY-LIFECYCLE-49",
+        "SPIRELEGACY-PORT-TEST",
+        "Y3Z019U2ZE"
+      ]
+    },
+    {
+      "branch": "beta",
+      "game": "v0.111.0",
+      "mod": "1.0.29",
+      "baseLib": "3.4.7",
+      "platform": "Microsoft Windows 10.0.26300",
+      "dllSha256": "410a3968bf135da3a61d0ff48e4c502e0afcf2c4bfd5a6b6673dfa40bbe4bc16",
+      "evidenceFiles": [
+        "coop-audit-beta-final.json",
+        "lifecycle-ui-coop-final-solo-beta.json"
+      ],
+      "correlatedResponses": 811,
+      "allResponsesPassed": true,
+      "peerCounts": [
+        2,
+        3,
+        4
+      ],
+      "coopPaidCards": 15,
+      "fourPeerSaveQuitRejoin": true,
+      "ownerScopedNativeRelicBags": true,
+      "wrongOwnerReconnectRefusalsPerProbe": 3,
+      "localSettlementScenarios": 4,
+      "soloClasses": [
+        "knight",
+        "mage",
+        "ranger"
+      ],
+      "baseAndUpgraded": true,
+      "seeds": [
+        "3J0U6EBBU2RL",
+        "CAUD5",
+        "SPIRELEGACY-LIFECYCLE-49",
+        "SPIRELEGACY-PORT-TEST",
+        "YHDMEJTEBXE5",
+        "ZMKW24X4HYS4"
+      ]
+    }
+  ],
+  "baselineReproduction": {
+    "productionSources": "git archive of baseline SHA; added only minimized test probes",
+    "receiptMetadataSource": "harness checkpoint, not production baseline SHA",
+    "probeDllSha256": "760e319a3b0ed603ec5ecca9b661be968d5aeb3aaf039c6509ad3f5449cd932c",
+    "ready": {
+      "owner": 1,
+      "immutableReady": false,
+      "requiredFrozenFields": false,
+      "badPacketsStable": true
+    },
+    "savedOwners": {
+      "savedOwnerRejected": false,
+      "failedSyncPreservedPlayer": false
+    }
+  },
+  "notTested": [
+    "physical Deck/Linux",
+    "Steam transport or real packet loss/latency",
+    "disconnect at exact embark transition",
+    "active-run host loss/migration",
+    "natural multiplayer death/revival",
+    "full-campaign rewards/shops",
+    "ready character-change controller UI attempt",
+    "every class-resource/inherited hook; #51/#53"
+  ],
+  "diagnosticsNotClaimedFixed": [
+    "beta native NCard pool double-free diagnostics",
+    "beta Godot WorkerThreadPool Invalid Task ID; cause unverified, tracked #110",
+    "native nonexistent disposable save-backup deletion diagnostics",
+    "compatibility-renderer particle warnings"
+  ]
+}

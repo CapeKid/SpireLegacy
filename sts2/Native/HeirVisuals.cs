@@ -57,6 +57,7 @@ public static class HeirVisuals
         foreach(var actor in actors.Where(a=>GodotObject.IsInstanceValid(a.sprite) && a.creature.Entity==creature))actor.appearance.DamageFlash();
     }
     public static object Diagnostic() => actors.Where(a => GodotObject.IsInstanceValid(a.sprite)).Select(a => new {
+        owner=a.creature.Entity.Player!.NetId,bannerIndex=Banner(a.creature.Entity.Player!),motto=Motto(a.creature.Entity.Player!),
         classId = a.sprite.ClassId, pose = a.sprite.Animation.ToString(), frame = a.sprite.Frame,
         frames = a.sprite.SpriteFrames.GetFrameCount(a.sprite.Animation), deathFrames = a.sprite.DeathFrames.ToArray(), visible = a.sprite.IsVisibleInTree(), tint = a.sprite.Modulate.ToString(), events = a.sprite.Events.ToArray(),
         position = a.sprite.GlobalPosition.ToString(), scale = a.sprite.Scale.ToString(), hp = a.creature.Entity.CurrentHp,

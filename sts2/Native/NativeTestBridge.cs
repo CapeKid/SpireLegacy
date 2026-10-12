@@ -93,8 +93,17 @@ public static class NativeTestBridge
                 case "coop-ready":CoopBloodlines.Lobby!.SetReady(request.TryGetProperty("ready",out var coopReady)?coopReady.GetBoolean():true);result=CoopOracle.State();break;
                 case "coop-state":result=CoopOracle.State();break;
                 case "coop-vote":result=CoopOracle.Vote();break;
-                case "coop-play":result=await CoopOracle.Play();break;
+                case "coop-play":result=await CoopOracle.Play(request.TryGetProperty("upgrade",out var coopUpgrade)&&coopUpgrade.GetBoolean());break;
+                case "coop-upgrade":result=CoopOracle.UpgradeOwnedCard(request.GetProperty("owner").GetUInt64());break;
                 case "coop-roundtrip":result=CoopOracle.RoundTrip();break;
+                case "coop-lobby-checks":result=CoopAdversarialOracle.LobbyChecks();break;
+                case "coop-wire-checks":result=CoopAdversarialOracle.Wire();break;
+                case "coop-replay":result=CoopAdversarialOracle.Replay();break;
+                case "coop-contexts":result=CoopAdversarialOracle.Scopes();break;
+                case "coop-owner-checks":result=CoopAdversarialOracle.SavedOwners(RunState());break;
+                case "coop-revival-checks":result=await CoopAdversarialOracle.Revival(RunState());break;
+                case "coop-random-seed":result=CoopAdversarialOracle.RandomHeirSeed();break;
+                case "coop-hold":CoopBloodlines.TestHoldSelections=request.GetProperty("hold").GetBoolean();if(!CoopBloodlines.TestHoldSelections)CoopBloodlines.Resend();result=new{holding=CoopBloodlines.TestHoldSelections};break;
                 case "coop-turn":MegaCrit.Sts2.Core.Combat.CombatManager.Instance.SetReadyToEndTurn(PlayerBloodlines.LocalPlayer!,false);result=CoopOracle.State();break;
                 case "coop-save-quit":await MegaCrit.Sts2.Core.Saves.SaveManager.Instance.SaveRun(null);await NGame.Instance!.ReturnToMainMenu();result=new{saved=true};break;
                 case "coop-resume-host":result=await CoopOracle.Resume(request,true);break;

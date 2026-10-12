@@ -5,6 +5,7 @@ from pathlib import Path
 root=Path(__file__).resolve().parents[1]
 def owner(path):
     name=Path(path).name
+    if name in {'CoopSelectionState.cs','CoopChecks.cs','CoopAdversarialOracle.cs','CoopOracle.cs','run-coop-audit.ps1','sts2-coop-audit.py','adversarial-coop.md','adversarial-coop-evidence.json'}:return 50
     if name in {'LifecycleChecks.cs','LifecycleOracle.cs','sts2-lifecycle-check.py','sts2-lifecycle-ui-check.py','adversarial-lifecycle.md','adversarial-lifecycle-evidence.json'}:return 49
     if name in {'PilotHealth.cs','PilotRewards.cs','PilotCardInfo.cs','PilotPotions.cs','TacticalPilot.cs'}:return 47
     if name in {'FamilyData.cs','FamilyStore.cs','PersistenceOracle.cs','sts2-persistence-check.py','adversarial-persistence.md'}:return 48

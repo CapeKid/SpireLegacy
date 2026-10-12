@@ -1,5 +1,5 @@
 """Adversarial transport/lab regressions with disposable fixture peers, no game launch."""
-import copy,json,os,subprocess,sys,threading,time,uuid
+import ast,copy,json,os,subprocess,sys,threading,time,uuid
 from pathlib import Path
 from unittest.mock import patch
 from oracle_protocol import call,assert_checks
@@ -73,7 +73,11 @@ check('config-injection user directory rejected',lambda:None)
 for file in (root/'scripts').glob('sts2-*.py'):
     if file.name=='sts2-oracle.py':continue
     text=file.read_text(encoding='utf-8-sig')
-    if 'def send(' in text:assert 'record=call(' in text and ("metadata=reply['metadata']" in text or 'evidence.append(record)' in text),file
+    for function in (n for n in ast.walk(ast.parse(text)) if isinstance(n,(ast.FunctionDef,ast.AsyncFunctionDef)) and n.name=='send'):
+        records={target.id for n in ast.walk(function) if isinstance(n,ast.Assign) and isinstance(n.value,ast.Call) and isinstance(n.value.func,ast.Name) and n.value.func.id=='call' for target in n.targets if isinstance(target,ast.Name)}
+        logged=any(isinstance(n,ast.Call) and isinstance(n.func,ast.Attribute) and n.func.attr=='append' and n.args and isinstance(n.args[0],ast.Name) and n.args[0].id in records for n in ast.walk(function))
+        metadata=any(isinstance(n,ast.keyword) and n.arg=='metadata' for n in ast.walk(function))
+        assert records and (logged or metadata),file
 check('all native scenario clients use correlated evidence',lambda:None)
 assert subprocess.run([sys.executable,'-O','-c','import oracle_protocol'],cwd=root/'scripts',capture_output=True).returncode!=0
 check('disabled assertions rejected',lambda:None)

@@ -14,4 +14,6 @@ Use the native save/quit and multiplayer Continue lobby to resume with the same 
 
 An unfinished local family climb must be resumed or abandoned before starting another Heir co-op run. If a lobby cannot synchronize heir selections, unready and check everyone's mod/version, then ready again.
 
-Owned-game validation uses two separate ENet peers and disposable saves on each supported branch. Steam Deck input actions are exercised in the native manor UI; physical Deck-to-PC Steam transport testing remains a user playtest.
+Version 1.0.29 uses co-op protocol 2. Lobby changes invalidate old selections, unready revokes the frozen snapshot, and native Random must synchronize an heir snapshot before embark. Older co-op protocol versions cannot supply compatible selections.
+
+Owned-game validation uses two, three and four independent ENet peers and disposable saves on each supported branch. See [the co-op audit](adversarial-coop.md) for ownership, malformed-packet and save/rejoin evidence and explicit gaps. Physical Deck/Linux and Deck-to-PC Steam transport remain device playtests.

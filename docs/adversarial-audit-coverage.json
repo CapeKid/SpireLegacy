@@ -1,5 +1,5 @@
 {
-  "sourceSha": "d5fea27824a4e6a9d1b78d803c250239621f91f0",
+  "sourceSha": "e984d412066128264461ae3b488c727f5b0389c3",
   "files": [
     {
       "path": ".gitattributes",
@@ -1486,6 +1486,14 @@
       "primaryIssue": 47
     },
     {
+      "path": "docs/adversarial-coop-evidence.json",
+      "primaryIssue": 50
+    },
+    {
+      "path": "docs/adversarial-coop.md",
+      "primaryIssue": 50
+    },
+    {
       "path": "docs/adversarial-harness.md",
       "primaryIssue": 47
     },
@@ -2162,6 +2170,10 @@
       "primaryIssue": 63
     },
     {
+      "path": "scripts/run-coop-audit.ps1",
+      "primaryIssue": 50
+    },
+    {
       "path": "scripts/sts2-ancient-check.py",
       "primaryIssue": 47
     },
@@ -2200,6 +2212,10 @@
     {
       "path": "scripts/sts2-compatibility-check.py",
       "primaryIssue": 59
+    },
+    {
+      "path": "scripts/sts2-coop-audit.py",
+      "primaryIssue": 50
     },
     {
       "path": "scripts/sts2-delayed-reward-check.py",
@@ -6122,6 +6138,10 @@
       "primaryIssue": 61
     },
     {
+      "path": "sts2/Core/CoopSelectionState.cs",
+      "primaryIssue": 50
+    },
+    {
       "path": "sts2/Core/Design.cs",
       "primaryIssue": 61
     },
@@ -6238,12 +6258,16 @@
       "primaryIssue": 47
     },
     {
+      "path": "sts2/Native/CoopAdversarialOracle.cs",
+      "primaryIssue": 50
+    },
+    {
       "path": "sts2/Native/CoopBloodlines.cs",
       "primaryIssue": 50
     },
     {
       "path": "sts2/Native/CoopOracle.cs",
-      "primaryIssue": 47
+      "primaryIssue": 50
     },
     {
       "path": "sts2/Native/HeirAncientConversations.cs",
@@ -6386,6 +6410,10 @@
       "primaryIssue": 62
     },
     {
+      "path": "sts2/tests/CoopChecks.cs",
+      "primaryIssue": 50
+    },
+    {
       "path": "sts2/tests/LifecycleChecks.cs",
       "primaryIssue": 49
     },
@@ -6422,7 +6450,8 @@
     "62": 88,
     "63": 419,
     "58": 923,
-    "47": 70,
+    "47": 69,
+    "50": 10,
     "49": 8,
     "48": 7,
     "59": 10,
@@ -6433,7 +6462,6 @@
     "55": 3,
     "52": 2,
     "54": 2,
-    "50": 2,
     "53": 2,
     "57": 2
   }
