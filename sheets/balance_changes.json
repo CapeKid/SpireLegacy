@@ -1812,7 +1812,7 @@
     },
     "after": {
       "cost": 2,
-      "damage": 3,
+      "damage": 5,
       "block": 0,
       "hits": 3,
       "draw": 0,
@@ -1843,7 +1843,7 @@
       "upgradeCost": false,
       "upgradeDiscard": 0
     },
-    "reason": "1.0.14: bounded recurring effects, smaller multi-hit upgrades, and meaningful upgrade choices."
+    "reason": "Targeted under-tuning correction: useful setup/recovery and paid draw without reusable free positive-draw loops."
   },
   {
     "id": "mark",
@@ -5107,9 +5107,9 @@
       "upgradeMagic": 1,
       "upgradeSpecial": 0,
       "upgradeCost": false,
-      "upgradeDiscard": 1
+      "upgradeDiscard": 0
     },
-    "reason": "Weaker no-manor baseline; avoid compounded effects/upgrades and free positive-draw cycles."
+    "reason": "Targeted under-tuning correction: useful setup/recovery and paid draw without reusable free positive-draw loops."
   },
   {
     "id": "knight_reinforce",
@@ -5668,7 +5668,7 @@
       "power": "none",
       "magic": 0,
       "special": "exhume",
-      "specialAmount": 0,
+      "specialAmount": 1,
       "exhaust": true,
       "upgradeDamage": 0,
       "upgradeBlock": 0,
@@ -5677,7 +5677,7 @@
       "upgradeCost": false,
       "upgradeDiscard": 0
     },
-    "reason": "Weaker no-manor baseline; avoid compounded effects/upgrades and free positive-draw cycles."
+    "reason": "Targeted under-tuning correction: useful setup/recovery and paid draw without reusable free positive-draw loops."
   },
   {
     "id": "knight_iron_skin",
@@ -11112,12 +11112,12 @@
       "upgradeDiscard": 0
     },
     "after": {
-      "cost": 2,
+      "cost": 1,
       "damage": 0,
       "block": 0,
       "hits": 1,
-      "draw": 5,
-      "discard": 1,
+      "draw": 3,
+      "discard": 0,
       "energy": 0,
       "strength": 0,
       "dexterity": 0,
@@ -11134,9 +11134,9 @@
       "nextBlock": 0,
       "power": "none",
       "magic": 0,
-      "special": "none",
-      "specialAmount": 0,
-      "exhaust": false,
+      "special": "charge_gain",
+      "specialAmount": 1,
+      "exhaust": true,
       "upgradeDamage": 0,
       "upgradeBlock": 0,
       "upgradeMagic": 1,
@@ -11144,7 +11144,7 @@
       "upgradeCost": false,
       "upgradeDiscard": 0
     },
-    "reason": "Weaker no-manor baseline; avoid compounded effects/upgrades and free positive-draw cycles."
+    "reason": "Targeted under-tuning correction: useful setup/recovery and paid draw without reusable free positive-draw loops."
   },
   {
     "id": "mage_hourglass",
@@ -15591,7 +15591,7 @@
       "hits": 1,
       "draw": 2,
       "discard": 0,
-      "energy": 2,
+      "energy": 1,
       "strength": 0,
       "dexterity": 0,
       "weak": 0,
@@ -15612,12 +15612,12 @@
       "exhaust": true,
       "upgradeDamage": 0,
       "upgradeBlock": 0,
-      "upgradeMagic": 0,
+      "upgradeMagic": 1,
       "upgradeSpecial": 0,
       "upgradeCost": false,
       "upgradeDiscard": 0
     },
-    "reason": "Weaker no-manor baseline; avoid compounded effects/upgrades and free positive-draw cycles."
+    "reason": "Targeted under-tuning correction: useful setup/recovery and paid draw without reusable free positive-draw loops."
   },
   {
     "id": "ranger_forest_remedy",
@@ -19632,7 +19632,7 @@
       "upgradeDiscard": 0
     },
     "after": {
-      "cost": 1,
+      "cost": 0,
       "damage": 0,
       "block": 0,
       "hits": 1,
@@ -19645,7 +19645,7 @@
       "vulnerable": 0,
       "poison": 0,
       "heal": 0,
-      "hpLoss": 1,
+      "hpLoss": 0,
       "vigor": 0,
       "thorns": 0,
       "plated": 0,
@@ -19656,7 +19656,7 @@
       "magic": 0,
       "special": "exhaust_one",
       "specialAmount": 1,
-      "exhaust": false,
+      "exhaust": true,
       "upgradeDamage": 0,
       "upgradeBlock": 0,
       "upgradeMagic": 1,
@@ -19664,7 +19664,7 @@
       "upgradeCost": false,
       "upgradeDiscard": 0
     },
-    "reason": "Weaker no-manor baseline; avoid compounded effects/upgrades and free positive-draw cycles."
+    "reason": "Targeted under-tuning correction: useful setup/recovery and paid draw without reusable free positive-draw loops."
   },
   {
     "id": "mage_paper_shield",
@@ -21338,7 +21338,7 @@
     "after": {
       "cost": 2,
       "damage": 0,
-      "block": 6,
+      "block": 10,
       "hits": 1,
       "draw": 0,
       "discard": 0,
@@ -21362,13 +21362,13 @@
       "specialAmount": 3,
       "exhaust": false,
       "upgradeDamage": 0,
-      "upgradeBlock": 2,
+      "upgradeBlock": 3,
       "upgradeMagic": 0,
       "upgradeSpecial": 1,
       "upgradeCost": false,
       "upgradeDiscard": 0
     },
-    "reason": "Weaker no-manor baseline; avoid compounded effects/upgrades and free positive-draw cycles."
+    "reason": "Targeted under-tuning correction: useful setup/recovery and paid draw without reusable free positive-draw loops."
   },
   {
     "id": "mage_hex_rain",
@@ -22046,11 +22046,11 @@
       "upgradeDiscard": 0
     },
     "after": {
-      "cost": 2,
+      "cost": 1,
       "damage": 0,
       "block": 0,
       "hits": 1,
-      "draw": 3,
+      "draw": 2,
       "discard": 0,
       "energy": 0,
       "strength": 0,
@@ -22069,7 +22069,7 @@
       "power": "none",
       "magic": 0,
       "special": "exhume",
-      "specialAmount": 0,
+      "specialAmount": 1,
       "exhaust": true,
       "upgradeDamage": 0,
       "upgradeBlock": 0,
@@ -22078,7 +22078,7 @@
       "upgradeCost": false,
       "upgradeDiscard": 0
     },
-    "reason": "Weaker no-manor baseline; avoid compounded effects/upgrades and free positive-draw cycles."
+    "reason": "Targeted under-tuning correction: useful setup/recovery and paid draw without reusable free positive-draw loops."
   },
   {
     "id": "mage_eternal_bookmark",

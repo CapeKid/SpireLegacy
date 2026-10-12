@@ -1,5 +1,13 @@
 """Targeted balance overrides shared by authoring regeneration and release updates."""
 CARD_OVERRIDES = {
+    'knight_arms_vault': dict(specialAmount=1),
+    'ranger_second_quiver': dict(hpLoss=0, draw=2),
+    'volley': dict(damage=5, upgradeDamage=1),
+    'mage_returned_prophecy': dict(cost=1, draw=2, upgradeMagic=1),
+    'mage_ash_reading': dict(cost=0, hpLoss=0, draw=1, upgradeMagic=1, exhaust=True, upgradeCost=False),
+    'mage_geode_ward': dict(block=10, upgradeBlock=3),
+    'knight_battle_meditation': dict(upgradeDiscard=0),
+    'mage_grand_thesis': dict(cost=1, upgradeSpecial=0),
     'mage_perfect_ward': dict(block=3, upgradeBlock=2, magic=1, upgradeMagic=1),
     'ranger_perfect_timing': dict(cost=3, magic=1, upgradeMagic=0, upgradeCost=True),
     'ranger_tripwire': dict(upgradeMagic=0),

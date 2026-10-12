@@ -154,7 +154,7 @@ Each class has 82 rewards on regular (20 common, 36 uncommon, 26 rare), or 85 on
 | Soulfire | Rare | Attack | 2 | Class unique; 13 damage; 6 Poison |
 | Perfect Ward | Rare | Skill | 2 | Class unique; 3 Block; Prevent the next 1 time(s) you would lose HP.; Exhaust |
 | Mana Fountain | Rare | Skill | 0 | Class unique; 3 Energy; Exhaust |
-| Grand Thesis | Rare | Skill | 2 | Class unique; 3 draw; Gain 1 Arcane Charge(s), up to the normal charge cap.; Exhaust |
+| Grand Thesis | Rare | Skill | 1 | Class unique; 3 draw; Gain 1 Arcane Charge(s), up to the normal charge cap.; Exhaust |
 | Hourglass | Rare | Skill | 1 | Class unique; Reduce the cost of 2 random card(s) in your hand by 1 this turn.; Exhaust |
 | Transmutation | Rare | Skill | 1 | Class unique; 2 draw; 2 Energy; Exhaust 2 card(s) from your hand.; Exhaust |
 | Infinite Script | Rare | Power | 2 | Class unique; 1 draw next turn; At the start of your turn, lose 1 HP and draw 1 card(s). |
@@ -166,7 +166,7 @@ Each class has 82 rewards on regular (20 common, 36 uncommon, 26 rare), or 85 on
 | Perfect Timing | Rare | Power | 3 | Shared family card; 3 HP cost; At the start of your turn, gain 1 Energy. |
 | Ancestral Salvage | Rare | Skill | 2 | Shared family card; 6 Block; Return a card from your Exhaust pile to your hand.; Exhaust |
 | Warding Verse | Common | Skill | 0 | Class unique; 2 Block; Retain |
-| Ash Reading | Common | Skill | 1 | Class unique; 1 draw; 1 HP cost; Exhaust 1 card(s) from your hand. |
+| Ash Reading | Common | Skill | 0 | Class unique; 1 draw; Exhaust 1 card(s) from your hand.; Exhaust |
 | Stored Ember | Common | Attack | 1 | Shared family card; 3 damage; Whenever this is Retained, gain 2 damage this combat.; Retain |
 | Crystal Seed | Common | Skill | 1 | Shared family card; 3 Block; Whenever this is Retained, gain 2 Block this combat.; Retain |
 | Chilling Words | Common | Skill | 1 | Class unique; 3 Block; 2 Weak |
@@ -174,7 +174,7 @@ Each class has 82 rewards on regular (20 common, 36 uncommon, 26 rare), or 85 on
 | Arcane Meter | Uncommon | Power | 1 | Class unique; Every third Skill you play each turn grants 1 Energy NEXT turn. |
 | Tower Library | Uncommon | Power | 2 | Class unique; Whenever a card is Retained, reduce its cost by 1 this combat. |
 | Moonstone Lance | Uncommon | Attack | 2 | Class unique; 6 damage; Whenever this is Retained, gain 4 damage this combat.; Retain |
-| Geode Ward | Uncommon | Skill | 2 | Class unique; 6 Block; Whenever this is Retained, gain 3 Block this combat.; Retain |
+| Geode Ward | Uncommon | Skill | 2 | Class unique; 10 Block; Whenever this is Retained, gain 3 Block this combat.; Retain |
 | Hex Rain | Uncommon | Attack | 2 | Class unique; 4 damage to all enemies; 2 Weak to all enemies |
 | Alchemist's Patience | Uncommon | Power | 1 | Shared family card; At the start of your turn, apply 2 Poison to ALL enemies. |
 | Rune Familiar | Uncommon | Power | 2 | Class unique; Whenever you play a Power, draw 1 card(s). |
@@ -182,7 +182,7 @@ Each class has 82 rewards on regular (20 common, 36 uncommon, 26 rare), or 85 on
 | Mirror Manuscript | Rare | Skill | 1 | Shared family card; Your next 1 Skill(s) this turn are played twice.; Retain; Exhaust |
 | Comet Calendar | Rare | Skill | 2 | Shared family card; 4 draw next turn; 3 Energy next turn; Exhaust |
 | Book of Embers | Rare | Power | 2 | Class unique; Public-beta only; Whenever you Exhaust a card, deal 3 damage to ALL enemies. |
-| Returned Prophecy | Rare | Skill | 2 | Class unique; 1 draw; Return a card from your Exhaust pile to your hand.; Exhaust |
+| Returned Prophecy | Rare | Skill | 1 | Class unique; 2 draw; Return a card from your Exhaust pile to your hand.; Exhaust |
 | Eternal Bookmark | Rare | Power | 2 | Shared family card; At the end of your turn, Retain up to 2 card(s). |
 | Sun in a Bottle | Rare | Attack | 3 | Class unique; 13 damage to all enemies; Whenever this is Retained, gain 6 damage this combat.; Retain |
 | Grand Incantation | Rare | Attack | 3 | Class unique; 3 damage ×8; Hits target random enemies.; Exhaust |
@@ -200,7 +200,7 @@ Each class has 82 rewards on regular (20 common, 36 uncommon, 26 rare), or 85 on
 | Steady Aim | Basic | Attack | 1 | Class unique; 6 damage; 1 draw |
 | Double Shot | Common | Attack | 1 | Class unique; 3 damage ×2 |
 | Retreat | Common | Skill | 1 | Class unique; 6 Block; 1 draw |
-| Volley | Common | Attack | 2 | Class unique; 3 damage ×3 |
+| Volley | Common | Attack | 2 | Class unique; 5 damage ×3 |
 | Mark Prey | Uncommon | Attack | 0 | Class unique; 2 damage; 1 Vulnerable |
 | Snipe | Rare | Attack | 2 | Class unique; 19 damage; Exhaust |
 | Meditate | Rare | Skill | 0 | Shared family card; 1 draw; 1 Energy; Exhaust |
@@ -248,7 +248,7 @@ Each class has 82 rewards on regular (20 common, 36 uncommon, 26 rare), or 85 on
 | Black Arrow | Rare | Attack | 2 | Class unique; 13 damage; 6 Poison |
 | Master Plan | Rare | Skill | 3 | Shared family card; Cards currently in your hand cost 0 this turn. You cannot draw additional cards this turn.; Exhaust |
 | Serpent Oil | Rare | Skill | 2 | Class unique; 2 Poison; Double Poison on the target.; Exhaust |
-| Second Quiver | Rare | Skill | 0 | Class unique; 1 draw; 1 Energy; 4 HP cost; Exhaust |
+| Second Quiver | Rare | Skill | 0 | Class unique; 2 draw; 1 Energy; Exhaust |
 | Forest Remedy | Rare | Skill | 2 | Shared family card; 4 healing; Remove all debuffs from yourself.; Exhaust |
 | Poisoned Arsenal | Rare | Power | 2 | Class unique; Whenever an Attack deals unblocked damage, apply 1 Poison. |
 | Unseen Hunter | Rare | Power | 2 | Class unique; Public-beta only; 4 Block; Whenever you play a card, gain 1 Block. |
