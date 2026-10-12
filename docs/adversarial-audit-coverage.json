@@ -1,5 +1,5 @@
 {
-  "sourceSha": "e984d412066128264461ae3b488c727f5b0389c3",
+  "sourceSha": "f84d2239a599361b265a3df8bb13d8f1357ba48f",
   "files": [
     {
       "path": ".gitattributes",
@@ -1514,6 +1514,18 @@
       "primaryIssue": 59
     },
     {
+      "path": "docs/adversarial-traits-consumers.json",
+      "primaryIssue": 51
+    },
+    {
+      "path": "docs/adversarial-traits-evidence.json",
+      "primaryIssue": 51
+    },
+    {
+      "path": "docs/adversarial-traits.md",
+      "primaryIssue": 51
+    },
+    {
       "path": "docs/balance-campaign-cards.csv",
       "primaryIssue": 62
     },
@@ -2340,6 +2352,10 @@
     {
       "path": "scripts/sts2-trait-appearance-check.py",
       "primaryIssue": 47
+    },
+    {
+      "path": "scripts/sts2-trait-audit.py",
+      "primaryIssue": 51
     },
     {
       "path": "scripts/sts2-trait-check.py",
@@ -6394,6 +6410,10 @@
       "primaryIssue": 58
     },
     {
+      "path": "sts2/Native/TraitAuditOracle.cs",
+      "primaryIssue": 51
+    },
+    {
       "path": "sts2/Native/VigorOracle.cs",
       "primaryIssue": 47
     },
@@ -6434,6 +6454,10 @@
       "primaryIssue": 47
     },
     {
+      "path": "sts2/tests/TraitChecks.cs",
+      "primaryIssue": 51
+    },
+    {
       "path": "sts2/workshop.json",
       "primaryIssue": 62
     },
@@ -6455,10 +6479,10 @@
     "49": 8,
     "48": 7,
     "59": 10,
+    "51": 8,
     "61": 56,
     "60": 3,
     "56": 5,
-    "51": 2,
     "55": 3,
     "52": 2,
     "54": 2,

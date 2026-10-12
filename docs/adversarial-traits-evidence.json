@@ -1,0 +1,105 @@
+{
+  "issue": 51,
+  "baselineSourceSha": "093c75644d978e38c18ee1db2f1cfcd315968c0f",
+  "dllSha256": "7a519e6fd7c01b1e9cc2d1b82cebbb29645ce57b7f8a83638ac19fb3415e154f",
+  "coreAssertions": 124044,
+  "enabledTraits": 61,
+  "disabledHistoricalTraits": [
+    "health",
+    "strength"
+  ],
+  "compatiblePairs": 1820,
+  "offerSeeds": 500,
+  "fixedIssues": [
+    112,
+    113,
+    114
+  ],
+  "preflight": {
+    "sheets": 32,
+    "rows": 2062,
+    "cells": 26477
+  },
+  "harnessChecks": 20,
+  "branches": [
+    {
+      "branch": "regular",
+      "game": "v0.107.1",
+      "mod": "1.0.29",
+      "baseLib": "3.4.7",
+      "platform": "Microsoft Windows 10.0.26300",
+      "sourceCheckpoints": [
+        "99615404631da22ff6a7daea5a4cf95ee0e0d5e2",
+        "f1b7101cbf627de944caa7cd32c5fa8ad421b5ab",
+        "f84d2239a599361b265a3df8bb13d8f1357ba48f"
+      ],
+      "dllSha256": "7a519e6fd7c01b1e9cc2d1b82cebbb29645ce57b7f8a83638ac19fb3415e154f",
+      "correlatedMainAndCoopReplies": 817,
+      "legacyInteractionReplies": 470,
+      "legacyDriversAssertOk": true,
+      "evidenceFiles": [
+        "trait-audit-traits51-reg-complete.json",
+        "harness-traits51-owner-regular-coop.json",
+        "traits109-traits51-reg-complete.json",
+        "traits111-traits51-reg-complete.json",
+        "trait-audit-traits51-regular-edges.json"
+      ],
+      "nativeTraitProbes": 79,
+      "geneticModelChecks": 4266,
+      "basicOwnerTransitions": 18,
+      "nativeTransformations": 27,
+      "riskyPairs": 9,
+      "baseAndUpgraded": true,
+      "allClasses": true,
+      "nativeAndColorlessControl": true,
+      "coopOwnerIsolation": true,
+      "seed": "SPIRELEGACY-TRAITS-51",
+      "cosmeticPairControls": 9,
+      "heroComplexDivaNativeRevival": 3,
+      "correlatedEdgeReplies": 62
+    },
+    {
+      "branch": "beta",
+      "game": "v0.111.0",
+      "mod": "1.0.29",
+      "baseLib": "3.4.7",
+      "platform": "Microsoft Windows 10.0.26300",
+      "sourceCheckpoints": [
+        "99615404631da22ff6a7daea5a4cf95ee0e0d5e2",
+        "f1b7101cbf627de944caa7cd32c5fa8ad421b5ab",
+        "f84d2239a599361b265a3df8bb13d8f1357ba48f"
+      ],
+      "dllSha256": "7a519e6fd7c01b1e9cc2d1b82cebbb29645ce57b7f8a83638ac19fb3415e154f",
+      "correlatedMainAndCoopReplies": 827,
+      "legacyInteractionReplies": 463,
+      "legacyDriversAssertOk": true,
+      "evidenceFiles": [
+        "trait-audit-traits51-beta-complete.json",
+        "harness-traits51-owner-beta-coop.json",
+        "traits109-traits51-beta-complete.json",
+        "traits111-traits51-beta-complete.json",
+        "trait-audit-traits51-beta-edges.json"
+      ],
+      "nativeTraitProbes": 79,
+      "geneticModelChecks": 4266,
+      "basicOwnerTransitions": 18,
+      "nativeTransformations": 27,
+      "riskyPairs": 9,
+      "baseAndUpgraded": true,
+      "allClasses": true,
+      "nativeAndColorlessControl": true,
+      "coopOwnerIsolation": true,
+      "seed": "SPIRELEGACY-TRAITS-51",
+      "cosmeticPairControls": 9,
+      "heroComplexDivaNativeRevival": 3,
+      "correlatedEdgeReplies": 64
+    }
+  ],
+  "sourceCheckpointNote": "Script-only checkpoint differences; all evidence verifies the same release DLL. Runtime source is unchanged since8097f51.",
+  "notTested": [
+    "physical Deck/Linux input/rendering",
+    "all compatible pairs as full native campaigns",
+    "full multiplayer campaigns and seamless transport reconnect",
+    "all complex card/power/relic combinations (#52/#53/#55/#60)"
+  ]
+}
