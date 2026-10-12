@@ -1,5 +1,7 @@
 # Spire Legacy 1.0.28
 
+Follow-up before publication: [Spellweave's paid upgrade](spellweave-balance.md). The archived candidate and exact hashes below precede that fix; regenerate and validate packages from the reviewed updated source before uploading.
+
 Release candidate for Slay the Spire 2 regular v0.107.1 and public-beta v0.111.0, with BaseLib 3.4.7. This package includes the merged balancing and recovery work through PR #98.
 
 ## Player changes
