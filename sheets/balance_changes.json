@@ -6214,7 +6214,7 @@
     },
     "after": {
       "cost": 3,
-      "damage": 24,
+      "damage": 20,
       "block": 0,
       "hits": 1,
       "draw": 0,
@@ -6237,15 +6237,15 @@
       "magic": 0,
       "special": "execute",
       "specialAmount": 2,
-      "exhaust": true,
-      "upgradeDamage": 2,
+      "exhaust": false,
+      "upgradeDamage": 6,
       "upgradeBlock": 0,
       "upgradeMagic": 0,
       "upgradeSpecial": 0,
       "upgradeCost": false,
       "upgradeDiscard": 0
     },
-    "reason": "Weaker no-manor baseline; avoid compounded effects/upgrades and free positive-draw cycles."
+    "reason": "Targeted finisher payoff: retain weaker unconditional no-manor baseline; improve setup payoff or paid rare upgrade without multi-hit or free-draw changes."
   },
   {
     "id": "knight_meteor_hammer",
@@ -10687,7 +10687,7 @@
     },
     "after": {
       "cost": 3,
-      "damage": 31,
+      "damage": 26,
       "block": 0,
       "hits": 1,
       "draw": 0,
@@ -10710,15 +10710,15 @@
       "magic": 0,
       "special": "none",
       "specialAmount": 0,
-      "exhaust": true,
-      "upgradeDamage": 2,
+      "exhaust": false,
+      "upgradeDamage": 8,
       "upgradeBlock": 0,
       "upgradeMagic": 0,
       "upgradeSpecial": 0,
       "upgradeCost": false,
       "upgradeDiscard": 0
     },
-    "reason": "Weaker no-manor baseline; avoid compounded effects/upgrades and free positive-draw cycles."
+    "reason": "Targeted finisher payoff: retain weaker unconditional no-manor baseline; improve setup payoff or paid rare upgrade without multi-hit or free-draw changes."
   },
   {
     "id": "mage_starfall",
@@ -25406,7 +25406,7 @@
       "power": "none",
       "magic": 0,
       "special": "chain_damage",
-      "specialAmount": 2,
+      "specialAmount": 4,
       "exhaust": true,
       "upgradeDamage": 0,
       "upgradeBlock": 0,
@@ -25415,7 +25415,7 @@
       "upgradeCost": true,
       "upgradeDiscard": 0
     },
-    "reason": "Weaker no-manor baseline; avoid compounded effects/upgrades and free positive-draw cycles."
+    "reason": "Targeted finisher payoff: retain weaker unconditional no-manor baseline; improve setup payoff or paid rare upgrade without multi-hit or free-draw changes."
   },
   {
     "id": "ranger_hunt_without_end",

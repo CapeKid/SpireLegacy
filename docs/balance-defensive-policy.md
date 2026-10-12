@@ -38,6 +38,8 @@ The two new paired seeds show no endpoint gain or endpoint regression. Keep `def
 
 ## Remaining two passes
 
+The targeted payoff pass is now documented in [three finisher corrections](balance-targeted-finishers.md). Once reviewed and merged, only the final regression and Workshop-preparation pass remains in this sequence.
+
 Next, review concrete card payoff and cost issues against native character benchmarks and representative legal decks. Change only specific supported problems, with focused regression checks; do not start another open-ended pilot feature pass or tune this rule to these seeds. A final pass then checks the resulting changes on both branches and prepares the Workshop update. This pass does not publish a release.
 
 ## Validation and limits
