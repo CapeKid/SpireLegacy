@@ -23,7 +23,7 @@ def send(command,**args):
     assert reply['ok'],reply
     assert {m['id'] for m in reply['metadata']['mods']}=={'BaseLib','SpireLegacy'}
     return reply['result']
-for kind in ['vulnerable','exhaust','lethal','area']:
+for kind in ['vulnerable','exhaust','lethal','area','execute','execute-upgraded','guarded','guarded-upgraded','marked','marked-upgraded','retained','retained-upgraded']:
     send('start',**{'class':'knight','manorTier':0,'quick':True,'traits':[],'seed':'SPIRELEGACY-TACTICAL-CHECK'})
     deadline=time.monotonic()+30
     while send('state')['phase']!='Play':
@@ -33,7 +33,10 @@ for kind in ['vulnerable','exhaust','lethal','area']:
     if kind=='vulnerable':assert r['vulnerable']==2 and r['followUpDamage']==7 and r['energySpent']==3,r
     elif kind=='exhaust':assert r['fuelExhausted'] and r['blockGained']==6,r
     elif kind=='lethal':assert r['targetDead'] and r['Reason']=='estimated-lethal',r
-    else:assert len(r['damage'])>1 and all(d==3 for d in r['damage']),r
+    elif kind=='area':assert len(r['damage'])>1 and all(d==3 for d in r['damage']),r
+    else:
+        assert r['targetDead'] and r['damage']==r['expected'] and r['Reason']=='estimated-lethal',r
+        assert r['rewardSpecial'] in {'execute','guard_bonus','marked_bonus','retain_damage'},r
     print(tag,r,flush=True)
 for kind in ['bash','shrug','repeat','skip','lethal-cost','avoid-offering','avoid-bloodletting','avoid-hemokinesis','safe-offering','only-fatal']:
     send('start',**{'class':'ironclad','manorTier':0,'quick':False,'traits':[],'seed':'SPIRELEGACY-CONTROL-CHECK'})

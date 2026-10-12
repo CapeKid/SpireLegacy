@@ -1,5 +1,7 @@
 # HP-cost decisions in the balance pilot
 
+The next stage records native reruns and conditional decisions: [balance-conditional-decisions.md](balance-conditional-decisions.md).
+
 This stage follows merged PR #90. It changes the opt-in tactical pilot, not playable cards, traits, manor progression or release packages.
 
 The pilot previously valued Offering's Energy and draw without considering its immediate HP loss. Native control diagnostics showed it could kill itself at 5 HP. The tactical policy now excludes verified immediate Ironclad self-damage when current HP is at or below the cost: Offering (6), Bloodletting (3) and Hemokinesis (2). Block does not count toward that budget because these owned models use unblockable self-damage. Other playable cards remain candidates, and a hand containing only a fatal cost produces no choice; the existing campaign loop then ends the turn.
