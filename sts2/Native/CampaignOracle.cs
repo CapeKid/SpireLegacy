@@ -93,7 +93,7 @@ public static class CampaignOracle
                     Observe();
                     for(var i=0;i<50;i++){
                         if(!player.Creature.IsAlive||CombatManager.Instance.IsEnding||!combat.GetOpponentsOf(player.Creature).Any(e=>e.IsAlive))break;
-                        var incoming=combat.GetOpponentsOf(player.Creature).Where(e=>e.IsAlive).Sum(e=>e.Monster!.NextMove.Intents.OfType<MegaCrit.Sts2.Core.MonsterMoves.Intents.AttackIntent>().Sum(a=>a.GetTotalDamage(new[]{player.Creature},e)));
+                        var incoming=TacticalPilot.Incoming(player);
                         var hand=PileType.Hand.GetPile(player);
                         var decision=policy=="tactical"?TacticalPilot.Choose(player,incoming):null;
                         var next=policy=="tactical"?decision?.Card:hand.Cards.Where(c=>c.CanPlay()).OrderByDescending(c=>policy=="attack"&&c.Type==CardType.Attack?200+BalanceOracle.Score(c,0):BalanceOracle.Score(c,incoming-player.Creature.Block)).ThenBy(Key,StringComparer.Ordinal).FirstOrDefault();
@@ -103,13 +103,21 @@ public static class CampaignOracle
                         await BalanceOracle.Play(next,decision?.Target);Observe();
                         plays.Add(new{id=Key(next),upgraded=next.IsUpgraded,netEnergy=player.PlayerCombatState is {} remaining?(int?)(energy-remaining.Energy):null,netHpLost=hp-player.Creature.CurrentHp,reason=decision?.Reason,target=decision?.Target?.Monster?.Id.ToString()});
                     }
+                    var potions=new List<PilotPotions.Used>();
+                    if(policy=="tactical"){
+                        var limit=player.Potions.Count();
+                        for(var p=0;p<limit&&player.Creature.IsAlive&&!CombatManager.Instance.IsEnding&&combat.GetOpponentsOf(player.Creature).Any(e=>e.IsAlive);p++){
+                            var used=await PilotPotions.EmergencyBlock(player,TacticalPilot.Incoming(player));
+                            if(used==null)break;potions.Add(used);Observe();
+                        }
+                    }
                     var unplayed=player.PlayerCombatState==null?[]:PileType.Hand.GetPile(player).Cards.Select(Key).ToArray();
                     // Next turn's draw belongs to the next decision, not this turn's sightings.
                     Tree.ProcessFrame-=Observe;
                     observing=false;
                     var victory=!combat.GetOpponentsOf(player.Creature).Any(e=>e.IsAlive);
                     if(!victory&&player.Creature.IsAlive&&!CombatManager.Instance.IsEnding)await BalanceOracle.End(player,false);
-                    return Result("combat-turn",new{turn,entries,plays,unplayed,victory=!combat.GetOpponentsOf(player.Creature).Any(e=>e.IsAlive)});
+                    return Result("combat-turn",new{turn,entries,plays,potions,unplayed,victory=!combat.GetOpponentsOf(player.Creature).Any(e=>e.IsAlive)});
                 }finally{if(observing)Tree.ProcessFrame-=Observe;Engine.TimeScale=oldScale;}
             }
             var nodes=NativeTestBridge.Descendants(Tree.Root).ToArray();

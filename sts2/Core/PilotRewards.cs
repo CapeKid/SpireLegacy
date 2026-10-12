@@ -3,7 +3,7 @@ namespace SpireLegacy;
 // Fixture-only reward heuristic; inputs are descriptions, not mutable game objects.
 public static class PilotRewards
 {
-    public record Card(string Id,int Cost,double Damage,double Block,int Draw,int Energy,int Poison,int Strength,bool Power,bool Exhaust,bool Engine,int Weak=0,int Vulnerable=0,string Special="none",int SpecialAmount=0,int Hits=1);
+    public record Card(string Id,int Cost,double Damage,double Block,int Draw,int Energy,int Poison,int Strength,bool Power,bool Exhaust,bool Engine,int Weak=0,int Vulnerable=0,string Special="none",int SpecialAmount=0,int Hits=1,bool Attack=false,bool SelfExhaust=false);
     // Reward expectations, not combat damage. Partial payoffs avoid assuming every condition is active.
     private static double ConditionalValue(Card offer,IReadOnlyList<Card> deck)
     {
@@ -12,6 +12,9 @@ public static class PilotRewards
             "execute"=>offer.Damage*Math.Max(0,offer.SpecialAmount-1)*.25,
             "guard_bonus"=>offer.SpecialAmount*Math.Max(1,offer.Hits)*Coverage(c=>c.Block>0),
             "marked_bonus"=>offer.SpecialAmount*Math.Max(1,offer.Hits)*Coverage(c=>c.Poison>0||c.Vulnerable>0),
+            "block_damage"=>deck.Where(c=>c.Block>0).Select(c=>c.Block).DefaultIfEmpty(0).Average()*Coverage(c=>c.Block>0)*Math.Max(1,offer.Hits),
+            "chain_damage"=>offer.SpecialAmount*Math.Min(2,deck.Count(c=>c.Attack&&c.Cost<=1)/3d)*.75*Math.Max(1,offer.Hits),
+            "exhaust_damage"=>offer.SpecialAmount*Math.Min(3,deck.Count(c=>c.Exhaust||c.SelfExhaust)*.5)*Math.Max(1,offer.Hits),
             // One possible retention, discounted for the turn spent holding the card.
             "retain_damage" or "retain_block"=>offer.SpecialAmount*.5,
             _=>0
