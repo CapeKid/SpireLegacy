@@ -46,6 +46,11 @@ public static class ControlPilotOracle
                 if(decision.Card!=twin)throw new InvalidDataException("Native repeat damage not recognized");
                 var hp=decision.Target!.CurrentHp;await BalanceOracle.Play(twin,decision.Target);return new{kind,damage=hp-decision.Target.CurrentHp,hits=PilotCardInfo.Hits(twin)};
             }
+            if(kind=="lethal-cost"){
+                player.Creature.SetCurrentHpInternal(5);var offering=await Add<Offering>();
+                await BalanceOracle.Play(offering);
+                return new{kind,dead=!player.Creature.IsAlive,gameOver=run.IsGameOver};
+            }
             if(kind=="skip"){
                 var count=player.Deck.Cards.Count;
                 var options=Enumerable.Range(0,3).Select(_=>run.CreateCard(ModelDb.Card<StrikeIronclad>(),player)).ToArray();

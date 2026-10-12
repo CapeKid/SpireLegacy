@@ -185,6 +185,12 @@ public static class NativeTestBridge
                     var cls = request.GetProperty("class").GetString()!;
                     if(cls is not ("knight" or "mage" or "ranger" or "ironclad"))throw new ArgumentException("Unknown campaign character.");
                     if(cls=="ironclad"&&(Runtime.Profile.manor.Values.Any(v=>v!=0)||request.TryGetProperty("traits",out var nativeTraits)&&nativeTraits.GetArrayLength()>0))throw new ArgumentException("Vanilla control cannot receive manor or traits.");
+                    if(cls=="ironclad"){
+                        var saves=MegaCrit.Sts2.Core.Saves.SaveManager.Instance;
+                        saves.ObtainEpochOverride(MegaCrit.Sts2.Core.Timeline.EpochModel.GetId<MegaCrit.Sts2.Core.Timeline.Epochs.Ironclad2Epoch>(),MegaCrit.Sts2.Core.Saves.EpochState.Revealed);
+                        saves.ObtainEpochOverride(MegaCrit.Sts2.Core.Timeline.EpochModel.GetId<MegaCrit.Sts2.Core.Timeline.Epochs.Ironclad5Epoch>(),MegaCrit.Sts2.Core.Saves.EpochState.Revealed);
+                        saves.ObtainEpochOverride(MegaCrit.Sts2.Core.Timeline.EpochModel.GetId<MegaCrit.Sts2.Core.Timeline.Epochs.Ironclad7Epoch>(),MegaCrit.Sts2.Core.Saves.EpochState.Revealed);
+                    }
                     Runtime.Profile.selected = cls=="ironclad"?null:new FamilyProfile.Heir { name="PortTester",classId=cls,traits=request.TryGetProperty("traits",out var traits) ? traits.EnumerateArray().Select(t=>t.GetString()!).ToList() : [] };
                     if(request.TryGetProperty("quick",out var quick) && Runtime.Profile.active==null)Runtime.Profile.generation=quick.GetBoolean()?0:3;
                     await NGame.Instance.StartNewSingleplayerRun(cls=="ironclad"?ModelDb.Character<MegaCrit.Sts2.Core.Models.Characters.Ironclad>():ModelDb.Character<HeirCharacter>(),true,ModelDb.ActsByIndex.Select(a=>a.First()).ToArray(),[],request.TryGetProperty("seed",out var balanceSeed)?balanceSeed.GetString()!:"SPIRELEGACY-PORT-TEST",GameMode.Standard,request.TryGetProperty("ascension",out var ascension)?ascension.GetInt32():0);

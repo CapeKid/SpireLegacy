@@ -28,8 +28,8 @@ public static class BalanceOracle
     {
         var enemy=preferredTarget??card.Owner.Creature.CombatState!.GetOpponentsOf(card.Owner.Creature).FirstOrDefault(e=>e.IsAlive);
         if(!card.TryManualPlay(card.TargetType==TargetType.AnyEnemy?enemy:null))throw new InvalidDataException("Paid balance play refused "+card.Id);
-        await Wait(()=>card.Pile?.Type is not (PileType.Hand or PileType.Play));
-        await Wait(()=>NCard.FindOnTable(card)==null);
+        await Wait(()=>!card.Owner.Creature.IsAlive||card.Pile?.Type is not (PileType.Hand or PileType.Play));
+        await Wait(()=>!card.Owner.Creature.IsAlive||NCard.FindOnTable(card)==null);
     }
     private static async Task<LegacyCard> Add(Player player,string key,bool upgraded=false,PileType pile=PileType.Hand)
     {

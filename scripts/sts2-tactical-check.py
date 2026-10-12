@@ -35,11 +35,12 @@ for kind in ['vulnerable','exhaust','lethal','area']:
     elif kind=='lethal':assert r['targetDead'] and r['Reason']=='estimated-lethal',r
     else:assert len(r['damage'])>1 and all(d==3 for d in r['damage']),r
     print(tag,r,flush=True)
-for kind in ['bash','shrug','repeat','skip']:
+for kind in ['bash','shrug','repeat','skip','lethal-cost']:
     send('start',**{'class':'ironclad','manorTier':0,'quick':False,'traits':[],'seed':'SPIRELEGACY-CONTROL-CHECK'})
     r=send('balance-control-probe',kind=kind)
     if kind=='bash':assert r['damage']==9 and r['vulnerable']==2,r
     elif kind=='shrug':assert r['block']==8 and r['draw']==1 and r['handCount']==r['previousCount'],r
     elif kind=='repeat':assert r['damage']==10 and r['hits']==2,r
-    else:assert r['unchangedDeck'] and not r['successfullySelected'] and r['closed'],r
+    elif kind=='skip':assert r['unchangedDeck'] and not r['successfullySelected'] and r['closed'],r
+    else:assert r['dead'] and r['gameOver'],r
     print(tag,r,flush=True)

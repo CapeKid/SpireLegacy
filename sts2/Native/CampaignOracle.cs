@@ -83,6 +83,7 @@ public static class CampaignOracle
                 // Observe every frame and after resolution, including cards drawn mid-turn.
                 // These are hand-entry counts, not Draw hook counts (retrieval also enters hand).
                 void Observe(){
+                    if(player.PlayerCombatState==null)return;
                     var hand=PileType.Hand.GetPile(player).Cards.ToHashSet();
                     foreach(var c in hand.Except(present)){var key=Key(c);entries[key]=entries.GetValueOrDefault(key)+1;}
                     present=hand;
@@ -100,9 +101,9 @@ public static class CampaignOracle
                         if(i==49)return Result("play-cap",new{turn,entries,plays});
                         var energy=player.PlayerCombatState.Energy;var hp=player.Creature.CurrentHp;
                         await BalanceOracle.Play(next,decision?.Target);Observe();
-                        plays.Add(new{id=Key(next),upgraded=next.IsUpgraded,netEnergy=energy-player.PlayerCombatState.Energy,netHpLost=hp-player.Creature.CurrentHp,reason=decision?.Reason,target=decision?.Target?.Monster?.Id.ToString()});
+                        plays.Add(new{id=Key(next),upgraded=next.IsUpgraded,netEnergy=player.PlayerCombatState is {} remaining?(int?)(energy-remaining.Energy):null,netHpLost=hp-player.Creature.CurrentHp,reason=decision?.Reason,target=decision?.Target?.Monster?.Id.ToString()});
                     }
-                    var unplayed=PileType.Hand.GetPile(player).Cards.Select(Key).ToArray();
+                    var unplayed=player.PlayerCombatState==null?[]:PileType.Hand.GetPile(player).Cards.Select(Key).ToArray();
                     // Next turn's draw belongs to the next decision, not this turn's sightings.
                     Tree.ProcessFrame-=Observe;
                     observing=false;
