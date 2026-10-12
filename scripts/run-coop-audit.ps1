@@ -3,6 +3,7 @@ param(
     [Parameter(Mandatory=$true)][string]$Tag,
     [ValidateRange(1024,65530)][int]$Port=25001,
     [ValidateSet('all','party')][string]$Scope='all',
+    [switch]$Pair,
     [string]$Python='python'
 )
 $ErrorActionPreference='Stop'
@@ -13,7 +14,7 @@ $clients=@();$profiles=@();$images=@();$old=@{}
 $names='HEIR_TEST_MODE','HEIR_TEST_ROOT','HEIR_DATA_DIR','HEIR_TEST_SOURCE_SHA'
 foreach($name in $names){$old[$name]=[Environment]::GetEnvironmentVariable($name,'Process')}
 try {
-    for($index=1;$index -le 4;$index++) {
+    foreach($index in $(if($Pair){3,4}else{1,2,3,4})) {
         $folder=if($index -eq 1){"sts2-harness-$Branch-lab"}elseif($index -eq 2){"sts2-harness-${Branch}2-lab"}else{"sts2-coop-$Branch$index-lab"}
         $lab=(Resolve-Path (Join-Path $private $folder)).Path
         if(-not $lab.StartsWith($private+[IO.Path]::DirectorySeparatorChar,[StringComparison]::OrdinalIgnoreCase)){throw 'Private lab required'}
@@ -29,7 +30,8 @@ try {
         $clients+=Start-Process $image -WorkingDirectory $lab -ArgumentList '--force-steam=off --rendering-method gl_compatibility --rendering-driver opengl3 --position -2000,-2000' -WindowStyle Hidden -PassThru -RedirectStandardOutput (Join-Path $profile 'launch.log') -RedirectStandardError (Join-Path $profile 'errors.log')
         $profiles+=$profile;$images+=$image
     }
-    & $Python (Join-Path $PSScriptRoot 'sts2-coop-audit.py') $Tag $Port @profiles $Scope
+    if($Pair){& $Python (Join-Path $PSScriptRoot 'sts2-harness-native-check.py') coop $profiles[0] $profiles[1] $Tag $Port}
+    else {& $Python (Join-Path $PSScriptRoot 'sts2-coop-audit.py') $Tag $Port @profiles $Scope}
     if($LASTEXITCODE -ne 0){throw 'Co-op audit driver failed'}
 } finally {
     foreach($name in $names){[Environment]::SetEnvironmentVariable($name,$old[$name],'Process')}
