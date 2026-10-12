@@ -46,7 +46,7 @@ public static class TraitAuditOracle
     {
         var player=run.Players.Single();var context=new BlockingPlayerChoiceContext();
         var card=reuse?redrawCard??throw new InvalidOperationException("No prior redraw fixture."):(LegacyCard)player.Creature.CombatState!.CreateCard(NativeCards.Get(PlayerBloodlines.Heir(player).classId+"_strike"),player);
-        Require(card.Owner==player&&card.CombatState==player.Creature.CombatState,"Redraw fixture belongs to another combat.");redrawCard=card;
+        Require(card.Owner==player&&player.Creature.CombatState!.ContainsCard(card),"Redraw fixture belongs to another combat.");redrawCard=card;
         await CardPileCmd.Add(card,PileType.Draw,CardPilePosition.Top,skipVisuals:true);
         await CardPileCmd.Draw(context,1,player);
         var first=card.EnergyCost.GetWithModifiers(CostModifiers.All);
@@ -63,28 +63,31 @@ public static class TraitAuditOracle
         Player Peer(ulong id,string[] traits) {
             var data=local.ToSerializable();data.NetId=id;
             var snapshot=FamilySnapshot.Read(FamilySnapshot.Serialize(PlayerBloodlines.State(local)!));
-            snapshot.ownerNetId=id;snapshot.coop=true;snapshot.heir.traits=traits.ToList();
+            snapshot.ownerNetId=id;snapshot.coop=true;snapshot.heir.traits=traits.ToList();snapshot.heir.classId=id==991?"mage":"ranger";
             var carrier=data.Relics.Single(r=>r.Id==ModelDb.Relic<BloodlineRelic>().Id);
             var index=carrier.Props!.strings!.FindIndex(p=>p.name==nameof(BloodlineRelic.FamilyRunSnapshot));
             carrier.Props.strings[index]=new(){name=nameof(BloodlineRelic.FamilyRunSnapshot),value=FamilySnapshot.Serialize(snapshot)};
-            return Player.FromSerializable(data);
+            var peer=Player.FromSerializable(data);peer.RunState=run;return peer;
         }
         var pacifist=Peer(991,["cantattack"]);var ordinary=Peer(992,[]);var checks=new List<object>();
-        foreach(var cls in new[]{"knight","mage","ranger"})foreach(var upgrade in new[]{false,true}) {
-            var card=(LegacyCard)NativeCards.Get(cls+"_strike").ToMutable();card.Owner=pacifist;
+        foreach(var row in Design.Rows("cards").Where(r=>r.Text("rarity")=="BASIC"))foreach(var upgrade in new[]{false,true}) {
+            var card=(LegacyCard)run.CreateCard(NativeCards.Get(row.Text("id")),pacifist);
             if(upgrade)CardCmd.Upgrade(card);
             var source=card.Type.ToString();card.Owner=null!;card.Owner=ordinary;
             var expected=new CardDesign(card.Key,upgrade,[]);
-            var rebound=card.Type==MegaCrit.Sts2.Core.Entities.Cards.CardType.Attack&&card.DynamicVars.Damage.BaseValue==expected.Damage&&card.TraitSnapshot=="[]";
+            var normalType=Enum.Parse<CardType>(row.Text("type"),true);
+            var rebound=card.Type==normalType&&card.DynamicVars.Damage.BaseValue==expected.Damage&&card.DynamicVars.Block.BaseValue==expected.Block&&card.TraitSnapshot=="[]";
             card.Owner=null!;card.Owner=pacifist;
-            var returned=card.Type==MegaCrit.Sts2.Core.Entities.Cards.CardType.Skill&&card.DynamicVars.Damage.BaseValue==0;
+            var mercy=new CardDesign(card.Key,upgrade,["cantattack"]);
+            var returned=card.Type==(mercy.Mercy?CardType.Skill:normalType)&&card.DynamicVars.Damage.BaseValue==mercy.Damage&&card.DynamicVars.Block.BaseValue==mercy.Block;
             var method=AccessTools.Method(typeof(CardModel),"CreateDupe");
             var duplicate=(LegacyCard)method.Invoke(card,method.GetParameters().Select(p=>p.ParameterType==typeof(Player)?ordinary:p.HasDefaultValue?p.DefaultValue:throw new MissingMethodException("Unsupported duplicate parameter: "+p)).ToArray())!;
             if(duplicate.Owner!=ordinary){duplicate.Owner=null!;duplicate.Owner=ordinary;}
-            var duplicatedRecipient=duplicate.Type==CardType.Attack&&duplicate.DynamicVars.Damage.BaseValue==expected.Damage;
+            var duplicatedRecipient=duplicate.Type==normalType&&duplicate.DynamicVars.Damage.BaseValue==expected.Damage&&duplicate.DynamicVars.Block.BaseValue==expected.Block;
             card.DynamicVars.Damage.BaseValue+=2;card.Owner=null!;card.Owner=ordinary;
             var preservesBuff=card.DynamicVars.Damage.BaseValue==expected.Damage+2;
             checks.Add(new{card.Key,upgrade,source,rebound,returned,duplicatedRecipient,preservesBuff});
+            run.RemoveCard(duplicate);run.RemoveCard(card);
         }
         return checks;
     }

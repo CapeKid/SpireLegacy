@@ -30,6 +30,7 @@ if 'baseline' in tag:
     send('abandon');print(tag,'reproduced stale recipient inheritance and repeated-draw cost stacking',flush=True);sys.exit(0)
 assert all(r['rebound'] and r['returned'] and r['duplicatedRecipient'] and r['preservesBuff'] for r in transfers),transfers
 traits=json.loads((root/'sheets/traits.json').read_text())
+if 'smoke' in tag:traits=[r for r in traits if r['id'] in ['nocolor','manacostanddamageup','disarmonhurt','manafromhurt','vampire','cheeronkills','itemsgoflying','explosiveenemies']]
 mutations=6*sum(r['rarity']=='BASIC' for r in json.loads((root/'sheets/cards.json').read_text()))
 for index,trait in enumerate(traits):
     cls=['knight','mage','ranger'][index%3]
@@ -70,6 +71,8 @@ for index,trait in enumerate(traits):
             assert played['pile']=='Discard' and not played['tableNodePresent']
     if trait['effect'] in ['hurt_energy','coin_loss','diva','explosions'] or trait['heal']>0:send('trait-triggers')
     if index%10==9:print(tag,index+1,'trait probes pass',flush=True)
+if 'smoke' in tag:
+    send('abandon');print(tag,'focused native trigger and ownership smoke passes',flush=True);sys.exit(0)
 for cls in ['knight','mage','ranger']:
     for pair in [['megahealth','cheeronkills'],['superhealer','nomeat'],['cantattack','breakpropsformana']]:
         start(cls,pair);send('trait-audit')
