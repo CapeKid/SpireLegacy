@@ -93,6 +93,7 @@ public static class ControlPilotOracle
                 return new{kind,dead=!player.Creature.IsAlive,gameOver=run.IsGameOver};
             }
             if(kind is "skip" or "force-present" or "force-absent"){
+                var rewardPolicy=kind=="skip"?"deck":"defensive";
                 var count=player.Deck.Cards.Count;
                 var options=Enumerable.Range(0,3).Select(_=>run.CreateCard(ModelDb.Card<StrikeIronclad>(),player)).ToArray();
                 var reward=new CardReward(options,CardCreationSource.Encounter,player,CardCreationOptions.ForRoom(player,run.CurrentRoom!.RoomType));
@@ -100,7 +101,7 @@ public static class ControlPilotOracle
                 for(var frame=0;frame<20&&NOverlayStack.Instance?.Peek() is not NRewardsScreen;frame++)await tree.ToSignal(tree,SceneTree.SignalName.ProcessFrame);
                 await CampaignOracle.Step(run,"tactical",new BorrowedSelector(),"deck");
                 var choice=kind=="force-present"?"CARD.STRIKE_IRONCLAD":kind=="force-absent"?"CARD.DOES_NOT_EXIST":null;
-                var skipped=System.Text.Json.JsonSerializer.SerializeToElement(await CampaignOracle.Step(run,"tactical",new BorrowedSelector(),"deck",choice,run.TotalFloor));
+                var skipped=System.Text.Json.JsonSerializer.SerializeToElement(await CampaignOracle.Step(run,"tactical",new BorrowedSelector(),rewardPolicy,choice,run.TotalFloor));
                 var took=kind=="force-present";
                 if(skipped.GetProperty("detail").GetProperty("skip").GetBoolean()==took)throw new InvalidDataException("Reward intervention/skip result incorrect");
                 if(took&&!skipped.GetProperty("detail").GetProperty("intervention").GetBoolean())throw new InvalidDataException("Legal intervention not journaled");
@@ -112,13 +113,13 @@ public static class ControlPilotOracle
                     var replay=new CardReward(more,CardCreationSource.Encounter,player,CardCreationOptions.ForRoom(player,run.CurrentRoom!.RoomType));
                     var secondSet=new RewardsSet(player);secondSet.Rewards.Add(replay);var secondOffer=secondSet.Offer();
                     for(var frame=0;frame<20&&NOverlayStack.Instance?.Peek() is not NRewardsScreen;frame++)await tree.ToSignal(tree,SceneTree.SignalName.ProcessFrame);
-                    await CampaignOracle.Step(run,"tactical",new BorrowedSelector(),"deck",choice,run.TotalFloor);
-                    var second=System.Text.Json.JsonSerializer.SerializeToElement(await CampaignOracle.Step(run,"tactical",new BorrowedSelector(),"deck",choice,run.TotalFloor));
+                    await CampaignOracle.Step(run,"tactical",new BorrowedSelector(),rewardPolicy,choice,run.TotalFloor);
+                    var second=System.Text.Json.JsonSerializer.SerializeToElement(await CampaignOracle.Step(run,"tactical",new BorrowedSelector(),rewardPolicy,choice,run.TotalFloor));
                     replaySkipped=second.GetProperty("detail").GetProperty("skip").GetBoolean();
                     if(!replaySkipped)throw new InvalidDataException("One-off intervention replayed on another reward");
                     await CampaignOracle.Step(run,"tactical",new BorrowedSelector(),"deck");await secondOffer.WaitAsync(TimeSpan.FromSeconds(10));
                 }
-                return new{kind,unchangedDeck=player.Deck.Cards.Count==count,added=player.Deck.Cards.Count-count,successfullySelected=reward.SuccessfullySelected,replaySkipped,closed=NOverlayStack.Instance?.Peek() is not NRewardsScreen};
+                return new{kind,rewardPolicy,unchangedDeck=player.Deck.Cards.Count==count,added=player.Deck.Cards.Count-count,successfullySelected=reward.SuccessfullySelected,replaySkipped,closed=NOverlayStack.Instance?.Peek() is not NRewardsScreen};
             }
             throw new ArgumentException("Unknown control fixture.");
         }
