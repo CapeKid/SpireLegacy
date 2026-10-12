@@ -47,7 +47,7 @@ public static class CoopOracle
             screen.InitializeAsHost(service,save.SaveData);
         }else{
             var flow=NewJoinFlow();
-            var join=await flow.Begin(new ENetClientConnectionInitializer(2,"127.0.0.1",port),tree);
+            var join=await flow.Begin(new ENetClientConnectionInitializer(request.TryGetProperty("peer",out var resumePeer)?resumePeer.GetUInt64():2,"127.0.0.1",port),tree);
             if(!join.loadJoinResponse.HasValue)throw new InvalidOperationException("Expected native saved lobby.");
             screen.InitializeAsClient(Service(flow),join.loadJoinResponse.Value);
         }
@@ -63,11 +63,13 @@ public static class CoopOracle
         RunManager.Instance.ActionQueueSynchronizer.RequestEnqueue(new MegaCrit.Sts2.Core.GameActions.VoteForMapCoordAction(PlayerBloodlines.LocalPlayer!,run.MapLocation,vote));
         return new{voted=next.coord.ToString()};
     }
-    public static async Task<object> Play()
+    public static async Task<object> Play(bool upgraded=false)
     {
         var player=PlayerBloodlines.LocalPlayer!;
         var combat=player.Creature.CombatState!;
-        var card=player.PlayerCombatState!.Hand.Cards.First(c=>c.CanPlay());
+        var card=player.PlayerCombatState!.Hand.Cards.Where(c=>c.CanPlay()).OrderBy(c=>c.Type==MegaCrit.Sts2.Core.Entities.Cards.CardType.Attack?1:0).First();
+        if(upgraded)MegaCrit.Sts2.Core.Commands.CardCmd.Upgrade(card);
+        var energy=player.PlayerCombatState.Energy;var cost=card.EnergyCost.GetWithModifiers(MegaCrit.Sts2.Core.Entities.Cards.CostModifiers.All);
         var target=card.TargetType==MegaCrit.Sts2.Core.Entities.Cards.TargetType.AnyEnemy?combat.GetOpponentsOf(player.Creature).First(c=>c.IsAlive):null;
         if(!card.TryManualPlay(target))throw new InvalidDataException("Native co-op manual play refused "+card.Id);
         var tree=(SceneTree)Engine.GetMainLoop();var deadline=Time.GetTicksMsec()+15000;
@@ -80,7 +82,7 @@ public static class CoopOracle
             if(Time.GetTicksMsec()>deadline)throw new InvalidDataException("Native co-op card remains on the table: "+card.Id);
             await tree.ToSignal(tree,SceneTree.SignalName.ProcessFrame);
         }
-        return new{played=true,card=card.Id.ToString(),pile=card.Pile?.Type.ToString(),tableNodePresent=false};
+        return new{played=true,card=card.Id.ToString(),upgraded=card.IsUpgraded,cost,energyBefore=energy,energyAfter=player.PlayerCombatState.Energy,pile=card.Pile?.Type.ToString(),tableNodePresent=false};
     }
     public static object RoundTrip()
     {
@@ -89,6 +91,7 @@ public static class CoopOracle
         foreach(var player in run.Players){
             var data=player.ToSerializable();
             var restored=Player.FromSerializable(data);
+            if(player.Character is not HeirCharacter){if(restored.Character.Id!=player.Character.Id||PlayerBloodlines.State(restored)!=null)throw new InvalidDataException("Native player inherited a bloodline.");checks.Add(new{player.NetId,native=true});continue;}
             var expected=FamilySnapshot.Serialize(PlayerBloodlines.State(player)!);
             if(FamilySnapshot.Serialize(PlayerBloodlines.State(restored)!)!=expected)throw new InvalidDataException("Owner snapshot changed during native player serialization.");
             var expectedTraits=JsonSerializer.Serialize(PlayerBloodlines.Heir(player).traits);
@@ -104,12 +107,17 @@ public static class CoopOracle
     {
         if(NRun.Instance!=null)throw new InvalidOperationException("Return to the menu before creating a lab lobby.");
         if(Runtime.Profile.active!=null)throw new InvalidOperationException("Lab family has an unfinished run.");
-        Runtime.Profile.selected=new FamilyProfile.Heir{name=host?"Host heir":"Guest heir",classId=request.GetProperty("class").GetString()!,traits=request.TryGetProperty("traits",out var traits)?traits.EnumerateArray().Select(t=>t.GetString()!).ToList():[]};
+        var choice=request.GetProperty("class").GetString()!;
+        var peer=host?1UL:request.TryGetProperty("peer",out var requestedPeer)?requestedPeer.GetUInt64():2UL;
+        Runtime.Profile.selected=new FamilyProfile.Heir{name=host?"Host heir":"Guest heir "+peer,classId=choice is "ironclad" or "random"?request.TryGetProperty("heirClass",out var frozenClass)?frozenClass.GetString()!:"knight":choice,traits=request.TryGetProperty("traits",out var traits)?traits.EnumerateArray().Select(t=>t.GetString()!).ToList():[]};
         Runtime.Profile.family=host?"Host family":"Guest family";
-        Runtime.Profile.banner=host?1:3;
+        Runtime.Profile.banner=(int)(peer%4);
         Runtime.Profile.generation=host?2:4;
         if(request.TryGetProperty("manor",out var manor))Runtime.Profile.manor=manor.EnumerateObject().ToDictionary(p=>p.Name,p=>p.Value.GetInt32());
         Runtime.Profile.crowns=host?123:234;
+        if(request.TryGetProperty("lesson",out var lesson)){
+            var cls=lesson.GetString()!;Runtime.Profile.chronicle.classes[cls]=new(){returns=1,maxFloor=6};
+        }
         FamilyChronicle.Reconcile(Runtime.Profile);
         Runtime.Profile.Save(Runtime.FamilyPath);
         foreach(var key in new[]{"accept_tutorials_ftue","map_select_ftue","combat_rules_ftue","shuffle_ftue","multiplayer_ftue"})MegaCrit.Sts2.Core.Saves.SaveManager.Instance.MarkFtueAsComplete(key);
@@ -124,12 +132,12 @@ public static class CoopOracle
             screen.InitializeMultiplayerAsHost(service,4);
         }else {
             var flow=NewJoinFlow();
-            var join=await flow.Begin(new ENetClientConnectionInitializer(2,"127.0.0.1",port),tree);
+            var join=await flow.Begin(new ENetClientConnectionInitializer(peer,"127.0.0.1",port),tree);
             if(!join.joinResponse.HasValue)throw new InvalidOperationException("Expected a native lobby join response.");
             screen.InitializeMultiplayerAsClient(Service(flow),join.joinResponse.Value);
         }
         menu.SubmenuStack.Push(screen);
-        var button=NativeTestBridge.Descendants(screen).OfType<NCharacterSelectButton>().Single(b=>b.Character is HeirCharacter);
+        var button=NativeTestBridge.Descendants(screen).OfType<NCharacterSelectButton>().Single(b=>choice=="ironclad"?b.Character is MegaCrit.Sts2.Core.Models.Characters.Ironclad:choice=="random"?b.Character is MegaCrit.Sts2.Core.Models.Characters.RandomCharacter:b.Character is HeirCharacter);
         screen.SelectCharacter(button,button.Character);
         return State();
     }
@@ -137,9 +145,11 @@ public static class CoopOracle
     {
         var run=AccessTools.Property(typeof(RunManager),"State").GetValue(RunManager.Instance) as RunState;
         return new{local=run==null?CoopBloodlines.Lobby?.NetService.NetId:RunManager.Instance.NetService.NetId,
+            paused=((SceneTree)Engine.GetMainLoop()).Paused,pending=CoopBloodlines.Pending.Keys.ToArray(),
+            session=CoopBloodlines.Selections.Session,protocol=CoopBloodlines.Protocol,
             family=Runtime.Profile.family,familyId=Runtime.Profile.familyId,crowns=Runtime.Profile.crowns,active=Runtime.Profile.active?.id,
             lobby=run==null&&CoopBloodlines.Lobby is {} lobby?CoopBloodlines.Players(lobby).Select(p=>new{id=CoopBloodlines.Id(p),character=CoopBloodlines.Character(p).Id.ToString(),ready=CoopBloodlines.IsReady(p),snapshot=CoopBloodlines.Pending.GetValueOrDefault(CoopBloodlines.Id(p))?.heir.classId}).ToArray():null,
             floor=run?.TotalFloor,room=run?.CurrentRoom?.GetType().Name,
-            players=run?.Players.Select(p=>new{p.NetId,character=p.Character.Id.ToString(),heir=JsonSerializer.SerializeToElement(PlayerBloodlines.Heir(p),FamilyProfile.JsonOptions),snapshot=PlayerBloodlines.State(p)==null?(JsonElement?)null:JsonSerializer.SerializeToElement(PlayerBloodlines.State(p),FamilyProfile.JsonOptions),hp=p.Creature.CurrentHp,maxHp=p.Creature.MaxHp,block=p.Creature.Block,energy=p.PlayerCombatState?.Energy,phase=p.PlayerCombatState?.Phase.ToString(),pool=p.Character.CardPool.Id.ToString(),deck=p.Deck.Cards.Select(c=>c.Id.ToString()).ToArray(),hand=p.PlayerCombatState?.Hand.Cards.Select(c=>c.Id.ToString()).ToArray()}).ToArray()};
+            players=run?.Players.Select(p=>new{p.NetId,character=p.Character.Id.ToString(),heir=JsonSerializer.SerializeToElement(PlayerBloodlines.Heir(p),FamilyProfile.JsonOptions),snapshot=PlayerBloodlines.State(p)==null?(JsonElement?)null:JsonSerializer.SerializeToElement(PlayerBloodlines.State(p),FamilyProfile.JsonOptions),hp=p.Creature.CurrentHp,maxHp=p.Creature.MaxHp,block=p.Creature.Block,energy=p.PlayerCombatState?.Energy,phase=p.PlayerCombatState?.Phase.ToString(),pool=p.Character.CardPool.Id.ToString(),deck=p.Deck.Cards.Select(c=>c.Id.ToString()).ToArray(),hand=p.PlayerCombatState?.Hand.Cards.Select(c=>c.Id.ToString()).ToArray(),powers=p.Creature.Powers.Select(power=>new{id=power.Id.ToString(),power.Amount,charges=power is P_class cp?cp.Charges:0}).ToArray()}).ToArray()};
     }
 }

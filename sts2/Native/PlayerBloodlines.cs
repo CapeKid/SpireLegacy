@@ -25,7 +25,7 @@ public static class PlayerBloodlines
     {
         var data=save.Relics.FirstOrDefault(r=>r.Id==ModelDb.Relic<BloodlineRelic>().Id)?.Props?.strings?.FirstOrDefault(p=>p.name==nameof(BloodlineRelic.FamilyRunSnapshot)).value;
         if(string.IsNullOrEmpty(data)&&save.CharacterId==ModelDb.Character<HeirCharacter>().Id)throw new InvalidDataException("This Heir save has no frozen family snapshot. The native save is preserved; restore a compatible backup or use its original mod version.");
-        return string.IsNullOrEmpty(data)?null:FamilySnapshot.Read(data);
+        return string.IsNullOrEmpty(data)?null:FamilySnapshot.ReadPlayerSave(data,save.NetId);
     }
     public static bool Eligible(Player player,string relic)
     {
@@ -96,7 +96,10 @@ public static class SyncSavedBloodline
     public static void Prefix(Player __instance,SerializablePlayer player,out FamilyProfile.FamilyRun? __state)
     {
         __state=PlayerBloodlines.Creating.Value;
+        if(__instance.NetId!=player.NetId)throw new InvalidDataException("Cannot synchronize another player's saved bloodline.");
         var saved=PlayerBloodlines.Saved(player);
+        if(PlayerBloodlines.State(__instance) is {} prior&&saved!=null&&!FamilySnapshot.SameInheritance(prior,saved))
+            throw new InvalidDataException("Reconnect cannot change this player's frozen inheritance.");
         if(__instance.Character is HeirCharacter heir&&saved!=null)heir.Bloodline=saved;
         PlayerBloodlines.Creating.Value=saved;
     }
