@@ -41,6 +41,8 @@ public static class TacticalPilot
         var energy=player.PlayerCombatState!.Energy;var need=Math.Max(0,incoming-player.Creature.Block);
         var choices=new List<Decision>();
         foreach(var card in hand.Where(c=>c.CanPlay())){
+            var hpLoss=PilotCardInfo.ImmediateHpLoss(card);
+            if(!PilotHealth.Affordable(player.Creature.CurrentHp,hpLoss))continue;
             foreach(var target in card.TargetType==TargetType.AnyEnemy?enemies.Cast<Creature?>():new Creature?[]{null}){
                 var cost=Cost(card);var reason="utility";
                 var damage=target!=null?(double)Damage(card,target):card.TargetType==TargetType.AllEnemies?enemies.Sum(e=>(double)Damage(card,e)):card.TargetType==TargetType.RandomEnemy&&enemies.Length>0?enemies.Average(e=>(double)Damage(card,e)):0;
@@ -67,6 +69,7 @@ public static class TacticalPilot
                     // Single-hit estimates only. Multi-hit/execute/reflect/phase effects need a richer solver.
                     if(target!=null&&PilotCardInfo.SimpleAttack(card)&&damage>=target.CurrentHp+target.Block){score+=100;reason="estimated-lethal";}
                 }
+                score-=PilotHealth.Penalty(player.Creature.CurrentHp,hpLoss);
                 choices.Add(new(card,target,score,reason));
             }
         }

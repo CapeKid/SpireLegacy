@@ -4,6 +4,11 @@ public static class PilotRewardChecks
 {
     public static void Run(Action<bool,string> check)
     {
+        check(!PilotHealth.Affordable(6,6),"Exact HP cost is fatal");
+        check(!PilotHealth.Affordable(5,6),"Over-budget HP cost is refused");
+        check(PilotHealth.Affordable(7,6),"Survivable HP cost remains available");
+        check(PilotHealth.Affordable(1,0),"Low health permits cards without immediate HP cost");
+        check(PilotHealth.Penalty(7,6)>PilotHealth.Penalty(80,6),"Near-death self-damage has higher opportunity cost");
         PilotRewards.Card Attack(string id,int damage=6)=>new(id,1,damage,0,0,0,0,0,false,false,false);
         PilotRewards.Card Guard(string id,int block=5)=>new(id,1,0,block,0,0,0,0,false,false,false);
         var balanced=Enumerable.Range(0,6).Select(i=>Attack("a"+i)).Concat(Enumerable.Range(0,4).Select(i=>Guard("g"+i))).ToArray();

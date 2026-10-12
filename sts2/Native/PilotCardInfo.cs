@@ -5,6 +5,10 @@ namespace SpireLegacy;
 
 public static class PilotCardInfo
 {
+    // Verified immediate Ironclad self-damage. Haunt's HpLoss variable is a delayed power,
+    // so a generic HpLoss-name check would incorrectly forbid it at low HP.
+    public static int ImmediateHpLoss(CardModel card)=>card.GetType().Name is "Offering" or "Bloodletting" or "Hemokinesis"
+        &&card.DynamicVars.TryGetValue("HpLoss",out var loss)?Math.Max(0,(int)Math.Ceiling(loss.BaseValue)):0;
     // Native variable names verified against owned card models. Some complex/generator cards lack these.
     public static int Amount(CardModel card,string effect)
     {
