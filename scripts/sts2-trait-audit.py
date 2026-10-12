@@ -33,7 +33,7 @@ if 'transforms' in tag:
     for cls in ['knight','mage','ranger']:
         for genes in [[],['cantattack']]:start(cls,genes);send('trait-transforms')
     send('abandon');print(tag,'native deck transformations and saved genetics pass',flush=True);sys.exit(0)
-traits=json.loads((root/'sheets/traits.json').read_text())
+traits=[r for r in json.loads((root/'sheets/traits.json').read_text()) if r['enabled']]
 if 'smoke' in tag:traits=[r for r in traits if r['id'] in ['nocolor','cantattack','manacostanddamageup','disarmonhurt','manafromhurt','vampire','cheeronkills','itemsgoflying','explosiveenemies']]
 mutations=6*sum(r['rarity']=='BASIC' for r in json.loads((root/'sheets/cards.json').read_text()))
 for index,trait in enumerate(traits):
@@ -66,8 +66,10 @@ for index,trait in enumerate(traits):
         assert after['gold']==state['gold']+(trait['amount'] if trait['effect']=='treasure_gold' else 0)
         assert after['hp']==state['hp']-(trait['amount'] if trait['effect']=='chest' else 0)
     if trait['effect']=='histrionic':
+        send('trait-speed',value=1)
         send('trait-hit',amount=2)
         assert any(v['flash']>0 for v in send('trait-appearance'))
+        send('trait-speed',value=8)
     if trait['effect']=='pacifist':send('trait-restrictions')
     if trait['effect'] not in ['fragile','treasure_gold','chest','histrionic','costly','shock']:
         send('trait-guard',amount=100)

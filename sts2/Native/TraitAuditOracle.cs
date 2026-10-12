@@ -136,6 +136,13 @@ public static class TraitAuditOracle
     {
         var player=run.Players.Single();var heir=PlayerBloodlines.Heir(player);var rows=Inheritance.Rows(heir).ToArray();
         var relic=player.Relics.OfType<BloodlineRelic>().Single();
+        var inheritance=new HeirInheritance(heir);
+        if(inheritance.Has("kit"))Require(player.Deck.Cards.OfType<LegacyCard>().Select(c=>c.Key).SequenceEqual(inheritance.Deck(heir.classId,PlayerBloodlines.State(player)!.generation)),"Innovator deck did not use the frozen generation seed.");
+        if(inheritance.Amount("relics")>0) {
+            var count=player.Relics.Count(r=>r.Rarity==MegaCrit.Sts2.Core.Entities.Relics.RelicRarity.Common);
+            Require(count==inheritance.Amount("relics")&&relic.StartingRelicsGranted,"Starting common relic count mismatch.");
+            await relic.AfterActEntered();Require(player.Relics.Count(r=>r.Rarity==MegaCrit.Sts2.Core.Entities.Relics.RelicRarity.Common)==count,"Repeated act callback duplicated starting relics.");
+        }
         var expectedHp=rows.Any(r=>r.Text("effect")=="fragile")?1:Math.Max(20,Design.Get("classes",heir.classId).Number("hp")+rows.Sum(r=>r.Number("hp")));
         Require(player.Creature.MaxHp==expectedHp,"Native starting HP disagrees with trait fields.");
         Require(player.Creature.GetPowerAmount<MegaCrit.Sts2.Core.Models.Powers.StrengthPower>()==rows.Sum(r=>r.Number("strength")),"Starting inherited Strength mismatch.");
