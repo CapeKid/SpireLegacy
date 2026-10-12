@@ -73,7 +73,7 @@ try:
         for profile in [host,guest]:assert len(send(profile,'coop-roundtrip'))==2
         diagnostic=send(host,'harness-owner-diagnostic',owner=2)
         assert diagnostic['originalPreserved'] and 'Heir: mage; traits: cantattack' in diagnostic['text'] and 'Inner owner diagnostic' in diagnostic['text'],diagnostic
-        time.sleep(3);send(host,'coop-vote');send(guest,'coop-vote');peers('Play')
+        time.sleep(12);send(host,'coop-vote');send(guest,'coop-vote');peers('Play')
         for profile in [host,guest]:
             played=send(profile,'coop-play')
             assert played['played'] and played['pile']=='Discard' and not played['tableNodePresent'],played

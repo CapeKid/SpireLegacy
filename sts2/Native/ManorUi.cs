@@ -241,7 +241,7 @@ public static class ManorUi
     private static void HeirDetails(FamilyProfile.Heir heir, bool selectable)
     {
         var cls = Design.Get("classes",heir.classId);
-        var selected = ReferenceEquals(Runtime.Profile.selected,heir);
+        var selected = Runtime.Profile.selected is {} chosen&&chosen.name==heir.name&&chosen.classId==heir.classId&&chosen.traits.SequenceEqual(heir.traits);
         AddText($"{(selected ? "✓ " : "")}{heir.name} {Runtime.Profile.family} — {cls.Text("name")}",27);
         AddText(cls.Text("summary"));
         foreach (var trait in Inheritance.Rows(heir))

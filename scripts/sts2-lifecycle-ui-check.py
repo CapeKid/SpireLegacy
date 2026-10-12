@@ -45,4 +45,5 @@ for cls,title,motto in [('knight','The oath outlives the armor','Unbroken Oath')
     choices=[b['text'] for b in send('manor-state')['buttons'] if b['text']=='Choose this heir' and not b['disabled']]
     assert choices;send('press',text='Choose this heir',index=0)
     chosen=send('lifecycle-state');assert chosen['profile']==chosen['persisted'] and chosen['profile']['active'] is None and chosen['profile']['selected'] is not None
+    assert sum(b['text']=='Selected for next climb' for b in send('manor-state')['buttons'])==1,'Persisted selection must keep its visible indicator'
     send('close');print(tag,cls,'paid cards, Chronicle controller/read/motto/frozen snapshot and next heir selection passed',flush=True)
