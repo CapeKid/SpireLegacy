@@ -3,11 +3,12 @@ param(
     [Parameter(Mandatory=$true)][string]$Tag,
     [Parameter(Mandatory=$true)][ValidateSet('knight','mage','ranger')][string]$Class,
     [ValidateRange(0,2)][int]$Tier=0,
-    [ValidateSet('attack','defense')][string]$Policy='defense',
+    [ValidateSet('attack','defense','tactical')][string]$Policy='defense',
     [string]$Seed='SPIRELEGACY-CAMPAIGN-1',
     [ValidateRange(0,10)][int]$Ascension=0,
     [string]$Traits='',
-    [string]$Python='python'
+    [string]$Python='python',
+    [switch]$Checks
 )
 $ErrorActionPreference='Stop'
 $repoPath=Split-Path $PSScriptRoot -Parent
@@ -31,7 +32,8 @@ try {
     $env:HEIR_TEST_MODE='1';$env:HEIR_TEST_ROOT=$privatePath;$env:HEIR_DATA_DIR=$profilePath
     $env:HEIR_TEST_SOURCE_SHA=git -C $repoPath rev-parse HEAD
     $client=Start-Process $exePath -WorkingDirectory $labPath -ArgumentList '--force-steam=off --rendering-method gl_compatibility --rendering-driver opengl3 --position -2000,-2000' -WindowStyle Hidden -PassThru -RedirectStandardOutput (Join-Path $profilePath 'launch.log') -RedirectStandardError (Join-Path $profilePath 'errors.log')
-    & $Python (Join-Path $PSScriptRoot 'sts2-balance-campaign.py') $profilePath $Tag $Class $Tier $Policy $Seed $Ascension $Traits
+    $driver=if($Checks){'sts2-tactical-check.py'}else{'sts2-balance-campaign.py'}
+    & $Python (Join-Path $PSScriptRoot $driver) $profilePath $Tag $Class $Tier $Policy $Seed $Ascension $Traits
     if ($LASTEXITCODE -ne 0) { throw "Campaign driver failed; inspect $profilePath" }
 } finally {
     foreach ($name in $names) { [Environment]::SetEnvironmentVariable($name,$previous[$name],'Process') }

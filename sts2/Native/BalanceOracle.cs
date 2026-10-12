@@ -24,9 +24,9 @@ public static class BalanceOracle
         var until=Time.GetTicksMsec()+30000;
         while(!done()){if(Time.GetTicksMsec()>until)throw new TimeoutException("Balance fixture did not settle.");await Tree.ToSignal(Tree,SceneTree.SignalName.ProcessFrame);}
     }
-    internal static async Task Play(CardModel card)
+    internal static async Task Play(CardModel card,Creature? preferredTarget=null)
     {
-        var enemy=card.Owner.Creature.CombatState!.GetOpponentsOf(card.Owner.Creature).FirstOrDefault(e=>e.IsAlive);
+        var enemy=preferredTarget??card.Owner.Creature.CombatState!.GetOpponentsOf(card.Owner.Creature).FirstOrDefault(e=>e.IsAlive);
         if(!card.TryManualPlay(card.TargetType==TargetType.AnyEnemy?enemy:null))throw new InvalidDataException("Paid balance play refused "+card.Id);
         await Wait(()=>card.Pile?.Type is not (PileType.Hand or PileType.Play));
         await Wait(()=>NCard.FindOnTable(card)==null);

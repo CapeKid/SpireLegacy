@@ -1,5 +1,7 @@
 # Natural campaign balance pilot
 
+The next stage adds validated combat ordering and target/fuel decisions, with two matched seeds: [balance-tactical-pilot.md](balance-tactical-pilot.md).
+
 This stage replaces the fixed fourteen-card opening-fight fixture with natural runs: ten starter cards, Neow, legal map children, normal encounters, actual rewards, chests, rest sites and naturally acquired relics. It changes test tooling only. Card definitions, manor effects, traits, crowns and production gameplay are unchanged from PR #87.
 
 The regular branch matrix uses `SPIRELEGACY-CAMPAIGN-1`, Ascension 0, no traits and an attack-first pilot. All nine runs reached a natural death; none was abandoned or counted as a victory. Floors are native `TotalFloor`, including Neow. Each run starts in a fresh disposable family and save profile, with no chronicle inheritance from another trial. The test profile uses generation 3 to avoid the first-family quick-start shortcut and reveals Neow's Timeline epoch so a new lab profile can take the ordinary opening event.
