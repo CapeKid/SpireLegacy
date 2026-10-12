@@ -12,15 +12,16 @@ def send(command,**args):
     r=record['response'];assert r['ok'],r
     assert {m['id']:m['version'] for m in r['metadata']['mods']}=={'BaseLib':'v3.4.7','SpireLegacy':'1.0.29'}
     return r['result']
-def ready():
+def ready(turn=1):
     deadline=time.monotonic()+45
     while time.monotonic()<deadline:
         state=send('state')
-        if state['phase']=='Play':return state
+        if state['phase']=='Play' and state['turn']>=turn:return state
         time.sleep(.15)
     raise TimeoutError('Trait audit playable phase')
 def start(cls,traits,quick=True):
     send('start',**{'class':cls,'traits':traits,'quick':quick,'manorTier':0,'seed':'SPIRELEGACY-TRAITS-51'});return ready() if quick else send('state')
+send('trait-speed',value=8)
 start('knight',[])
 transfers=send('trait-transfer')
 if 'baseline' in tag:
@@ -40,7 +41,14 @@ for index,trait in enumerate(traits):
     if trait['effect']=='sepia':assert any(v['sepia'] for v in look)
     if trait['effect'] in ['nature','blue','medium','festive']:assert any(trait['effect'] in v['accents'] for v in look)
     state=send('state')
-    if trait['effect']=='costly':assert send('trait-redraw')['repeatedDrawStable']
+    if trait['effect']=='costly':
+        redraw=send('trait-redraw');assert redraw['repeatedDrawStable'] and redraw['first']==2
+        send('turn');ready(2);redraw=send('trait-redraw',reuse=True);assert redraw['first']==2 and redraw['second']==2
+    if trait['effect']=='shock':
+        send('trait-hit',amount=2);draw=send('trait-redraw');assert draw['firstPile']=='Discard' and draw['secondPile']=='Hand'
+    if trait['effect']=='exhausted':send('turn');assert ready(2)['energy']==2
+    if trait['effect']=='turn_block':assert state['block']==trait['amount']
+    if trait['effect']=='overcharge':assert state['energy']==4 and any('VULNERABLE' in p['id'] and p['amount']==1 for p in state['powers'])
     if trait['effect']=='algesia':assert send('trait-hit',amount=2)['hp']==state['hp']-4
     if trait['effect']=='hurt_weak':assert any('WEAK' in p['id'] and p['amount']==1 for p in send('trait-hit',amount=2)['powers'])
     if trait['effect']=='opening_weak':assert any('WEAK' in p['id'] and p['amount']==1 for p in state['powers'])
@@ -51,6 +59,14 @@ for index,trait in enumerate(traits):
         send('enter',room='Treasure');after=send('state')
         assert after['gold']==state['gold']+(trait['amount'] if trait['effect']=='treasure_gold' else 0)
         assert after['hp']==state['hp']-(trait['amount'] if trait['effect']=='chest' else 0)
+    if trait['effect']=='histrionic':
+        send('trait-hit',amount=2)
+        assert any(v['flash']>0 for v in send('trait-appearance'))
+    if trait['effect'] not in ['fragile','treasure_gold','chest','histrionic','costly','shock']:
+        send('trait-guard',amount=100)
+        for upgraded in [False,True]:
+            played=send('expansion-play',card=cls+'_strike',upgrade=upgraded)
+            assert played['pile']=='Discard' and not played['tableNodePresent']
     if index%10==9:print(tag,index+1,'trait probes pass',flush=True)
 for cls in ['knight','mage','ranger']:
     for pair in [['megahealth','cheeronkills'],['superhealer','nomeat'],['cantattack','breakpropsformana']]:

@@ -27,6 +27,7 @@ public sealed class BloodlineRelic : CustomRelicModel
     public override List<(string,string)> Localization => [("title", "Family Bloodline"), ("description", "Your class, inherited traits and purchased manor upgrades shape this climb. Open the Family Manor to read every trait."), ("flavor", "Every climb ends. Your bloodline grows.")];
     private bool firstSkill, firstAttack, firstHurt, shocked;
     private readonly HashSet<Creature> firstAttackTargets = new();
+    private readonly Dictionary<CardModel,int> costlyDrawTurns = new();
     private int pendingEnergy;
     [SavedProperty] public string FamilyRunSnapshot { get; set; } = "";
     [SavedProperty] public string SelectedHeir { get; set; } = "";
@@ -58,7 +59,7 @@ public sealed class BloodlineRelic : CustomRelicModel
     public override bool ShouldPlay(CardModel card, AutoPlayType type) => card.Owner != Owner || !Inheritance.Has("pacifist") || card.Type != CardType.Attack;
     public override async Task BeforeCombatStart()
     {
-        firstSkill = firstAttack = firstHurt = true; firstAttackTargets.Clear(); shocked = false; pendingEnergy = 0;
+        firstSkill = firstAttack = firstHurt = true; firstAttackTargets.Clear(); costlyDrawTurns.Clear(); shocked = false; pendingEnergy = 0;
         var context = new BlockingPlayerChoiceContext();
         await Apply(context,"strength",Owner.Creature,PlayerBloodlines.Bonus(Owner,"strength") + Inheritance.Stat("strength"));
         await Apply(context,"dexterity",Owner.Creature,PlayerBloodlines.Bonus(Owner,"dexterity") + Inheritance.Stat("dexterity"));
@@ -122,7 +123,13 @@ public sealed class BloodlineRelic : CustomRelicModel
     public override async Task AfterCardDrawn(PlayerChoiceContext context, CardModel card, bool fromHandDraw)
     {
         if (card.Owner != Owner || card.Type != CardType.Attack) return;
-        if (Inheritance.Has("costly") && !card.EnergyCost.CostsX) card.EnergyCost.AddThisTurn(1);
+        if (Inheritance.Has("costly") && !card.EnergyCost.CostsX) {
+            var turn=Owner.PlayerCombatState!.TurnNumber;
+            if(!costlyDrawTurns.TryGetValue(card,out var taxedTurn)||taxedTurn!=turn) {
+                costlyDrawTurns[card]=turn;
+                card.EnergyCost.AddThisTurn(1);
+            }
+        }
         if (shocked) { shocked = false; await CardCmd.Discard(context,card); }
     }
     public decimal InheritedDamageAdditive(Creature? target, decimal amount, ValueProp props, Creature? dealer, CardModel? card) => dealer == Owner.Creature && props.IsPoweredAttack() ? Inheritance.Amount("piercing") + (firstAttack && card?.Type == CardType.Attack ? Inheritance.Amount("first_attack_damage") : 0) : 0;

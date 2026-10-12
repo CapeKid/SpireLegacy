@@ -156,7 +156,10 @@ public static class NativeTestBridge
                     result=StateSummary();break;
                 case "trait-audit":result=await TraitAuditOracle.Probe(RunState());break;
                 case "trait-transfer":result=TraitAuditOracle.Transfer(RunState());break;
-                case "trait-redraw":result=await TraitAuditOracle.Redraw(RunState());break;
+                case "trait-redraw":result=await TraitAuditOracle.Redraw(RunState(),request.TryGetProperty("reuse",out var reuseDraw)&&reuseDraw.GetBoolean());break;
+                case "trait-speed":
+                    var auditSpeed=request.GetProperty("value").GetDouble();if(auditSpeed<1||auditSpeed>8)throw new ArgumentOutOfRangeException("value");
+                    Engine.TimeScale=auditSpeed;result=new{speed=auditSpeed};break;
                 case "manor": ManorUi.Open(); result = new { open = true }; break;
                 case "chronicle-fixture":result=ChronicleOracle.Fixture(request.GetProperty("unlocked").GetBoolean());break;
                 case "chronicle-state":result=ChronicleOracle.State();break;

@@ -15,18 +15,21 @@ namespace SpireLegacy;
 public static class TraitAuditOracle
 {
     private static void Require(bool value,string message){if(!value)throw new InvalidDataException(message);}
-    public static async Task<object> Redraw(RunState run)
+    private static LegacyCard? redrawCard;
+    public static async Task<object> Redraw(RunState run,bool reuse=false)
     {
         var player=run.Players.Single();var context=new BlockingPlayerChoiceContext();
-        var card=(LegacyCard)player.Creature.CombatState!.CreateCard(NativeCards.Get(PlayerBloodlines.Heir(player).classId+"_strike"),player);
+        var card=reuse?redrawCard??throw new InvalidOperationException("No prior redraw fixture."):(LegacyCard)player.Creature.CombatState!.CreateCard(NativeCards.Get(PlayerBloodlines.Heir(player).classId+"_strike"),player);
+        Require(card.Owner==player&&card.CombatState==player.Creature.CombatState,"Redraw fixture belongs to another combat.");redrawCard=card;
         await CardPileCmd.Add(card,PileType.Draw,CardPilePosition.Top,skipVisuals:true);
         await CardPileCmd.Draw(context,1,player);
         var first=card.EnergyCost.GetWithModifiers(CostModifiers.All);
-        await CardCmd.Discard(context,card);
+        var firstPile=card.Pile?.Type.ToString();
+        if(card.Pile?.Type==PileType.Hand)await CardCmd.Discard(context,card);
         await CardPileCmd.Add(card,PileType.Draw,CardPilePosition.Top,skipVisuals:true);
         await CardPileCmd.Draw(context,1,player);
         var second=card.EnergyCost.GetWithModifiers(CostModifiers.All);
-        return new{first,second,repeatedDrawStable=first==second};
+        return new{first,second,firstPile,secondPile=card.Pile?.Type.ToString(),repeatedDrawStable=first==second};
     }
     public static object Transfer(RunState run)
     {
