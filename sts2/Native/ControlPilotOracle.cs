@@ -49,7 +49,7 @@ public static class ControlPilotOracle
             if(kind=="skip"){
                 var count=player.Deck.Cards.Count;
                 var options=Enumerable.Range(0,3).Select(_=>run.CreateCard(ModelDb.Card<StrikeIronclad>(),player)).ToArray();
-                var reward=new CardReward(options,CardCreationSource.Encounter,player,CardCreationOptions.ForRoom(player,run.CurrentRoom!));
+                var reward=new CardReward(options,CardCreationSource.Encounter,player,CardCreationOptions.ForRoom(player,run.CurrentRoom!.RoomType));
                 var set=new RewardsSet(player);set.Rewards.Add(reward);var offering=set.Offer();
                 for(var frame=0;frame<20&&NOverlayStack.Instance?.Peek() is not NRewardsScreen;frame++)await tree.ToSignal(tree,SceneTree.SignalName.ProcessFrame);
                 await CampaignOracle.Step(run,"tactical",new BorrowedSelector(),"deck");
