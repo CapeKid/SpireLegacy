@@ -20,7 +20,9 @@ def ready(turn=1):
         time.sleep(.15)
     raise TimeoutError('Trait audit playable phase')
 def start(cls,traits,quick=True):
-    send('start',**{'class':cls,'traits':traits,'quick':quick,'manorTier':0,'seed':'SPIRELEGACY-TRAITS-51'});return ready() if quick else send('state')
+    send('start',**{'class':cls,'traits':traits,'quick':quick,'manorTier':0,'seed':'SPIRELEGACY-TRAITS-51'})
+    if cls=='ironclad':send('enter',room='Monster')
+    return ready() if quick else send('state')
 send('trait-speed',value=8)
 start('knight',[])
 transfers=send('trait-transfer')
