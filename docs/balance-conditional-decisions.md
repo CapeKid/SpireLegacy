@@ -1,5 +1,7 @@
 # Conditional-card decisions and HP-aware controls
 
+The next stage adds engine finishers and emergency potion use: [balance-finishers-and-potions.md](balance-finishers-and-potions.md).
+
 This stage continues after merged PR #91. It changes the diagnostic pilot and records two native-control reruns; production card stats, manor progression and release packages are unchanged.
 
 ## Conditional decisions
