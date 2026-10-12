@@ -52,7 +52,7 @@ public static class CoopAdversarialOracle
         Require(before==JsonSerializer.Serialize(CoopBloodlines.Pending.Select(p=>new{p.Key,value=FamilySnapshot.Serialize(p.Value)})),"Old lobby selection replay changed state.");
         return new{replayRejected=true};
     }
-    public static object Scopes()=>new{creating=PlayerBloodlines.Creating.Value!=null,multiplayer=CoopBloodlines.CreatingMultiplayer.Value,eligibility=PlayerBloodlines.EligibilityOwner.Value!=null,healing=InheritedHealing.StartingHp.Value!=null,lobby=CoopBloodlines.Lobby!=null,handler=AccessTools.Field(typeof(CoopBloodlines),"registered").GetValue(null)!=null,pending=CoopBloodlines.Pending.Count};
+    public static object Scopes()=>new{creating=PlayerBloodlines.Creating.Value!=null,multiplayer=CoopBloodlines.CreatingMultiplayer.Value,eligibility=PlayerBloodlines.EligibilityOwner.Value!=null,healing=InheritedHealing.StartingHp.Value!=null,lobby=CoopBloodlines.Lobby?.NetService.Type is MegaCrit.Sts2.Core.Multiplayer.Game.NetGameType.Host or MegaCrit.Sts2.Core.Multiplayer.Game.NetGameType.Client,handler=AccessTools.Field(typeof(CoopBloodlines),"registered").GetValue(null)!=null,pending=CoopBloodlines.Pending.Count};
     public static object Wire()
     {
         var rejected=0;

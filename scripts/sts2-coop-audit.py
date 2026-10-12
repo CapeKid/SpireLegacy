@@ -137,8 +137,17 @@ for old,new in zip(before,restored[0]['players']):
 owner_checks(4);settle(4);menu(4)
 for i in range(4):
     scopes=send(i,'coop-contexts');assert not any(scopes.values()),scopes
+print(tag,'four owners, random barrier, revival and save/rejoin settlement pass',flush=True)
+
+# An actual three-owner combat, not only a three-player lobby on the way to four.
+lobby(0,'ranger',True);lobby(1,'knight');lobby(2,'mage')
+for i in range(3):send(i,'coop-ready')
+synced(3);owner_checks(3);map_start(3)
+for i in range(3):
+    assert send(i,'coop-play')['played'];synced(3)
+settle(3);menu(3)
 send(0,'start',**{'class':'ranger','quick':True,'traits':[]})
 wait(lambda: send(0,'state')['phase']=='Play')
 played=send(0,'expansion-play',card='ranger_strike',upgrade=True);assert played['pile']=='Discard'
-send(0,'abandon');print(tag,'four owners, delayed random barrier, paid cards, revival, resume and solo transition pass',flush=True)
+send(0,'abandon');print(tag,'three-owner combat and clean co-op to solo transition pass',flush=True)
 
