@@ -70,7 +70,11 @@ public static class CardEffects
    case "double_block":await CreatureCmd.GainBlock(creature,creature.Block,ValueProp.Unpowered,play);break;
    case "cleanse":foreach(var power in creature.Powers.Where(p=>p.Type==PowerType.Debuff).ToArray())await PowerCmd.Remove(power);break;
    case "exhaust_one":foreach(var fuel in await CardSelectCmd.FromHand(context,player,new CardSelectorPrefs(CardSelectorPrefs.ExhaustSelectionPrompt,amount),null,card))await BranchCommands.Exhaust(context,fuel);break;
-   case "retrieve":case "exhume":var pile=row.Text("special")=="retrieve"?PileType.Discard:PileType.Exhaust;var selected=await CardSelectCmd.FromCombatPile(context,pile.GetPile(player),player,new CardSelectorPrefs(new MegaCrit.Sts2.Core.Localization.LocString("cards",card.Id.Entry+".returnPrompt"),amount));foreach(var retrieved in selected)await CardPileCmd.Add(retrieved,PileType.Hand);break;
+   case "retrieve":case "exhume":
+    var pile=row.Text("special")=="retrieve"?PileType.Discard:PileType.Exhaust;
+    var selected=await CardSelectCmd.FromCombatPile(context,pile.GetPile(player),player,new CardSelectorPrefs(new MegaCrit.Sts2.Core.Localization.LocString("cards",card.Id.Entry+".returnPrompt"),amount),
+     candidate=>candidate is not LegacyCard legacy||(pile==PileType.Exhaust?legacy.DesignCard.RecoverableFromExhaust:legacy.DesignCard.RecoverableFromDiscard));
+    foreach(var retrieved in selected)await CardPileCmd.Add(retrieved,PileType.Hand);break;
    case "charge_gain":if(creature.GetPower<P_class>() is {} cls && PlayerBloodlines.Heir(player).classId=="mage")cls.Charges=Math.Min(2,cls.Charges+amount);break;
    case "discount_hand":var eligible=hand.Cards.Where(c=>!c.EnergyCost.CostsX&&c.EnergyCost.GetWithModifiers(CostModifiers.All)>0).ToList();for(var i=0;i<amount&&eligible.Count>0;i++){var index=player.RunState.Rng.CombatCardSelection.NextInt(eligible.Count);var discounted=eligible[index];eligible.RemoveAt(index);discounted.EnergyCost.AddThisTurn(-1);}break;
    case "free_hand":foreach(var held in hand.Cards.Where(c=>!c.EnergyCost.CostsX))held.SetToFreeThisTurn();await Apply(context,"no_draw",creature,1,creature,card);break;

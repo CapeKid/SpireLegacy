@@ -5029,7 +5029,7 @@
       "power": "none",
       "magic": 0,
       "special": "exhaust_one",
-      "specialAmount": 2,
+      "specialAmount": 1,
       "exhaust": false,
       "upgradeDamage": 0,
       "upgradeBlock": 2,
@@ -5038,7 +5038,7 @@
       "upgradeCost": false,
       "upgradeDiscard": 0
     },
-    "reason": "Weaker no-manor baseline; avoid compounded effects/upgrades and free positive-draw cycles."
+    "reason": "Follow-up balance: affordable engines and retention, practical exhaust support, stronger Poison seeds and working historical recovery."
   },
   {
     "id": "knight_battle_meditation",
@@ -9277,7 +9277,7 @@
       "dexterity": 0,
       "weak": 0,
       "vulnerable": 0,
-      "poison": 3,
+      "poison": 4,
       "heal": 0,
       "hpLoss": 0,
       "vigor": 0,
@@ -9293,12 +9293,12 @@
       "exhaust": false,
       "upgradeDamage": 0,
       "upgradeBlock": 0,
-      "upgradeMagic": 1,
+      "upgradeMagic": 2,
       "upgradeSpecial": 0,
       "upgradeCost": false,
       "upgradeDiscard": 0
     },
-    "reason": "Weaker no-manor baseline; avoid compounded effects/upgrades and free positive-draw cycles."
+    "reason": "Follow-up balance: affordable engines and retention, practical exhaust support, stronger Poison seeds and working historical recovery."
   },
   {
     "id": "mage_crystal_shell",
@@ -9573,7 +9573,7 @@
       "power": "none",
       "magic": 0,
       "special": "exhume",
-      "specialAmount": 0,
+      "specialAmount": 1,
       "exhaust": true,
       "upgradeDamage": 0,
       "upgradeBlock": 0,
@@ -9582,7 +9582,7 @@
       "upgradeCost": false,
       "upgradeDiscard": 0
     },
-    "reason": "Weaker no-manor baseline; avoid compounded effects/upgrades and free positive-draw cycles."
+    "reason": "Follow-up balance: affordable engines and retention, practical exhaust support, stronger Poison seeds and working historical recovery."
   },
   {
     "id": "mage_rewrite",
@@ -12543,7 +12543,7 @@
       "dexterity": 0,
       "weak": 0,
       "vulnerable": 0,
-      "poison": 3,
+      "poison": 4,
       "heal": 0,
       "hpLoss": 0,
       "vigor": 0,
@@ -12559,12 +12559,12 @@
       "exhaust": false,
       "upgradeDamage": 0,
       "upgradeBlock": 0,
-      "upgradeMagic": 1,
+      "upgradeMagic": 2,
       "upgradeSpecial": 0,
       "upgradeCost": false,
       "upgradeDiscard": 0
     },
-    "reason": "Weaker no-manor baseline; avoid compounded effects/upgrades and free positive-draw cycles."
+    "reason": "Follow-up balance: affordable engines and retention, practical exhaust support, stronger Poison seeds and working historical recovery."
   },
   {
     "id": "ranger_watch_the_wind",
@@ -21620,7 +21620,7 @@
       "upgradeDiscard": 0
     },
     "after": {
-      "cost": 2,
+      "cost": 1,
       "damage": 0,
       "block": 0,
       "hits": 1,
@@ -21647,12 +21647,12 @@
       "exhaust": false,
       "upgradeDamage": 0,
       "upgradeBlock": 0,
-      "upgradeMagic": 0,
+      "upgradeMagic": 1,
       "upgradeSpecial": 0,
-      "upgradeCost": true,
+      "upgradeCost": false,
       "upgradeDiscard": 0
     },
-    "reason": "Weaker no-manor baseline; avoid compounded effects/upgrades and free positive-draw cycles."
+    "reason": "Follow-up balance: affordable engines and retention, practical exhaust support, stronger Poison seeds and working historical recovery."
   },
   {
     "id": "mage_archmage_thesis",
@@ -25241,7 +25241,7 @@
       "upgradeDiscard": 0
     },
     "after": {
-      "cost": 3,
+      "cost": 2,
       "damage": 15,
       "block": 0,
       "hits": 1,
@@ -25266,14 +25266,14 @@
       "special": "retain_damage",
       "specialAmount": 6,
       "exhaust": false,
-      "upgradeDamage": 2,
+      "upgradeDamage": 4,
       "upgradeBlock": 0,
       "upgradeMagic": 0,
       "upgradeSpecial": 1,
       "upgradeCost": false,
       "upgradeDiscard": 0
     },
-    "reason": "Weaker no-manor baseline; avoid compounded effects/upgrades and free positive-draw cycles."
+    "reason": "Follow-up balance: affordable engines and retention, practical exhaust support, stronger Poison seeds and working historical recovery."
   },
   {
     "id": "ranger_ancient_canopy",

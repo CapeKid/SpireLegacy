@@ -56,6 +56,11 @@ public static class NativeTestBridge
             object result;
             switch (commandName)
             {
+                case "balance-campaign-step":result=await CampaignOracle.Step(RunState(),request.GetProperty("policy").GetString()!,UseTestSelector());break;
+                case "balance-probe":await WaitForPlay(RunState().Players.Single());result=await BalanceOracle.Probe(RunState(),request.GetProperty("card").GetString()!,request.GetProperty("upgrade").GetBoolean(),UseTestSelector());break;
+                case "balance-loop":await WaitForPlay(RunState().Players.Single());result=await BalanceOracle.RecoveryLoop(RunState(),UseTestSelector(),request.TryGetProperty("kind",out var recoveryKind)&&recoveryKind.GetString()=="discard");break;
+                case "balance-retention":await WaitForPlay(RunState().Players.Single());result=await BalanceOracle.RetentionSnapshots(RunState());break;
+                case "balance-encounter":await WaitForPlay(RunState().Players.Single());result=await BalanceOracle.Encounter(RunState(),request.GetProperty("build").GetString()!,UseTestSelector());break;
                 case "persistence-state":result=PersistenceOracle.Snapshot(RunState());break;
                 case "persistence-menu":result=PersistenceOracle.ChangeMenu(RunState());break;
                 case "persistence-adoption":result=PersistenceOracle.Adoption(RunState());break;
@@ -167,10 +172,16 @@ public static class NativeTestBridge
                         await NGame.Instance.ReturnToMainMenu();
                     }
                     if (Runtime.Profile.active is {} orphan) Runtime.Profile.Settle(orphan.id,orphan.floors,0,false);
+                    if(request.TryGetProperty("manorTier",out var balanceTier)) {
+                        var tier=balanceTier.GetInt32();if(tier is <0 or >2)throw new ArgumentOutOfRangeException("manorTier");
+                        MegaCrit.Sts2.Core.Saves.SaveManager.Instance.SetFtuesEnabled(false);
+                        MegaCrit.Sts2.Core.Saves.SaveManager.Instance.ObtainEpochOverride(MegaCrit.Sts2.Core.Timeline.EpochModel.GetId<MegaCrit.Sts2.Core.Timeline.Epochs.NeowEpoch>(),MegaCrit.Sts2.Core.Saves.EpochState.Revealed);
+                        Runtime.Profile.manor=Design.Rows("manor").ToDictionary(r=>r.Text("id"),r=>tier==2?r.Number("maxLevel"):tier==1?r.Number("maxLevel")/2:0);
+                    }
                     var cls = request.GetProperty("class").GetString()!;
                     Runtime.Profile.selected = new FamilyProfile.Heir { name="PortTester",classId=cls,traits=request.TryGetProperty("traits",out var traits) ? traits.EnumerateArray().Select(t=>t.GetString()!).ToList() : [] };
-                    if(request.TryGetProperty("quick",out var quick)&&quick.GetBoolean() && Runtime.Profile.active==null)Runtime.Profile.generation=0;
-                    await NGame.Instance.StartNewSingleplayerRun(ModelDb.Character<HeirCharacter>(),true,ModelDb.ActsByIndex.Select(a=>a.First()).ToArray(),[],"SPIRELEGACY-PORT-TEST",GameMode.Standard,request.TryGetProperty("ascension",out var ascension)?ascension.GetInt32():0);
+                    if(request.TryGetProperty("quick",out var quick) && Runtime.Profile.active==null)Runtime.Profile.generation=quick.GetBoolean()?0:3;
+                    await NGame.Instance.StartNewSingleplayerRun(ModelDb.Character<HeirCharacter>(),true,ModelDb.ActsByIndex.Select(a=>a.First()).ToArray(),[],request.TryGetProperty("seed",out var balanceSeed)?balanceSeed.GetString()!:"SPIRELEGACY-PORT-TEST",GameMode.Standard,request.TryGetProperty("ascension",out var ascension)?ascension.GetInt32():0);
                     result = StateSummary(); break;
                 case "state": result = StateSummary(); break;
                 case "relic-info": result=HeirRelicOracle.Inspect(RunState());break;

@@ -182,7 +182,7 @@ foreach (var upgraded in new[] { false, true })
 }
 Check(Design.Rows("cards").Where(c => c.Number("hits") > 1).All(c => c.Number("upgradeDamage") <= 1), "Multi-hit upgrade budget");
 // Recovery text must correspond to a non-empty native selection at both levels.
-foreach (var row in Design.Rows("card_pools").Concat(Design.Rows("branch_cards")).Select(r => r.Text("cardId")).Distinct().Select(id => Design.Get("cards", id)).Where(r => r.Text("special") is "exhume" or "retrieve"))
+foreach (var row in Design.Rows("cards").Where(r => r.Text("special") is "exhume" or "retrieve"))
 foreach (var upgraded in new[] { false, true })
     Check(new CardDesign(row.Text("id"), upgraded).SpecialAmount > 0, row.Text("id") + " recovery selects at least one card");
 foreach (var upgraded in new[] { false, true })
@@ -203,6 +203,23 @@ foreach (var upgraded in new[] { false, true })
 var baseMeditation = new CardDesign("knight_battle_meditation");
 var upgradedMeditation = new CardDesign("knight_battle_meditation", true);
 Check(upgradedMeditation.Amount("draw") - upgradedMeditation.Amount("discard") > baseMeditation.Amount("draw") - baseMeditation.Amount("discard"), "Battle Meditation upgrade improves net hand size");
+foreach (var row in Design.Rows("cards").Where(r => r.Text("special") == "exhume"))
+    Check(!new CardDesign(row.Text("id")).RecoverableFromExhaust, row.Text("id") + " cannot participate in discounted recovery cycles");
+Check(new CardDesign("mage_guard").RecoverableFromExhaust && new CardDesign("mage_memory_prism").RecoverableFromExhaust, "Recovery restriction preserves ordinary cards and discard recovery");
+foreach(var row in Design.Rows("cards").Where(r=>r.Text("special") is "exhume" or "retrieve"))
+    Check(!new CardDesign(row.Text("id")).RecoverableFromDiscard,row.Text("id")+" cannot cycle through discounted discard recovery");
+Check(new CardDesign("ranger_rapid_fire").RecoverableFromDiscard,"Discard recovery still returns ordinary Attacks");
+foreach (var upgraded in new[] {false,true})
+{
+    var secondWind=new CardDesign("knight_second_wind",upgraded);
+    Check(secondWind.Cost==1&&secondWind.SpecialAmount==1,"Second Wind requires only one fuel card");
+    var familiar=new CardDesign("mage_rune_familiar",upgraded);
+    Check(familiar.Cost==1&&familiar.Magic==(upgraded?2:1),"Rune Familiar upgrade improves payoff rather than repairing cost");
+    var vigil=new CardDesign("ranger_long_vigil",upgraded);
+    Check(vigil.Cost==2&&vigil.Damage==(upgraded?19:15),"Long Vigil has an affordable retained finisher budget");
+    foreach(var poisonId in new[]{"ranger_poison_tip","mage_toxic_cloud"})
+        Check(new CardDesign(poisonId,upgraded).Amount("poison")== (upgraded?6:4),poisonId+" supplies a useful Poison seed without global manor scaling");
+}
 foreach (var traitId in new[] { "nocolor", "oldyellowtint", "colortrails", "fmffan" }) Check(Design.Get("traits", traitId).Number("goldBonus") == 0, "No free crown bonus: " + traitId);
 var oldManor = new FamilyProfile { crowns = 5, manor = new() { ["smith"] = 3, ["armory"] = 3, ["garden"] = 4 } };
 Check(oldManor.RefundRetiredLevels() && oldManor.crowns == 965, "Refund retired levels at their original purchase prices");

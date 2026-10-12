@@ -1,5 +1,11 @@
 """Targeted balance overrides shared by authoring regeneration and release updates."""
 CARD_OVERRIDES = {
+    'knight_second_wind': dict(specialAmount=1),
+    'mage_rune_familiar': dict(cost=1, magic=1, upgradeMagic=1, upgradeCost=False),
+    'ranger_long_vigil': dict(cost=2, upgradeDamage=4),
+    'ranger_poison_tip': dict(poison=4, upgradeMagic=2),
+    'mage_toxic_cloud': dict(poison=4, upgradeMagic=2),
+    'mage_rekindle': dict(specialAmount=1),
     'knight_arms_vault': dict(specialAmount=1),
     'ranger_second_quiver': dict(hpLoss=0, draw=2),
     'volley': dict(damage=5, upgradeDamage=1),

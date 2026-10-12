@@ -1,5 +1,5 @@
 {
-  "sourceSha": "5d3ab10b1220b8ea6c56a39ea33956b64417341f",
+  "sourceSha": "987c876644b5ec1e43d4c7b3a1ee293413385608",
   "files": [
     {
       "path": ".gitattributes",
@@ -1498,6 +1498,14 @@
       "primaryIssue": 59
     },
     {
+      "path": "docs/balance-encounters.csv",
+      "primaryIssue": 62
+    },
+    {
+      "path": "docs/balance-followup.md",
+      "primaryIssue": 62
+    },
+    {
       "path": "docs/card-catalogue.md",
       "primaryIssue": 62
     },
@@ -1902,6 +1910,10 @@
       "primaryIssue": 61
     },
     {
+      "path": "scripts/check-balance-regeneration.py",
+      "primaryIssue": 60
+    },
+    {
       "path": "scripts/create_sheets.py",
       "primaryIssue": 61
     },
@@ -2015,6 +2027,10 @@
     },
     {
       "path": "scripts/sts2-balance-audit-check.py",
+      "primaryIssue": 47
+    },
+    {
+      "path": "scripts/sts2-balance-followup.py",
       "primaryIssue": 47
     },
     {
@@ -5986,6 +6002,10 @@
       "primaryIssue": 47
     },
     {
+      "path": "sts2/Native/BalanceOracle.cs",
+      "primaryIssue": 47
+    },
+    {
       "path": "sts2/Native/BloodlineRelic.cs",
       "primaryIssue": 55
     },
@@ -6171,14 +6191,14 @@
     }
   ],
   "counts": {
-    "62": 54,
+    "62": 56,
     "63": 415,
     "58": 923,
-    "47": 53,
+    "47": 55,
     "48": 7,
     "59": 10,
     "61": 56,
-    "60": 2,
+    "60": 3,
     "56": 5,
     "49": 2,
     "51": 2,
