@@ -38,7 +38,10 @@ for cls,title,motto in [('knight','The oath outlives the armor','Unbroken Oath')
     selected=send('lifecycle-state');assert selected['profile']==selected['persisted']
     assert selected['profile']['chronicle']['motto']==motto and cls+'_victory' in selected['profile']['chronicle']['read']
     assert selected['snapshot']==snapshot,'Menu changes altered frozen run'
-    send('close');send('save');send('resume');ready()
+    send('close');send('enter',room='Monster');ready()
+    progressed=send('lifecycle-state')
+    assert progressed['profile']==progressed['persisted'] and progressed['profile']['active']['floors']==progressed['snapshot']['floors'],'Chronicle save detached native room-progress hooks'
+    send('save');send('resume');ready()
     restored=send('lifecycle-state');assert restored['profile']==restored['persisted'] and restored['profile']['chronicle']==selected['profile']['chronicle']
     assert restored['snapshot']['motto']==snapshot['motto'] and restored['snapshot']['chronicleRelics']==snapshot['chronicleRelics']
     send('abandon');send('select');send('manor')

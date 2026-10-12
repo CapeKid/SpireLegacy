@@ -118,7 +118,10 @@ public sealed class FamilyProfile
         finally {
             if(previous!=(trial.storagePath,trial.storageRevision)) {
                 crowns=trial.crowns;lastEarned=trial.lastEarned;generation=trial.generation;
-                manor=trial.manor;offers=trial.offers;selected=trial.selected;active=trial.active;
+                manor=trial.manor;offers=trial.offers;selected=trial.selected;
+                // Menu-only transactions must not detach the active object shared
+                // with the native character's room-progress/quickstart hooks.
+                active=active is {} current&&trial.active is {} next&&FamilySnapshot.Serialize(current)==FamilySnapshot.Serialize(next)?current:trial.active;
                 settledId=trial.settledId;chronicle=trial.chronicle;CopyStorage(trial);
             }
         }

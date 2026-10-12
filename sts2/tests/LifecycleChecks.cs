@@ -153,6 +153,9 @@ public static class LifecycleChecks
         p=Fresh();path=PathFor();p.Save(path);var oldGeneration=p.generation;var oldBank=p.crowns;
         check(p.CommitHeirSelection(new(){name="Cancelled choice",classId="ranger",traits=[]},path)&&p.CommitHeirSelection(null,path)&&p.active==null&&p.selected==null&&p.generation==oldGeneration&&p.crowns==oldBank,"Choose/cancel never starts or settles a climb");
         check(!p.CommitChronicleRead("knight_victory",path)&&!p.CommitMotto("Unbroken Oath",path),"Locked story/motto cannot be committed");
+        p=Fresh();path=PathFor();var bound=p.Begin(49);bound.floors=3;p.Save(path);
+        check(p.CommitChronicleRead("founding",path)&&ReferenceEquals(p.active,bound),"Story read must preserve the native-bound active run object");
+        bound.floors=6;p.Save(path);check(FamilyProfile.Load(path).active!.floors==6,"Room progress after menu transaction must reach the family save");
         foreach(var step in new[]{"after-write","after-flush","before-commit","after-commit"}) {
             var f=Fresh();var snapshot=f.Begin(49);var file=PathFor();f.Save(file);var marker=file+".ready";
             using var child=PersistenceChecks.Spawn("--lifecycle-crash",file,step,marker);

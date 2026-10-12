@@ -1,5 +1,5 @@
 """Native completion/save-failure checks, isolated owned labs only."""
-import hashlib,json,sys,time
+import hashlib,json,subprocess,sys,time
 from pathlib import Path
 from oracle_protocol import call
 
@@ -54,3 +54,5 @@ for cls in ['knight','mage','ranger']:
         assert after['profile']['generation']==generation+1 and after['profile']['settledId']==run_id
         assert after['profile']['chronicle']['settledRuns'].count(run_id)==1
         print(tag,cls,end,'actual native settlement passed',flush=True)
+
+subprocess.run([sys.executable,str(root/'scripts/sts2-lifecycle-ui-check.py'),str(profile),tag+'-ui'],check=True)
