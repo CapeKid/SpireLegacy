@@ -11,6 +11,8 @@ def copy(source,target):
     target.parent.mkdir(parents=True,exist_ok=True);shutil.copy2(source,target)
 copy(repo/'sts2/bin/Release/net9.0/SpireLegacy.dll',mod/'SpireLegacy.dll')
 copy(repo/'sts2/SpireLegacy.json',mod/'SpireLegacy.json')
+release_notes=repo/'docs'/f'release-{version}.md'
+if release_notes.exists():copy(release_notes,mod/'release-notes.md')
 # Remove the obsolete reader when rebuilding a previously staged version.
 (mod/'content-reader.zip').unlink(missing_ok=True)
 icons=json.loads((repo/'sheets/icon_art.json').read_text())

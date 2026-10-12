@@ -1,0 +1,113 @@
+{
+  "version": "1.0.28",
+  "requiresRL2": false,
+  "packages": [
+    {
+      "kind": "standalone",
+      "file": "SpireLegacy-StS2-1.0.28.zip",
+      "size": 39439006,
+      "sha256": "813c0de8eb0c0e86b1b38844ca804d2d1fca6a9ae5f4e57bbcdd3a85bdb301de",
+      "files": 530,
+      "dllSha256": "56380292b9026c3065d2ddbb2bdec2f27dbede6d46d9654ddfe48bcd8211c483"
+    },
+    {
+      "kind": "workshop",
+      "file": "SpireLegacy-StS2-1.0.28-workshop.zip",
+      "size": 39817718,
+      "sha256": "9ab807db82ebacd394c15783d1be5424182fe27804304c32834fee5b32fc025f",
+      "files": 534,
+      "dllSha256": "56380292b9026c3065d2ddbb2bdec2f27dbede6d46d9654ddfe48bcd8211c483"
+    },
+    {
+      "kind": "melty",
+      "file": "SpireLegacy-StS2-1.0.28-melty.zip",
+      "size": 39904894,
+      "sha256": "88cc11bfde5692a710637a6c1499e4b178c48153576718a122b993dfa61b7490",
+      "files": 534,
+      "dllSha256": "56380292b9026c3065d2ddbb2bdec2f27dbede6d46d9654ddfe48bcd8211c483"
+    }
+  ],
+  "branches": [
+    {
+      "branch": "regular",
+      "game": "v0.107.1",
+      "suites": [
+        {
+          "suite": "finishers",
+          "cases": 24,
+          "status": "passed",
+          "journal": "finisher-payoffs-release128-payoffs-regular.json"
+        },
+        {
+          "suite": "tactical",
+          "cases": 33,
+          "status": "passed",
+          "journal": "tactical-pilot-release128-regression-regular.json"
+        },
+        {
+          "suite": "delayed",
+          "cases": 6,
+          "status": "passed",
+          "journal": "delayed-reward-release128-regression-regular.json"
+        },
+        {
+          "suite": "rewards",
+          "cases": 2,
+          "status": "passed",
+          "journal": "reward-intervention-release128-regression-regular.json"
+        },
+        {
+          "suite": "vigor",
+          "cases": 86,
+          "status": "passed",
+          "journal": "vigor-release128-regression-regular.json"
+        }
+      ],
+      "totalCases": 151
+    },
+    {
+      "branch": "beta",
+      "game": "v0.111.0",
+      "suites": [
+        {
+          "suite": "finishers",
+          "cases": 24,
+          "status": "passed",
+          "journal": "finisher-payoffs-release128-payoffs-beta.json"
+        },
+        {
+          "suite": "tactical",
+          "cases": 33,
+          "status": "passed",
+          "journal": "tactical-pilot-release128-regression-beta.json"
+        },
+        {
+          "suite": "delayed",
+          "cases": 6,
+          "status": "passed",
+          "journal": "delayed-reward-release128-regression-beta.json"
+        },
+        {
+          "suite": "rewards",
+          "cases": 2,
+          "status": "passed",
+          "journal": "reward-intervention-release128-regression-beta.json"
+        },
+        {
+          "suite": "vigor",
+          "cases": 86,
+          "status": "passed",
+          "journal": "vigor-release128-regression-beta.json"
+        }
+      ],
+      "totalCases": 151
+    }
+  ],
+  "sourceSha": "f138a138975a2c41a25a4f5660557474c6e5009e",
+  "mergedBaseline": "212dd2c",
+  "coreAssertions": 3454,
+  "workshopItemId": "3816525393",
+  "published": false,
+  "physicalSteamDeckTest": false,
+  "meltyInstalledLaunchVerified": false
+}
