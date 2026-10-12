@@ -94,6 +94,7 @@ public static class NativeTestBridge
                 case "coop-state":result=CoopOracle.State();break;
                 case "coop-vote":result=CoopOracle.Vote();break;
                 case "coop-play":result=await CoopOracle.Play(request.TryGetProperty("upgrade",out var coopUpgrade)&&coopUpgrade.GetBoolean());break;
+                case "coop-upgrade":result=CoopOracle.UpgradeOwnedCard(request.GetProperty("owner").GetUInt64());break;
                 case "coop-roundtrip":result=CoopOracle.RoundTrip();break;
                 case "coop-lobby-checks":result=CoopAdversarialOracle.LobbyChecks();break;
                 case "coop-wire-checks":result=CoopAdversarialOracle.Wire();break;

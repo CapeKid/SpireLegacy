@@ -37,6 +37,9 @@ def owner_checks(count):
         assert len(send(i,'coop-roundtrip'))==count
         r=send(i,'coop-owner-checks');assert r==dict(ownerRefusals=3,playerUnchanged=True,contextsRestored=True),r
         assert not any(send(i,'coop-contexts')[key] for key in ['creating','multiplayer','eligibility','healing'])
+def upgrade_owner(index,count):
+    changed=[send(peer,'coop-upgrade',owner=index+1) for peer in range(count)]
+    assert all(c==changed[0] for c in changed),changed
 def map_start(count):
     time.sleep(12)
     for i in range(count):send(i,'coop-vote')
@@ -70,6 +73,7 @@ synced(2);owner_checks(2);map_start(2)
 send(1,'manor');assert not send(1,'coop-state')['paused']
 assert send(0,'coop-play')['played'];send(1,'close');synced(2)
 for i in range(2):
+    upgrade_owner(i,2)
     assert send(i,'coop-play',upgrade=True)['upgraded'];synced(2)
 settle(2);menu(2);print(tag,'two identical-class owners, ordering, rejoin, manor and settlement pass',flush=True)
 
@@ -104,10 +108,11 @@ owner_checks(4);map_start(4)
 for i in range(4):
     actors=send(i,'visual');assert len(actors)==4
     for actor in actors:
-        player=next(p for p in send(i,'coop-state')['players'] if p['netId']==actor['owner'])
+        player=next(p for p in send(i,'coop-state')['players'] if p['NetId']==actor['owner'])
         assert actor['classId']==player['heir']['classId'] and actor['bannerIndex']==player['snapshot']['banner']
 for upgraded in [False,True]:
     for i in range(4):
+        if upgraded:upgrade_owner(i,4)
         played=send(i,'coop-play',upgrade=upgraded)
         assert played['played'] and played['pile']=='Discard' and not played['tableNodePresent']
         assert played['upgraded']==upgraded;synced(4)

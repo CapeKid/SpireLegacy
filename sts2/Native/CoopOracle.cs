@@ -68,7 +68,7 @@ public static class CoopOracle
         var player=PlayerBloodlines.LocalPlayer!;
         var combat=player.Creature.CombatState!;
         var card=player.PlayerCombatState!.Hand.Cards.Where(c=>c.CanPlay()).OrderBy(c=>c.Type==MegaCrit.Sts2.Core.Entities.Cards.CardType.Attack?1:0).First();
-        if(upgraded)MegaCrit.Sts2.Core.Commands.CardCmd.Upgrade(card);
+        if(upgraded&&!card.IsUpgraded)throw new InvalidDataException("Apply the fixture upgrade on every peer before playing.");
         var energy=player.PlayerCombatState.Energy;var cost=card.EnergyCost.GetWithModifiers(MegaCrit.Sts2.Core.Entities.Cards.CostModifiers.All);
         var target=card.TargetType==MegaCrit.Sts2.Core.Entities.Cards.TargetType.AnyEnemy?combat.GetOpponentsOf(player.Creature).First(c=>c.IsAlive):null;
         if(!card.TryManualPlay(target))throw new InvalidDataException("Native co-op manual play refused "+card.Id);
@@ -102,6 +102,14 @@ public static class CoopOracle
             checks.Add(new{player.NetId,restored=PlayerBloodlines.Heir(restored).classId,pool=restored.Character.CardPool.Id.ToString(),traits=PlayerBloodlines.Heir(restored).traits,cards=restored.Deck.Cards.Count});
         }
         return checks;
+    }
+    public static object UpgradeOwnedCard(ulong owner)
+    {
+        var run=(RunState)AccessTools.Property(typeof(RunManager),"State").GetValue(RunManager.Instance)!;
+        var player=run.Players.Single(p=>p.NetId==owner);
+        var card=player.PlayerCombatState!.Hand.Cards.Where(c=>c.CanPlay()).OrderBy(c=>c.Type==MegaCrit.Sts2.Core.Entities.Cards.CardType.Attack?1:0).First();
+        MegaCrit.Sts2.Core.Commands.CardCmd.Upgrade(card);
+        return new{owner,card=card.Id.ToString(),index=player.PlayerCombatState.Hand.Cards.IndexOf(card),upgraded=card.IsUpgraded};
     }
     public static async Task<object> Lobby(JsonElement request,bool host)
     {
