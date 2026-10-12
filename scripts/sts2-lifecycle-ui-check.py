@@ -50,3 +50,9 @@ for cls,title,motto in [('knight','The oath outlives the armor','Unbroken Oath')
     chosen=send('lifecycle-state');assert chosen['profile']==chosen['persisted'] and chosen['profile']['active'] is None and chosen['profile']['selected'] is not None
     assert sum(b['text']=='Selected for next climb' for b in send('manor-state')['buttons'])==1,'Persisted selection must keep its visible indicator'
     send('close');print(tag,cls,'paid cards, Chronicle controller/read/motto/frozen snapshot and next heir selection passed',flush=True)
+
+# Observe progression at normal startup without entering a map point, playing a
+# card or clearing a room. This is measurement, not an assertion of good balance.
+started=send('start',**{'class':'knight','quick':False,'traits':[],'seed':'SPIRELEGACY-LIFECYCLE-49'})
+before=send('lifecycle-state')['profile'];ended=send('abandon')
+print(tag,'Normal-start immediate-abandon observation:',dict(room=started['room'],floor=started['floor'],gold=started['gold'],crowns=ended['crowns']-before['crowns']),flush=True)
