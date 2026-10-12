@@ -133,6 +133,13 @@ public static class CoopOracle
         }
         FamilyChronicle.Reconcile(Runtime.Profile);
         Runtime.Profile.Save(Runtime.FamilyPath);
+        if(choice=="random") {
+            var saves=MegaCrit.Sts2.Core.Saves.SaveManager.Instance;
+            saves.ObtainEpochOverride(MegaCrit.Sts2.Core.Timeline.EpochModel.GetId<MegaCrit.Sts2.Core.Timeline.Epochs.Silent1Epoch>(),MegaCrit.Sts2.Core.Saves.EpochState.Revealed);
+            saves.ObtainEpochOverride(MegaCrit.Sts2.Core.Timeline.EpochModel.GetId<MegaCrit.Sts2.Core.Timeline.Epochs.Regent1Epoch>(),MegaCrit.Sts2.Core.Saves.EpochState.Revealed);
+            saves.ObtainEpochOverride(MegaCrit.Sts2.Core.Timeline.EpochModel.GetId<MegaCrit.Sts2.Core.Timeline.Epochs.Necrobinder1Epoch>(),MegaCrit.Sts2.Core.Saves.EpochState.Revealed);
+            saves.ObtainEpochOverride(MegaCrit.Sts2.Core.Timeline.EpochModel.GetId<MegaCrit.Sts2.Core.Timeline.Epochs.Defect1Epoch>(),MegaCrit.Sts2.Core.Saves.EpochState.Revealed);
+        }
         foreach(var key in new[]{"accept_tutorials_ftue","map_select_ftue","combat_rules_ftue","shuffle_ftue","multiplayer_ftue"})MegaCrit.Sts2.Core.Saves.SaveManager.Instance.MarkFtueAsComplete(key);
         var tree=(SceneTree)Engine.GetMainLoop();
         var menu=NGame.Instance!.MainMenu!;
