@@ -42,8 +42,9 @@ public static class LifecycleChecks
         }
         foreach(var step in new[]{"before-write","after-write","after-flush","before-backup","before-commit","after-commit"}) {
             var committed=step=="after-commit";
-            foreach(var transition in new[]{"start","settle","purchase","adopt"}) {
+            foreach(var transition in new[]{"start","settle","purchase","adopt","read","motto","select"}) {
                 var f=Fresh();var file=PathFor();FamilyProfile.FamilyRun snapshot;
+                if(transition=="motto"){f.chronicle.classes["knight"]=new(){returns=1,wins=1};FamilyChronicle.Reconcile(f);}
                 if(transition=="settle")snapshot=f.Begin(49);
                 else snapshot=FamilySnapshot.Freeze(f,f.selected!);
                 f.Save(file);var old=State(f);
@@ -51,6 +52,9 @@ public static class LifecycleChecks
                     case "start":f.CommitRunStart(snapshot,file);break;
                     case "settle":f.CommitSettlement(snapshot,0,6,100,true,file);break;
                     case "purchase":f.CommitPurchases(["vitality","smith"],file);break;
+                    case "read":f.CommitChronicleRead("founding",file);break;
+                    case "motto":f.CommitMotto("Unbroken Oath",file);break;
+                    case "select":f.CommitHeirSelection(new(){name="New choice",classId="ranger",traits=[]},file);break;
                     default:f.CommitAdoption(snapshot,0,file);break;
                 }});
                 check(State(f)==State(FamilyProfile.Load(file)),"Live/disk agreement at "+transition+" "+step);
@@ -146,6 +150,9 @@ public static class LifecycleChecks
         var replacement=FamilySnapshot.Freeze(orphan,new(){name="Selected replacement",classId="ranger",traits=[]});
         check(orphan.CommitRunStart(replacement,path)&&orphan.generation==1&&orphan.crowns==1012&&!orphan.active!.quick&&orphan.active.generation==1&&orphan.active.heir.classId=="ranger","Replacing orphan atomically settles old climb and preserves selected new heir without repeating quickstart");
         check(!orphan.CommitRunStart(replacement,path)&&orphan.generation==1,"Duplicate embark callback cannot settle the replacement");
+        p=Fresh();path=PathFor();p.Save(path);var oldGeneration=p.generation;var oldBank=p.crowns;
+        check(p.CommitHeirSelection(new(){name="Cancelled choice",classId="ranger",traits=[]},path)&&p.CommitHeirSelection(null,path)&&p.active==null&&p.selected==null&&p.generation==oldGeneration&&p.crowns==oldBank,"Choose/cancel never starts or settles a climb");
+        check(!p.CommitChronicleRead("knight_victory",path)&&!p.CommitMotto("Unbroken Oath",path),"Locked story/motto cannot be committed");
         foreach(var step in new[]{"after-write","after-flush","before-commit","after-commit"}) {
             var f=Fresh();var snapshot=f.Begin(49);var file=PathFor();f.Save(file);var marker=file+".ready";
             using var child=PersistenceChecks.Spawn("--lifecycle-crash",file,step,marker);
@@ -170,6 +177,6 @@ public static class LifecycleChecks
                 if(victory)largestWin=Math.Max(largestWin,amount);else largestEarly=Math.Max(largestEarly,amount);payoutCount++;
             }
         }
-        Console.WriteLine(JsonSerializer.Serialize(new{lifecycle="passed",modelSeeds=12,modelTransitions=1200,faultTransitions=24,chronicleThresholds=27,crashBoundaries=4,payoutCount,largestEarly,largestWin}));
+        Console.WriteLine(JsonSerializer.Serialize(new{lifecycle="passed",modelSeeds=12,modelTransitions=1200,faultTransitions=42,chronicleThresholds=27,crashBoundaries=4,payoutCount,largestEarly,largestWin}));
     }
 }

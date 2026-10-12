@@ -149,6 +149,24 @@ public sealed class FamilyProfile
         var trial=Trial();trial.active=FamilySnapshot.Read(FamilySnapshot.Serialize(run));trial.selected=null;
         Persist(trial,path);return true;
     }
+    public bool CommitChronicleRead(string id,string path)
+    {
+        if(!chronicle.unlocked.Contains(id))return false;
+        if(chronicle.read.Contains(id))return true;
+        var trial=Trial();trial.chronicle.read.Add(id);Persist(trial,path);return true;
+    }
+    public bool CommitMotto(string motto,string path)
+    {
+        var trial=Trial();if(!FamilyChronicle.SelectMotto(trial,motto))return false;
+        if(trial.chronicle.motto!=chronicle.motto)Persist(trial,path);return true;
+    }
+    public bool CommitHeirSelection(Heir? heir,string path)
+    {
+        if(active!=null)return false;
+        if(heir!=null)FamilyData.Heir(heir);
+        var trial=Trial();trial.selected=heir==null?null:JsonSerializer.Deserialize<Heir>(JsonSerializer.Serialize(heir,JsonOptions),JsonOptions);
+        Persist(trial,path);return true;
+    }
     public void Save(string path)=>FamilyStore.Save(this,path);
     public bool RefundRetiredLevels()
     {

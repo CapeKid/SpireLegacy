@@ -250,7 +250,7 @@ public static class ManorUi
             detail.AddChild(new TextureRect { Texture = Runtime.TraitIcon(trait.Text("id")), CustomMinimumSize = new(48,48), ExpandMode = TextureRect.ExpandModeEnum.IgnoreSize, StretchMode = TextureRect.StretchModeEnum.KeepAspectCentered });
             detail.AddChild(Text($"{trait.Text("name")}: {trait.Text("summary")}\nCrown bonus: {trait.Number("goldBonus")}%"));
         }
-        if (selectable) AddButton(selected ? "Selected for next climb" : "Choose this heir",() => { Runtime.Profile.selected = heir; Runtime.Profile.Save(Runtime.FamilyPath); Render(); });
+        if (selectable) AddButton(selected ? "Selected for next climb" : "Choose this heir",() => { Runtime.Profile.CommitHeirSelection(heir,Runtime.FamilyPath); Render(); });
     }
     public static void ShowChronicle()
     {
@@ -274,8 +274,7 @@ public static class ManorUi
         var profile=Runtime.Profile;if(!profile.chronicle.unlocked.Contains(id))return;
         var row=Design.Get("family_chronicle",id);
         // Persist before rendering, so a failed write cannot silently mark a story read.
-        var wasRead=profile.chronicle.read.Contains(id);profile.chronicle.read.Add(id);
-        try {profile.Save(Runtime.FamilyPath);}catch {if(!wasRead)profile.chronicle.read.Remove(id);throw;}
+        if(!profile.CommitChronicleRead(id,Runtime.FamilyPath))return;
         back=ShowChronicle;Clear();AddText(row.Text("title"),32);
         AddText(row.Text("story").Replace("{Family}",profile.family),25);
         AddText(FamilyChronicle.Reward(row),23);
@@ -285,9 +284,7 @@ public static class ManorUi
     }
     private static void SaveMotto(string motto)
     {
-        var profile=Runtime.Profile;var old=profile.chronicle.motto;
-        if(!FamilyChronicle.SelectMotto(profile,motto))return;
-        try{profile.Save(Runtime.FamilyPath);}catch{profile.chronicle.motto=old;throw;}
+        Runtime.Profile.CommitMotto(motto,Runtime.FamilyPath);
     }
     private static void Review()
     {
