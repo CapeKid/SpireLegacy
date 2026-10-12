@@ -117,7 +117,7 @@ public static class TacticalPilot
                     for(var i=0;i<11;i++){
                         var fuel=player.Creature.CombatState.CreateCard(ModelDb.Card<MegaCrit.Sts2.Core.Models.Cards.Wound>(),player);
                         await CardPileCmd.Add(fuel,PileType.Hand,skipVisuals:true);
-                        await CardCmd.Exhaust(new BlockingPlayerChoiceContext(),fuel);
+                        await BranchCommands.Exhaust(new BlockingPlayerChoiceContext(),fuel);
                     }
                     expected=finisher.DesignCard.Damage+finisher.DesignCard.SpecialAmount*10;
                 }
