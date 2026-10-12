@@ -1,5 +1,7 @@
 # Native controls and deck-aware rewards
 
+The next stage addresses immediate HP-cost decisions: [balance-hp-cost-decisions.md](balance-hp-cost-decisions.md). The data below retain the original policy and hashes.
+
 This stage continues from merged PR #89. It adds actual Ironclad runs and a shared reward heuristic, without changing production cards, manor bonuses or crown payouts.
 
 The previous tactical policy understood several effects only on Legacy cards. Native draw, Energy, debuffs, Strength Powers and multi-hit cards could receive inadequate scores. A shared adapter now reads owned native dynamic-variable names alongside Legacy sheet effects. It recognizes native Bash, Shrug It Off, Inflame, Offering and Twin Strike; Twin Strike's two hits are explicit because its owned model uses a literal hit count rather than a Repeat variable. Generic Repeat variables are also read.
