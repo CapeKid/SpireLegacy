@@ -59,36 +59,38 @@ def menu(count):
     for i in range(count):send(i,'select')
     time.sleep(1)
 
-# Two identical-class Heirs, host ready before join, rapid toggles, leave/rejoin.
-lobby(0,'knight',True,lesson='knight');send(0,'coop-ready')
-lobby(1,'knight',traits=['superhealer'])
-wait(lambda: next((p for p in send(1,'coop-state')['lobby'] if p['id']==1 and p['snapshot']=='knight'),False))
-probe=send(1,'coop-lobby-checks');assert probe['immutableReady'] and probe['requiredFrozenFields']
-wire=send(1,'coop-wire-checks');assert wire==dict(boundedLengthFailures=4,utf8Roundtrip=True)
-for ready in [False,True,False,True]:send(0,'coop-ready',ready=ready)
-send(1,'coop-replay');send(1,'coop-leave')
-wait(lambda: len(send(0,'coop-state')['lobby'])==1)
-assert 2 not in send(0,'coop-state')['pending']
-lobby(1,'knight',traits=['superhealer']);send(1,'coop-replay');send(1,'coop-ready')
-synced(2);owner_checks(2);map_start(2)
-send(1,'manor');assert not send(1,'coop-state')['paused']
-assert send(0,'coop-play')['played'];send(1,'close');synced(2)
-for i in range(2):
-    upgrade_owner(i,2)
-    assert send(i,'coop-play',upgrade=True)['upgraded'];synced(2)
-settle(2);menu(2);print(tag,'two identical-class owners, ordering, rejoin, manor and settlement pass',flush=True)
-
-# Mixed native/Heir lobby and host loss before start.
-lobby(0,'knight',True);lobby(1,'ironclad');send(0,'coop-leave')
-wait(lambda: send(1,'coop-contexts')['lobby'] is False)
-assert send(1,'coop-contexts')['pending']==0 and not send(1,'coop-contexts')['handler']
-time.sleep(2)
-lobby(0,'knight',True);lobby(1,'ironclad');send(0,'coop-ready');send(1,'coop-ready');synced(2);map_start(2)
-assert len(send(0,'coop-roundtrip'))==2
-assert send(0,'coop-state')['players'][1]['snapshot'] is None
-assert send(1,'coop-play')['played'];synced(2);settle(2);menu(2)
-print(tag,'mixed native owner and host-loss cleanup pass',flush=True)
-
+if len(sys.argv)<8 or sys.argv[7]=='all':
+    # Two identical-class Heirs, host ready before join, rapid toggles, leave/rejoin.
+    lobby(0,'knight',True,lesson='knight');send(0,'coop-ready')
+    lobby(1,'knight',traits=['superhealer'])
+    wait(lambda: next((p for p in send(1,'coop-state')['lobby'] if p['id']==1 and p['snapshot']=='knight'),False))
+    probe=send(1,'coop-lobby-checks');assert probe['immutableReady'] and probe['requiredFrozenFields']
+    wire=send(1,'coop-wire-checks');assert wire==dict(boundedLengthFailures=4,utf8Roundtrip=True)
+    for ready in [False,True,False,True]:send(0,'coop-ready',ready=ready)
+    send(1,'coop-replay');send(1,'coop-leave')
+    wait(lambda: len(send(0,'coop-state')['lobby'])==1)
+    assert 2 not in send(0,'coop-state')['pending']
+    lobby(1,'knight',traits=['superhealer']);send(1,'coop-replay');send(1,'coop-ready')
+    synced(2);owner_checks(2);map_start(2)
+    send(1,'manor');assert not send(1,'coop-state')['paused']
+    assert send(0,'coop-play')['played'];send(1,'close');synced(2)
+    for i in range(2):
+        upgrade_owner(i,2)
+        assert send(i,'coop-play',upgrade=True)['upgraded'];synced(2)
+    settle(2);menu(2);print(tag,'two identical-class owners, ordering, rejoin, manor and settlement pass',flush=True)
+    
+    # Mixed native/Heir lobby and host loss before start.
+    lobby(0,'knight',True);lobby(1,'ironclad');send(0,'coop-leave')
+    wait(lambda: send(1,'coop-contexts')['lobby'] is False)
+    assert send(1,'coop-contexts')['pending']==0 and not send(1,'coop-contexts')['handler']
+    time.sleep(2)
+    lobby(0,'knight',True);lobby(1,'ironclad');send(0,'coop-ready');send(1,'coop-ready');synced(2);map_start(2)
+    assert len(send(0,'coop-roundtrip'))==2
+    assert send(0,'coop-state')['players'][1]['snapshot'] is None
+    assert send(1,'coop-play')['played'];synced(2);settle(2);menu(2)
+    print(tag,'mixed native owner and host-loss cleanup pass',flush=True)
+    
+    
 # Four peers, all classes and native Random resolving to another Knight.
 lobby(0,'knight',True,lesson='knight',manor={'vitality':1,'smith':1});send(0,'coop-ready')
 lobby(1,'mage',traits=['megahealth'])
@@ -97,6 +99,7 @@ lobby(2,'ranger',traits=['superhealer'],lesson='ranger')
 wait(lambda: len(send(0,'coop-state')['lobby'])==3)
 send(1,'coop-ready');send(0,'coop-ready',ready=False)
 lobby(3,'random',heirClass='knight',lesson='mage')
+wait(lambda: next((p for p in send(0,'coop-state')['lobby'] if p['id']==4 and 'RANDOM' in p['character'].upper()),False))
 seed=send(0,'coop-random-seed');assert seed['resolvedHeirs']==1
 send(3,'coop-hold',hold=True);send(3,'coop-ready');send(2,'coop-ready');send(0,'coop-ready')
 time.sleep(2);blocked=send(0,'coop-state')
@@ -138,3 +141,4 @@ send(0,'start',**{'class':'ranger','quick':True,'traits':[]})
 wait(lambda: send(0,'state')['phase']=='Play')
 played=send(0,'expansion-play',card='ranger_strike',upgrade=True);assert played['pile']=='Discard'
 send(0,'abandon');print(tag,'four owners, delayed random barrier, paid cards, revival, resume and solo transition pass',flush=True)
+

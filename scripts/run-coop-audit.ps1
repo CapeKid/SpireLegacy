@@ -2,6 +2,7 @@ param(
     [Parameter(Mandatory=$true)][ValidateSet('regular','beta')][string]$Branch,
     [Parameter(Mandatory=$true)][string]$Tag,
     [ValidateRange(1024,65530)][int]$Port=25001,
+    [ValidateSet('all','party')][string]$Scope='all',
     [string]$Python='python'
 )
 $ErrorActionPreference='Stop'
@@ -28,7 +29,7 @@ try {
         $clients+=Start-Process $image -WorkingDirectory $lab -ArgumentList '--force-steam=off --rendering-method gl_compatibility --rendering-driver opengl3 --position -2000,-2000' -WindowStyle Hidden -PassThru -RedirectStandardOutput (Join-Path $profile 'launch.log') -RedirectStandardError (Join-Path $profile 'errors.log')
         $profiles+=$profile;$images+=$image
     }
-    & $Python (Join-Path $PSScriptRoot 'sts2-coop-audit.py') $Tag $Port @profiles
+    & $Python (Join-Path $PSScriptRoot 'sts2-coop-audit.py') $Tag $Port @profiles $Scope
     if($LASTEXITCODE -ne 0){throw 'Co-op audit driver failed'}
 } finally {
     foreach($name in $names){[Environment]::SetEnvironmentVariable($name,$old[$name],'Process')}
