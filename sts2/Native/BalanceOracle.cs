@@ -47,7 +47,7 @@ public static class BalanceOracle
         CombatManager.Instance.SetReadyToEndTurn(player,false);
         await Wait(()=>!player.Creature.IsAlive||!combat.GetOpponentsOf(player.Creature).Any(e=>e.IsAlive)||CombatManager.Instance.IsEnding||player.PlayerCombatState.Phase==PlayerTurnPhase.Play&&player.PlayerCombatState.TurnNumber>turn);
     }
-    public static async Task<object> Probe(RunState run,string key,bool upgraded,IDisposable selector)
+    public static async Task<object> Probe(RunState run,string key,bool upgraded,IDisposable selector,bool supported=false)
     {
         using(selector) {
             var player=run.Players.Single();var hand=PileType.Hand.GetPile(player);var context=new BlockingPlayerChoiceContext();
@@ -57,6 +57,21 @@ public static class BalanceOracle
             foreach(var target in targets){target.SetMaxHpInternal(10000);target.SetCurrentHpInternal(10000);}
             var card=await Add(player,key,upgraded);
             var beforeEnergy=player.PlayerCombatState!.Energy;var beforeBlock=player.Creature.Block;
+            if(key is "knight_royal_execution" or "mage_celestial_spear" or "ranger_arrow_cascade"){
+                if(supported){
+                    if(key=="knight_royal_execution")targets[0].SetCurrentHpInternal(5000);
+                    else for(var i=0;i<2;i++)await Play(await Add(player,key=="mage_celestial_spear"?"mage_warding_verse":"ranger_quick_nock"));
+                }
+                var precedingAttacks=player.Creature.GetPower<P_class>()?.AttacksThisTurn??0;
+                var charges=player.Creature.GetPower<P_class>()?.Charges??0;
+                var hp=targets.Select(t=>t.CurrentHp).ToArray();var block=targets.Select(t=>t.Block).ToArray();
+                beforeEnergy=player.PlayerCombatState.Energy;
+                await Play(card);
+                var restored=(LegacyCard)run.LoadCard(card.ToSerializable(),player);
+                var roundTrip=restored.Key==key&&restored.IsUpgraded==upgraded&&restored.DesignCard.Rules()==card.DesignCard.Rules();run.RemoveCard(restored);
+                return new{key,upgraded,supported,precedingAttacks,charges,damage=targets.Select((t,i)=>hp[i]-t.CurrentHp+block[i]-t.Block).ToArray(),
+                    energySpent=beforeEnergy-player.PlayerCombatState.Energy,cost=card.DesignCard.Cost,pile=card.Pile?.Type.ToString(),roundTrip};
+            }
             if(key=="knight_second_wind"){
                 await Add(player,"knight_guard");await Add(player,"knight_guard");
                 await Play(card);

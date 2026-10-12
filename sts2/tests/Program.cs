@@ -221,6 +221,15 @@ foreach (var upgraded in new[] {false,true})
         Check(new CardDesign(poisonId,upgraded).Amount("poison")== (upgraded?6:4),poisonId+" supplies a useful Poison seed without global manor scaling");
 }
 foreach (var traitId in new[] { "nocolor", "oldyellowtint", "colortrails", "fmffan" }) Check(Design.Get("traits", traitId).Number("goldBonus") == 0, "No free crown bonus: " + traitId);
+foreach(var upgraded in new[]{false,true}){
+    var nativeBludgeon=upgraded?42:32;
+    var execution=new CardDesign("knight_royal_execution",upgraded);
+    var spear=new CardDesign("mage_celestial_spear",upgraded);
+    Check(execution.Cost==3&&execution.Damage<nativeBludgeon&&execution.Damage*execution.SpecialAmount>nativeBludgeon,"Royal Execution remains below native unconditional budget and rewards its health condition");
+    Check(spear.Cost==3&&spear.Damage+4<nativeBludgeon,"Celestial Spear plus full Smith and two charges stays below native Bludgeon");
+    var cascade=new CardDesign("ranger_arrow_cascade",upgraded);
+    Check(cascade.Row.Flag("aoe")&&cascade.Row.Flag("exhaust")&&cascade.SpecialAmount<6&&cascade.Row.Number("damage")==0,"Arrow Cascade retains setup and single-use limits below native Finisher's per-attack base");
+}
 var oldManor = new FamilyProfile { crowns = 5, manor = new() { ["smith"] = 3, ["armory"] = 3, ["garden"] = 4 } };
 Check(oldManor.RefundRetiredLevels() && oldManor.crowns == 965, "Refund retired levels at their original purchase prices");
 Check(oldManor.Bonus("strength") == 2 && oldManor.Bonus("dexterity") == 2 && oldManor.Bonus("heal") == 2, "Retuned manor stats");

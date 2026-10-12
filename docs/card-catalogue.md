@@ -46,7 +46,7 @@ Each class has 82 rewards on regular (20 common, 36 uncommon, 26 rare), or 85 on
 | Burnished Legacy | Uncommon | Power | 1 | Shared family card; Whenever you Exhaust a card, gain 2 Block. |
 | Vengeful Armor | Uncommon | Power | 1 | Class unique; Public-beta only; 3 Block; Whenever an enemy attacks you, deal 2 damage to it. |
 | Veteran Training | Uncommon | Power | 1 | Class unique; At the start of your turn, lose 1 HP and draw 1 card(s). |
-| Royal Execution | Rare | Attack | 3 | Class unique; 16 damage; Deal 2 times damage if the target is at or below half HP. |
+| Royal Execution | Rare | Attack | 3 | Class unique; 20 damage; Deal 2 times damage if the target is at or below half HP. |
 | Meteor Hammer | Rare | Attack | 2 | Class unique; 5 damage ×3; 1 Weak; Exhaust |
 | Unbroken Wall | Rare | Skill | 2 | Class unique; 18 Block; Exhaust |
 | Guardian Angel | Rare | Skill | 2 | Shared family card; Prevent the next 1 time(s) you would lose HP.; Exhaust |
@@ -149,7 +149,7 @@ Each class has 82 rewards on regular (20 common, 36 uncommon, 26 rare), or 85 on
 | Spell Threads | Uncommon | Power | 2 | Class unique; Whenever you play a card, deal 1 damage to ALL enemies. |
 | Secret Thesis | Uncommon | Power | 2 | Shared family card; Whenever you Exhaust a card, draw 1 card(s). |
 | Toxic Theory | Uncommon | Power | 1 | Class unique; Whenever you apply a debuff to an enemy, deal 2 damage to it. |
-| Celestial Spear | Rare | Attack | 3 | Class unique; 24 damage |
+| Celestial Spear | Rare | Attack | 3 | Class unique; 26 damage |
 | Starfall | Rare | Attack | 3 | Class unique; 6 damage ×3 to all enemies |
 | Soulfire | Rare | Attack | 2 | Class unique; 13 damage; 6 Poison |
 | Perfect Ward | Rare | Skill | 2 | Class unique; 3 Block; Prevent the next 1 time(s) you would lose HP.; Exhaust |
@@ -277,6 +277,6 @@ Each class has 82 rewards on regular (20 common, 36 uncommon, 26 rare), or 85 on
 | Falcon Courier | Rare | Attack | 2 | Class unique; 10 damage; When discarded during your turn, gain 3 Energy. Triggers at most once per copy each turn.; Exhaust |
 | Venom Eclipse | Rare | Skill | 2 | Class unique; 7 Poison to all enemies; Exhaust |
 | Long Vigil | Rare | Attack | 2 | Class unique; 15 damage; Whenever this is Retained, gain 6 damage this combat.; Retain |
-| Arrow Cascade | Rare | Attack | 2 | Class unique; Deal 2 damage for each OTHER Attack played this turn to all enemies.; Exhaust |
+| Arrow Cascade | Rare | Attack | 2 | Class unique; Deal 4 damage for each OTHER Attack played this turn to all enemies.; Exhaust |
 | Hunt Without End | Rare | Power | 2 | Class unique; 3 next Attack damage; Every third Attack you play each turn grants 3 Vigor for your NEXT Attack. |
 | Forest Oracle | Rare | Power | 2 | Class unique; Whenever you Scry, gain 4 Block. |
