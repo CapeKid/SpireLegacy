@@ -32,7 +32,7 @@ public static class CampaignOracle
         using(selector){
             if(policy is not ("defense" or "attack"))throw new ArgumentException("Unknown campaign policy.");
             var player=run.Players.Single();
-            object Snapshot()=>new{act=run.CurrentActIndex+1,floor=run.TotalFloor,room=run.CurrentRoom?.RoomType.ToString(),hp=player.Creature.CurrentHp,maxHp=player.Creature.MaxHp,gold=player.Gold,crowns=Runtime.Profile.crowns,lastEarned=Runtime.Profile.lastEarned,deck=player.Deck.Cards.Select(Key).ToArray(),relics=player.Relics.Select(r=>r.Id.ToString()).ToArray()};
+            object Snapshot()=>new{act=run.CurrentActIndex+1,floor=run.TotalFloor,room=run.CurrentRoom?.RoomType.ToString(),hp=player.Creature.CurrentHp,maxHp=player.Creature.MaxHp,gold=player.Gold,crowns=Runtime.Profile.crowns,lastEarned=Runtime.Profile.lastEarned,wins=Runtime.Profile.chronicle.classes.Values.Sum(h=>h.wins),manor=Runtime.Profile.manor,deck=player.Deck.Cards.Select(Key).ToArray(),relics=player.Relics.Select(r=>r.Id.ToString()).ToArray()};
             object Result(string action,object? detail=null)=>new{action,detail,state=Snapshot()};
             if(run.IsGameOver){await Task.Delay(500);return Result("finished");}
             if(NMapScreen.Instance?.IsOpen==true){

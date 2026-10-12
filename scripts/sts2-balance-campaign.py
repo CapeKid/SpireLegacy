@@ -47,7 +47,7 @@ try:
                     'seed': seed, 'ascension': ascension, 'traits': traits})
     stalled = 0
     deadline = time.monotonic() + 1200
-    for step in range(600):
+    for step in range(1200):
         if time.monotonic() > deadline:
             report['status'] = 'time-cap'
             break
