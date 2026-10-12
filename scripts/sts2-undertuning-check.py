@@ -51,7 +51,7 @@ try:
             hand_before = len(played['costsBefore'])
             if card == 'knight_arms_vault':
                 assert played['fuelReturned'] and played['cost'] == 1, played
-                assert len(played['hand']) == hand_before + 2 + int(upgrade), played
+                assert len(played['hand']) == hand_before + 2, played
             elif card == 'mage_returned_prophecy':
                 assert played['fuelReturned'] and played['cost'] == 1, played
                 assert len(played['hand']) == hand_before + 3 + int(upgrade), played

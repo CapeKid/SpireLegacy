@@ -10,7 +10,7 @@ from pathlib import Path
 ROOT=Path(__file__).resolve().parents[1]
 read=lambda name:json.loads((ROOT/'sheets'/f'{name}.json').read_text())
 write=lambda name,rows:(ROOT/'sheets'/f'{name}.json').write_text(json.dumps(rows,indent=2)+'\n')
-FIELDS=('cost','damage','block','hits','draw','discard','energy','strength','dexterity','weak','vulnerable','poison','heal','hpLoss','vigor','thorns','plated','nextEnergy','nextDraw','nextBlock','power','magic','special','specialAmount','exhaust','upgradeDamage','upgradeBlock','upgradeMagic','upgradeSpecial','upgradeCost','upgradeDiscard')
+FIELDS=('cost','damage','block','hits','draw','discard','energy','strength','dexterity','weak','vulnerable','poison','heal','hpLoss','vigor','thorns','plated','nextEnergy','nextDraw','nextBlock','power','magic','special','specialAmount','exhaust','upgradeDamage','upgradeBlock','upgradeMagic','upgradeSpecial','upgradeCost','upgradeDiscard','upgradeDraw')
 
 def main():
     cards=read('cards');active={r['cardId'] for r in read('card_pools')}
@@ -18,7 +18,9 @@ def main():
     changes=[]
     for row in cards:
         row.setdefault('upgradeDiscard',0)
-        before=previous[row['id']]['before'] if row['id'] in previous else {k:row[k] for k in FIELDS}
+        row.setdefault('upgradeDraw',-1)
+        before=dict(previous[row['id']]['before']) if row['id'] in previous else {k:row[k] for k in FIELDS}
+        before.setdefault('upgradeDraw',-1)
         row.update(before)
         for field in ('damage','block','nextBlock'):
             if row[field]>0:row[field]=max(1,math.floor(row[field]*.75))

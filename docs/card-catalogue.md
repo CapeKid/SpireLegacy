@@ -50,7 +50,7 @@ Each class has 82 rewards on regular (20 common, 36 uncommon, 26 rare), or 85 on
 | Meteor Hammer | Rare | Attack | 2 | Class unique; 5 damage ×3; 1 Weak; Exhaust |
 | Unbroken Wall | Rare | Skill | 2 | Class unique; 18 Block; Exhaust |
 | Guardian Angel | Rare | Skill | 2 | Shared family card; Prevent the next 1 time(s) you would lose HP.; Exhaust |
-| Battlefield Recovery | Rare | Skill | 2 | Class unique; 2 draw; 4 healing; Exhaust |
+| Battlefield Recovery | Rare | Skill | 1 | Class unique; 2 draw; 4 healing; Exhaust |
 | Living Fortress | Rare | Power | 3 | Class unique; Your Block is not removed at the start of your turn. |
 | Ancestral Fury | Rare | Power | 3 | Class unique; At the start of your turn, gain 2 Strength. |
 | Forge Memory | Rare | Power | 2 | Class unique; 4 Block; Whenever you Exhaust a card, draw 1 card(s). |
@@ -77,7 +77,7 @@ Each class has 82 rewards on regular (20 common, 36 uncommon, 26 rare), or 85 on
 | Furnace Breath | Uncommon | Power | 1 | Class unique; Whenever you draw a Status or Curse, deal 3 damage to ALL enemies. |
 | Patient Riposte | Uncommon | Attack | 2 | Class unique; 9 damage; Whenever this is Retained, gain 3 damage this combat.; Retain |
 | Castle Heart | Rare | Power | 2 | Class unique; Public-beta only; 5 Block; At the end of your turn, gain 4 Block. |
-| Iron Avalanche | Rare | Attack | 3 | Class unique; 6 damage to all enemies; Deal 18 additional damage if you have Block.; Exhaust |
+| Iron Avalanche | Rare | Attack | 2 | Class unique; 6 damage to all enemies; Deal 18 additional damage if you have Block.; Exhaust |
 | Phoenix Forge | Rare | Power | 2 | Class unique; Whenever you Exhaust a card, deal 4 damage to ALL enemies. |
 | Ancestral Salvage | Rare | Skill | 2 | Shared family card; 6 Block; Return a card from your Exhaust pile to your hand. Cannot return cards with this effect.; Exhaust |
 | King's Ransom | Rare | Skill | 0 | Class unique; 2 Energy; 4 HP cost; Exhaust |
@@ -92,7 +92,7 @@ Each class has 82 rewards on regular (20 common, 36 uncommon, 26 rare), or 85 on
 | Alchemist's Patience | Uncommon | Power | 1 | Shared family card; At the start of your turn, apply 2 Poison to ALL enemies. |
 | Mirror Manuscript | Rare | Skill | 1 | Shared family card; Your next 1 Skill(s) this turn are played twice.; Retain; Exhaust |
 | Comet Calendar | Rare | Skill | 2 | Shared family card; 4 draw next turn; 3 Energy next turn; Exhaust |
-| Eternal Bookmark | Rare | Power | 2 | Shared family card; At the end of your turn, Retain up to 2 card(s). |
+| Eternal Bookmark | Rare | Power | 1 | Shared family card; At the end of your turn, Retain up to 2 card(s). |
 | Tracking Rhythm | Uncommon | Power | 1 | Shared family card; Every third Attack you play each turn grants 2 Vigor for your NEXT Attack. |
 
 ## Mage
@@ -153,7 +153,7 @@ Each class has 82 rewards on regular (20 common, 36 uncommon, 26 rare), or 85 on
 | Starfall | Rare | Attack | 3 | Class unique; 6 damage ×3 to all enemies |
 | Soulfire | Rare | Attack | 2 | Class unique; 13 damage; 6 Poison |
 | Perfect Ward | Rare | Skill | 2 | Class unique; 3 Block; Prevent the next 1 time(s) you would lose HP.; Exhaust |
-| Mana Fountain | Rare | Skill | 0 | Class unique; 3 Energy; Exhaust |
+| Mana Fountain | Rare | Skill | 0 | Class unique; 2 Energy; Exhaust |
 | Grand Thesis | Rare | Skill | 1 | Class unique; 3 draw; Gain 1 Arcane Charge(s), up to the normal charge cap.; Exhaust |
 | Hourglass | Rare | Skill | 1 | Class unique; Reduce the cost of 2 random card(s) in your hand by 1 this turn.; Exhaust |
 | Transmutation | Rare | Skill | 1 | Class unique; 2 draw; 2 Energy; Exhaust 2 card(s) from your hand.; Exhaust |
@@ -183,7 +183,7 @@ Each class has 82 rewards on regular (20 common, 36 uncommon, 26 rare), or 85 on
 | Comet Calendar | Rare | Skill | 2 | Shared family card; 4 draw next turn; 3 Energy next turn; Exhaust |
 | Book of Embers | Rare | Power | 2 | Class unique; Public-beta only; Whenever you Exhaust a card, deal 3 damage to ALL enemies. |
 | Returned Prophecy | Rare | Skill | 1 | Class unique; 2 draw; Return a card from your Exhaust pile to your hand. Cannot return cards with this effect.; Exhaust |
-| Eternal Bookmark | Rare | Power | 2 | Shared family card; At the end of your turn, Retain up to 2 card(s). |
+| Eternal Bookmark | Rare | Power | 1 | Shared family card; At the end of your turn, Retain up to 2 card(s). |
 | Sun in a Bottle | Rare | Attack | 3 | Class unique; 13 damage to all enemies; Whenever this is Retained, gain 6 damage this combat.; Retain |
 | Grand Incantation | Rare | Attack | 3 | Class unique; 3 damage ×8; Hits target random enemies.; Exhaust |
 | Tracking Rhythm | Uncommon | Power | 1 | Shared family card; Every third Attack you play each turn grants 2 Vigor for your NEXT Attack. |
@@ -260,7 +260,7 @@ Each class has 82 rewards on regular (20 common, 36 uncommon, 26 rare), or 85 on
 | Alchemist's Patience | Uncommon | Power | 1 | Shared family card; At the start of your turn, apply 2 Poison to ALL enemies. |
 | Mirror Manuscript | Rare | Skill | 1 | Shared family card; Your next 1 Skill(s) this turn are played twice.; Retain; Exhaust |
 | Comet Calendar | Rare | Skill | 2 | Shared family card; 4 draw next turn; 3 Energy next turn; Exhaust |
-| Eternal Bookmark | Rare | Power | 2 | Shared family card; At the end of your turn, Retain up to 2 card(s). |
+| Eternal Bookmark | Rare | Power | 1 | Shared family card; At the end of your turn, Retain up to 2 card(s). |
 | Loose Fletching | Common | Attack | 1 | Class unique; 4 damage; When discarded during your turn, draw 1 card(s). Triggers at most once per copy each turn. |
 | Pocket Wind | Common | Skill | 1 | Class unique; 3 Block; When discarded during your turn, gain 1 Energy. Triggers at most once per copy each turn. |
 | Sort Quiver | Common | Skill | 1 | Class unique; 3 draw; 2 discard |
