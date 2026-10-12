@@ -9,9 +9,11 @@ param(
     [string]$Traits='',
     [string]$Python='python',
     [switch]$Checks,
+    [switch]$DelayedChecks,
     [ValidateSet('standalone','deck')][string]$Rewards='standalone'
 )
 $ErrorActionPreference='Stop'
+if($Checks -and $DelayedChecks){throw 'Select one fixture driver.'}
 $repoPath=Split-Path $PSScriptRoot -Parent
 $privatePath=(Resolve-Path (Join-Path $repoPath 'private')).Path
 $labPath=(Resolve-Path (Join-Path $repoPath $Lab)).Path
@@ -33,7 +35,7 @@ try {
     $env:HEIR_TEST_MODE='1';$env:HEIR_TEST_ROOT=$privatePath;$env:HEIR_DATA_DIR=$profilePath
     $env:HEIR_TEST_SOURCE_SHA=git -C $repoPath rev-parse HEAD
     $client=Start-Process $exePath -WorkingDirectory $labPath -ArgumentList '--force-steam=off --rendering-method gl_compatibility --rendering-driver opengl3 --position -2000,-2000' -WindowStyle Hidden -PassThru -RedirectStandardOutput (Join-Path $profilePath 'launch.log') -RedirectStandardError (Join-Path $profilePath 'errors.log')
-    $driver=if($Checks){'sts2-tactical-check.py'}else{'sts2-balance-campaign.py'}
+    $driver=if($Checks){'sts2-tactical-check.py'}elseif($DelayedChecks){'sts2-delayed-reward-check.py'}else{'sts2-balance-campaign.py'}
     $traitArgument=if($Traits){$Traits}else{'-'}
     & $Python (Join-Path $PSScriptRoot $driver) $profilePath $Tag $Class $Tier $Policy $Seed $Ascension $traitArgument $Rewards
     if ($LASTEXITCODE -ne 0) { throw "Campaign driver failed; inspect $profilePath" }

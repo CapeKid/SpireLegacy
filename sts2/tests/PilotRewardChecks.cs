@@ -53,5 +53,13 @@ public static class PilotRewardChecks
         check(PilotHealth.NeedsEmergencyBlock(5,2,7),"Exactly lethal incoming damage requests emergency Block");
         check(!PilotHealth.NeedsEmergencyBlock(5,3,7),"Survivable damage conserves emergency potion");
         check(!PilotHealth.NeedsEmergencyBlock(1,12,12),"Existing Block avoids redundant potion use");
+        var delayedAttack=Attack("brave",5) with{NextEnergy=1};
+        var execution=Attack("axe",9) with{Cost=2,Special="execute",SpecialAmount=2};
+        check(PilotRewards.Pick([execution,delayedAttack],balanced)==1,"Next-turn Energy gives Brave Advance credit against a conditional two-cost attack");
+        check(PilotRewards.Score(delayedAttack,balanced)<PilotRewards.Score(delayedAttack with{NextEnergy=0,Energy=1},balanced),"Delayed Energy is discounted against immediate Energy");
+        check(PilotRewards.Pick([Guard("plain",5),Guard("mail",3) with{NextBlock=6}],balanced)==1,"Delayed Block has value distinct from immediate Block");
+        check(PilotRewards.Score(Guard("late",0) with{NextBlock=6},balanced)<PilotRewards.Score(Guard("now",6),balanced),"Delayed Block is not full immediate protection");
+        check(PilotRewards.Pick([Attack("plain",5),Attack("running",3) with{NextDraw=2}],balanced)==1,"Next-turn draw gets prospective reward value");
+        check(PilotRewards.Score(Attack("late",0) with{NextDraw=2},balanced)<PilotRewards.Score(Attack("now",0) with{Draw=2},balanced),"Delayed draw is discounted against immediate draw");
     }
 }
