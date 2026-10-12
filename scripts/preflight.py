@@ -42,6 +42,7 @@ def validate(historical_assets=False):
         ref('cards',row,'classId',classes); ref('cards',row,'asset',assets)
         ref('cards',row,'art',{r['id'] for r in sheets.get('card_art',[])})
         if row['type'] not in ('ATTACK','SKILL','POWER'): errors.append('invalid card type '+row['id'])
+        if not isinstance(row.get('upgradeDraw',-1),int) or row.get('upgradeDraw',-1)<-1:errors.append('Invalid draw upgrade override '+row['id'])
         if row['power'] not in {'none','reservoir','quiver'}|{r['id'] for r in sheets.get('power_effects',[])}:errors.append('Unsupported class power '+row['id'])
         if row.get('special','none') not in {'none'}|{r['id'] for r in sheets.get('special_effects',[])}:errors.append('Unsupported card mechanic '+row['id'])
         if row.get('aoe') and row.get('special')=='random_attack':errors.append('Conflicting multi-target modes '+row['id'])

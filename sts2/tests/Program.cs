@@ -353,6 +353,23 @@ foreach(var name in new[]{"Missing","WrongReturn"})try{ApiContract.Require(typeo
 try{ApiContract.Invoke(typeof(ApiFixture).GetMethod("ThrowOriginal")!,null,[]);Check(false,"Reflection must propagate failure");}catch(InvalidOperationException e){Check(ReferenceEquals(e,ApiFixture.Failure),"Reflection preserves original exception identity");}
 PilotRewardChecks.Run(Check);
 foreach(var upgraded in new[]{false,true}){
+    var slow=new CardDesign("mage_slow_incantation",upgraded);
+    Check(slow.Cost==1&&slow.Amount("nextEnergy")==1&&slow.Amount("nextDraw")==1&&slow.Amount("nextBlock")==3,"Slow Incantation stays paid with unchanged delayed payout");
+    Check(slow.Block==(upgraded?2:0)&&!slow.Row.Flag("exhaust"),"Slow Incantation upgrades protection without free cycling");
+    var quiver=new CardDesign("ranger_second_quiver",upgraded);
+    Check(quiver.Amount("draw")==2&&quiver.Amount("energy")==1+(upgraded?1:0)&&quiver.Row.Flag("exhaust"),"Second Quiver matches native Adrenaline draw/Energy rather than upgrading both");
+    Check(new CardDesign("mage_mana_fountain",upgraded).Amount("energy")==2+(upgraded?1:0),"Mana Fountain has a bounded single-use Energy burst");
+    var bookmark=new CardDesign("mage_eternal_bookmark",upgraded);
+    Check(bookmark.Cost==1&&bookmark.Magic==2+(upgraded?1:0),"Rare Bookmark improves retention rather than repairing a costly setup");
+    var recovery=new CardDesign("knight_battlefield_recovery",upgraded);
+    Check(recovery.Cost==1&&recovery.Amount("draw")==2+(upgraded?1:0)&&recovery.Amount("heal")==4+(upgraded?1:0)&&recovery.Row.Flag("exhaust"),"Battlefield Recovery leaves Energy to use drawn cards without increasing healing");
+    var avalanche=new CardDesign("knight_iron_avalanche",upgraded);
+    Check(avalanche.Cost==2&&avalanche.SpecialAmount==18&&avalanche.Row.Flag("exhaust"),"Iron Avalanche fits one paid guard plus its conditional single-use attack in three Energy");
+}
+foreach(var card in Design.Rows("cards").Where(c=>c.Text("id")!="ranger_second_quiver")){
+    Check(card.Number("upgradeDraw")==-1,"Existing draw upgrades preserve the shared resource increment: "+card.Text("id"));
+}
+foreach(var upgraded in new[]{false,true}){
     var spellweave=new CardDesign("mage_spellweave",upgraded);
     Check(spellweave.Cost==1,"Spellweave always pays Energy, including after upgrade");
     Check(spellweave.Amount("nextEnergy")==1&&spellweave.Amount("nextDraw")==2,"Spellweave upgrade cannot increase delayed resource payout");

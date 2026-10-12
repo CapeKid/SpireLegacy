@@ -47,7 +47,7 @@ cards=read('cards');byid={r['id']:r for r in cards};members=read('card_pools');e
 defaults={k:v for k,v in byid['knight_strike'].items() if k not in ('id','name','classId','rarity','asset','art')}
 for key in defaults:
     defaults[key]=False if isinstance(defaults[key],bool) else 0 if isinstance(defaults[key],int) else 'none'
-defaults.update(type='SKILL',hits=1)
+defaults.update(type='SKILL',hits=1,upgradeDraw=-1)
 for cardid,scope,build,reference,stats in plan:
     row=byid[cardid];row.update(defaults);row.update(stats)
     rarity='UNCOMMON' if scope=='beta' and cardid not in ('knight_castle_heart','mage_book_of_embers','ranger_unseen_hunter') else 'RARE'
@@ -61,6 +61,7 @@ for cardid,scope,build,reference,stats in plan:
 targets=read('pool_targets')
 for row in targets:row.update(reference='StS2 regular v0.107.1: 82 rewards; public-beta v0.111.0: 85 rewards with branch additions',basic=3,common=20,uncommon=36,rare=26,total=85)
 for row in cards:
+    row.setdefault('upgradeDraw', -1)
     row.update(CARD_OVERRIDES.get(row['id'], {}))
 write('cards',cards);write('card_pools',members);write('pool_targets',targets);write('branch_cards',branch);write('pool_expansion',expansion)
 print('Activated 22 original rare cards (4 shared + 6/class) and 9 beta additions (2 uncommon + 1 rare/class); saved model IDs and illustration paths preserved.')

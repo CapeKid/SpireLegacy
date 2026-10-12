@@ -1,7 +1,10 @@
 using Godot;
+using HarmonyLib;
+using MegaCrit.Sts2.Core.CardSelection;
 using MegaCrit.Sts2.Core.Combat;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
+using MegaCrit.Sts2.Core.Entities.CardRewardAlternatives;
 using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Entities.Players;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
@@ -11,6 +14,7 @@ using MegaCrit.Sts2.Core.MonsterMoves.Intents;
 using MegaCrit.Sts2.Core.Nodes.Cards;
 using MegaCrit.Sts2.Core.Nodes.CommonUi;
 using MegaCrit.Sts2.Core.Runs;
+using MegaCrit.Sts2.Core.TestSupport;
 using MegaCrit.Sts2.Core.ValueProps;
 
 namespace SpireLegacy;
@@ -47,6 +51,10 @@ public static class BalanceOracle
         CombatManager.Instance.SetReadyToEndTurn(player,false);
         await Wait(()=>!player.Creature.IsAlive||!combat.GetOpponentsOf(player.Creature).Any(e=>e.IsAlive)||CombatManager.Instance.IsEnding||player.PlayerCombatState.Phase==PlayerTurnPhase.Play&&player.PlayerCombatState.TurnNumber>turn);
     }
+    private static async Task CompleteProtectedTurn(Player player){
+        var turn=player.PlayerCombatState!.TurnNumber;await End(player,true);
+        await Wait(()=>player.PlayerCombatState.Phase==PlayerTurnPhase.Play&&player.PlayerCombatState.TurnNumber>turn);
+    }
     public static async Task<object> Probe(RunState run,string key,bool upgraded,IDisposable selector,bool supported=false)
     {
         using(selector) {
@@ -57,6 +65,37 @@ public static class BalanceOracle
             foreach(var target in targets){target.SetMaxHpInternal(10000);target.SetCurrentHpInternal(10000);}
             var card=await Add(player,key,upgraded);
             var beforeEnergy=player.PlayerCombatState!.Energy;var beforeBlock=player.Creature.Block;
+            if(key is "mage_slow_incantation" or "ranger_second_quiver" or "mage_mana_fountain" or "mage_eternal_bookmark" or "knight_battlefield_recovery" or "knight_iron_avalanche"){
+                var setupSpent=0;
+                if(key=="knight_iron_avalanche"&&supported){await Play(await Add(player,"fortify"));setupSpent=beforeEnergy-player.PlayerCombatState.Energy;}
+                player.Creature.SetCurrentHpInternal(player.Creature.MaxHp-20);
+                beforeEnergy=player.PlayerCombatState.Energy;beforeBlock=player.Creature.Block;
+                var beforeHp=player.Creature.CurrentHp;var beforeHand=hand.Cards.Count;
+                var targetHp=targets.Select(t=>t.CurrentHp).ToArray();var targetBlock=targets.Select(t=>t.Block).ToArray();
+                await Play(card);
+                var energyDelta=player.PlayerCombatState.Energy-beforeEnergy;
+                var blockDelta=player.Creature.Block-beforeBlock;var healing=player.Creature.CurrentHp-beforeHp;
+                var drawn=hand.Cards.Count-beforeHand+1;var pile=card.Pile?.Type.ToString();
+                var damage=targets.Select((t,i)=>targetHp[i]-t.CurrentHp+targetBlock[i]-t.Block).ToArray();
+                var restored=(LegacyCard)run.LoadCard(card.ToSerializable(),player);
+                var roundTrip=restored.EnergyCost.GetWithModifiers(CostModifiers.All)==card.DesignCard.Cost&&restored.DesignCard.Rules()==card.DesignCard.Rules();run.RemoveCard(restored);
+                if(key=="mage_slow_incantation"){
+                    var queuedEnergy=player.Creature.GetPowerAmount<EnergyNextTurnPower>();var queuedDraw=player.Creature.GetPowerAmount<DrawCardsNextTurnPower>();var queuedBlock=player.Creature.GetPowerAmount<BlockNextTurnPower>();
+                    await CompleteProtectedTurn(player);var firstEnergy=player.PlayerCombatState.Energy;var firstHand=hand.Cards.Count;var firstBlock=player.Creature.Block;
+                    await CardPileCmd.Add(card,PileType.Hand,skipVisuals:true);beforeEnergy=player.PlayerCombatState.Energy;await Play(card);var replaySpent=beforeEnergy-player.PlayerCombatState.Energy;
+                    await CompleteProtectedTurn(player);
+                    return new{key,upgraded,energyDelta,blockDelta,queuedEnergy,queuedDraw,queuedBlock,firstEnergy,firstHand,firstBlock,replaySpent,
+                        secondEnergy=player.PlayerCombatState.Energy,secondHand=hand.Cards.Count,secondBlock=player.Creature.Block,roundTrip,pile};
+                }
+                if(key=="mage_eternal_bookmark"){
+                    var fuel=new List<LegacyCard>();for(var i=0;i<4;i++)fuel.Add(await Add(player,"mage_guard"));
+                    var automatic=await Add(player,"mage_crystal_guard");
+                    var amount=player.Creature.Powers.OfType<LegacyPower>().Single(p=>p.Key=="well_laid").Amount;
+                    using(MaxChoices())await CompleteProtectedTurn(player);
+                    return new{key,upgraded,energyDelta,amount,retained=fuel.Count(c=>hand.Cards.Contains(c)),automaticRetained=hand.Cards.Contains(automatic),roundTrip,pile};
+                }
+                return new{key,upgraded,supported,energyDelta,blockDelta,healing,drawn,damage,setupSpent,roundTrip,pile};
+            }
             if(key is "knight_royal_execution" or "mage_celestial_spear" or "ranger_arrow_cascade"){
                 if(supported){
                     if(key=="knight_royal_execution")targets[0].SetCurrentHpInternal(5000);
@@ -182,6 +221,14 @@ public static class BalanceOracle
         }
     }
     private static void Count(Dictionary<string,int> counts,CardModel card){var key=card is LegacyCard lc?lc.Key:card.Id.ToString();counts[key]=counts.GetValueOrDefault(key)+1;}
+    private static IDisposable MaxChoices(){
+        var method=AccessTools.Method(typeof(CardSelectCmd),"UseSelector",[typeof(ICardSelector),typeof(bool)])??AccessTools.Method(typeof(CardSelectCmd),"UseSelector",[typeof(ICardSelector)]);
+        return (IDisposable)method.Invoke(null,method.GetParameters().Length==2?[new MaximumSelector(),false]:[new MaximumSelector()])!;
+    }
+    private sealed class MaximumSelector:ICardSelector{
+        public Task<IEnumerable<CardModel>> GetSelectedCards(IEnumerable<CardModel> options,int minSelect,int maxSelect)=>Task.FromResult(options.Take(maxSelect));
+        public CardRewardSelection GetSelectedCardReward(IReadOnlyList<CardCreationResult> options,IReadOnlyList<CardRewardAlternative> alternatives)=>new(){card=options.FirstOrDefault()?.Card};
+    }
     internal static double Score(CardModel card,int needBlock)
     {
         if(card.Type==CardType.Power)return 100;
