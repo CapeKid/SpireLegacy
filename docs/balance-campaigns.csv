@@ -1,0 +1,13 @@
+tag,game,cls,tier,policy,seed,ascension,traits,status,act,floor,dead,wins,finalHp,maxHp,crowns,deckSize,turns,rewardChoices,dllSha256
+regular-knight-none,v0.107.1,knight,0,attack,SPIRELEGACY-CAMPAIGN-1,0,,finished,1,5,True,0,0,60,15,13,16,3,d37566a735ea5e7d0b344ebd32409703749f0ce46e8f10758c1402be25bf95a9
+regular-knight-partial,v0.107.1,knight,1,attack,SPIRELEGACY-CAMPAIGN-1,0,,finished,1,8,True,0,0,68,25,15,22,5,1c41b29266fe43a16f8c54cc170971832d8e5acf9be4c9e376d41c6e473fed79
+regular-knight-full,v0.107.1,knight,2,attack,SPIRELEGACY-CAMPAIGN-1,0,,finished,1,17,True,0,0,80,56,19,44,9,59b1901168549e583f8020f8789c2a479590418221a6d9c09679712631dec7a6
+regular-mage-none,v0.107.1,mage,0,attack,SPIRELEGACY-CAMPAIGN-1,0,,finished,1,4,True,0,0,52,13,12,13,2,76984003b1a171e80ee9db520cae0629698e1324e070f34d3a670b9bf40e20d0
+regular-mage-partial,v0.107.1,mage,1,attack,SPIRELEGACY-CAMPAIGN-1,0,,finished,1,8,True,0,0,60,25,15,22,5,76984003b1a171e80ee9db520cae0629698e1324e070f34d3a670b9bf40e20d0
+regular-mage-full,v0.107.1,mage,2,attack,SPIRELEGACY-CAMPAIGN-1,0,,finished,1,15,True,0,0,72,50,18,35,8,76984003b1a171e80ee9db520cae0629698e1324e070f34d3a670b9bf40e20d0
+regular-ranger-none,v0.107.1,ranger,0,attack,SPIRELEGACY-CAMPAIGN-1,0,,finished,1,4,True,0,0,56,13,12,12,2,59b1901168549e583f8020f8789c2a479590418221a6d9c09679712631dec7a6
+regular-ranger-partial,v0.107.1,ranger,1,attack,SPIRELEGACY-CAMPAIGN-1,0,,finished,1,6,True,0,0,64,19,14,18,4,1c41b29266fe43a16f8c54cc170971832d8e5acf9be4c9e376d41c6e473fed79
+regular-ranger-full,v0.107.1,ranger,2,attack,SPIRELEGACY-CAMPAIGN-1,0,,finished,1,12,True,0,0,76,40,16,26,6,1c41b29266fe43a16f8c54cc170971832d8e5acf9be4c9e376d41c6e473fed79
+beta-mage-none2,v0.111.0,mage,0,attack,SPIRELEGACY-CAMPAIGN-1,0,,finished,1,3,True,0,0,52,10,11,8,1,59b1901168549e583f8020f8789c2a479590418221a6d9c09679712631dec7a6
+beta-mage-handicap,v0.111.0,mage,2,defense,SPIRELEGACY-CAMPAIGN-1,1,megahealth;cheeronkills,finished,1,11,True,0,0,112,79,16,40,6,76984003b1a171e80ee9db520cae0629698e1324e070f34d3a670b9bf40e20d0
+regular-knight-defense,v0.107.1,knight,0,defense,SPIRELEGACY-CAMPAIGN-1,0,,finished,1,4,True,0,0,60,13,12,33,2,76984003b1a171e80ee9db520cae0629698e1324e070f34d3a670b9bf40e20d0

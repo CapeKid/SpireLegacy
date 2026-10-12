@@ -35,6 +35,8 @@ These are controlled opening-encounter stress tests, not whole-campaign win rate
 
 ## Remaining balancing work
 
+The next stage's natural runs and actual offer/choice/hand-use evidence are documented in [balance-campaign-pilot.md](balance-campaign-pilot.md). The broader balancing goals below remain relevant; this first pilot matrix reaches natural deaths in Act 1 and does not establish campaign win rates.
+
 - Play full campaigns at the three manor tiers with matched seeds; record act reached, boss outcomes, crowns and purchased upgrades. Include attack-first play and experienced archetype play to complement the stress pilot.
 - Capture actual reward offers and choices, plus mid-turn draw/play sightings. Do not use the harness's initial-hand counts as complete pick/play statistics.
 - Expand to single-target bosses, multi-hit enemies and fights that punish Skills or Powers; then test difficult trait combinations and higher ascensions.
