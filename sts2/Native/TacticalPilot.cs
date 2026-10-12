@@ -1,4 +1,6 @@
 using HarmonyLib;
+using Godot;
+using MegaCrit.Sts2.Core.Combat;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Creatures;
@@ -78,6 +80,11 @@ public static class TacticalPilot
     public static async Task<object> Probe(RunState run,string kind)
     {
         using(Selector()){
+            // Quick-start encounters can contain only one enemy. Explicitly use two for target/area checks.
+            await RunManager.Instance.EnterRoomDebug(MegaCrit.Sts2.Core.Rooms.RoomType.Monster,model:ModelDb.Encounter<MegaCrit.Sts2.Core.Models.Encounters.NibbitsNormal>().ToMutable(),showTransition:false);
+            RunManager.Instance.ActionExecutor.Unpause();
+            var tree=(SceneTree)Engine.GetMainLoop();var deadline=Time.GetTicksMsec()+30000;
+            while(run.Players.Single().PlayerCombatState?.Phase!=PlayerTurnPhase.Play){if(Time.GetTicksMsec()>deadline)throw new TimeoutException("Tactical fixture combat did not start.");await tree.ToSignal(tree,SceneTree.SignalName.ProcessFrame);}
             var player=run.Players.Single();var hand=PileType.Hand.GetPile(player);
             foreach(var card in hand.Cards.ToArray())await CardPileCmd.Add(card,PileType.Draw,skipVisuals:true);
             var enemies=player.Creature.CombatState!.HittableEnemies.ToArray();
@@ -112,7 +119,7 @@ public static class TacticalPilot
                 return new{kind,picked=strike.Key,targetDead=!enemies.Last().IsAlive,decision.Reason};
             }
             if(kind=="area"){
-                var volley=await Add("volley");await Add("knight_strike");
+                var volley=await Add("knight_sweeping_edge");await Add("knight_strike");
                 var decision=Choose(player,0)!;
                 if(decision.Card!=volley||decision.Target!=null)throw new InvalidDataException("Tactical pilot undervalued area damage.");
                 var before=enemies.Select(e=>e.CurrentHp).ToArray();await BalanceOracle.Play(volley);
