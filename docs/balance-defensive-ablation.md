@@ -36,6 +36,8 @@ Campaign DLL: `fe307b45652dcfdffb4a61855c3768c7421b5ca78f82f3badd1f78b081b536ae`
 
 ## Next balancing decision
 
+Follow-up: [bounded defensive reward policy and new paired seeds](balance-defensive-policy.md). This is the first of the three remaining agreed passes; the follow-up keeps the scope bounded rather than implementing every pilot limitation below.
+
 Add an explicit, general defensive/archetype objective and test it on more independent seeds and specified decks. Avoid hard-coding Fortify or adjusting weights solely to reproduce this result. Include potion inventory/eligibility, purposeful shop and upgrade choices, and resource cost/availability when selecting support cards. Repeat automatic delayed-aware comparisons across manor tiers before changing numerical card stats.
 
 All trials/fixtures use independent private owned-game labs, disposable profiles and verified PID cleanup. No real saves, installed-game folders, Steam branches or Workshop/Melty listings are changed.

@@ -61,5 +61,16 @@ public static class PilotRewardChecks
         check(PilotRewards.Score(Guard("late",0) with{NextBlock=6},balanced)<PilotRewards.Score(Guard("now",6),balanced),"Delayed Block is not full immediate protection");
         check(PilotRewards.Pick([Attack("plain",5),Attack("running",3) with{NextDraw=2}],balanced)==1,"Next-turn draw gets prospective reward value");
         check(PilotRewards.Score(Attack("late",0) with{NextDraw=2},balanced)<PilotRewards.Score(Attack("now",0) with{Draw=2},balanced),"Delayed draw is discounted against immediate draw");
+        var guarded=Attack("conditional",6) with{Special="guard_bonus",SpecialAmount=4};
+        var sparse=Enumerable.Range(0,7).Select(i=>Guard("g"+i,5)).Concat(Enumerable.Range(0,8).Select(i=>Attack("a"+i))).ToArray();
+        check(PilotRewards.Pick([guarded,Guard("defense",7)],sparse)==0,"Control preserves its conditional attack preference");
+        check(PilotRewards.Pick([guarded,Guard("defense",7)],sparse,true)==1,"Defensive quality objective can prefer an affordable guard");
+        var strong=Enumerable.Range(0,7).Select(i=>Guard("g"+i,10)).Concat(Enumerable.Range(0,8).Select(i=>Attack("a"+i))).ToArray();
+        check(PilotRewards.Pick([guarded,Guard("defense",7)],strong,true)==0,"Sufficient defense restores the ordinary attack choice");
+        check(PilotRewards.Score(Guard("g",7),strong,true)==PilotRewards.Score(Guard("g",7),strong),"Sufficient coverage earns no defensive bonus");
+        check(PilotRewards.Pick([Guard("tiny",1)],attacks,true)==null,"Defense objective does not force a weak one-Block reward");
+        check(PilotRewards.Score(Guard("g",12),attacks,true)-PilotRewards.Score(Guard("g",12),attacks)<=3,"Defensive preference is bounded");
+        check(PilotRewards.Score(Guard("empty",7),[],true)==PilotRewards.Score(Guard("empty",7),[]),"Empty deck avoids unsupported coverage assumptions");
+        check(PilotRewards.Score(Guard("later",0) with{NextBlock=10},attacks,true)==PilotRewards.Score(Guard("later",0) with{NextBlock=10},attacks),"Delayed protection is not immediate defensive coverage");
     }
 }
