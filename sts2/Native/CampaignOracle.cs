@@ -55,7 +55,7 @@ public static class CampaignOracle
             }
             if(overlay is NRewardsScreen rewards){
                 var reward=UiHelper.FindAll<NRewardButton>(rewards).FirstOrDefault(b=>b.IsEnabled&&b.IsVisibleInTree()&&(b.Reward is not PotionReward||player.HasOpenPotionSlots));
-                if(reward!=null){var kind=reward.Reward.GetType().Name;await UiHelper.Click(reward,500);return Result("collect-rewards",new{kind});}
+                if(reward!=null){var kind=reward.Reward?.GetType().Name;await UiHelper.Click(reward,500);return Result("collect-rewards",new{kind});}
                 var leave=UiHelper.FindAll<NProceedButton>(rewards).FirstOrDefault(b=>b.IsEnabled&&b.IsVisibleInTree());
                 if(leave!=null){await UiHelper.Click(leave,500);return Result("reward-proceed");}
                 return Result("wait");
@@ -73,7 +73,7 @@ public static class CampaignOracle
                     foreach(var c in hand.Except(present)){var key=Key(c);entries[key]=entries.GetValueOrDefault(key)+1;}
                     present=hand;
                 }
-                var oldScale=Engine.TimeScale;Engine.TimeScale=6;Tree.ProcessFrame+=Observe;
+                var oldScale=Engine.TimeScale;Engine.TimeScale=6;Tree.ProcessFrame+=Observe;var observing=true;
                 try{
                     Observe();
                     for(var i=0;i<50;i++){
@@ -90,10 +90,11 @@ public static class CampaignOracle
                     var unplayed=PileType.Hand.GetPile(player).Cards.Select(Key).ToArray();
                     // Next turn's draw belongs to the next decision, not this turn's sightings.
                     Tree.ProcessFrame-=Observe;
+                    observing=false;
                     var victory=!combat.GetOpponentsOf(player.Creature).Any(e=>e.IsAlive);
                     if(!victory&&player.Creature.IsAlive&&!CombatManager.Instance.IsEnding)await BalanceOracle.End(player,false);
                     return Result("combat-turn",new{turn,entries,plays,unplayed,victory=!combat.GetOpponentsOf(player.Creature).Any(e=>e.IsAlive)});
-                }finally{Tree.ProcessFrame-=Observe;Engine.TimeScale=oldScale;}
+                }finally{if(observing)Tree.ProcessFrame-=Observe;Engine.TimeScale=oldScale;}
             }
             var nodes=NativeTestBridge.Descendants(Tree.Root).ToArray();
             var options=nodes.OfType<NEventOptionButton>().Where(b=>b.IsVisibleInTree()&&b.IsEnabled&&!b.Option.IsLocked).ToArray();
@@ -104,7 +105,7 @@ public static class CampaignOracle
             }
             var dialogue=nodes.OfType<NAncientEventLayout>().Select(n=>n.GetNodeOrNull<NButton>("%DialogueHitbox")).FirstOrDefault(b=>b!=null&&b.IsVisibleInTree()&&b.IsEnabled);
             if(dialogue!=null){await UiHelper.Click(dialogue);return Result("dialogue");}
-            var rest=nodes.OfType<NRestSiteButton>().Where(b=>b.IsVisibleInTree()&&b.Option.IsEnabled).ToArray();
+            var rest=nodes.OfType<NRestSiteButton>().Where(b=>b.IsVisibleInTree()&&b.IsEnabled&&b.Option.IsEnabled).ToArray();
             if(rest.Length>0){
                 var choice=rest.FirstOrDefault(b=>b.Option.GetType().Name=="HealRestSiteOption")??rest[0];
                 await UiHelper.Click(choice);return Result("rest",new{choice=choice.Option.GetType().Name});
