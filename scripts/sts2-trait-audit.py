@@ -24,6 +24,18 @@ def start(cls,traits,quick=True):
     if cls=='ironclad':send('enter',room='Monster')
     return ready() if quick else send('state')
 send('trait-speed',value=8)
+if 'edges' in tag:
+    for cls in ['knight','mage','ranger']:
+        for pair in [['nocolor','colortrails'],['oldyellowtint','christmasholiday'],['youareblue','disposition']]:
+            start(cls,pair)
+            look=send('trait-appearance');active=[v for v in look if v['classId']==cls and v['visible']]
+            assert active,look
+            if pair[0]=='nocolor':assert all(v['gray'] and v['rainbow'] and v['motes']==6 and v['arcs']==6 for v in active)
+            elif pair[0]=='oldyellowtint':assert all(v['sepia'] and 'festive' in v['accents'] for v in active)
+            else:assert all('blue' in v['accents'] and 'nature' in v['accents'] for v in active)
+        start(cls,['megahealth','cheeronkills'])
+        revived=send('coop-revival-checks');assert len(revived)==1 and revived[0]['revivedHp']==1,revived
+    send('abandon');print(tag,'nine cosmetic pair controls and three Hero Complex/Diva native revival probes pass',flush=True);sys.exit(0)
 start('knight',[])
 transfers=send('trait-transfer')
 if 'baseline' in tag:
