@@ -92,18 +92,21 @@ public static class ControlPilotOracle
                 await BalanceOracle.Play(offering);
                 return new{kind,dead=!player.Creature.IsAlive,gameOver=run.IsGameOver};
             }
-            if(kind=="skip"){
+            if(kind is "skip" or "force-present" or "force-absent"){
                 var count=player.Deck.Cards.Count;
                 var options=Enumerable.Range(0,3).Select(_=>run.CreateCard(ModelDb.Card<StrikeIronclad>(),player)).ToArray();
                 var reward=new CardReward(options,CardCreationSource.Encounter,player,CardCreationOptions.ForRoom(player,run.CurrentRoom!.RoomType));
                 var set=new RewardsSet(player);set.Rewards.Add(reward);var offering=set.Offer();
                 for(var frame=0;frame<20&&NOverlayStack.Instance?.Peek() is not NRewardsScreen;frame++)await tree.ToSignal(tree,SceneTree.SignalName.ProcessFrame);
                 await CampaignOracle.Step(run,"tactical",new BorrowedSelector(),"deck");
-                var skipped=System.Text.Json.JsonSerializer.SerializeToElement(await CampaignOracle.Step(run,"tactical",new BorrowedSelector(),"deck"));
-                if(!skipped.GetProperty("detail").GetProperty("skip").GetBoolean())throw new InvalidDataException("Weak duplicate reward did not skip");
+                var choice=kind=="force-present"?"CARD.STRIKE_IRONCLAD":kind=="force-absent"?"CARD.DOES_NOT_EXIST":null;
+                var skipped=System.Text.Json.JsonSerializer.SerializeToElement(await CampaignOracle.Step(run,"tactical",new BorrowedSelector(),"deck",choice,run.TotalFloor));
+                var took=kind=="force-present";
+                if(skipped.GetProperty("detail").GetProperty("skip").GetBoolean()==took)throw new InvalidDataException("Reward intervention/skip result incorrect");
+                if(took&&!skipped.GetProperty("detail").GetProperty("intervention").GetBoolean())throw new InvalidDataException("Legal intervention not journaled");
                 await CampaignOracle.Step(run,"tactical",new BorrowedSelector(),"deck");
                 await offering.WaitAsync(TimeSpan.FromSeconds(10));
-                return new{kind,unchangedDeck=player.Deck.Cards.Count==count,successfullySelected=reward.SuccessfullySelected,closed=NOverlayStack.Instance?.Peek() is not NRewardsScreen};
+                return new{kind,unchangedDeck=player.Deck.Cards.Count==count,added=player.Deck.Cards.Count-count,successfullySelected=reward.SuccessfullySelected,closed=NOverlayStack.Instance?.Peek() is not NRewardsScreen};
             }
             throw new ArgumentException("Unknown control fixture.");
         }

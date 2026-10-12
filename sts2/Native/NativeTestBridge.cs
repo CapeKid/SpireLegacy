@@ -60,7 +60,7 @@ public static class NativeTestBridge
                 case "balance-tactical-probe":await WaitForPlay(RunState().Players.Single());result=await TacticalPilot.Probe(RunState(),request.GetProperty("kind").GetString()!);break;
                 case "balance-campaign-step":
                     var pilotPolicy=request.GetProperty("policy").GetString()!;
-                    result=await CampaignOracle.Step(RunState(),pilotPolicy,pilotPolicy=="tactical"?TacticalPilot.Selector():UseTestSelector(),request.TryGetProperty("rewardPolicy",out var rewardsPolicy)?rewardsPolicy.GetString()!:"standalone");break;
+                    result=await CampaignOracle.Step(RunState(),pilotPolicy,pilotPolicy=="tactical"?TacticalPilot.Selector():UseTestSelector(),request.TryGetProperty("rewardPolicy",out var rewardsPolicy)?rewardsPolicy.GetString()!:"standalone",request.TryGetProperty("forcedReward",out var forcedReward)?forcedReward.GetString():null,request.TryGetProperty("forcedRewardFloor",out var forcedFloor)?forcedFloor.GetInt32():0);break;
                 case "balance-probe":await WaitForPlay(RunState().Players.Single());result=await BalanceOracle.Probe(RunState(),request.GetProperty("card").GetString()!,request.GetProperty("upgrade").GetBoolean(),UseTestSelector());break;
                 case "balance-loop":await WaitForPlay(RunState().Players.Single());result=await BalanceOracle.RecoveryLoop(RunState(),UseTestSelector(),request.TryGetProperty("kind",out var recoveryKind)&&recoveryKind.GetString()=="discard");break;
                 case "balance-retention":await WaitForPlay(RunState().Players.Single());result=await BalanceOracle.RetentionSnapshots(RunState());break;
