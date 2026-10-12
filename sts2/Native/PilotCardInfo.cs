@@ -26,6 +26,6 @@ public static class PilotCardInfo
         var damage=Value("Damage")*Hits(card);
         var cost=card.EnergyCost.CostsX?3:Math.Max(0,card.EnergyCost.GetWithModifiers(CostModifiers.All));
         var design=(card as LegacyCard)?.DesignCard;
-        return new(card is LegacyCard legacy?legacy.Key:card.Id.ToString(),cost,damage,Value("Block"),Amount(card,"draw"),Amount(card,"energy"),Amount(card,"poison"),Amount(card,"strength"),card.Type==CardType.Power,ExhaustsOthers(card),Engine(card),Amount(card,"weak"),Amount(card,"vulnerable"),design?.Row.Text("special")??"none",design?.SpecialAmount??0,Hits(card),card.Type==CardType.Attack,card.Keywords.Contains(CardKeyword.Exhaust));
+        return new(card is LegacyCard legacy?legacy.Key:card.Id.ToString(),cost,damage,Value("Block"),Amount(card,"draw"),Amount(card,"energy"),Amount(card,"poison"),Amount(card,"strength"),card.Type==CardType.Power,ExhaustsOthers(card),Engine(card),Amount(card,"weak"),Amount(card,"vulnerable"),design?.Row.Text("special")??"none",design?.SpecialAmount??0,Hits(card),card.Type==CardType.Attack,card.Keywords.Contains(CardKeyword.Exhaust),design?.Amount("nextEnergy")??0,design?.Amount("nextDraw")??0,design?.Amount("nextBlock")??0);
     }
 }

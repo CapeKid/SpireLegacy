@@ -99,6 +99,29 @@ public static class TacticalPilot
             async Task<LegacyCard> Add(string key,bool upgraded=false){var card=(LegacyCard)player.Creature.CombatState.CreateCard(NativeCards.Get(key),player);if(upgraded)CardCmd.Upgrade(card);await CardPileCmd.Add(card,PileType.Hand,skipVisuals:true);return card;}
             var upgraded=kind.EndsWith("-upgraded",StringComparison.Ordinal);
             var scenario=upgraded?kind[..^9]:kind;
+            if(scenario is "delayed-energy" or "delayed-draw" or "delayed-block"){
+                var key=scenario switch{"delayed-energy"=>"knight_brave_advance","delayed-draw"=>"ranger_patient_hunter",_=>"knight_reinforce"};
+                var delayed=await Add(key,upgraded);var description=PilotCardInfo.Describe(delayed);
+                var design=delayed.DesignCard;
+                if(description.NextEnergy!=design.Amount("nextEnergy")||description.NextDraw!=design.Amount("nextDraw")||description.NextBlock!=design.Amount("nextBlock"))throw new InvalidDataException("Delayed reward metadata missing");
+                var chosen=true;
+                if(scenario=="delayed-energy"){
+                    var alternative=(LegacyCard)run.CreateCard(NativeCards.Get("knight_executioner_axe"),player);
+                    chosen=PilotRewards.Pick([PilotCardInfo.Describe(alternative),description],player.Deck.Cards.Select(PilotCardInfo.Describe).ToArray())==1;
+                    run.RemoveCard(alternative);
+                    if(!chosen)throw new InvalidDataException("Actual delayed Energy reward still undervalued");
+                }
+                var energy=player.PlayerCombatState!.Energy;
+                await BalanceOracle.Play(delayed,delayed.TargetType==TargetType.AnyEnemy?enemies[0]:null);
+                var immediateEnergy=player.PlayerCombatState.Energy;
+                var queuedEnergy=player.Creature.GetPowerAmount<EnergyNextTurnPower>();
+                var queuedDraw=player.Creature.GetPowerAmount<DrawCardsNextTurnPower>();
+                var queuedBlock=player.Creature.GetPowerAmount<BlockNextTurnPower>();
+                if(queuedEnergy!=description.NextEnergy||queuedDraw!=description.NextDraw||queuedBlock!=(decimal)description.NextBlock)throw new InvalidDataException("Delayed native powers disagree with reward metadata");
+                if(immediateEnergy!=energy-delayed.DesignCard.Cost)throw new InvalidDataException("Delayed Energy was granted immediately");
+                await BalanceOracle.End(player,true);
+                return new{kind,key,upgraded,chosen,description.NextEnergy,description.NextDraw,description.NextBlock,immediateEnergy,deliveredEnergy=player.PlayerCombatState.Energy,deliveredHand=hand.Cards.Count,deliveredBlock=player.Creature.Block};
+            }
             if(scenario is "block-finisher" or "chain-finisher" or "exhaust-finisher"){
                 var key=scenario switch{"block-finisher"=>"knight_shield_slam","chain-finisher"=>"ranger_finishing_flurry",_=>"knight_ashen_advance"};
                 var finisher=await Add(key,upgraded);var target=enemies.Last();

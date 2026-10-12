@@ -1,5 +1,7 @@
 # Engine finishers and emergency Block Potions
 
+The next stage records natural comparisons and a delayed-resource scoring correction: [balance-engine-comparisons.md](balance-engine-comparisons.md).
+
 This stage follows merged PR #92. It improves the opt-in diagnostic pilot; production card stats, traits, manor/crown progression and release packages are unchanged.
 
 ## Finisher decisions
