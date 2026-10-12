@@ -1,6 +1,6 @@
 """Export selected immutable campaign journals as public, non-private CSV evidence.
 
-Usage: summarize-balance-campaigns.py TAG [TAG ...]
+Usage: summarize-balance-campaigns.py [--prefix NAME] TAG [TAG ...]
 Offer/pick counts describe a deterministic pilot, never human pick rates.
 """
 from collections import Counter
@@ -10,8 +10,14 @@ from pathlib import Path
 import sys
 
 root = Path(__file__).resolve().parents[1]
+arguments=sys.argv[1:]
+prefix='balance-campaign'
+if arguments[:1]==['--prefix']:
+    prefix=arguments[1]
+    assert prefix and all(c.isalnum() or c in '-_' for c in prefix)
+    arguments=arguments[2:]
 trials, observations = [], []
-for tag in sys.argv[1:]:
+for tag in arguments:
     assert tag and all(c.isalnum() or c in '-_' for c in tag)
     journal = json.loads((root/'private/sts2-evidence'/f'balance-campaign-{tag}.json').read_text())
     assert journal['status'] != 'running', 'An unfinished journal is not evidence.'
@@ -43,7 +49,7 @@ for tag in sys.argv[1:]:
                                  unplayedAtTurnEnd=left[card], offered=offers[card], picked=picks[card]))
 
 assert trials, 'Select at least one journal.'
-for name, rows in [('balance-campaigns.csv', trials), ('balance-campaign-cards.csv', observations)]:
+for name, rows in [(prefix+'s.csv', trials), (prefix+'-cards.csv', observations)]:
     path = root/'docs'/name
     with path.open('w', newline='', encoding='utf-8') as stream:
         writer = csv.DictWriter(stream, fieldnames=list(rows[0]))

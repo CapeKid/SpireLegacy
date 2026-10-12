@@ -1,0 +1,13 @@
+tag,game,cls,tier,policy,seed,ascension,traits,status,act,floor,dead,wins,finalHp,maxHp,crowns,deckSize,turns,rewardChoices,dllSha256
+regular-knight-none,v0.107.1,knight,0,attack,SPIRELEGACY-CAMPAIGN-1,0,,finished,1,5,True,0,0,60,15,13,16,3,d37566a735ea5e7d0b344ebd32409703749f0ce46e8f10758c1402be25bf95a9
+tactical-knight-seed1,v0.107.1,knight,0,tactical,SPIRELEGACY-CAMPAIGN-1,0,,finished,1,6,True,0,0,60,18,14,23,4,cf6299070b1e2c4a6e055cddbf7c4ef1ac43221249d0d249bda487b49114c1a5
+attack-knight-seed2,v0.107.1,knight,0,attack,SPIRELEGACY-CAMPAIGN-2,0,,finished,1,6,True,0,0,60,17,13,14,3,cf6299070b1e2c4a6e055cddbf7c4ef1ac43221249d0d249bda487b49114c1a5
+tactical-knight-seed2,v0.107.1,knight,0,tactical,SPIRELEGACY-CAMPAIGN-2,0,,finished,1,12,True,0,0,60,26,15,30,5,cf6299070b1e2c4a6e055cddbf7c4ef1ac43221249d0d249bda487b49114c1a5
+regular-mage-none,v0.107.1,mage,0,attack,SPIRELEGACY-CAMPAIGN-1,0,,finished,1,4,True,0,0,52,13,12,13,2,76984003b1a171e80ee9db520cae0629698e1324e070f34d3a670b9bf40e20d0
+tactical-mage-seed1,v0.107.1,mage,0,tactical,SPIRELEGACY-CAMPAIGN-1,0,,finished,1,5,True,0,0,52,15,13,21,3,cf6299070b1e2c4a6e055cddbf7c4ef1ac43221249d0d249bda487b49114c1a5
+attack-mage-seed2,v0.107.1,mage,0,attack,SPIRELEGACY-CAMPAIGN-2,0,,finished,1,6,True,0,0,52,17,13,13,3,cf6299070b1e2c4a6e055cddbf7c4ef1ac43221249d0d249bda487b49114c1a5
+tactical-mage-seed2,v0.107.1,mage,0,tactical,SPIRELEGACY-CAMPAIGN-2,0,,finished,1,8,True,0,0,52,22,14,25,4,cf6299070b1e2c4a6e055cddbf7c4ef1ac43221249d0d249bda487b49114c1a5
+regular-ranger-none,v0.107.1,ranger,0,attack,SPIRELEGACY-CAMPAIGN-1,0,,finished,1,4,True,0,0,56,13,12,12,2,59b1901168549e583f8020f8789c2a479590418221a6d9c09679712631dec7a6
+tactical-ranger-seed1,v0.107.1,ranger,0,tactical,SPIRELEGACY-CAMPAIGN-1,0,,finished,1,5,True,0,0,56,15,13,21,3,cf6299070b1e2c4a6e055cddbf7c4ef1ac43221249d0d249bda487b49114c1a5
+attack-ranger-seed2,v0.107.1,ranger,0,attack,SPIRELEGACY-CAMPAIGN-2,0,,finished,1,6,True,0,0,56,17,13,14,3,cf6299070b1e2c4a6e055cddbf7c4ef1ac43221249d0d249bda487b49114c1a5
+tactical-ranger-seed2,v0.107.1,ranger,0,tactical,SPIRELEGACY-CAMPAIGN-2,0,,finished,1,6,True,0,0,56,17,13,22,3,cf6299070b1e2c4a6e055cddbf7c4ef1ac43221249d0d249bda487b49114c1a5
