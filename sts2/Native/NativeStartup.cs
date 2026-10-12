@@ -6,7 +6,10 @@ namespace SpireLegacy;
 public static class NativeStartup
 {
     public const string Owner="CapeKid.SpireLegacy2";
-    public static Type[] PatchClasses=>typeof(Runtime).Assembly.GetTypes().Where(t=>t.GetCustomAttributes<HarmonyPatch>().Any()).OrderBy(t=>t.FullName,StringComparer.Ordinal).ToArray();
+    public static Type[] PatchClasses=>typeof(Runtime).Assembly.GetTypes().Where(t=>t.GetCustomAttributes<HarmonyPatch>().Any())
+        .Where(t=>t!=typeof(CaptureCopiedOwnerInheritance)||CaptureCopiedOwnerInheritance.Prepare())
+        .Where(t=>t!=typeof(CaptureTransferredOwnerInheritance)||CaptureTransferredOwnerInheritance.Prepare())
+        .OrderBy(t=>t.FullName,StringComparer.Ordinal).ToArray();
     public static int Install(string owner,IEnumerable<Type> classes,string? failBefore=null)
     {
         var harmony=new Harmony(owner);var count=0;string? current=null;

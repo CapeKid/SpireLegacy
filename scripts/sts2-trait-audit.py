@@ -29,6 +29,10 @@ if 'baseline' in tag:
     start('knight',['manacostanddamageup']);redraw=send('trait-redraw');assert not redraw['repeatedDrawStable'],redraw
     send('abandon');print(tag,'reproduced stale recipient inheritance and repeated-draw cost stacking',flush=True);sys.exit(0)
 assert all(r['rebound'] and r['returned'] and r['duplicatedRecipient'] and r['preservesBuff'] for r in transfers),transfers
+if 'transforms' in tag:
+    for cls in ['knight','mage','ranger']:
+        for genes in [[],['cantattack']]:start(cls,genes);send('trait-transforms')
+    send('abandon');print(tag,'native deck transformations and saved genetics pass',flush=True);sys.exit(0)
 traits=json.loads((root/'sheets/traits.json').read_text())
 if 'smoke' in tag:traits=[r for r in traits if r['id'] in ['nocolor','cantattack','manacostanddamageup','disarmonhurt','manafromhurt','vampire','cheeronkills','itemsgoflying','explosiveenemies']]
 mutations=6*sum(r['rarity']=='BASIC' for r in json.loads((root/'sheets/cards.json').read_text()))
@@ -78,6 +82,7 @@ start('ironclad',[]);send('trait-restrictions')
 for cls in ['knight','mage','ranger']:
     for pair in [['megahealth','cheeronkills'],['superhealer','nomeat'],['cantattack','breakpropsformana']]:
         start(cls,pair);send('trait-audit')
+        send('trait-transforms')
         for upgraded in [False,True]:
             played=send('expansion-play',card=cls+'_strike',upgrade=upgraded)
             assert played['pile']=='Discard' and not played['tableNodePresent']

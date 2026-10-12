@@ -16,6 +16,23 @@ public static class TraitAuditOracle
 {
     private static void Require(bool value,string message){if(!value)throw new InvalidDataException(message);}
     private static LegacyCard? redrawCard;
+    public static async Task<object> Transforms(RunState run)
+    {
+        var player=run.Players.Single();var cls=PlayerBloodlines.Heir(player).classId;var results=new List<object>();
+        foreach(var key in new[]{cls+"_guard",cls+"_strike","ranger_barbed_arrow"}) {
+            var original=player.Deck.Cards.OfType<LegacyCard>().First(c=>c.DesignCard.Row.Text("rarity")=="BASIC");
+            var replacement=(LegacyCard)run.CreateCard(NativeCards.Get(key),player);
+            var result=await CardCmd.Transform(original,replacement);
+            Require(result is {success:true}&&result.Value.cardAdded==replacement&&replacement.Owner==player&&!player.Deck.Cards.Contains(original),"Native transform failed identity/owner conservation.");
+            Require(replacement.TraitSnapshot==JsonSerializer.Serialize(PlayerBloodlines.Heir(player).traits),"Transform lost frozen owner traits.");
+            var expected=new CardDesign(key,false,PlayerBloodlines.Heir(player).traits);
+            Require(replacement.DynamicVars.Damage.BaseValue==expected.Damage&&replacement.DynamicVars.Block.BaseValue==expected.Block,"Transform delivered wrong starter genetics.");
+            var loaded=(LegacyCard)run.LoadCard(replacement.ToSerializable(),player);
+            Require(loaded.DesignCard.Rules()==replacement.DesignCard.Rules()&&loaded.Type==replacement.Type,"Transformed card save mismatch.");run.RemoveCard(loaded);
+            results.Add(new{key,type=replacement.Type.ToString(),removedOriginal=true,owner=player.NetId});
+        }
+        return results;
+    }
     public static async Task<object> Restrictions(RunState run)
     {
         var player=run.Players.Single();var combat=player.Creature.CombatState!;
