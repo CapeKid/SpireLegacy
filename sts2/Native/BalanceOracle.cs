@@ -24,7 +24,7 @@ public static class BalanceOracle
         var until=Time.GetTicksMsec()+30000;
         while(!done()){if(Time.GetTicksMsec()>until)throw new TimeoutException("Balance fixture did not settle.");await Tree.ToSignal(Tree,SceneTree.SignalName.ProcessFrame);}
     }
-    private static async Task Play(CardModel card)
+    internal static async Task Play(CardModel card)
     {
         var enemy=card.Owner.Creature.CombatState!.GetOpponentsOf(card.Owner.Creature).FirstOrDefault(e=>e.IsAlive);
         if(!card.TryManualPlay(card.TargetType==TargetType.AnyEnemy?enemy:null))throw new InvalidDataException("Paid balance play refused "+card.Id);
@@ -36,7 +36,7 @@ public static class BalanceOracle
         var card=(LegacyCard)player.Creature.CombatState!.CreateCard(NativeCards.Get(key),player);
         if(upgraded)CardCmd.Upgrade(card);await CardPileCmd.Add(card,pile,skipVisuals:true);return card;
     }
-    private static async Task End(Player player,bool protect)
+    internal static async Task End(Player player,bool protect)
     {
         NModalContainer.Instance?.Clear();
         CombatManager.Instance.Unpause();
@@ -167,7 +167,7 @@ public static class BalanceOracle
         }
     }
     private static void Count(Dictionary<string,int> counts,CardModel card){var key=card is LegacyCard lc?lc.Key:card.Id.ToString();counts[key]=counts.GetValueOrDefault(key)+1;}
-    private static double Score(CardModel card,int needBlock)
+    internal static double Score(CardModel card,int needBlock)
     {
         if(card.Type==CardType.Power)return 100;
         if(card is not LegacyCard lc)return card.Type==CardType.Attack?20:10;
