@@ -30,6 +30,7 @@ public static class CampaignOracle
     private static SceneTree Tree=>(SceneTree)Engine.GetMainLoop();
     private static string Key(CardModel c)=>c is LegacyCard lc?lc.Key:c.Id.ToString();
     private static readonly ConditionalWeakTable<RunState,HashSet<Reward>> skippedRewards=new();
+    private static readonly ConditionalWeakTable<RunState,HashSet<string>> appliedInterventions=new();
     public static async Task<object> Step(RunState run,string policy,IDisposable selector,string rewardPolicy="standalone",string? forcedReward=null,int forcedRewardFloor=0)
     {
         using(selector){
@@ -53,7 +54,8 @@ public static class CampaignOracle
                 var deck=player.Deck.Cards.Select(PilotCardInfo.Describe).ToArray();
                 double Score(CardModel c)=>rewardPolicy=="deck"?PilotRewards.Score(PilotCardInfo.Describe(c),deck):BalanceOracle.Score(c,0);
                 var offers=holders.Select(h=>new{id=Key(h.CardModel!),upgraded=h.CardModel!.IsUpgraded,score=Score(h.CardModel!)}).ToArray();
-                var forced=forcedReward!=null&&run.TotalFloor==forcedRewardFloor?holders.FirstOrDefault(h=>Key(h.CardModel!)==forcedReward):null;
+                var interventionKey=$"{forcedRewardFloor}:{forcedReward}";
+                var forced=forcedReward!=null&&run.TotalFloor==forcedRewardFloor&&!appliedInterventions.GetOrCreateValue(run).Contains(interventionKey)?holders.FirstOrDefault(h=>Key(h.CardModel!)==forcedReward):null;
                 var index=forced!=null?Array.IndexOf(holders,forced):rewardPolicy=="deck"?PilotRewards.Pick(holders.Select(h=>PilotCardInfo.Describe(h.CardModel!)).ToArray(),deck):0;
                 var parent=NativeTestBridge.Descendants(Tree.Root).OfType<NRewardButton>().Select(b=>b.Reward).OfType<CardReward>().FirstOrDefault(r=>r.Cards.Any(c=>c==holders[0].CardModel));
                 if(rewardPolicy=="deck"&&index==null&&parent?.CanSkip==true){
@@ -66,6 +68,7 @@ public static class CampaignOracle
                 var choice=forced??holders.OrderByDescending(h=>Score(h.CardModel!)).ThenBy(h=>Key(h.CardModel!),StringComparer.Ordinal).First();
                 var picked=Key(choice.CardModel!);
                 choice.EmitSignal(NCardHolder.SignalName.Pressed,choice);
+                if(forced!=null)appliedInterventions.GetOrCreateValue(run).Add(interventionKey);
                 await Task.Delay(300);
                 return Result("card-reward",new{offers,picked,skip=false,rewardPolicy,intervention=forced!=null});
             }

@@ -106,7 +106,19 @@ public static class ControlPilotOracle
                 if(took&&!skipped.GetProperty("detail").GetProperty("intervention").GetBoolean())throw new InvalidDataException("Legal intervention not journaled");
                 await CampaignOracle.Step(run,"tactical",new BorrowedSelector(),"deck");
                 await offering.WaitAsync(TimeSpan.FromSeconds(10));
-                return new{kind,unchangedDeck=player.Deck.Cards.Count==count,added=player.Deck.Cards.Count-count,successfullySelected=reward.SuccessfullySelected,closed=NOverlayStack.Instance?.Peek() is not NRewardsScreen};
+                var replaySkipped=false;
+                if(took){
+                    var more=Enumerable.Range(0,3).Select(_=>run.CreateCard(ModelDb.Card<StrikeIronclad>(),player)).ToArray();
+                    var replay=new CardReward(more,CardCreationSource.Encounter,player,CardCreationOptions.ForRoom(player,run.CurrentRoom!.RoomType));
+                    var secondSet=new RewardsSet(player);secondSet.Rewards.Add(replay);var secondOffer=secondSet.Offer();
+                    for(var frame=0;frame<20&&NOverlayStack.Instance?.Peek() is not NRewardsScreen;frame++)await tree.ToSignal(tree,SceneTree.SignalName.ProcessFrame);
+                    await CampaignOracle.Step(run,"tactical",new BorrowedSelector(),"deck",choice,run.TotalFloor);
+                    var second=System.Text.Json.JsonSerializer.SerializeToElement(await CampaignOracle.Step(run,"tactical",new BorrowedSelector(),"deck",choice,run.TotalFloor));
+                    replaySkipped=second.GetProperty("detail").GetProperty("skip").GetBoolean();
+                    if(!replaySkipped)throw new InvalidDataException("One-off intervention replayed on another reward");
+                    await CampaignOracle.Step(run,"tactical",new BorrowedSelector(),"deck");await secondOffer.WaitAsync(TimeSpan.FromSeconds(10));
+                }
+                return new{kind,unchangedDeck=player.Deck.Cards.Count==count,added=player.Deck.Cards.Count-count,successfullySelected=reward.SuccessfullySelected,replaySkipped,closed=NOverlayStack.Instance?.Peek() is not NRewardsScreen};
             }
             throw new ArgumentException("Unknown control fixture.");
         }

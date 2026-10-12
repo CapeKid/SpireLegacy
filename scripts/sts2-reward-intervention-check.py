@@ -20,6 +20,6 @@ for kind in ['force-present','force-absent']:
     send('start',**{'class':'ironclad','manorTier':0,'quick':False,'traits':[],'seed':'SPIRELEGACY-REWARD-CHECK'})
     result=send('balance-control-probe',kind=kind)
     assert result['closed'],result
-    if kind=='force-present':assert result['added']==1 and result['successfullySelected'],result
+    if kind=='force-present':assert result['added']==1 and result['successfullySelected'] and result['replaySkipped'],result
     else:assert result['unchangedDeck'] and not result['successfullySelected'],result
     print(tag,result,flush=True)
