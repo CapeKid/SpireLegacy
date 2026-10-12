@@ -1,5 +1,6 @@
 """Targeted balance overrides shared by authoring regeneration and release updates."""
 CARD_OVERRIDES = {
+    'mage_spellweave': dict(upgradeCost=False, upgradeBlock=2),
     'knight_royal_execution': dict(damage=20, upgradeDamage=6),
     'mage_celestial_spear': dict(damage=26, upgradeDamage=8),
     'ranger_arrow_cascade': dict(specialAmount=4),

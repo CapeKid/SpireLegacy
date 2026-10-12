@@ -9860,13 +9860,13 @@
       "specialAmount": 0,
       "exhaust": false,
       "upgradeDamage": 0,
-      "upgradeBlock": 0,
+      "upgradeBlock": 2,
       "upgradeMagic": 0,
       "upgradeSpecial": 0,
-      "upgradeCost": true,
+      "upgradeCost": false,
       "upgradeDiscard": 0
     },
-    "reason": "Weaker no-manor baseline; avoid compounded effects/upgrades and free positive-draw cycles."
+    "reason": "Keep Spellweave paid and reusable; upgrade adds 2 immediate Block instead of free Energy/draw setup."
   },
   {
     "id": "mage_time_pocket",

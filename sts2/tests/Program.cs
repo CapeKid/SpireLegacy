@@ -352,6 +352,12 @@ Check(ApiContract.Require(typeof(ApiFixture),"GenericTask",typeof(Task),Type.Emp
 foreach(var name in new[]{"Missing","WrongReturn"})try{ApiContract.Require(typeof(ApiFixture),name,typeof(Task),Type.EmptyTypes);Check(false,"Drift must fail");}catch(MissingMethodException e){Check(e.Message.Contains(name)&&e.Message.Contains("Expected")&&e.Message.Contains("Available"),"API failure identifies expected and available signatures");}
 try{ApiContract.Invoke(typeof(ApiFixture).GetMethod("ThrowOriginal")!,null,[]);Check(false,"Reflection must propagate failure");}catch(InvalidOperationException e){Check(ReferenceEquals(e,ApiFixture.Failure),"Reflection preserves original exception identity");}
 PilotRewardChecks.Run(Check);
+foreach(var upgraded in new[]{false,true}){
+    var spellweave=new CardDesign("mage_spellweave",upgraded);
+    Check(spellweave.Cost==1,"Spellweave always pays Energy, including after upgrade");
+    Check(spellweave.Amount("nextEnergy")==1&&spellweave.Amount("nextDraw")==2,"Spellweave upgrade cannot increase delayed resource payout");
+    Check(spellweave.Block==(upgraded?2:0)&&!spellweave.Row.Flag("exhaust"),"Spellweave upgrades modest immediate protection while remaining reusable");
+}
 PersistenceChecks.Run(Check,directory);
 Console.WriteLine(JsonSerializer.Serialize(new { result = "passed", assertions = count, cards = 360, inheritedTraits = traitIds.Length, familyFixture = directory }));
 

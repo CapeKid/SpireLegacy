@@ -25,16 +25,22 @@ def send(command,**args):
     assert {m['id'] for m in reply['metadata']['mods']}=={'BaseLib','SpireLegacy'}
     return reply['result']
 
-for effect in ['energy','draw','block']:
+for effect in ['energy','draw','block','spellweave']:
     for upgraded in [False,True]:
         kind=f'delayed-{effect}'+('-upgraded' if upgraded else '')
-        send('start',**{'class':'knight','manorTier':0,'quick':True,'traits':[],'seed':'SPIRELEGACY-DELAYED-CHECK'})
+        send('start',**{'class':'mage' if effect=='spellweave' else 'knight','manorTier':0,'quick':True,'traits':[],'seed':'SPIRELEGACY-DELAYED-CHECK'})
         deadline=time.monotonic()+30
         while send('state')['phase']!='Play':
             if time.monotonic()>deadline:raise TimeoutError('Delayed check play phase')
             time.sleep(.2)
         r=send('balance-tactical-probe',kind=kind)
         assert r['immediateEnergy']==2,r
+        if effect=='spellweave':
+            assert r['immediateBlock']==(2 if upgraded else 0),r
+            assert r['firstEnergy']==r['secondEnergy']==4 and r['firstHand']==r['secondHand']==7,r
+            assert r['replaySpent']==1 and r['queuedEnergy']==r['queuedDraw']==0 and r['roundTrip'] and r['pile']=='Discard',r
+            print(tag,r,flush=True)
+            continue
         if effect=='energy':assert r['chosen'] and r['NextEnergy']==1 and r['deliveredEnergy']==4,r
         elif effect=='draw':assert r['NextDraw']==(3 if upgraded else 2) and r['deliveredHand']==5+r['NextDraw'],r
         else:assert r['NextBlock']==(6 if upgraded else 5) and r['deliveredBlock']==r['NextBlock'],r
