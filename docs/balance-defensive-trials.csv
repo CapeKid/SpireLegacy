@@ -1,0 +1,6 @@
+tag,game,cls,tier,policy,seed,ascension,traits,rewardPolicy,status,act,floor,dead,wins,finalHp,maxHp,crowns,deckSize,turns,potionUses,rewardChoices,skippedRewards,forcedReward,forcedRewardFloor,interventions,dllSha256
+defense-policy-seed2,v0.107.1,knight,2,tactical,SPIRELEGACY-CAMPAIGN-2,0,,defensive,finished,2,25,True,0,0,80,74,24,76,0,12,0,,0,0,990e7fac0d38c773c01ea18325d4adb87acf4dbf44c70ded4b1239930bff1dd9
+defense-policy-seed3,v0.107.1,knight,2,tactical,SPIRELEGACY-CAMPAIGN-3,0,,defensive,finished,2,27,True,0,0,80,94,23,73,1,13,0,,0,0,990e7fac0d38c773c01ea18325d4adb87acf4dbf44c70ded4b1239930bff1dd9
+defense-control-seed3,v0.107.1,knight,2,tactical,SPIRELEGACY-CAMPAIGN-3,0,,deck,finished,2,27,True,0,0,80,94,23,73,1,13,0,,0,0,990e7fac0d38c773c01ea18325d4adb87acf4dbf44c70ded4b1239930bff1dd9
+defense-policy-seed4,v0.107.1,knight,2,tactical,SPIRELEGACY-CAMPAIGN-4,0,,defensive,finished,1,15,True,0,0,80,51,20,44,0,10,0,,0,0,ea8b5b438da6017180f6aeaaa59b0fcf694094d7c1903682095d21ccf72c94f6
+defense-control-seed4,v0.107.1,knight,2,tactical,SPIRELEGACY-CAMPAIGN-4,0,,deck,finished,1,15,True,0,0,80,51,20,43,0,10,0,,0,0,ea8b5b438da6017180f6aeaaa59b0fcf694094d7c1903682095d21ccf72c94f6
