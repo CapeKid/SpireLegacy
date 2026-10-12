@@ -19,9 +19,17 @@ public static class TacticalPilot
     private static int Cost(CardModel card)=>card.EnergyCost.CostsX?card.Owner.PlayerCombatState!.Energy:Math.Max(0,card.EnergyCost.GetWithModifiers(CostModifiers.All));
     private static decimal Damage(CardModel card,Creature target)
     {
-        if(card is not LegacyCard legacy||legacy.DesignCard.Mercy)return 0;
-        var variable=card.DynamicVars.Damage;var old=variable.PreviewValue;
-        try{variable.UpdateCardPreview(card,CardPreviewMode.Normal,target,true);return Math.Max(0,variable.PreviewValue)*Math.Max(1,legacy.DesignCard.Row.Number("hits"));}
+        if(card is LegacyCard mercy&&mercy.DesignCard.Mercy)return 0;
+        if(!card.DynamicVars.TryGetValue("Damage",out var variable))return 0;
+        var old=variable.PreviewValue;
+        try{variable.UpdateCardPreview(card,CardPreviewMode.Normal,target,true);return Math.Max(0,variable.PreviewValue)*(card is LegacyCard legacy?Math.Max(1,legacy.DesignCard.Row.Number("hits")):1);}
+        finally{variable.PreviewValue=old;}
+    }
+    private static double Block(CardModel card,Creature owner)
+    {
+        if(!card.DynamicVars.TryGetValue("Block",out var variable))return 0;
+        var old=variable.PreviewValue;
+        try{variable.UpdateCardPreview(card,CardPreviewMode.Normal,owner,true);return Math.Max(0,(double)variable.PreviewValue);}
         finally{variable.PreviewValue=old;}
     }
     public static Decision? Choose(Player player,int incoming)
@@ -33,12 +41,11 @@ public static class TacticalPilot
         foreach(var card in hand.Where(c=>c.CanPlay())){
             foreach(var target in card.TargetType==TargetType.AnyEnemy?enemies.Cast<Creature?>():new Creature?[]{null}){
                 var cost=Cost(card);var reason="utility";
-                var damage=target==null?0:(double)Damage(card,target);
+                var damage=target!=null?(double)Damage(card,target):card.TargetType==TargetType.AllEnemies?enemies.Sum(e=>(double)Damage(card,e)):card.TargetType==TargetType.RandomEnemy&&enemies.Length>0?enemies.Average(e=>(double)Damage(card,e)):0;
                 var score=damage/Math.Max(1,cost);
+                score+=Math.Min(need,Block(card,player.Creature))*1.6/Math.Max(1,cost);
                 if(card is LegacyCard lc){
                     var d=lc.DesignCard;
-                    var block=Math.Min(need,Math.Max(0,(double)card.DynamicVars.Block.BaseValue+player.Creature.GetPowerAmount<DexterityPower>()));
-                    score+=block*1.6/Math.Max(1,cost);
                     score+=d.Amount("draw")*3+d.Amount("energy")*8;
                     if(card.Type==CardType.Power)score+=8;
                     if(target!=null&&d.Amount("vulnerable")>0&&target.GetPowerAmount<VulnerablePower>()==0){
@@ -48,7 +55,7 @@ public static class TacticalPilot
                         if(follow>0)reason="vulnerable-follow-up";
                     }
                     if(target!=null&&d.Amount("weak")>0)score+=need*.25;
-                    if(d.Amount("poison")>0)score+=d.Amount("poison")*1.5/Math.Max(1,cost);
+                    if(d.Amount("poison")>0)score+=d.Amount("poison")*1.5/Math.Max(1,cost)*(card.TargetType==TargetType.AllEnemies?enemies.Length:1);
                     if(lc.DesignCard.Row.Text("special") is "exhaust_one" or "exhaust_nonattacks"){
                         var engine=player.Creature.GetPowerAmount<FeelNoPainPower>()+player.Creature.Powers.OfType<LegacyPower>().Where(p=>p.Key=="exhaust_damage").Sum(p=>p.Amount);
                         var fuel=hand.Any(c=>c!=card&&c.Type is CardType.Status or CardType.Curse);
@@ -103,6 +110,13 @@ public static class TacticalPilot
                 if(decision.Card!=strike||decision.Target!=enemies.Last())throw new InvalidDataException("Tactical pilot missed non-first lethal target.");
                 await BalanceOracle.Play(strike,decision.Target);
                 return new{kind,picked=strike.Key,targetDead=!enemies.Last().IsAlive,decision.Reason};
+            }
+            if(kind=="area"){
+                var volley=await Add("volley");await Add("knight_strike");
+                var decision=Choose(player,0)!;
+                if(decision.Card!=volley||decision.Target!=null)throw new InvalidDataException("Tactical pilot undervalued area damage.");
+                var before=enemies.Select(e=>e.CurrentHp).ToArray();await BalanceOracle.Play(volley);
+                return new{kind,picked=volley.Key,damage=enemies.Select((e,i)=>before[i]-e.CurrentHp).ToArray()};
             }
             throw new ArgumentException("Unknown tactical probe.");
         }

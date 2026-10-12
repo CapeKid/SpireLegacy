@@ -23,7 +23,7 @@ def send(command,**args):
     assert reply['ok'],reply
     assert {m['id'] for m in reply['metadata']['mods']}=={'BaseLib','SpireLegacy'}
     return reply['result']
-for kind in ['vulnerable','exhaust','lethal']:
+for kind in ['vulnerable','exhaust','lethal','area']:
     send('start',**{'class':'knight','manorTier':0,'quick':True,'traits':[],'seed':'SPIRELEGACY-TACTICAL-CHECK'})
     deadline=time.monotonic()+30
     while send('state')['phase']!='Play':
@@ -32,5 +32,6 @@ for kind in ['vulnerable','exhaust','lethal']:
     r=send('balance-tactical-probe',kind=kind)
     if kind=='vulnerable':assert r['vulnerable']==2 and r['followUpDamage']==7 and r['energySpent']==3,r
     elif kind=='exhaust':assert r['fuelExhausted'] and r['blockGained']==6,r
-    else:assert r['targetDead'] and r['Reason']=='estimated-lethal',r
+    elif kind=='lethal':assert r['targetDead'] and r['Reason']=='estimated-lethal',r
+    else:assert len(r['damage'])>1 and all(d==15 for d in r['damage']),r
     print(tag,r,flush=True)
