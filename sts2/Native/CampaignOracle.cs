@@ -1,6 +1,5 @@
 using Godot;
 using MegaCrit.Sts2.Core.AutoSlay.Helpers;
-using MegaCrit.Sts2.Core.AutoSlay.Handlers.Screens;
 using MegaCrit.Sts2.Core.Combat;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
@@ -10,13 +9,14 @@ using MegaCrit.Sts2.Core.Nodes.CommonUi;
 using MegaCrit.Sts2.Core.Nodes.Events;
 using MegaCrit.Sts2.Core.Nodes.GodotExtensions;
 using MegaCrit.Sts2.Core.Nodes.RestSite;
+using MegaCrit.Sts2.Core.Nodes.Rewards;
 using MegaCrit.Sts2.Core.Nodes.Rooms;
 using MegaCrit.Sts2.Core.Nodes.Screens;
 using MegaCrit.Sts2.Core.Nodes.Screens.CardSelection;
 using MegaCrit.Sts2.Core.Nodes.Screens.Map;
 using MegaCrit.Sts2.Core.Nodes.Screens.Overlays;
 using MegaCrit.Sts2.Core.Nodes.Screens.TreasureRoomRelic;
-using MegaCrit.Sts2.Core.Random;
+using MegaCrit.Sts2.Core.Rewards;
 using MegaCrit.Sts2.Core.Runs;
 
 namespace SpireLegacy;
@@ -53,10 +53,12 @@ public static class CampaignOracle
                 await Task.Delay(300);
                 return Result("card-reward",new{offers,picked,skip=false});
             }
-            if(overlay is NRewardsScreen){
-                using var timeout=new CancellationTokenSource(TimeSpan.FromSeconds(35));
-                await new RewardsScreenHandler().HandleAsync(new Rng(1),timeout.Token);
-                return Result("collect-rewards");
+            if(overlay is NRewardsScreen rewards){
+                var reward=UiHelper.FindAll<NRewardButton>(rewards).FirstOrDefault(b=>b.IsEnabled&&b.IsVisibleInTree()&&(b.Reward is not PotionReward||player.HasOpenPotionSlots));
+                if(reward!=null){var kind=reward.Reward.GetType().Name;await UiHelper.Click(reward,500);return Result("collect-rewards",new{kind});}
+                var leave=UiHelper.FindAll<NProceedButton>(rewards).FirstOrDefault(b=>b.IsEnabled&&b.IsVisibleInTree());
+                if(leave!=null){await UiHelper.Click(leave,500);return Result("reward-proceed");}
+                return Result("wait");
             }
             if(overlay!=null)return Result("unsupported-overlay",new{type=overlay.GetType().Name});
             if(CombatManager.Instance.IsInProgress){
