@@ -9,6 +9,9 @@ with tempfile.TemporaryDirectory(prefix='spire-balance-authoring-') as directory
         shutil.copy2(root/'scripts'/name,scratch/'scripts'/name)
     subprocess.run([sys.executable,str(scratch/'scripts/sts2-pool-expansion.py')],check=True)
     original={r['id']:r for r in json.loads((root/'sheets/cards.json').read_text())}
+    audit={r['id']:r for r in json.loads((root/'sheets/balance_changes.json').read_text())}
+    for key in ['knight_royal_execution','mage_celestial_spear','ranger_arrow_cascade']:
+        assert all(original[key][field]==value for field,value in audit[key]['after'].items()),(key,'stale current audit values')
     regenerated={r['id']:r for r in json.loads((scratch/'sheets/cards.json').read_text())}
     for key,overrides in CARD_OVERRIDES.items():
         for field,value in overrides.items():
