@@ -35,3 +35,5 @@ Native evidence tags are `finisher-payoffs-payoffs-regular.json` and `finisher-p
 All native runs use independent private game copies and disposable profiles. Wrappers stop only their verified client PIDs. Real saves, installed games, Steam branches and published listings are untouched. This is not physical Steam Deck validation.
 
 The final remaining pass is regression testing and Workshop preparation after review. This PR does not publish a Workshop or Melty update, change the release version, or merge itself.
+
+Completed follow-up: [1.0.28 release regression and prepared packages](release-1.0.28.md). The exact release DLL now passes both branches, including all 48 finisher cases; the earlier immutable build hashes above remain the evidence for the original tuning PR.
