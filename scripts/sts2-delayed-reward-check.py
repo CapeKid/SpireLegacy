@@ -35,7 +35,7 @@ for effect in ['energy','draw','block']:
             time.sleep(.2)
         r=send('balance-tactical-probe',kind=kind)
         assert r['immediateEnergy']==2,r
-        if effect=='energy':assert r['chosen'] and r['NextEnergy']==1 and r['nextEnergy']==4,r
-        elif effect=='draw':assert r['NextDraw']==(3 if upgraded else 2) and r['nextHand']==5+r['NextDraw'],r
-        else:assert r['NextBlock']==(6 if upgraded else 5) and r['nextBlock']==r['NextBlock'],r
+        if effect=='energy':assert r['chosen'] and r['NextEnergy']==1 and r['deliveredEnergy']==4,r
+        elif effect=='draw':assert r['NextDraw']==(3 if upgraded else 2) and r['deliveredHand']==5+r['NextDraw'],r
+        else:assert r['NextBlock']==(6 if upgraded else 5) and r['deliveredBlock']==r['NextBlock'],r
         print(tag,r,flush=True)

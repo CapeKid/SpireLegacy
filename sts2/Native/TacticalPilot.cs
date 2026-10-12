@@ -120,7 +120,7 @@ public static class TacticalPilot
                 if(queuedEnergy!=description.NextEnergy||queuedDraw!=description.NextDraw||queuedBlock!=(decimal)description.NextBlock)throw new InvalidDataException("Delayed native powers disagree with reward metadata");
                 if(immediateEnergy!=energy-delayed.DesignCard.Cost)throw new InvalidDataException("Delayed Energy was granted immediately");
                 await BalanceOracle.End(player,true);
-                return new{kind,key,upgraded,chosen,description.NextEnergy,description.NextDraw,description.NextBlock,immediateEnergy,nextEnergy=player.PlayerCombatState.Energy,nextHand=hand.Cards.Count,nextBlock=player.Creature.Block};
+                return new{kind,key,upgraded,chosen,description.NextEnergy,description.NextDraw,description.NextBlock,immediateEnergy,deliveredEnergy=player.PlayerCombatState.Energy,deliveredHand=hand.Cards.Count,deliveredBlock=player.Creature.Block};
             }
             if(scenario is "block-finisher" or "chain-finisher" or "exhaust-finisher"){
                 var key=scenario switch{"block-finisher"=>"knight_shield_slam","chain-finisher"=>"ranger_finishing_flurry",_=>"knight_ashen_advance"};
