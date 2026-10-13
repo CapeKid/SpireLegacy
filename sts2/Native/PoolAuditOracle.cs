@@ -123,9 +123,17 @@ public static class PoolAuditOracle
                 var options=relic.ModifyCardRewardCreationOptions(player,input);
                 var possible=options.GetPossibleCards(player).OfType<LegacyCard>().Select(c=>c.Key).ToHashSet();
                 var expected=player.Character.CardPool.AllCards.OfType<LegacyCard>().Select(c=>c.Key).ToHashSet();
+                var bypass=CardCreationOptions.ForRoom(player,RoomType.Monster).WithFlags(CardCreationFlags.IsCardReward|CardCreationFlags.NoCardPoolModifications);
+                Require(relic.ModifyCardRewardCreationOptions(player,bypass).CardPools.SequenceEqual(new[]{player.Character.CardPool}),"Prismatic bypass expanded the pool.");
+                var original=player.Character.CardPool.AllCards.First(c=>c.Rarity==CardRarity.Common);
+                var custom=new CardCreationOptions(new[]{original},CardCreationSource.Other,CardRarityOddsType.Uniform).WithFlags(CardCreationFlags.IsCardReward);
+                Require(relic.ModifyCardRewardCreationOptions(player,custom).CustomCardPool!.SequenceEqual(new[]{original}),"Prismatic changed an explicit custom pool.");
+                var filter=CardCreationOptions.ForNonCombatWithUniformOdds(new[]{player.Character.CardPool},c=>c.Id==original.Id).WithFlags(CardCreationFlags.IsCardReward);
+                Require(relic.ModifyCardRewardCreationOptions(player,filter).GetPossibleCards(player).Select(c=>c.Id).Distinct().SequenceEqual(new[]{original.Id}),"Prismatic lost the reward filter.");
                 var draws=CardFactory.CreateForReward(player,12,CardCreationOptions.ForRoom(player,RoomType.Monster).WithFlags(CardCreationFlags.IsCardReward|CardCreationFlags.NoUpgradeRoll)).Select(r=>r.Card).ToArray();
                 Require(draws.Length==12&&draws.Select(c=>c.Id).Distinct().Count()==12&&draws.All(c=>c.Owner==player&&!c.IsUpgraded),"Prismatic reward uniqueness/owner/no-upgrade flag.");
-                results.Add(new{player.NetId,cls=player.Character is HeirCharacter?PlayerBloodlines.Heir(player).classId:"native",pools=options.CardPools.Select(p=>p.Id.ToString()).Order().ToArray(),legacy=possible.Order().ToArray(),ownerPoolOnly=possible.SetEquals(expected),draws=draws.Select(c=>c.Id.ToString()).ToArray()});
+                var upgraded=0;foreach(var card in draws.Where(c=>c.IsUpgradable)){CardCmd.Upgrade(card);Require(card.IsUpgraded,"Generated card upgrade failed.");upgraded++;}
+                results.Add(new{player.NetId,cls=player.Character is HeirCharacter?PlayerBloodlines.Heir(player).classId:"native",pools=options.CardPools.Select(p=>p.Id.ToString()).Order().ToArray(),legacy=possible.Order().ToArray(),ownerPoolOnly=possible.SetEquals(expected),draws=draws.Select(c=>c.Id.ToString()).ToArray(),upgraded,bypassPreserved=true,filterPreserved=true,customPreserved=true});
                 foreach(var card in draws)run.RemoveCard(card);
             }
             finally {player.RemoveRelicInternal(relic,silent:true);}
