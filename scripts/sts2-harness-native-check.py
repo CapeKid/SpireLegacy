@@ -55,9 +55,11 @@ try:
         send(profile,'select')
     elif mode=='coop':
         host,guest=sys.argv[2:4];port=int(sys.argv[5])
+        guest_class='ranger' if 'powers53ranger' in tag else 'mage'
+        guest_traits=[] if guest_class=='ranger' else ['cantattack']
         send(host,'coop-host',**{'class':'knight','traits':['easybreakables'],'port':port,'manor':{'vitality':1}})
         send(host,'coop-ready')
-        send(guest,'coop-join',**{'class':'mage','traits':['cantattack'],'port':port,'manor':{}})
+        send(guest,'coop-join',**{'class':guest_class,'traits':guest_traits,'port':port,'manor':{}})
         # Ready is correctly refused until the authenticated lobby session arrives.
         # Wait for that boundary instead of racing the native message pump.
         deadline=time.monotonic()+30
@@ -75,13 +77,24 @@ try:
                     if a['players']==b['players']:return a,b
                 time.sleep(.2)
             raise TimeoutError('Peer synchronization '+str(phase))
-        a,b=peers();assert [p['heir']['classId'] for p in a['players']]==['knight','mage'],a
+        a,b=peers();assert [p['heir']['classId'] for p in a['players']]==['knight',guest_class],a
         ids=[p['snapshot']['id'] for p in a['players']]
         assert a['active']==ids[0] and b['active']==ids[1],(a,b)
         for profile in [host,guest]:assert len(send(profile,'coop-roundtrip'))==2
         diagnostic=send(host,'harness-owner-diagnostic',owner=2)
-        assert diagnostic['originalPreserved'] and 'Heir: mage; traits: cantattack' in diagnostic['text'] and 'Inner owner diagnostic' in diagnostic['text'],diagnostic
+        assert diagnostic['originalPreserved'] and 'Heir: '+guest_class+'; traits: '+', '.join(guest_traits) in diagnostic['text'] and 'Inner owner diagnostic' in diagnostic['text'],diagnostic
         time.sleep(12);send(host,'coop-vote');send(guest,'coop-vote');peers('Play')
+        if 'powers53' in tag:
+            for upgraded in [False,True]:
+                for profile in [host,guest]:send(profile,'power-coop-prepare',upgrade=upgraded)
+                for profile in [host,guest]:
+                    played=send(profile,'power-coop-play',upgrade=upgraded)
+                    for peer in [host,guest]:assert send(peer,'power-coop-checkpoint',minimum=played['checksumNext'])['enabled']
+                    peers('Play')
+                peers('Play')
+                snapshots=[send(profile,'power-snapshot') for profile in [host,guest]]
+                assert snapshots[0]==snapshots[1],snapshots
+                assert all(p['charges']==(1 if p['cls']=='knight' else 2 if p['cls']=='mage' else 0) for p in snapshots[0])
         if 'cards52' in tag:
             for upgraded in [False,True]:
                 for key,replay in [('fortify',True),('study',False)]:
