@@ -345,6 +345,7 @@ public static class NativeTestBridge
                     try {await CardPlayDiagnostics.Observe(Task.FromException(new InvalidOperationException("Owned-game diagnostic fixture")),"TEST_ONLY");}catch(InvalidOperationException){}
                     ManorUi.Open();result=new{diagnostic=CardPlayDiagnostics.LastFailure};break;
                 case "architect-dialogues":
+                    if(PlayerBloodlines.LocalPlayer!=null)throw new InvalidDataException("Inspect Architect selectors from the menu; live heirs use frozen class snapshots.");
                     var endingSet=ModelDb.Event<MegaCrit.Sts2.Core.Models.Events.TheArchitect>().DialogueSet;
                     var endingClass=Runtime.Heir.classId; var endingChecks=new List<object>();
                     try {
@@ -361,6 +362,19 @@ public static class NativeTestBridge
                     } finally {Runtime.Heir.classId=endingClass;}
                     result=endingChecks;break;
                 case "ancient-dialogues":result=AncientDialogueOracle.Inspect();break;
+                case "ancient-audit-selectors":result=AncientDialogueOracle.Inspect(true);break;
+                case "ancient-audit-fallbacks":result=AncientAuditOracle.Fallbacks();break;
+                case "ancient-audit-persistent-neow":result=await AncientAuditOracle.PersistentNeow(RunState(),request.GetProperty("visits").GetInt32());break;
+                case "ancient-audit-finished":var finishedEvent=((MegaCrit.Sts2.Core.Rooms.EventRoom)RunState().CurrentRoom!).LocalMutableEvent;if(!finishedEvent.IsFinished)throw new InvalidDataException("Saved Ancient reward was offered again.");result=new{finished=true,options=finishedEvent.CurrentOptions.Select(o=>o.TextKey).ToArray()};break;
+                case "ancient-audit-save-finished":if(RunState().CurrentRoom is not MegaCrit.Sts2.Core.Rooms.EventRoom completeRoom||!completeRoom.LocalMutableEvent.IsFinished)throw new InvalidDataException("No finished Ancient room.");await MegaCrit.Sts2.Core.Saves.SaveManager.Instance.SaveRun(completeRoom);var completedSave=MegaCrit.Sts2.Core.Saves.SaveManager.Instance.LoadRunSave();if(!completedSave.Success||completedSave.SaveData?.PreFinishedRoom==null)throw new InvalidDataException("Finished-room save marker missing.");result=new{preFinishedRoom=true};break;
+                case "ancient-audit-next":result=await AncientAuditOracle.Advance(RunState(),request.GetProperty("controller").GetBoolean());break;
+                case "ancient-audit-choose":using(UseTestSelector())result=await AncientAuditOracle.Choose(RunState());break;
+                case "ancient-audit-tome":result=await AncientAuditOracle.Tome(RunState());break;
+                case "ancient-audit-play-modifier":await WaitForPlay(RunState().Players.Single());result=await AncientAuditOracle.Modifier(RunState(),request.GetProperty("card").GetString()!,request.GetProperty("upgrade").GetBoolean(),UseTestSelector());break;
+                case "ancient-audit-ending-enter":result=await AncientAuditOracle.EndingEnter(RunState(),request.GetProperty("wins").GetInt32());break;
+                case "ancient-audit-ending-next":result=await AncientAuditOracle.EndingAdvance(RunState());break;
+                case "ancient-audit-ending-win":result=await AncientAuditOracle.EndingWin(RunState());break;
+                case "ancient-audit-owners":result=await AncientAuditOracle.Owners(RunState());break;
                 case "ancient-state":result=AncientDialogueOracle.State(false);break;
                 case "neow-energy":result=await HeirPresentationOracle.NeowEnergy(RunState());break;
                 case "ancient-next":result=AncientDialogueOracle.State(true);break;
@@ -383,11 +397,8 @@ public static class NativeTestBridge
                 case "orobas-native-control":result=await OrobasOracle.NativeControl();break;
                 case "ancient-play":result=await AncientCardOracle.Check(RunState(),request.GetProperty("card").GetString()!,request.GetProperty("upgrade").GetBoolean(),UseTestSelector());break;
                 case "ancients":
-                    var ancientPlayer=RunState().Players.Single(); var originalClass=Runtime.Heir.classId; var ancientChecks=0;
-                    try {
-                        foreach(var heirClass in new[]{"knight","mage","ranger"}) {
-                            Runtime.Heir.classId=heirClass;
-                            for(var roll=0;roll<30;roll++) {
+                    var ancientPlayer=RunState().Players.Single(); var heirClass=PlayerBloodlines.Heir(ancientPlayer).classId; var ancientChecks=0;
+                            for(var roll=0;roll<90;roll++) {
                                 var tome=(MegaCrit.Sts2.Core.Models.Relics.DustyTome)ModelDb.Relic<MegaCrit.Sts2.Core.Models.Relics.DustyTome>().ToMutable();
                                 tome.SetupForPlayer(ancientPlayer);
                                 var chosen=ModelDb.GetById<CardModel>(tome.AncientCard!);
@@ -396,8 +407,6 @@ public static class NativeTestBridge
                                 if(restoredTome.AncientCard!=tome.AncientCard)throw new InvalidDataException("Ancient relic save mismatch.");
                                 ancientChecks++;
                             }
-                        }
-                    } finally {Runtime.Heir.classId=originalClass;}
                     var acquiredTome=(MegaCrit.Sts2.Core.Models.Relics.DustyTome)ModelDb.Relic<MegaCrit.Sts2.Core.Models.Relics.DustyTome>().ToMutable();
                     acquiredTome.SetupForPlayer(ancientPlayer);
                     var deckBefore=ancientPlayer.Deck.Cards.Count;

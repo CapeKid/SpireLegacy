@@ -18,7 +18,7 @@ public static class AncientCardOracle
         using(selector) {
             var player=run.Players.Single();var creature=player.Creature;var combat=creature.CombatState!;
             var context=new BlockingPlayerChoiceContext();var hand=PileType.Hand.GetPile(player);
-            var attack=combat.CreateCard(NativeCards.Get(Runtime.Heir.classId+"_strike"),player);
+            var attack=combat.CreateCard(NativeCards.Get(PlayerBloodlines.Heir(player).classId+"_strike"),player);
             await CardPileCmd.Add(attack,PileType.Hand,skipVisuals:true);
             if(key=="knight_kingbreaker")await CreatureCmd.GainBlock(creature,1,ValueProp.Unpowered,null);
             var played=await PoolExpansionOracle.Play(run,key,upgrade,selector:new NoopScope());
@@ -29,9 +29,14 @@ public static class AncientCardOracle
             {
                 var skill=combat.CreateCard(NativeCards.Get("mage_guard"),player);
                 await CardPileCmd.Add(skill,PileType.Hand,skipVisuals:true);
-                await CardCmd.AutoPlay(context,skill,null);
+                var energy=player.PlayerCombatState!.Energy;var cost=skill.EnergyCost.GetWithModifiers(CostModifiers.All);
+                if(!skill.TryManualPlay(null))throw new InvalidDataException("Ancient card paid Skill refused.");
+                var tree=(SceneTree)Engine.GetMainLoop();var deadline=Time.GetTicksMsec()+15000;
+                while((skill.Pile?.Type is PileType.Hand or PileType.Play||RunManager.Instance.ActionExecutor.IsRunning)&&Time.GetTicksMsec()<deadline)await tree.ToSignal(tree,SceneTree.SignalName.ProcessFrame);
+                if(skill.Pile?.Type is PileType.Hand or PileType.Play||player.PlayerCombatState.Energy!=energy-cost)throw new InvalidDataException("Ancient Skill payment/resolution.");
             }
             if(key=="mage_arcane_conductor") {
+                await PlayerCmd.GainEnergy(3,player);
                 var before=hand.Cards.Count;await Skill();firstDraw=hand.Cards.Count-before;
                 if(firstDraw!=1||creature.GetPower<P_class>()?.Charges!=2)throw new InvalidDataException("First Skill charge/draw mismatch.");
                 before=hand.Cards.Count;await Skill();secondDraw=hand.Cards.Count-before;
