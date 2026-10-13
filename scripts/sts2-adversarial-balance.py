@@ -41,9 +41,11 @@ if 'controls' in tag:
     send('abandon');raise SystemExit(0)
 if 'matrix' in tag:
     builds={'knight':['armor','exhaust','blood','strength'],'mage':['sequencing','mage-exhaust','mage-retained','delayed'],'ranger':['discard','poison','retention','chain']}
-    risks={'knight':['vampire','superhealer'],'mage':['bonusmagicstrength','megahealth'],'ranger':['cantattack','vegan']}
+    risks={'knight':['vampire','superhealer'],'mage':['bonusmagicstrength','megahealth'],'ranger':['cantattack','nomeat']}
     members={(r['classId'],r['cardId']) for r in json.loads((root/'sheets/card_pools.json').read_text())}
     traits={r['id']:r for r in json.loads((root/'sheets/traits.json').read_text())}
+    assert all(set(pair)<=traits.keys() for pair in risks.values()),'Use canonical trait IDs before starting trials'
+    if 'matrix-ranger' in tag:builds={'ranger':builds['ranger']}
     for cls,choices in builds.items():
         for build in choices:
             for tier,risk in [(0,False),(2,False),(2,True)]:
