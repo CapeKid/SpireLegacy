@@ -4,6 +4,8 @@ using MegaCrit.Sts2.Core.Entities.Players;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Models.Cards;
+using MegaCrit.Sts2.Core.Nodes.Combat;
+using MegaCrit.Sts2.Core.Nodes.Cards.Holders;
 using MegaCrit.Sts2.Core.Runs;
 
 namespace SpireLegacy;
@@ -152,15 +154,29 @@ public static class BalanceAuditOracle
         }
         return new{owners=run.Players.Count,upgraded,fundedEnergy=3};
     }
-    public static async Task<object> CoopDrawPlay(RunState run,bool upgraded,IDisposable selector)
+    public static async Task<object> CoopDrawPlay(RunState run,bool upgraded)
     {
-        using(selector) {
             var player=PlayerBloodlines.LocalPlayer!;
             var others=run.Players.Where(p=>p!=player).Select(p=>new{p,energy=p.PlayerCombatState!.Energy,block=p.Creature.Block,hand=PileType.Hand.GetPile(p).Cards.Count}).ToArray();
             var card=PileType.Hand.GetPile(player).Cards.OfType<LegacyCard>().Single(c=>c.Key=="knight_battle_meditation");
-            var before=player.PlayerCombatState!.Energy;await BalanceOracle.Play(card);
+            var before=player.PlayerCombatState!.Energy;var playing=BalanceOracle.Play(card);
+            var tree=(SceneTree)Engine.GetMainLoop();var deadline=Time.GetTicksMsec()+20000;
+            while(NPlayerHand.Instance?.IsInCardSelection!=true){
+                if(playing.IsCompleted){await playing;throw new InvalidDataException("Expected a live native discard choice.");}
+                if(Time.GetTicksMsec()>deadline)throw new TimeoutException("Native owner discard choice did not open.");
+                await tree.ToSignal(tree,SceneTree.SignalName.ProcessFrame);
+            }
+            // Exercise the actual hand-choice completion. CardSelectCmd sends its
+            // native synchronized choice to the other peer; no selector override.
+            var hand=NPlayerHand.Instance!;
+            var holder=hand.CardHolderContainer.GetChildren().OfType<NHandCardHolder>().First(h=>h.CardNode.Model is DefendIronclad);
+            AccessTools.Method(typeof(NPlayerHand),"SelectCardInSimpleMode").Invoke(hand,[holder]);
+            var confirm=AccessTools.Field(typeof(NPlayerHand),"_selectModeConfirmButton").GetValue(hand);
+            AccessTools.Method(typeof(NPlayerHand),"OnSelectModeConfirmButtonPressed").Invoke(hand,[confirm]);
+            await playing;
             var isolated=others.All(o=>o.p.PlayerCombatState!.Energy==o.energy&&o.p.Creature.Block==o.block&&PileType.Hand.GetPile(o.p).Cards.Count==o.hand);
-            return new{owner=player.NetId,cls=PlayerBloodlines.Heir(player).classId,upgraded,energySpent=before-player.PlayerCombatState.Energy,hand=PileType.Hand.GetPile(player).Cards.Count,discarded=PileType.Discard.GetPile(player).Cards.Count(c=>c is DefendIronclad),pile=card.Pile?.Type.ToString(),ownerIsolated=isolated,checksumNext=RunManager.Instance.ChecksumTracker.NextId,checksumEnabled=RunManager.Instance.ChecksumTracker.IsEnabled};
-        }
+            return new{owner=player.NetId,cls=PlayerBloodlines.Heir(player).classId,upgraded,energySpent=before-player.PlayerCombatState.Energy,hand=PileType.Hand.GetPile(player).Cards.Count,discarded=PileType.Discard.GetPile(player).Cards.Count(c=>c is DefendIronclad),pile=card.Pile?.Type.ToString(),ownerIsolated=isolated,nativeChoice=true,checksumNext=RunManager.Instance.ChecksumTracker.NextId,checksumEnabled=RunManager.Instance.ChecksumTracker.IsEnabled};
     }
 }
+using Godot;
+using HarmonyLib;
