@@ -33,11 +33,11 @@ if 'choices' in tag:
             row=next(r for r in cards if r['special']==special)
             for up in [False,True]:
                 for decline in ([False,True] if special=='scry' else [False]):
-                    start(cls);send('card-choice-boundary',card=row['id'],upgrade=up,decline=decline)
-                    send('resume');ready();send('cards')
+                    start(cls);choice=send('card-choice-boundary',card=row['id'],upgrade=up,decline=decline)
+                    send('resume');ready();assert send('card-deck-identity')==choice['deck']
     for up in [False,True]:
-        start('ironclad');send('card-choice-boundary',card='native:BurningPact',upgrade=up)
-        send('resume');send('cards')
+        start('ironclad');choice=send('card-choice-boundary',card='native:BurningPact',upgrade=up)
+        send('resume');assert send('card-deck-identity')==choice['deck']
     send('abandon');print(tag+': legal held/declined native choices, actual saved deck and resume checks pass',flush=True);sys.exit(0)
 if 'edges' in tag:
     representative={}

@@ -253,6 +253,7 @@ public static class NativeTestBridge
                 case "card-choice-boundary":
                     await WaitForPlay(RunState().Players.Single());
                     result=await CardChoiceBoundaryOracle.Check(RunState(),request.GetProperty("card").GetString()!,request.GetProperty("upgrade").GetBoolean(),request.TryGetProperty("decline",out var declineChoice)&&declineChoice.GetBoolean());break;
+                case "card-deck-identity":result=RunState().Players.Single().Deck.Cards.Select(c=>c.Id.ToString()+":"+c.CurrentUpgradeLevel).ToArray();break;
                 case "nimble-eligibility":result=NimbleOracle.Eligibility(RunState());break;
                 case "nimble-play":
                     await WaitForPlay(RunState().Players.Single());

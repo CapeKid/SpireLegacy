@@ -34,6 +34,7 @@ public static class CardChoiceBoundaryOracle
         using var scope=(IDisposable)method.Invoke(null,method.GetParameters().Length==2?[held,false]:[held])!;
         try {
             var guard=PlayerBloodlines.Heir(player).classId+"_guard";
+            foreach(var old in player.PlayerCombatState!.Hand.Cards.ToArray())await CardPileCmd.Add(old,PileType.Draw,skipVisuals:true);
             for(var i=0;i<5;i++) {
                 await CardPileCmd.Add(combat.CreateCard(NativeCards.Get(guard),player),PileType.Draw,skipVisuals:true);
                 await CardPileCmd.Add(combat.CreateCard(NativeCards.Get(guard),player),PileType.Hand,skipVisuals:true);
@@ -50,12 +51,12 @@ public static class CardChoiceBoundaryOracle
             await SaveManager.Instance.SaveRun(null);
             var save=SaveManager.Instance.LoadRunSave();Require(save.Success&&save.SaveData!=null,"Save during choice failed.");
             var saved=save.SaveData!.Players.Single(p=>p.NetId==player.NetId);
-            Require(saved.Deck.Select(c=>c.Id.ToString()+":"+c.CurrentUpgradeLevel).SequenceEqual(deck),"Pending choice lost or added a durable deck card.");
+            Require(saved.Deck.Select(c=>c.Id?.ToString()+":"+c.CurrentUpgradeLevel).SequenceEqual(deck),"Pending choice lost or added a durable deck card.");
             held.Complete(decline);
             await Wait(()=>card.Pile?.Type is not (PileType.Hand or PileType.Play));await Wait(()=>NCard.FindOnTable(card)==null&&!RunManager.Instance.ActionExecutor.IsRunning);
             Require(CardPlayDiagnostics.LastFailure==failure,"Held-choice paid action failed.");
             Require(player.Deck.Cards.Select(c=>c.Id.ToString()+":"+c.CurrentUpgradeLevel).SequenceEqual(deck),"Resolved choice changed durable deck identity.");
-            return new {key,upgraded,decline,held.Min,held.Max,options=held.Options.Length,pile=card.Pile?.Type.ToString(),cost,saveDuringChoice=true,deckPreserved=true,tableNodePresent=false};
+            return new {key,upgraded,decline,held.Min,held.Max,options=held.Options.Length,pile=card.Pile?.Type.ToString(),cost,deck,saveDuringChoice=true,deckPreserved=true,tableNodePresent=false};
         }finally{held.Complete(false);}
     }
 }
