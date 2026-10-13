@@ -276,6 +276,8 @@ public static class NativeTestBridge
                     await WaitForPlay(RunState().Players.Single());
                     result=await NimbleOracle.Play(RunState(),request.GetProperty("card").GetString()!,request.GetProperty("upgrade").GetBoolean(),UseTestSelector());break;
                 case "pool-audit-registry":result=PoolAuditOracle.Registry();break;
+                case "pool-audit-export-run":result=await PoolAuditOracle.ExportRun(RunState());break;
+                case "pool-audit-import-run":result=await PoolAuditOracle.ImportRun();break;
                 case "pool-audit-owner":result=PoolAuditOracle.Owner(RunState());break;
                 case "pool-audit-sparse":result=PoolAuditOracle.Sparse(RunState());break;
                 case "pool-audit-history":result=PoolAuditOracle.Historical(RunState(),request.TryGetProperty("import",out var poolImport)&&poolImport.GetBoolean());break;

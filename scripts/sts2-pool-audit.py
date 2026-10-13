@@ -36,6 +36,11 @@ for cls in ['knight','mage','ranger','ironclad']:
     send('start',**{'class':cls,'quick':True,'traits':[],'seed':'SPIRELEGACY-POOLS-54','manorTier':0})
     if cls=='ironclad':send('enter',room='Monster')
     ready()
+    if 'crossrun' in tag and cls!='ironclad':
+        send('abandon')
+        source=root/'private/sts2-evidence'/f'pool54-{"regular" if beta else "beta"}-{cls}-run.json'
+        shutil.copy2(source,profile/'pool-run.json');loaded=send('pool-audit-import-run');ready()
+        assert loaded['cls']==cls and all(any(c['key']==r['cardId'] and c['upgraded'] for c in loaded['deck']) for r in json.loads((root/'sheets/branch_cards.json').read_text()) if r['classId']==cls),loaded
     if 'import' in tag and cls!='ironclad':
         source=root/'private/sts2-evidence'/f'pool54-{("regular" if beta else "beta")}-{cls}-cards.json'
         shutil.copy2(source,profile/'pool-cards.json')
@@ -51,6 +56,9 @@ for cls in ['knight','mage','ranger','ironclad']:
         design={r['id']:r for r in json.loads((root/'sheets/cards.json').read_text())}
         assert set(result[0]['allowed'])=={r['cardId'] for r in membership if r['classId']==cls and design[r['cardId']]['rarity'] in ['COMMON','UNCOMMON','RARE']},result
     send('save');send('resume');ready();send('pool-audit-owner')
+    if 'export' in tag and cls!='ironclad':
+        send('pool-audit-export-run')
+        shutil.copy2(profile/'pool-run.json',root/'private/sts2-evidence'/f'pool54-{"beta" if beta else "regular"}-{cls}-run.json')
     send('pool-audit-registry')
     print(tag,cls,'reward/shop/transform/filter/history checks pass',flush=True)
 send('abandon')

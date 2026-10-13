@@ -20,6 +20,7 @@ namespace SpireLegacy;
 // Disposable lab fixtures only; all entry points are behind the native test bridge.
 public static class PoolAuditOracle
 {
+    private static MegaCrit.Sts2.Core.Nodes.Cards.NCard[] menuCards=[];
     private static void Require(bool value,string message) {if(!value)throw new InvalidDataException(message);}
     public static object Registry()
     {
@@ -118,10 +119,31 @@ public static class PoolAuditOracle
         {
             stack.Push(library);var deadline=Time.GetTicksMsec()+1000;while(Time.GetTicksMsec()<deadline)await tree.ToSignal(tree,SceneTree.SignalName.ProcessFrame);
             var grid=(NCardLibraryGrid)AccessTools.Field(typeof(NCardLibrary),"_grid").GetValue(library)!;
-            var rendered=NativeTestBridge.Descendants(library).OfType<MegaCrit.Sts2.Core.Nodes.Cards.NCard>().Select(c=>c.Model).Where(c=>c!=null).ToArray();
-            var stale=new[]{"_portraitBlurMaterial","_canvasGroupMaskBlurMaterial","_canvasGroupBlurMaterial","_canvasGroupMaskMaterial"}.Where(name=>AccessTools.Field(typeof(MegaCrit.Sts2.Core.Nodes.Cards.NCard),name).GetValue(null) is Material material&&!GodotObject.IsInstanceValid(material)).ToArray();
+            var nodes=NativeTestBridge.Descendants(library).OfType<MegaCrit.Sts2.Core.Nodes.Cards.NCard>().ToArray();if(run==null)menuCards=nodes;
+            var rendered=nodes.Select(c=>c.Model).Where(c=>c!=null).ToArray();
+            var stale=new[]{"_portraitBlurMaterial","_canvasGroupMaskBlurMaterial","_canvasGroupBlurMaterial","_canvasGroupMaskMaterial"}.Where(name=>menuCards.Concat(nodes).Where(GodotObject.IsInstanceValid).Any(node=>AccessTools.Field(typeof(MegaCrit.Sts2.Core.Nodes.Cards.NCard),name).GetValue(node) is Material material&&!GodotObject.IsInstanceValid(material))).ToArray();
             return new{rendered=rendered.Length,filtered=grid.VisibleCards.Count(),filteredLegacy=grid.VisibleCards.OfType<LegacyCard>().Select(c=>c.Key).Distinct().ToArray(),legacy=rendered.OfType<LegacyCard>().Select(c=>c.Key).Distinct().ToArray(),staleMaterials=stale};
         }
         finally {stack.Pop();var deadline=Time.GetTicksMsec()+500;while(Time.GetTicksMsec()<deadline)await tree.ToSignal(tree,SceneTree.SignalName.ProcessFrame);}
+    }
+    public static async Task<object> ExportRun(RunState run)
+    {
+        var player=run.Players.Single();var cls=PlayerBloodlines.Heir(player).classId;
+        foreach(var row in Design.Rows("branch_cards").Where(r=>r.Text("classId")==cls))
+        {
+            var card=run.CreateCard(NativeCards.Get(row.Text("cardId")),player);CardCmd.Upgrade(card);
+            await CardPileCmd.Add(card,PileType.Deck,skipVisuals:true);
+        }
+        await SaveManager.Instance.SaveRun(null);var save=SaveManager.Instance.LoadRunSave();Require(save.Success&&save.SaveData!=null,"Run export failed.");
+        File.WriteAllText(Path.Combine(Runtime.DataDirectory,"pool-run.json"),JsonSerializer.Serialize(save.SaveData!,JsonSerializationUtility.GetTypeInfo<SerializableRun>()));
+        return new{cls,deck=player.Deck.Cards.OfType<LegacyCard>().Select(c=>new{key=c.Key,upgraded=c.IsUpgraded}).ToArray()};
+    }
+    public static async Task<object> ImportRun()
+    {
+        if(MegaCrit.Sts2.Core.Nodes.NRun.Instance!=null)await MegaCrit.Sts2.Core.Nodes.NGame.Instance!.ReturnToMainMenu();
+        var save=JsonSerializer.Deserialize(File.ReadAllText(Path.Combine(Runtime.DataDirectory,"pool-run.json")),JsonSerializationUtility.GetTypeInfo<SerializableRun>())!;
+        var run=RunState.FromSerializable(save);await RunManager.Instance.SetUpSavedSingleplayer(run,save);
+        await MegaCrit.Sts2.Core.Nodes.NGame.Instance!.LoadRun(run,save.PreFinishedRoom);
+        var player=run.Players.Single();return new{cls=PlayerBloodlines.Heir(player).classId,deck=player.Deck.Cards.OfType<LegacyCard>().Select(c=>new{key=c.Key,upgraded=c.IsUpgraded}).ToArray()};
     }
 }
