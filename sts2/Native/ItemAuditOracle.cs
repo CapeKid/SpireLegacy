@@ -1,6 +1,7 @@
 using Godot;
 using HarmonyLib;
 using MegaCrit.Sts2.Core.Combat;
+using MegaCrit.Sts2.Core.Combat.History.Entries;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Players;
@@ -93,8 +94,8 @@ public static class ItemAuditOracle
         var slots=player.PotionSlots.ToArray();var rejected=await PotionCmd.TryToProcure(HeirPotions.Get("borrowed_breath").ToMutable(),player);
         Require(!rejected.success&&player.PotionSlots.SequenceEqual(slots),"Full belt changed.");
         var breath=player.Potions.OfType<FamilyPotion>().Single(p=>p.Key=="borrowed_breath");var briar=player.Potions.OfType<FamilyPotion>().Single(p=>p.Key=="briar_vial");
-        var uses=0;breath.ExecutionFinished+=_=>uses++;briar.ExecutionFinished+=_=>uses++;
-        async Task Cancel(PotionModel potion,MegaCrit.Sts2.Core.Entities.Creatures.Creature? target){Require(!potion.IsValidTarget(target),"Cancellation fixture target was valid.");potion.EnqueueManualUse(target);await Wait(()=>!potion.IsQueued&&!RunManager.Instance.ActionExecutor.IsRunning);Require(uses==0&&player.PotionSlots.SequenceEqual(slots),$"Invalid target consumed potion: {potion.Id}, uses={uses}, slots={string.Join(',',player.PotionSlots.Select(p=>p?.Id.ToString()))}, expected={string.Join(',',slots.Select(p=>p?.Id.ToString()))}.");}
+        int Uses()=>CombatManager.Instance.History.Entries.OfType<PotionUsedEntry>().Count(e=>e.Potion==breath||e.Potion==briar);
+        async Task Cancel(PotionModel potion,MegaCrit.Sts2.Core.Entities.Creatures.Creature? target){Require(!potion.IsValidTarget(target),"Cancellation fixture target was valid.");potion.EnqueueManualUse(target);await Wait(()=>!potion.IsQueued&&!RunManager.Instance.ActionExecutor.IsRunning);Require(Uses()==0&&player.PotionSlots.SequenceEqual(slots),"Invalid target consumed potion.");}
         await Cancel(briar,player.Creature);await Cancel(breath,enemies.First());
         var hp=enemies.Select(e=>e.CurrentHp).ToArray();
         try{foreach(var enemy in enemies)enemy.SetCurrentHpInternal(0);Require(!briar.IsValidTarget(enemies.First())&&!briar.IsValidTarget(null),"Dead/empty target validity.");await Cancel(briar,enemies.First());}
@@ -103,9 +104,9 @@ public static class ItemAuditOracle
         // cancel against the now-empty slot, without consuming its neighbouring item.
         var one=new UsePotionAction(breath,player.Creature,true);var two=new UsePotionAction(breath,player.Creature,true);var block=player.Creature.Block;
         RunManager.Instance.ActionQueueSynchronizer.RequestEnqueue(one);RunManager.Instance.ActionQueueSynchronizer.RequestEnqueue(two);
-        await Wait(()=>uses==1&&!RunManager.Instance.ActionExecutor.IsRunning);
+        await Wait(()=>Uses()==1&&!RunManager.Instance.ActionExecutor.IsRunning);
         Require(player.Creature.Block-block==6&&!player.Potions.Contains(breath)&&player.Potions.Contains(briar)&&player.Potions.Count()==2,"Duplicate queue effect/consumption.");
-        return new{fullBeltRejected=true,invalidTargetCanceled=true,deadTargetCanceled=true,zeroAliveEnemiesCanceled=true,duplicateUses=uses,duplicateBlock=player.Creature.Block-block,remaining=player.Potions.Select(p=>p.Id.ToString()).ToArray()};
+        return new{fullBeltRejected=true,invalidTargetCanceled=true,deadTargetCanceled=true,zeroAliveEnemiesCanceled=true,duplicateUses=Uses(),duplicateBlock=player.Creature.Block-block,remaining=player.Potions.Select(p=>p.Id.ToString()).ToArray()};
     }
     public static async Task<object> CoopAttack(RunState run,bool up)
     {
