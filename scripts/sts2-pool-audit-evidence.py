@@ -122,11 +122,11 @@ proof['limitations']=['Physical Deck/Linux/controller tests and full natural co-
     'Card effect/paid play coverage belongs to #52/#53; no balance/win-rate or automatic publishing claims.']
 def readable_json(value,depth=0):
     pad='  '*depth;child='  '*(depth+1)
-    if isinstance(value,dict):return '{\n'+',\n'.join(child+json.dumps(k)+': '+readable_json(v,depth+1) for k,v in value.items())+'\n'+pad+'}' if value else '{}'
+    if isinstance(value,dict):return '{\n'+',\n'.join(child+json.dumps(str(k))+': '+readable_json(v,depth+1) for k,v in value.items())+'\n'+pad+'}' if value else '{}'
     if isinstance(value,list):
         if all(not isinstance(v,(dict,list)) for v in value):return json.dumps(value)
         return '[\n'+',\n'.join(child+readable_json(v,depth+1) for v in value)+'\n'+pad+']' if value else '[]'
     return json.dumps(value)
-serialized=readable_json(proof);assert json.loads(serialized)==proof
+serialized=readable_json(proof);assert json.loads(serialized)==json.loads(json.dumps(proof))
 output=root/'docs/adversarial-pools-evidence.json';output.write_text(serialized+'\n')
 print(json.dumps(dict(output=output.name,branches=[dict(branch=b['branch'],stages=len(b['stages']),replies=sum(s['replies'] for s in b['stages'])) for b in proof['branches']])))
