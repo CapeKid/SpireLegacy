@@ -69,7 +69,7 @@ public sealed class FamilyProfile
         selected = null;
         return active;
     }
-    public int Settle(string runId, int floors, int gold, bool victory)
+    public int Settle(string runId, int floors, int gold, bool victory,int? reachedFloor=null)
     {
         if (active is null || active.familyId != familyId || active.id != runId || settledId == runId || chronicle.settledRuns.Contains(runId)) return 0;
         var percent = Math.Clamp(100 + active.heir.traits.Sum(id => Design.Get("traits", id).Number("goldBonus")), 0, 200);
@@ -77,7 +77,7 @@ public sealed class FamilyProfile
         var earned = (int)Math.Min(int.MaxValue, basis * percent * (100L + active.bonuses.GetValueOrDefault("gold")) / 10000);
         crowns = (int)Math.Min(int.MaxValue, (long)crowns + earned);
         lastEarned = earned; generation=(int)Math.Min(int.MaxValue,(long)generation+1); settledId = runId;
-        FamilyChronicle.Record(this,active,floors,victory);active = null;
+        FamilyChronicle.Record(this,active,reachedFloor??floors,victory);active = null;
         GenerateOffers(unchecked(generation * 1009 + StableHash(runId)));
         return earned;
     }
@@ -126,10 +126,10 @@ public sealed class FamilyProfile
             }
         }
     }
-    public int CommitSettlement(FamilyRun run,ulong owner,int floors,int gold,bool victory,string path)
+    public int CommitSettlement(FamilyRun run,ulong owner,int floors,int gold,bool victory,string path,int? reachedFloor=null)
     {
         if(!FamilySnapshot.CanSettle(this,run,owner))return 0;
-        var trial=Trial();var earned=trial.Settle(run.id,floors,gold,victory);
+        var trial=Trial();var earned=trial.Settle(run.id,floors,gold,victory,reachedFloor);
         Persist(trial,path);return earned;
     }
     public bool CommitRunStart(FamilyRun run,string path)
@@ -138,7 +138,7 @@ public sealed class FamilyProfile
         if(run.coop||run.familyId!=familyId||run.id==settledId||chronicle.settledRuns.Contains(run.id))return false;
         if(active?.id==run.id)return false;
         var trial=Trial();
-        if(trial.active is {} old)trial.Settle(old.id,old.floors,0,false);
+        if(trial.active is {} old)trial.Settle(old.id,0,0,false,old.floors);
         trial.active=FamilySnapshot.Read(FamilySnapshot.Serialize(run));
         trial.active.generation=trial.generation;trial.active.quick=trial.generation==0;
         trial.selected=null;Persist(trial,path);return true;
