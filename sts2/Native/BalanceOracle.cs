@@ -180,18 +180,19 @@ public static class BalanceOracle
         }
         return new{checks,saveRoundTrip=true,newCombatReset=true,upgradePreservesGrowth=true};
     }
-    public static async Task<object> Encounter(RunState run,string build,IDisposable selector)
+    public static async Task<object> Encounter(RunState run,string build,IDisposable selector,bool audit=false,bool item=false)
     {
         using(selector){
             var player=run.Players.Single();var oldScale=Engine.TimeScale;Engine.TimeScale=6;
             try{
-                var additions=build switch{
+                var additions=audit?BalanceAuditOracle.Builds[build]:build switch{
                     "exhaust"=>new[]{"knight_second_wind","knight_burnished_legacy","knight_cast_off","knight_forge_sparks"},
                     "powers"=>new[]{"mage_rune_familiar","reservoir","mage_spell_threads","surge"},
                     "retention"=>new[]{"ranger_long_vigil","ranger_heartseeker","ranger_perch_discipline","mage_crystal_seed"},
                     "poison"=>new[]{"ranger_poison_tip","ranger_poison_tip","ranger_razor_fletching","ranger_double_dose"},
                     _=>throw new ArgumentException("Unknown balance deck.")};
                 foreach(var key in additions)await CardPileCmd.Add(run.CreateCard(NativeCards.Get(key),player),PileType.Deck,skipVisuals:true);
+                if(item)await RelicCmd.Obtain(HeirDropRelics.Get("family_seal").ToMutable(),player);
                 await RunManager.Instance.EnterRoomDebug(MegaCrit.Sts2.Core.Rooms.RoomType.Monster,model:ModelDb.Encounter<MegaCrit.Sts2.Core.Models.Encounters.NibbitsNormal>().ToMutable(),showTransition:false);
                 RunManager.Instance.ActionExecutor.Unpause();await Wait(()=>player.PlayerCombatState?.Phase==PlayerTurnPhase.Play);
                 NModalContainer.Instance?.Clear();
@@ -216,7 +217,7 @@ public static class BalanceOracle
                 }
                 var victory=!player.Creature.CombatState!.GetOpponentsOf(player.Creature).Any(e=>e.IsAlive);
                 if(victory){await Wait(()=>!CombatManager.Instance.IsInProgress);for(var frame=0;frame<30;frame++)await Tree.ToSignal(Tree,SceneTree.SignalName.ProcessFrame);}
-                return new{build,seed=run.Rng.StringSeed,manor=Runtime.Profile.manor,initialHp=hp,finalHp=player.Creature.CurrentHp,damageTaken=hp-player.Creature.CurrentHp,victory,deadPlayer=!player.Creature.IsAlive,endedTurns,energySpent,seen,played,unplayedEndTurn=dead,exhaustedBudget};
+                return new{build,additions,item,traits=PlayerBloodlines.Heir(player).traits,seed=run.Rng.StringSeed,manor=Runtime.Profile.manor,initialHp=hp,finalHp=player.Creature.CurrentHp,damageTaken=hp-player.Creature.CurrentHp,victory,deadPlayer=!player.Creature.IsAlive,endedTurns,energySpent,seen,played,unplayedEndTurn=dead,exhaustedBudget};
             }finally{Engine.TimeScale=oldScale;}
         }
     }

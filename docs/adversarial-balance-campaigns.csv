@@ -1,0 +1,15 @@
+tag,game,cls,tier,policy,seed,ascension,traits,rewardPolicy,status,act,floor,dead,wins,finalHp,maxHp,crowns,deckSize,turns,potionUses,rewardChoices,skippedRewards,forcedReward,forcedRewardFloor,interventions,dllSha256
+balance60-natural-beta-ironclad-t0,v0.111.0,ironclad,0,tactical,SPIRELEGACY-AUDIT60-CAMPAIGN-1,0,,deck,finished,1,17,True,0,0,80,0,20,57,0,10,0,,0,0,bfb12a36a7604426ec876702ef6615e08bc27b4bc481e465180268d0b6411e08
+balance60-natural-beta-knight-t0,v0.111.0,knight,0,tactical,SPIRELEGACY-AUDIT60-CAMPAIGN-1,0,,deck,finished,1,8,True,0,0,60,17,14,31,1,5,1,,0,0,2c2481f38a3ac2df4e2bac6350e93124fa4204e6384c6ab8f64773109fe81cf0
+balance60-natural-beta-knight-t2,v0.111.0,knight,2,tactical,SPIRELEGACY-AUDIT60-CAMPAIGN-1,0,,deck,finished,1,17,True,0,0,80,50,18,45,1,10,1,,0,0,2c2481f38a3ac2df4e2bac6350e93124fa4204e6384c6ab8f64773109fe81cf0
+balance60-natural-beta-mage-t0,v0.111.0,mage,0,tactical,SPIRELEGACY-AUDIT60-CAMPAIGN-1,0,,deck,finished,1,8,True,0,0,52,17,15,29,1,5,0,,0,0,aafa5e0003ce58a0a54da8e9833f966fbc3106a1e537fcfe1575536ddab3c3bb
+balance60-natural-beta-mage-t2,v0.111.0,mage,2,tactical,SPIRELEGACY-AUDIT60-CAMPAIGN-1,0,,deck,finished,1,17,True,0,0,72,50,19,47,1,10,0,,0,0,aafa5e0003ce58a0a54da8e9833f966fbc3106a1e537fcfe1575536ddab3c3bb
+balance60-natural-beta-ranger-t0,v0.111.0,ranger,0,tactical,SPIRELEGACY-AUDIT60-CAMPAIGN-1,0,,deck,finished,1,6,True,0,0,56,12,13,22,0,3,0,,0,0,aafa5e0003ce58a0a54da8e9833f966fbc3106a1e537fcfe1575536ddab3c3bb
+balance60-natural-beta-ranger-t2,v0.111.0,ranger,2,tactical,SPIRELEGACY-AUDIT60-CAMPAIGN-1,0,,deck,finished,1,7,True,0,0,76,16,14,22,0,4,0,,0,0,aafa5e0003ce58a0a54da8e9833f966fbc3106a1e537fcfe1575536ddab3c3bb
+balance60-natural-regular-ironclad-t0,v0.107.1,ironclad,0,tactical,SPIRELEGACY-AUDIT60-CAMPAIGN-1,0,,deck,finished,1,12,True,0,0,80,0,16,40,0,7,0,,0,0,2b43f4fe36d115f8e701540a068422dee881ec069bbc897c46459b68ab0fb38f
+balance60-natural-regular-knight-t0,v0.107.1,knight,0,tactical,SPIRELEGACY-AUDIT60-CAMPAIGN-1,0,,deck,finished,1,6,True,0,0,60,12,14,24,0,4,0,,0,0,2c2481f38a3ac2df4e2bac6350e93124fa4204e6384c6ab8f64773109fe81cf0
+balance60-natural-regular-knight-t2,v0.107.1,knight,2,tactical,SPIRELEGACY-AUDIT60-CAMPAIGN-1,0,,deck,finished,2,28,True,0,0,80,81,27,74,0,15,0,,0,0,2c2481f38a3ac2df4e2bac6350e93124fa4204e6384c6ab8f64773109fe81cf0
+balance60-natural-regular-mage-t0,v0.107.1,mage,0,tactical,SPIRELEGACY-AUDIT60-CAMPAIGN-1,0,,deck,finished,1,6,True,0,0,52,12,14,25,0,4,0,,0,0,aafa5e0003ce58a0a54da8e9833f966fbc3106a1e537fcfe1575536ddab3c3bb
+balance60-natural-regular-mage-t2,v0.107.1,mage,2,tactical,SPIRELEGACY-AUDIT60-CAMPAIGN-1,0,,deck,finished,1,15,True,0,0,72,42,19,40,0,9,0,,0,0,aafa5e0003ce58a0a54da8e9833f966fbc3106a1e537fcfe1575536ddab3c3bb
+balance60-natural-regular-ranger-t0,v0.107.1,ranger,0,tactical,SPIRELEGACY-AUDIT60-CAMPAIGN-1,0,,deck,finished,1,6,True,0,0,56,12,14,28,0,4,0,,0,0,aafa5e0003ce58a0a54da8e9833f966fbc3106a1e537fcfe1575536ddab3c3bb
+balance60-natural-regular-ranger-t2,v0.107.1,ranger,2,tactical,SPIRELEGACY-AUDIT60-CAMPAIGN-1,0,,deck,finished,1,17,True,0,0,76,48,20,45,0,10,0,,0,0,bfb12a36a7604426ec876702ef6615e08bc27b4bc481e465180268d0b6411e08

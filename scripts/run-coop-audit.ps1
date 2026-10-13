@@ -7,14 +7,17 @@ param(
     [switch]$AncientChecks,
     [switch]$ManorChecks,
     [switch]$PresentationChecks,
+    [switch]$BalanceChecks,
     [string]$Python='python'
 )
 $ErrorActionPreference='Stop'
-if(($AncientChecks -or $ManorChecks -or $PresentationChecks) -and !$Pair){throw 'Specialized checks require the pair launcher.'}
-if(([int]$AncientChecks.IsPresent+[int]$ManorChecks.IsPresent+[int]$PresentationChecks.IsPresent) -gt 1){throw 'Select one pair driver.'}
+if(($AncientChecks -or $ManorChecks -or $PresentationChecks -or $BalanceChecks) -and !$Pair){throw 'Specialized checks require the pair launcher.'}
+if(([int]$AncientChecks.IsPresent+[int]$ManorChecks.IsPresent+[int]$PresentationChecks.IsPresent+[int]$BalanceChecks.IsPresent) -gt 1){throw 'Select one pair driver.'}
 if($Tag -notmatch '^[A-Za-z0-9_-]+$'){throw 'Plain evidence tag required'}
 $repo=Split-Path $PSScriptRoot -Parent
 $private=(Resolve-Path (Join-Path $repo 'private')).Path
+$buildSource=([Diagnostics.FileVersionInfo]::GetVersionInfo((Join-Path $repo 'sts2/bin/Release/net9.0/SpireLegacy.dll')).ProductVersion -split '\+')[-1]
+if($buildSource -notmatch '^[a-f0-9]{40}$'){throw 'Audit DLL must carry its committed build source.'}
 $clients=@();$profiles=@();$images=@();$old=@{}
 $names='HEIR_TEST_MODE','HEIR_TEST_ROOT','HEIR_DATA_DIR','HEIR_TEST_SOURCE_SHA'
 foreach($name in $names){$old[$name]=[Environment]::GetEnvironmentVariable($name,'Process')}
@@ -32,11 +35,11 @@ try {
         Copy-Item -LiteralPath (Join-Path $repo 'sts2/bin/Release/net9.0/SpireLegacy.dll') -Destination (Join-Path $lab 'mods/SpireLegacy/SpireLegacy.dll')
         Copy-Item -LiteralPath (Join-Path $repo 'sts2/SpireLegacy.json') -Destination (Join-Path $lab 'mods/SpireLegacy/SpireLegacy.json')
         if($PresentationChecks){Copy-Item -Path (Join-Path $repo 'src/main/resources/heir/presentation/*') -Destination (Join-Path $lab 'mods/SpireLegacy/heir/presentation') -Force}
-        $env:HEIR_TEST_MODE='1';$env:HEIR_TEST_ROOT=$private;$env:HEIR_DATA_DIR=$profile;$env:HEIR_TEST_SOURCE_SHA=git -C $repo rev-parse HEAD
+        $env:HEIR_TEST_MODE='1';$env:HEIR_TEST_ROOT=$private;$env:HEIR_DATA_DIR=$profile;$env:HEIR_TEST_SOURCE_SHA=$buildSource
         $clients+=Start-Process $image -WorkingDirectory $lab -ArgumentList '--force-steam=off --rendering-method gl_compatibility --rendering-driver opengl3 --position -2000,-2000' -WindowStyle Hidden -PassThru -RedirectStandardOutput (Join-Path $profile 'launch.log') -RedirectStandardError (Join-Path $profile 'errors.log')
         $profiles+=$profile;$images+=$image
     }
-    if($Pair){$pairDriver=if($AncientChecks){'sts2-ancient-coop.py'}elseif($ManorChecks){'sts2-manor-coop.py'}elseif($PresentationChecks){'sts2-presentation-coop.py'}else{'sts2-harness-native-check.py'};& $Python (Join-Path $PSScriptRoot $pairDriver) coop $profiles[0] $profiles[1] $Tag $Port}
+    if($Pair){$pairDriver=if($AncientChecks){'sts2-ancient-coop.py'}elseif($ManorChecks){'sts2-manor-coop.py'}elseif($PresentationChecks){'sts2-presentation-coop.py'}elseif($BalanceChecks){'sts2-balance-coop.py'}else{'sts2-harness-native-check.py'};& $Python (Join-Path $PSScriptRoot $pairDriver) coop $profiles[0] $profiles[1] $Tag $Port}
     else {& $Python (Join-Path $PSScriptRoot 'sts2-coop-audit.py') $Tag $Port @profiles $Scope}
     if($LASTEXITCODE -ne 0){throw 'Co-op audit driver failed'}
 } finally {

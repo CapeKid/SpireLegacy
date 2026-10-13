@@ -1,4 +1,7 @@
-# Manor controls and progression in 0.5.0
+# Manor controls and progression
+
+This page retains the original tuning rationale below. Current Slay the Spire 2
+benchmarks and adversarial results are in [adversarial-balance.md](adversarial-balance.md).
 
 Full trait details are available by selecting **Read full traits** on an heir offer. Mouse clicks, keyboard navigation and controller A open a wrapped detail panel. Scroll or use Up/Down for long entries; Enter/Back closes it. Hover tips remain available.
 
@@ -10,7 +13,7 @@ Click upgrades to stage levels. The manor shows pending levels, the total cost a
 
 ## Crown pacing
 
-Earn 2 crowns per cleared floor, 1 crown per 25 unspent gold, and 20 extra for victory. Apply trait bonuses after that calculation, capped at +100%. Treasury multiplies the capped payout by +5% per level, and therefore remains effective at the trait cap. Settlement remains once per run.
+After qualifying combat progress, earn 2 crowns per completed non-Ancient map point, 1 crown per 25 earned, unspent gold, and 20 extra for victory. Starting gold is excluded. A non-abandoned combat death after a manual play earns one participation point. Apply trait bonuses after that calculation, capped at +100%. Treasury multiplies the capped payout by +5% per level. Settlement remains once per run; see [earned-crowns.md](earned-crowns.md).
 
 | Example without bonuses | Crowns |
 | --- | ---: |
@@ -18,11 +21,11 @@ Earn 2 crowns per cleared floor, 1 crown per 25 unspent gold, and 20 extra for v
 | Death after 17 floors, 100 gold | 38 |
 | Victory after 50 floors, 200 gold | 128 |
 
-Living Quarters starts at 80 crowns, Blacksmith and Armory at 120, Treasury and Healing Garden at 100, and Library at 350. Costs rise with levels. The 128-crown example buys one entry level, with insufficient crowns left for another. Buying every level costs 3580 crowns before considering rewards earned along the way. High-earning handicap traits accelerate progress but cannot multiply rewards beyond twice the base.
+Living Quarters starts at 80 crowns, Blacksmith and Armory at 120, Treasury and Healing Garden at 100, and Library at 350. Costs rise with levels. The 128-crown example buys one entry level, with insufficient crowns left for another. Buying every current level costs 2620 crowns before considering rewards earned along the way. Trait bonuses cap at twice the base; maximum Treasury then multiplies that by 1.2, for an overall maximum of 2.4 before final rounding.
 
 ## Card and class balance
 
-The reference audit reads the owned Slay the Spire 1 library, including costs, rarity, damage, Block, magic values, exhaustion and upgraded rules. Native Strike is 6 damage (9 upgraded); native Defend is 5 Block (8 upgraded). Heirs deliberately begin below those values. All 360 registered mod cards, including legacy cards accessible through saved decks/cross-color effects, receive the balance pass; ordinary pools still contain 75 per class with 30 shared and 45 unique cards.
+The original reference audit read the owned Slay the Spire 1 library. The table below describes that historical pass, rather than certifying current StS2 parity. Current regular StS2 pools have 82 rewards plus 3 basics per class; public-beta has 85 rewards plus 3 basics. There are 34 shared family cards and 360 stable registered card identities, including historical cards outside the reward pools.
 
 | Comparison | Native reference | 0.5.0 heir behavior |
 | --- | --- | --- |
