@@ -15,7 +15,7 @@ public static class CrownAccounting
         var finished=state.CurrentRoom?.IsPreFinished==true||state.CurrentRoom?.IsVictoryRoom==true;
         var complete=points.Where(p=>!ReferenceEquals(p,current)||finished).ToArray();
         var combat=complete.Any(p=>p.Rooms.Any(r=>r.RoomType is RoomType.Monster or RoomType.Elite or RoomType.Boss));
-        var diedAfterPlay=!player.Creature.IsAlive&&state.CurrentRoom is CombatRoom {IsPreFinished:false}&&
+        var diedAfterPlay=!RunManager.Instance.IsAbandoned&&!player.Creature.IsAlive&&state.CurrentRoom is CombatRoom {IsPreFinished:false}&&
             CombatManager.Instance.History.CardPlaysFinished.Any(e=>e.CardPlay.Card.Owner==player&&!e.CardPlay.IsAutoPlay);
         var stats=points.SelectMany(p=>p.PlayerStats).Where(p=>p.PlayerId==player.NetId).ToArray();
         return CrownEarnings.Qualify(complete.Count(p=>p.MapPointType is not (MapPointType.Ancient or MapPointType.Unassigned)),combat,diedAfterPlay,
