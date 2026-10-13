@@ -16,6 +16,8 @@ A custom character by **CapeKid** for solo and co-op on the regular and public-b
 
 Supports **Slay the Spire 2 regular v0.107.1 and public-beta v0.111.0**. Requires **BaseLib 3.4.7**. The StS1 implementation remains as historical source; active releases now target StS2.
 
+Both branches support the mod, but full native saves are not interchangeable: beta's 64-bit RNG data cannot load on regular's 32-bit save schema. Historical card data loads both ways; tested regular runs resume on beta. See the [card pool and branch-save audit](docs/adversarial-pools.md).
+
 [Install, Steam Deck, Melty, Workshop, saves and build instructions](docs/sts2-port.md)
 
 The port is a development release. Native automated and visual checks cover card registration, upgrades, inherited save round trips, combat effects, class mechanics, rewards, shops and manor controls. Full campaign balance, physical Deck gameplay and a Melty-installed launch still require verification. The Melty package is prepared with a Windows launch mapping; the Workshop package supports native Windows/Linux.
