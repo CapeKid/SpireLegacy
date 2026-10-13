@@ -72,6 +72,12 @@ if 'choices' in tag:
         start('ironclad');choice=send('card-choice-boundary',card='native:BurningPact',upgrade=up)
         send('resume');assert send('card-deck-identity')==choice['deck']
     send('abandon');print(tag+': legal held/declined native choices, actual saved deck and resume checks pass',flush=True);sys.exit(0)
+if 'controls' in tag:
+    for key in ['StrikeIronclad','TwinStrike','Thunderclap','BurningPact','Hemokinesis']:
+        for up in [False,True]:
+            for mode in (['self-death'] if key=='Hemokinesis' else ['empty','full','replay','save-copy','dupe']):
+                start('ironclad');play({'id':'native:'+key},up,mode)
+    send('abandon');print(tag+': 42 native control edge plays pass',flush=True);sys.exit(0)
 if 'edges' in tag:
     representative={}
     for row in cards:
@@ -89,6 +95,8 @@ if 'edges' in tag:
             for mode in modes:
                 start(row['classId'])
                 play(row,up,mode)
+    if 'model' in tag:
+        send('abandon');print(tag+': all mod effect-family and target edge cases pass',flush=True);sys.exit(0)
     start('ironclad')
     for key in ['StrikeIronclad','TwinStrike','Thunderclap','BurningPact','Hemokinesis']:
         for up in [False,True]:
