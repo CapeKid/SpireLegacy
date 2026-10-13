@@ -111,4 +111,20 @@ public static class BalanceAuditOracle
         await BalanceOracle.Play(card);
         return new{key,upgraded,energySpent=energy-player.PlayerCombatState.Energy,blockGained=player.Creature.Block-block,pile=card.Pile?.Type.ToString(),fuel=fuel.Select(f=>new{id=f.Id.ToString(),pile=f.Pile?.Type.ToString()}).ToArray(),queuedBlock=player.Creature.GetPowerAmount<MegaCrit.Sts2.Core.Models.Powers.BlockNextTurnPower>()};
     }
+    public static async Task<object> NativeRecovery(RunState run,bool mixed,IDisposable selector)
+    {
+        using(selector) {
+            var player=run.Players.Single();var combat=player.Creature.CombatState!;
+            await CardPileCmd.RemoveFromCombat(CardPile.GetCards(player,Piles).ToArray(),skipVisuals:true);
+            var a=combat.CreateCard(mixed?NativeCards.Get("mage_memory_prism"):ModelDb.Card<Hologram>(),player);
+            var b=combat.CreateCard(ModelDb.Card<Hologram>(),player);CardCmd.Upgrade(a);CardCmd.Upgrade(b);
+            // Model a completed, legal combat-cost reduction setup; this does not
+            // claim a natural reward/shop acquisition or a free setup turn.
+            a.EnergyCost.SetThisCombat(0);b.EnergyCost.SetThisCombat(0);
+            await CardPileCmd.Add(a,PileType.Hand,skipVisuals:true);await CardPileCmd.Add(b,PileType.Discard,skipVisuals:true);
+            var energy=player.PlayerCombatState!.Energy;var block=player.Creature.Block;
+            for(var i=0;i<12;i++)await BalanceOracle.Play(i%2==0?a:b);
+            return new{mixed,plays=12,energySpent=energy-player.PlayerCombatState.Energy,blockGained=player.Creature.Block-block,aPile=a.Pile?.Type.ToString(),bPile=b.Pile?.Type.ToString()};
+        }
+    }
 }

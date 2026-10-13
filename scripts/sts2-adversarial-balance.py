@@ -16,6 +16,14 @@ def start(cls,tier=0,traits=[]):
     while send('state')['phase']!='Play':
         assert time.monotonic()<deadline;time.sleep(.15)
 send('presentation-prepare');send('balance-audit-references')
+if 'native-recovery' in tag:
+    for cls in ['knight','mage','ranger']:
+        for mixed in [False,True]:
+            start(cls);r=send('balance-audit-native-recovery',mixed=mixed)
+            assert r['plays']==12 and r['energySpent']==0 and r['blockGained']==(30 if mixed else 60),r
+            assert r['aPile']=='Hand' and r['bPile']=='Discard',r
+            print(tag,cls,r,flush=True)
+    send('abandon');raise SystemExit(0)
 if 'exchange' in tag:
     rows={r['id']:r for r in json.loads((root/'sheets/cards.json').read_text())}
     for upgraded in [False,True]:
