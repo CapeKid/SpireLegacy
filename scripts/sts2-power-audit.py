@@ -24,7 +24,9 @@ def start(cls):
     ready();send('vigor-room');ready()
 send('trait-speed',value=8)
 send('compat-control',patches=True,upgrade=False)
-for cls in ([] if any(x in tag for x in ['engines','retention','copies','empty','misc']) else ['knight','mage','ranger']):
+if 'supplement' in tag:
+    for up in [False,True]:assert send('compat-control',patches=False,upgrade=up)==send('compat-control',patches=True,upgrade=up)
+for cls in ([] if any(x in tag for x in ['engines','retention','copies','empty','misc','supplement']) else ['knight','mage','ranger']):
     modes=['single','multi','area','random','zero','replay','dupe','lethal']+(['reservoir'] if cls=='mage' else [])
     if 'smoke' in tag:modes=['reservoir' if cls=='mage' else 'multi']
     for up in ([False] if 'smoke' in tag else [False,True]):
@@ -33,7 +35,7 @@ for cls in ([] if any(x in tag for x in ['engines','retention','copies','empty',
             print(tag,cls,mode,up,'pass',flush=True)
     send('save');send('resume');ready()
     assert all(p['charges']==p['attacks']==0 for p in send('power-snapshot'))
-for up in ([] if any(x in tag for x in ['engines','retention','copies','empty','misc']) else [False] if 'smoke' in tag else [False,True]):
+for up in ([] if any(x in tag for x in ['engines','retention','copies','empty','misc','supplement']) else [False] if 'smoke' in tag else [False,True]):
     for mode in (['multi'] if 'smoke' in tag else ['multi','area','random']):
         start('ranger');send('power-rhythm',mode=mode,upgrade=up)
     for native in [False,True]:
@@ -58,4 +60,8 @@ if 'empty' in tag or 'misc' in tag:
     for cls in ['knight','mage','ranger']:
         for up in [False,True]:
             start(cls);send('power-engines',mode='foresight-empty' if 'empty' in tag else 'misc',upgrade=up)
+if 'supplement' in tag:
+    for cls in ['knight','mage','ranger']:
+        for up in [False,True]:start(cls);send('power-engines',mode='misc',upgrade=up)
+        for empty in [False,True]:start(cls);send('power-retention-edges',empty=empty)
 send('abandon');print(tag+': selected power audit suite passes',flush=True)

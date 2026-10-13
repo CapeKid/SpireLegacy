@@ -17,6 +17,8 @@ using MegaCrit.Sts2.Core.Runs;
 using MegaCrit.Sts2.Core.Saves.Runs;
 using MegaCrit.Sts2.Core.Saves;
 using MegaCrit.Sts2.Core.Models.Enchantments;
+using MegaCrit.Sts2.Core.TestSupport;
+using MegaCrit.Sts2.Core.Entities.CardRewardAlternatives;
 using MegaCrit.Sts2.Core.ValueProps;
 
 namespace SpireLegacy;
@@ -278,6 +280,34 @@ public static class PowerAuditOracle
         return checks;
     }
     public static object Snapshot(RunState run)=>run.Players.Select(p=>new{owner=p.NetId,cls=PlayerBloodlines.Heir(p).classId,charges=p.Creature.GetPower<P_class>()?.Charges,attacks=p.Creature.GetPower<P_class>()?.AttacksThisTurn}).ToArray();
+    private sealed class RetainSelector : ICardSelector
+    {
+        public int Choose=1,Calls;public HashSet<CardModel> Preferred=[];
+        public Task<IEnumerable<CardModel>> GetSelectedCards(IEnumerable<CardModel> options,int minSelect,int maxSelect)
+        {Calls++;Require(minSelect==0,"Retention unexpectedly became mandatory.");var cards=options.ToArray();return Task.FromResult(cards.OrderBy(c=>Preferred.Contains(c)?0:1).Take(Math.Min(Choose,maxSelect)).AsEnumerable());}
+        public CardRewardSelection GetSelectedCardReward(IReadOnlyList<CardCreationResult> options,IReadOnlyList<CardRewardAlternative> alternatives)=>new(){card=options.FirstOrDefault()?.Card};
+    }
+    public static async Task<object> RetentionEdges(RunState run,bool empty)
+    {
+        var player=run.Players.Single();await Setup(player);await Apply(player,"well_laid",2);
+        if(!empty)await PowerCmd.Apply<WellLaidPlansPower>(Context,player.Creature,1,player.Creature,null);
+        var originals=new List<CardModel>();if(!empty)for(var i=0;i<5;i++)originals.Add(await Add(player,ModelDb.Card<DefendIronclad>()));
+        var flush=Hook.ShouldFlush(player.Creature.CombatState!,player);var selector=new RetainSelector{Preferred=originals.ToHashSet()};
+        var method=AccessTools.Method(typeof(CardSelectCmd),"UseSelector",[typeof(ICardSelector),typeof(bool)])??AccessTools.Method(typeof(CardSelectCmd),"UseSelector",[typeof(ICardSelector)]);
+        using((IDisposable)method.Invoke(null,method.GetParameters().Length==2?[selector,false]:[selector])!) {
+            await BalanceOracle.End(player,true);await Wait(()=>player.PlayerCombatState!.Phase==PlayerTurnPhase.Play);
+            var first=originals.Count(c=>c.Pile?.Type==PileType.Hand);
+            Require(first==(empty?0:flush?2:5),"Native/custom retention interaction differs.");
+            Require(originals.All(c=>!c.ShouldRetainThisTurn&&!c.Keywords.Contains(CardKeyword.Retain)),"Retention keywords became permanent.");
+            if(empty)return new{empty,first,turn=player.PlayerCombatState!.TurnNumber,hand=player.PlayerCombatState.Hand.Cards.Count,noHang=true};
+            await PowerCmd.Remove(player.Creature.GetPower<WellLaidPlansPower>()!);
+            await BalanceOracle.End(player,true);await Wait(()=>player.PlayerCombatState!.Phase==PlayerTurnPhase.Play);
+            var second=originals.Count(c=>c.Pile?.Type==PileType.Hand);Require(second==1,"Measured Breath exceeded a new bounded choice after native retention removal.");
+            selector.Choose=0;await BalanceOracle.End(player,true);await Wait(()=>player.PlayerCombatState!.Phase==PlayerTurnPhase.Play);
+            Require(originals.All(c=>c.Pile?.Type!=PileType.Hand),"Declined retention persisted permanently.");
+            return new{empty,flush,first,second,third=0,calls=selector.Calls,temporary=true};
+        }
+    }
     public static async Task<object> CoopPrepare(RunState run,bool up)
     {
         foreach(var player in run.Players.OrderBy(p=>p.NetId)) {
