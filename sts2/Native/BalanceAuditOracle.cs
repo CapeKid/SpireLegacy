@@ -26,8 +26,9 @@ public static class BalanceAuditOracle
                 if(upgraded)CardCmd.Upgrade(card);
                 await CardPileCmd.Add(card,PileType.Hand,skipVisuals:true);copies.Add(card);
             }
-            // One ordinary card keeps the hand-exchange active; no Energy injection.
-            await CardPileCmd.Add(combat.CreateCard(ModelDb.Card<DefendIronclad>(),player),PileType.Hand,skipVisuals:true);
+            // Native Reflex is a legal cross-color enabler. Its discard draw can
+            // replenish the exchange; no injected Energy or forged reward hooks.
+            await CardPileCmd.Add(combat.CreateCard(ModelDb.Card<Reflex>(),player),PileType.Hand,skipVisuals:true);
             var before=player.PlayerCombatState!.Energy;var block=player.Creature.Block;
             var peers=run.Players.Where(p=>p!=player).Select(p=>new{p.NetId,energy=p.PlayerCombatState!.Energy,block=p.Creature.Block,hand=PileType.Hand.GetPile(p).Cards.Count}).ToArray();
             var samples=new List<object>();
