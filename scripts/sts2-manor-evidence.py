@@ -52,5 +52,17 @@ for raw in sorted(profiles):
             digest=hashlib.sha256(text.encode()).hexdigest();proof['diagnostics'][digest]=text;refs.append(digest)
     proof['logs'].append(dict(profile=profile.name,sha256=hashlib.sha256(path.read_bytes()).hexdigest(),diagnostics=refs))
 proof['limitations']=['Synthetic native action events and callbacks are not physical Deck/controller/touch passes.','Physical Deck/Linux/Proton, Steam transport, hardware disconnect/reconnect, virtual-keyboard dismissal and touch/controller switching remain #110 device checks.','No natural full campaign or arbitrary UI-scale/localization matrix was run.','Trait fixtures render one trait per heir in valid three-offer batches; generated compatible pairs remain covered by existing trait/core checks.']
-(root/'docs/adversarial-manor-evidence.json').write_text(json.dumps(proof,indent=2)+'\n')
+def render(value,level=0):
+    pad='  '
+    if isinstance(value,dict):return '{\n'+',\n'.join(pad*(level+1)+json.dumps(k)+': '+render(v,level+1) for k,v in value.items())+'\n'+pad*level+'}'
+    if isinstance(value,list):
+        # Keep each command receipt on one line, avoiding repeated layout trees
+        # consuming thousands of diff lines while preserving its actual values.
+        if value and all(isinstance(v,dict) and 'command' in v and 'result' in v for v in value):
+            return '[\n'+',\n'.join(pad*(level+1)+json.dumps(v) for v in value)+'\n'+pad*level+']'
+        if all(not isinstance(v,(dict,list)) for v in value):return json.dumps(value)
+        return '[\n'+',\n'.join(pad*(level+1)+render(v,level+1) for v in value)+'\n'+pad*level+']'
+    return json.dumps(value)
+serialized=render(proof)+'\n';assert json.loads(serialized)==proof
+(root/'docs/adversarial-manor-evidence.json').write_text(serialized)
 print([(s['branch'],s['kind'],s['replies']) for s in proof['stages']])
