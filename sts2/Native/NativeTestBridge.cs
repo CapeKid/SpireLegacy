@@ -56,6 +56,8 @@ public static class NativeTestBridge
             object result;
             switch (commandName)
             {
+                case "balance-audit-references":result=BalanceAuditOracle.References();break;
+                case "balance-audit-reset":result=await BalanceAuditOracle.ResetLoop(RunState(),request.GetProperty("upgrade").GetBoolean(),request.GetProperty("native").GetBoolean(),UseTestSelector());break;
                 case "balance-control-probe":result=await ControlPilotOracle.Probe(RunState(),request.GetProperty("kind").GetString()!);break;
                 case "balance-tactical-probe":await WaitForPlay(RunState().Players.Single());result=await TacticalPilot.Probe(RunState(),request.GetProperty("kind").GetString()!);break;
                 case "balance-campaign-step":
