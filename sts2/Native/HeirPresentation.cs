@@ -91,6 +91,7 @@ public static class HeirPresentation
         }
         var settings=SaveManager.Instance.SettingsSave;
         var audio=new AudioStreamPlayer{Stream=(AudioStream)resource,VolumeLinear=Math.Clamp(volume,0,1)*MathF.Pow(settings.VolumeMaster,2)*MathF.Pow(settings.VolumeSfx,2)};
+        audio.SetMeta("spirelegacy_sound",path);
         var tree=(SceneTree)Engine.GetMainLoop();tree.Root.AddChild(audio);audio.Finished+=audio.QueueFree;audio.Play();
         Sounds.Add(path);if(Sounds.Count>48)Sounds.RemoveAt(0);return true;
     }
@@ -162,9 +163,13 @@ public partial class HeirRoomMotion:Node2D
 {
     private HeirSprite sprite=null!;private bool rest;private double clock;
     public static void Attach(Node2D parent,HeirSprite sprite,bool rest) {
-        var motion=new HeirRoomMotion{Name="HeirRoomMotion",sprite=sprite,rest=rest};parent.AddChild(motion);
+        var motion=new HeirRoomMotion{Name="HeirRoomMotion",sprite=sprite,rest=rest};
         // External mod classes are not imported Godot scripts. Use a native signal callback.
-        var tree=(SceneTree)Engine.GetMainLoop();tree.ProcessFrame+=motion.Update;motion.TreeExiting+=()=>tree.ProcessFrame-=motion.Update;
+        var tree=(SceneTree)Engine.GetMainLoop();var callback=Callable.From(motion.Update);
+        // Native game-over relayers room visuals before eventually freeing them.
+        motion.TreeEntered+=()=>{if(!tree.IsConnected(SceneTree.SignalName.ProcessFrame,callback))tree.Connect(SceneTree.SignalName.ProcessFrame,callback);};
+        motion.TreeExiting+=()=>{if(tree.IsConnected(SceneTree.SignalName.ProcessFrame,callback))tree.Disconnect(SceneTree.SignalName.ProcessFrame,callback);};
+        parent.AddChild(motion);
     }
     private void Update()
     {
@@ -193,7 +198,7 @@ public static class HeirShopPurchase
     public static void Postfix(MegaCrit.Sts2.Core.Entities.Merchant.MerchantEntry __instance) {
         if(AccessTools.Field(typeof(MegaCrit.Sts2.Core.Entities.Merchant.MerchantEntry),"_player").GetValue(__instance) is not Player player||player.Character is not HeirCharacter)return;
         var tree=(SceneTree)Engine.GetMainLoop();
-        foreach(var sprite in NativeTestBridge.Descendants(tree.Root).OfType<HeirSprite>().Where(s=>s.Name=="SpireLegacyRoomHeir"&&s.IsVisibleInTree()))sprite.PlayPose("skill");
+        foreach(var sprite in NativeTestBridge.Descendants(tree.Root).OfType<HeirSprite>().Where(s=>s.Name=="SpireLegacyRoomHeir"&&s.IsVisibleInTree()&&s.HasMeta("spirelegacy_owner")&&s.GetMeta("spirelegacy_owner").AsUInt64()==player.NetId))sprite.PlayPose("skill");
     }
 }
 [HarmonyPatch(typeof(MegaCrit.Sts2.Core.Nodes.Screens.Shops.NMerchantCharacter),"PlayAnimation")]

@@ -63,13 +63,13 @@ public static class HeirPresentationOracle
         if(icon!=Runtime.Texture("heir/presentation/"+cls+"-cookie.svg")||large!=icon||outline!=Runtime.Texture("heir/presentation/"+cls+"-cookie-outline.svg"))throw new InvalidDataException("Cookie did not resolve class art.");
         var native=ModelDb.Character<Ironclad>();if(!native.CharacterSelectSfx.Contains("ironclad")||!native.TrailPath.Contains("ironclad"))throw new InvalidDataException("Changed native identity.");
         var trail=MegaCrit.Sts2.Core.Assets.PreloadManager.Cache.GetScene(model.TrailPath).Instantiate();
-        if(trail is not MegaCrit.Sts2.Core.Nodes.Vfx.NCardTrailVfx||trail.GetNodeOrNull<Node>("Sprites/FamilyRibbon")==null)throw new InvalidDataException("Heir trail cannot instantiate.");trail.Free();
+        if(trail is not MegaCrit.Sts2.Core.Nodes.Vfx.NCardTrailVfx||trail.GetNodeOrNull<Node>("Trails/FamilyRibbon")==null)throw new InvalidDataException("Heir trail cannot instantiate.");trail.Free();
         var mat=MegaCrit.Sts2.Core.Assets.PreloadManager.Cache.GetMaterial(model.CharacterSelectTransitionPath);
         if(mat is not ShaderMaterial material||!material.Shader.Code.Contains("threshold"))throw new InvalidDataException("Heir transition did not load.");
-        var before=HeirPresentation.Sounds.Count;
-        foreach(var role in new[]{"attack","cast","die","select","transition"})SfxCmd.Play(HeirPresentation.Sound(role));
+        var roles=new[]{"attack","cast","die","select","transition"};
+        foreach(var role in roles)SfxCmd.Play(HeirPresentation.Sound(role));
         await tree.ToSignal(tree,SceneTree.SignalName.ProcessFrame);
-        var sounds=HeirPresentation.Sounds.Skip(before).ToArray();if(sounds.Length!=5)throw new InvalidDataException("Heir audio routing incomplete.");
+        var sounds=HeirPresentation.Sounds.TakeLast(roles.Length).ToArray();if(!sounds.SequenceEqual(roles.Select(HeirPresentation.Sound)))throw new InvalidDataException("Heir audio routing incomplete.");
         var enemy=player.Creature.CombatState!.GetOpponentsOf(player.Creature).First();
         foreach(var path in model.GetArchitectAttackVfx())VfxCmd.PlayOnCreatureCenter(enemy,path);
         if(NativeTestBridge.Descendants(tree.Root).Count(n=>n.HasMeta("spirelegacy_architect")&&n.GetMeta("spirelegacy_architect").AsString()==cls)!=5)throw new InvalidDataException("Architect effects did not appear in the native scene.");

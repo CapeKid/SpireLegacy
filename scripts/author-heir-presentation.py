@@ -23,7 +23,9 @@ script = ExtResource("1")
 
 [node name="Sprites" type="Node2D" parent="."]
 
-[node name="FamilyRibbon" type="Line2D" parent="Sprites"]
+[node name="Trails" type="Node2D" parent="."]
+
+[node name="FamilyRibbon" type="Line2D" parent="Trails"]
 width = 16.0
 gradient = SubResource("Gradient_ribbon")
 begin_cap_mode = 2

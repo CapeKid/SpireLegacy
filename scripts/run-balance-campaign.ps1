@@ -25,12 +25,13 @@ param(
     [switch]$ItemAuditChecks,
     [switch]$AncientAuditChecks,
     [switch]$ManorAuditChecks,
+    [switch]$PresentationAuditChecks,
     [string]$ForcedReward='',
     [int]$ForcedRewardFloor=0,
     [ValidateSet('standalone','deck','defensive')][string]$Rewards='standalone'
 )
 $ErrorActionPreference='Stop'
-if(([int]$Checks.IsPresent+[int]$DelayedChecks.IsPresent+[int]$RewardChecks.IsPresent+[int]$PayoffChecks.IsPresent+[int]$ReleaseChecks.IsPresent+[int]$CandidateChecks.IsPresent+[int]$LifecycleChecks.IsPresent+[int]$LifecycleUiChecks.IsPresent+[int]$TraitAuditChecks.IsPresent+[int]$OrobasChecks.IsPresent+[int]$CardResolutionChecks.IsPresent+[int]$PowerAuditChecks.IsPresent+[int]$CrownChecks.IsPresent+[int]$PoolAuditChecks.IsPresent+[int]$ItemAuditChecks.IsPresent+[int]$AncientAuditChecks.IsPresent+[int]$ManorAuditChecks.IsPresent) -gt 1){throw 'Select one fixture driver.'}
+if(([int]$Checks.IsPresent+[int]$DelayedChecks.IsPresent+[int]$RewardChecks.IsPresent+[int]$PayoffChecks.IsPresent+[int]$ReleaseChecks.IsPresent+[int]$CandidateChecks.IsPresent+[int]$LifecycleChecks.IsPresent+[int]$LifecycleUiChecks.IsPresent+[int]$TraitAuditChecks.IsPresent+[int]$OrobasChecks.IsPresent+[int]$CardResolutionChecks.IsPresent+[int]$PowerAuditChecks.IsPresent+[int]$CrownChecks.IsPresent+[int]$PoolAuditChecks.IsPresent+[int]$ItemAuditChecks.IsPresent+[int]$AncientAuditChecks.IsPresent+[int]$ManorAuditChecks.IsPresent+[int]$PresentationAuditChecks.IsPresent) -gt 1){throw 'Select one fixture driver.'}
 if($ForcedReward -and ($ForcedRewardFloor -le 0 -or $Rewards -eq 'standalone')){throw 'Interventions require deck rewards and a positive floor.'}
 $repoPath=Split-Path $PSScriptRoot -Parent
 $privatePath=(Resolve-Path (Join-Path $repoPath 'private')).Path
@@ -46,6 +47,7 @@ if (Test-Path -LiteralPath $profilePath) { throw 'A new disposable profile is re
 New-Item -ItemType Directory -Path $profilePath | Out-Null
 Copy-Item -LiteralPath (Join-Path $repoPath 'sts2/bin/Release/net9.0/SpireLegacy.dll') -Destination (Join-Path $labPath 'mods/SpireLegacy/SpireLegacy.dll')
 Copy-Item -LiteralPath (Join-Path $repoPath 'sts2/SpireLegacy.json') -Destination (Join-Path $labPath 'mods/SpireLegacy/SpireLegacy.json')
+if($PresentationAuditChecks){Copy-Item -Path (Join-Path $repoPath 'src/main/resources/heir/presentation/*') -Destination (Join-Path $labPath 'mods/SpireLegacy/heir/presentation') -Force}
 $client=$null
 $names='HEIR_TEST_MODE','HEIR_TEST_ROOT','HEIR_DATA_DIR','HEIR_TEST_SOURCE_SHA'
 $previous=@{}
@@ -54,7 +56,7 @@ try {
     $env:HEIR_TEST_MODE='1';$env:HEIR_TEST_ROOT=$privatePath;$env:HEIR_DATA_DIR=$profilePath
     $env:HEIR_TEST_SOURCE_SHA=git -C $repoPath rev-parse HEAD
     $client=Start-Process $exePath -WorkingDirectory $labPath -ArgumentList '--force-steam=off --rendering-method gl_compatibility --rendering-driver opengl3 --position -2000,-2000' -WindowStyle Hidden -PassThru -RedirectStandardOutput (Join-Path $profilePath 'launch.log') -RedirectStandardError (Join-Path $profilePath 'errors.log')
-    $driver=if($Checks){'sts2-tactical-check.py'}elseif($DelayedChecks){'sts2-delayed-reward-check.py'}elseif($RewardChecks){'sts2-reward-intervention-check.py'}elseif($PayoffChecks){'sts2-finisher-payoff-check.py'}elseif($ReleaseChecks){'sts2-release-check.py'}elseif($CandidateChecks){'sts2-six-candidates-check.py'}elseif($LifecycleChecks){'sts2-lifecycle-check.py'}elseif($LifecycleUiChecks){'sts2-lifecycle-ui-check.py'}elseif($TraitAuditChecks){'sts2-trait-audit.py'}elseif($OrobasChecks){'sts2-orobas-check.py'}elseif($CardResolutionChecks){'sts2-card-resolution-check.py'}elseif($PowerAuditChecks){'sts2-power-audit.py'}elseif($CrownChecks){'sts2-crown-check.py'}elseif($PoolAuditChecks){'sts2-pool-audit.py'}elseif($ItemAuditChecks){'sts2-item-audit.py'}elseif($AncientAuditChecks){'sts2-ancient-audit.py'}elseif($ManorAuditChecks){'sts2-manor-audit.py'}else{'sts2-balance-campaign.py'}
+    $driver=if($Checks){'sts2-tactical-check.py'}elseif($DelayedChecks){'sts2-delayed-reward-check.py'}elseif($RewardChecks){'sts2-reward-intervention-check.py'}elseif($PayoffChecks){'sts2-finisher-payoff-check.py'}elseif($ReleaseChecks){'sts2-release-check.py'}elseif($CandidateChecks){'sts2-six-candidates-check.py'}elseif($LifecycleChecks){'sts2-lifecycle-check.py'}elseif($LifecycleUiChecks){'sts2-lifecycle-ui-check.py'}elseif($TraitAuditChecks){'sts2-trait-audit.py'}elseif($OrobasChecks){'sts2-orobas-check.py'}elseif($CardResolutionChecks){'sts2-card-resolution-check.py'}elseif($PowerAuditChecks){'sts2-power-audit.py'}elseif($CrownChecks){'sts2-crown-check.py'}elseif($PoolAuditChecks){'sts2-pool-audit.py'}elseif($ItemAuditChecks){'sts2-item-audit.py'}elseif($AncientAuditChecks){'sts2-ancient-audit.py'}elseif($ManorAuditChecks){'sts2-manor-audit.py'}elseif($PresentationAuditChecks){'sts2-presentation-audit.py'}else{'sts2-balance-campaign.py'}
     $traitArgument=if($Traits){$Traits}else{'-'}
     $rewardArgument=if($ForcedReward){$ForcedReward}else{'-'}
     & $Python (Join-Path $PSScriptRoot $driver) $profilePath $Tag $Class $Tier $Policy $Seed $Ascension $traitArgument $Rewards $rewardArgument $ForcedRewardFloor
