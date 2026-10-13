@@ -56,6 +56,8 @@ public static class CardResolutionOracle
                 var loaded=run.LoadCard(card.ToSerializable(),player);var copy=combat.CloneCard(loaded);run.RemoveCard(loaded);combat.RemoveCard(card);card=copy;
             }
             if(mode=="dupe") {
+                // Native cloning chooses its scope from current pile membership.
+                await CardPileCmd.Add(card,PileType.Hand,skipVisuals:true);
                 var method=AccessTools.Method(typeof(CardModel),"CreateDupe");
                 card=(CardModel)method.Invoke(card,method.GetParameters().Select(p=>p.ParameterType==typeof(Player)?player:p.HasDefaultValue?p.DefaultValue:throw new MissingMethodException("Unknown dupe parameter.")).ToArray())!;
             }
