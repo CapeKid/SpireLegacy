@@ -230,6 +230,10 @@ public static class NativeTestBridge
                     await NGame.Instance.StartNewSingleplayerRun(cls=="ironclad"?ModelDb.Character<MegaCrit.Sts2.Core.Models.Characters.Ironclad>():ModelDb.Character<HeirCharacter>(),true,ModelDb.ActsByIndex.Select(a=>a.First()).ToArray(),[],request.TryGetProperty("seed",out var balanceSeed)?balanceSeed.GetString()!:"SPIRELEGACY-PORT-TEST",GameMode.Standard,request.TryGetProperty("ascension",out var ascension)?ascension.GetInt32():0);
                     result = StateSummary(); break;
                 case "state": result = StateSummary(); break;
+                case "item-clones":result=ItemAuditOracle.Clones();break;
+                case "item-relic":result=await ItemAuditOracle.Relic(RunState(),request.GetProperty("relic").GetString()!,request.GetProperty("upgrade").GetBoolean());break;
+                case "item-coop-prepare":result=await ItemAuditOracle.CoopPrepare(RunState(),request.GetProperty("upgrade").GetBoolean());break;
+                case "item-coop-attack":result=await ItemAuditOracle.CoopAttack(RunState(),request.GetProperty("upgrade").GetBoolean());break;
                 case "relic-info": result=HeirRelicOracle.Inspect(RunState());break;
                 case "relic-obtain": result=await HeirRelicOracle.Obtain(RunState(),request.GetProperty("relic").GetString()!,request.TryGetProperty("shop",out var shopRelic)&&shopRelic.GetBoolean());break;
                 case "relic-counters": result=HeirRelicOracle.Counters(RunState());break;
