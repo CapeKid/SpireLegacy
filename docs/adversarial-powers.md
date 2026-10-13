@@ -1,5 +1,7 @@
 # Class resources and combat hook audit (#53)
 
+The historical first-hit class damage policy below is superseded by [#130's native comparison and all-hit regression](class-multihit.md). This audit's original receipts remain tied to their recorded source checkpoints.
+
 Baseline: merged main `664f288`. Owned Windows regular v0.107.1 / public-beta v0.111.0, BaseLib 3.4.7, Spire Legacy 1.0.29. Tests use independent copied labs, disposable profiles and the official offline launch option. No installed branches, personal saves or published packages change.
 
 ## Confirmed finding
