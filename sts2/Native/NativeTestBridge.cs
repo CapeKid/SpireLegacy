@@ -231,6 +231,8 @@ public static class NativeTestBridge
                     result = StateSummary(); break;
                 case "state": result = StateSummary(); break;
                 case "item-clones":result=ItemAuditOracle.Clones();break;
+                case "item-relic-edges":result=await ItemAuditOracle.RelicEdges(RunState());break;
+                case "item-antique-empty":result=await ItemAuditOracle.AntiqueEmpty(RunState());break;
                 case "item-potion-edges":result=await ItemAuditOracle.PotionEdges(RunState());break;
                 case "item-coop-potion":result=await ItemAuditOracle.CoopPotion(RunState());break;
                 case "item-relic":result=await ItemAuditOracle.Relic(RunState(),request.GetProperty("relic").GetString()!,request.GetProperty("upgrade").GetBoolean());break;

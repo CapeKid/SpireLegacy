@@ -5,6 +5,8 @@ using MegaCrit.Sts2.Core.Combat.History.Entries;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Players;
+using MegaCrit.Sts2.Core.Entities.Relics;
+using MegaCrit.Sts2.Core.Factories;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.GameActions;
 using MegaCrit.Sts2.Core.Models;
@@ -107,6 +109,36 @@ public static class ItemAuditOracle
         await Wait(()=>Uses()==1&&!RunManager.Instance.ActionExecutor.IsRunning);
         Require(player.Creature.Block-block==6&&!player.Potions.Contains(breath)&&player.Potions.Contains(briar)&&player.Potions.Count()==2,"Duplicate queue effect/consumption.");
         return new{fullBeltRejected=true,invalidTargetCanceled=true,deadTargetCanceled=true,zeroAliveEnemiesCanceled=true,duplicateUses=Uses(),duplicateBlock=player.Creature.Block-block,remaining=player.Potions.Select(p=>p.Id.ToString()).ToArray()};
+    }
+    public static async Task<object> RelicEdges(RunState run)
+    {
+        var player=run.Players.Single();foreach(var enemy in player.Creature.CombatState!.GetOpponentsOf(player.Creature)){enemy.SetMaxHpInternal(10000);enemy.SetCurrentHpInternal(10000);}player.Creature.SetMaxHpInternal(10000);player.Creature.SetCurrentHpInternal(10000);
+        foreach(var canonical in HeirDropRelics.All)await RelicCmd.Obtain(canonical.ToMutable(),player);
+        FamilyDropRelic Relic(string key)=>player.Relics.OfType<FamilyDropRelic>().Single(r=>r.Key==key);
+        async Task Sequence(){await PlayerCmd.GainEnergy(40,player);foreach(var card in player.PlayerCombatState!.Hand.Cards.ToArray())await CardPileCmd.Add(card,PileType.Draw,skipVisuals:true);await CreatureCmd.GainBlock(player.Creature,20,ValueProp.Unpowered,null);
+            foreach(var key in new[]{"knight_forge_memory",PlayerBloodlines.Heir(player).classId+"_guard",PlayerBloodlines.Heir(player).classId+"_strike","knight_king_s_ransom","knight_king_s_ransom"})await Play(await Add(player,key));
+            await Add(player,PlayerBloodlines.Heir(player).classId+"_guard");await Play(await Add(player,"ranger_empty_quiver"));}
+        await Sequence();var first=player.PlayerCombatState!.TurnNumber;
+        var firstCounters=HeirRelicOracle.Counters(run);var saved=System.Text.Json.JsonSerializer.Serialize(firstCounters);await HeirRelicOracle.RoundTrip(run);Require(saved==System.Text.Json.JsonSerializer.Serialize(HeirRelicOracle.Counters(run)),"Stacked counter round trip.");
+        CombatManager.Instance.SetReadyToEndTurn(player,false);await Wait(()=>player.PlayerCombatState.Phase==PlayerTurnPhase.Play&&player.PlayerCombatState.TurnNumber>first);
+        foreach(var key in new[]{"training_dummy","threadbound_ledger","wayfarer_ribbon","family_seal"})Require(Relic(key).TriggerTurn==first,"End-turn discard/exhaust claimed a new turn.");
+        Require(Relic("family_seal").TypeMask==0&&Relic("trail_compass").CombatClaimed,"Turn-start reset/compass.");
+        await Sequence();var second=player.PlayerCombatState.TurnNumber;
+        foreach(var key in new[]{"training_dummy","threadbound_ledger","wayfarer_ribbon","family_seal"})Require(Relic(key).TriggerTurn==second,"Per-turn relic failed to rearm.");
+        foreach(var key in new[]{"heirloom_brooch","guardian_knot","scholar_bookmark","triune_crest"})Require(Relic(key).CombatClaimed,"Combat cap lost.");
+        var beforeReacquire=HeirRelicOracle.Counters(run);await RelicCmd.Remove(Relic("heirloom_brooch"));await RelicCmd.Obtain(HeirDropRelics.Get("heirloom_brooch").ToMutable(),player);Require(!Relic("heirloom_brooch").CombatClaimed,"Fresh relic did not reset.");
+        var block=player.Creature.Block;await Play(await Add(player,"knight_forge_memory"));Require(player.Creature.Block-block==9&&Relic("heirloom_brooch").CombatClaimed,"Reacquired relic trigger.");
+        var original=player.RelicGrabBag.ToSerializable();var fallback=new List<string>();
+        try{foreach(var list in original.RelicIdLists.Values){/* keep original immutable below */}var empty=player.RelicGrabBag.ToSerializable();foreach(var list in empty.RelicIdLists.Values)list.Clear();player.RelicGrabBag.LoadFromSerializable(empty);foreach(var rarity in new[]{RelicRarity.Common,RelicRarity.Uncommon,RelicRarity.Rare}){var reward=new MegaCrit.Sts2.Core.Rewards.RelicReward(rarity,player);reward.Populate();Require(reward.Relic!.Id==RelicFactory.FallbackRelic.Id,"Depleted native bag fallback.");fallback.Add(reward.Relic.Id.ToString());}}
+        finally{player.RelicGrabBag.LoadFromSerializable(original);}
+        return new{firstCounters,secondCounters=beforeReacquire,roundTrip=true,endTurnDidNotClaim=true,rearmed=true,reacquiredBlock=player.Creature.Block-block,fallback};
+    }
+    public static async Task<object> AntiqueEmpty(RunState run)
+    {
+        var player=run.Players.Single();var bloodline=player.Relics.OfType<BloodlineRelic>().Single();var bag=run.SharedRelicGrabBag.ToSerializable();var before=player.Relics.Count();string? diagnostic=null;
+        try{var empty=run.SharedRelicGrabBag.ToSerializable();foreach(var list in empty.RelicIdLists.Values)list.Clear();run.SharedRelicGrabBag.LoadFromSerializable(empty);bloodline.StartingRelicsGranted=false;try{await bloodline.AfterActEntered();}catch(Exception error){diagnostic=error.ToString();}}
+        finally{run.SharedRelicGrabBag.LoadFromSerializable(bag);}
+        return new{diagnostic,granted=player.Relics.Count()-before,bloodline.StartingRelicsGranted,added=player.Relics.Skip(before).Select(r=>r.Id.ToString()).ToArray()};
     }
     public static async Task<object> CoopAttack(RunState run,bool up)
     {

@@ -19,7 +19,17 @@ send('trait-speed',value=8);clones=send('item-clones')
 if 'clones' in tag:
     assert all(c['shared']==('baseline' in tag) for c in clones),clones
     print(tag,'clone isolation probe complete',flush=True);sys.exit(0)
-if 'relics' in tag:
+if 'antique' in tag:
+    send('start',**{'class':'knight','quick':True,'traits':['antique'],'seed':'SPIRELEGACY-ITEMS-55','manorTier':0});ready()
+    r=send('item-antique-empty')
+    if 'baseline' in tag:assert r['diagnostic'] and r['granted']==0,r
+    else:assert r['diagnostic'] is None and r['granted']==1 and r['added']==['RELIC.CIRCLET'],r
+    send('abandon');print(tag,'depleted starter grant checked',flush=True)
+elif 'relic-edges' in tag:
+    for cls in ['knight','mage','ranger']:
+        send('chronicle-fixture',unlocked=True);send('start',**{'class':cls,'quick':True,'traits':[],'seed':'SPIRELEGACY-ITEMS-55','manorTier':0});ready()
+        send('item-relic-edges');send('abandon');print(tag,cls,'nested relic/reset edges checked',flush=True)
+elif 'relics' in tag:
     for cls in ['knight','mage','ranger']:
         for up in [False,True]:
             for row in json.loads((root/'sheets/heir_relics.json').read_text()):
