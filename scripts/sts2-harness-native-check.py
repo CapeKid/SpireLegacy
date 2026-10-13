@@ -79,12 +79,14 @@ try:
         ids=[p['snapshot']['id'] for p in a['players']]
         assert a['active']==ids[0] and b['active']==ids[1],(a,b)
         for profile in [host,guest]:assert len(send(profile,'coop-roundtrip'))==2
-        if 'orobas86' in tag:
-            for profile in [host,guest]:assert len(send(profile,'orobas-coop'))==2
-            for profile in [host,guest]:assert len(send(profile,'coop-roundtrip'))==2
         diagnostic=send(host,'harness-owner-diagnostic',owner=2)
         assert diagnostic['originalPreserved'] and 'Heir: mage; traits: cantattack' in diagnostic['text'] and 'Inner owner diagnostic' in diagnostic['text'],diagnostic
         time.sleep(12);send(host,'coop-vote');send(guest,'coop-vote');peers('Play')
+        if 'orobas86' in tag:
+            # The native player roster appears before FinalizeStartingRelics finishes.
+            # Acquire test relics only after the run has reached paid combat.
+            for profile in [host,guest]:assert len(send(profile,'orobas-coop'))==2
+            for profile in [host,guest]:assert len(send(profile,'coop-roundtrip'))==2
         for profile in [host,guest]:
             played=send(profile,'coop-play')
             assert played['played'] and played['pile']=='Discard' and not played['tableNodePresent'],played
