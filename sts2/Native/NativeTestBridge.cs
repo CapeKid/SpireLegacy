@@ -57,6 +57,8 @@ public static class NativeTestBridge
             switch (commandName)
             {
                 case "balance-audit-references":result=BalanceAuditOracle.References();break;
+                case "balance-audit-coop-prepare":result=await BalanceAuditOracle.CoopPrepare(RunState(),request.GetProperty("upgrade").GetBoolean());break;
+                case "balance-audit-coop-play":result=await BalanceAuditOracle.CoopPlay(RunState(),request.GetProperty("upgrade").GetBoolean());break;
                 case "balance-audit-encounter":await WaitForPlay(RunState().Players.Single());result=await BalanceOracle.Encounter(RunState(),request.GetProperty("build").GetString()!,UseTestSelector(),audit:true,item:request.GetProperty("item").GetBoolean());break;
                 case "balance-audit-reset":result=await BalanceAuditOracle.ResetLoop(RunState(),request.GetProperty("upgrade").GetBoolean(),request.GetProperty("native").GetBoolean(),UseTestSelector());break;
                 case "balance-control-probe":result=await ControlPilotOracle.Probe(RunState(),request.GetProperty("kind").GetString()!);break;
