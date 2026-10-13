@@ -378,6 +378,7 @@ public static class NativeTestBridge
                     await RunManager.Instance.EnterRoomDebug(roomType,model:roomModel,showTransition:false);
                     RunManager.Instance.ActionExecutor.Unpause();
                     result = StateSummary(); break;
+                case "tome-parity":result=await TomeParityOracle.Check(RunState(),request.TryGetProperty("removeBasics",out var tomeRemove)&&tomeRemove.GetBoolean(),request.TryGetProperty("forced",out var tomeForced)?tomeForced.GetString():null,request.TryGetProperty("inspect",out var tomeInspect)&&tomeInspect.GetBoolean());break;
                 case "advance":
                     var advancing=RunState();
                     var next=advancing.CurrentMapPoint?.Children.FirstOrDefault() ?? advancing.Map.StartingMapPoint;

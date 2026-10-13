@@ -1,0 +1,70 @@
+{
+  "issue": 93,
+  "baseline": "42a7471",
+  "dllSha256": "5de6b627a447f309a68ca3dfaa77aaf757dbcb17b86cd2b329b6fbda8e855856",
+  "productionChanges": false,
+  "harnessChecks": 20,
+  "preflight": {
+    "sheets": 32,
+    "rows": 2062,
+    "cells": 26477
+  },
+  "branches": [
+    {
+      "branch": "regular",
+      "game": "v0.107.1",
+      "baseLib": "3.4.7",
+      "mod": "1.0.29",
+      "sourceCheckpoints": [
+        "ddf8e377cb6945a22d5a982762d4c6cc31fed72f"
+      ],
+      "evidenceFile": "tome-parity-tome93-regular-final.json",
+      "correlatedReplies": 104,
+      "classes": [
+        "knight",
+        "mage",
+        "ranger",
+        "ironclad"
+      ],
+      "offerChecks": 600,
+      "upgradedAcquisitions": 10,
+      "saveResumeInspections": 8,
+      "deckModes": [
+        "intact",
+        "all Basics removed"
+      ],
+      "paidCanopyForms": 2
+    },
+    {
+      "branch": "beta",
+      "game": "v0.111.0",
+      "baseLib": "3.4.7",
+      "mod": "1.0.29",
+      "sourceCheckpoints": [
+        "ddf8e377cb6945a22d5a982762d4c6cc31fed72f"
+      ],
+      "evidenceFile": "tome-parity-tome93-beta-final.json",
+      "correlatedReplies": 106,
+      "classes": [
+        "knight",
+        "mage",
+        "ranger",
+        "ironclad"
+      ],
+      "offerChecks": 600,
+      "upgradedAcquisitions": 10,
+      "saveResumeInspections": 8,
+      "deckModes": [
+        "intact",
+        "all Basics removed"
+      ],
+      "paidCanopyForms": 2
+    }
+  ],
+  "limits": [
+    "physical Deck/Linux",
+    "multiplayer reward voting",
+    "full campaigns",
+    "other reward providers"
+  ]
+}
