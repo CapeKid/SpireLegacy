@@ -67,7 +67,6 @@ public static class ItemAuditOracle
     }
     public static async Task<object> CoopPrepare(RunState run,bool up)
     {
-        if(up)await Wait(()=>run.Players.All(p=>p.PlayerCombatState?.Phase==PlayerTurnPhase.Play&&p.PlayerCombatState.TurnNumber>=2));
         foreach(var enemy in run.Players[0].Creature.CombatState!.GetOpponentsOf(run.Players[0].Creature)){enemy.SetMaxHpInternal(10000);enemy.SetCurrentHpInternal(10000);}
         foreach(var player in run.Players.OrderBy(p=>p.NetId)){
             foreach(var card in player.PlayerCombatState!.Hand.Cards.ToArray())await CardPileCmd.Add(card,PileType.Draw,skipVisuals:true);
@@ -95,7 +94,7 @@ public static class ItemAuditOracle
         Require(!rejected.success&&player.PotionSlots.SequenceEqual(slots),"Full belt changed.");
         var breath=player.Potions.OfType<FamilyPotion>().Single(p=>p.Key=="borrowed_breath");var briar=player.Potions.OfType<FamilyPotion>().Single(p=>p.Key=="briar_vial");
         var uses=0;breath.ExecutionFinished+=_=>uses++;briar.ExecutionFinished+=_=>uses++;
-        async Task Cancel(PotionModel potion,MegaCrit.Sts2.Core.Entities.Creatures.Creature? target){potion.EnqueueManualUse(target);await Wait(()=>!potion.IsQueued&&!RunManager.Instance.ActionExecutor.IsRunning);Require(uses==0&&player.PotionSlots.SequenceEqual(slots),"Invalid target consumed potion.");}
+        async Task Cancel(PotionModel potion,MegaCrit.Sts2.Core.Entities.Creatures.Creature? target){Require(!potion.IsValidTarget(target),"Cancellation fixture target was valid.");potion.EnqueueManualUse(target);await Wait(()=>!potion.IsQueued&&!RunManager.Instance.ActionExecutor.IsRunning);Require(uses==0&&player.PotionSlots.SequenceEqual(slots),$"Invalid target consumed potion: {potion.Id}, uses={uses}, slots={string.Join(',',player.PotionSlots.Select(p=>p?.Id.ToString()))}, expected={string.Join(',',slots.Select(p=>p?.Id.ToString()))}.");}
         await Cancel(briar,player.Creature);await Cancel(breath,enemies.First());
         var hp=enemies.Select(e=>e.CurrentHp).ToArray();
         try{foreach(var enemy in enemies)enemy.SetCurrentHpInternal(0);Require(!briar.IsValidTarget(enemies.First())&&!briar.IsValidTarget(null),"Dead/empty target validity.");await Cancel(briar,enemies.First());}

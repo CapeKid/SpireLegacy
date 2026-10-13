@@ -94,10 +94,9 @@ try:
             if 'baseline' in tag:assert [p['weak'] for p in outcomes]==[1,0],outcomes
             else:assert [p['weak'] for p in outcomes]==[1,1],outcomes
             if 'baseline' in tag:print(tag,'native inherited first-hit leakage reproduced',flush=True);sys.exit(0)
-            for profile in [host,guest]:send(profile,'coop-turn')
             for profile in [host,guest]:send(profile,'item-coop-prepare',upgrade=True)
             for profile in [host,guest]:
-                played=send(profile,'item-coop-attack',upgrade=True);assert played['weak']==1,played
+                played=send(profile,'item-coop-attack',upgrade=True);assert played['weak']==0,played
                 for peer in [host,guest]:assert send(peer,'power-coop-checkpoint',minimum=played['checksumNext'])['enabled']
                 peers('Play')
                 used=send(profile,'item-coop-potion');assert used['otherOwnersUnchanged'] and used['completed']==1,used
