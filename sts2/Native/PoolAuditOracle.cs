@@ -40,7 +40,8 @@ public static class PoolAuditOracle
         {
             var allowed=player.Character.CardPool.GetUnlockedCards(player.UnlockState,player.RunState.CardMultiplayerConstraint).Where(c=>c.Rarity is CardRarity.Common or CardRarity.Uncommon or CardRarity.Rare).ToArray();
             var ids=allowed.Select(c=>c.Id).ToHashSet();var rewards=new List<object>();var shops=new List<object>();
-            var canon=allowed.Select(c=>new{c.Id,c.IsUpgraded,damage=c.DynamicVars.Damage.BaseValue,block=c.DynamicVars.Block.BaseValue}).ToArray();
+            object Snapshot(CardModel c)=>new{c.Id,c.IsUpgraded,vars=c.DynamicVars.Select(v=>new{v.Key,v.Value.BaseValue}).ToArray()};
+            var canon=allowed.Select(Snapshot).ToArray();
             foreach(var room in new[]{RoomType.Monster,RoomType.Elite,RoomType.Boss})
                 foreach(var count in new[]{1,3,6,12})
                     for(var repeat=0;repeat<5;repeat++)
@@ -70,7 +71,7 @@ public static class PoolAuditOracle
                 Require(created.Owner==player&&ids.Contains(created.Id)&&created.Id!=card.Id,"Transform result owner/pool.");
                 transforms.Add(new{original=card.Id.ToString(),created=created.Id.ToString(),choices=choices.Length});run.RemoveCard(created);
             }
-            Require(JsonSerializer.Serialize(canon)==JsonSerializer.Serialize(allowed.Select(c=>new{c.Id,c.IsUpgraded,damage=c.DynamicVars.Damage.BaseValue,block=c.DynamicVars.Block.BaseValue})),"Reward/shop/transform mutated canonical values.");
+            Require(JsonSerializer.Serialize(canon)==JsonSerializer.Serialize(allowed.Select(Snapshot)),"Reward/shop/transform mutated canonical values.");
             checks.Add(new{player.NetId,cls=player.Character is HeirCharacter?PlayerBloodlines.Heir(player).classId:"native",pool=player.Character.CardPool.Id.ToString(),allowed=allowed.Select(c=>c is LegacyCard legacy?legacy.Key:c.Id.ToString()).ToArray(),rewards,shops,transforms,canonicalUnchanged=true});
         }
         return checks;
@@ -116,9 +117,10 @@ public static class PoolAuditOracle
         try
         {
             stack.Push(library);var deadline=Time.GetTicksMsec()+1000;while(Time.GetTicksMsec()<deadline)await tree.ToSignal(tree,SceneTree.SignalName.ProcessFrame);
+            var grid=(NCardLibraryGrid)AccessTools.Field(typeof(NCardLibrary),"_grid").GetValue(library)!;
             var rendered=NativeTestBridge.Descendants(library).OfType<MegaCrit.Sts2.Core.Nodes.Cards.NCard>().Select(c=>c.Model).Where(c=>c!=null).ToArray();
-            Require(rendered.Length>0,"Compendium has no rendered cards.");
-            return new{rendered=rendered.Length,legacy=rendered.OfType<LegacyCard>().Select(c=>c.Key).Distinct().ToArray(),labels=NativeTestBridge.Descendants(library).OfType<Label>().Select(l=>l.Text).ToArray()};
+            var stale=new[]{"_portraitBlurMaterial","_canvasGroupMaskBlurMaterial","_canvasGroupBlurMaterial","_canvasGroupMaskMaterial"}.Where(name=>AccessTools.Field(typeof(MegaCrit.Sts2.Core.Nodes.Cards.NCard),name).GetValue(null) is Material material&&!GodotObject.IsInstanceValid(material)).ToArray();
+            return new{rendered=rendered.Length,filtered=grid.VisibleCards.Count(),filteredLegacy=grid.VisibleCards.OfType<LegacyCard>().Select(c=>c.Key).Distinct().ToArray(),legacy=rendered.OfType<LegacyCard>().Select(c=>c.Key).Distinct().ToArray(),staleMaterials=stale};
         }
         finally {stack.Pop();var deadline=Time.GetTicksMsec()+500;while(Time.GetTicksMsec()<deadline)await tree.ToSignal(tree,SceneTree.SignalName.ProcessFrame);}
     }

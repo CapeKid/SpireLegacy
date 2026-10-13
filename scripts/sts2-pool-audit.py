@@ -26,7 +26,12 @@ for cls in ['knight','mage','ranger']:
     assert {r['key'] for r in pool['cards']}==keys,pool
     assert len(keys)==len(pool['cards']) and sum(c['rarity']=='Basic' for c in pool['cards'])==3
     assert tuple(sum(c['rarity']==r for c in pool['cards']) for r in ['Common','Uncommon','Rare'])==((20,38,27) if beta else (20,36,26))
-if 'import' not in tag:send('pool-audit-library',menu=True)
+if 'library-control' in tag:
+    before=send('pool-audit-library',menu=True)
+    send('start',**{'class':'ironclad','quick':True,'traits':[],'seed':'SPIRELEGACY-POOLS-54','manorTier':0});send('enter',room='Monster');ready()
+    after=send('pool-audit-library')
+    assert not before['staleMaterials'] and after['staleMaterials'] and not after['filteredLegacy'],(before,after)
+    send('abandon');print(tag,'native unseen-material control reproduced',flush=True);sys.exit(0)
 for cls in ['knight','mage','ranger','ironclad']:
     send('start',**{'class':cls,'quick':True,'traits':[],'seed':'SPIRELEGACY-POOLS-54','manorTier':0})
     if cls=='ironclad':send('enter',room='Monster')
@@ -36,7 +41,7 @@ for cls in ['knight','mage','ranger','ironclad']:
         shutil.copy2(source,profile/'pool-cards.json')
         restored=send('pool-audit-history',**{'import':True});assert len(restored['checks'])==720
     if 'import' not in tag:
-        send('pool-audit-library')
+        library=send('pool-audit-library');assert library['filtered']>0,library
         sparse=send('pool-audit-sparse');assert len(sparse)==20
         if cls!='ironclad':
             saved=send('pool-audit-history');assert len(saved['checks'])==720
