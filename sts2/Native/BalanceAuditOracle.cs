@@ -171,7 +171,7 @@ public static class BalanceAuditOracle
             // Exercise the actual hand-choice completion. CardSelectCmd sends its
             // native synchronized choice to the other peer; no selector override.
             var hand=NPlayerHand.Instance!;
-            var holder=hand.CardHolderContainer.GetChildren().OfType<NHandCardHolder>().First(h=>h.CardNode.Model is DefendIronclad);
+            var holder=hand.CardHolderContainer.GetChildren().OfType<NHandCardHolder>().First(h=>h.CardNode?.Model is DefendIronclad);
             AccessTools.Method(typeof(NPlayerHand),"SelectCardInSimpleMode").Invoke(hand,[holder]);
             var confirm=AccessTools.Field(typeof(NPlayerHand),"_selectModeConfirmButton").GetValue(hand);
             AccessTools.Method(typeof(NPlayerHand),"OnSelectModeConfirmButtonPressed").Invoke(hand,[confirm]);
@@ -180,5 +180,3 @@ public static class BalanceAuditOracle
             return new{owner=player.NetId,cls=PlayerBloodlines.Heir(player).classId,upgraded,energySpent=before-player.PlayerCombatState.Energy,hand=PileType.Hand.GetPile(player).Cards.Count,discarded=PileType.Discard.GetPile(player).Cards.Count(c=>c is DefendIronclad),pile=card.Pile?.Type.ToString(),ownerIsolated=isolated,nativeChoice=true,checksumNext=RunManager.Instance.ChecksumTracker.NextId,checksumEnabled=RunManager.Instance.ChecksumTracker.IsEnabled};
     }
 }
-
-
