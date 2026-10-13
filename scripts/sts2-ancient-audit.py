@@ -35,7 +35,7 @@ elif 'modifiers' in tag:
     for row in json.loads((root/'sheets/ancient_cards.json').read_text()):
         for traits in [[],['cantattack'],['megahealth'],['superhealer']]:
             for up in [False,True]:
-                start(row['classId'],traits);r=send('expansion-play',card=row['cardId'],upgrade=up)
+                start(row['classId'],traits);r=send('ancient-audit-play-modifier',card=row['cardId'],upgrade=up)
                 assert r['saveRoundTrip'] and not r['tableNodePresent'] and r['pile']!='Play',r
                 if row['cardId']=='mage_elixir_of_life':assert r['hpChange']==(0 if traits==['megahealth'] else 12 if traits==['superhealer'] else 6),r
                 if row['cardId']=='knight_kingbreaker' and traits==['cantattack']:assert r['enemyDamage']==0,r

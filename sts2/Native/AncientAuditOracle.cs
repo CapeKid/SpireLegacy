@@ -11,6 +11,8 @@ using MegaCrit.Sts2.Core.Nodes.Events;
 using MegaCrit.Sts2.Core.Nodes.Cards.Holders;
 using MegaCrit.Sts2.Core.Nodes.Cards;
 using MegaCrit.Sts2.Core.Nodes.Screens.CardSelection;
+using MegaCrit.Sts2.Core.Nodes.Screens;
+using MegaCrit.Sts2.Core.Nodes.Rewards;
 using MegaCrit.Sts2.Core.Nodes.GodotExtensions;
 using MegaCrit.Sts2.Core.Rooms;
 using MegaCrit.Sts2.Core.Runs;
@@ -62,6 +64,8 @@ public static class AncientAuditOracle
                 if((stage==0||stage==2)&&selected==null){NativeTestBridge.Descendants(bundleScreen).OfType<NCardBundle>().First(n=>n.IsVisibleInTree()).Hitbox.ForceClick();bundleStages[bundleScreen]=stage+1;}
                 else if(stage==1||stage==3){var control=(NButton)AccessTools.Field(bundleScreen.GetType(),stage==1?"_previewCancelButton":"_previewConfirmButton").GetValue(bundleScreen)!;if(control.IsEnabled){control.ForceClick();bundleStages[bundleScreen]=stage+1;}}
             }
+            var rewards=NativeTestBridge.Descendants(tree.Root).OfType<NRewardsScreen>().FirstOrDefault(n=>n.IsVisibleInTree());
+            if(rewards!=null&&rewardScreen==null&&bundleScreen==null){var reward=NativeTestBridge.Descendants(rewards).OfType<NRewardButton>().FirstOrDefault(b=>b.IsVisibleInTree()&&b.IsEnabled&&b.Reward!=null);if(reward!=null)reward.ForceClick();else NativeTestBridge.Descendants(rewards).OfType<NProceedButton>().FirstOrDefault(b=>b.IsVisibleInTree()&&b.IsEnabled)?.ForceClick();}
             await tree.ToSignal(tree,SceneTree.SignalName.ProcessFrame);
         }
         Require(option.WasChosen,"Native reward callback did not execute.");
