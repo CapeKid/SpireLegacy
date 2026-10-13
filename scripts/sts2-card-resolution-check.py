@@ -40,6 +40,20 @@ def play(row,up,mode='normal'):
     return result
 cards=json.loads((root/'sheets/cards.json').read_text())
 send('trait-speed',value=8)
+if 'extras' in tag:
+    start('knight');send('nimble-eligibility')
+    for key in ['knight_guard','knight_reinforce','knight_stand_ready','mage_crystal_shell','mage_scripted_spark','ranger_ancient_canopy','knight_salvage_guard','mage_spell_pyre','ranger_shed_cloak']:
+        for up in [False,True]:
+            start(key.split('_')[0]);send('nimble-play',card=key,upgrade=up)
+    for row in cards:
+        if not (row['retain'] or row['ethereal'] or row['innate']):continue
+        for up in [False,True]:
+            start(row['classId']);send('card-flush',card=row['id'],upgrade=up)
+            send('enter',room='Monster');ready();send('card-flush-next',card=row['id'])
+    for cls in ['knight','mage','ranger','ironclad']:
+        start(cls)
+        play({'id':'native:StrikeIronclad' if cls=='ironclad' else cls+'_strike'},False,'auto-empty')
+    send('abandon');print(tag+': Nimble, native flush/growth reset and missing-target autoplay checks pass',flush=True);sys.exit(0)
 if 'choices' in tag:
     for cls in ['knight','mage','ranger']:
         for special in ['scry','exhaust_one','retrieve','exhume']:
