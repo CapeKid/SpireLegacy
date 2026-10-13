@@ -1,0 +1,69 @@
+{
+  "issue": 86,
+  "baseline": "42a7471",
+  "dllSha256": "63471cf7e3aea66c3c1fdeef5866e5ca17988bd86a18b9bd241369a03c8bf41c",
+  "coreAssertions": 124044,
+  "harnessChecks": 20,
+  "preflight": {
+    "sheets": 32,
+    "rows": 2062,
+    "cells": 26477
+  },
+  "branches": [
+    {
+      "branch": "regular",
+      "game": "v0.107.1",
+      "baseLib": "3.4.7",
+      "mod": "1.0.29",
+      "sourceCheckpoints": [
+        "9cf15941f6579e63b7b6005d07686cedab7ba6a7",
+        "ec71ebeb0976e33de8acb9b83e6648c2b155ac3d"
+      ],
+      "evidenceFiles": [
+        "orobas-orobas86-regular-final.json",
+        "harness-orobas86-owner-regular-settled-coop.json"
+      ],
+      "correlatedReplies": [
+        136,
+        77
+      ],
+      "refinements": 9,
+      "saveResumeInspections": 9,
+      "paidCards": 18,
+      "nativeControl": true,
+      "coopOwners": 2,
+      "baselineEvidence": "orobas-orobas86-regular-baseline.json",
+      "baselineDll": "d0358f220473e0d2c0065103556822d76e9bc0c3ee82a99384f2c828d21d4323"
+    },
+    {
+      "branch": "beta",
+      "game": "v0.111.0",
+      "baseLib": "3.4.7",
+      "mod": "1.0.29",
+      "sourceCheckpoints": [
+        "9cf15941f6579e63b7b6005d07686cedab7ba6a7",
+        "ec71ebeb0976e33de8acb9b83e6648c2b155ac3d"
+      ],
+      "evidenceFiles": [
+        "orobas-orobas86-beta-final.json",
+        "harness-orobas86-owner-beta-settled-coop.json"
+      ],
+      "correlatedReplies": [
+        136,
+        72
+      ],
+      "refinements": 9,
+      "saveResumeInspections": 9,
+      "paidCards": 18,
+      "nativeControl": true,
+      "coopOwners": 2,
+      "baselineEvidence": "orobas-orobas86-beta-baseline.json",
+      "baselineDll": "d0358f220473e0d2c0065103556822d76e9bc0c3ee82a99384f2c828d21d4323"
+    }
+  ],
+  "limits": [
+    "physical Deck/Linux",
+    "natural multiplayer Orobas event campaign",
+    "full-run balance"
+  ]
+}

@@ -1,5 +1,5 @@
 {
-  "sourceSha": "6a2c8de184c10ac19cc22f5c51c77a91016dff5a",
+  "sourceSha": "ec71ebeb0976e33de8acb9b83e6648c2b155ac3d",
   "files": [
     {
       "path": ".gitattributes",
@@ -1706,6 +1706,14 @@
       "primaryIssue": 62
     },
     {
+      "path": "docs/orobas-refinement-evidence.json",
+      "primaryIssue": 62
+    },
+    {
+      "path": "docs/orobas-refinement.md",
+      "primaryIssue": 62
+    },
+    {
       "path": "docs/release-1.0.28-validation.json",
       "primaryIssue": 62
     },
@@ -2287,6 +2295,10 @@
     },
     {
       "path": "scripts/sts2-oracle.py",
+      "primaryIssue": 47
+    },
+    {
+      "path": "scripts/sts2-orobas-check.py",
       "primaryIssue": 47
     },
     {
@@ -6378,6 +6390,10 @@
       "primaryIssue": 47
     },
     {
+      "path": "sts2/Native/OrobasOracle.cs",
+      "primaryIssue": 47
+    },
+    {
       "path": "sts2/Native/PersistenceOracle.cs",
       "primaryIssue": 48
     },
@@ -6396,6 +6412,10 @@
     {
       "path": "sts2/Native/PoolExpansionOracle.cs",
       "primaryIssue": 47
+    },
+    {
+      "path": "sts2/Native/RefinedBloodlineRelic.cs",
+      "primaryIssue": 55
     },
     {
       "path": "sts2/Native/RetentionOracle.cs",
@@ -6479,10 +6499,10 @@
     }
   ],
   "counts": {
-    "62": 90,
+    "62": 92,
     "63": 419,
     "58": 923,
-    "47": 69,
+    "47": 71,
     "50": 10,
     "49": 8,
     "48": 7,
@@ -6491,7 +6511,7 @@
     "61": 56,
     "60": 3,
     "56": 5,
-    "55": 3,
+    "55": 4,
     "52": 2,
     "54": 2,
     "53": 2,
