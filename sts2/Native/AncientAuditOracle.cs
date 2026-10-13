@@ -51,9 +51,9 @@ public static class AncientAuditOracle
     {
         var model=Event(run);var option=model.CurrentOptions.First(o=>!o.IsLocked);var before=model.Owner!.Relics.Count();var deck=model.Owner.Deck.Cards.Count;
         var tree=(SceneTree)Engine.GetMainLoop();var button=NativeTestBridge.Descendants(tree.Root).OfType<NEventOptionButton>().Single(b=>b.Option==option&&b.IsVisibleInTree());Require(button.IsEnabled,"Reward button disabled.");
-        button.EmitSignal(NClickableControl.SignalName.Released,button);var deadline=Time.GetTicksMsec()+25000;var rewardSelections=0;
+        button.ForceClick();var deadline=Time.GetTicksMsec()+25000;var rewardSelections=0;
         while(!model.IsFinished){
-            if(Time.GetTicksMsec()>deadline)throw new TimeoutException("Ancient reward selection.");
+            if(Time.GetTicksMsec()>deadline){tree.Root.GetViewport().GetTexture().GetImage().SavePng(System.IO.Path.Combine(Runtime.DataDirectory,"ancient-choice-timeout.png"));throw new TimeoutException($"Ancient reward selection: {option.Relic?.Id}; chosen={option.WasChosen}; acquired={model.Owner.Relics.Count()-before}; visible={string.Join(',',NativeTestBridge.Descendants(tree.Root).OfType<Control>().Where(c=>c.IsVisibleInTree()).Select(c=>c.GetType().Name).Distinct())}");}
             var rewardScreen=NativeTestBridge.Descendants(tree.Root).OfType<NCardRewardSelectionScreen>().FirstOrDefault(n=>n.IsVisibleInTree());
             if(rewardScreen!=null){var holder=NativeTestBridge.Descendants(rewardScreen).OfType<NCardHolder>().FirstOrDefault(h=>h.CardModel!=null&&h.IsVisibleInTree());if(holder!=null){holder.EmitSignal(NCardHolder.SignalName.Pressed,holder);rewardSelections++;}}
             await tree.ToSignal(tree,SceneTree.SignalName.ProcessFrame);
