@@ -18,6 +18,10 @@ def ready():
 beta='beta' in tag
 send('trait-speed',value=8)
 registry=send('pool-audit-registry');assert registry['historical']==360 and registry['expanded']==beta,registry
+parity=send('pool-parity')
+for pool in parity['native']+parity['heirs']:
+    assert (pool['common'],pool['uncommon'],pool['rare'])==((20,38,27) if beta else (20,36,26)) and pool['total']==pool['unique'],pool
+if 'parity' in tag:print(tag,'all five native characters and three Heir pool rarity counts match',flush=True);sys.exit(0)
 membership=json.loads((root/'sheets/card_pools.json').read_text())+(json.loads((root/'sheets/branch_cards.json').read_text()) if beta else [])
 ancients=json.loads((root/'sheets/ancient_cards.json').read_text())
 for cls in ['knight','mage','ranger']:
