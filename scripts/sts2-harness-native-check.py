@@ -82,6 +82,13 @@ try:
         diagnostic=send(host,'harness-owner-diagnostic',owner=2)
         assert diagnostic['originalPreserved'] and 'Heir: mage; traits: cantattack' in diagnostic['text'] and 'Inner owner diagnostic' in diagnostic['text'],diagnostic
         time.sleep(12);send(host,'coop-vote');send(guest,'coop-vote');peers('Play')
+        if 'cards52' in tag:
+            for upgraded in [False,True]:
+                for key,replay in [('fortify',True),('study',False)]:
+                    for profile in [host,guest]:send(profile,'card-coop-prepare',card=key,upgrade=upgraded,replay=replay)
+                    for profile in [host,guest]:send(profile,'card-coop-play',card=key)
+                    peers('Play')
+            for profile in [host,guest]:assert len(send(profile,'coop-roundtrip'))==2
         if 'orobas86' in tag:
             # The native player roster appears before FinalizeStartingRelics finishes.
             # Acquire test relics only after the run has reached paid combat.

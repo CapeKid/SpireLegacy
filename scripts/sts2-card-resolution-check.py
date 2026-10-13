@@ -81,13 +81,17 @@ if 'edges' in tag:
             if row['type']=='ATTACK':modes+=['invalid'] if not row['aoe'] and row['special']!='random_attack' else []
             if row['damage']>0:modes+=['lethal']
             for mode in modes:
-                if mode=='self-death':start(row['classId'])
+                start(row['classId'])
                 play(row,up,mode)
+    for key in ['knight_cleave','ranger_arrow_storm']:
+        row=next((r for r in cards if r['id']==key),None)
+        if row is not None:
+            for up in [False,True]:start(row['classId']);play(row,up,'zero-enemies')
     start('ironclad')
     for key in ['StrikeIronclad','TwinStrike','Cleave','BurningPact','Hemokinesis']:
         for up in [False,True]:
             for mode in (['self-death'] if key=='Hemokinesis' else ['empty','full','replay','save-copy','dupe']):
-                if mode=='self-death':start('ironclad')
+                start('ironclad')
                 play({'id':'native:'+key},up,mode)
     send('abandon');print(tag+': native effect-family edge cases and vanilla controls pass',flush=True);sys.exit(0)
 if 'smoke' in tag:cards=[r for r in cards if r['special']!='none' or r['id'].endswith('_strike')][:45]
