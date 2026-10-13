@@ -25,7 +25,7 @@ public static class AncientAuditOracle
     private static EventModel Event(RunState run)=>((EventRoom)run.CurrentRoom!).LocalMutableEvent;
     public static object Fallbacks()
     {
-        Require(PlayerBloodlines.LocalPlayer==null,"Fallback selectors require the menu.");var heirId=ModelDb.Character<HeirCharacter>().Id;var set=new AncientDialogueSet();
+        Require(PlayerBloodlines.LocalPlayer==null,"Fallback selectors require the menu.");var heirId=ModelDb.Character<HeirCharacter>().Id;var set=new AncientDialogueSet{FirstVisitEverDialogue=null,CharacterDialogues=new(),AgnosticDialogues=[]};
         Require(!set.GetValidDialogues(heirId,0,0,false).Any(),"Unregistered empty native set changed.");
         // Emulate a future native Ancient's getter registration without shipping or
         // adding a fake game model. Only this throwaway set receives the test identity.
