@@ -28,7 +28,6 @@ def owner(path):
     raise ValueError('Unassigned tracked file: '+path)
 files=subprocess.check_output(['git','ls-files'],cwd=root,text=True).splitlines()
 files+=subprocess.check_output(['git','ls-files','--others','--exclude-standard'],cwd=root,text=True).splitlines()
-files.append('docs/adversarial-audit-coverage.json')
 rows=[dict(path=p,primaryIssue=owner(p)) for p in sorted(set(files))]
 output=root/'docs/adversarial-audit-coverage.json';output.parent.mkdir(parents=True,exist_ok=True)
 output.write_text(json.dumps(dict(sourceSha=subprocess.check_output(['git','rev-parse','HEAD'],cwd=root,text=True).strip(),files=rows,counts=dict(Counter(r['primaryIssue'] for r in rows))),indent=2),encoding='utf-8')
