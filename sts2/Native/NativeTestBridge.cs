@@ -68,6 +68,10 @@ public static class NativeTestBridge
                 case "power-rhythm":await WaitForPlay(RunState().Players.Single());result=await PowerAuditOracle.Rhythm(RunState(),request.GetProperty("upgrade").GetBoolean(),request.GetProperty("mode").GetString()!,UseTestSelector());break;
                 case "power-barrier":await WaitForPlay(RunState().Players.Single());result=await PowerAuditOracle.Barrier(RunState(),request.GetProperty("upgrade").GetBoolean(),request.GetProperty("native").GetBoolean());break;
                 case "power-engines":await WaitForPlay(RunState().Players.Single());result=await PowerAuditOracle.Engines(RunState(),request.GetProperty("mode").GetString()!,request.GetProperty("upgrade").GetBoolean(),UseTestSelector());break;
+                case "power-copies":await WaitForPlay(RunState().Players.Single());result=await PowerAuditOracle.EnchantedCopies(RunState(),request.GetProperty("mode").GetString()!,request.GetProperty("upgrade").GetBoolean());break;
+                case "power-snapshot":result=PowerAuditOracle.Snapshot(RunState());break;
+                case "power-coop-prepare":result=await PowerAuditOracle.CoopPrepare(RunState(),request.GetProperty("upgrade").GetBoolean());break;
+                case "power-coop-play":result=await PowerAuditOracle.CoopPlay(RunState(),request.GetProperty("upgrade").GetBoolean());break;
                 case "balance-encounter":await WaitForPlay(RunState().Players.Single());result=await BalanceOracle.Encounter(RunState(),request.GetProperty("build").GetString()!,UseTestSelector());break;
                 case "persistence-state":result=PersistenceOracle.Snapshot(RunState());break;
                 case "persistence-menu":result=PersistenceOracle.ChangeMenu(RunState());break;

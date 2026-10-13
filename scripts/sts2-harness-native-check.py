@@ -82,6 +82,14 @@ try:
         diagnostic=send(host,'harness-owner-diagnostic',owner=2)
         assert diagnostic['originalPreserved'] and 'Heir: mage; traits: cantattack' in diagnostic['text'] and 'Inner owner diagnostic' in diagnostic['text'],diagnostic
         time.sleep(12);send(host,'coop-vote');send(guest,'coop-vote');peers('Play')
+        if 'powers53' in tag:
+            for upgraded in [False,True]:
+                for profile in [host,guest]:send(profile,'power-coop-prepare',upgrade=upgraded)
+                for profile in [host,guest]:send(profile,'power-coop-play',upgrade=upgraded)
+                peers('Play')
+                snapshots=[send(profile,'power-snapshot') for profile in [host,guest]]
+                assert snapshots[0]==snapshots[1],snapshots
+                assert all(p['charges']==(1 if p['cls']=='knight' else 2) for p in snapshots[0])
         if 'cards52' in tag:
             for upgraded in [False,True]:
                 for key,replay in [('fortify',True),('study',False)]:

@@ -15,6 +15,8 @@ using MegaCrit.Sts2.Core.Models.Powers;
 using MegaCrit.Sts2.Core.Nodes.Cards;
 using MegaCrit.Sts2.Core.Runs;
 using MegaCrit.Sts2.Core.Saves.Runs;
+using MegaCrit.Sts2.Core.Saves;
+using MegaCrit.Sts2.Core.Models.Enchantments;
 using MegaCrit.Sts2.Core.ValueProps;
 
 namespace SpireLegacy;
@@ -62,6 +64,7 @@ public static class PowerAuditOracle
         const string patch="CapeKid.SpireLegacy2.PowerAudit";var harmony=new Harmony(patch);
         var player=run.Players.Single();var cls=PlayerBloodlines.Heir(player).classId;
         using(selector)try {
+            var initial=player.Creature.GetPower<P_class>();Require(initial is {Charges:0,AttacksThisTurn:0},"New combat inherited old class counters.");
             var enemies=await Setup(player);Require(enemies.Length>0,"Class fixture needs targets.");
             harmony.Patch(typeof(Hook).GetMethods(BindingFlags.Public|BindingFlags.Static).Single(m=>m.Name=="AfterDamageGiven"),prefix:new HarmonyMethod(typeof(PowerAuditOracle),nameof(Observe)));
             var counter=player.Creature.GetPower<P_class>()!;
@@ -74,7 +77,7 @@ public static class PowerAuditOracle
             }
             // Regular does not cache power fields: run saves contain no live powers.
             // Register this test model explicitly for the separate property-codec probe.
-            SavedPropertiesTypeCache.InjectTypeIntoCache(typeof(P_class));
+            BaseLib.Utils.BetaMainCompatibility.CacheSavedProperties(typeof(P_class));
             var saved=SavedProperties.From(counter)??new SavedProperties();
             var json=JsonSerializer.Serialize(saved,new JsonSerializerOptions{IncludeFields=true});
             var loaded=(P_class)ModelDb.Power<P_class>().ToMutable();JsonSerializer.Deserialize<SavedProperties>(json,new JsonSerializerOptions{IncludeFields=true})!.Fill(loaded);
@@ -82,6 +85,8 @@ public static class PowerAuditOracle
             var clone=(P_class)counter.MutableClone();clone.Charges=0;
             var field=AccessTools.Field(typeof(LegacyPower),"classBonusTargets");
             Require(!ReferenceEquals(field.GetValue(counter),field.GetValue(clone))&&counter.Charges==charges.Last(),"Power clone shares counters/target set.");
+            ((HashSet<Creature>)field.GetValue(clone)!).Add(enemies[0]);Require(!((HashSet<Creature>)field.GetValue(counter)!).Contains(enemies[0]),"Clone target mutation leaked.");
+            await SaveManager.Instance.SaveRun(null);
             var canonical=mode switch {
                 "area"=>ModelDb.Card<Thunderclap>(),
                 "random"=>NativeCards.Get(Design.Rows("cards").First(r=>r.Text("special")=="random_attack"&&r.Text("power")=="none").Text("id")),
@@ -101,7 +106,7 @@ public static class PowerAuditOracle
             observed=card;hits.Clear();await Play(card,enemies[0]);
             var bonus=cls=="knight"&&primed>0?2:cls=="mage"?primed*(1+(mode=="reservoir"?2:0)):0;
             var seen=new HashSet<Creature>();
-            foreach(var hit in hits){var extra=seen.Add(hit.target)?bonus:0;Require(hit.damage==baseDamage+extra,$"Class first-hit damage {cls}/{mode}: {hit.damage}, expected {baseDamage+extra}");}
+            foreach(var hit in hits){var extra=seen.Add(hit.target)?bonus:0;var expected=mode=="lethal"?1:baseDamage+extra;Require(hit.damage==expected,$"Class first-hit damage {cls}/{mode}: {hit.damage}, expected {expected}");}
             Require(hits.Count>0,"No observed powered hits.");
             var plays=mode=="replay"?2:1;
             if(mode!="lethal")Require(counter.AttacksThisTurn==plays&&counter.Charges==0,"Class Attack count/consumption mismatch.");
@@ -220,5 +225,58 @@ public static class PowerAuditOracle
             }
             throw new ArgumentException("Unknown engine fixture: "+mode);
         }
+    }
+    public static async Task<object> EnchantedCopies(RunState run,string mode,bool up)
+    {
+        var player=run.Players.Single();var checks=new List<object>();
+        foreach(var key in new[]{"knight_guard","knight_stand_ready","ranger_shed_cloak"}) {
+            await Setup(player);await Apply(player,"dexterity",2);
+            var original=(LegacyCard)await Add(player,NativeCards.Get(key),up);CardCmd.Enchant<Nimble>(original,3);
+            LegacyCard card;
+            if(mode=="dupe") {
+                var method=AccessTools.Method(typeof(CardModel),"CreateDupe");
+                card=(LegacyCard)method.Invoke(original,method.GetParameters().Select(p=>p.ParameterType==typeof(Player)?player:p.HasDefaultValue?p.DefaultValue:throw new MissingMethodException("Dupe parameter.")).ToArray())!;
+            }else {
+                var loaded=run.LoadCard(original.ToSerializable(),player);card=(LegacyCard)player.Creature.CombatState!.CloneCard(loaded);run.RemoveCard(loaded);
+            }
+            Require(card.Enchantment?.Amount==3,"Nimble disappeared from a card copy.");
+            await CardPileCmd.RemoveFromCombat(original,skipVisuals:true);await CardPileCmd.Add(card,PileType.Hand,skipVisuals:true);
+            var design=card.DesignCard;var secondary=design.Row.Text("special")=="exhaust_nonattacks";
+            if(secondary)await Add(player,ModelDb.Card<DefendIronclad>());
+            var before=player.Creature.Block;await Play(card);
+            var expected=(design.Block>0?design.Block+5:0)+(secondary?design.SpecialAmount+3:0);
+            Require(player.Creature.Block-before==expected,"Copied Nimble immediate/secondary Block differs.");
+            var delayed=design.Amount("nextBlock");
+            if(delayed>0) {
+                Require(player.Creature.GetPowerAmount<BlockNextTurnPower>()==delayed+5,"Copied Nimble delayed amount differs.");
+                await BalanceOracle.End(player,true);await Wait(()=>player.PlayerCombatState!.Phase==PlayerTurnPhase.Play);
+                Require(player.Creature.Block==delayed+5&&player.Creature.GetPower<BlockNextTurnPower>()==null,"Copied Nimble delayed delivery differs.");
+            }
+            checks.Add(new{key,mode,up,block=expected,nextBlock=delayed>0?delayed+5:0});
+        }
+        return checks;
+    }
+    public static object Snapshot(RunState run)=>run.Players.Select(p=>new{owner=p.NetId,cls=PlayerBloodlines.Heir(p).classId,charges=p.Creature.GetPower<P_class>()?.Charges,attacks=p.Creature.GetPower<P_class>()?.AttacksThisTurn}).ToArray();
+    public static async Task<object> CoopPrepare(RunState run,bool up)
+    {
+        foreach(var player in run.Players.OrderBy(p=>p.NetId)) {
+            foreach(var key in new[]{"arcane_echo","skill_block","discard_energy"})foreach(var old in player.Creature.Powers.OfType<LegacyPower>().Where(p=>p.Key==key).ToArray())await PowerCmd.Remove(old);
+            await Apply(player,"arcane_echo",2);await Apply(player,"skill_block",3);await Apply(player,"discard_energy",2);
+            await PlayerCmd.GainEnergy(20,player);
+            for(var i=0;i<3;i++)await Add(player,ModelDb.Card<DefendIronclad>(),up);
+        }
+        return new{up,owners=run.Players.Count};
+    }
+    public static async Task<object> CoopPlay(RunState run,bool up)
+    {
+        var player=PlayerBloodlines.LocalPlayer!;var others=run.Players.Where(p=>p!=player).Select(p=>new{p,energy=p.PlayerCombatState!.Energy,block=p.Creature.Block,hand=p.PlayerCombatState.Hand.Cards.Count,charges=p.Creature.GetPower<P_class>()!.Charges}).ToArray();
+        var energy=player.PlayerCombatState!.Energy;var block=player.Creature.Block;
+        var cards=player.PlayerCombatState.Hand.Cards.OfType<DefendIronclad>().Where(c=>c.IsUpgraded==up).TakeLast(3).ToArray();Require(cards.Length==3,"Missing co-op Skill fuel.");
+        foreach(var card in cards)await Play(card);
+        Require(player.PlayerCombatState.Energy==energy-3&&player.Creature.Block-block==3*(up?8:5)+3,"Co-op third Skill stacking differs.");
+        var counter=player.Creature.GetPower<P_class>()!;var cls=PlayerBloodlines.Heir(player).classId;
+        Require(counter.Charges==(cls=="knight"?1:cls=="mage"?2:0),"Co-op class Skill cap differs.");
+        Require(others.All(o=>o.p.PlayerCombatState!.Energy==o.energy&&o.p.Creature.Block==o.block&&o.p.PlayerCombatState.Hand.Cards.Count==o.hand&&o.p.Creature.GetPower<P_class>()!.Charges==o.charges),"Power hook leaked to another owner.");
+        return new{owner=player.NetId,cls,up,plays=3,charges=counter.Charges,ownerOnly=true};
     }
 }
