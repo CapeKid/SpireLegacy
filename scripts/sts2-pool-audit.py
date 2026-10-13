@@ -5,10 +5,10 @@ from oracle_protocol import call
 root=Path(__file__).resolve().parents[1];profile=Path(sys.argv[1]);tag=sys.argv[2];records=[]
 expected=hashlib.sha256((root/'sts2/bin/Release/net9.0/SpireLegacy.dll').read_bytes()).hexdigest()
 output=root/'private/sts2-evidence'/('pool-audit-'+tag+'.json');assert not output.exists()
-def send(command,**args):
+def send(command,ok=True,**args):
     r=call(profile,dict(command=command,**args),timeout=90,expected_hash=expected);records.append(r)
-    output.write_text(json.dumps(records,indent=2));assert r['response']['ok'],r
-    return r['response']['result']
+    output.write_text(json.dumps(records,indent=2));assert r['response']['ok']==ok,r
+    return r['response'].get('result',r['response'].get('error'))
 def ready():
     deadline=time.monotonic()+45
     while time.monotonic()<deadline:
@@ -41,8 +41,12 @@ for cls in ['knight','mage','ranger','ironclad']:
     if 'crossrun' in tag and cls!='ironclad':
         send('abandon')
         source=root/'private/sts2-evidence'/f'pool54-{"regular" if beta else "beta"}-{cls}-run.json'
-        shutil.copy2(source,profile/'pool-run.json');loaded=send('pool-audit-import-run');ready()
-        assert loaded['cls']==cls and all(any(c['key']==r['cardId'] and c['upgraded'] for c in loaded['deck']) for r in json.loads((root/'sheets/branch_cards.json').read_text()) if r['classId']==cls),loaded
+        shutil.copy2(source,profile/'pool-run.json');loaded=send('pool-audit-import-run',ok=beta)
+        if beta:
+            ready();assert loaded['cls']==cls and all(any(c['key']==r['cardId'] and c['upgraded'] for c in loaded['deck']) for r in json.loads((root/'sheets/branch_cards.json').read_text()) if r['classId']==cls),loaded
+        else:
+            assert 'System.UInt32' in loaded and '.rng.seed' in loaded,loaded
+            send('start',**{'class':cls,'quick':True,'traits':[],'seed':'SPIRELEGACY-POOLS-54','manorTier':0});ready()
     if 'import' in tag and cls!='ironclad':
         source=root/'private/sts2-evidence'/f'pool54-{("regular" if beta else "beta")}-{cls}-cards.json'
         shutil.copy2(source,profile/'pool-cards.json')
@@ -62,7 +66,7 @@ for cls in ['knight','mage','ranger','ironclad']:
     send('save');send('resume')
     if cls=='ironclad':send('enter',room='Monster')
     ready();send('pool-audit-owner')
-    if 'export' in tag and cls!='ironclad':
+    if 'export' in tag:
         send('pool-audit-export-run')
         shutil.copy2(profile/'pool-run.json',root/'private/sts2-evidence'/f'pool54-{"beta" if beta else "regular"}-{cls}-run.json')
     send('pool-audit-registry')
