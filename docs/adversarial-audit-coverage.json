@@ -1,5 +1,5 @@
 {
-  "sourceSha": "6a2c8de184c10ac19cc22f5c51c77a91016dff5a",
+  "sourceSha": "ddf8e377cb6945a22d5a982762d4c6cc31fed72f",
   "files": [
     {
       "path": ".gitattributes",
@@ -1526,6 +1526,14 @@
       "primaryIssue": 51
     },
     {
+      "path": "docs/ancient-tome-parity-evidence.json",
+      "primaryIssue": 62
+    },
+    {
+      "path": "docs/ancient-tome-parity.md",
+      "primaryIssue": 62
+    },
+    {
       "path": "docs/balance-campaign-cards.csv",
       "primaryIssue": 62
     },
@@ -2355,6 +2363,10 @@
     },
     {
       "path": "scripts/sts2-tactical-check.py",
+      "primaryIssue": 47
+    },
+    {
+      "path": "scripts/sts2-tome-parity-check.py",
       "primaryIssue": 47
     },
     {
@@ -6414,6 +6426,10 @@
       "primaryIssue": 47
     },
     {
+      "path": "sts2/Native/TomeParityOracle.cs",
+      "primaryIssue": 47
+    },
+    {
       "path": "sts2/Native/TraitAppearance.cs",
       "primaryIssue": 58
     },
@@ -6479,10 +6495,10 @@
     }
   ],
   "counts": {
-    "62": 90,
+    "62": 92,
     "63": 419,
     "58": 923,
-    "47": 69,
+    "47": 71,
     "50": 10,
     "49": 8,
     "48": 7,
