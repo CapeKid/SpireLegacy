@@ -16,6 +16,17 @@ def start(cls,tier=0,traits=[]):
     while send('state')['phase']!='Play':
         assert time.monotonic()<deadline;time.sleep(.15)
 send('presentation-prepare');send('balance-audit-references')
+if 'draw-budget' in tag:
+    for cls in ['knight'] if 'baseline' in tag else ['knight','mage','ranger']:
+        for upgraded in [False,True]:
+            for key in ['native','study','knight_battle_meditation']:
+                start(cls);r=send('balance-audit-draw',card=key,upgrade=upgraded)
+                draw=(2 if key=='study' or key=='knight_battle_meditation' and 'baseline' in tag else 3)+int(upgraded)
+                discarded=0 if key=='study' else 1
+                assert r['drawn']==draw and r['discarded']==discarded and r['hand']==draw-discarded,r
+                assert r['energySpent']==r['cost']==1 and r['pile']=='Discard',r
+                print(tag,cls,r,flush=True)
+    send('abandon');raise SystemExit(0)
 if 'native-recovery' in tag:
     for cls in ['knight','mage','ranger']:
         for mixed in [False,True]:

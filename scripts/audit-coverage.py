@@ -5,6 +5,7 @@ from pathlib import Path
 root=Path(__file__).resolve().parents[1]
 def owner(path):
     name=Path(path).name
+    if name in {'BalanceAuditOracle.cs','BalanceOracle.cs','sts2-adversarial-balance.py','sts2-balance-coop.py','sts2-balance-design-audit.py','sts2-adversarial-balance-evidence.py','adversarial-balance.md','adversarial-balance-design.json','adversarial-balance-evidence.json','adversarial-balance-campaigns.csv','adversarial-balance-campaign-cards.csv'}:return 60
     if name in {'HeirRoomFacing.cs','PresentationAuditOracle.cs','HeirPresentationOracle.cs','sts2-presentation-audit.py','sts2-presentation-coop.py','sts2-presentation-evidence.py','adversarial-presentation.md','adversarial-presentation-evidence.json'}:return 58
     if name in {'ManorAuditOracle.cs','sts2-manor-audit.py','sts2-manor-coop.py','sts2-manor-evidence.py','adversarial-manor.md','adversarial-manor-evidence.json'}:return 57
     if name in {'AncientAuditOracle.cs','AncientDialogueOracle.cs','AncientCardOracle.cs','sts2-ancient-audit.py','sts2-ancient-coop.py','sts2-ancient-audit-evidence.py','sts2-architect-check.py','sts2-ancient-dialogue-check.py','adversarial-ancients.md','adversarial-ancients-evidence.json'}:return 56

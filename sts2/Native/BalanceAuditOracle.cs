@@ -127,4 +127,17 @@ public static class BalanceAuditOracle
             return new{mixed,plays=12,energySpent=energy-player.PlayerCombatState.Energy,blockGained=player.Creature.Block-block,aPile=a.Pile?.Type.ToString(),bPile=b.Pile?.Type.ToString()};
         }
     }
+    public static async Task<object> DrawBudget(RunState run,string key,bool upgraded,IDisposable selector)
+    {
+        using(selector) {
+            var player=run.Players.Single();var combat=player.Creature.CombatState!;
+            await CardPileCmd.RemoveFromCombat(CardPile.GetCards(player,Piles).ToArray(),skipVisuals:true);
+            var fuel=new List<CardModel>();
+            for(var i=0;i<12;i++){var f=combat.CreateCard(ModelDb.Card<DefendIronclad>(),player);await CardPileCmd.Add(f,PileType.Draw,skipVisuals:true);fuel.Add(f);}
+            var card=combat.CreateCard(key=="native"?ModelDb.Card<Acrobatics>():NativeCards.Get(key),player);
+            if(upgraded)CardCmd.Upgrade(card);await CardPileCmd.Add(card,PileType.Hand,skipVisuals:true);
+            var before=player.PlayerCombatState!.Energy;await BalanceOracle.Play(card);
+            return new{key,upgraded,rarity=card.Rarity.ToString(),cost=card.EnergyCost.GetWithModifiers(CostModifiers.All),energySpent=before-player.PlayerCombatState.Energy,drawn=fuel.Count(c=>c.Pile?.Type!=PileType.Draw),discarded=fuel.Count(c=>c.Pile?.Type==PileType.Discard),hand=fuel.Count(c=>c.Pile?.Type==PileType.Hand),pile=card.Pile?.Type.ToString()};
+        }
+    }
 }

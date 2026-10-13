@@ -383,6 +383,8 @@ foreach(var up in new[]{false,true}) {
     var reset=new CardDesign("ranger_trail_reset",up);
     Check(reset.Row.Flag("exhaust")&&reset.Cost==(up?0:1)&&reset.Row.Text("special")=="refill_hand","Trail Reset keeps its hand exchange and cost but cannot replay the free Reflex loop");
 }
+Check(new CardDesign("mage_memory_prism").Rules().Contains("Spire Legacy recovery cards"),"Recovery text does not imply native recovery cards are forbidden");
+Check(new CardDesign("knight_arms_vault").Rules().Contains("Spire Legacy cards with this effect"),"Exhaust recovery text names the actual restricted effect family");
 PersistenceChecks.Run(Check,directory);
 Console.WriteLine(JsonSerializer.Serialize(new { result = "passed", assertions = count, cards = 360, inheritedTraits = traitIds.Length, familyFixture = directory }));
 

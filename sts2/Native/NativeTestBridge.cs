@@ -60,6 +60,7 @@ public static class NativeTestBridge
                 case "balance-audit-native-loop":result=await BalanceAuditOracle.NativeFlashLoop(RunState(),request.GetProperty("upgrade").GetBoolean());break;
                 case "balance-audit-exchange":result=await BalanceAuditOracle.Exchange(RunState(),request.GetProperty("card").GetString()!,request.GetProperty("upgrade").GetBoolean());break;
                 case "balance-audit-native-recovery":result=await BalanceAuditOracle.NativeRecovery(RunState(),request.GetProperty("mixed").GetBoolean(),UseTestSelector());break;
+                case "balance-audit-draw":result=await BalanceAuditOracle.DrawBudget(RunState(),request.GetProperty("card").GetString()!,request.GetProperty("upgrade").GetBoolean(),UseTestSelector());break;
                 case "balance-audit-coop-prepare":result=await BalanceAuditOracle.CoopPrepare(RunState(),request.GetProperty("upgrade").GetBoolean());break;
                 case "balance-audit-coop-play":result=await BalanceAuditOracle.CoopPlay(RunState(),request.GetProperty("upgrade").GetBoolean());break;
                 case "balance-audit-encounter":await WaitForPlay(RunState().Players.Single());result=await BalanceOracle.Encounter(RunState(),request.GetProperty("build").GetString()!,UseTestSelector(),audit:true,item:request.GetProperty("item").GetBoolean());break;
