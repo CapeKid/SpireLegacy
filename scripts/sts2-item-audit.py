@@ -2,6 +2,7 @@
 import hashlib,json,sys,time
 from pathlib import Path
 from oracle_protocol import call
+from item_audit_assertions import relic_effect,potion_effect
 root=Path(__file__).resolve().parents[1];profile=Path(sys.argv[1]);tag=sys.argv[2];records=[]
 expected=hashlib.sha256((root/'sts2/bin/Release/net9.0/SpireLegacy.dll').read_bytes()).hexdigest();output=root/'private/sts2-evidence'/('item-audit-'+tag+'.json')
 assert not output.exists()
@@ -22,8 +23,8 @@ if 'clones' in tag:
 if 'antique' in tag:
     send('start',**{'class':'knight','quick':True,'traits':['antique'],'seed':'SPIRELEGACY-ITEMS-55','manorTier':0});ready()
     r=send('item-antique-empty')
-    if 'baseline' in tag:assert r['diagnostic'] and r['granted']==0,r
-    else:assert r['diagnostic'] is None and r['granted']==1 and r['added']==['RELIC.CIRCLET'],r
+    # The shared native bag refreshes from its original pool when depleted.
+    assert r['diagnostic'] is None and r['granted']==1 and r['rarities']==['Common'],r
     send('abandon');print(tag,'depleted starter grant checked',flush=True)
 elif 'relic-edges' in tag:
     for cls in ['knight','mage','ranger']:
@@ -36,7 +37,7 @@ elif 'relics' in tag:
                 send('chronicle-fixture',unlocked=True)
                 send('start',**{'class':cls,'quick':True,'traits':[],'seed':'SPIRELEGACY-ITEMS-55','manorTier':0});ready()
                 key=row['id'];send('relic-obtain',relic=key,shop=up)
-                r=send('item-relic',relic=key,upgrade=up);assert r['roundTrip'],r
+                r=send('item-relic',relic=key,upgrade=up);relic_effect(cls,r)
                 send('save');send('resume');ready();assert len(send('relic-counters'))==1
                 send('abandon')
             print(tag,cls,up,'all relic identities exercised',flush=True)
@@ -55,7 +56,7 @@ elif 'potions' in tag:
                 for key in ['borrowed_breath','briar_vial','triune_draught']:send('potion-obtain',potion=key,shop=shop)
                 slots=send('potion-slots');send('save');send('resume');ready();assert send('potion-slots')==slots
                 for key in ['borrowed_breath','briar_vial','triune_draught']:
-                    r=send('potion-use',potion=key);assert r['completed'] and r['hpChange']==r['energyChange']==0,r
+                    r=send('potion-use',potion=key);potion_effect(cls,r)
                 assert all(p is None for p in send('potion-slots'))
             send('abandon');print(tag,cls,traits,'saved belt/native effects complete',flush=True)
 elif 'edges' in tag:

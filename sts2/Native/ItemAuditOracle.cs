@@ -141,7 +141,7 @@ public static class ItemAuditOracle
         var player=run.Players.Single();var bloodline=player.Relics.OfType<BloodlineRelic>().Single();var bag=run.SharedRelicGrabBag.ToSerializable();var before=player.Relics.Count();string? diagnostic=null;
         try{var empty=run.SharedRelicGrabBag.ToSerializable();foreach(var list in empty.RelicIdLists.Values)list.Clear();run.SharedRelicGrabBag.LoadFromSerializable(empty);bloodline.StartingRelicsGranted=false;try{await bloodline.AfterActEntered();}catch(Exception error){diagnostic=error.ToString();}}
         finally{run.SharedRelicGrabBag.LoadFromSerializable(bag);}
-        return new{diagnostic,granted=player.Relics.Count()-before,bloodline.StartingRelicsGranted,added=player.Relics.Skip(before).Select(r=>r.Id.ToString()).ToArray()};
+        return new{diagnostic,granted=player.Relics.Count()-before,bloodline.StartingRelicsGranted,added=player.Relics.Skip(before).Select(r=>r.Id.ToString()).ToArray(),rarities=player.Relics.Skip(before).Select(r=>r.Rarity.ToString()).ToArray()};
     }
     public static async Task<object> CoopAttack(RunState run,bool up)
     {
