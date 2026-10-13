@@ -49,7 +49,7 @@ Perfect Ward remains a 2-Energy Exhaust Skill, but prevents 1 HP-loss event (2 u
 ## 1.0.14 balance audit fixes
 
 - Guardian Angel prevents one HP-loss event at either level, costing 2 Energy (1 upgraded). Perfect Ward costs 2, prevents 1/2 events and now supplies 3/5 Block, giving the cards different upgrade choices.
-- Every multi-hit card adds at most 1 damage per hit on upgrade. Knight/Mage priming and Arcane Reservoir add damage only on the first hit to each enemy per Attack; normal Strength remains per hit.
+- Every multi-hit card adds at most 1 damage per hit on upgrade. Knight/Mage priming and Arcane Reservoir now add damage to every hit of the next Attack, following native attack-bonus behavior (#130). Their charge limits and once-per-card consumption remain unchanged.
 - Discard draw/Energy/Block cards reward at most once per copy per turn. The claimed turn is saved on the card, and nested reward triggers cannot claim it twice. The native discard POWER remains capped at the first discard per turn.
 - Astral Mantle always grants 1 Block per card played; its upgrade lowers setup cost from 2 to 1.
 - Blood to Mana upgrades Energy 2 to 3; Mana Fountain 3 to 4; Escape Route 1 to 2. Kindle gains 2/4 Block alongside its charge gain. Overcharge retains the normal charge cap, draws 1/2 cards, loses 3 HP, and now Exhausts.

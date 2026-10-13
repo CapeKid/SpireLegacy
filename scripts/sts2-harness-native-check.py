@@ -56,8 +56,8 @@ try:
     elif mode=='coop':
         host,guest=sys.argv[2:4];port=int(sys.argv[5])
         guest_class='ranger' if 'powers53ranger' in tag or 'pools54ranger' in tag or 'items55ranger' in tag else 'mage'
-        guest_traits=['enemyknockedfar'] if 'items55' in tag else [] if guest_class=='ranger' else ['cantattack']
-        send(host,'coop-host',**{'class':'knight','traits':['enemyknockedfar'] if 'items55' in tag else ['easybreakables'],'port':port,'manor':{'vitality':1}})
+        guest_traits=[] if 'class130' in tag else ['enemyknockedfar'] if 'items55' in tag else [] if guest_class=='ranger' else ['cantattack']
+        send(host,'coop-host',**{'class':'knight','traits':[] if 'class130' in tag else ['enemyknockedfar'] if 'items55' in tag else ['easybreakables'],'port':port,'manor':{'vitality':1}})
         send(host,'coop-ready')
         send(guest,'coop-join',**{'class':guest_class,'traits':guest_traits,'port':port,'manor':{}})
         # Ready is correctly refused until the authenticated lobby session arrives.
@@ -84,6 +84,13 @@ try:
         diagnostic=send(host,'harness-owner-diagnostic',owner=2)
         assert diagnostic['originalPreserved'] and 'Heir: '+guest_class+'; traits: '+', '.join(guest_traits) in diagnostic['text'] and 'Inner owner diagnostic' in diagnostic['text'],diagnostic
         time.sleep(12);send(host,'coop-vote');send(guest,'coop-vote');peers('Play')
+        if 'class130' in tag:
+            for upgraded in [False,True]:
+                for profile in [host,guest]:send(profile,'power-multihit-coop-prepare',upgrade=upgraded)
+                for profile in [host,guest]:
+                    played=send(profile,'power-multihit-coop-play',upgrade=upgraded);assert played['ownerOnly']
+                    for peer in [host,guest]:assert send(peer,'power-coop-checkpoint',minimum=played['checksumNext'])['enabled']
+                    peers('Play')
         if 'items55' in tag:
             for profile in [host,guest]:send(profile,'item-coop-prepare',upgrade=False)
             outcomes=[]
@@ -141,7 +148,7 @@ try:
             for profile in [host,guest]:assert len(send(profile,'orobas-coop'))==2
             for profile in [host,guest]:assert len(send(profile,'coop-roundtrip'))==2
         for profile in [host,guest]:
-            if 'items55' in tag:continue
+            if 'items55' in tag or 'class130' in tag:continue
             played=send(profile,'coop-play')
             assert played['played'] and played['pile']=='Discard' and not played['tableNodePresent'],played
             time.sleep(1)

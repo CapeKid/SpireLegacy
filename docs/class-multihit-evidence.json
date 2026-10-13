@@ -1,0 +1,3472 @@
+{
+  "issue": 130,
+  "baselineMain": "70ff82d",
+  "coreAssertions": 164053,
+  "harnessChecks": 20,
+  "branches": [
+    {
+      "branch": "regular",
+      "game": "v0.107.1",
+      "baseline": {
+        "file": "power-audit-class130-baseline-regular.json",
+        "replies": 77,
+        "dllSha256": "815f02376895454d2c87337aa8d445d2a2e2dd055a95415c1ccbcd732e3c4860",
+        "sourceSha": "91a2ef35eedca176d9bc914c53e2ef2e3328dbdc",
+        "productionSha256": {
+          "sts2/Native/LegacyPower.cs": "4faf6e33cc002a898b463086b627ba7b84fdc116ffa4d6f854a6695e192b8bb1",
+          "sts2/Core/CardDesign.cs": "eaad709271bbde4d38f1ae6ce4b0798c5058654e68f8450cee061340c711328e",
+          "sheets/classes.json": "c0e8b04438bd42e31e4ef12f29914fe57567e599f7467260d306c79d8e86662b",
+          "sheets/class_mechanics.json": "910cf66501e0e8a70befb3e95da380da460c6b0cf7f0354e17941bd9a34ff327"
+        },
+        "commands": {
+          "trait-speed": 1,
+          "compat-control": 1,
+          "start": 10,
+          "enter": 4,
+          "state": 40,
+          "vigor-room": 10,
+          "power-damage-control": 4,
+          "power-class": 6,
+          "abandon": 1
+        },
+        "seeds": [
+          "SPIRELEGACY-POWERS-53"
+        ],
+        "results": [
+          {
+            "input": {
+              "command": "power-damage-control",
+              "power": "strength",
+              "upgrade": false
+            },
+            "result": {
+              "power": "strength",
+              "up": false,
+              "first": [
+                7,
+                7
+              ],
+              "next": 8,
+              "vigorRemaining": 0
+            }
+          },
+          {
+            "input": {
+              "command": "power-damage-control",
+              "power": "vigor",
+              "upgrade": false
+            },
+            "result": {
+              "power": "vigor",
+              "up": false,
+              "first": [
+                7,
+                7
+              ],
+              "next": 6,
+              "vigorRemaining": 0
+            }
+          },
+          {
+            "input": {
+              "command": "power-class",
+              "mode": "baseline-multi",
+              "upgrade": false
+            },
+            "result": {
+              "cls": "knight",
+              "mode": "multi",
+              "up": false,
+              "charges": [
+                1,
+                1,
+                1,
+                1
+              ],
+              "primed": 1,
+              "bonus": 2,
+              "hits": [
+                7,
+                5
+              ],
+              "distinctTargets": 1,
+              "attacks": 1,
+              "Charges": 0,
+              "cloneIndependent": true,
+              "savedProperties": true,
+              "pile": "Discard"
+            }
+          },
+          {
+            "input": {
+              "command": "power-class",
+              "mode": "baseline-multi",
+              "upgrade": false
+            },
+            "result": {
+              "cls": "mage",
+              "mode": "multi",
+              "up": false,
+              "charges": [
+                1,
+                2,
+                2,
+                2
+              ],
+              "primed": 2,
+              "bonus": 2,
+              "hits": [
+                7,
+                5
+              ],
+              "distinctTargets": 1,
+              "attacks": 1,
+              "Charges": 0,
+              "cloneIndependent": true,
+              "savedProperties": true,
+              "pile": "Discard"
+            }
+          },
+          {
+            "input": {
+              "command": "power-class",
+              "mode": "baseline-multi",
+              "upgrade": false
+            },
+            "result": {
+              "cls": "ranger",
+              "mode": "multi",
+              "up": false,
+              "charges": [
+                0,
+                0,
+                0,
+                0
+              ],
+              "primed": 0,
+              "bonus": 0,
+              "hits": [
+                5,
+                5
+              ],
+              "distinctTargets": 1,
+              "attacks": 1,
+              "Charges": 0,
+              "cloneIndependent": true,
+              "savedProperties": true,
+              "pile": "Discard"
+            }
+          },
+          {
+            "input": {
+              "command": "power-damage-control",
+              "power": "strength",
+              "upgrade": true
+            },
+            "result": {
+              "power": "strength",
+              "up": true,
+              "first": [
+                9,
+                9
+              ],
+              "next": 11,
+              "vigorRemaining": 0
+            }
+          },
+          {
+            "input": {
+              "command": "power-damage-control",
+              "power": "vigor",
+              "upgrade": true
+            },
+            "result": {
+              "power": "vigor",
+              "up": true,
+              "first": [
+                9,
+                9
+              ],
+              "next": 9,
+              "vigorRemaining": 0
+            }
+          },
+          {
+            "input": {
+              "command": "power-class",
+              "mode": "baseline-multi",
+              "upgrade": true
+            },
+            "result": {
+              "cls": "knight",
+              "mode": "multi",
+              "up": true,
+              "charges": [
+                1,
+                1,
+                1,
+                1
+              ],
+              "primed": 1,
+              "bonus": 2,
+              "hits": [
+                9,
+                7
+              ],
+              "distinctTargets": 1,
+              "attacks": 1,
+              "Charges": 0,
+              "cloneIndependent": true,
+              "savedProperties": true,
+              "pile": "Discard"
+            }
+          },
+          {
+            "input": {
+              "command": "power-class",
+              "mode": "baseline-multi",
+              "upgrade": true
+            },
+            "result": {
+              "cls": "mage",
+              "mode": "multi",
+              "up": true,
+              "charges": [
+                1,
+                2,
+                2,
+                2
+              ],
+              "primed": 2,
+              "bonus": 2,
+              "hits": [
+                9,
+                7
+              ],
+              "distinctTargets": 1,
+              "attacks": 1,
+              "Charges": 0,
+              "cloneIndependent": true,
+              "savedProperties": true,
+              "pile": "Discard"
+            }
+          },
+          {
+            "input": {
+              "command": "power-class",
+              "mode": "baseline-multi",
+              "upgrade": true
+            },
+            "result": {
+              "cls": "ranger",
+              "mode": "multi",
+              "up": true,
+              "charges": [
+                0,
+                0,
+                0,
+                0
+              ],
+              "primed": 0,
+              "bonus": 0,
+              "hits": [
+                7,
+                7
+              ],
+              "distinctTargets": 1,
+              "attacks": 1,
+              "Charges": 0,
+              "cloneIndependent": true,
+              "savedProperties": true,
+              "pile": "Discard"
+            }
+          }
+        ]
+      },
+      "fixed": {
+        "file": "power-audit-class130-fixed-regular.json",
+        "replies": 296,
+        "dllSha256": "b1953426fd539e34b2fe4003f9a5aea8fbd05f868f1314f9ca423649d6984080",
+        "sourceSha": "6807b453e3bbc3f8b5082e84e861442a324e2bfe",
+        "productionSha256": {
+          "sts2/Native/LegacyPower.cs": "0eb35b44383210382ec77dc8a611cdd7fd4abd26e02fa4b0e0b0b03b1bcbdfd9",
+          "sts2/Core/CardDesign.cs": "0b366c60f187493473335d6714a0d1e4f260026dfb4774e03cac7c242a9e5f5d",
+          "sheets/classes.json": "0b61073801240d48c89e25b5daa64414d7d34ab87dc6d19697c128a831e2d82c",
+          "sheets/class_mechanics.json": "66cd8a40d3542ff67329558c9968f739623590bbd5bb85fa8a7b8dd37852115e"
+        },
+        "commands": {
+          "trait-speed": 1,
+          "compat-control": 1,
+          "start": 42,
+          "enter": 4,
+          "state": 163,
+          "vigor-room": 42,
+          "power-damage-control": 4,
+          "power-class": 38,
+          "abandon": 1
+        },
+        "seeds": [
+          "SPIRELEGACY-POWERS-53"
+        ],
+        "results": [
+          {
+            "input": {
+              "command": "power-damage-control",
+              "power": "strength",
+              "upgrade": false
+            },
+            "result": {
+              "power": "strength",
+              "up": false,
+              "first": [
+                7,
+                7
+              ],
+              "next": 8,
+              "vigorRemaining": 0
+            }
+          },
+          {
+            "input": {
+              "command": "power-damage-control",
+              "power": "vigor",
+              "upgrade": false
+            },
+            "result": {
+              "power": "vigor",
+              "up": false,
+              "first": [
+                7,
+                7
+              ],
+              "next": 6,
+              "vigorRemaining": 0
+            }
+          },
+          {
+            "input": {
+              "command": "power-class",
+              "mode": "multi",
+              "upgrade": false
+            },
+            "result": {
+              "cls": "knight",
+              "mode": "multi",
+              "up": false,
+              "charges": [
+                1,
+                1,
+                1,
+                1
+              ],
+              "primed": 1,
+              "bonus": 2,
+              "hits": [
+                7,
+                7
+              ],
+              "distinctTargets": 1,
+              "attacks": 1,
+              "Charges": 0,
+              "cloneIndependent": true,
+              "savedProperties": true,
+              "pile": "Discard"
+            }
+          },
+          {
+            "input": {
+              "command": "power-class",
+              "mode": "legacy-multi",
+              "upgrade": false
+            },
+            "result": {
+              "cls": "knight",
+              "mode": "legacy-multi",
+              "up": false,
+              "charges": [
+                1,
+                1,
+                1,
+                1
+              ],
+              "primed": 1,
+              "bonus": 2,
+              "hits": [
+                8,
+                8
+              ],
+              "distinctTargets": 1,
+              "attacks": 1,
+              "Charges": 0,
+              "cloneIndependent": true,
+              "savedProperties": true,
+              "pile": "Exhaust"
+            }
+          },
+          {
+            "input": {
+              "command": "power-class",
+              "mode": "area",
+              "upgrade": false
+            },
+            "result": {
+              "cls": "knight",
+              "mode": "area",
+              "up": false,
+              "charges": [
+                1,
+                1,
+                1,
+                1
+              ],
+              "primed": 1,
+              "bonus": 2,
+              "hits": [
+                6,
+                6
+              ],
+              "distinctTargets": 2,
+              "attacks": 1,
+              "Charges": 0,
+              "cloneIndependent": true,
+              "savedProperties": true,
+              "pile": "Discard"
+            }
+          },
+          {
+            "input": {
+              "command": "power-class",
+              "mode": "random",
+              "upgrade": false
+            },
+            "result": {
+              "cls": "knight",
+              "mode": "random",
+              "up": false,
+              "charges": [
+                1,
+                1,
+                1,
+                1
+              ],
+              "primed": 1,
+              "bonus": 2,
+              "hits": [
+                4,
+                4,
+                4
+              ],
+              "distinctTargets": 2,
+              "attacks": 1,
+              "Charges": 0,
+              "cloneIndependent": true,
+              "savedProperties": true,
+              "pile": "Discard"
+            }
+          },
+          {
+            "input": {
+              "command": "power-class",
+              "mode": "single",
+              "upgrade": false
+            },
+            "result": {
+              "cls": "knight",
+              "mode": "single",
+              "up": false,
+              "charges": [
+                1,
+                1,
+                1,
+                1
+              ],
+              "primed": 1,
+              "bonus": 2,
+              "hits": [
+                8
+              ],
+              "distinctTargets": 1,
+              "attacks": 1,
+              "Charges": 0,
+              "cloneIndependent": true,
+              "savedProperties": true,
+              "pile": "Discard"
+            }
+          },
+          {
+            "input": {
+              "command": "power-class",
+              "mode": "replay",
+              "upgrade": false
+            },
+            "result": {
+              "cls": "knight",
+              "mode": "replay",
+              "up": false,
+              "charges": [
+                1,
+                1,
+                1,
+                1
+              ],
+              "primed": 1,
+              "bonus": 2,
+              "hits": [
+                7,
+                7,
+                5,
+                5
+              ],
+              "distinctTargets": 1,
+              "attacks": 2,
+              "Charges": 0,
+              "cloneIndependent": true,
+              "savedProperties": true,
+              "pile": "Discard"
+            }
+          },
+          {
+            "input": {
+              "command": "power-class",
+              "mode": "zero",
+              "upgrade": false
+            },
+            "result": {
+              "cls": "knight",
+              "mode": "zero",
+              "up": false,
+              "charges": [
+                1,
+                1,
+                1,
+                1
+              ],
+              "primed": 0,
+              "bonus": 0,
+              "hits": [
+                0
+              ],
+              "distinctTargets": 1,
+              "attacks": 1,
+              "Charges": 0,
+              "cloneIndependent": true,
+              "savedProperties": true,
+              "pile": "Discard"
+            }
+          },
+          {
+            "input": {
+              "command": "power-class",
+              "mode": "lethal-chain",
+              "upgrade": false
+            },
+            "result": {
+              "cls": "knight",
+              "mode": "lethal-chain",
+              "up": false,
+              "charges": [
+                1,
+                1,
+                1,
+                1
+              ],
+              "primed": 1,
+              "bonus": 2,
+              "hits": [
+                1
+              ],
+              "distinctTargets": 1,
+              "attacks": 1,
+              "Charges": 0,
+              "cloneIndependent": true,
+              "savedProperties": true,
+              "pile": "Discard"
+            }
+          },
+          {
+            "input": {
+              "command": "power-class",
+              "mode": "multi",
+              "upgrade": false
+            },
+            "result": {
+              "cls": "mage",
+              "mode": "multi",
+              "up": false,
+              "charges": [
+                1,
+                2,
+                2,
+                2
+              ],
+              "primed": 2,
+              "bonus": 2,
+              "hits": [
+                7,
+                7
+              ],
+              "distinctTargets": 1,
+              "attacks": 1,
+              "Charges": 0,
+              "cloneIndependent": true,
+              "savedProperties": true,
+              "pile": "Discard"
+            }
+          },
+          {
+            "input": {
+              "command": "power-class",
+              "mode": "legacy-multi",
+              "upgrade": false
+            },
+            "result": {
+              "cls": "mage",
+              "mode": "legacy-multi",
+              "up": false,
+              "charges": [
+                1,
+                2,
+                2,
+                2
+              ],
+              "primed": 2,
+              "bonus": 2,
+              "hits": [
+                6,
+                6,
+                6
+              ],
+              "distinctTargets": 1,
+              "attacks": 1,
+              "Charges": 0,
+              "cloneIndependent": true,
+              "savedProperties": true,
+              "pile": "Discard"
+            }
+          },
+          {
+            "input": {
+              "command": "power-class",
+              "mode": "area",
+              "upgrade": false
+            },
+            "result": {
+              "cls": "mage",
+              "mode": "area",
+              "up": false,
+              "charges": [
+                1,
+                2,
+                2,
+                2
+              ],
+              "primed": 2,
+              "bonus": 2,
+              "hits": [
+                6,
+                6
+              ],
+              "distinctTargets": 2,
+              "attacks": 1,
+              "Charges": 0,
+              "cloneIndependent": true,
+              "savedProperties": true,
+              "pile": "Discard"
+            }
+          },
+          {
+            "input": {
+              "command": "power-class",
+              "mode": "random",
+              "upgrade": false
+            },
+            "result": {
+              "cls": "mage",
+              "mode": "random",
+              "up": false,
+              "charges": [
+                1,
+                2,
+                2,
+                2
+              ],
+              "primed": 2,
+              "bonus": 2,
+              "hits": [
+                4,
+                4,
+                4
+              ],
+              "distinctTargets": 2,
+              "attacks": 1,
+              "Charges": 0,
+              "cloneIndependent": true,
+              "savedProperties": true,
+              "pile": "Discard"
+            }
+          },
+          {
+            "input": {
+              "command": "power-class",
+              "mode": "single",
+              "upgrade": false
+            },
+            "result": {
+              "cls": "mage",
+              "mode": "single",
+              "up": false,
+              "charges": [
+                1,
+                2,
+                2,
+                2
+              ],
+              "primed": 2,
+              "bonus": 2,
+              "hits": [
+                8
+              ],
+              "distinctTargets": 1,
+              "attacks": 1,
+              "Charges": 0,
+              "cloneIndependent": true,
+              "savedProperties": true,
+              "pile": "Discard"
+            }
+          },
+          {
+            "input": {
+              "command": "power-class",
+              "mode": "replay",
+              "upgrade": false
+            },
+            "result": {
+              "cls": "mage",
+              "mode": "replay",
+              "up": false,
+              "charges": [
+                1,
+                2,
+                2,
+                2
+              ],
+              "primed": 2,
+              "bonus": 2,
+              "hits": [
+                7,
+                7,
+                5,
+                5
+              ],
+              "distinctTargets": 1,
+              "attacks": 2,
+              "Charges": 0,
+              "cloneIndependent": true,
+              "savedProperties": true,
+              "pile": "Discard"
+            }
+          },
+          {
+            "input": {
+              "command": "power-class",
+              "mode": "zero",
+              "upgrade": false
+            },
+            "result": {
+              "cls": "mage",
+              "mode": "zero",
+              "up": false,
+              "charges": [
+                1,
+                2,
+                2,
+                2
+              ],
+              "primed": 0,
+              "bonus": 0,
+              "hits": [
+                0
+              ],
+              "distinctTargets": 1,
+              "attacks": 1,
+              "Charges": 0,
+              "cloneIndependent": true,
+              "savedProperties": true,
+              "pile": "Discard"
+            }
+          },
+          {
+            "input": {
+              "command": "power-class",
+              "mode": "lethal-chain",
+              "upgrade": false
+            },
+            "result": {
+              "cls": "mage",
+              "mode": "lethal-chain",
+              "up": false,
+              "charges": [
+                1,
+                2,
+                2,
+                2
+              ],
+              "primed": 2,
+              "bonus": 2,
+              "hits": [
+                1
+              ],
+              "distinctTargets": 1,
+              "attacks": 1,
+              "Charges": 0,
+              "cloneIndependent": true,
+              "savedProperties": true,
+              "pile": "Discard"
+            }
+          },
+          {
+            "input": {
+              "command": "power-class",
+              "mode": "reservoir",
+              "upgrade": false
+            },
+            "result": {
+              "cls": "mage",
+              "mode": "reservoir",
+              "up": false,
+              "charges": [
+                2,
+                2,
+                2,
+                2
+              ],
+              "primed": 2,
+              "bonus": 6,
+              "hits": [
+                11,
+                11
+              ],
+              "distinctTargets": 1,
+              "attacks": 1,
+              "Charges": 0,
+              "cloneIndependent": true,
+              "savedProperties": true,
+              "pile": "Discard"
+            }
+          },
+          {
+            "input": {
+              "command": "power-class",
+              "mode": "multi",
+              "upgrade": false
+            },
+            "result": {
+              "cls": "ranger",
+              "mode": "multi",
+              "up": false,
+              "charges": [
+                0,
+                0,
+                0,
+                0
+              ],
+              "primed": 0,
+              "bonus": 0,
+              "hits": [
+                5,
+                5
+              ],
+              "distinctTargets": 1,
+              "attacks": 1,
+              "Charges": 0,
+              "cloneIndependent": true,
+              "savedProperties": true,
+              "pile": "Discard"
+            }
+          },
+          {
+            "input": {
+              "command": "power-class",
+              "mode": "legacy-multi",
+              "upgrade": false
+            },
+            "result": {
+              "cls": "ranger",
+              "mode": "legacy-multi",
+              "up": false,
+              "charges": [
+                0,
+                0,
+                0,
+                0
+              ],
+              "primed": 0,
+              "bonus": 0,
+              "hits": [
+                3,
+                3
+              ],
+              "distinctTargets": 1,
+              "attacks": 1,
+              "Charges": 0,
+              "cloneIndependent": true,
+              "savedProperties": true,
+              "pile": "Discard"
+            }
+          },
+          {
+            "input": {
+              "command": "power-damage-control",
+              "power": "strength",
+              "upgrade": true
+            },
+            "result": {
+              "power": "strength",
+              "up": true,
+              "first": [
+                9,
+                9
+              ],
+              "next": 11,
+              "vigorRemaining": 0
+            }
+          },
+          {
+            "input": {
+              "command": "power-damage-control",
+              "power": "vigor",
+              "upgrade": true
+            },
+            "result": {
+              "power": "vigor",
+              "up": true,
+              "first": [
+                9,
+                9
+              ],
+              "next": 9,
+              "vigorRemaining": 0
+            }
+          },
+          {
+            "input": {
+              "command": "power-class",
+              "mode": "multi",
+              "upgrade": true
+            },
+            "result": {
+              "cls": "knight",
+              "mode": "multi",
+              "up": true,
+              "charges": [
+                1,
+                1,
+                1,
+                1
+              ],
+              "primed": 1,
+              "bonus": 2,
+              "hits": [
+                9,
+                9
+              ],
+              "distinctTargets": 1,
+              "attacks": 1,
+              "Charges": 0,
+              "cloneIndependent": true,
+              "savedProperties": true,
+              "pile": "Discard"
+            }
+          },
+          {
+            "input": {
+              "command": "power-class",
+              "mode": "legacy-multi",
+              "upgrade": true
+            },
+            "result": {
+              "cls": "knight",
+              "mode": "legacy-multi",
+              "up": true,
+              "charges": [
+                1,
+                1,
+                1,
+                1
+              ],
+              "primed": 1,
+              "bonus": 2,
+              "hits": [
+                9,
+                9
+              ],
+              "distinctTargets": 1,
+              "attacks": 1,
+              "Charges": 0,
+              "cloneIndependent": true,
+              "savedProperties": true,
+              "pile": "Exhaust"
+            }
+          },
+          {
+            "input": {
+              "command": "power-class",
+              "mode": "area",
+              "upgrade": true
+            },
+            "result": {
+              "cls": "knight",
+              "mode": "area",
+              "up": true,
+              "charges": [
+                1,
+                1,
+                1,
+                1
+              ],
+              "primed": 1,
+              "bonus": 2,
+              "hits": [
+                9,
+                9
+              ],
+              "distinctTargets": 2,
+              "attacks": 1,
+              "Charges": 0,
+              "cloneIndependent": true,
+              "savedProperties": true,
+              "pile": "Discard"
+            }
+          },
+          {
+            "input": {
+              "command": "power-class",
+              "mode": "random",
+              "upgrade": true
+            },
+            "result": {
+              "cls": "knight",
+              "mode": "random",
+              "up": true,
+              "charges": [
+                1,
+                1,
+                1,
+                1
+              ],
+              "primed": 1,
+              "bonus": 2,
+              "hits": [
+                5,
+                5,
+                5
+              ],
+              "distinctTargets": 2,
+              "attacks": 1,
+              "Charges": 0,
+              "cloneIndependent": true,
+              "savedProperties": true,
+              "pile": "Discard"
+            }
+          },
+          {
+            "input": {
+              "command": "power-class",
+              "mode": "single",
+              "upgrade": true
+            },
+            "result": {
+              "cls": "knight",
+              "mode": "single",
+              "up": true,
+              "charges": [
+                1,
+                1,
+                1,
+                1
+              ],
+              "primed": 1,
+              "bonus": 2,
+              "hits": [
+                11
+              ],
+              "distinctTargets": 1,
+              "attacks": 1,
+              "Charges": 0,
+              "cloneIndependent": true,
+              "savedProperties": true,
+              "pile": "Discard"
+            }
+          },
+          {
+            "input": {
+              "command": "power-class",
+              "mode": "replay",
+              "upgrade": true
+            },
+            "result": {
+              "cls": "knight",
+              "mode": "replay",
+              "up": true,
+              "charges": [
+                1,
+                1,
+                1,
+                1
+              ],
+              "primed": 1,
+              "bonus": 2,
+              "hits": [
+                9,
+                9,
+                7,
+                7
+              ],
+              "distinctTargets": 1,
+              "attacks": 2,
+              "Charges": 0,
+              "cloneIndependent": true,
+              "savedProperties": true,
+              "pile": "Discard"
+            }
+          },
+          {
+            "input": {
+              "command": "power-class",
+              "mode": "zero",
+              "upgrade": true
+            },
+            "result": {
+              "cls": "knight",
+              "mode": "zero",
+              "up": true,
+              "charges": [
+                1,
+                1,
+                1,
+                1
+              ],
+              "primed": 0,
+              "bonus": 0,
+              "hits": [
+                0
+              ],
+              "distinctTargets": 1,
+              "attacks": 1,
+              "Charges": 0,
+              "cloneIndependent": true,
+              "savedProperties": true,
+              "pile": "Discard"
+            }
+          },
+          {
+            "input": {
+              "command": "power-class",
+              "mode": "lethal-chain",
+              "upgrade": true
+            },
+            "result": {
+              "cls": "knight",
+              "mode": "lethal-chain",
+              "up": true,
+              "charges": [
+                1,
+                1,
+                1,
+                1
+              ],
+              "primed": 1,
+              "bonus": 2,
+              "hits": [
+                1
+              ],
+              "distinctTargets": 1,
+              "attacks": 1,
+              "Charges": 0,
+              "cloneIndependent": true,
+              "savedProperties": true,
+              "pile": "Discard"
+            }
+          },
+          {
+            "input": {
+              "command": "power-class",
+              "mode": "multi",
+              "upgrade": true
+            },
+            "result": {
+              "cls": "mage",
+              "mode": "multi",
+              "up": true,
+              "charges": [
+                1,
+                2,
+                2,
+                2
+              ],
+              "primed": 2,
+              "bonus": 2,
+              "hits": [
+                9,
+                9
+              ],
+              "distinctTargets": 1,
+              "attacks": 1,
+              "Charges": 0,
+              "cloneIndependent": true,
+              "savedProperties": true,
+              "pile": "Discard"
+            }
+          },
+          {
+            "input": {
+              "command": "power-class",
+              "mode": "legacy-multi",
+              "upgrade": true
+            },
+            "result": {
+              "cls": "mage",
+              "mode": "legacy-multi",
+              "up": true,
+              "charges": [
+                1,
+                2,
+                2,
+                2
+              ],
+              "primed": 2,
+              "bonus": 2,
+              "hits": [
+                7,
+                7,
+                7
+              ],
+              "distinctTargets": 1,
+              "attacks": 1,
+              "Charges": 0,
+              "cloneIndependent": true,
+              "savedProperties": true,
+              "pile": "Discard"
+            }
+          },
+          {
+            "input": {
+              "command": "power-class",
+              "mode": "area",
+              "upgrade": true
+            },
+            "result": {
+              "cls": "mage",
+              "mode": "area",
+              "up": true,
+              "charges": [
+                1,
+                2,
+                2,
+                2
+              ],
+              "primed": 2,
+              "bonus": 2,
+              "hits": [
+                9,
+                9
+              ],
+              "distinctTargets": 2,
+              "attacks": 1,
+              "Charges": 0,
+              "cloneIndependent": true,
+              "savedProperties": true,
+              "pile": "Discard"
+            }
+          },
+          {
+            "input": {
+              "command": "power-class",
+              "mode": "random",
+              "upgrade": true
+            },
+            "result": {
+              "cls": "mage",
+              "mode": "random",
+              "up": true,
+              "charges": [
+                1,
+                2,
+                2,
+                2
+              ],
+              "primed": 2,
+              "bonus": 2,
+              "hits": [
+                5,
+                5,
+                5
+              ],
+              "distinctTargets": 2,
+              "attacks": 1,
+              "Charges": 0,
+              "cloneIndependent": true,
+              "savedProperties": true,
+              "pile": "Discard"
+            }
+          },
+          {
+            "input": {
+              "command": "power-class",
+              "mode": "single",
+              "upgrade": true
+            },
+            "result": {
+              "cls": "mage",
+              "mode": "single",
+              "up": true,
+              "charges": [
+                1,
+                2,
+                2,
+                2
+              ],
+              "primed": 2,
+              "bonus": 2,
+              "hits": [
+                11
+              ],
+              "distinctTargets": 1,
+              "attacks": 1,
+              "Charges": 0,
+              "cloneIndependent": true,
+              "savedProperties": true,
+              "pile": "Discard"
+            }
+          },
+          {
+            "input": {
+              "command": "power-class",
+              "mode": "replay",
+              "upgrade": true
+            },
+            "result": {
+              "cls": "mage",
+              "mode": "replay",
+              "up": true,
+              "charges": [
+                1,
+                2,
+                2,
+                2
+              ],
+              "primed": 2,
+              "bonus": 2,
+              "hits": [
+                9,
+                9,
+                7,
+                7
+              ],
+              "distinctTargets": 1,
+              "attacks": 2,
+              "Charges": 0,
+              "cloneIndependent": true,
+              "savedProperties": true,
+              "pile": "Discard"
+            }
+          },
+          {
+            "input": {
+              "command": "power-class",
+              "mode": "zero",
+              "upgrade": true
+            },
+            "result": {
+              "cls": "mage",
+              "mode": "zero",
+              "up": true,
+              "charges": [
+                1,
+                2,
+                2,
+                2
+              ],
+              "primed": 0,
+              "bonus": 0,
+              "hits": [
+                0
+              ],
+              "distinctTargets": 1,
+              "attacks": 1,
+              "Charges": 0,
+              "cloneIndependent": true,
+              "savedProperties": true,
+              "pile": "Discard"
+            }
+          },
+          {
+            "input": {
+              "command": "power-class",
+              "mode": "lethal-chain",
+              "upgrade": true
+            },
+            "result": {
+              "cls": "mage",
+              "mode": "lethal-chain",
+              "up": true,
+              "charges": [
+                1,
+                2,
+                2,
+                2
+              ],
+              "primed": 2,
+              "bonus": 2,
+              "hits": [
+                1
+              ],
+              "distinctTargets": 1,
+              "attacks": 1,
+              "Charges": 0,
+              "cloneIndependent": true,
+              "savedProperties": true,
+              "pile": "Discard"
+            }
+          },
+          {
+            "input": {
+              "command": "power-class",
+              "mode": "reservoir",
+              "upgrade": true
+            },
+            "result": {
+              "cls": "mage",
+              "mode": "reservoir",
+              "up": true,
+              "charges": [
+                2,
+                2,
+                2,
+                2
+              ],
+              "primed": 2,
+              "bonus": 6,
+              "hits": [
+                13,
+                13
+              ],
+              "distinctTargets": 1,
+              "attacks": 1,
+              "Charges": 0,
+              "cloneIndependent": true,
+              "savedProperties": true,
+              "pile": "Discard"
+            }
+          },
+          {
+            "input": {
+              "command": "power-class",
+              "mode": "multi",
+              "upgrade": true
+            },
+            "result": {
+              "cls": "ranger",
+              "mode": "multi",
+              "up": true,
+              "charges": [
+                0,
+                0,
+                0,
+                0
+              ],
+              "primed": 0,
+              "bonus": 0,
+              "hits": [
+                7,
+                7
+              ],
+              "distinctTargets": 1,
+              "attacks": 1,
+              "Charges": 0,
+              "cloneIndependent": true,
+              "savedProperties": true,
+              "pile": "Discard"
+            }
+          },
+          {
+            "input": {
+              "command": "power-class",
+              "mode": "legacy-multi",
+              "upgrade": true
+            },
+            "result": {
+              "cls": "ranger",
+              "mode": "legacy-multi",
+              "up": true,
+              "charges": [
+                0,
+                0,
+                0,
+                0
+              ],
+              "primed": 0,
+              "bonus": 0,
+              "hits": [
+                4,
+                4
+              ],
+              "distinctTargets": 1,
+              "attacks": 1,
+              "Charges": 0,
+              "cloneIndependent": true,
+              "savedProperties": true,
+              "pile": "Discard"
+            }
+          }
+        ]
+      },
+      "coop": {
+        "file": "harness-class130-fixed-regular-coop.json",
+        "replies": 88,
+        "dllSha256": "235740ccf64fa736f8be5b7bc5587e50e9759de947f6aa3ec138aba612cd8a5b",
+        "sourceSha": "09d1c26368b5ece72c297ebf08454b9d4f1f7eea",
+        "productionSha256": {
+          "sts2/Native/LegacyPower.cs": "0eb35b44383210382ec77dc8a611cdd7fd4abd26e02fa4b0e0b0b03b1bcbdfd9",
+          "sts2/Core/CardDesign.cs": "0b366c60f187493473335d6714a0d1e4f260026dfb4774e03cac7c242a9e5f5d",
+          "sheets/classes.json": "0b61073801240d48c89e25b5daa64414d7d34ab87dc6d19697c128a831e2d82c",
+          "sheets/class_mechanics.json": "66cd8a40d3542ff67329558c9968f739623590bbd5bb85fa8a7b8dd37852115e"
+        },
+        "commands": {
+          "coop-host": 1,
+          "coop-ready": 2,
+          "coop-join": 1,
+          "coop-state": 54,
+          "coop-roundtrip": 2,
+          "harness-owner-diagnostic": 1,
+          "coop-vote": 2,
+          "power-multihit-coop-prepare": 4,
+          "power-multihit-coop-play": 4,
+          "power-coop-checkpoint": 8,
+          "lifecycle-owners": 2,
+          "lifecycle-state": 6,
+          "coop-abandon": 1
+        },
+        "seeds": [
+          "UFPU2QNZSZ"
+        ],
+        "results": [
+          {
+            "input": {
+              "command": "power-multihit-coop-play",
+              "upgrade": false
+            },
+            "result": {
+              "owner": 1,
+              "cls": "knight",
+              "up": false,
+              "primed": 1,
+              "hits": [
+                [
+                  7,
+                  7
+                ],
+                [
+                  5,
+                  5
+                ]
+              ],
+              "Charges": 0,
+              "ownerOnly": true,
+              "checksumNext": 5
+            }
+          },
+          {
+            "input": {
+              "command": "power-coop-checkpoint",
+              "minimum": 5
+            },
+            "result": {
+              "next": 5,
+              "enabled": true
+            }
+          },
+          {
+            "input": {
+              "command": "power-coop-checkpoint",
+              "minimum": 5
+            },
+            "result": {
+              "next": 5,
+              "enabled": true
+            }
+          },
+          {
+            "input": {
+              "command": "power-multihit-coop-play",
+              "upgrade": false
+            },
+            "result": {
+              "owner": 2,
+              "cls": "mage",
+              "up": false,
+              "primed": 2,
+              "hits": [
+                [
+                  7,
+                  7
+                ],
+                [
+                  5,
+                  5
+                ]
+              ],
+              "Charges": 0,
+              "ownerOnly": true,
+              "checksumNext": 9
+            }
+          },
+          {
+            "input": {
+              "command": "power-coop-checkpoint",
+              "minimum": 9
+            },
+            "result": {
+              "next": 9,
+              "enabled": true
+            }
+          },
+          {
+            "input": {
+              "command": "power-coop-checkpoint",
+              "minimum": 9
+            },
+            "result": {
+              "next": 9,
+              "enabled": true
+            }
+          },
+          {
+            "input": {
+              "command": "power-multihit-coop-play",
+              "upgrade": true
+            },
+            "result": {
+              "owner": 1,
+              "cls": "knight",
+              "up": true,
+              "primed": 1,
+              "hits": [
+                [
+                  9,
+                  9
+                ],
+                [
+                  7,
+                  7
+                ]
+              ],
+              "Charges": 0,
+              "ownerOnly": true,
+              "checksumNext": 13
+            }
+          },
+          {
+            "input": {
+              "command": "power-coop-checkpoint",
+              "minimum": 13
+            },
+            "result": {
+              "next": 13,
+              "enabled": true
+            }
+          },
+          {
+            "input": {
+              "command": "power-coop-checkpoint",
+              "minimum": 13
+            },
+            "result": {
+              "next": 13,
+              "enabled": true
+            }
+          },
+          {
+            "input": {
+              "command": "power-multihit-coop-play",
+              "upgrade": true
+            },
+            "result": {
+              "owner": 2,
+              "cls": "mage",
+              "up": true,
+              "primed": 2,
+              "hits": [
+                [
+                  9,
+                  9
+                ],
+                [
+                  7,
+                  7
+                ]
+              ],
+              "Charges": 0,
+              "ownerOnly": true,
+              "checksumNext": 17
+            }
+          },
+          {
+            "input": {
+              "command": "power-coop-checkpoint",
+              "minimum": 17
+            },
+            "result": {
+              "next": 17,
+              "enabled": true
+            }
+          },
+          {
+            "input": {
+              "command": "power-coop-checkpoint",
+              "minimum": 17
+            },
+            "result": {
+              "next": 17,
+              "enabled": true
+            }
+          }
+        ]
+      }
+    },
+    {
+      "branch": "beta",
+      "game": "v0.111.0",
+      "baseline": {
+        "file": "power-audit-class130-baseline-beta.json",
+        "replies": 77,
+        "dllSha256": "815f02376895454d2c87337aa8d445d2a2e2dd055a95415c1ccbcd732e3c4860",
+        "sourceSha": "91a2ef35eedca176d9bc914c53e2ef2e3328dbdc",
+        "productionSha256": {
+          "sts2/Native/LegacyPower.cs": "4faf6e33cc002a898b463086b627ba7b84fdc116ffa4d6f854a6695e192b8bb1",
+          "sts2/Core/CardDesign.cs": "eaad709271bbde4d38f1ae6ce4b0798c5058654e68f8450cee061340c711328e",
+          "sheets/classes.json": "c0e8b04438bd42e31e4ef12f29914fe57567e599f7467260d306c79d8e86662b",
+          "sheets/class_mechanics.json": "910cf66501e0e8a70befb3e95da380da460c6b0cf7f0354e17941bd9a34ff327"
+        },
+        "commands": {
+          "trait-speed": 1,
+          "compat-control": 1,
+          "start": 10,
+          "enter": 4,
+          "state": 40,
+          "vigor-room": 10,
+          "power-damage-control": 4,
+          "power-class": 6,
+          "abandon": 1
+        },
+        "seeds": [
+          "SPIRELEGACY-POWERS-53"
+        ],
+        "results": [
+          {
+            "input": {
+              "command": "power-damage-control",
+              "power": "strength",
+              "upgrade": false
+            },
+            "result": {
+              "power": "strength",
+              "up": false,
+              "first": [
+                7,
+                7
+              ],
+              "next": 8,
+              "vigorRemaining": 0
+            }
+          },
+          {
+            "input": {
+              "command": "power-damage-control",
+              "power": "vigor",
+              "upgrade": false
+            },
+            "result": {
+              "power": "vigor",
+              "up": false,
+              "first": [
+                7,
+                7
+              ],
+              "next": 6,
+              "vigorRemaining": 0
+            }
+          },
+          {
+            "input": {
+              "command": "power-class",
+              "mode": "baseline-multi",
+              "upgrade": false
+            },
+            "result": {
+              "cls": "knight",
+              "mode": "multi",
+              "up": false,
+              "charges": [
+                1,
+                1,
+                1,
+                1
+              ],
+              "primed": 1,
+              "bonus": 2,
+              "hits": [
+                7,
+                5
+              ],
+              "distinctTargets": 1,
+              "attacks": 1,
+              "Charges": 0,
+              "cloneIndependent": true,
+              "savedProperties": true,
+              "pile": "Discard"
+            }
+          },
+          {
+            "input": {
+              "command": "power-class",
+              "mode": "baseline-multi",
+              "upgrade": false
+            },
+            "result": {
+              "cls": "mage",
+              "mode": "multi",
+              "up": false,
+              "charges": [
+                1,
+                2,
+                2,
+                2
+              ],
+              "primed": 2,
+              "bonus": 2,
+              "hits": [
+                7,
+                5
+              ],
+              "distinctTargets": 1,
+              "attacks": 1,
+              "Charges": 0,
+              "cloneIndependent": true,
+              "savedProperties": true,
+              "pile": "Discard"
+            }
+          },
+          {
+            "input": {
+              "command": "power-class",
+              "mode": "baseline-multi",
+              "upgrade": false
+            },
+            "result": {
+              "cls": "ranger",
+              "mode": "multi",
+              "up": false,
+              "charges": [
+                0,
+                0,
+                0,
+                0
+              ],
+              "primed": 0,
+              "bonus": 0,
+              "hits": [
+                5,
+                5
+              ],
+              "distinctTargets": 1,
+              "attacks": 1,
+              "Charges": 0,
+              "cloneIndependent": true,
+              "savedProperties": true,
+              "pile": "Discard"
+            }
+          },
+          {
+            "input": {
+              "command": "power-damage-control",
+              "power": "strength",
+              "upgrade": true
+            },
+            "result": {
+              "power": "strength",
+              "up": true,
+              "first": [
+                9,
+                9
+              ],
+              "next": 11,
+              "vigorRemaining": 0
+            }
+          },
+          {
+            "input": {
+              "command": "power-damage-control",
+              "power": "vigor",
+              "upgrade": true
+            },
+            "result": {
+              "power": "vigor",
+              "up": true,
+              "first": [
+                9,
+                9
+              ],
+              "next": 9,
+              "vigorRemaining": 0
+            }
+          },
+          {
+            "input": {
+              "command": "power-class",
+              "mode": "baseline-multi",
+              "upgrade": true
+            },
+            "result": {
+              "cls": "knight",
+              "mode": "multi",
+              "up": true,
+              "charges": [
+                1,
+                1,
+                1,
+                1
+              ],
+              "primed": 1,
+              "bonus": 2,
+              "hits": [
+                9,
+                7
+              ],
+              "distinctTargets": 1,
+              "attacks": 1,
+              "Charges": 0,
+              "cloneIndependent": true,
+              "savedProperties": true,
+              "pile": "Discard"
+            }
+          },
+          {
+            "input": {
+              "command": "power-class",
+              "mode": "baseline-multi",
+              "upgrade": true
+            },
+            "result": {
+              "cls": "mage",
+              "mode": "multi",
+              "up": true,
+              "charges": [
+                1,
+                2,
+                2,
+                2
+              ],
+              "primed": 2,
+              "bonus": 2,
+              "hits": [
+                9,
+                7
+              ],
+              "distinctTargets": 1,
+              "attacks": 1,
+              "Charges": 0,
+              "cloneIndependent": true,
+              "savedProperties": true,
+              "pile": "Discard"
+            }
+          },
+          {
+            "input": {
+              "command": "power-class",
+              "mode": "baseline-multi",
+              "upgrade": true
+            },
+            "result": {
+              "cls": "ranger",
+              "mode": "multi",
+              "up": true,
+              "charges": [
+                0,
+                0,
+                0,
+                0
+              ],
+              "primed": 0,
+              "bonus": 0,
+              "hits": [
+                7,
+                7
+              ],
+              "distinctTargets": 1,
+              "attacks": 1,
+              "Charges": 0,
+              "cloneIndependent": true,
+              "savedProperties": true,
+              "pile": "Discard"
+            }
+          }
+        ]
+      },
+      "fixed": {
+        "file": "power-audit-class130-fixed-beta.json",
+        "replies": 301,
+        "dllSha256": "b1953426fd539e34b2fe4003f9a5aea8fbd05f868f1314f9ca423649d6984080",
+        "sourceSha": "6807b453e3bbc3f8b5082e84e861442a324e2bfe",
+        "productionSha256": {
+          "sts2/Native/LegacyPower.cs": "0eb35b44383210382ec77dc8a611cdd7fd4abd26e02fa4b0e0b0b03b1bcbdfd9",
+          "sts2/Core/CardDesign.cs": "0b366c60f187493473335d6714a0d1e4f260026dfb4774e03cac7c242a9e5f5d",
+          "sheets/classes.json": "0b61073801240d48c89e25b5daa64414d7d34ab87dc6d19697c128a831e2d82c",
+          "sheets/class_mechanics.json": "66cd8a40d3542ff67329558c9968f739623590bbd5bb85fa8a7b8dd37852115e"
+        },
+        "commands": {
+          "trait-speed": 1,
+          "compat-control": 1,
+          "start": 42,
+          "enter": 4,
+          "state": 168,
+          "vigor-room": 42,
+          "power-damage-control": 4,
+          "power-class": 38,
+          "abandon": 1
+        },
+        "seeds": [
+          "SPIRELEGACY-POWERS-53"
+        ],
+        "results": [
+          {
+            "input": {
+              "command": "power-damage-control",
+              "power": "strength",
+              "upgrade": false
+            },
+            "result": {
+              "power": "strength",
+              "up": false,
+              "first": [
+                7,
+                7
+              ],
+              "next": 8,
+              "vigorRemaining": 0
+            }
+          },
+          {
+            "input": {
+              "command": "power-damage-control",
+              "power": "vigor",
+              "upgrade": false
+            },
+            "result": {
+              "power": "vigor",
+              "up": false,
+              "first": [
+                7,
+                7
+              ],
+              "next": 6,
+              "vigorRemaining": 0
+            }
+          },
+          {
+            "input": {
+              "command": "power-class",
+              "mode": "multi",
+              "upgrade": false
+            },
+            "result": {
+              "cls": "knight",
+              "mode": "multi",
+              "up": false,
+              "charges": [
+                1,
+                1,
+                1,
+                1
+              ],
+              "primed": 1,
+              "bonus": 2,
+              "hits": [
+                7,
+                7
+              ],
+              "distinctTargets": 1,
+              "attacks": 1,
+              "Charges": 0,
+              "cloneIndependent": true,
+              "savedProperties": true,
+              "pile": "Discard"
+            }
+          },
+          {
+            "input": {
+              "command": "power-class",
+              "mode": "legacy-multi",
+              "upgrade": false
+            },
+            "result": {
+              "cls": "knight",
+              "mode": "legacy-multi",
+              "up": false,
+              "charges": [
+                1,
+                1,
+                1,
+                1
+              ],
+              "primed": 1,
+              "bonus": 2,
+              "hits": [
+                8,
+                8
+              ],
+              "distinctTargets": 1,
+              "attacks": 1,
+              "Charges": 0,
+              "cloneIndependent": true,
+              "savedProperties": true,
+              "pile": "Exhaust"
+            }
+          },
+          {
+            "input": {
+              "command": "power-class",
+              "mode": "area",
+              "upgrade": false
+            },
+            "result": {
+              "cls": "knight",
+              "mode": "area",
+              "up": false,
+              "charges": [
+                1,
+                1,
+                1,
+                1
+              ],
+              "primed": 1,
+              "bonus": 2,
+              "hits": [
+                6,
+                6
+              ],
+              "distinctTargets": 2,
+              "attacks": 1,
+              "Charges": 0,
+              "cloneIndependent": true,
+              "savedProperties": true,
+              "pile": "Discard"
+            }
+          },
+          {
+            "input": {
+              "command": "power-class",
+              "mode": "random",
+              "upgrade": false
+            },
+            "result": {
+              "cls": "knight",
+              "mode": "random",
+              "up": false,
+              "charges": [
+                1,
+                1,
+                1,
+                1
+              ],
+              "primed": 1,
+              "bonus": 2,
+              "hits": [
+                4,
+                4,
+                4
+              ],
+              "distinctTargets": 2,
+              "attacks": 1,
+              "Charges": 0,
+              "cloneIndependent": true,
+              "savedProperties": true,
+              "pile": "Discard"
+            }
+          },
+          {
+            "input": {
+              "command": "power-class",
+              "mode": "single",
+              "upgrade": false
+            },
+            "result": {
+              "cls": "knight",
+              "mode": "single",
+              "up": false,
+              "charges": [
+                1,
+                1,
+                1,
+                1
+              ],
+              "primed": 1,
+              "bonus": 2,
+              "hits": [
+                8
+              ],
+              "distinctTargets": 1,
+              "attacks": 1,
+              "Charges": 0,
+              "cloneIndependent": true,
+              "savedProperties": true,
+              "pile": "Discard"
+            }
+          },
+          {
+            "input": {
+              "command": "power-class",
+              "mode": "replay",
+              "upgrade": false
+            },
+            "result": {
+              "cls": "knight",
+              "mode": "replay",
+              "up": false,
+              "charges": [
+                1,
+                1,
+                1,
+                1
+              ],
+              "primed": 1,
+              "bonus": 2,
+              "hits": [
+                7,
+                7,
+                5,
+                5
+              ],
+              "distinctTargets": 1,
+              "attacks": 2,
+              "Charges": 0,
+              "cloneIndependent": true,
+              "savedProperties": true,
+              "pile": "Discard"
+            }
+          },
+          {
+            "input": {
+              "command": "power-class",
+              "mode": "zero",
+              "upgrade": false
+            },
+            "result": {
+              "cls": "knight",
+              "mode": "zero",
+              "up": false,
+              "charges": [
+                1,
+                1,
+                1,
+                1
+              ],
+              "primed": 0,
+              "bonus": 0,
+              "hits": [
+                0
+              ],
+              "distinctTargets": 1,
+              "attacks": 1,
+              "Charges": 0,
+              "cloneIndependent": true,
+              "savedProperties": true,
+              "pile": "Discard"
+            }
+          },
+          {
+            "input": {
+              "command": "power-class",
+              "mode": "lethal-chain",
+              "upgrade": false
+            },
+            "result": {
+              "cls": "knight",
+              "mode": "lethal-chain",
+              "up": false,
+              "charges": [
+                1,
+                1,
+                1,
+                1
+              ],
+              "primed": 1,
+              "bonus": 2,
+              "hits": [
+                1
+              ],
+              "distinctTargets": 1,
+              "attacks": 1,
+              "Charges": 0,
+              "cloneIndependent": true,
+              "savedProperties": true,
+              "pile": "Discard"
+            }
+          },
+          {
+            "input": {
+              "command": "power-class",
+              "mode": "multi",
+              "upgrade": false
+            },
+            "result": {
+              "cls": "mage",
+              "mode": "multi",
+              "up": false,
+              "charges": [
+                1,
+                2,
+                2,
+                2
+              ],
+              "primed": 2,
+              "bonus": 2,
+              "hits": [
+                7,
+                7
+              ],
+              "distinctTargets": 1,
+              "attacks": 1,
+              "Charges": 0,
+              "cloneIndependent": true,
+              "savedProperties": true,
+              "pile": "Discard"
+            }
+          },
+          {
+            "input": {
+              "command": "power-class",
+              "mode": "legacy-multi",
+              "upgrade": false
+            },
+            "result": {
+              "cls": "mage",
+              "mode": "legacy-multi",
+              "up": false,
+              "charges": [
+                1,
+                2,
+                2,
+                2
+              ],
+              "primed": 2,
+              "bonus": 2,
+              "hits": [
+                6,
+                6,
+                6
+              ],
+              "distinctTargets": 1,
+              "attacks": 1,
+              "Charges": 0,
+              "cloneIndependent": true,
+              "savedProperties": true,
+              "pile": "Discard"
+            }
+          },
+          {
+            "input": {
+              "command": "power-class",
+              "mode": "area",
+              "upgrade": false
+            },
+            "result": {
+              "cls": "mage",
+              "mode": "area",
+              "up": false,
+              "charges": [
+                1,
+                2,
+                2,
+                2
+              ],
+              "primed": 2,
+              "bonus": 2,
+              "hits": [
+                6,
+                6
+              ],
+              "distinctTargets": 2,
+              "attacks": 1,
+              "Charges": 0,
+              "cloneIndependent": true,
+              "savedProperties": true,
+              "pile": "Discard"
+            }
+          },
+          {
+            "input": {
+              "command": "power-class",
+              "mode": "random",
+              "upgrade": false
+            },
+            "result": {
+              "cls": "mage",
+              "mode": "random",
+              "up": false,
+              "charges": [
+                1,
+                2,
+                2,
+                2
+              ],
+              "primed": 2,
+              "bonus": 2,
+              "hits": [
+                4,
+                4,
+                4
+              ],
+              "distinctTargets": 2,
+              "attacks": 1,
+              "Charges": 0,
+              "cloneIndependent": true,
+              "savedProperties": true,
+              "pile": "Discard"
+            }
+          },
+          {
+            "input": {
+              "command": "power-class",
+              "mode": "single",
+              "upgrade": false
+            },
+            "result": {
+              "cls": "mage",
+              "mode": "single",
+              "up": false,
+              "charges": [
+                1,
+                2,
+                2,
+                2
+              ],
+              "primed": 2,
+              "bonus": 2,
+              "hits": [
+                8
+              ],
+              "distinctTargets": 1,
+              "attacks": 1,
+              "Charges": 0,
+              "cloneIndependent": true,
+              "savedProperties": true,
+              "pile": "Discard"
+            }
+          },
+          {
+            "input": {
+              "command": "power-class",
+              "mode": "replay",
+              "upgrade": false
+            },
+            "result": {
+              "cls": "mage",
+              "mode": "replay",
+              "up": false,
+              "charges": [
+                1,
+                2,
+                2,
+                2
+              ],
+              "primed": 2,
+              "bonus": 2,
+              "hits": [
+                7,
+                7,
+                5,
+                5
+              ],
+              "distinctTargets": 1,
+              "attacks": 2,
+              "Charges": 0,
+              "cloneIndependent": true,
+              "savedProperties": true,
+              "pile": "Discard"
+            }
+          },
+          {
+            "input": {
+              "command": "power-class",
+              "mode": "zero",
+              "upgrade": false
+            },
+            "result": {
+              "cls": "mage",
+              "mode": "zero",
+              "up": false,
+              "charges": [
+                1,
+                2,
+                2,
+                2
+              ],
+              "primed": 0,
+              "bonus": 0,
+              "hits": [
+                0
+              ],
+              "distinctTargets": 1,
+              "attacks": 1,
+              "Charges": 0,
+              "cloneIndependent": true,
+              "savedProperties": true,
+              "pile": "Discard"
+            }
+          },
+          {
+            "input": {
+              "command": "power-class",
+              "mode": "lethal-chain",
+              "upgrade": false
+            },
+            "result": {
+              "cls": "mage",
+              "mode": "lethal-chain",
+              "up": false,
+              "charges": [
+                1,
+                2,
+                2,
+                2
+              ],
+              "primed": 2,
+              "bonus": 2,
+              "hits": [
+                1
+              ],
+              "distinctTargets": 1,
+              "attacks": 1,
+              "Charges": 0,
+              "cloneIndependent": true,
+              "savedProperties": true,
+              "pile": "Discard"
+            }
+          },
+          {
+            "input": {
+              "command": "power-class",
+              "mode": "reservoir",
+              "upgrade": false
+            },
+            "result": {
+              "cls": "mage",
+              "mode": "reservoir",
+              "up": false,
+              "charges": [
+                2,
+                2,
+                2,
+                2
+              ],
+              "primed": 2,
+              "bonus": 6,
+              "hits": [
+                11,
+                11
+              ],
+              "distinctTargets": 1,
+              "attacks": 1,
+              "Charges": 0,
+              "cloneIndependent": true,
+              "savedProperties": true,
+              "pile": "Discard"
+            }
+          },
+          {
+            "input": {
+              "command": "power-class",
+              "mode": "multi",
+              "upgrade": false
+            },
+            "result": {
+              "cls": "ranger",
+              "mode": "multi",
+              "up": false,
+              "charges": [
+                0,
+                0,
+                0,
+                0
+              ],
+              "primed": 0,
+              "bonus": 0,
+              "hits": [
+                5,
+                5
+              ],
+              "distinctTargets": 1,
+              "attacks": 1,
+              "Charges": 0,
+              "cloneIndependent": true,
+              "savedProperties": true,
+              "pile": "Discard"
+            }
+          },
+          {
+            "input": {
+              "command": "power-class",
+              "mode": "legacy-multi",
+              "upgrade": false
+            },
+            "result": {
+              "cls": "ranger",
+              "mode": "legacy-multi",
+              "up": false,
+              "charges": [
+                0,
+                0,
+                0,
+                0
+              ],
+              "primed": 0,
+              "bonus": 0,
+              "hits": [
+                3,
+                3
+              ],
+              "distinctTargets": 1,
+              "attacks": 1,
+              "Charges": 0,
+              "cloneIndependent": true,
+              "savedProperties": true,
+              "pile": "Discard"
+            }
+          },
+          {
+            "input": {
+              "command": "power-damage-control",
+              "power": "strength",
+              "upgrade": true
+            },
+            "result": {
+              "power": "strength",
+              "up": true,
+              "first": [
+                9,
+                9
+              ],
+              "next": 11,
+              "vigorRemaining": 0
+            }
+          },
+          {
+            "input": {
+              "command": "power-damage-control",
+              "power": "vigor",
+              "upgrade": true
+            },
+            "result": {
+              "power": "vigor",
+              "up": true,
+              "first": [
+                9,
+                9
+              ],
+              "next": 9,
+              "vigorRemaining": 0
+            }
+          },
+          {
+            "input": {
+              "command": "power-class",
+              "mode": "multi",
+              "upgrade": true
+            },
+            "result": {
+              "cls": "knight",
+              "mode": "multi",
+              "up": true,
+              "charges": [
+                1,
+                1,
+                1,
+                1
+              ],
+              "primed": 1,
+              "bonus": 2,
+              "hits": [
+                9,
+                9
+              ],
+              "distinctTargets": 1,
+              "attacks": 1,
+              "Charges": 0,
+              "cloneIndependent": true,
+              "savedProperties": true,
+              "pile": "Discard"
+            }
+          },
+          {
+            "input": {
+              "command": "power-class",
+              "mode": "legacy-multi",
+              "upgrade": true
+            },
+            "result": {
+              "cls": "knight",
+              "mode": "legacy-multi",
+              "up": true,
+              "charges": [
+                1,
+                1,
+                1,
+                1
+              ],
+              "primed": 1,
+              "bonus": 2,
+              "hits": [
+                9,
+                9
+              ],
+              "distinctTargets": 1,
+              "attacks": 1,
+              "Charges": 0,
+              "cloneIndependent": true,
+              "savedProperties": true,
+              "pile": "Exhaust"
+            }
+          },
+          {
+            "input": {
+              "command": "power-class",
+              "mode": "area",
+              "upgrade": true
+            },
+            "result": {
+              "cls": "knight",
+              "mode": "area",
+              "up": true,
+              "charges": [
+                1,
+                1,
+                1,
+                1
+              ],
+              "primed": 1,
+              "bonus": 2,
+              "hits": [
+                9,
+                9
+              ],
+              "distinctTargets": 2,
+              "attacks": 1,
+              "Charges": 0,
+              "cloneIndependent": true,
+              "savedProperties": true,
+              "pile": "Discard"
+            }
+          },
+          {
+            "input": {
+              "command": "power-class",
+              "mode": "random",
+              "upgrade": true
+            },
+            "result": {
+              "cls": "knight",
+              "mode": "random",
+              "up": true,
+              "charges": [
+                1,
+                1,
+                1,
+                1
+              ],
+              "primed": 1,
+              "bonus": 2,
+              "hits": [
+                5,
+                5,
+                5
+              ],
+              "distinctTargets": 2,
+              "attacks": 1,
+              "Charges": 0,
+              "cloneIndependent": true,
+              "savedProperties": true,
+              "pile": "Discard"
+            }
+          },
+          {
+            "input": {
+              "command": "power-class",
+              "mode": "single",
+              "upgrade": true
+            },
+            "result": {
+              "cls": "knight",
+              "mode": "single",
+              "up": true,
+              "charges": [
+                1,
+                1,
+                1,
+                1
+              ],
+              "primed": 1,
+              "bonus": 2,
+              "hits": [
+                11
+              ],
+              "distinctTargets": 1,
+              "attacks": 1,
+              "Charges": 0,
+              "cloneIndependent": true,
+              "savedProperties": true,
+              "pile": "Discard"
+            }
+          },
+          {
+            "input": {
+              "command": "power-class",
+              "mode": "replay",
+              "upgrade": true
+            },
+            "result": {
+              "cls": "knight",
+              "mode": "replay",
+              "up": true,
+              "charges": [
+                1,
+                1,
+                1,
+                1
+              ],
+              "primed": 1,
+              "bonus": 2,
+              "hits": [
+                9,
+                9,
+                7,
+                7
+              ],
+              "distinctTargets": 1,
+              "attacks": 2,
+              "Charges": 0,
+              "cloneIndependent": true,
+              "savedProperties": true,
+              "pile": "Discard"
+            }
+          },
+          {
+            "input": {
+              "command": "power-class",
+              "mode": "zero",
+              "upgrade": true
+            },
+            "result": {
+              "cls": "knight",
+              "mode": "zero",
+              "up": true,
+              "charges": [
+                1,
+                1,
+                1,
+                1
+              ],
+              "primed": 0,
+              "bonus": 0,
+              "hits": [
+                0
+              ],
+              "distinctTargets": 1,
+              "attacks": 1,
+              "Charges": 0,
+              "cloneIndependent": true,
+              "savedProperties": true,
+              "pile": "Discard"
+            }
+          },
+          {
+            "input": {
+              "command": "power-class",
+              "mode": "lethal-chain",
+              "upgrade": true
+            },
+            "result": {
+              "cls": "knight",
+              "mode": "lethal-chain",
+              "up": true,
+              "charges": [
+                1,
+                1,
+                1,
+                1
+              ],
+              "primed": 1,
+              "bonus": 2,
+              "hits": [
+                1
+              ],
+              "distinctTargets": 1,
+              "attacks": 1,
+              "Charges": 0,
+              "cloneIndependent": true,
+              "savedProperties": true,
+              "pile": "Discard"
+            }
+          },
+          {
+            "input": {
+              "command": "power-class",
+              "mode": "multi",
+              "upgrade": true
+            },
+            "result": {
+              "cls": "mage",
+              "mode": "multi",
+              "up": true,
+              "charges": [
+                1,
+                2,
+                2,
+                2
+              ],
+              "primed": 2,
+              "bonus": 2,
+              "hits": [
+                9,
+                9
+              ],
+              "distinctTargets": 1,
+              "attacks": 1,
+              "Charges": 0,
+              "cloneIndependent": true,
+              "savedProperties": true,
+              "pile": "Discard"
+            }
+          },
+          {
+            "input": {
+              "command": "power-class",
+              "mode": "legacy-multi",
+              "upgrade": true
+            },
+            "result": {
+              "cls": "mage",
+              "mode": "legacy-multi",
+              "up": true,
+              "charges": [
+                1,
+                2,
+                2,
+                2
+              ],
+              "primed": 2,
+              "bonus": 2,
+              "hits": [
+                7,
+                7,
+                7
+              ],
+              "distinctTargets": 1,
+              "attacks": 1,
+              "Charges": 0,
+              "cloneIndependent": true,
+              "savedProperties": true,
+              "pile": "Discard"
+            }
+          },
+          {
+            "input": {
+              "command": "power-class",
+              "mode": "area",
+              "upgrade": true
+            },
+            "result": {
+              "cls": "mage",
+              "mode": "area",
+              "up": true,
+              "charges": [
+                1,
+                2,
+                2,
+                2
+              ],
+              "primed": 2,
+              "bonus": 2,
+              "hits": [
+                9,
+                9
+              ],
+              "distinctTargets": 2,
+              "attacks": 1,
+              "Charges": 0,
+              "cloneIndependent": true,
+              "savedProperties": true,
+              "pile": "Discard"
+            }
+          },
+          {
+            "input": {
+              "command": "power-class",
+              "mode": "random",
+              "upgrade": true
+            },
+            "result": {
+              "cls": "mage",
+              "mode": "random",
+              "up": true,
+              "charges": [
+                1,
+                2,
+                2,
+                2
+              ],
+              "primed": 2,
+              "bonus": 2,
+              "hits": [
+                5,
+                5,
+                5
+              ],
+              "distinctTargets": 2,
+              "attacks": 1,
+              "Charges": 0,
+              "cloneIndependent": true,
+              "savedProperties": true,
+              "pile": "Discard"
+            }
+          },
+          {
+            "input": {
+              "command": "power-class",
+              "mode": "single",
+              "upgrade": true
+            },
+            "result": {
+              "cls": "mage",
+              "mode": "single",
+              "up": true,
+              "charges": [
+                1,
+                2,
+                2,
+                2
+              ],
+              "primed": 2,
+              "bonus": 2,
+              "hits": [
+                11
+              ],
+              "distinctTargets": 1,
+              "attacks": 1,
+              "Charges": 0,
+              "cloneIndependent": true,
+              "savedProperties": true,
+              "pile": "Discard"
+            }
+          },
+          {
+            "input": {
+              "command": "power-class",
+              "mode": "replay",
+              "upgrade": true
+            },
+            "result": {
+              "cls": "mage",
+              "mode": "replay",
+              "up": true,
+              "charges": [
+                1,
+                2,
+                2,
+                2
+              ],
+              "primed": 2,
+              "bonus": 2,
+              "hits": [
+                9,
+                9,
+                7,
+                7
+              ],
+              "distinctTargets": 1,
+              "attacks": 2,
+              "Charges": 0,
+              "cloneIndependent": true,
+              "savedProperties": true,
+              "pile": "Discard"
+            }
+          },
+          {
+            "input": {
+              "command": "power-class",
+              "mode": "zero",
+              "upgrade": true
+            },
+            "result": {
+              "cls": "mage",
+              "mode": "zero",
+              "up": true,
+              "charges": [
+                1,
+                2,
+                2,
+                2
+              ],
+              "primed": 0,
+              "bonus": 0,
+              "hits": [
+                0
+              ],
+              "distinctTargets": 1,
+              "attacks": 1,
+              "Charges": 0,
+              "cloneIndependent": true,
+              "savedProperties": true,
+              "pile": "Discard"
+            }
+          },
+          {
+            "input": {
+              "command": "power-class",
+              "mode": "lethal-chain",
+              "upgrade": true
+            },
+            "result": {
+              "cls": "mage",
+              "mode": "lethal-chain",
+              "up": true,
+              "charges": [
+                1,
+                2,
+                2,
+                2
+              ],
+              "primed": 2,
+              "bonus": 2,
+              "hits": [
+                1
+              ],
+              "distinctTargets": 1,
+              "attacks": 1,
+              "Charges": 0,
+              "cloneIndependent": true,
+              "savedProperties": true,
+              "pile": "Discard"
+            }
+          },
+          {
+            "input": {
+              "command": "power-class",
+              "mode": "reservoir",
+              "upgrade": true
+            },
+            "result": {
+              "cls": "mage",
+              "mode": "reservoir",
+              "up": true,
+              "charges": [
+                2,
+                2,
+                2,
+                2
+              ],
+              "primed": 2,
+              "bonus": 6,
+              "hits": [
+                13,
+                13
+              ],
+              "distinctTargets": 1,
+              "attacks": 1,
+              "Charges": 0,
+              "cloneIndependent": true,
+              "savedProperties": true,
+              "pile": "Discard"
+            }
+          },
+          {
+            "input": {
+              "command": "power-class",
+              "mode": "multi",
+              "upgrade": true
+            },
+            "result": {
+              "cls": "ranger",
+              "mode": "multi",
+              "up": true,
+              "charges": [
+                0,
+                0,
+                0,
+                0
+              ],
+              "primed": 0,
+              "bonus": 0,
+              "hits": [
+                7,
+                7
+              ],
+              "distinctTargets": 1,
+              "attacks": 1,
+              "Charges": 0,
+              "cloneIndependent": true,
+              "savedProperties": true,
+              "pile": "Discard"
+            }
+          },
+          {
+            "input": {
+              "command": "power-class",
+              "mode": "legacy-multi",
+              "upgrade": true
+            },
+            "result": {
+              "cls": "ranger",
+              "mode": "legacy-multi",
+              "up": true,
+              "charges": [
+                0,
+                0,
+                0,
+                0
+              ],
+              "primed": 0,
+              "bonus": 0,
+              "hits": [
+                4,
+                4
+              ],
+              "distinctTargets": 1,
+              "attacks": 1,
+              "Charges": 0,
+              "cloneIndependent": true,
+              "savedProperties": true,
+              "pile": "Discard"
+            }
+          }
+        ]
+      },
+      "coop": {
+        "file": "harness-class130-fixed-beta-coop.json",
+        "replies": 90,
+        "dllSha256": "235740ccf64fa736f8be5b7bc5587e50e9759de947f6aa3ec138aba612cd8a5b",
+        "sourceSha": "09d1c26368b5ece72c297ebf08454b9d4f1f7eea",
+        "productionSha256": {
+          "sts2/Native/LegacyPower.cs": "0eb35b44383210382ec77dc8a611cdd7fd4abd26e02fa4b0e0b0b03b1bcbdfd9",
+          "sts2/Core/CardDesign.cs": "0b366c60f187493473335d6714a0d1e4f260026dfb4774e03cac7c242a9e5f5d",
+          "sheets/classes.json": "0b61073801240d48c89e25b5daa64414d7d34ab87dc6d19697c128a831e2d82c",
+          "sheets/class_mechanics.json": "66cd8a40d3542ff67329558c9968f739623590bbd5bb85fa8a7b8dd37852115e"
+        },
+        "commands": {
+          "coop-host": 1,
+          "coop-ready": 2,
+          "coop-join": 1,
+          "coop-state": 56,
+          "coop-roundtrip": 2,
+          "harness-owner-diagnostic": 1,
+          "coop-vote": 2,
+          "power-multihit-coop-prepare": 4,
+          "power-multihit-coop-play": 4,
+          "power-coop-checkpoint": 8,
+          "lifecycle-owners": 2,
+          "lifecycle-state": 6,
+          "coop-abandon": 1
+        },
+        "seeds": [
+          "UFPU2QNZSZG7"
+        ],
+        "results": [
+          {
+            "input": {
+              "command": "power-multihit-coop-play",
+              "upgrade": false
+            },
+            "result": {
+              "owner": 1,
+              "cls": "knight",
+              "up": false,
+              "primed": 1,
+              "hits": [
+                [
+                  7,
+                  7
+                ],
+                [
+                  5,
+                  5
+                ]
+              ],
+              "Charges": 0,
+              "ownerOnly": true,
+              "checksumNext": 5
+            }
+          },
+          {
+            "input": {
+              "command": "power-coop-checkpoint",
+              "minimum": 5
+            },
+            "result": {
+              "next": 5,
+              "enabled": true
+            }
+          },
+          {
+            "input": {
+              "command": "power-coop-checkpoint",
+              "minimum": 5
+            },
+            "result": {
+              "next": 5,
+              "enabled": true
+            }
+          },
+          {
+            "input": {
+              "command": "power-multihit-coop-play",
+              "upgrade": false
+            },
+            "result": {
+              "owner": 2,
+              "cls": "mage",
+              "up": false,
+              "primed": 2,
+              "hits": [
+                [
+                  7,
+                  7
+                ],
+                [
+                  5,
+                  5
+                ]
+              ],
+              "Charges": 0,
+              "ownerOnly": true,
+              "checksumNext": 9
+            }
+          },
+          {
+            "input": {
+              "command": "power-coop-checkpoint",
+              "minimum": 9
+            },
+            "result": {
+              "next": 9,
+              "enabled": true
+            }
+          },
+          {
+            "input": {
+              "command": "power-coop-checkpoint",
+              "minimum": 9
+            },
+            "result": {
+              "next": 9,
+              "enabled": true
+            }
+          },
+          {
+            "input": {
+              "command": "power-multihit-coop-play",
+              "upgrade": true
+            },
+            "result": {
+              "owner": 1,
+              "cls": "knight",
+              "up": true,
+              "primed": 1,
+              "hits": [
+                [
+                  9,
+                  9
+                ],
+                [
+                  7,
+                  7
+                ]
+              ],
+              "Charges": 0,
+              "ownerOnly": true,
+              "checksumNext": 13
+            }
+          },
+          {
+            "input": {
+              "command": "power-coop-checkpoint",
+              "minimum": 13
+            },
+            "result": {
+              "next": 13,
+              "enabled": true
+            }
+          },
+          {
+            "input": {
+              "command": "power-coop-checkpoint",
+              "minimum": 13
+            },
+            "result": {
+              "next": 13,
+              "enabled": true
+            }
+          },
+          {
+            "input": {
+              "command": "power-multihit-coop-play",
+              "upgrade": true
+            },
+            "result": {
+              "owner": 2,
+              "cls": "mage",
+              "up": true,
+              "primed": 2,
+              "hits": [
+                [
+                  9,
+                  9
+                ],
+                [
+                  7,
+                  7
+                ]
+              ],
+              "Charges": 0,
+              "ownerOnly": true,
+              "checksumNext": 17
+            }
+          },
+          {
+            "input": {
+              "command": "power-coop-checkpoint",
+              "minimum": 17
+            },
+            "result": {
+              "next": 17,
+              "enabled": true
+            }
+          },
+          {
+            "input": {
+              "command": "power-coop-checkpoint",
+              "minimum": 17
+            },
+            "result": {
+              "next": 17,
+              "enabled": true
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "limitations": [
+    "Windows copied-game labs; physical Deck/Linux, full campaigns and distribution updates were not tested.",
+    "This intentionally increases multi-hit class synergy; charge caps, card amounts and Ranger mechanics are unchanged."
+  ]
+}

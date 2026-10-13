@@ -42,7 +42,7 @@ public sealed class CardDesign(string id, bool upgraded = false, IEnumerable<str
         }
         if (Gene("heal") > 0) lines.Add($"Heal {Gene("heal")} HP.");
         if (Mercy) lines.Add($"Apply {MercyPoison} Poison. This inherited starter is a Skill.");
-        if (Row.Text("power") == "reservoir") lines.Add($"Each Arcane Charge adds {Magic} extra damage on the first hit to each enemy.");
+        if (Row.Text("power") == "reservoir") lines.Add($"Each Arcane Charge adds {Magic} extra damage to every hit of your next Attack.");
         else if (Row.Text("power") == "quiver") lines.Add($"Hunter Rhythm draws {Magic} additional card(s).");
         else if (Row.Text("power") != "none") lines.Add(Design.Get("power_effects", Row.Text("power")).Text("summary").Replace("!M!", Magic.ToString()));
         if (Row.Text("special") != "none") lines.Add(Design.Get("special_effects", Row.Text("special")).Text("summary").Replace("{n}", specialBlock ?? SpecialAmount.ToString()));
