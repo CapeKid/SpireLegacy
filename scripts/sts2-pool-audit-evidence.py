@@ -95,6 +95,25 @@ cached=receipt_stage('pool-audit-pools54-beta-compendium-baseline.json','v0.111.
 menus=[r['result'] for r in cached['results'] if r['input']['command']=='pool-audit-library']
 assert [m['cls'] for m in menus]==['knight','mage','ranger','knight'] and all(m['filteredLegacy']==menus[0]['filteredLegacy'] for m in menus)
 proof['prismaticBaseline']=prism;proof['cachedFilterBaseline']=cached
+all_stages=[s for b in proof['branches'] for s in b['stages']+[b['materialBaseline']]]+[prism,cached]
+for stage in all_stages:
+    for result in stage['results']:
+        command=result['input']['command'];value=result['result']
+        if command=='pool-audit-owner':
+            summarized=[]
+            for p in value:
+                allowed={('CARD.SPIRELEGACY-C_'+key.upper()) if p['cls']!='native' else key for key in p['allowed']}
+                assert all(set(r['ids']).issubset(allowed) for r in p['rewards']) and all(set(s['ids']).issubset(allowed) for s in p['shops'])
+                assert all(t['created'] in allowed and t['created']!=t['original'] and t['choices']>0 for t in p['transforms'])
+                summarized.append(dict(netId=p['NetId'],cls=p['cls'],pool=p['pool'],allowed=p['allowed'],canonicalUnchanged=p['canonicalUnchanged'],
+                    rewardRequests=len(p['rewards']),rewardCards=sum(len(r['ids']) for r in p['rewards']),
+                    rooms=dict(collections.Counter(r['room'] for r in p['rewards'])),choiceCounts=dict(collections.Counter(r['count'] for r in p['rewards'])),
+                    distinctWithinEveryOffer=True,eligibleEveryOffer=True,seenRewards=sorted({key for r in p['rewards'] for key in r['ids']}),
+                    shopInventories=len(p['shops']),shopCards=sum(len(s['ids']) for s in p['shops']),seenShopCards=sorted({key for s in p['shops'] for key in s['ids']}),
+                    transformChecks=len(p['transforms']),eligibleTransforms=True))
+            result['result']=summarized
+        elif command=='pool-audit-registry':
+            value['detail']=[dict(pool=p['pool'],count=len(p['cards']),rarities=dict(collections.Counter(c['rarity'] for c in p['cards'])),keys=sorted(c['key'] for c in p['cards'])) for p in value['detail']]
 proof['limitations']=['Physical Deck/Linux/controller tests and full natural co-op campaigns remain #57/#110.',
     'Beta-to-regular full saves are natively incompatible: beta RNG seeds/state exceed regular UInt32 schema. All three Heirs and Ironclad reject with complete diagnostic; no truncation or save rewriting. Individual historical card data loads both ways; regular full runs load on beta.',
     'Native sparse reward inputs requesting more distinct choices than exist fail explicitly, matching Ironclad. No fallback into foreign class or duplicate cards is injected. Arbitrary third-party filter recovery remains outside supported active pools (#55/#61).',
