@@ -6,6 +6,7 @@ var count = 0;
 void Check(bool value, string message) { count++; if (!value) throw new Exception(message); }
 CoopChecks.Run(Check);
 TraitChecks.Run(Check);
+CrownChecks.Run(Check);
 var coopFamilies=new[]{new FamilyProfile{family="First family",generation=3},new FamilyProfile{family="Second family",generation=7}};
 var coopHeirs=new[]{new FamilyProfile.Heir{name="First",classId="knight",traits=["easybreakables"]},new FamilyProfile.Heir{name="Second",classId="mage",traits=[]}};
 var coopRuns=coopFamilies.Select((p,i)=>FamilySnapshot.Freeze(p,coopHeirs[i],(ulong)(i+1),true)).ToArray();

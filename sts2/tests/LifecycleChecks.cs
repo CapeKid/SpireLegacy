@@ -148,7 +148,7 @@ public static class LifecycleChecks
         check(p.CommitPurchases(Enumerable.Repeat("vitality",5).ToArray(),path)&&p.Level("vitality")==5,"Repeated IDs within cap are valid staged levels");
         var orphan=Fresh();var orphanRun=orphan.Begin(49);orphanRun.floors=6;path=PathFor();orphan.Save(path);
         var replacement=FamilySnapshot.Freeze(orphan,new(){name="Selected replacement",classId="ranger",traits=[]});
-        check(orphan.CommitRunStart(replacement,path)&&orphan.generation==1&&orphan.crowns==1012&&!orphan.active!.quick&&orphan.active.generation==1&&orphan.active.heir.classId=="ranger","Replacing orphan atomically settles old climb and preserves selected new heir without repeating quickstart");
+        check(orphan.CommitRunStart(replacement,path)&&orphan.generation==1&&orphan.crowns==1000&&orphan.chronicle.classes["knight"].maxFloor==6&&!orphan.active!.quick&&orphan.active.generation==1&&orphan.active.heir.classId=="ranger","Replacing orphan preserves reached progress without inventing earned crowns or repeating quickstart");
         check(!orphan.CommitRunStart(replacement,path)&&orphan.generation==1,"Duplicate embark callback cannot settle the replacement");
         p=Fresh();path=PathFor();p.Save(path);var oldGeneration=p.generation;var oldBank=p.crowns;
         check(p.CommitHeirSelection(new(){name="Cancelled choice",classId="ranger",traits=[]},path)&&p.CommitHeirSelection(null,path)&&p.active==null&&p.selected==null&&p.generation==oldGeneration&&p.crowns==oldBank,"Choose/cancel never starts or settles a climb");

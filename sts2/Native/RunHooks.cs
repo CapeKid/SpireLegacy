@@ -118,6 +118,7 @@ public static class SettleBloodlineRun
         var state = (RunState?)AccessTools.Property(typeof(RunManager), "State").GetValue(__instance);
         var player = state?.Players.FirstOrDefault(p => p.Character is HeirCharacter && p.NetId==__instance.NetService.NetId);
         if (player == null || PlayerBloodlines.State(player) is not {} run || !FamilySnapshot.CanSettle(Runtime.Profile,run,__instance.NetService.NetId)) return;
-        Runtime.Profile.CommitSettlement(run,__instance.NetService.NetId,state!.TotalFloor,player.Gold,isVictory,Runtime.FamilyPath);
+        var earned=CrownAccounting.Earned(state!,player);
+        Runtime.Profile.CommitSettlement(run,__instance.NetService.NetId,earned.floors,earned.gold,isVictory,Runtime.FamilyPath,state!.TotalFloor);
     }
 }
