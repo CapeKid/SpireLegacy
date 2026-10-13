@@ -367,7 +367,7 @@ public static class NativeTestBridge
                 case "ancient-audit-next":result=await AncientAuditOracle.Advance(RunState(),request.GetProperty("controller").GetBoolean());break;
                 case "ancient-audit-choose":using(UseTestSelector())result=await AncientAuditOracle.Choose(RunState());break;
                 case "ancient-audit-tome":result=await AncientAuditOracle.Tome(RunState());break;
-                case "ancient-audit-play-modifier":await WaitForPlay(RunState().Players.Single());await PlayerCmd.GainEnergy(3,RunState().Players.Single());result=await PoolExpansionOracle.Play(RunState(),request.GetProperty("card").GetString()!,request.GetProperty("upgrade").GetBoolean(),UseTestSelector());break;
+                case "ancient-audit-play-modifier":await WaitForPlay(RunState().Players.Single());result=await AncientAuditOracle.Modifier(RunState(),request.GetProperty("card").GetString()!,request.GetProperty("upgrade").GetBoolean(),UseTestSelector());break;
                 case "ancient-audit-ending-enter":result=await AncientAuditOracle.EndingEnter(RunState(),request.GetProperty("wins").GetInt32());break;
                 case "ancient-audit-ending-next":result=await AncientAuditOracle.EndingAdvance(RunState());break;
                 case "ancient-audit-ending-win":result=await AncientAuditOracle.EndingWin(RunState());break;

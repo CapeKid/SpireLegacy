@@ -38,7 +38,7 @@ elif 'modifiers' in tag:
                 start(row['classId'],traits);r=send('ancient-audit-play-modifier',card=row['cardId'],upgrade=up)
                 assert r['saveRoundTrip'] and not r['tableNodePresent'] and r['pile']!='Play',r
                 if row['cardId']=='mage_elixir_of_life':assert r['hpChange']==(0 if traits==['megahealth'] else 12 if traits==['superhealer'] else 6),r
-                if row['cardId']=='knight_kingbreaker' and traits==['cantattack']:assert r['enemyDamage']==0,r
+                if row['cardId']=='knight_kingbreaker' and traits==['cantattack']:assert r['blocked'] and r['energyChange']==0,r
                 send('abandon')
         print(tag,row['cardId'],'trait modifiers/paid forms passed',flush=True)
 elif 'cards' in tag:

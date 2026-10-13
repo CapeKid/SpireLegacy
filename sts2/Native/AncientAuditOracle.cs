@@ -84,6 +84,17 @@ public static class AncientAuditOracle
         var restored=CardModel.FromSerializable(gained.ToSerializable());restored.Owner=player;Require(restored.Id==gained.Id&&restored.IsUpgraded&&restored.Owner==player,"Ancient card saved identity.");
         return new{cls,seen=seen.Order().ToArray(),acquired=gained.Id.ToString(),upgrade=gained.CurrentUpgradeLevel,saveRoundTrip=true};
     }
+    public static async Task<object> Modifier(RunState run,string key,bool up,IDisposable selector)
+    {
+        var player=run.Players.Single();await PlayerCmd.GainEnergy(3,player);
+        if(PlayerBloodlines.Traits(player).Has("pacifist")&&Design.Get("cards",key).Text("type")=="ATTACK"){
+            using(selector){var combat=player.Creature.CombatState!;var card=combat.CreateCard(NativeCards.Get(key),player);if(up)CardCmd.Upgrade(card);await CardPileCmd.Add(card,PileType.Hand,skipVisuals:true);var energy=player.PlayerCombatState!.Energy;
+                Require(!card.TryManualPlay(combat.GetOpponentsOf(player.Creature).First(e=>e.IsAlive))&&player.PlayerCombatState.Energy==energy,"Pacifist played a forbidden Ancient Attack.");
+                var restored=run.LoadCard(card.ToSerializable(),player);Require(restored.Id==card.Id&&restored.IsUpgraded==up,"Restricted Ancient card save identity.");run.RemoveCard(restored);
+                return new{key,upgrade=up,blocked=true,saveRoundTrip=true,tableNodePresent=false,pile="Hand",energyChange=0};}
+        }
+        return await PoolExpansionOracle.Play(run,key,up,selector);
+    }
     public static async Task<object> EndingEnter(RunState run,int wins)
     {
         SaveManager.Instance.Progress.GetOrCreateCharacterStats(run.Players.Single().Character.Id).TotalWins=wins;
