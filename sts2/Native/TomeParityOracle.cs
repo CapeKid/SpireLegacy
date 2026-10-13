@@ -14,7 +14,7 @@ public static class TomeParityOracle
     public static async Task<object> Check(RunState run,bool removeBasics,string? forced,bool inspect)
     {
         var player=run.Players.Single();
-        var allowed=player.Character.CardPool.GetUnlockedCards(player.UnlockState,run.CardMultiplayerConstraint)
+        var allowed=player.Character.CardPool.GetUnlockedCards(player.UnlockState,player.RunState.CardMultiplayerConstraint)
             .Where(c=>c.Rarity==CardRarity.Ancient&&!ArchaicTooth.TranscendenceCards.Contains(c)).Select(c=>c.Id).ToHashSet();
         Require(allowed.Count>0,"No native Dusty Tome choices.");
         if(inspect) {
