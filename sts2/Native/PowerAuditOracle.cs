@@ -119,19 +119,20 @@ public static class PowerAuditOracle
     {
         using(selector) {
             var player=run.Players.Single();var enemies=await Setup(player);var counter=player.Creature.GetPower<P_class>()!;
-            await Apply(player,"quiver",2);var counts=new List<int>();var draws=new List<int>();
+            await Apply(player,"quiver",2);var counts=new List<int>();var draws=new List<int>();var printedMarks=0;
             for(var i=1;i<=6;i++) {
                 var canonical=mode=="area"?ModelDb.Card<Thunderclap>() as CardModel:mode=="random"?NativeCards.Get(Design.Rows("cards").First(r=>r.Text("special")=="random_attack").Text("id")):ModelDb.Card<TwinStrike>();
                 var card=await Add(player,canonical,up);var before=player.PlayerCombatState!.Hand.Cards.Count;
+                if(mode=="area")printedMarks+=(int)card.DynamicVars.Vulnerable.BaseValue;
                 await Play(card,enemies[0]);var drawn=player.PlayerCombatState.Hand.Cards.Count-before+1;
                 Require(counter.AttacksThisTurn==i&&counter.DisplayAmount==i%3&&drawn==(i%3==0?3:0),"Hunter Rhythm per-card/draw cap mismatch.");
                 counts.Add(counter.DisplayAmount);draws.Add(drawn);
             }
             var marks=enemies.Select(e=>e.GetPowerAmount<VulnerablePower>()).ToArray();
-            Require(marks.Sum()==(mode=="area"?enemies.Length*2:2),"Hunter Rhythm target selection mismatch.");
+            Require(marks.Sum()==(mode=="area"?enemies.Length*(2+printedMarks):2),"Hunter Rhythm target selection mismatch: "+string.Join(",",marks));
             await BalanceOracle.End(player,true);await Wait(()=>player.PlayerCombatState!.Phase==PlayerTurnPhase.Play);
             Require(counter.AttacksThisTurn==0&&counter.DisplayAmount==0,"Hunter Rhythm did not reset next turn.");
-            return new{mode,up,counts,draws,marks,nextTurnReset=true};
+            return new{mode,up,counts,draws,marks,printedMarks,nextTurnReset=true};
         }
     }
     public static async Task<object> Barrier(RunState run,bool up,bool native)

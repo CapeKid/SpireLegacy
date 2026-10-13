@@ -85,7 +85,9 @@ try:
         if 'powers53' in tag:
             for upgraded in [False,True]:
                 for profile in [host,guest]:send(profile,'power-coop-prepare',upgrade=upgraded)
-                for profile in [host,guest]:send(profile,'power-coop-play',upgrade=upgraded)
+                for profile in [host,guest]:
+                    send(profile,'power-coop-play',upgrade=upgraded)
+                    peers('Play')
                 peers('Play')
                 snapshots=[send(profile,'power-snapshot') for profile in [host,guest]]
                 assert snapshots[0]==snapshots[1],snapshots
