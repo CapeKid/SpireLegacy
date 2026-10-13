@@ -12,9 +12,30 @@ namespace SpireLegacy;
 public static class OrobasOracle
 {
     private static void Require(bool condition,string text) {if(!condition)throw new InvalidDataException(text);}
-    public static async Task<object> Check(RunState run,bool baseline,bool inspect)
+    public static async Task<object> NativeControl()
     {
         var player=PlayerBloodlines.LocalPlayer!;
+        Require(player.Character is MegaCrit.Sts2.Core.Models.Characters.Ironclad,"Native control requires Ironclad.");
+        var touch=(TouchOfOrobas)ModelDb.Relic<TouchOfOrobas>().ToMutable();
+        Require(touch.SetupForPlayer(player)&&touch.UpgradedRelic==ModelDb.Relic<BlackBlood>().Id,"Native starter refinement changed.");
+        await RelicCmd.Obtain(touch,player);
+        Require(player.Relics.OfType<BlackBlood>().Count()==1&&!player.Relics.OfType<BurningBlood>().Any(),"Native refinement acquisition changed.");
+        Require(PlayerBloodlines.Saved(player.ToSerializable())==null,"Native player received family inheritance.");
+        return new {nativeStarter="BlackBlood",unchanged=true};
+    }
+    public static Task<object> Check(RunState run,bool baseline,bool inspect)=>CheckPlayer(PlayerBloodlines.LocalPlayer!,baseline,inspect);
+    public static async Task<object> Coop(RunState run)
+    {
+        var results=new List<object>();
+        foreach(var player in run.Players.Where(p=>p.Character is HeirCharacter)) {
+            results.Add(await CheckPlayer(player,false,false));
+            var refined=player.Relics.OfType<RefinedBloodlineRelic>().Single();
+            foreach(var other in run.Players.Where(p=>p!=player))Require(refined.ModifyHandDraw(other,5)==5,"Refinement affected another owner's draw.");
+        }
+        return results;
+    }
+    private static async Task<object> CheckPlayer(MegaCrit.Sts2.Core.Entities.Players.Player player,bool baseline,bool inspect)
+    {
         var original=player.Relics.OfType<BloodlineRelic>().Single();
         var touch=(TouchOfOrobas)ModelDb.Relic<TouchOfOrobas>().ToMutable();
         if(baseline) {

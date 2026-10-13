@@ -25,4 +25,7 @@ for cls in ['knight','mage','ranger']:
             for upgraded in [False,True]:
                 played=send('expansion-play',card=cls+'_strike',upgrade=upgraded);assert played['pile']=='Discard' and not played['tableNodePresent'],played
         send('abandon')
+if 'baseline' not in tag:
+    send('start',**{'class':'ironclad','traits':[],'quick':True,'seed':'SPIRELEGACY-OROBAS-86','manorTier':0})
+    send('enter',room='Monster');ready();send('orobas-native-control');send('abandon')
 print(tag+': '+('native Circlet fallback reproduced for all classes' if 'baseline' in tag else 'nine native refinements/save-resumes and paid base/upgraded cards pass'),flush=True)
