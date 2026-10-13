@@ -27,9 +27,15 @@ public class BloodlineRelic : CustomRelicModel
     protected override string BigIconPath=>PackedIconPath;
     public override List<(string,string)> Localization => [("title", "Family Bloodline"), ("description", "Your class, inherited traits and purchased manor upgrades shape this climb. Open the Family Manor to read every trait."), ("flavor", "Every climb ends. Your bloodline grows.")];
     private bool firstSkill, firstAttack, firstHurt, shocked;
-    private readonly HashSet<Creature> firstAttackTargets = new();
-    private readonly Dictionary<CardModel,int> costlyDrawTurns = new();
+    private HashSet<Creature> firstAttackTargets = new();
+    private Dictionary<CardModel,int> costlyDrawTurns = new();
     private int pendingEnergy;
+    protected override void DeepCloneFields()
+    {
+        base.DeepCloneFields();
+        firstAttackTargets=new();
+        costlyDrawTurns=new();
+    }
     [SavedProperty] public string FamilyRunSnapshot { get; set; } = "";
     [SavedProperty] public string SelectedHeir { get; set; } = "";
     [SavedProperty] public bool StartingRelicsGranted { get; set; }

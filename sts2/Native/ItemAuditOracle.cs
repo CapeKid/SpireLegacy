@@ -38,6 +38,7 @@ public static class ItemAuditOracle
     public static async Task<object> Relic(RunState run,string key,bool up)
     {
         var player=run.Players.Single();var combat=player.Creature.CombatState!;foreach(var enemy in combat.GetOpponentsOf(player.Creature)){enemy.SetMaxHpInternal(10000);enemy.SetCurrentHpInternal(10000);}
+        player.Creature.SetMaxHpInternal(10000);player.Creature.SetCurrentHpInternal(10000);
         foreach(var card in player.PlayerCombatState!.Hand.Cards.ToArray())await CardPileCmd.Add(card,PileType.Draw,skipVisuals:true);
         await PlayerCmd.GainEnergy(100,player);
         var relic=player.Relics.OfType<FamilyDropRelic>().Single(r=>r.Key==key);
