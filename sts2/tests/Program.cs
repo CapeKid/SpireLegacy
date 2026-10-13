@@ -379,6 +379,10 @@ foreach(var upgraded in new[]{false,true}){
     Check(spellweave.Block==(upgraded?2:0)&&!spellweave.Row.Flag("exhaust"),"Spellweave upgrades modest immediate protection while remaining reusable");
 }
 LifecycleChecks.Run(Check,directory);
+foreach(var up in new[]{false,true}) {
+    var reset=new CardDesign("ranger_trail_reset",up);
+    Check(reset.Row.Flag("exhaust")&&reset.Cost==(up?0:1)&&reset.Row.Text("special")=="refill_hand","Trail Reset keeps its hand exchange and cost but cannot replay the free Reflex loop");
+}
 PersistenceChecks.Run(Check,directory);
 Console.WriteLine(JsonSerializer.Serialize(new { result = "passed", assertions = count, cards = 360, inheritedTraits = traitIds.Length, familyFixture = directory }));
 

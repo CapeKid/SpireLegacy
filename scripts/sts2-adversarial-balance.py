@@ -16,6 +16,21 @@ def start(cls,tier=0,traits=[]):
     while send('state')['phase']!='Play':
         assert time.monotonic()<deadline;time.sleep(.15)
 send('presentation-prepare');send('balance-audit-references')
+if 'matrix' in tag:
+    builds={'knight':['armor','exhaust','blood','strength'],'mage':['sequencing','mage-exhaust','mage-retained','delayed'],'ranger':['discard','poison','retention','chain']}
+    risks={'knight':['vampire','superhealer'],'mage':['bonusmagicstrength','megahealth'],'ranger':['cantattack','vegan']}
+    members={(r['classId'],r['cardId']) for r in json.loads((root/'sheets/card_pools.json').read_text())}
+    traits={r['id']:r for r in json.loads((root/'sheets/traits.json').read_text())}
+    for cls,choices in builds.items():
+        for build in choices:
+            for tier,risk in [(0,False),(2,False),(2,True)]:
+                pair=risks[cls] if risk else []
+                if pair:assert pair[1] not in traits[pair[0]]['excludes'] and pair[0] not in traits[pair[1]]['excludes']
+                start(cls,tier,pair);r=send('balance-audit-encounter',build=build,item=risk)
+                assert all((cls,c) in members for c in r['additions']),r
+                assert not r['exhaustedBudget'],r
+                print(tag,cls,build,tier,risk,'win',r['victory'],'death',r['deadPlayer'],'net HP loss',r['damageTaken'],'turns',r['endedTurns'],flush=True)
+    send('abandon');raise SystemExit(0)
 for cls in ['ranger'] if 'baseline' in tag else ['knight','mage','ranger']:
     for upgraded in [False,True]:
         for native in [False,True]:

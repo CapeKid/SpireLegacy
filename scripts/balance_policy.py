@@ -1,5 +1,6 @@
 """Targeted balance overrides shared by authoring regeneration and release updates."""
 CARD_OVERRIDES = {
+    'ranger_trail_reset': dict(exhaust=True),
     'mage_slow_incantation': dict(upgradeCost=False, upgradeBlock=2),
     'mage_mana_fountain': dict(energy=2, upgradeMagic=1),
     'mage_eternal_bookmark': dict(cost=1, upgradeCost=False, upgradeMagic=1),

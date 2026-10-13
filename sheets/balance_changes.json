@@ -22727,7 +22727,7 @@
   },
   {
     "id": "ranger_trail_reset",
-    "reference": "Native attack/defense cost and upgrade budgets; class passive included separately",
+    "reference": "StS2 Calculated Gamble: hand exchange remains Exhaust after upgrade",
     "before": {
       "cost": 1,
       "damage": 0,
@@ -22786,7 +22786,7 @@
       "magic": 0,
       "special": "refill_hand",
       "specialAmount": 0,
-      "exhaust": false,
+      "exhaust": true,
       "upgradeDamage": 0,
       "upgradeBlock": 0,
       "upgradeMagic": 0,

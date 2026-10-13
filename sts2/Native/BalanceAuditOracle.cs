@@ -11,6 +11,20 @@ namespace SpireLegacy;
 // Bounded effect isolation, reachable only through the disposable test bridge.
 public static class BalanceAuditOracle
 {
+    public static readonly Dictionary<string,string[]> Builds=new(){
+        ["armor"]=["fortify","knight_shield_slam","knight_living_fortress","knight_double_guard"],
+        ["exhaust"]=["knight_second_wind","knight_burnished_legacy","knight_cast_off","knight_forge_sparks"],
+        ["blood"]=["knight_bloodied_blade","knight_forged_in_pain","knight_blood_price","knight_veteran_training"],
+        ["strength"]=["oath","knight_sword_dance","knight_ancestral_fury","knight_warlord_s_command"],
+        ["sequencing"]=["mage_warding_verse","mage_rune_familiar","reservoir","mage_spell_threads"],
+        ["mage-exhaust"]=["mage_ash_reading","mage_secret_thesis","mage_transmutation","mage_returned_prophecy"],
+        ["mage-retained"]=["mage_tower_library","mage_stored_ember","mage_crystal_seed","mage_eternal_bookmark"],
+        ["delayed"]=["mage_spellweave","mage_comet_calendar","knight_brave_advance","study"],
+        ["discard"]=["ranger_sort_quiver","ranger_pocket_wind","ranger_spring_nock","ranger_light_pack"],
+        ["poison"]=["ranger_poison_tip","ranger_razor_fletching","ranger_double_dose","ranger_poisoned_arsenal"],
+        ["retention"]=["ranger_perch_discipline","ranger_long_vigil","mage_stored_ember","mage_crystal_seed"],
+        ["chain"]=["ranger_rapid_fire","ranger_tracking_rhythm","ranger_arrow_cascade","quiver"]
+    };
     private static readonly PileType[] Piles=[PileType.Hand,PileType.Draw,PileType.Discard,PileType.Exhaust,PileType.Play];
     public static async Task<object> ResetLoop(RunState run,bool upgraded,bool native,IDisposable selector)
     {
