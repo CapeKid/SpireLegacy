@@ -94,6 +94,16 @@ try:
             if 'baseline' in tag:assert [p['weak'] for p in outcomes]==[1,0],outcomes
             else:assert [p['weak'] for p in outcomes]==[1,1],outcomes
             if 'baseline' in tag:print(tag,'native inherited first-hit leakage reproduced',flush=True);sys.exit(0)
+            for profile in [host,guest]:send(profile,'coop-turn')
+            for profile in [host,guest]:send(profile,'item-coop-prepare',upgrade=True)
+            for profile in [host,guest]:
+                played=send(profile,'item-coop-attack',upgrade=True);assert played['weak']==1,played
+                for peer in [host,guest]:assert send(peer,'power-coop-checkpoint',minimum=played['checksumNext'])['enabled']
+                peers('Play')
+                used=send(profile,'item-coop-potion');assert used['otherOwnersUnchanged'] and used['completed']==1,used
+                assert (used['block'],used['draw'],used['vigor'])==({'knight':(8,0,2),'mage':(0,1,0),'ranger':(0,2,3)}[used['cls']]),used
+                for peer in [host,guest]:assert send(peer,'power-coop-checkpoint',minimum=used['checksumNext'])['enabled']
+                peers('Play')
         if 'pools54' in tag:
             prism=[send(profile,'pool-audit-modifiers') for profile in [host,guest]]
             if 'fixed' in tag:
@@ -132,6 +142,7 @@ try:
             for profile in [host,guest]:assert len(send(profile,'orobas-coop'))==2
             for profile in [host,guest]:assert len(send(profile,'coop-roundtrip'))==2
         for profile in [host,guest]:
+            if 'items55' in tag:continue
             played=send(profile,'coop-play')
             assert played['played'] and played['pile']=='Discard' and not played['tableNodePresent'],played
             time.sleep(1)

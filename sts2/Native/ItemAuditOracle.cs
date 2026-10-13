@@ -5,6 +5,7 @@ using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Players;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
+using MegaCrit.Sts2.Core.GameActions;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Models.Powers;
 using MegaCrit.Sts2.Core.Nodes.Cards;
@@ -66,12 +67,46 @@ public static class ItemAuditOracle
     }
     public static async Task<object> CoopPrepare(RunState run,bool up)
     {
+        if(up)await Wait(()=>run.Players.All(p=>p.PlayerCombatState?.Phase==PlayerTurnPhase.Play&&p.PlayerCombatState.TurnNumber>=2));
         foreach(var enemy in run.Players[0].Creature.CombatState!.GetOpponentsOf(run.Players[0].Creature)){enemy.SetMaxHpInternal(10000);enemy.SetCurrentHpInternal(10000);}
         foreach(var player in run.Players.OrderBy(p=>p.NetId)){
             foreach(var card in player.PlayerCombatState!.Hand.Cards.ToArray())await CardPileCmd.Add(card,PileType.Draw,skipVisuals:true);
             await PlayerCmd.GainEnergy(30,player);await Add(player,PlayerBloodlines.Heir(player).classId+"_strike",up);
+            if(!up)Require((await PotionCmd.TryToProcure(HeirPotions.Get("triune_draught").ToMutable(),player)).success,"Co-op potion procurement.");
         }
         return new{prepared=true,up};
+    }
+    public static async Task<object> CoopPotion(RunState run)
+    {
+        var player=PlayerBloodlines.LocalPlayer!;var potion=player.Potions.OfType<FamilyPotion>().Single(p=>p.Key=="triune_draught");
+        var others=run.Players.Where(p=>p!=player).Select(p=>new{p.Creature.Block,hand=p.PlayerCombatState!.Hand.Cards.Count,vigor=p.Creature.GetPowerAmount<VigorPower>(),charges=p.Creature.GetPower<P_class>()?.Charges,potions=p.Potions.Count()}).ToArray();
+        var block=player.Creature.Block;var hand=player.PlayerCombatState!.Hand.Cards.Count;var vigor=player.Creature.GetPowerAmount<VigorPower>();var completed=0;var checkpoint=RunManager.Instance.ChecksumTracker.NextId;
+        potion.ExecutionFinished+=_=>completed++;potion.EnqueueManualUse(player.Creature);await Wait(()=>completed==1&&!RunManager.Instance.ActionExecutor.IsRunning);
+        var after=run.Players.Where(p=>p!=player).Select(p=>new{p.Creature.Block,hand=p.PlayerCombatState!.Hand.Cards.Count,vigor=p.Creature.GetPowerAmount<VigorPower>(),charges=p.Creature.GetPower<P_class>()?.Charges,potions=p.Potions.Count()}).ToArray();
+        Require(others.SequenceEqual(after)&&!player.Potions.Contains(potion),"Co-op potion ownership.");
+        return new{owner=player.NetId,cls=PlayerBloodlines.Heir(player).classId,block=player.Creature.Block-block,draw=player.PlayerCombatState.Hand.Cards.Count-hand,vigor=player.Creature.GetPowerAmount<VigorPower>()-vigor,charges=player.Creature.GetPower<P_class>()?.Charges,otherOwnersUnchanged=true,completed,checksumNext=checkpoint+1};
+    }
+    public static async Task<object> PotionEdges(RunState run)
+    {
+        var player=run.Players.Single();var enemies=player.Creature.CombatState!.GetOpponentsOf(player.Creature).ToArray();
+        foreach(var potion in player.Potions.ToArray())await PotionCmd.Discard(potion);
+        foreach(var key in new[]{"borrowed_breath","briar_vial","triune_draught"})Require((await PotionCmd.TryToProcure(HeirPotions.Get(key).ToMutable(),player)).success,"Empty belt procurement.");
+        var slots=player.PotionSlots.ToArray();var rejected=await PotionCmd.TryToProcure(HeirPotions.Get("borrowed_breath").ToMutable(),player);
+        Require(!rejected.success&&player.PotionSlots.SequenceEqual(slots),"Full belt changed.");
+        var breath=player.Potions.OfType<FamilyPotion>().Single(p=>p.Key=="borrowed_breath");var briar=player.Potions.OfType<FamilyPotion>().Single(p=>p.Key=="briar_vial");
+        var uses=0;breath.ExecutionFinished+=_=>uses++;briar.ExecutionFinished+=_=>uses++;
+        async Task Cancel(PotionModel potion,MegaCrit.Sts2.Core.Entities.Creatures.Creature? target){potion.EnqueueManualUse(target);await Wait(()=>!potion.IsQueued&&!RunManager.Instance.ActionExecutor.IsRunning);Require(uses==0&&player.PotionSlots.SequenceEqual(slots),"Invalid target consumed potion.");}
+        await Cancel(briar,player.Creature);await Cancel(breath,enemies.First());
+        var hp=enemies.Select(e=>e.CurrentHp).ToArray();
+        try{foreach(var enemy in enemies)enemy.SetCurrentHpInternal(0);Require(!briar.IsValidTarget(enemies.First())&&!briar.IsValidTarget(null),"Dead/empty target validity.");await Cancel(briar,enemies.First());}
+        finally{for(var i=0;i<enemies.Length;i++)enemies[i].SetCurrentHpInternal(hp[i]);}
+        // Construct both genuine native actions before enqueueing; the duplicate must
+        // cancel against the now-empty slot, without consuming its neighbouring item.
+        var one=new UsePotionAction(breath,player.Creature,true);var two=new UsePotionAction(breath,player.Creature,true);var block=player.Creature.Block;
+        RunManager.Instance.ActionQueueSynchronizer.RequestEnqueue(one);RunManager.Instance.ActionQueueSynchronizer.RequestEnqueue(two);
+        await Wait(()=>uses==1&&!RunManager.Instance.ActionExecutor.IsRunning);
+        Require(player.Creature.Block-block==6&&!player.Potions.Contains(breath)&&player.Potions.Contains(briar)&&player.Potions.Count()==2,"Duplicate queue effect/consumption.");
+        return new{fullBeltRejected=true,invalidTargetCanceled=true,deadTargetCanceled=true,zeroAliveEnemiesCanceled=true,duplicateUses=uses,duplicateBlock=player.Creature.Block-block,remaining=player.Potions.Select(p=>p.Id.ToString()).ToArray()};
     }
     public static async Task<object> CoopAttack(RunState run,bool up)
     {

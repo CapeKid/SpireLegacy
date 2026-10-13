@@ -48,3 +48,7 @@ elif 'potions' in tag:
                     r=send('potion-use',potion=key);assert r['completed'] and r['hpChange']==r['energyChange']==0,r
                 assert all(p is None for p in send('potion-slots'))
             send('abandon');print(tag,cls,traits,'saved belt/native effects complete',flush=True)
+elif 'edges' in tag:
+    for cls in ['knight','mage','ranger']:
+        send('start',**{'class':cls,'quick':True,'traits':[],'seed':'SPIRELEGACY-ITEMS-55','manorTier':0});ready()
+        send('item-potion-edges');send('abandon');print(tag,cls,'belt and queue edges checked',flush=True)
