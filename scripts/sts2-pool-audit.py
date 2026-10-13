@@ -38,22 +38,25 @@ for cls in ['knight','mage','ranger','ironclad']:
     send('start',**{'class':cls,'quick':True,'traits':[],'seed':'SPIRELEGACY-POOLS-54','manorTier':0})
     if cls=='ironclad':send('enter',room='Monster')
     ready()
-    if 'crossrun' in tag and cls!='ironclad':
+    if 'crossrun' in tag:
         send('abandon')
         source=root/'private/sts2-evidence'/f'pool54-{"regular" if beta else "beta"}-{cls}-run.json'
         shutil.copy2(source,profile/'pool-run.json');loaded=send('pool-audit-import-run',ok=beta)
         if beta:
+            if cls=='ironclad':send('enter',room='Monster')
             ready();assert loaded['cls']==cls and all(any(c['key']==r['cardId'] and c['upgraded'] for c in loaded['deck']) for r in json.loads((root/'sheets/branch_cards.json').read_text()) if r['classId']==cls),loaded
         else:
             assert 'System.UInt32' in loaded and '.rng.seed' in loaded,loaded
-            send('start',**{'class':cls,'quick':True,'traits':[],'seed':'SPIRELEGACY-POOLS-54','manorTier':0});ready()
+            send('start',**{'class':cls,'quick':True,'traits':[],'seed':'SPIRELEGACY-POOLS-54','manorTier':0})
+            if cls=='ironclad':send('enter',room='Monster')
+            ready()
     if 'import' in tag and cls!='ironclad':
         source=root/'private/sts2-evidence'/f'pool54-{("regular" if beta else "beta")}-{cls}-cards.json'
         shutil.copy2(source,profile/'pool-cards.json')
         restored=send('pool-audit-history',**{'import':True});assert len(restored['checks'])==720
     if 'import' not in tag:
         library=send('pool-audit-library');assert library['filtered']>0,library
-        sparse=send('pool-audit-sparse');assert len(sparse)==20
+        sparse=send('pool-audit-sparse');assert len(sparse)==60
         if cls!='ironclad':
             saved=send('pool-audit-history');assert len(saved['checks'])==720
             shutil.copy2(profile/'pool-cards.json',root/'private/sts2-evidence'/f'pool54-{"beta" if beta else "regular"}-{cls}-cards.json')
@@ -70,5 +73,8 @@ for cls in ['knight','mage','ranger','ironclad']:
         send('pool-audit-export-run')
         shutil.copy2(profile/'pool-run.json',root/'private/sts2-evidence'/f'pool54-{"beta" if beta else "regular"}-{cls}-run.json')
     send('pool-audit-registry')
+    if 'import' not in tag:
+        send('abandon');send('select');menu=send('pool-audit-library',menu=True,heir=True)
+        assert len(menu['filteredLegacy'])==360 and menu['rendered']>0 and not menu['staleMaterials'],menu
     print(tag,cls,'reward/shop/transform/filter/history checks pass',flush=True)
-send('abandon')
+if 'import' in tag:send('abandon')

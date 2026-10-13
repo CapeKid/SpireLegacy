@@ -44,7 +44,7 @@ public static class PoolAuditOracle
             object Snapshot(CardModel c)=>new{c.Id,c.IsUpgraded,vars=c.DynamicVars.Select(v=>new{v.Key,v.Value.BaseValue}).ToArray()};
             var canon=allowed.Select(Snapshot).ToArray();
             foreach(var room in new[]{RoomType.Monster,RoomType.Elite,RoomType.Boss})
-                foreach(var count in new[]{1,3,6,12})
+                foreach(var count in new[]{1,3,6,12}.Concat(room==RoomType.Boss?new[]{allowed.Count(c=>c.Rarity==CardRarity.Rare)}:[]))
                     for(var repeat=0;repeat<5;repeat++)
                     {
                         var reward=new CardReward(CardCreationOptions.ForRoom(player,room),count,player);reward.Populate();
@@ -80,16 +80,17 @@ public static class PoolAuditOracle
     public static object Sparse(RunState run)
     {
         var player=run.Players.Single();var allowed=player.Character.CardPool.GetUnlockedCards(player.UnlockState,player.RunState.CardMultiplayerConstraint).Where(c=>c.Rarity==CardRarity.Common).ToArray();var checks=new List<object>();
+        foreach(var odds in new[]{CardRarityOddsType.Uniform,CardRarityOddsType.RegularEncounter,CardRarityOddsType.BossEncounter})
         foreach(var size in new[]{0,1,2,6})foreach(var count in new[]{0,1,3,6,7})
         {
-            var options=CardCreationOptions.ForNonCombatWithUniformOdds([player.Character.CardPool],c=>allowed.Take(size).Contains(c));
+            var options=new CardCreationOptions(new[]{player.Character.CardPool},CardCreationSource.Other,odds,c=>allowed.Take(size).Contains(c)).WithFlags(CardCreationFlags.NoUpgradeRoll);
             var started=Time.GetTicksMsec();string? diagnostic=null;CardModel[] cards=[];
             try{cards=CardFactory.CreateForReward(player,count,options).Select(r=>r.Card).ToArray();}
             catch(Exception error){diagnostic=DiagnosticText.Describe(error,()=>"Sparse reward size="+size+", requested="+count);}
             var elapsed=Time.GetTicksMsec()-started;
             Require(elapsed<2000,"Sparse reward selection was not bounded.");
             Require(count<=size?diagnostic==null&&cards.Length==count&&cards.Select(c=>c.Id).Distinct().Count()==count:diagnostic!=null,"Sparse reward contract changed.");
-            checks.Add(new{size,count,elapsed,offered=cards.Select(c=>c.Id.ToString()).ToArray(),diagnostic});foreach(var card in cards)run.RemoveCard(card);
+            checks.Add(new{odds=odds.ToString(),size,count,elapsed,offered=cards.Select(c=>c.Id.ToString()).ToArray(),diagnostic});foreach(var card in cards)run.RemoveCard(card);
         }
         return checks;
     }
@@ -141,13 +142,16 @@ public static class PoolAuditOracle
         }
         return results;
     }
-    public static async Task<object> Library(RunState? run)
+    public static async Task<object> Library(RunState? run,bool heir)
     {
         var tree=(SceneTree)Engine.GetMainLoop();MegaCrit.Sts2.Core.Nodes.Screens.MainMenu.NSubmenuStack stack=run==null?MegaCrit.Sts2.Core.Nodes.NGame.Instance!.MainMenu!.SubmenuStack:MegaCrit.Sts2.Core.Nodes.NRun.Instance!.GlobalUi.SubmenuStack.Stack;
         var library=stack.GetSubmenuType<NCardLibrary>();library.Initialize(run!);
         try
         {
-            stack.Push(library);var deadline=Time.GetTicksMsec()+1000;while(Time.GetTicksMsec()<deadline)await tree.ToSignal(tree,SceneTree.SignalName.ProcessFrame);
+            stack.Push(library);
+            if(heir){var filters=(Dictionary<CharacterModel,NCardPoolFilter>)AccessTools.Field(typeof(NCardLibrary),"_cardPoolFilters").GetValue(library)!;
+                var filter=filters.Single(p=>p.Key is HeirCharacter).Value;filter.IsSelected=true;AccessTools.Method(typeof(NCardLibrary),"UpdateCardPoolFilter").Invoke(library,[filter]);}
+            var deadline=Time.GetTicksMsec()+1000;while(Time.GetTicksMsec()<deadline)await tree.ToSignal(tree,SceneTree.SignalName.ProcessFrame);
             var grid=(NCardLibraryGrid)AccessTools.Field(typeof(NCardLibrary),"_grid").GetValue(library)!;
             var nodes=NativeTestBridge.Descendants(library).OfType<MegaCrit.Sts2.Core.Nodes.Cards.NCard>().ToArray();if(run==null)menuCards=nodes;
             var rendered=nodes.Select(c=>c.Model).Where(c=>c!=null).ToArray();
@@ -174,6 +178,6 @@ public static class PoolAuditOracle
         var save=JsonSerializer.Deserialize(File.ReadAllText(Path.Combine(Runtime.DataDirectory,"pool-run.json")),JsonSerializationUtility.GetTypeInfo<SerializableRun>())!;
         var run=RunState.FromSerializable(save);await RunManager.Instance.SetUpSavedSingleplayer(run,save);
         await MegaCrit.Sts2.Core.Nodes.NGame.Instance!.LoadRun(run,save.PreFinishedRoom);
-        var player=run.Players.Single();return new{cls=PlayerBloodlines.Heir(player).classId,deck=player.Deck.Cards.OfType<LegacyCard>().Select(c=>new{key=c.Key,upgraded=c.IsUpgraded}).ToArray()};
+        var player=run.Players.Single();return new{cls=player.Character is HeirCharacter?PlayerBloodlines.Heir(player).classId:"ironclad",deck=player.Deck.Cards.OfType<LegacyCard>().Select(c=>new{key=c.Key,upgraded=c.IsUpgraded}).ToArray()};
     }
 }

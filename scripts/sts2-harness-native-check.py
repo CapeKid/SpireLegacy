@@ -91,7 +91,7 @@ try:
             pool_checks=[send(profile,'pool-audit-owner') for profile in [host,guest]]
             assert pool_checks[0]==pool_checks[1],pool_checks
             assert [p['cls'] for p in pool_checks[0]]==['knight',guest_class],pool_checks
-            assert all(p['canonicalUnchanged'] and len(p['rewards'])==60 and len(p['shops'])==10 for p in pool_checks[0])
+            assert all(p['canonicalUnchanged'] and len(p['rewards'])==65 and len(p['shops'])==10 for p in pool_checks[0])
             peers('Play')
         if 'powers53' in tag:
             for upgraded in [False,True]:
