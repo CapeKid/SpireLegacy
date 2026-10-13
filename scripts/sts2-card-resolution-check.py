@@ -35,7 +35,7 @@ if 'edges' in tag:
         start(row['classId'])
         for up in [False,True]:
             for mode in ['empty','full','discount','save-copy','dupe']:play(row,up,mode)
-    for key in ['knight_strike','mage_guard','ranger_rapid_fire','knight_blood_price','mage_blood_to_mana','ranger_shadow_arrow','ranger_poison_arrow','knight_crimson_sweep']:
+    for key in ['knight_strike','mage_guard','ranger_rapid_fire','knight_blood_price','mage_blood_to_mana','ranger_shadow_arrow','ranger_barbed_arrow','knight_crimson_sweep']:
         row=next(r for r in cards if r['id']==key);start(row['classId'])
         for up in [False,True]:
             modes=['replay'] if not row['hpLoss'] else ['self-death']

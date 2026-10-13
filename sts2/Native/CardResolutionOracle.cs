@@ -89,7 +89,9 @@ public static class CardResolutionOracle
             Require(actual.All(c=>c.Owner==player&&combat.ContainsCard(c)&&c.Pile!.Cards.Count(x=>ReferenceEquals(x,c))==1),"Card scope/owner/pile disagreement.");
             var expectedPile=card.Type==CardType.Power||card.IsDupe?PileType.None:card.Keywords.Contains(CardKeyword.Exhaust)?PileType.Exhaust:PileType.Discard;
             Require((card.Pile?.Type??PileType.None)==expectedPile,"Wrong result pile: "+key);
-            Require(expectedPile!=PileType.None||!combat.ContainsCard(card),"Removed Power remains in combat scope.");
+            // Native RemoveFromCombat removes pile membership, retaining the model
+            // in combat scope until cleanup (including native Powers and dupes).
+            Require(expectedPile!=PileType.None||!actual.Contains(card),"Removed card remains in a native pile.");
             var plays=mode=="replay"?2:1;
             var design=(card as LegacyCard)?.DesignCard;
             var generated=row?.Text("special")=="wounds"?design!.SpecialAmount*plays:0;
