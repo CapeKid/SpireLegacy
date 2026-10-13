@@ -20,6 +20,12 @@ def activate(text):
 send('chronicle-fixture',unlocked=True)
 send('select',previewAscension=10);send('input',action='controller_face_button_north')
 state=send('manor-state');assert state['paused'] and state['focusableLabels']==0
+activate(next(b['text'] for b in state['buttons'] if b['text'].startswith('Family Chronicle')))
+story=next(b['text'] for b in send('manor-state')['buttons'] if b['text'].endswith('The oath outlives the armor') and not b['disabled'])
+activate(story);activate('Use family motto: Unbroken Oath')
+assert send('lifecycle-state')['profile']['chronicle']['motto']=='Unbroken Oath'
+send('input',action='ui_cancel');assert send('manor-state')['focusText']=='Read: The oath outlives the armor'
+send('input',action='ui_cancel');assert send('manor-state')['focusText'].startswith('Family Chronicle')
 activate('Name your family');time.sleep(.3)
 assert send('manor-audit')['focusType']=='LineEdit'
 activate('Clear text');activate('A');activate('B');activate('Space');activate('c')

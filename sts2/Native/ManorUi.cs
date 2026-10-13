@@ -293,7 +293,7 @@ public static class ManorUi
             AddText(row.Text("requirement"));
             if(!unlocked)AddText(FamilyChronicle.Progress(profile,row),20);
             AddText(FamilyChronicle.Reward(row),20);
-            var button=MakeButton((unlocked?profile.chronicle.read.Contains(id)?"Read: ":"NEW · Read: ":"Locked: ")+row.Text("title"),()=>ReadChronicle(id));
+            var button=MakeButton((unlocked?profile.chronicle.read.Contains(id)?"Read: ":"NEW · Read: ":"Locked: ")+row.Text("title"),()=>ReadChronicle(id),"ManorStory_"+id);
             button.Disabled=!unlocked;content!.AddChild(button);
         }
         if(profile.chronicle.motto.Length>0)AddButton("Clear family motto",()=>{SaveMotto("");ShowChronicle();});
