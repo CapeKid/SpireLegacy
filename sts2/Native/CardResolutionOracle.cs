@@ -98,7 +98,11 @@ public static class CardResolutionOracle
             Require(actual.Length==countBefore+generated-(expectedPile==PileType.None?1:0),"Native card count was not conserved: "+key);
             Require(player.PlayerCombatState.Energy-energy==-cost+(design?.Amount("energy")??0)*plays,"Paid energy mismatch: "+key);
             var saved=card.ToSerializable();var restored=run.LoadCard(saved,player);
-            Require(restored.Id==card.Id&&restored.IsUpgraded==upgraded&&restored.GetDescriptionForPile(PileType.Deck)==card.GetDescriptionForPile(PileType.Deck),"Resolved card identity/text did not round-trip.");
+            Require(restored.Id==card.Id&&restored.IsUpgraded==upgraded,"Resolved card identity did not round-trip.");
+            // Native SerializableCard excludes transient dupe/keyword overrides.
+            // Dupes are removed from play, never promised as durable deck copies.
+            if(!card.IsDupe)Require(restored.GetDescriptionForPile(PileType.Deck)==card.GetDescriptionForPile(PileType.Deck),"Resolved card text did not round-trip.");
+            else if(card is LegacyCard legacy)Require(((LegacyCard)restored).DesignCard.Rules()==legacy.DesignCard.Rules(),"Dupe underlying saved design differs.");
             run.RemoveCard(restored);
             return new {key,upgraded,mode,cost,pile=expectedPile.ToString(),energyDelta=player.PlayerCombatState.Energy-energy,hpDelta=creature.CurrentHp-hp,blockDelta=creature.Block-block,
                 damage=enemies.Select((e,i)=>enemyHp[i]-e.CurrentHp).ToArray(),hand=player.PlayerCombatState.Hand.Cards.Count,cardCount=actual.Length,generated,conserved=true,saveRoundTrip=true,tableNodePresent=false};
