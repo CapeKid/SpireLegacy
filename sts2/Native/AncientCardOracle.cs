@@ -18,7 +18,7 @@ public static class AncientCardOracle
         using(selector) {
             var player=run.Players.Single();var creature=player.Creature;var combat=creature.CombatState!;
             var context=new BlockingPlayerChoiceContext();var hand=PileType.Hand.GetPile(player);
-            var attack=combat.CreateCard(NativeCards.Get(Runtime.Heir.classId+"_strike"),player);
+            var attack=combat.CreateCard(NativeCards.Get(PlayerBloodlines.Heir(player).classId+"_strike"),player);
             await CardPileCmd.Add(attack,PileType.Hand,skipVisuals:true);
             if(key=="knight_kingbreaker")await CreatureCmd.GainBlock(creature,1,ValueProp.Unpowered,null);
             var played=await PoolExpansionOracle.Play(run,key,upgrade,selector:new NoopScope());

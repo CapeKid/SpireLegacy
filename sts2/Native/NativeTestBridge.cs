@@ -345,6 +345,7 @@ public static class NativeTestBridge
                     try {await CardPlayDiagnostics.Observe(Task.FromException(new InvalidOperationException("Owned-game diagnostic fixture")),"TEST_ONLY");}catch(InvalidOperationException){}
                     ManorUi.Open();result=new{diagnostic=CardPlayDiagnostics.LastFailure};break;
                 case "architect-dialogues":
+                    if(PlayerBloodlines.LocalPlayer!=null)throw new InvalidDataException("Inspect Architect selectors from the menu; live heirs use frozen class snapshots.");
                     var endingSet=ModelDb.Event<MegaCrit.Sts2.Core.Models.Events.TheArchitect>().DialogueSet;
                     var endingClass=Runtime.Heir.classId; var endingChecks=new List<object>();
                     try {
@@ -391,11 +392,8 @@ public static class NativeTestBridge
                 case "orobas-native-control":result=await OrobasOracle.NativeControl();break;
                 case "ancient-play":result=await AncientCardOracle.Check(RunState(),request.GetProperty("card").GetString()!,request.GetProperty("upgrade").GetBoolean(),UseTestSelector());break;
                 case "ancients":
-                    var ancientPlayer=RunState().Players.Single(); var originalClass=Runtime.Heir.classId; var ancientChecks=0;
-                    try {
-                        foreach(var heirClass in new[]{"knight","mage","ranger"}) {
-                            Runtime.Heir.classId=heirClass;
-                            for(var roll=0;roll<30;roll++) {
+                    var ancientPlayer=RunState().Players.Single(); var heirClass=PlayerBloodlines.Heir(ancientPlayer).classId; var ancientChecks=0;
+                            for(var roll=0;roll<90;roll++) {
                                 var tome=(MegaCrit.Sts2.Core.Models.Relics.DustyTome)ModelDb.Relic<MegaCrit.Sts2.Core.Models.Relics.DustyTome>().ToMutable();
                                 tome.SetupForPlayer(ancientPlayer);
                                 var chosen=ModelDb.GetById<CardModel>(tome.AncientCard!);
@@ -404,8 +402,6 @@ public static class NativeTestBridge
                                 if(restoredTome.AncientCard!=tome.AncientCard)throw new InvalidDataException("Ancient relic save mismatch.");
                                 ancientChecks++;
                             }
-                        }
-                    } finally {Runtime.Heir.classId=originalClass;}
                     var acquiredTome=(MegaCrit.Sts2.Core.Models.Relics.DustyTome)ModelDb.Relic<MegaCrit.Sts2.Core.Models.Relics.DustyTome>().ToMutable();
                     acquiredTome.SetupForPlayer(ancientPlayer);
                     var deckBefore=ancientPlayer.Deck.Cards.Count;

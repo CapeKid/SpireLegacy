@@ -87,7 +87,9 @@ public static class AncientAuditOracle
     public static async Task<object> Owners(RunState run)
     {
         var prior=PlayerBloodlines.EligibilityOwner.Value;var results=new List<object>();
-        foreach(var player in run.Players){var model=(TheArchitect)ModelDb.Event<TheArchitect>().ToMutable();await model.BeginEvent(player,false);var dialogue=(AncientDialogue)AccessTools.Field(typeof(TheArchitect),"_dialogue").GetValue(model)!;var ancientKeys=new List<string>();
+        foreach(var player in run.Players){var model=(TheArchitect)ModelDb.Event<TheArchitect>().ToMutable();var begin=AccessTools.Method(typeof(EventModel),"BeginEvent");
+            await (Task)begin.Invoke(model,begin.GetParameters().Length==2?[player,false]:[player,null,false])!;
+            var dialogue=(AncientDialogue)AccessTools.Field(typeof(TheArchitect),"_dialogue").GetValue(model)!;var ancientKeys=new List<string>();
             if(player.Character is HeirCharacter){var cls=PlayerBloodlines.Heir(player).classId;Require(dialogue.Lines.All(l=>l.LineText!.LocEntryKey.StartsWith("SPIRELEGACY.ARCHITECT."+cls+".")),"Remote ending used another heir's class.");}
             else Require(dialogue.Lines.All(l=>!l.LineText!.LocEntryKey.StartsWith("SPIRELEGACY")),"Native ending contaminated.");
             try{PlayerBloodlines.EligibilityOwner.Value=player;

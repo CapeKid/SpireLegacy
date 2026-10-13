@@ -22,6 +22,7 @@ def send(command, **args):
 
 
 try:
+    checks = send('architect-dialogues')
     for cls in ['knight', 'mage', 'ranger']:
         send('start', **{'class': cls, 'traits': [], 'quick': True})
         for _ in range(150):
@@ -31,7 +32,6 @@ try:
         else:
             raise TimeoutError('combat startup')
         if cls == 'knight':
-            checks = send('architect-dialogues')
             assert len(checks) == 15, checks
             for item in checks:
                 lines = item['lines']
