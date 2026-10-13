@@ -25,7 +25,7 @@
     "hook": "run_end",
     "amount": 2,
     "enabled": true,
-    "summary": "Earn 2 crowns per cleared floor; remaining gold converts at 25:1. Trait bonuses are capped at +100%; Treasury multiplies the capped payout."
+    "summary": "Earn 2 crowns per completed non-Ancient map point after completing combat. A combat death after a manual card play adds one participation point; abandonment does not. Only earned, unspent gold converts at 25:1. Trait bonuses are capped at +100%; Treasury multiplies the capped payout."
   },
   {
     "id": "victory",
@@ -88,7 +88,7 @@
     "hook": "run_end",
     "amount": 25,
     "enabled": true,
-    "summary": "Convert 25 unspent run gold into one legacy crown."
+    "summary": "Convert 25 earned, unspent gold into one legacy crown after qualifying combat progress. Starting gold is excluded; earned gold is spent or lost first."
   },
   {
     "id": "playtest_crowns",

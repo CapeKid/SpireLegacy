@@ -9,7 +9,8 @@ public static class CrownEarnings
         var floors=Math.Max(0,completedPoints);
         if(diedAfterPlay)floors=(int)Math.Min(int.MaxValue,(long)floors+1);
         // Conservatively spend earned gold first; returned stolen gold cancels theft.
-        var unspent=Math.Max(0,Math.Max(0,gained)-Math.Max(0,spent)-Math.Max(0,lost)-Math.Max(0,stolen));
+        var unspent=Math.Max(0,gained);
+        foreach(var debit in new[]{spent,lost,stolen})unspent-=Math.Min(unspent,Math.Max(0,debit));
         return (floors,(int)Math.Min(Math.Max(0,remainingGold),unspent));
     }
 }
