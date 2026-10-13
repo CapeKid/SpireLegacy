@@ -156,7 +156,7 @@ public static class PoolAuditOracle
             var nodes=NativeTestBridge.Descendants(library).OfType<MegaCrit.Sts2.Core.Nodes.Cards.NCard>().ToArray();if(run==null)menuCards=nodes;
             var rendered=nodes.Select(c=>c.Model).Where(c=>c!=null).ToArray();
             var stale=new[]{"_portraitBlurMaterial","_canvasGroupMaskBlurMaterial","_canvasGroupBlurMaterial","_canvasGroupMaskMaterial"}.Where(name=>menuCards.Concat(nodes).Where(GodotObject.IsInstanceValid).Any(node=>AccessTools.Field(typeof(MegaCrit.Sts2.Core.Nodes.Cards.NCard),name).GetValue(node) is Material material&&!GodotObject.IsInstanceValid(material))).ToArray();
-            return new{cls=run?.Players.Single().Character is HeirCharacter character?character.ClassId:Runtime.Heir.classId,rendered=rendered.Length,filtered=grid.VisibleCards.Count(),filteredLegacy=grid.VisibleCards.OfType<LegacyCard>().Select(c=>c.Key).Distinct().ToArray(),legacy=rendered.OfType<LegacyCard>().Select(c=>c.Key).Distinct().ToArray(),staleMaterials=stale};
+            return new{cls=run!=null&&MegaCrit.Sts2.Core.Context.LocalContext.GetMe(run)?.Character is HeirCharacter character?character.ClassId:Runtime.Heir.classId,rendered=rendered.Length,filtered=grid.VisibleCards.Count(),filteredLegacy=grid.VisibleCards.OfType<LegacyCard>().Select(c=>c.Key).Distinct().ToArray(),legacy=rendered.OfType<LegacyCard>().Select(c=>c.Key).Distinct().ToArray(),staleMaterials=stale};
         }
         finally {stack.Pop();var deadline=Time.GetTicksMsec()+500;while(Time.GetTicksMsec()<deadline)await tree.ToSignal(tree,SceneTree.SignalName.ProcessFrame);}
     }

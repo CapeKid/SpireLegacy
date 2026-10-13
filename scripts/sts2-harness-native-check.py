@@ -92,6 +92,11 @@ try:
             assert pool_checks[0]==pool_checks[1],pool_checks
             assert [p['cls'] for p in pool_checks[0]]==['knight',guest_class],pool_checks
             assert all(p['canonicalUnchanged'] and len(p['rewards'])==65 and len(p['shops'])==10 for p in pool_checks[0])
+            for profile,cls in [(host,'knight'),(guest,guest_class)]:
+                library=send(profile,'pool-audit-library')
+                pools=send(profile,'pool-audit-registry')
+                expected_pool=next(p for p in pools['detail'] if cls.upper()+'_CARD_POOL' in p['pool'])
+                assert library['cls']==cls and set(library['filteredLegacy'])=={c['key'] for c in expected_pool['cards']} and library['rendered']>0 and not library['staleMaterials'],library
             peers('Play')
         if 'powers53' in tag:
             for upgraded in [False,True]:
