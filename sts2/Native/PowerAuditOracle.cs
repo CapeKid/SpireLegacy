@@ -314,10 +314,12 @@ public static class PowerAuditOracle
     {
         foreach(var enemy in run.Players[0].Creature.CombatState!.GetOpponentsOf(run.Players[0].Creature)){enemy.SetMaxHpInternal(10000);enemy.SetCurrentHpInternal(10000);}
         foreach(var player in run.Players.OrderBy(p=>p.NetId)) {
+            foreach(var held in player.PlayerCombatState!.Hand.Cards.ToArray())await CardPileCmd.Add(held,PileType.Draw,skipVisuals:true);
             foreach(var key in new[]{"arcane_echo","skill_block","discard_energy"})foreach(var old in player.Creature.Powers.OfType<LegacyPower>().Where(p=>p.Key==key).ToArray())await PowerCmd.Remove(old);
             await Apply(player,"arcane_echo",2);await Apply(player,"skill_block",3);await Apply(player,"discard_energy",2);
             await PlayerCmd.GainEnergy(20,player);
             for(var i=0;i<3;i++)await Add(player,ModelDb.Card<DefendIronclad>(),up);
+            if(PlayerBloodlines.Heir(player).classId=="ranger")for(var i=0;i<3;i++)await Add(player,ModelDb.Card<TwinStrike>(),up);
         }
         return new{up,owners=run.Players.Count};
     }
@@ -333,7 +335,8 @@ public static class PowerAuditOracle
         Require(counter.Charges==(cls=="knight"?1:cls=="mage"?2:0),"Co-op class Skill cap differs.");
         var attackPlays=0;if(cls=="ranger") {
             var before=counter.AttacksThisTurn;var target=player.Creature.CombatState!.GetOpponentsOf(player.Creature).First(e=>e.IsAlive);
-            for(var i=0;i<3;i++)await Play(await Add(player,ModelDb.Card<TwinStrike>(),up),target);
+            var attacks=player.PlayerCombatState.Hand.Cards.OfType<TwinStrike>().Where(c=>c.IsUpgraded==up).TakeLast(3).ToArray();Require(attacks.Length==3,"Missing prepared co-op Attack fuel.");
+            foreach(var card in attacks)await Play(card,target);
             attackPlays=3;Require(counter.AttacksThisTurn==before+3&&counter.DisplayAmount==0,"Co-op Hunter Rhythm counted hits instead of cards.");
         }
         Require(others.All(o=>o.p.PlayerCombatState!.Energy==o.energy&&o.p.Creature.Block==o.block&&o.p.PlayerCombatState.Hand.Cards.Count==o.hand&&o.p.Creature.GetPower<P_class>()!.Charges==o.charges),"Power hook leaked to another owner.");

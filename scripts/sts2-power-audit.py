@@ -70,7 +70,7 @@ if 'chains' in tag:
 if 'scry' in tag:
     rows=json.loads((root/'sheets/cards.json').read_text())
     for cls in ['knight','mage','ranger']:
-        row=next(r for r in rows if r['classId']==cls and r['special']=='scry' and not r['energy'])
+        row=next((r for r in rows if r['classId']==cls and r['special']=='scry' and not r['energy']),next(r for r in rows if r['special']=='scry' and not r['energy']))
         for up in [False,True]:
             for decline in [False,True]:
                 start(cls);choice=send('card-choice-boundary',card=row['id'],upgrade=up,decline=decline)
