@@ -72,7 +72,10 @@ public static class PowerAuditOracle
                 var expected=cls=="knight"?1:cls=="mage"?Math.Min(2,i+1+(mode=="reservoir"?1:0)):0;
                 Require(counter.Charges==expected,"Class Skill cap/echo mismatch: "+cls);
             }
-            var saved=SavedProperties.From(counter)!;
+            // Regular does not cache power fields: run saves contain no live powers.
+            // Register this test model explicitly for the separate property-codec probe.
+            SavedPropertiesTypeCache.InjectTypeIntoCache(typeof(P_class));
+            var saved=SavedProperties.From(counter)??new SavedProperties();
             var json=JsonSerializer.Serialize(saved,new JsonSerializerOptions{IncludeFields=true});
             var loaded=(P_class)ModelDb.Power<P_class>().ToMutable();JsonSerializer.Deserialize<SavedProperties>(json,new JsonSerializerOptions{IncludeFields=true})!.Fill(loaded);
             Require(loaded.Charges==counter.Charges&&loaded.AttacksThisTurn==counter.AttacksThisTurn,"Saved class properties differ.");
@@ -139,5 +142,83 @@ public static class PowerAuditOracle
         await BalanceOracle.End(player,true);await Wait(()=>player.PlayerCombatState!.Phase==PlayerTurnPhase.Play);
         Require(player.Creature.GetPower<FlameBarrierPower>()==null,"Flame Barrier outlived enemy turn.");
         return new{native,up,amount,results,nextTurnRemoved=true};
+    }
+    public static async Task<object> Engines(RunState run,string mode,bool up,IDisposable selector)
+    {
+        using(selector) {
+            var player=run.Players.Single();var creature=player.Creature;var enemies=await Setup(player);
+            if(mode=="third") {
+                await Apply(player,"skill_block",2);await Apply(player,"skill_block",1);
+                await Apply(player,"skill_energy",2);await Apply(player,"attack_vigor",4);await Apply(player,"arcane_echo",2);
+                var block=creature.Block;var hand=player.PlayerCombatState!.Hand.Cards.Count;
+                for(var i=1;i<=3;i++) {
+                    var card=await Add(player,ModelDb.Card<DefendIronclad>(),up);await Play(card);
+                    Require(creature.Block-block==i*(up?8:5)+(i==3?3:0),"Third Skill Block/stacking mismatch.");
+                    Require(creature.GetPowerAmount<EnergyNextTurnPower>()==(i==3?2:0),"Third Skill next-Energy mismatch.");
+                    Require(player.PlayerCombatState.Hand.Cards.Count-hand==2,"Arcane Echo repeated within a turn.");
+                }
+                for(var i=1;i<=3;i++){await Play(await Add(player,ModelDb.Card<StrikeIronclad>(),up),enemies[0]);Require(creature.GetPowerAmount<VigorPower>()==(i==3?4:0),"Third Attack Vigor mismatch.");}
+                await Play(await Add(player,ModelDb.Card<TwinStrike>(),up),enemies[0]);Require(creature.GetPowerAmount<VigorPower>()==0,"Generated Vigor was not consumed by next Attack.");
+                await BalanceOracle.End(player,true);await Wait(()=>player.PlayerCombatState.Phase==PlayerTurnPhase.Play);
+                Require(player.PlayerCombatState.Energy==5&&creature.GetPower<EnergyNextTurnPower>()==null,"Next Energy not delivered once.");
+                var nextHand=player.PlayerCombatState.Hand.Cards.Count;
+                await Play(await Add(player,ModelDb.Card<DefendIronclad>(),up));
+                Require(player.PlayerCombatState.Hand.Cards.Count-nextHand==2&&creature.GetPower<EnergyNextTurnPower>()==null,"First Skill/reset claims did not reset.");
+                return new{mode,up,stack=3,skillPlays=4,attackPlays=4,firstSkillDraw=2,nextEnergy=5,reset=true};
+            }
+            if(mode=="discard") {
+                await Apply(player,"discard_energy",2);await Apply(player,"discard_block",3);
+                var before=player.PlayerCombatState!.Energy;var block=creature.Block;
+                for(var i=0;i<2;i++){var card=await Add(player,ModelDb.Card<DefendIronclad>());await CardCmd.Discard(Context,card);}
+                Require(player.PlayerCombatState.Energy==before+2&&creature.Block==block+6,"Manual discard once-only claim mismatch.");
+                await Add(player,ModelDb.Card<DefendIronclad>());
+                await BalanceOracle.End(player,true);await Wait(()=>player.PlayerCombatState.Phase==PlayerTurnPhase.Play);
+                Require(player.PlayerCombatState.Energy==3&&creature.Block==0,"End-turn discard paid a manual reward.");
+                var card2=await Add(player,ModelDb.Card<DefendIronclad>());await CardCmd.Discard(Context,card2);
+                Require(player.PlayerCombatState.Energy==5&&creature.Block==3,"Discard next-turn claim did not reset.");
+                return new{mode,up,firstReward=2,secondReward=0,nextReward=2,automaticReward=0};
+            }
+            if(mode=="exhaust") {
+                await Apply(player,"exhaust_damage",3);await Apply(player,"dark_embrace",1);await Apply(player,"feel_no_pain",2);
+                var hp=enemies.Select(e=>e.CurrentHp).ToArray();var block=creature.Block;var hand=player.PlayerCombatState!.Hand.Cards.Count;
+                for(var i=0;i<2;i++){var card=await Add(player,ModelDb.Card<DefendIronclad>(),up);await BranchCommands.Exhaust(Context,card);Require(card.Pile?.Type==PileType.Exhaust,"Exhaust engine stranded fuel.");}
+                Require(creature.Block-block==4&&player.PlayerCombatState.Hand.Cards.Count-hand==2,"Exhaust Block/draw hook mismatch.");
+                Require(enemies.Select((e,i)=>hp[i]-e.CurrentHp).All(n=>n==6),"Exhaust damage did not hit every live enemy.");
+                return new{mode,up,exhausts=2,block=4,draw=2,damage=6};
+            }
+            if(mode=="draw-chain") {
+                await CardPileCmd.RemoveFromCombat(CardPile.GetCards(player,Piles).ToArray(),skipVisuals:true);
+                await Apply(player,"evolve",1);await Apply(player,"fire_breathing",2);
+                for(var i=0;i<20;i++)await Add(player,ModelDb.Card<Wound>(),false,PileType.Draw);
+                var hp=enemies.Select(e=>e.CurrentHp).ToArray();await CardPileCmd.Draw(Context,1,player);
+                Require(player.PlayerCombatState!.Hand.Cards.Count==10,"Status draw recursion did not stop at full hand.");
+                Require(enemies.Select((e,i)=>hp[i]-e.CurrentHp).All(n=>n==20),"Status draw damage duplicated or skipped hooks.");
+                return new{mode,up,hand=10,drawPile=10,damage=20,bounded=true};
+            }
+            if(mode=="sadistic") {
+                await Apply(player,"sadistic",3);await PowerCmd.Apply<FlameBarrierPower>(Context,enemies[0],4,enemies[0],null);
+                var hp=enemies[0].CurrentHp;var self=creature.CurrentHp;
+                await CardEffects.Apply(Context,"weak",enemies[0],2,creature,null);
+                Require(hp-enemies[0].CurrentHp==3&&creature.CurrentHp==self,"Sadistic damage recursed through retaliation.");
+                hp=enemies[0].CurrentHp;await CardEffects.Apply(Context,"weak",enemies[0],1,creature,null);
+                Require(hp-enemies[0].CurrentHp==3,"Sadistic stacking did not trigger once.");
+                await PowerCmd.Remove(enemies[0].GetPower<WeakPower>()!);Require(hp-enemies[0].CurrentHp==3,"Debuff removal triggered Sadistic.");
+                return new{mode,up,applies=2,damage=6,unpoweredNoRetaliation=true};
+            }
+            if(mode=="turn") {
+                creature.SetCurrentHpInternal(creature.MaxHp-10);
+                await Apply(player,"brutality",2);await Apply(player,"berserk",1);await Apply(player,"combust",3);await Apply(player,"metallicize",4);await Apply(player,"plated",2);
+                var hp=creature.CurrentHp;var enemyHp=enemies.Select(e=>e.CurrentHp).ToArray();
+                await BalanceOracle.End(player,true);await Wait(()=>player.PlayerCombatState!.Phase==PlayerTurnPhase.Play);
+                Require(creature.CurrentHp==hp-3&&player.PlayerCombatState!.Energy==4&&player.PlayerCombatState.Hand.Cards.Count==7,"Turn-start/end loss, Energy or draw mismatch.");
+                Require(enemies.Select((e,i)=>enemyHp[i]-e.CurrentHp).All(n=>n==3),"Combust did not damage every enemy once.");
+                var plated=creature.GetPower<P_plated>()!;
+                await CreatureCmd.Damage(Context,creature,2,ValueProp.Unblockable|ValueProp.Unpowered,enemies[0]);Require(plated.Amount==2,"Unpowered HP loss consumed Plated.");
+                await CreatureCmd.Damage(Context,creature,2,ValueProp.Move,enemies[0]);Require(plated.Amount==1,"Powered HP damage did not consume Plated.");
+                await PowerCmd.Remove(plated);await Apply(player,"plated",2);Require(creature.GetPower<P_plated>()!.Amount==2,"Removed/reapplied power retained old state.");
+                return new{mode,up,hpLoss=3,energy=4,hand=7,damage=3,platedReset=true};
+            }
+            throw new ArgumentException("Unknown engine fixture: "+mode);
+        }
     }
 }

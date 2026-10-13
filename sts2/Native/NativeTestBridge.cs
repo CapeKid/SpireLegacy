@@ -67,6 +67,7 @@ public static class NativeTestBridge
                 case "power-class":await WaitForPlay(RunState().Players.Single());result=await PowerAuditOracle.Class(RunState(),request.GetProperty("mode").GetString()!,request.GetProperty("upgrade").GetBoolean(),UseTestSelector());break;
                 case "power-rhythm":await WaitForPlay(RunState().Players.Single());result=await PowerAuditOracle.Rhythm(RunState(),request.GetProperty("upgrade").GetBoolean(),request.GetProperty("mode").GetString()!,UseTestSelector());break;
                 case "power-barrier":await WaitForPlay(RunState().Players.Single());result=await PowerAuditOracle.Barrier(RunState(),request.GetProperty("upgrade").GetBoolean(),request.GetProperty("native").GetBoolean());break;
+                case "power-engines":await WaitForPlay(RunState().Players.Single());result=await PowerAuditOracle.Engines(RunState(),request.GetProperty("mode").GetString()!,request.GetProperty("upgrade").GetBoolean(),UseTestSelector());break;
                 case "balance-encounter":await WaitForPlay(RunState().Players.Single());result=await BalanceOracle.Encounter(RunState(),request.GetProperty("build").GetString()!,UseTestSelector());break;
                 case "persistence-state":result=PersistenceOracle.Snapshot(RunState());break;
                 case "persistence-menu":result=PersistenceOracle.ChangeMenu(RunState());break;

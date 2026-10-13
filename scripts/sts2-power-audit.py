@@ -24,16 +24,26 @@ def start(cls):
     ready();send('vigor-room');ready()
 send('trait-speed',value=8)
 send('compat-control',patches=True,upgrade=False)
-for cls in ['knight','mage','ranger']:
+for cls in ([] if 'engines' in tag or 'retention' in tag else ['knight','mage','ranger']):
     modes=['single','multi','area','random','zero','replay','dupe','lethal']+(['reservoir'] if cls=='mage' else [])
     if 'smoke' in tag:modes=['reservoir' if cls=='mage' else 'multi']
     for up in ([False] if 'smoke' in tag else [False,True]):
         for mode in modes:
             start(cls);send('power-class',mode=mode,upgrade=up)
             print(tag,cls,mode,up,'pass',flush=True)
-for up in ([False] if 'smoke' in tag else [False,True]):
+for up in ([] if 'engines' in tag or 'retention' in tag else [False] if 'smoke' in tag else [False,True]):
     for mode in (['multi'] if 'smoke' in tag else ['multi','area','random']):
         start('ranger');send('power-rhythm',mode=mode,upgrade=up)
     for native in [False,True]:
         start('ironclad' if native else 'mage');send('power-barrier',native=native,upgrade=up)
-send('abandon');print(tag+': class counters, per-hit ordering, retention/retaliation audit passes',flush=True)
+if 'engines' in tag:
+    for cls in ['knight','mage','ranger']:
+        for up in [False,True]:
+            for mode in ['third','discard','exhaust','draw-chain','sadistic','turn']:
+                start(cls);send('power-engines',mode=mode,upgrade=up)
+                print(tag,cls,mode,up,'pass',flush=True)
+if 'retention' in tag:
+    for cls in ['knight','mage','ranger']:
+        for up,stack,intrinsic,full in [(False,False,False,False),(True,True,True,False),(False,False,False,True)]:
+            start(cls);send('retention-check',upgrade=up,stack=stack,intrinsic=intrinsic,fullHand=full)
+send('abandon');print(tag+': selected power audit suite passes',flush=True)
