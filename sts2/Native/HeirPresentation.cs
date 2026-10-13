@@ -193,7 +193,7 @@ public static class HeirShopPurchase
     public static void Postfix(MegaCrit.Sts2.Core.Entities.Merchant.MerchantEntry __instance) {
         if(AccessTools.Field(typeof(MegaCrit.Sts2.Core.Entities.Merchant.MerchantEntry),"_player").GetValue(__instance) is not Player player||player.Character is not HeirCharacter)return;
         var tree=(SceneTree)Engine.GetMainLoop();
-        foreach(var sprite in NativeTestBridge.Descendants(tree.Root).OfType<HeirSprite>().Where(s=>s.Name=="SpireLegacyRoomHeir"&&s.IsVisibleInTree()))sprite.PlayPose("skill");
+        foreach(var sprite in NativeTestBridge.Descendants(tree.Root).OfType<HeirSprite>().Where(s=>s.Name=="SpireLegacyRoomHeir"&&s.IsVisibleInTree()&&s.HasMeta("spirelegacy_owner")&&s.GetMeta("spirelegacy_owner").AsUInt64()==player.NetId))sprite.PlayPose("skill");
     }
 }
 [HarmonyPatch(typeof(MegaCrit.Sts2.Core.Nodes.Screens.Shops.NMerchantCharacter),"PlayAnimation")]
