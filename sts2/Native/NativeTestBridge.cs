@@ -282,7 +282,9 @@ public static class NativeTestBridge
                 case "pool-audit-modifiers":result=PoolAuditOracle.Modifiers(RunState());break;
                 case "pool-audit-sparse":result=PoolAuditOracle.Sparse(RunState());break;
                 case "pool-audit-history":result=PoolAuditOracle.Historical(RunState(),request.TryGetProperty("import",out var poolImport)&&poolImport.GetBoolean());break;
-                case "pool-audit-library":result=await PoolAuditOracle.Library(request.TryGetProperty("menu",out var poolMenu)&&poolMenu.GetBoolean()?null:RunState(),request.TryGetProperty("heir",out var poolHeir)&&poolHeir.GetBoolean());break;
+                case "pool-audit-library":
+                    if(request.TryGetProperty("selectedClass",out var poolSelected)){if(Runtime.Profile.active!=null||poolSelected.GetString() is not ("knight" or "mage" or "ranger"))throw new InvalidDataException("Only an idle lab family's class may change.");Runtime.Profile.selected=new(){name="PoolTester",classId=poolSelected.GetString()!,traits=[]};}
+                    result=await PoolAuditOracle.Library(request.TryGetProperty("menu",out var poolMenu)&&poolMenu.GetBoolean()?null:RunState(),request.TryGetProperty("heir",out var poolHeir)&&poolHeir.GetBoolean());break;
                 case "pool-parity":
                     object PoolCounts(CardPoolModel pool) {var cards=pool.AllCards.ToArray();return new {pool=pool.Id.ToString(),total=cards.Length,unique=cards.Select(c=>c.Id).Distinct().Count(),ordinary=cards.Count(c=>c.Rarity is CardRarity.Common or CardRarity.Uncommon or CardRarity.Rare),common=cards.Count(c=>c.Rarity==CardRarity.Common),uncommon=cards.Count(c=>c.Rarity==CardRarity.Uncommon),rare=cards.Count(c=>c.Rarity==CardRarity.Rare),basic=cards.Count(c=>c.Rarity==CardRarity.Basic),ancient=cards.Count(c=>c.Rarity==CardRarity.Ancient)};}
                     result=new{native=ModelDb.AllCharacters.Where(c=>c is not HeirCharacter).Select(c=>PoolCounts(c.CardPool)).ToArray(),heirs=new[]{PoolCounts(ModelDb.CardPool<KnightCardPool>()),PoolCounts(ModelDb.CardPool<MageCardPool>()),PoolCounts(ModelDb.CardPool<RangerCardPool>())}};break;

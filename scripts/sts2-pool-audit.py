@@ -34,6 +34,11 @@ if 'library-control' in tag:
     if 'fixed' in tag:assert after['rendered']>0 and not after['staleMaterials'],(before,after)
     else:assert after['staleMaterials'],(before,after)
     send('abandon');print(tag,'native unseen-material control checked',flush=True);sys.exit(0)
+if 'compendium-baseline' in tag:
+    send('start',**{'class':'knight','quick':True,'traits':[],'seed':'SPIRELEGACY-POOLS-54','manorTier':0});ready();send('abandon');send('select')
+    menus=[send('pool-audit-library',menu=True,heir=True,selectedClass=cls) for cls in ['knight','mage','ranger','knight']]
+    assert menus[0]['filteredLegacy']==menus[1]['filteredLegacy']==menus[2]['filteredLegacy']==menus[3]['filteredLegacy'],menus
+    print(tag,'cached class filter reproduction captured',flush=True);sys.exit(0)
 for cls in ['knight','mage','ranger','ironclad']:
     send('start',**{'class':cls,'quick':True,'traits':[],'seed':'SPIRELEGACY-POOLS-54','manorTier':0})
     if cls=='ironclad':send('enter',room='Monster')
@@ -74,7 +79,9 @@ for cls in ['knight','mage','ranger','ironclad']:
         shutil.copy2(profile/'pool-run.json',root/'private/sts2-evidence'/f'pool54-{"beta" if beta else "regular"}-{cls}-run.json')
     send('pool-audit-registry')
     if 'import' not in tag:
-        send('abandon');send('select');menu=send('pool-audit-library',menu=True,heir=True)
-        assert len(menu['filteredLegacy'])==360 and menu['rendered']>0 and not menu['staleMaterials'],menu
+        send('abandon');send('select')
+        for selected in ['knight','mage','ranger','knight']:
+            menu=send('pool-audit-library',menu=True,heir=True,selectedClass=selected)
+            assert menu['cls']==selected and set(menu['filteredLegacy'])=={r['cardId'] for r in membership+ancients if r['classId']==selected} and menu['rendered']>0 and not menu['staleMaterials'],menu
     print(tag,cls,'reward/shop/transform/filter/history checks pass',flush=True)
 if 'import' in tag:send('abandon')
