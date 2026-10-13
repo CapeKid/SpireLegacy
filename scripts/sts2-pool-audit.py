@@ -20,7 +20,8 @@ send('trait-speed',value=8)
 registry=send('pool-audit-registry');assert registry['historical']==360 and registry['expanded']==beta,registry
 membership=json.loads((root/'sheets/card_pools.json').read_text())+(json.loads((root/'sheets/branch_cards.json').read_text()) if beta else [])
 ancients=json.loads((root/'sheets/ancient_cards.json').read_text())
-for cls,pool in zip(['knight','mage','ranger'],registry['detail']):
+for cls in ['knight','mage','ranger']:
+    pool=next(p for p in registry['detail'] if cls.upper()+'_CARD_POOL' in p['pool'])
     keys={r['cardId'] for r in membership+ancients if r['classId']==cls}
     assert {r['key'] for r in pool['cards']}==keys,pool
     assert len(keys)==len(pool['cards']) and sum(c['rarity']=='Basic' for c in pool['cards'])==3
@@ -39,7 +40,9 @@ for cls in ['knight','mage','ranger','ironclad']:
             saved=send('pool-audit-history');assert len(saved['checks'])==720
             shutil.copy2(profile/'pool-cards.json',root/'private/sts2-evidence'/f'pool54-{"beta" if beta else "regular"}-{cls}-cards.json')
     result=send('pool-audit-owner');assert len(result)==1
-    if cls!='ironclad':assert set(result[0]['allowed'])=={r['cardId'] for r in membership if r['classId']==cls and not r['cardId'].endswith(('_strike','_guard','_talent'))},result
+    if cls!='ironclad':
+        design={r['id']:r for r in json.loads((root/'sheets/cards.json').read_text())}
+        assert set(result[0]['allowed'])=={r['cardId'] for r in membership if r['classId']==cls and design[r['cardId']]['rarity'] in ['COMMON','UNCOMMON','RARE']},result
     send('save');send('resume');ready();send('pool-audit-owner')
     send('pool-audit-registry')
     print(tag,cls,'reward/shop/transform/filter/history checks pass',flush=True)
