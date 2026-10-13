@@ -23,7 +23,7 @@ public static class PlayerBloodlines
     }
     public static FamilyProfile.FamilyRun? Saved(SerializablePlayer save)
     {
-        var data=save.Relics.FirstOrDefault(r=>r.Id==ModelDb.Relic<BloodlineRelic>().Id)?.Props?.strings?.FirstOrDefault(p=>p.name==nameof(BloodlineRelic.FamilyRunSnapshot)).value;
+        var data=save.Relics.FirstOrDefault(r=>r.Id==ModelDb.Relic<BloodlineRelic>().Id||r.Id==ModelDb.Relic<RefinedBloodlineRelic>().Id)?.Props?.strings?.FirstOrDefault(p=>p.name==nameof(BloodlineRelic.FamilyRunSnapshot)).value;
         if(string.IsNullOrEmpty(data)&&save.CharacterId==ModelDb.Character<HeirCharacter>().Id)throw new InvalidDataException("This Heir save has no frozen family snapshot. The native save is preserved; restore a compatible backup or use its original mod version.");
         return string.IsNullOrEmpty(data)?null:FamilySnapshot.ReadPlayerSave(data,save.NetId);
     }

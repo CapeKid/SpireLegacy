@@ -332,6 +332,9 @@ public static class NativeTestBridge
                         await (Task)AccessTools.Method(endingEvent.GetType(),"AdvanceDialogue").Invoke(endingEvent,[])!;
                     }
                     result=new{index=(int)AccessTools.Field(endingEvent.GetType(),"_currentLineIndex").GetValue(endingEvent)!,lines=endingDialogue.Lines.Select(l=>l.LineText!.GetFormattedText()).ToArray(),options=endingEvent.CurrentOptions.Select(o=>o.Title.GetFormattedText()).ToArray()};break;
+                case "orobas-refinement":result=await OrobasOracle.Check(RunState(),request.TryGetProperty("baseline",out var orobasBaseline)&&orobasBaseline.GetBoolean(),request.TryGetProperty("inspect",out var orobasInspect)&&orobasInspect.GetBoolean());break;
+                case "orobas-coop":result=await OrobasOracle.Coop(RunState());break;
+                case "orobas-native-control":result=await OrobasOracle.NativeControl();break;
                 case "ancient-play":result=await AncientCardOracle.Check(RunState(),request.GetProperty("card").GetString()!,request.GetProperty("upgrade").GetBoolean(),UseTestSelector());break;
                 case "ancients":
                     var ancientPlayer=RunState().Players.Single(); var originalClass=Runtime.Heir.classId; var ancientChecks=0;

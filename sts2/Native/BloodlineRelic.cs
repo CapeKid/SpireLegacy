@@ -15,11 +15,12 @@ using System.Text.Json;
 namespace SpireLegacy;
 
 /// <summary>Run-wide inheritance hooks; the visible manor panel supplies the full trait descriptions.</summary>
-public sealed class BloodlineRelic : CustomRelicModel
+public class BloodlineRelic : CustomRelicModel
 {
     private HeirInheritance Inheritance=>PlayerBloodlines.Traits(Owner);
     public BloodlineRelic() : base(false) { }
     public override RelicRarity Rarity => RelicRarity.Starter;
+    public override RelicModel? GetUpgradeReplacement()=>ModelDb.Relic<RefinedBloodlineRelic>();
     private string IdentityClass=>IsMutable&&Owner!=null?HeirPresentation.ClassFor(Owner):HeirPresentation.ClassId;
     public override string PackedIconPath=>HeirPresentation.TexturePath(IdentityClass+"-energy-icon");
     protected override string PackedIconOutlinePath=>HeirPresentation.TexturePath(IdentityClass+"-outline");
