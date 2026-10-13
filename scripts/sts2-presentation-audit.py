@@ -42,7 +42,12 @@ for cls in ['knight'] if baseline else ['knight','mage','ranger']:
     r=send('presentation-trail',**{'class':cls})
     if not baseline:assert all(s['parent']=='Trails' and s['alpha']==1 for s in r['samples']),r
     else:print(tag,'trail early/late',r['samples'][0],r['samples'][-1],flush=True)
+    if 'effects' in tag:assert send('presentation')['nativeUnchanged']
     send('abandon')
+if 'effects' in tag:
+    r=send('presentation-texture-failures');assert r['disposed'] and r['reloaded'] and len(r['errors'])==3
+    time.sleep(.2);assert 'NCombatRulesFtue.Start' not in (profile/'errors.log').read_text(errors='replace')
+    print(tag,'tutorial-free paid crab facing, trails, identity/audio and asset failures passed',flush=True);raise SystemExit(0)
 if not baseline:
     negative=send('presentation-texture-failures');assert negative['disposed'] and negative['reloaded'] and len(negative['errors'])==3
     trend=[]
