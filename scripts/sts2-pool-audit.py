@@ -30,8 +30,10 @@ if 'library-control' in tag:
     before=send('pool-audit-library',menu=True)
     send('start',**{'class':'ironclad','quick':True,'traits':[],'seed':'SPIRELEGACY-POOLS-54','manorTier':0});send('enter',room='Monster');ready()
     after=send('pool-audit-library')
-    assert not before['staleMaterials'] and after['staleMaterials'] and not after['filteredLegacy'],(before,after)
-    send('abandon');print(tag,'native unseen-material control reproduced',flush=True);sys.exit(0)
+    assert not before['staleMaterials'] and not after['filteredLegacy'],(before,after)
+    if 'fixed' in tag:assert after['rendered']>0 and not after['staleMaterials'],(before,after)
+    else:assert after['staleMaterials'],(before,after)
+    send('abandon');print(tag,'native unseen-material control checked',flush=True);sys.exit(0)
 for cls in ['knight','mage','ranger','ironclad']:
     send('start',**{'class':cls,'quick':True,'traits':[],'seed':'SPIRELEGACY-POOLS-54','manorTier':0})
     if cls=='ironclad':send('enter',room='Monster')
