@@ -26,7 +26,7 @@ for upgraded in [False,True]:
     for profile in [host,guest]:send(profile,'balance-audit-coop-prepare',upgrade=upgraded)
     for profile in [host,guest]:
         r=send(profile,'balance-audit-coop-play',upgrade=upgraded)
-        assert r['exhausted']==2 and r['energySpent']==(0 if upgraded else 2) and r['ownerIsolated'] and r['checksumEnabled'],r
+        assert r['exhausted']==2 and r['energySpent']==(0 if upgraded else 2) and r['blockGained']==4 and r['ownerIsolated'] and r['checksumEnabled'],r
         for peer in [host,guest]:assert send(peer,'power-coop-checkpoint',minimum=r['checksumNext'])['enabled']
         print(tag,r,flush=True)
 send(host,'coop-abandon')

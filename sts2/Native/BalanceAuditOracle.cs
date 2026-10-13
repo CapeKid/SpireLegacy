@@ -84,7 +84,18 @@ public static class BalanceAuditOracle
     }
     public static object References()
     {
-        var cards=new CardModel[]{ModelDb.Card<StrikeIronclad>(),ModelDb.Card<DefendIronclad>(),ModelDb.Card<Prepared>(),ModelDb.Card<Acrobatics>(),ModelDb.Card<Adrenaline>(),ModelDb.Card<CalculatedGamble>(),ModelDb.Card<Backflip>(),ModelDb.Card<FlashOfSteel>(),ModelDb.Card<Bloodletting>(),ModelDb.Card<Turbo>(),ModelDb.Card<WellLaidPlans>()};
+        var cards=new CardModel[]{ModelDb.Card<StrikeIronclad>(),ModelDb.Card<DefendIronclad>(),ModelDb.Card<Prepared>(),ModelDb.Card<Acrobatics>(),ModelDb.Card<Adrenaline>(),ModelDb.Card<CalculatedGamble>(),ModelDb.Card<Backflip>(),ModelDb.Card<FlashOfSteel>(),ModelDb.Card<Bloodletting>(),ModelDb.Card<Turbo>(),ModelDb.Card<WellLaidPlans>(),ModelDb.Card<DodgeAndRoll>(),ModelDb.Card<ChargeBattery>(),ModelDb.Card<LegSweep>(),ModelDb.Card<Buffer>(),ModelDb.Card<Deflect>(),ModelDb.Card<Finisher>(),ModelDb.Card<Bludgeon>(),ModelDb.Card<Pyre>()};
         return cards.SelectMany(c=>new[]{false,true}.Select(up=>{var card=c.ToMutable();if(up)CardCmd.Upgrade(card);return new{id=card.Id.ToString(),upgraded=up,cost=card.EnergyCost.GetWithModifiers(CostModifiers.All),rarity=card.Rarity.ToString(),keywords=card.Keywords.Select(k=>k.ToString()).ToArray(),vars=card.DynamicVars.Select(v=>new{name=v.Key,value=v.Value.BaseValue}).ToArray()};})).ToArray();
+    }
+    public static async Task<object> NativeFlashLoop(RunState run,bool upgraded)
+    {
+        var player=run.Players.Single();var combat=player.Creature.CombatState!;
+        await CardPileCmd.RemoveFromCombat(CardPile.GetCards(player,Piles).ToArray(),skipVisuals:true);
+        var enemy=combat.GetOpponentsOf(player.Creature).First(e=>e.IsAlive);enemy.SetMaxHpInternal(10000);enemy.SetCurrentHpInternal(10000);
+        var cards=new List<CardModel>();
+        for(var i=0;i<2;i++){var card=combat.CreateCard(ModelDb.Card<FlashOfSteel>(),player);if(upgraded)CardCmd.Upgrade(card);await CardPileCmd.Add(card,PileType.Hand,skipVisuals:true);cards.Add(card);}
+        var energy=player.PlayerCombatState!.Energy;var hp=enemy.CurrentHp;
+        for(var i=0;i<12;i++)await BalanceOracle.Play(cards.First(c=>c.Pile?.Type==PileType.Hand),enemy);
+        return new{plays=12,energySpent=energy-player.PlayerCombatState.Energy,damage=hp-enemy.CurrentHp,exhausted=cards.Count(c=>c.Pile?.Type==PileType.Exhaust)};
     }
 }

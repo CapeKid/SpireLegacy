@@ -16,6 +16,16 @@ def start(cls,tier=0,traits=[]):
     while send('state')['phase']!='Play':
         assert time.monotonic()<deadline;time.sleep(.15)
 send('presentation-prepare');send('balance-audit-references')
+if 'controls' in tag:
+    for cls in ['knight','mage','ranger']:
+        for kind in ['discard','exhaust']:
+            start(cls);r=send('balance-loop',kind=kind)
+            assert not r['returnedRecovery'] and not r['returnedOriginal'] and r['energySpent']==0,r
+        for upgraded in [False,True]:
+            start(cls);r=send('balance-audit-native-loop',upgrade=upgraded)
+            assert r['plays']==12 and r['energySpent']==r['exhausted']==0 and r['damage']>0,r
+            print(tag,cls,upgraded,'native legal loop',r,flush=True)
+    send('abandon');raise SystemExit(0)
 if 'matrix' in tag:
     builds={'knight':['armor','exhaust','blood','strength'],'mage':['sequencing','mage-exhaust','mage-retained','delayed'],'ranger':['discard','poison','retention','chain']}
     risks={'knight':['vampire','superhealer'],'mage':['bonusmagicstrength','megahealth'],'ranger':['cantattack','vegan']}
@@ -36,7 +46,9 @@ for cls in ['ranger'] if 'baseline' in tag else ['knight','mage','ranger']:
         for native in [False,True]:
             start(cls);r=send('balance-audit-reset',upgrade=upgraded,native=native)
             assert r['roundTrip'] and r['ownerIsolated'],r
-            if 'baseline' not in tag or native:assert r['plays']==r['exhausted']==2,r
+            if 'baseline' not in tag or native:
+                assert r['plays']==r['exhausted']==2,r
+                assert r['blockGained']==4 and r['samples'][-1]['hand']==0,r
             else:assert r['plays']==(3 if not upgraded else 12) and r['exhausted']==0,r
             print(tag,cls,upgraded,native,r,flush=True)
 send('abandon')
