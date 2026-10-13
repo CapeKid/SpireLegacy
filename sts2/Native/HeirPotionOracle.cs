@@ -1,4 +1,6 @@
 using Godot;
+using MegaCrit.Sts2.Core.Combat;
+using MegaCrit.Sts2.Core.Combat.History.Entries;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Merchant;
 using MegaCrit.Sts2.Core.Factories;
@@ -62,7 +64,7 @@ public static class HeirPotionOracle
         if(!potion.IsValidTarget(target)||potion.IsValidTarget(potion.TargetType==MegaCrit.Sts2.Core.Entities.Cards.TargetType.AnyEnemy?player.Creature:enemy))throw new InvalidDataException("Wrong native potion target.");
         var block=player.Creature.Block;var hp=player.Creature.CurrentHp;var hand=player.PlayerCombatState!.Hand.Cards.Count;var energy=player.PlayerCombatState.Energy;var completed=false;
         var tree=(SceneTree)Engine.GetMainLoop();var cancelPreserved=false;
-        potion.ExecutionFinished+=_=>completed=true;
+        int NativeUses()=>CombatManager.Instance.History.Entries.OfType<PotionUsedEntry>().Count(e=>e.Potion==potion);
         if(controller)
         {
             var holder=NativeTestBridge.Descendants(tree.Root).OfType<NPotionHolder>().Single(h=>h.Potion?.Model==potion);
@@ -79,7 +81,7 @@ public static class HeirPotionOracle
                 Input.ParseInputEvent(new InputEventAction{Action="ui_cancel",Pressed=false});
                 for(var i=0;i<30&&!canceled.IsCompleted;i++)await tree.ToSignal(tree,SceneTree.SignalName.ProcessFrame);
                 if(!canceled.IsCompleted)throw new InvalidDataException("Controller potion cancel did not complete.");
-                await canceled;cancelPreserved=!completed&&player.Potions.Contains(potion);
+                await canceled;cancelPreserved=NativeUses()==0&&player.Potions.Contains(potion);
                 if(!cancelPreserved)throw new InvalidDataException("Controller cancel consumed potion.");
             }
             var use=holder.UsePotion();
@@ -96,9 +98,10 @@ public static class HeirPotionOracle
         }
         else potion.EnqueueManualUse(target);
         var deadline=Time.GetTicksMsec()+15000;
-        while(!completed&&Time.GetTicksMsec()<deadline)await tree.ToSignal(tree,SceneTree.SignalName.ProcessFrame);
+        while(NativeUses()==0&&Time.GetTicksMsec()<deadline)await tree.ToSignal(tree,SceneTree.SignalName.ProcessFrame);
+        completed=NativeUses()==1;
         if(!completed||player.Potions.Contains(potion))throw new InvalidDataException("Potion native queue did not resolve/remove.");
-        return new{key,completed,controller,cancelPreserved,hpChange=player.Creature.CurrentHp-hp,blockChange=player.Creature.Block-block,handChange=player.PlayerCombatState.Hand.Cards.Count-hand,energyChange=player.PlayerCombatState.Energy-energy,
+        return new{key,completed,nativeUses=NativeUses(),controller,cancelPreserved,hpChange=player.Creature.CurrentHp-hp,blockChange=player.Creature.Block-block,handChange=player.PlayerCombatState.Hand.Cards.Count-hand,energyChange=player.PlayerCombatState.Energy-energy,
             charges=player.Creature.GetPower<P_class>()?.Charges,powers=player.Creature.Powers.Select(p=>new{id=p.Id.ToString(),amount=p.Amount}).ToArray(),enemyPowers=enemy.Powers.Select(p=>new{id=p.Id.ToString(),amount=p.Amount}).ToArray()};
     }
     public static async Task<object> Focus(string key)

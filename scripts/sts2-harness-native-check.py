@@ -55,9 +55,9 @@ try:
         send(profile,'select')
     elif mode=='coop':
         host,guest=sys.argv[2:4];port=int(sys.argv[5])
-        guest_class='ranger' if 'powers53ranger' in tag or 'pools54ranger' in tag else 'mage'
-        guest_traits=[] if guest_class=='ranger' else ['cantattack']
-        send(host,'coop-host',**{'class':'knight','traits':['easybreakables'],'port':port,'manor':{'vitality':1}})
+        guest_class='ranger' if 'powers53ranger' in tag or 'pools54ranger' in tag or 'items55ranger' in tag else 'mage'
+        guest_traits=['enemyknockedfar'] if 'items55' in tag else [] if guest_class=='ranger' else ['cantattack']
+        send(host,'coop-host',**{'class':'knight','traits':['enemyknockedfar'] if 'items55' in tag else ['easybreakables'],'port':port,'manor':{'vitality':1}})
         send(host,'coop-ready')
         send(guest,'coop-join',**{'class':guest_class,'traits':guest_traits,'port':port,'manor':{}})
         # Ready is correctly refused until the authenticated lobby session arrives.
@@ -84,6 +84,25 @@ try:
         diagnostic=send(host,'harness-owner-diagnostic',owner=2)
         assert diagnostic['originalPreserved'] and 'Heir: '+guest_class+'; traits: '+', '.join(guest_traits) in diagnostic['text'] and 'Inner owner diagnostic' in diagnostic['text'],diagnostic
         time.sleep(12);send(host,'coop-vote');send(guest,'coop-vote');peers('Play')
+        if 'items55' in tag:
+            for profile in [host,guest]:send(profile,'item-coop-prepare',upgrade=False)
+            outcomes=[]
+            for profile in [host,guest]:
+                played=send(profile,'item-coop-attack',upgrade=False);outcomes.append(played)
+                for peer in [host,guest]:assert send(peer,'power-coop-checkpoint',minimum=played['checksumNext'])['enabled']
+                peers('Play')
+            if 'baseline' in tag:assert [p['weak'] for p in outcomes]==[1,0],outcomes
+            else:assert [p['weak'] for p in outcomes]==[1,1],outcomes
+            if 'baseline' in tag:print(tag,'native inherited first-hit leakage reproduced',flush=True);sys.exit(0)
+            for profile in [host,guest]:send(profile,'item-coop-prepare',upgrade=True)
+            for profile in [host,guest]:
+                played=send(profile,'item-coop-attack',upgrade=True);assert played['weak']==0,played
+                for peer in [host,guest]:assert send(peer,'power-coop-checkpoint',minimum=played['checksumNext'])['enabled']
+                peers('Play')
+                used=send(profile,'item-coop-potion');assert used['otherOwnersUnchanged'] and used['completed']==1,used
+                assert (used['block'],used['draw'],used['vigor'])==({'knight':(8,0,2),'mage':(0,1,0),'ranger':(0,2,3)}[used['cls']]),used
+                for peer in [host,guest]:assert send(peer,'power-coop-checkpoint',minimum=used['checksumNext'])['enabled']
+                peers('Play')
         if 'pools54' in tag:
             prism=[send(profile,'pool-audit-modifiers') for profile in [host,guest]]
             if 'fixed' in tag:
@@ -122,6 +141,7 @@ try:
             for profile in [host,guest]:assert len(send(profile,'orobas-coop'))==2
             for profile in [host,guest]:assert len(send(profile,'coop-roundtrip'))==2
         for profile in [host,guest]:
+            if 'items55' in tag:continue
             played=send(profile,'coop-play')
             assert played['played'] and played['pile']=='Discard' and not played['tableNodePresent'],played
             time.sleep(1)
