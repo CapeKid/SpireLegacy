@@ -111,14 +111,15 @@ public static class PoolAuditOracle
     }
     public static async Task<object> Library(RunState? run)
     {
-        var tree=(SceneTree)Engine.GetMainLoop();var library=NCardLibrary.Create()!;tree.Root.AddChild(library);library.Initialize(run!);
+        var tree=(SceneTree)Engine.GetMainLoop();MegaCrit.Sts2.Core.Nodes.Screens.MainMenu.NSubmenuStack stack=run==null?MegaCrit.Sts2.Core.Nodes.NGame.Instance!.MainMenu!.SubmenuStack:MegaCrit.Sts2.Core.Nodes.NRun.Instance!.GlobalUi.SubmenuStack.Stack;
+        var library=stack.GetSubmenuType<NCardLibrary>();library.Initialize(run!);
         try
         {
-            library.OnSubmenuOpened();for(var i=0;i<20;i++)await tree.ToSignal(tree,SceneTree.SignalName.ProcessFrame);
+            stack.Push(library);var deadline=Time.GetTicksMsec()+1000;while(Time.GetTicksMsec()<deadline)await tree.ToSignal(tree,SceneTree.SignalName.ProcessFrame);
             var rendered=NativeTestBridge.Descendants(library).OfType<MegaCrit.Sts2.Core.Nodes.Cards.NCard>().Select(c=>c.Model).Where(c=>c!=null).ToArray();
             Require(rendered.Length>0,"Compendium has no rendered cards.");
             return new{rendered=rendered.Length,legacy=rendered.OfType<LegacyCard>().Select(c=>c.Key).Distinct().ToArray(),labels=NativeTestBridge.Descendants(library).OfType<Label>().Select(l=>l.Text).ToArray()};
         }
-        finally {library.OnSubmenuClosed();library.QueueFree();await tree.ToSignal(tree,SceneTree.SignalName.ProcessFrame);}
+        finally {stack.Pop();var deadline=Time.GetTicksMsec()+500;while(Time.GetTicksMsec()<deadline)await tree.ToSignal(tree,SceneTree.SignalName.ProcessFrame);}
     }
 }

@@ -28,7 +28,9 @@ for cls in ['knight','mage','ranger']:
     assert tuple(sum(c['rarity']==r for c in pool['cards']) for r in ['Common','Uncommon','Rare'])==((20,38,27) if beta else (20,36,26))
 if 'import' not in tag:send('pool-audit-library',menu=True)
 for cls in ['knight','mage','ranger','ironclad']:
-    send('start',**{'class':cls,'quick':True,'traits':[],'seed':'SPIRELEGACY-POOLS-54','manorTier':0});ready()
+    send('start',**{'class':cls,'quick':True,'traits':[],'seed':'SPIRELEGACY-POOLS-54','manorTier':0})
+    if cls=='ironclad':send('enter',room='Monster')
+    ready()
     if 'import' in tag and cls!='ironclad':
         source=root/'private/sts2-evidence'/f'pool54-{("regular" if beta else "beta")}-{cls}-cards.json'
         shutil.copy2(source,profile/'pool-cards.json')

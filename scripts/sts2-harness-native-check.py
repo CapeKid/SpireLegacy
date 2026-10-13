@@ -55,7 +55,7 @@ try:
         send(profile,'select')
     elif mode=='coop':
         host,guest=sys.argv[2:4];port=int(sys.argv[5])
-        guest_class='ranger' if 'powers53ranger' in tag else 'mage'
+        guest_class='ranger' if 'powers53ranger' in tag or 'pools54ranger' in tag else 'mage'
         guest_traits=[] if guest_class=='ranger' else ['cantattack']
         send(host,'coop-host',**{'class':'knight','traits':['easybreakables'],'port':port,'manor':{'vitality':1}})
         send(host,'coop-ready')
@@ -84,6 +84,12 @@ try:
         diagnostic=send(host,'harness-owner-diagnostic',owner=2)
         assert diagnostic['originalPreserved'] and 'Heir: '+guest_class+'; traits: '+', '.join(guest_traits) in diagnostic['text'] and 'Inner owner diagnostic' in diagnostic['text'],diagnostic
         time.sleep(12);send(host,'coop-vote');send(guest,'coop-vote');peers('Play')
+        if 'pools54' in tag:
+            pool_checks=[send(profile,'pool-audit-owner') for profile in [host,guest]]
+            assert pool_checks[0]==pool_checks[1],pool_checks
+            assert [p['cls'] for p in pool_checks[0]]==['knight',guest_class],pool_checks
+            assert all(p['canonicalUnchanged'] and len(p['rewards'])==60 and len(p['shops'])==10 for p in pool_checks[0])
+            peers('Play')
         if 'powers53' in tag:
             for upgraded in [False,True]:
                 for profile in [host,guest]:send(profile,'power-coop-prepare',upgrade=upgraded)
