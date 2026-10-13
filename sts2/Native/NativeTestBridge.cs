@@ -180,6 +180,11 @@ public static class NativeTestBridge
                     var auditSpeed=request.GetProperty("value").GetDouble();if(auditSpeed<1||auditSpeed>8)throw new ArgumentOutOfRangeException("value");
                     Engine.TimeScale=auditSpeed;result=new{speed=auditSpeed};break;
                 case "manor": ManorUi.Open(); result = new { open = true }; break;
+                case "manor-audit":result=ManorAuditOracle.Inspect();break;
+                case "manor-run-launch":result=ManorAuditOracle.LaunchRun();break;
+                case "manor-double-press":result=ManorAuditOracle.Duplicate(request.GetProperty("text").GetString()!);break;
+                case "manor-trait-fixture":result=ManorAuditOracle.Traits(request.GetProperty("offset").GetInt32());break;
+                case "manor-resize":result=await ManorAuditOracle.Resize(request.GetProperty("width").GetInt32(),request.GetProperty("height").GetInt32());break;
                 case "chronicle-fixture":result=ChronicleOracle.Fixture(request.GetProperty("unlocked").GetBoolean());break;
                 case "chronicle-state":result=ChronicleOracle.State();break;
                 case "lifecycle-state":result=LifecycleOracle.Inspect();break;

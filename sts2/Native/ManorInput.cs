@@ -12,7 +12,7 @@ public class ManorInput : Control
     private bool paging;
     public void Poll()
     {
-        if(!ManorUi.IsOpen)return;
+        if(!ManorUi.ValidateContext())return;
         if(Input.IsActionJustPressed(MegaInput.cancel) || Input.IsActionJustPressed(MegaInput.pauseAndBack)) {ManorUi.GoBack();return;}
         // Godot buttons handle ui_accept; ui_select is the game's normal A/Select action.
         if(Input.IsActionJustPressed(MegaInput.select) && GetViewport().GuiGetFocusOwner() is not LineEdit) {ManorUi.Activate();return;}
