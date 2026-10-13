@@ -82,13 +82,14 @@ try:
         assert a['active']==ids[0] and b['active']==ids[1],(a,b)
         for profile in [host,guest]:assert len(send(profile,'coop-roundtrip'))==2
         diagnostic=send(host,'harness-owner-diagnostic',owner=2)
-        assert diagnostic['originalPreserved'] and 'Heir: '+guest_class+'; traits: '+(','.join(guest_traits) if guest_traits else 'none') in diagnostic['text'] and 'Inner owner diagnostic' in diagnostic['text'],diagnostic
+        assert diagnostic['originalPreserved'] and 'Heir: '+guest_class+'; traits: '+', '.join(guest_traits) in diagnostic['text'] and 'Inner owner diagnostic' in diagnostic['text'],diagnostic
         time.sleep(12);send(host,'coop-vote');send(guest,'coop-vote');peers('Play')
         if 'powers53' in tag:
             for upgraded in [False,True]:
                 for profile in [host,guest]:send(profile,'power-coop-prepare',upgrade=upgraded)
                 for profile in [host,guest]:
-                    send(profile,'power-coop-play',upgrade=upgraded)
+                    played=send(profile,'power-coop-play',upgrade=upgraded)
+                    for peer in [host,guest]:assert send(peer,'power-coop-checkpoint',minimum=played['checksumNext'])['enabled']
                     peers('Play')
                 peers('Play')
                 snapshots=[send(profile,'power-snapshot') for profile in [host,guest]]

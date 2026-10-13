@@ -73,6 +73,7 @@ public static class NativeTestBridge
                 case "power-retention-edges":await WaitForPlay(RunState().Players.Single());result=await PowerAuditOracle.RetentionEdges(RunState(),request.GetProperty("empty").GetBoolean());break;
                 case "power-coop-prepare":result=await PowerAuditOracle.CoopPrepare(RunState(),request.GetProperty("upgrade").GetBoolean());break;
                 case "power-coop-play":result=await PowerAuditOracle.CoopPlay(RunState(),request.GetProperty("upgrade").GetBoolean());break;
+                case "power-coop-checkpoint":result=await PowerAuditOracle.CoopCheckpoint(request.GetProperty("minimum").GetUInt32());break;
                 case "balance-encounter":await WaitForPlay(RunState().Players.Single());result=await BalanceOracle.Encounter(RunState(),request.GetProperty("build").GetString()!,UseTestSelector());break;
                 case "persistence-state":result=PersistenceOracle.Snapshot(RunState());break;
                 case "persistence-menu":result=PersistenceOracle.ChangeMenu(RunState());break;

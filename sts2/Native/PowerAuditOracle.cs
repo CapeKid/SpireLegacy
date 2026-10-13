@@ -323,6 +323,7 @@ public static class PowerAuditOracle
     }
     public static async Task<object> CoopPlay(RunState run,bool up)
     {
+        var checkpoint=RunManager.Instance.ChecksumTracker.NextId;
         var player=PlayerBloodlines.LocalPlayer!;var others=run.Players.Where(p=>p!=player).Select(p=>new{p,energy=p.PlayerCombatState!.Energy,block=p.Creature.Block,hand=p.PlayerCombatState.Hand.Cards.Count,charges=p.Creature.GetPower<P_class>()!.Charges}).ToArray();
         var energy=player.PlayerCombatState!.Energy;var block=player.Creature.Block;
         var cards=player.PlayerCombatState.Hand.Cards.OfType<DefendIronclad>().Where(c=>c.IsUpgraded==up).TakeLast(3).ToArray();Require(cards.Length==3,"Missing co-op Skill fuel.");
@@ -336,6 +337,13 @@ public static class PowerAuditOracle
             attackPlays=3;Require(counter.AttacksThisTurn==before+3&&counter.DisplayAmount==0,"Co-op Hunter Rhythm counted hits instead of cards.");
         }
         Require(others.All(o=>o.p.PlayerCombatState!.Energy==o.energy&&o.p.Creature.Block==o.block&&o.p.PlayerCombatState.Hand.Cards.Count==o.hand&&o.p.Creature.GetPower<P_class>()!.Charges==o.charges),"Power hook leaked to another owner.");
-        return new{owner=player.NetId,cls,up,plays=3,attackPlays,charges=counter.Charges,ownerOnly=true};
+        Require(RunManager.Instance.ChecksumTracker.IsEnabled,"Co-op checksums must remain enabled.");
+        await Wait(()=>RunManager.Instance.ChecksumTracker.NextId>=checkpoint+3+attackPlays);
+        return new{owner=player.NetId,cls,up,plays=3,attackPlays,charges=counter.Charges,ownerOnly=true,checksumNext=RunManager.Instance.ChecksumTracker.NextId};
+    }
+    public static async Task<object> CoopCheckpoint(uint minimum)
+    {
+        await Wait(()=>!RunManager.Instance.ActionExecutor.IsRunning&&RunManager.Instance.ChecksumTracker.NextId>=minimum);
+        return new{next=RunManager.Instance.ChecksumTracker.NextId,enabled=RunManager.Instance.ChecksumTracker.IsEnabled};
     }
 }
