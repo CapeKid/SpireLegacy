@@ -247,6 +247,9 @@ public static class NativeTestBridge
                 case "expansion-play":
                     await WaitForPlay(RunState().Players.Single());
                     result=await PoolExpansionOracle.Play(RunState(),request.GetProperty("card").GetString()!,request.GetProperty("upgrade").GetBoolean(),UseTestSelector());break;
+                case "card-resolution":
+                    await WaitForPlay(RunState().Players.Single());
+                    result=await CardResolutionOracle.Play(RunState(),request.GetProperty("card").GetString()!,request.GetProperty("upgrade").GetBoolean(),request.TryGetProperty("mode",out var resolutionMode)?resolutionMode.GetString()!:"normal",UseTestSelector());break;
                 case "nimble-eligibility":result=NimbleOracle.Eligibility(RunState());break;
                 case "nimble-play":
                     await WaitForPlay(RunState().Players.Single());

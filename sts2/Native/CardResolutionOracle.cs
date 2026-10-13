@@ -1,0 +1,90 @@
+using Godot;
+using MegaCrit.Sts2.Core.Commands;
+using MegaCrit.Sts2.Core.Entities.Cards;
+using MegaCrit.Sts2.Core.Entities.Players;
+using MegaCrit.Sts2.Core.GameActions.Multiplayer;
+using MegaCrit.Sts2.Core.Models;
+using MegaCrit.Sts2.Core.Models.Powers;
+using MegaCrit.Sts2.Core.Nodes.Cards;
+using MegaCrit.Sts2.Core.Runs;
+using MegaCrit.Sts2.Core.ValueProps;
+
+namespace SpireLegacy;
+
+// Opt-in owned-game fixture. Real paid actions and native card scopes are the oracle.
+public static class CardResolutionOracle
+{
+    private static readonly PileType[] Piles=[PileType.Draw,PileType.Hand,PileType.Discard,PileType.Exhaust,PileType.Play];
+    private static void Require(bool value,string message) {if(!value)throw new InvalidDataException(message);}
+    private static async Task Wait(Func<bool> done,string what)
+    {
+        var tree=(SceneTree)Engine.GetMainLoop();var until=Time.GetTicksMsec()+20000;
+        while(!done()) {if(Time.GetTicksMsec()>until)throw new TimeoutException(what);await tree.ToSignal(tree,SceneTree.SignalName.ProcessFrame);}
+    }
+    public static async Task<object> Play(RunState run,string key,bool upgraded,string mode,IDisposable selector)
+    {
+        using(selector) {
+            var player=run.Players.Single();var creature=player.Creature;var combat=creature.CombatState!;
+            var context=new BlockingPlayerChoiceContext();var row=Design.Get("cards",key);
+            var old=CardPile.GetCards(player,Piles).ToArray();await CardPileCmd.RemoveFromCombat(old,skipVisuals:true);
+            var enemies=combat.GetOpponentsOf(creature).Where(e=>e.IsAlive).ToArray();
+            Require(enemies.Length>0,"Fixture needs a live native enemy.");
+            foreach(var enemy in enemies) {
+                foreach(var power in enemy.Powers.ToArray())await PowerCmd.Remove(power);
+                enemy.SetMaxHpInternal(10000);enemy.SetCurrentHpInternal(mode=="lethal"?1:10000);
+                enemy.LoseBlockInternal(enemy.Block);
+            }
+            creature.SetCurrentHpInternal(mode=="self-death"?1:creature.MaxHp-20);
+            creature.LoseBlockInternal(creature.Block);
+            async Task<LegacyCard> Add(string id,PileType pile)
+            {
+                var item=(LegacyCard)combat.CreateCard(NativeCards.Get(id),player);
+                await CardPileCmd.Add(item,pile,skipVisuals:true);return item;
+            }
+            var guard=PlayerBloodlines.Heir(player).classId+"_guard";
+            if(mode!="empty") {
+                for(var i=0;i<(mode=="full"?9:3);i++)await Add(guard,PileType.Hand);
+                for(var i=0;i<20;i++)await Add(guard,PileType.Draw);
+                await Add(guard,PileType.Discard);await Add(guard,PileType.Exhaust);
+            }
+            var card=(LegacyCard)combat.CreateCard(NativeCards.Get(key),player);
+            if(upgraded)CardCmd.Upgrade(card);
+            if(mode=="discount")card.SetToFreeThisTurn();
+            await CardPileCmd.Add(card,PileType.Hand,skipVisuals:true);
+            await PlayerCmd.GainEnergy(20,player);
+            var countBefore=CardPile.GetCards(player,Piles).Count();
+            var hp=creature.CurrentHp;var block=creature.Block;var energy=player.PlayerCombatState!.Energy;
+            var enemyHp=enemies.Select(e=>e.CurrentHp).ToArray();
+            var cost=card.EnergyCost.GetWithModifiers(CostModifiers.All);var failure=CardPlayDiagnostics.LastFailure;
+            var target=card.TargetType==TargetType.AnyEnemy?enemies[0]:null;
+            if(mode=="invalid") {
+                Require(card.TargetType==TargetType.AnyEnemy,"Invalid-target fixture needs a targeted card.");
+                enemies[0].SetCurrentHpInternal(0);
+                Require(!card.TryManualPlay(enemies[0])&&!card.TryManualPlay(null),"Invalid targeted action accepted.");
+                enemies[0].SetCurrentHpInternal(enemyHp[0]);
+                Require(card.Pile?.Type==PileType.Hand&&player.PlayerCombatState.Energy==energy,"Rejected play spent energy or moved its card.");
+                return new {key,upgraded,mode,rejected=true,cost,pile="Hand",conserved=true};
+            }
+            Require(card.TryManualPlay(target),"Native paid play refused "+key+" / "+mode);
+            await Wait(()=>!creature.IsAlive||card.Pile?.Type is not (PileType.Hand or PileType.Play),"Paid card unresolved: "+key);
+            await Wait(()=>!creature.IsAlive||NCard.FindOnTable(card)==null,"Card remains hovering: "+key);
+            await Wait(()=>!RunManager.Instance.ActionExecutor.IsRunning,"Native card action did not complete: "+key);
+            Require(CardPlayDiagnostics.LastFailure==failure,"Paid action raised a new exception: "+CardPlayDiagnostics.LastFailure);
+            if(!creature.IsAlive||!enemies.Any(e=>e.IsAlive))return new {key,upgraded,mode,terminal=true,alive=creature.IsAlive,pile=card.Pile?.Type.ToString(),newFailure=false};
+            var actual=CardPile.GetCards(player,Piles).ToArray();
+            Require(actual.Distinct().Count()==actual.Length,"Card appears in multiple native piles.");
+            Require(actual.All(c=>c.Owner==player&&combat.ContainsCard(c)&&c.Pile!.Cards.Count(x=>ReferenceEquals(x,c))==1),"Card scope/owner/pile disagreement.");
+            var expectedPile=card.Type==CardType.Power?PileType.None:row.Flag("exhaust")?PileType.Exhaust:PileType.Discard;
+            Require((card.Pile?.Type??PileType.None)==expectedPile,"Wrong result pile: "+key);
+            Require(expectedPile!=PileType.None||!combat.ContainsCard(card),"Removed Power remains in combat scope.");
+            var generated=row.Text("special")=="wounds"?card.DesignCard.SpecialAmount:0;
+            Require(actual.Length==countBefore+generated-(expectedPile==PileType.None?1:0),"Native card count was not conserved: "+key);
+            Require(player.PlayerCombatState.Energy-energy==-cost+card.DesignCard.Amount("energy"),"Paid energy mismatch: "+key);
+            var saved=card.ToSerializable();var restored=(LegacyCard)run.LoadCard(saved,player);
+            Require(restored.Key==key&&restored.IsUpgraded==upgraded&&restored.DesignCard.Rules()==card.DesignCard.Rules(),"Resolved card identity/text did not round-trip.");
+            run.RemoveCard(restored);
+            return new {key,upgraded,mode,cost,pile=expectedPile.ToString(),energyDelta=player.PlayerCombatState.Energy-energy,hpDelta=creature.CurrentHp-hp,blockDelta=creature.Block-block,
+                damage=enemies.Select((e,i)=>enemyHp[i]-e.CurrentHp).ToArray(),hand=player.PlayerCombatState.Hand.Cards.Count,cardCount=actual.Length,generated,conserved=true,saveRoundTrip=true,tableNodePresent=false};
+        }
+    }
+}
