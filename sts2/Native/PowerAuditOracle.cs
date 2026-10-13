@@ -223,6 +223,27 @@ public static class PowerAuditOracle
                 await PowerCmd.Remove(plated);await Apply(player,"plated",2);Require(creature.GetPower<P_plated>()!.Amount==2,"Removed/reapplied power retained old state.");
                 return new{mode,up,hpLoss=3,energy=4,hand=7,damage=3,platedReset=true};
             }
+            if(mode=="foresight-empty") {
+                await Apply(player,"foresight",2);await Apply(player,"scry_block",3);
+                foreach(var card in player.Deck.Cards.ToArray())await CardPileCmd.RemoveFromDeck(card);
+                await BalanceOracle.End(player,true);await Wait(()=>player.PlayerCombatState!.Phase==PlayerTurnPhase.Play);
+                Require(player.Deck.Cards.Count==0&&creature.Block==3,"Empty-deck Foresight did not complete Scry.");
+                return new{mode,up,deck=0,block=3,nextTurn=true};
+            }
+            if(mode=="misc") {
+                await Apply(player,"power_draw",2);await Apply(player,"thousand_cuts",3);
+                await Apply(player,"foresight",2);await Apply(player,"scry_block",3);await Apply(player,"establishment",1);
+                var hp=enemies.Select(e=>e.CurrentHp).ToArray();var hand=player.PlayerCombatState!.Hand.Cards.Count;
+                await Play(await Add(player,ModelDb.Card<Inflame>(),up));
+                Require(player.PlayerCombatState.Hand.Cards.Count-hand==2&&enemies.Select((e,i)=>hp[i]-e.CurrentHp).All(n=>n==3),"Power draw/Thousand Cuts mismatch.");
+                var retained=await Add(player,NativeCards.Get(Design.Rows("cards").First(r=>r.Flag("retain")&&r.Number("cost")>0).Text("id")),up);
+                var cost=retained.EnergyCost.GetWithModifiers(CostModifiers.Local);
+                for(var i=1;i<=2;i++) {
+                    await BalanceOracle.End(player,true);await Wait(()=>player.PlayerCombatState.Phase==PlayerTurnPhase.Play);
+                    Require(retained.Pile?.Type==PileType.Hand&&retained.EnergyCost.GetWithModifiers(CostModifiers.Local)==Math.Max(0,cost-i)&&creature.Block==3,"Establishment/Foresight turn ordering mismatch.");
+                }
+                return new{mode,up,powerDraw=2,cuts=3,scryBlock=3,retainedTurns=2,cost=retained.EnergyCost.GetWithModifiers(CostModifiers.Local)};
+            }
             throw new ArgumentException("Unknown engine fixture: "+mode);
         }
     }
