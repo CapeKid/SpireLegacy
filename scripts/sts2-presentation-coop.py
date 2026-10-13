@@ -28,6 +28,12 @@ while True:
     if a['players'] and a['players']==b['players'] and all(p['phase']=='Play' for p in a['players']):break
     if time.monotonic()>deadline:raise TimeoutError('Native peer synchronization')
     time.sleep(.2)
+for profile in [host,guest]:
+    actors=send(profile,'visual');assert len(actors)==2
+    assert all(a['bannerIndex']==a['owner']%4 for a in actors)
+    looks={a['classId']:a for a in send(profile,'trait-appearance') if not a['room']}
+    assert looks['knight']['gray'] and not looks['knight']['rainbow']
+    assert looks[guest_class]['rainbow'] and not looks[guest_class]['gray']
 with ThreadPoolExecutor(max_workers=2) as pool:
     list(pool.map(lambda p:send(p,'enter',room='RestSite'),[host,guest]))
 for profile in [host,guest]:
