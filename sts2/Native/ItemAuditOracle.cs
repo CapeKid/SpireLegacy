@@ -100,7 +100,10 @@ public static class ItemAuditOracle
         async Task Cancel(PotionModel potion,MegaCrit.Sts2.Core.Entities.Creatures.Creature? target){Require(!potion.IsValidTarget(target),"Cancellation fixture target was valid.");potion.EnqueueManualUse(target);await Wait(()=>!potion.IsQueued&&!RunManager.Instance.ActionExecutor.IsRunning);Require(Uses()==0&&player.PotionSlots.SequenceEqual(slots),"Invalid target consumed potion.");}
         await Cancel(briar,player.Creature);await Cancel(breath,enemies.First());
         var hp=enemies.Select(e=>e.CurrentHp).ToArray();
-        try{foreach(var enemy in enemies)enemy.SetCurrentHpInternal(0);Require(!briar.IsValidTarget(enemies.First())&&!briar.IsValidTarget(null),"Dead/empty target validity.");await Cancel(briar,enemies.First());}
+        try{enemies.First().SetCurrentHpInternal(0);Require(!briar.IsValidTarget(enemies.First()),"Dead target validity.");if(enemies.Length>1)await Cancel(briar,enemies.First());
+            // Validate an empty battlefield without yielding a frame: otherwise the
+            // native victory transition correctly ends combat and cancels all actions.
+            foreach(var enemy in enemies)enemy.SetCurrentHpInternal(0);Require(!briar.IsValidTarget(null)&&enemies.All(e=>!briar.IsValidTarget(e)),"Empty battlefield target validity.");}
         finally{for(var i=0;i<enemies.Length;i++)enemies[i].SetCurrentHpInternal(hp[i]);}
         // Construct both genuine native actions before enqueueing; the duplicate must
         // cancel against the now-empty slot, without consuming its neighbouring item.
@@ -108,7 +111,7 @@ public static class ItemAuditOracle
         RunManager.Instance.ActionQueueSynchronizer.RequestEnqueue(one);RunManager.Instance.ActionQueueSynchronizer.RequestEnqueue(two);
         await Wait(()=>Uses()==1&&!RunManager.Instance.ActionExecutor.IsRunning);
         Require(player.Creature.Block-block==6&&!player.Potions.Contains(breath)&&player.Potions.Contains(briar)&&player.Potions.Count()==2,"Duplicate queue effect/consumption.");
-        return new{fullBeltRejected=true,invalidTargetCanceled=true,deadTargetCanceled=true,zeroAliveEnemiesCanceled=true,duplicateUses=Uses(),duplicateBlock=player.Creature.Block-block,remaining=player.Potions.Select(p=>p.Id.ToString()).ToArray()};
+        return new{fullBeltRejected=true,invalidTargetCanceled=true,deadTargetCanceled=enemies.Length>1,zeroAliveEnemiesRejectedByTargetValidation=true,duplicateUses=Uses(),duplicateBlock=player.Creature.Block-block,remaining=player.Potions.Select(p=>p.Id.ToString()).ToArray()};
     }
     public static async Task<object> RelicEdges(RunState run)
     {
@@ -129,7 +132,7 @@ public static class ItemAuditOracle
         var beforeReacquire=HeirRelicOracle.Counters(run);await RelicCmd.Remove(Relic("heirloom_brooch"));await RelicCmd.Obtain(HeirDropRelics.Get("heirloom_brooch").ToMutable(),player);Require(!Relic("heirloom_brooch").CombatClaimed,"Fresh relic did not reset.");
         var block=player.Creature.Block;await Play(await Add(player,"knight_forge_memory"));Require(player.Creature.Block-block==9&&Relic("heirloom_brooch").CombatClaimed,"Reacquired relic trigger.");
         var original=player.RelicGrabBag.ToSerializable();var fallback=new List<string>();
-        try{foreach(var list in original.RelicIdLists.Values){/* keep original immutable below */}var empty=player.RelicGrabBag.ToSerializable();foreach(var list in empty.RelicIdLists.Values)list.Clear();player.RelicGrabBag.LoadFromSerializable(empty);foreach(var rarity in new[]{RelicRarity.Common,RelicRarity.Uncommon,RelicRarity.Rare}){var reward=new MegaCrit.Sts2.Core.Rewards.RelicReward(rarity,player);reward.Populate();Require(reward.Relic!.Id==RelicFactory.FallbackRelic.Id,"Depleted native bag fallback.");fallback.Add(reward.Relic.Id.ToString());}}
+        try{var empty=player.RelicGrabBag.ToSerializable();foreach(var list in empty.RelicIdLists.Values)list.Clear();player.RelicGrabBag.LoadFromSerializable(empty);foreach(var rarity in new[]{RelicRarity.Common,RelicRarity.Uncommon,RelicRarity.Rare}){var reward=new MegaCrit.Sts2.Core.Rewards.RelicReward(rarity,player);reward.Populate();Require(reward.Relic!.Id==RelicFactory.FallbackRelic.Id,"Depleted native bag fallback.");fallback.Add(reward.Relic.Id.ToString());}}
         finally{player.RelicGrabBag.LoadFromSerializable(original);}
         return new{firstCounters,secondCounters=beforeReacquire,roundTrip=true,endTurnDidNotClaim=true,rearmed=true,reacquiredBlock=player.Creature.Block-block,fallback};
     }
