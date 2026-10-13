@@ -443,7 +443,7 @@ public static class NativeTestBridge
                     if(request.TryGetProperty("event",out var endingName) && endingName.GetString()=="Architect")roomModel=ModelDb.Event<MegaCrit.Sts2.Core.Models.Events.TheArchitect>();
                     await RunManager.Instance.EnterRoomDebug(roomType,model:roomModel,showTransition:false);
                     RunManager.Instance.ActionExecutor.Unpause();
-                    result = StateSummary(); break;
+                    result = RunState().Players.Count==1?StateSummary():CoopOracle.State(); break;
                 case "tome-parity":result=await TomeParityOracle.Check(RunState(),request.TryGetProperty("removeBasics",out var tomeRemove)&&tomeRemove.GetBoolean(),request.TryGetProperty("forced",out var tomeForced)?tomeForced.GetString():null,request.TryGetProperty("inspect",out var tomeInspect)&&tomeInspect.GetBoolean());break;
                 case "advance":
                     var advancing=RunState();

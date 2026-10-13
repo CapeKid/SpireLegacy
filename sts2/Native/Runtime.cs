@@ -21,15 +21,17 @@ public static class Runtime
         // A managed dictionary reference does not keep that disposed Godot object usable.
         if (Textures.TryGetValue(path, out var texture) && GodotObject.IsInstanceValid(texture)) return texture;
         var fullPath = Path.Combine(ModDirectory, path);
-        var image = new Image();
+        if(!File.Exists(fullPath))throw new InvalidDataException("Missing mod illustration: " + path);
         if (Path.GetExtension(path).Equals(".svg", StringComparison.OrdinalIgnoreCase))
         {
+            using var image = new Image();
             var error = image.LoadSvgFromString(File.ReadAllText(fullPath));
             if (error != Error.Ok) throw new InvalidDataException("Invalid mod icon: " + path + " (" + error + ")");
+            return Textures[path] = ImageTexture.CreateFromImage(image);
         }
-        else image = Image.LoadFromFile(fullPath);
-        if (image.IsEmpty()) throw new InvalidDataException("Missing mod illustration: " + path);
-        return Textures[path] = ImageTexture.CreateFromImage(image);
+        using var bitmap = Image.LoadFromFile(fullPath);
+        if (bitmap is null || bitmap.IsEmpty()) throw new InvalidDataException("Invalid mod illustration: " + path);
+        return Textures[path] = ImageTexture.CreateFromImage(bitmap);
     }
     public static Texture2D TraitIcon(string id) => Texture(Design.Get("icon_art", "trait_" + id).Text("path"));
     public static Texture2D ClassIcon(string id) => Texture(Design.Get("icon_art", "class_" + id).Text("path"));
