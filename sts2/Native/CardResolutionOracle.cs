@@ -1,4 +1,5 @@
 using Godot;
+using HarmonyLib;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Players;
@@ -25,13 +26,14 @@ public static class CardResolutionOracle
     {
         using(selector) {
             var player=run.Players.Single();var creature=player.Creature;var combat=creature.CombatState!;
-            var context=new BlockingPlayerChoiceContext();var row=Design.Get("cards",key);
+            var context=new BlockingPlayerChoiceContext();var native=key.StartsWith("native:");
+            var row=native?null:Design.Get("cards",key);
             var old=CardPile.GetCards(player,Piles).ToArray();await CardPileCmd.RemoveFromCombat(old,skipVisuals:true);
             var enemies=combat.GetOpponentsOf(creature).Where(e=>e.IsAlive).ToArray();
             Require(enemies.Length>0,"Fixture needs a live native enemy.");
             foreach(var enemy in enemies) {
                 foreach(var power in enemy.Powers.ToArray())await PowerCmd.Remove(power);
-                enemy.SetMaxHpInternal(10000);enemy.SetCurrentHpInternal(mode=="lethal"?1:10000);
+                enemy.SetMaxHpInternal(10000);enemy.SetCurrentHpInternal(mode=="lethal"?1:mode=="zero-enemies"?0:10000);
                 enemy.LoseBlockInternal(enemy.Block);
             }
             creature.SetCurrentHpInternal(mode=="self-death"?1:creature.MaxHp-20);
@@ -47,8 +49,17 @@ public static class CardResolutionOracle
                 for(var i=0;i<20;i++)await Add(guard,PileType.Draw);
                 await Add(guard,PileType.Discard);await Add(guard,PileType.Exhaust);
             }
-            var card=(LegacyCard)combat.CreateCard(NativeCards.Get(key),player);
+            var canonical=native?ModelDb.GetById<CardModel>(ModelDb.GetId(typeof(CardModel).Assembly.GetType("MegaCrit.Sts2.Core.Models.Cards."+key[7..],true)!)):NativeCards.Get(key);
+            var card=combat.CreateCard(canonical,player);
             if(upgraded)CardCmd.Upgrade(card);
+            if(mode=="save-copy") {
+                var loaded=run.LoadCard(card.ToSerializable(),player);var copy=combat.CloneCard(loaded);run.RemoveCard(loaded);combat.RemoveCard(card);card=copy;
+            }
+            if(mode=="dupe") {
+                var method=AccessTools.Method(typeof(CardModel),"CreateDupe");
+                card=(CardModel)method.Invoke(card,method.GetParameters().Select(p=>p.ParameterType==typeof(Player)?player:p.HasDefaultValue?p.DefaultValue:throw new MissingMethodException("Unknown dupe parameter.")).ToArray())!;
+            }
+            if(mode=="replay")await PowerCmd.Apply(context,LegacyPowers.Get(card.Type==CardType.Attack?"double_tap":"burst").ToMutable(),creature,1,creature,null);
             if(mode=="discount")card.SetToFreeThisTurn();
             await CardPileCmd.Add(card,PileType.Hand,skipVisuals:true);
             await PlayerCmd.GainEnergy(20,player);
@@ -74,14 +85,16 @@ public static class CardResolutionOracle
             var actual=CardPile.GetCards(player,Piles).ToArray();
             Require(actual.Distinct().Count()==actual.Length,"Card appears in multiple native piles.");
             Require(actual.All(c=>c.Owner==player&&combat.ContainsCard(c)&&c.Pile!.Cards.Count(x=>ReferenceEquals(x,c))==1),"Card scope/owner/pile disagreement.");
-            var expectedPile=card.Type==CardType.Power?PileType.None:row.Flag("exhaust")?PileType.Exhaust:PileType.Discard;
+            var expectedPile=card.Type==CardType.Power||card.IsDupe?PileType.None:card.Keywords.Contains(CardKeyword.Exhaust)?PileType.Exhaust:PileType.Discard;
             Require((card.Pile?.Type??PileType.None)==expectedPile,"Wrong result pile: "+key);
             Require(expectedPile!=PileType.None||!combat.ContainsCard(card),"Removed Power remains in combat scope.");
-            var generated=row.Text("special")=="wounds"?card.DesignCard.SpecialAmount:0;
+            var plays=mode=="replay"?2:1;
+            var design=(card as LegacyCard)?.DesignCard;
+            var generated=row?.Text("special")=="wounds"?design!.SpecialAmount*plays:0;
             Require(actual.Length==countBefore+generated-(expectedPile==PileType.None?1:0),"Native card count was not conserved: "+key);
-            Require(player.PlayerCombatState.Energy-energy==-cost+card.DesignCard.Amount("energy"),"Paid energy mismatch: "+key);
-            var saved=card.ToSerializable();var restored=(LegacyCard)run.LoadCard(saved,player);
-            Require(restored.Key==key&&restored.IsUpgraded==upgraded&&restored.DesignCard.Rules()==card.DesignCard.Rules(),"Resolved card identity/text did not round-trip.");
+            Require(player.PlayerCombatState.Energy-energy==-cost+(design?.Amount("energy")??0)*plays,"Paid energy mismatch: "+key);
+            var saved=card.ToSerializable();var restored=run.LoadCard(saved,player);
+            Require(restored.Id==card.Id&&restored.IsUpgraded==upgraded&&restored.GetDescriptionForPile(PileType.Deck)==card.GetDescriptionForPile(PileType.Deck),"Resolved card identity/text did not round-trip.");
             run.RemoveCard(restored);
             return new {key,upgraded,mode,cost,pile=expectedPile.ToString(),energyDelta=player.PlayerCombatState.Energy-energy,hpDelta=creature.CurrentHp-hp,blockDelta=creature.Block-block,
                 damage=enemies.Select((e,i)=>enemyHp[i]-e.CurrentHp).ToArray(),hand=player.PlayerCombatState.Hand.Cards.Count,cardCount=actual.Length,generated,conserved=true,saveRoundTrip=true,tableNodePresent=false};
