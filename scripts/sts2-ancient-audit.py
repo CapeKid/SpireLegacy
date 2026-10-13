@@ -27,7 +27,7 @@ elif 'saveboundaries' in tag:
     for cls in ['knight','mage','ranger']:
         for visits in [0,4]:
             start(cls);send('ancient-audit-tome');send('save');send('resume');ready();assert send('tome-parity',inspect=True)['saved']
-            send('ancient-enter',ancient='NEOW',visits=visits);send('save');send('resume')
+            send('ancient-audit-persistent-neow',visits=visits);send('save');send('resume')
             state=send('ancient-state');assert state['index']==0 and all('.'+cls+'.' in l['key'] for l in state['lines']),state
             for index in [1,2,3]:assert send('ancient-audit-next',controller=visits>0)['index']==index
             time.sleep(.4);send('ancient-audit-choose');send('save');send('resume');assert send('ancient-audit-finished')['finished'];send('abandon')

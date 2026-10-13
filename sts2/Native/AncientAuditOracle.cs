@@ -2,6 +2,7 @@ using Godot;
 using HarmonyLib;
 using MegaCrit.Sts2.Core.Entities.Ancients;
 using MegaCrit.Sts2.Core.Entities.Cards;
+using MegaCrit.Sts2.Core.Map;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Models.Events;
 using MegaCrit.Sts2.Core.Models.Relics;
@@ -26,6 +27,13 @@ public static class AncientAuditOracle
     private static void Require(bool ok,string message){if(!ok)throw new InvalidDataException(message);}
     private static async Task Wait(Func<bool> done){var tree=(SceneTree)Engine.GetMainLoop();var deadline=Time.GetTicksMsec()+25000;while(!done()){if(Time.GetTicksMsec()>deadline)throw new TimeoutException("Ancient audit native transition.");await tree.ToSignal(tree,SceneTree.SignalName.ProcessFrame);}}
     private static EventModel Event(RunState run)=>((EventRoom)run.CurrentRoom!).LocalMutableEvent;
+    public static async Task<object> PersistentNeow(RunState run,int visits)
+    {
+        AncientDialogueOracle.Prepare("NEOW",visits);run.ExtraFields.StartedWithNeow=true;run.CurrentMapPoint!.PointType=MapPointType.Ancient;
+        await RunManager.Instance.EnterMapPointInternal(run.ActFloor,MapPointType.Ancient,null,false);
+        await Wait(()=>NativeTestBridge.Descendants(((SceneTree)Engine.GetMainLoop()).Root).OfType<NAncientEventLayout>().Any(l=>l.IsVisibleInTree()&&((List<AncientDialogueLine>)AccessTools.Field(typeof(NAncientEventLayout),"_dialogue").GetValue(l)!).Count==4));
+        return AncientDialogueOracle.State(false);
+    }
     public static object Fallbacks()
     {
         Require(PlayerBloodlines.LocalPlayer==null,"Fallback selectors require the menu.");var heirId=ModelDb.Character<HeirCharacter>().Id;var set=new AncientDialogueSet{FirstVisitEverDialogue=null,CharacterDialogues=new(),AgnosticDialogues=[]};
