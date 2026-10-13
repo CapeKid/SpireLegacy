@@ -57,7 +57,9 @@ for cls in ['knight','mage','ranger','ironclad']:
     if cls!='ironclad':
         design={r['id']:r for r in json.loads((root/'sheets/cards.json').read_text())}
         assert set(result[0]['allowed'])=={r['cardId'] for r in membership if r['classId']==cls and design[r['cardId']]['rarity'] in ['COMMON','UNCOMMON','RARE']},result
-    send('save');send('resume');ready();send('pool-audit-owner')
+    send('save');send('resume')
+    if cls=='ironclad':send('enter',room='Monster')
+    ready();send('pool-audit-owner')
     if 'export' in tag and cls!='ironclad':
         send('pool-audit-export-run')
         shutil.copy2(profile/'pool-run.json',root/'private/sts2-evidence'/f'pool54-{"beta" if beta else "regular"}-{cls}-run.json')

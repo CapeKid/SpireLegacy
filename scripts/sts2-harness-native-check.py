@@ -85,6 +85,9 @@ try:
         assert diagnostic['originalPreserved'] and 'Heir: '+guest_class+'; traits: '+', '.join(guest_traits) in diagnostic['text'] and 'Inner owner diagnostic' in diagnostic['text'],diagnostic
         time.sleep(12);send(host,'coop-vote');send(guest,'coop-vote');peers('Play')
         if 'pools54' in tag:
+            prism=[send(profile,'pool-audit-modifiers') for profile in [host,guest]]
+            if 'fixed' in tag:
+                assert prism[0]==prism[1] and all(p['ownerPoolOnly'] for p in prism[0]),prism
             pool_checks=[send(profile,'pool-audit-owner') for profile in [host,guest]]
             assert pool_checks[0]==pool_checks[1],pool_checks
             assert [p['cls'] for p in pool_checks[0]]==['knight',guest_class],pool_checks

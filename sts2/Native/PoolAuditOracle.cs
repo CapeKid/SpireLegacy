@@ -111,6 +111,27 @@ public static class PoolAuditOracle
         if(!import)File.WriteAllText(path,JsonSerializer.Serialize(saves,JsonSerializationUtility.GetTypeInfo<List<SerializableCard>>()));
         return new{import,checks};
     }
+    public static object Modifiers(RunState run)
+    {
+        var results=new List<object>();
+        foreach(var player in run.Players)
+        {
+            var relic=ModelDb.Relic<MegaCrit.Sts2.Core.Models.Relics.PrismaticGem>().ToMutable();player.AddRelicInternal(relic,silent:true);
+            try
+            {
+                var input=CardCreationOptions.ForRoom(player,RoomType.Monster).WithFlags(CardCreationFlags.IsCardReward);
+                var options=relic.ModifyCardRewardCreationOptions(player,input);
+                var possible=options.GetPossibleCards(player).OfType<LegacyCard>().Select(c=>c.Key).ToHashSet();
+                var expected=player.Character.CardPool.AllCards.OfType<LegacyCard>().Select(c=>c.Key).ToHashSet();
+                var draws=CardFactory.CreateForReward(player,12,CardCreationOptions.ForRoom(player,RoomType.Monster).WithFlags(CardCreationFlags.IsCardReward|CardCreationFlags.NoUpgradeRoll)).Select(r=>r.Card).ToArray();
+                Require(draws.Length==12&&draws.Select(c=>c.Id).Distinct().Count()==12&&draws.All(c=>c.Owner==player&&!c.IsUpgraded),"Prismatic reward uniqueness/owner/no-upgrade flag.");
+                results.Add(new{player.NetId,cls=player.Character is HeirCharacter?PlayerBloodlines.Heir(player).classId:"native",pools=options.CardPools.Select(p=>p.Id.ToString()).Order().ToArray(),legacy=possible.Order().ToArray(),ownerPoolOnly=possible.SetEquals(expected),draws=draws.Select(c=>c.Id.ToString()).ToArray()});
+                foreach(var card in draws)run.RemoveCard(card);
+            }
+            finally {player.RemoveRelicInternal(relic,silent:true);}
+        }
+        return results;
+    }
     public static async Task<object> Library(RunState? run)
     {
         var tree=(SceneTree)Engine.GetMainLoop();MegaCrit.Sts2.Core.Nodes.Screens.MainMenu.NSubmenuStack stack=run==null?MegaCrit.Sts2.Core.Nodes.NGame.Instance!.MainMenu!.SubmenuStack:MegaCrit.Sts2.Core.Nodes.NRun.Instance!.GlobalUi.SubmenuStack.Stack;
