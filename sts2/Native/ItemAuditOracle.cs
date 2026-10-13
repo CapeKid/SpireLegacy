@@ -111,7 +111,14 @@ public static class ItemAuditOracle
         RunManager.Instance.ActionQueueSynchronizer.RequestEnqueue(one);RunManager.Instance.ActionQueueSynchronizer.RequestEnqueue(two);
         await Wait(()=>Uses()==1&&!RunManager.Instance.ActionExecutor.IsRunning);
         Require(player.Creature.Block-block==6&&!player.Potions.Contains(breath)&&player.Potions.Contains(briar)&&player.Potions.Count()==2,"Duplicate queue effect/consumption.");
-        return new{fullBeltRejected=true,invalidTargetCanceled=true,deadTargetCanceled=enemies.Length>1,zeroAliveEnemiesRejectedByTargetValidation=true,duplicateUses=Uses(),duplicateBlock=player.Creature.Block-block,remaining=player.Potions.Select(p=>p.Id.ToString()).ToArray()};
+        var familyBlock=player.Creature.Block-block;var remaining=player.Potions.Select(p=>p.Id.ToString()).ToArray();
+        var weak=ModelDb.Potion<MegaCrit.Sts2.Core.Models.Potions.WeakPotion>().ToMutable();Require((await PotionCmd.TryToProcure(weak,player)).success,"Native control procurement.");weak.EnqueueManualUse(player.Creature);await Wait(()=>!weak.IsQueued&&!RunManager.Instance.ActionExecutor.IsRunning);Require(player.Potions.Contains(weak)&&!CombatManager.Instance.History.Entries.OfType<PotionUsedEntry>().Any(e=>e.Potion==weak),"Native invalid-target control.");await PotionCmd.Discard(weak);
+        var native=ModelDb.Potion<MegaCrit.Sts2.Core.Models.Potions.BlockPotion>().ToMutable();Require((await PotionCmd.TryToProcure(native,player)).success,"Native Block Potion control procurement.");
+        var nativeOne=new UsePotionAction(native,player.Creature,true);var nativeTwo=new UsePotionAction(native,player.Creature,true);var nativeBlock=player.Creature.Block;
+        RunManager.Instance.ActionQueueSynchronizer.RequestEnqueue(nativeOne);RunManager.Instance.ActionQueueSynchronizer.RequestEnqueue(nativeTwo);
+        await Wait(()=>CombatManager.Instance.History.Entries.OfType<PotionUsedEntry>().Count(e=>e.Potion==native)==1&&!RunManager.Instance.ActionExecutor.IsRunning);
+        Require(player.Creature.Block-nativeBlock==12&&player.Potions.Select(p=>p.Id.ToString()).SequenceEqual(remaining),"Native duplicate-use control.");
+        return new{fullBeltRejected=true,invalidTargetCanceled=true,deadTargetCanceled=enemies.Length>1,zeroAliveEnemiesRejectedByTargetValidation=true,duplicateUses=Uses(),duplicateBlock=familyBlock,remaining,nativeControl=new{invalidTargetCanceled=true,duplicateUses=1,duplicateBlock=player.Creature.Block-nativeBlock}};
     }
     public static async Task<object> RelicEdges(RunState run)
     {
