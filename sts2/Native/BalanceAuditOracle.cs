@@ -1,3 +1,5 @@
+using Godot;
+using HarmonyLib;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Players;
@@ -178,5 +180,5 @@ public static class BalanceAuditOracle
             return new{owner=player.NetId,cls=PlayerBloodlines.Heir(player).classId,upgraded,energySpent=before-player.PlayerCombatState.Energy,hand=PileType.Hand.GetPile(player).Cards.Count,discarded=PileType.Discard.GetPile(player).Cards.Count(c=>c is DefendIronclad),pile=card.Pile?.Type.ToString(),ownerIsolated=isolated,nativeChoice=true,checksumNext=RunManager.Instance.ChecksumTracker.NextId,checksumEnabled=RunManager.Instance.ChecksumTracker.IsEnabled};
     }
 }
-using Godot;
-using HarmonyLib;
+
+
