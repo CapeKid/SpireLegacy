@@ -42,6 +42,8 @@ if ($Tag -notmatch '^[A-Za-z0-9_-]+$') { throw 'Use a plain evidence tag.' }
 $provenance=Get-Content (Join-Path $labPath 'lab-provenance.json') -Raw | ConvertFrom-Json
 if (-not $provenance.independentCopies) { throw 'Independent copies required.' }
 $exePath=Join-Path $labPath 'SlayTheSpire2.exe'
+$buildSource=([Diagnostics.FileVersionInfo]::GetVersionInfo((Join-Path $repoPath 'sts2/bin/Release/net9.0/SpireLegacy.dll')).ProductVersion -split '\+')[-1]
+if($buildSource -notmatch '^[a-f0-9]{40}$'){throw 'Audit DLL must carry its committed build source.'}
 if (Get-CimInstance Win32_Process | Where-Object ExecutablePath -EQ $exePath) { throw 'The selected lab already has a client.' }
 $profilePath=Join-Path $privatePath "campaign-$Tag-profile"
 if (Test-Path -LiteralPath $profilePath) { throw 'A new disposable profile is required.' }
@@ -55,7 +57,7 @@ $previous=@{}
 foreach ($name in $names) { $previous[$name]=[Environment]::GetEnvironmentVariable($name,'Process') }
 try {
     $env:HEIR_TEST_MODE='1';$env:HEIR_TEST_ROOT=$privatePath;$env:HEIR_DATA_DIR=$profilePath
-    $env:HEIR_TEST_SOURCE_SHA=git -C $repoPath rev-parse HEAD
+    $env:HEIR_TEST_SOURCE_SHA=$buildSource
     $client=Start-Process $exePath -WorkingDirectory $labPath -ArgumentList '--force-steam=off --rendering-method gl_compatibility --rendering-driver opengl3 --position -2000,-2000' -WindowStyle Hidden -PassThru -RedirectStandardOutput (Join-Path $profilePath 'launch.log') -RedirectStandardError (Join-Path $profilePath 'errors.log')
     $driver=if($Checks){'sts2-tactical-check.py'}elseif($DelayedChecks){'sts2-delayed-reward-check.py'}elseif($RewardChecks){'sts2-reward-intervention-check.py'}elseif($PayoffChecks){'sts2-finisher-payoff-check.py'}elseif($ReleaseChecks){'sts2-release-check.py'}elseif($CandidateChecks){'sts2-six-candidates-check.py'}elseif($LifecycleChecks){'sts2-lifecycle-check.py'}elseif($LifecycleUiChecks){'sts2-lifecycle-ui-check.py'}elseif($TraitAuditChecks){'sts2-trait-audit.py'}elseif($OrobasChecks){'sts2-orobas-check.py'}elseif($CardResolutionChecks){'sts2-card-resolution-check.py'}elseif($PowerAuditChecks){'sts2-power-audit.py'}elseif($CrownChecks){'sts2-crown-check.py'}elseif($PoolAuditChecks){'sts2-pool-audit.py'}elseif($ItemAuditChecks){'sts2-item-audit.py'}elseif($AncientAuditChecks){'sts2-ancient-audit.py'}elseif($ManorAuditChecks){'sts2-manor-audit.py'}elseif($PresentationAuditChecks){'sts2-presentation-audit.py'}elseif($BalanceAuditChecks){'sts2-adversarial-balance.py'}else{'sts2-balance-campaign.py'}
     $traitArgument=if($Traits){$Traits}else{'-'}

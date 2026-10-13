@@ -29,4 +29,11 @@ for upgraded in [False,True]:
         assert r['exhausted']==2 and r['energySpent']==(0 if upgraded else 2) and r['blockGained']==4 and r['ownerIsolated'] and r['checksumEnabled'],r
         for peer in [host,guest]:assert send(peer,'power-coop-checkpoint',minimum=r['checksumNext'])['enabled']
         print(tag,r,flush=True)
+for upgraded in [False,True]:
+    for profile in [host,guest]:send(profile,'balance-audit-coop-draw-prepare',upgrade=upgraded)
+    for profile in [host,guest]:
+        r=send(profile,'balance-audit-coop-draw-play',upgrade=upgraded)
+        assert r['energySpent']==1 and r['hand']==2+int(upgraded) and r['discarded']==1 and r['pile']=='Discard' and r['ownerIsolated'] and r['checksumEnabled'],r
+        for peer in [host,guest]:assert send(peer,'power-coop-checkpoint',minimum=r['checksumNext'])['enabled']
+        print(tag,'draw',r,flush=True)
 send(host,'coop-abandon')

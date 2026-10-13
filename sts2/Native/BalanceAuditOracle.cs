@@ -140,4 +140,27 @@ public static class BalanceAuditOracle
             return new{key,upgraded,rarity=card.Rarity.ToString(),cost=card.EnergyCost.GetWithModifiers(CostModifiers.All),energySpent=before-player.PlayerCombatState.Energy,drawn=fuel.Count(c=>c.Pile?.Type!=PileType.Draw),discarded=fuel.Count(c=>c.Pile?.Type==PileType.Discard),hand=fuel.Count(c=>c.Pile?.Type==PileType.Hand),pile=card.Pile?.Type.ToString()};
         }
     }
+    public static async Task<object> CoopDrawPrepare(RunState run,bool upgraded)
+    {
+        foreach(var player in run.Players.OrderBy(p=>p.NetId)) {
+            var combat=player.Creature.CombatState!;
+            await CardPileCmd.RemoveFromCombat(CardPile.GetCards(player,Piles).ToArray(),skipVisuals:true);
+            await PlayerCmd.GainEnergy(3-player.PlayerCombatState!.Energy,player);
+            for(var i=0;i<12;i++)await CardPileCmd.Add(combat.CreateCard(ModelDb.Card<DefendIronclad>(),player),PileType.Draw,skipVisuals:true);
+            var card=combat.CreateCard(NativeCards.Get("knight_battle_meditation"),player);if(upgraded)CardCmd.Upgrade(card);
+            await CardPileCmd.Add(card,PileType.Hand,skipVisuals:true);
+        }
+        return new{owners=run.Players.Count,upgraded,fundedEnergy=3};
+    }
+    public static async Task<object> CoopDrawPlay(RunState run,bool upgraded,IDisposable selector)
+    {
+        using(selector) {
+            var player=PlayerBloodlines.LocalPlayer!;
+            var others=run.Players.Where(p=>p!=player).Select(p=>new{p,energy=p.PlayerCombatState!.Energy,block=p.Creature.Block,hand=PileType.Hand.GetPile(p).Cards.Count}).ToArray();
+            var card=PileType.Hand.GetPile(player).Cards.OfType<LegacyCard>().Single(c=>c.Key=="knight_battle_meditation");
+            var before=player.PlayerCombatState!.Energy;await BalanceOracle.Play(card);
+            var isolated=others.All(o=>o.p.PlayerCombatState!.Energy==o.energy&&o.p.Creature.Block==o.block&&PileType.Hand.GetPile(o.p).Cards.Count==o.hand);
+            return new{owner=player.NetId,cls=PlayerBloodlines.Heir(player).classId,upgraded,energySpent=before-player.PlayerCombatState.Energy,hand=PileType.Hand.GetPile(player).Cards.Count,discarded=PileType.Discard.GetPile(player).Cards.Count(c=>c is DefendIronclad),pile=card.Pile?.Type.ToString(),ownerIsolated=isolated,checksumNext=RunManager.Instance.ChecksumTracker.NextId,checksumEnabled=RunManager.Instance.ChecksumTracker.IsEnabled};
+        }
+    }
 }
