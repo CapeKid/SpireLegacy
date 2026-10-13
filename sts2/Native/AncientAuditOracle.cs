@@ -8,6 +8,8 @@ using MegaCrit.Sts2.Core.Models.Relics;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Nodes.CommonUi;
 using MegaCrit.Sts2.Core.Nodes.Events;
+using MegaCrit.Sts2.Core.Nodes.Cards.Holders;
+using MegaCrit.Sts2.Core.Nodes.Screens.CardSelection;
 using MegaCrit.Sts2.Core.Nodes.GodotExtensions;
 using MegaCrit.Sts2.Core.Rooms;
 using MegaCrit.Sts2.Core.Runs;
@@ -35,11 +37,18 @@ public static class AncientAuditOracle
     public static async Task<object> Choose(RunState run)
     {
         var model=Event(run);var option=model.CurrentOptions.First(o=>!o.IsLocked);var before=model.Owner!.Relics.Count();var deck=model.Owner.Deck.Cards.Count;
-        await option.Chosen();Require(option.WasChosen,"Native reward callback did not execute.");
+        var choice=option.Chosen();var tree=(SceneTree)Engine.GetMainLoop();var deadline=Time.GetTicksMsec()+25000;var rewardSelections=0;
+        while(!choice.IsCompleted){
+            if(Time.GetTicksMsec()>deadline)throw new TimeoutException("Ancient reward selection.");
+            var rewardScreen=NativeTestBridge.Descendants(tree.Root).OfType<NCardRewardSelectionScreen>().FirstOrDefault(n=>n.IsVisibleInTree());
+            if(rewardScreen!=null){var holder=NativeTestBridge.Descendants(rewardScreen).OfType<NCardHolder>().FirstOrDefault(h=>h.CardModel!=null&&h.IsVisibleInTree());if(holder!=null){holder.EmitSignal(NCardHolder.SignalName.Pressed,holder);rewardSelections++;}}
+            await tree.ToSignal(tree,SceneTree.SignalName.ProcessFrame);
+        }
+        await choice;Require(option.WasChosen,"Native reward callback did not execute.");
         var after=model.Owner.Relics.Count();var acquired=model.Owner.Relics.Skip(before).Select(r=>r.Id.ToString()).ToArray();
         // Native EventOption guards repeated activation of this same choice.
         await option.Chosen();Require(model.Owner.Relics.Count()==after,"Reward callback acquired twice.");
-        return new{key=option.TextKey,finished=model.IsFinished,acquired,deckDelta=model.Owner.Deck.Cards.Count-deck,once=true,options=model.CurrentOptions.Select(o=>o.TextKey).ToArray()};
+        return new{key=option.TextKey,finished=model.IsFinished,acquired,deckDelta=model.Owner.Deck.Cards.Count-deck,rewardSelections,once=true,options=model.CurrentOptions.Select(o=>o.TextKey).ToArray()};
     }
     public static async Task<object> Tome(RunState run)
     {
