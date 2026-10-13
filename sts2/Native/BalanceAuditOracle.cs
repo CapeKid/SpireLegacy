@@ -84,7 +84,7 @@ public static class BalanceAuditOracle
     }
     public static object References()
     {
-        var cards=new CardModel[]{ModelDb.Card<StrikeIronclad>(),ModelDb.Card<DefendIronclad>(),ModelDb.Card<Prepared>(),ModelDb.Card<Acrobatics>(),ModelDb.Card<Adrenaline>(),ModelDb.Card<CalculatedGamble>(),ModelDb.Card<Backflip>(),ModelDb.Card<FlashOfSteel>(),ModelDb.Card<Bloodletting>(),ModelDb.Card<Turbo>(),ModelDb.Card<WellLaidPlans>(),ModelDb.Card<DodgeAndRoll>(),ModelDb.Card<ChargeBattery>(),ModelDb.Card<LegSweep>(),ModelDb.Card<Buffer>(),ModelDb.Card<Deflect>(),ModelDb.Card<Finisher>(),ModelDb.Card<Bludgeon>(),ModelDb.Card<Pyre>()};
+        var cards=new CardModel[]{ModelDb.Card<StrikeIronclad>(),ModelDb.Card<DefendIronclad>(),ModelDb.Card<Prepared>(),ModelDb.Card<Acrobatics>(),ModelDb.Card<Adrenaline>(),ModelDb.Card<CalculatedGamble>(),ModelDb.Card<Backflip>(),ModelDb.Card<FlashOfSteel>(),ModelDb.Card<Bloodletting>(),ModelDb.Card<Turbo>(),ModelDb.Card<WellLaidPlans>(),ModelDb.Card<DodgeAndRoll>(),ModelDb.Card<ChargeBattery>(),ModelDb.Card<LegSweep>(),ModelDb.Card<MegaCrit.Sts2.Core.Models.Cards.Buffer>(),ModelDb.Card<Deflect>(),ModelDb.Card<Finisher>(),ModelDb.Card<Bludgeon>(),ModelDb.Card<Pyre>()};
         return cards.SelectMany(c=>new[]{false,true}.Select(up=>{var card=c.ToMutable();if(up)CardCmd.Upgrade(card);return new{id=card.Id.ToString(),upgraded=up,cost=card.EnergyCost.GetWithModifiers(CostModifiers.All),rarity=card.Rarity.ToString(),keywords=card.Keywords.Select(k=>k.ToString()).ToArray(),vars=card.DynamicVars.Select(v=>new{name=v.Key,value=v.Value.BaseValue}).ToArray()};})).ToArray();
     }
     public static async Task<object> NativeFlashLoop(RunState run,bool upgraded)
