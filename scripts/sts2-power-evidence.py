@@ -6,8 +6,8 @@ root=Path(__file__).resolve().parents[1];evidence=root/'private/sts2-evidence'
 proof=dict(issue=53,baselineSource='664f288',fixedIssue=121,seed='SPIRELEGACY-POWERS-53',coreAssertions=124044,harnessChecks=20,preflight=dict(sheets=32,rows=2062,cells=26477),branches=[])
 for branch,game in [('regular','v0.107.1'),('beta','v0.111.0')]:
     stages=[]
-    names=['power-audit-powers53-'+branch+'-'+tag+'.json' for tag in ['class-complete','engines','retention','copies','empty-fixed','supplement','chains','card-scry']]
-    names+=['harness-'+tag+'-owner-'+branch+'-checkpoint-coop.json' for tag in ['powers53','powers53ranger']]
+    names=['power-audit-powers53-'+branch+'-'+tag+'.json' for tag in ['class-complete','engines','retention','copies','empty-fixed','supplement','chains','card-scry-complete']]
+    names+=['harness-powers53-owner-'+branch+'-checkpoint-coop.json','harness-powers53ranger-owner-'+branch+'-prepared-coop.json']
     for name in names:
         records=json.loads((evidence/name).read_text());ids=set();hashes=set();sources=set();results=[]
         for record in records:
@@ -31,7 +31,7 @@ for branch,game in [('regular','v0.107.1'),('beta','v0.111.0')]:
         elif '-empty-fixed.' in name:assert counts['power-engines']==6 and all(r['result']['deck']==0 and r['result']['nextTurn'] for r in results)
         elif '-supplement.' in name:assert counts['power-engines']==counts['power-retention-edges']==6 and counts['compat-control']==5
         elif '-chains.' in name:assert counts['power-class']==6 and all(len(r['result']['hits'])==1 for r in results)
-        elif '-card-scry.' in name:assert counts['card-choice-boundary']==counts['resume']==counts['card-deck-identity']==12
+        elif '-card-scry-complete.' in name:assert counts['card-choice-boundary']==counts['resume']==counts['card-deck-identity']==12
         elif name.startswith('harness-'):
             assert counts['power-coop-prepare']==counts['power-coop-play']==4 and counts['power-coop-checkpoint']==8
             assert all(r['result']['ownerOnly'] for r in results if r['input']['command']=='power-coop-play')
