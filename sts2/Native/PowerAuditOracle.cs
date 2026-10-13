@@ -103,15 +103,16 @@ public static class PowerAuditOracle
                 await CardPileCmd.Add(card,PileType.Hand,skipVisuals:true);
             }
             if(mode=="replay")await Apply(player,"double_tap",1);
-            if(mode=="lethal")enemies[0].SetCurrentHpInternal(1);
+            if(mode is "lethal" or "lethal-chain")enemies[0].SetCurrentHpInternal(1);
             var primed=counter.Charges;var baseDamage=card.DynamicVars.Damage.BaseValue;
             observed=card;hits.Clear();await Play(card,enemies[0]);
             var bonus=cls=="knight"&&primed>0?2:cls=="mage"?primed*(1+(mode=="reservoir"?2:0)):0;
             var seen=new HashSet<Creature>();
-            foreach(var hit in hits){var extra=seen.Add(hit.target)?bonus:0;var expected=mode=="lethal"?1:baseDamage+extra;Require(hit.damage==expected,$"Class first-hit damage {cls}/{mode}: {hit.damage}, expected {expected}");}
+            foreach(var hit in hits){var extra=seen.Add(hit.target)?bonus:0;var expected=mode is "lethal" or "lethal-chain"?1:baseDamage+extra;Require(hit.damage==expected,$"Class first-hit damage {cls}/{mode}: {hit.damage}, expected {expected}");}
             Require(hits.Count>0,"No observed powered hits.");
             var plays=mode=="replay"?2:1;
             if(mode!="lethal")Require(counter.AttacksThisTurn==plays&&counter.Charges==0,"Class Attack count/consumption mismatch.");
+            if(mode=="lethal-chain")Require(hits.Count==1&&enemies.Skip(1).All(e=>e.IsAlive),"Dead target continued receiving chain hits.");
             return new{cls,mode,up,charges,primed,bonus,hits=hits.Select(h=>h.damage).ToArray(),distinctTargets=seen.Count,attacks=counter.AttacksThisTurn,counter.Charges,cloneIndependent=true,savedProperties=true,pile=card.Pile?.Type.ToString()};
         }finally{observed=null;NativeStartup.Remove(patch);}
     }
@@ -311,6 +312,7 @@ public static class PowerAuditOracle
     }
     public static async Task<object> CoopPrepare(RunState run,bool up)
     {
+        foreach(var enemy in run.Players[0].Creature.CombatState!.GetOpponentsOf(run.Players[0].Creature)){enemy.SetMaxHpInternal(10000);enemy.SetCurrentHpInternal(10000);}
         foreach(var player in run.Players.OrderBy(p=>p.NetId)) {
             foreach(var key in new[]{"arcane_echo","skill_block","discard_energy"})foreach(var old in player.Creature.Powers.OfType<LegacyPower>().Where(p=>p.Key==key).ToArray())await PowerCmd.Remove(old);
             await Apply(player,"arcane_echo",2);await Apply(player,"skill_block",3);await Apply(player,"discard_energy",2);
@@ -328,7 +330,12 @@ public static class PowerAuditOracle
         Require(player.PlayerCombatState.Energy==energy-3&&player.Creature.Block-block==3*(up?8:5)+3,"Co-op third Skill stacking differs.");
         var counter=player.Creature.GetPower<P_class>()!;var cls=PlayerBloodlines.Heir(player).classId;
         Require(counter.Charges==(cls=="knight"?1:cls=="mage"?2:0),"Co-op class Skill cap differs.");
+        var attackPlays=0;if(cls=="ranger") {
+            var before=counter.AttacksThisTurn;var target=player.Creature.CombatState!.GetOpponentsOf(player.Creature).First(e=>e.IsAlive);
+            for(var i=0;i<3;i++)await Play(await Add(player,ModelDb.Card<TwinStrike>(),up),target);
+            attackPlays=3;Require(counter.AttacksThisTurn==before+3&&counter.DisplayAmount==0,"Co-op Hunter Rhythm counted hits instead of cards.");
+        }
         Require(others.All(o=>o.p.PlayerCombatState!.Energy==o.energy&&o.p.Creature.Block==o.block&&o.p.PlayerCombatState.Hand.Cards.Count==o.hand&&o.p.Creature.GetPower<P_class>()!.Charges==o.charges),"Power hook leaked to another owner.");
-        return new{owner=player.NetId,cls,up,plays=3,charges=counter.Charges,ownerOnly=true};
+        return new{owner=player.NetId,cls,up,plays=3,attackPlays,charges=counter.Charges,ownerOnly=true};
     }
 }
