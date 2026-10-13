@@ -23,6 +23,19 @@ public static class AncientAuditOracle
     private static void Require(bool ok,string message){if(!ok)throw new InvalidDataException(message);}
     private static async Task Wait(Func<bool> done){var tree=(SceneTree)Engine.GetMainLoop();var deadline=Time.GetTicksMsec()+25000;while(!done()){if(Time.GetTicksMsec()>deadline)throw new TimeoutException("Ancient audit native transition.");await tree.ToSignal(tree,SceneTree.SignalName.ProcessFrame);}}
     private static EventModel Event(RunState run)=>((EventRoom)run.CurrentRoom!).LocalMutableEvent;
+    public static object Fallbacks()
+    {
+        Require(PlayerBloodlines.LocalPlayer==null,"Fallback selectors require the menu.");var heirId=ModelDb.Character<HeirCharacter>().Id;var set=new AncientDialogueSet();
+        Require(!set.GetValidDialogues(heirId,0,0,false).Any(),"Unregistered empty native set changed.");
+        // Emulate a future native Ancient's getter registration without shipping or
+        // adding a fake game model. Only this throwaway set receives the test identity.
+        var type=typeof(HeirAncientConversations).GetNestedType("Identity",System.Reflection.BindingFlags.NonPublic)!;
+        var identity=Activator.CreateInstance(type,["FUTURE_ANCIENT"])!;var table=AccessTools.Field(typeof(HeirAncientConversations),"Sets").GetValue(null)!;
+        AccessTools.Method(table.GetType(),"Add").Invoke(table,[set,identity]);var original=Runtime.Heir.classId;var results=new List<object>();
+        try{foreach(var cls in new[]{"knight","mage","ranger"})foreach(var visits in new[]{0,100}){Runtime.Heir.classId=cls;var dialogue=set.GetValidDialogues(heirId,visits,200,false).Single();Require(dialogue.Lines.Count==4&&dialogue.Lines.All(l=>l.LineText!.Exists()&&!string.IsNullOrWhiteSpace(l.LineText.GetFormattedText())),"Missing fallback localization.");results.Add(new{cls,visits,keys=dialogue.Lines.Select(l=>l.LineText!.LocEntryKey).ToArray()});}}
+        finally{Runtime.Heir.classId=original;}
+        Require(!set.GetValidDialogues(ModelDb.Character<MegaCrit.Sts2.Core.Models.Characters.Ironclad>().Id,0,0,false).Any(),"Future set changed native empty behavior.");return new{emptyPreserved=true,future=results};
+    }
     public static async Task<object> Advance(RunState run,bool controller)
     {
         var layout=NativeTestBridge.Descendants(((SceneTree)Engine.GetMainLoop()).Root).OfType<NAncientEventLayout>().Single(l=>l.IsVisibleInTree());

@@ -20,6 +20,7 @@ def start(cls,traits=[]):
 send('trait-speed',value=8)
 if 'selectors' in tag:
     assert send('ancient-audit-selectors')['checks']==672
+    assert send('ancient-audit-fallbacks')['emptyPreserved']
     endings=send('architect-dialogues');assert len(endings)==15
     assert all(all(l['key'].startswith('SPIRELEGACY.ARCHITECT.'+r['classId']+'.') for l in r['lines']) for r in endings)
 elif 'endings' in tag:
