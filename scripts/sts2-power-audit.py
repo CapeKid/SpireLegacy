@@ -24,6 +24,17 @@ def start(cls):
     ready();send('vigor-room');ready()
 send('trait-speed',value=8)
 send('compat-control',patches=True,upgrade=False)
+if 'class130' in tag:
+    for up in [False,True]:
+        for power in ['strength','vigor']:
+            start('ironclad');send('power-damage-control',power=power,upgrade=up)
+        for cls in ['knight','mage','ranger']:
+            modes=['baseline-multi'] if 'baseline' in tag else ['multi','legacy-multi','area','random','single','replay','zero','lethal-chain']+(['reservoir'] if cls=='mage' else [])
+            if cls=='ranger':modes=['baseline-multi'] if 'baseline' in tag else ['multi','legacy-multi']
+            for mode in modes:
+                start(cls);send('power-class',mode=mode,upgrade=up)
+                print(tag,cls,mode,up,'pass',flush=True)
+    send('abandon');print(tag,'class multi-hit comparison complete',flush=True);sys.exit(0)
 if 'supplement' in tag:
     for up in [False,True]:assert send('compat-control',patches=False,upgrade=up)==send('compat-control',patches=True,upgrade=up)
 for cls in ([] if any(x in tag for x in ['engines','retention','copies','empty','misc','supplement','chains','scry']) else ['knight','mage','ranger']):

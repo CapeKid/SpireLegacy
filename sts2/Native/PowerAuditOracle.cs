@@ -63,6 +63,7 @@ public static class PowerAuditOracle
     }
     public static async Task<object> Class(RunState run,string mode,bool up,IDisposable selector)
     {
+        var firstHitBaseline=mode.StartsWith("baseline-");if(firstHitBaseline)mode=mode[9..];
         const string patch="CapeKid.SpireLegacy2.PowerAudit";var harmony=new Harmony(patch);
         var player=run.Players.Single();var cls=PlayerBloodlines.Heir(player).classId;
         using(selector)try {
@@ -85,14 +86,13 @@ public static class PowerAuditOracle
             var loaded=(P_class)ModelDb.Power<P_class>().ToMutable();JsonSerializer.Deserialize<SavedProperties>(json,new JsonSerializerOptions{IncludeFields=true})!.Fill(loaded);
             Require(loaded.Charges==counter.Charges&&loaded.AttacksThisTurn==counter.AttacksThisTurn,"Saved class properties differ.");
             var clone=(P_class)counter.MutableClone();clone.Charges=0;
-            var field=AccessTools.Field(typeof(LegacyPower),"classBonusTargets");
-            Require(!ReferenceEquals(field.GetValue(counter),field.GetValue(clone))&&counter.Charges==charges.Last(),"Power clone shares counters/target set.");
-            ((HashSet<Creature>)field.GetValue(clone)!).Add(enemies[0]);Require(!((HashSet<Creature>)field.GetValue(counter)!).Contains(enemies[0]),"Clone target mutation leaked.");
+            Require(counter.Charges==charges.Last(),"Power clone shares counters.");
             await SaveManager.Instance.SaveRun(null);
             var canonical=mode switch {
                 "area"=>ModelDb.Card<Thunderclap>(),
                 "random"=>NativeCards.Get(Design.Rows("cards").First(r=>r.Text("special")=="random_attack"&&r.Text("power")=="none").Text("id")),
                 "single" or "zero" or "lethal"=>ModelDb.Card<StrikeIronclad>(),
+                "legacy-multi"=>NativeCards.Get(Design.Rows("cards").First(r=>r.Text("classId")==cls&&r.Number("hits")>1&&r.Text("special")=="none"&&r.Text("power")=="none").Text("id")),
                 _=>ModelDb.Card<TwinStrike>() as CardModel
             };
             var card=await Add(player,canonical,up);
@@ -108,12 +108,22 @@ public static class PowerAuditOracle
             observed=card;hits.Clear();await Play(card,enemies[0]);
             var bonus=cls=="knight"&&primed>0?2:cls=="mage"?primed*(1+(mode=="reservoir"?2:0)):0;
             var seen=new HashSet<Creature>();
-            foreach(var hit in hits){var extra=seen.Add(hit.target)?bonus:0;var expected=mode is "lethal" or "lethal-chain"?1:baseDamage+extra;Require(hit.damage==expected,$"Class first-hit damage {cls}/{mode}: {hit.damage}, expected {expected}");}
+            for(var i=0;i<hits.Count;i++){var hit=hits[i];var fresh=seen.Add(hit.target);var extra=firstHitBaseline?(fresh?bonus:0):mode=="replay"&&i>=2?0:bonus;var expected=mode is "lethal" or "lethal-chain"?1:baseDamage+extra;Require(hit.damage==expected,$"Class attack damage {cls}/{mode}: {hit.damage}, expected {expected}");}
             Require(hits.Count>0,"No observed powered hits.");
             var plays=mode=="replay"?2:1;
             if(mode!="lethal")Require(counter.AttacksThisTurn==plays&&counter.Charges==0,"Class Attack count/consumption mismatch.");
             if(mode=="lethal-chain")Require(hits.Count==1&&enemies.Skip(1).All(e=>e.IsAlive),"Dead target continued receiving chain hits.");
             return new{cls,mode,up,charges,primed,bonus,hits=hits.Select(h=>h.damage).ToArray(),distinctTargets=seen.Count,attacks=counter.AttacksThisTurn,counter.Charges,cloneIndependent=true,savedProperties=true,pile=card.Pile?.Type.ToString()};
+        }finally{observed=null;NativeStartup.Remove(patch);}
+    }
+    public static async Task<object> DamageControl(RunState run,string power,bool up)
+    {
+        const string patch="CapeKid.SpireLegacy2.PowerAuditControl";var harmony=new Harmony(patch);var player=run.Players.Single();
+        try{var enemies=await Setup(player,false);await Apply(player,power,2);
+            harmony.Patch(typeof(Hook).GetMethods(BindingFlags.Public|BindingFlags.Static).Single(m=>m.Name=="AfterDamageGiven"),prefix:new HarmonyMethod(typeof(PowerAuditOracle),nameof(Observe)));
+            var card=await Add(player,ModelDb.Card<TwinStrike>(),up);observed=card;hits.Clear();await Play(card,enemies[0]);var first=hits.Select(h=>h.damage).ToArray();Require(first.SequenceEqual(new[]{up?9:7,up?9:7}),"Native attack bonus control.");
+            var next=await Add(player,ModelDb.Card<StrikeIronclad>(),up);observed=next;hits.Clear();await Play(next,enemies[0]);var expected=(up?9:6)+(power=="strength"?2:0);Require(hits.Single().damage==expected,"Native damage control consumption.");
+            return new{power,up,first,next=hits.Single().damage,vigorRemaining=player.Creature.GetPowerAmount<VigorPower>()};
         }finally{observed=null;NativeStartup.Remove(patch);}
     }
     public static async Task<object> Rhythm(RunState run,bool up,string mode,IDisposable selector)
