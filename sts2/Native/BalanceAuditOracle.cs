@@ -98,4 +98,17 @@ public static class BalanceAuditOracle
         for(var i=0;i<12;i++)await BalanceOracle.Play(cards.First(c=>c.Pile?.Type==PileType.Hand),enemy);
         return new{plays=12,energySpent=energy-player.PlayerCombatState.Energy,damage=hp-enemy.CurrentHp,exhausted=cards.Count(c=>c.Pile?.Type==PileType.Exhaust)};
     }
+    public static async Task<object> Exchange(RunState run,string key,bool upgraded)
+    {
+        var player=run.Players.Single();var combat=player.Creature.CombatState!;
+        await CardPileCmd.RemoveFromCombat(CardPile.GetCards(player,Piles).ToArray(),skipVisuals:true);
+        await CardEffects.Apply(new BlockingPlayerChoiceContext(),"discard_block",player.Creature,2,player.Creature,null);
+        var fuel=new List<CardModel>();
+        foreach(var canonical in new CardModel[]{ModelDb.Card<Reflex>(),ModelDb.Card<DefendIronclad>()}){var f=combat.CreateCard(canonical,player);await CardPileCmd.Add(f,PileType.Hand,skipVisuals:true);fuel.Add(f);}
+        var card=combat.CreateCard(key=="native"?ModelDb.Card<CalculatedGamble>():NativeCards.Get(key),player);
+        if(upgraded)CardCmd.Upgrade(card);await CardPileCmd.Add(card,PileType.Hand,skipVisuals:true);
+        var energy=player.PlayerCombatState!.Energy;var block=player.Creature.Block;
+        await BalanceOracle.Play(card);
+        return new{key,upgraded,energySpent=energy-player.PlayerCombatState.Energy,blockGained=player.Creature.Block-block,pile=card.Pile?.Type.ToString(),fuel=fuel.Select(f=>new{id=f.Id.ToString(),pile=f.Pile?.Type.ToString()}).ToArray(),queuedBlock=player.Creature.GetPowerAmount<MegaCrit.Sts2.Core.Models.Powers.BlockNextTurnPower>()};
+    }
 }

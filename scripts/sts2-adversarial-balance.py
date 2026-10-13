@@ -16,6 +16,19 @@ def start(cls,tier=0,traits=[]):
     while send('state')['phase']!='Play':
         assert time.monotonic()<deadline;time.sleep(.15)
 send('presentation-prepare');send('balance-audit-references')
+if 'exchange' in tag:
+    rows={r['id']:r for r in json.loads((root/'sheets/cards.json').read_text())}
+    for upgraded in [False,True]:
+        start('ranger');control=send('balance-audit-exchange',card='native',upgrade=upgraded)
+        for key in ['ranger_trail_reset','ranger_quiver_repack','ranger_empty_quiver']:
+            start('ranger');r=send('balance-audit-exchange',card=key,upgrade=upgraded);d=rows[key]
+            assert r['fuel']==control['fuel'],(control,r)
+            assert r['energySpent']==d['cost']-int(upgraded and d['upgradeCost']),r
+            assert r['blockGained']==control['blockGained']+d['block']+(d['upgradeBlock'] if upgraded else 0),r
+            assert r['queuedBlock']==d['nextBlock']+(d['upgradeMagic'] if upgraded and d['nextBlock'] else 0),r
+            assert r['pile']==('Exhaust' if d['exhaust'] else 'Discard'),r
+            print(tag,key,upgraded,r,flush=True)
+    send('abandon');raise SystemExit(0)
 if 'controls' in tag:
     for cls in ['knight','mage','ranger']:
         for kind in ['discard','exhaust']:
