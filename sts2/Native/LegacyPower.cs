@@ -47,7 +47,7 @@ public abstract class LegacyPower:CustomPowerModel
   switch(Key){
    case "brutality":await CreatureCmd.Damage(context,Owner,Amount,ValueProp.Unblockable|ValueProp.Unpowered,Owner);await CardPileCmd.Draw(context,Amount,player);break;
    case "berserk":await PlayerCmd.GainEnergy(Amount,player);break;
-   case "foresight":await CardEffects.Scry(player.Deck.Cards.First(),context,Amount);break;
+   case "foresight":await CardEffects.Scry(player,context,Amount);break;
   }
  }
  public override async Task BeforeSideTurnEnd(PlayerChoiceContext context,CombatSide side,IEnumerable<Creature> participants)

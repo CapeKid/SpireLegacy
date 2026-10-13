@@ -2,6 +2,7 @@ using MegaCrit.Sts2.Core.CardSelection;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Creatures;
+using MegaCrit.Sts2.Core.Entities.Players;
 using MegaCrit.Sts2.Core.Entities.Powers;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Models;
@@ -44,11 +45,12 @@ public static class CardEffects
   if(row.Text("power")!="none")await Apply(context,row.Text("power"),creature,d.Magic,creature,card);
   await Special(card,context,play,enemies);
  }
- public static async Task Scry(CardModel card,PlayerChoiceContext context,int amount)
+ public static Task Scry(CardModel card,PlayerChoiceContext context,int amount)=>Scry(card.Owner,context,amount);
+ public static async Task Scry(Player player,PlayerChoiceContext context,int amount)
  {
-  var top=PileType.Draw.GetPile(card.Owner).Cards.Take(amount).ToArray();
-  if(top.Length>0){var chosen=await CardSelectCmd.FromSimpleGrid(context,top,card.Owner,new CardSelectorPrefs(CardSelectorPrefs.DiscardSelectionPrompt,0,top.Length));foreach(var selected in chosen)await CardPileCmd.Add(selected,PileType.Discard);}
-  foreach(var engine in card.Owner.Creature.Powers.OfType<LegacyPower>().Where(p=>p.Key=="scry_block"))await CreatureCmd.GainBlock(card.Owner.Creature,engine.Amount,ValueProp.Unpowered,null);
+  var top=PileType.Draw.GetPile(player).Cards.Take(amount).ToArray();
+  if(top.Length>0){var chosen=await CardSelectCmd.FromSimpleGrid(context,top,player,new CardSelectorPrefs(CardSelectorPrefs.DiscardSelectionPrompt,0,top.Length));foreach(var selected in chosen)await CardPileCmd.Add(selected,PileType.Discard);}
+  foreach(var engine in player.Creature.Powers.OfType<LegacyPower>().Where(p=>p.Key=="scry_block"))await CreatureCmd.GainBlock(player.Creature,engine.Amount,ValueProp.Unpowered,null);
  }
  private static async Task Special(LegacyCard card,PlayerChoiceContext context,CardPlay play,IEnumerable<Creature> enemies)
  {
