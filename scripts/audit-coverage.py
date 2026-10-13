@@ -5,7 +5,7 @@ from pathlib import Path
 root=Path(__file__).resolve().parents[1]
 def owner(path):
     name=Path(path).name
-    if name in {'ItemAuditOracle.cs','sts2-item-audit.py','sts2-item-audit-evidence.py','item_audit_assertions.py','adversarial-items.md','adversarial-items-evidence.json'}:return 55
+    if name in {'ItemAuditOracle.cs','HeirPotionOracle.cs','sts2-item-audit.py','sts2-item-audit-evidence.py','item_audit_assertions.py','adversarial-items.md','adversarial-items-evidence.json'}:return 55
     if name in {'PoolAuditOracle.cs','CardMaterialRecovery.cs','PrismaticPoolOwnership.cs','HeirCompendiumPool.cs','sts2-pool-audit.py','sts2-pool-audit-evidence.py','adversarial-pools.md','adversarial-pools-evidence.json'}:return 54
     if name in {'CrownEarnings.cs','CrownAccounting.cs','CrownOracle.cs','CrownChecks.cs','sts2-crown-check.py','sts2-crown-evidence.py','earned-crowns.md','earned-crowns-evidence.json'}:return 60
     if name in {'PowerAuditOracle.cs','sts2-power-audit.py','sts2-power-evidence.py','adversarial-powers.md','adversarial-powers-evidence.json'}:return 53

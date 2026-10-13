@@ -20,6 +20,7 @@ send('trait-speed',value=8);clones=send('item-clones')
 if 'clones' in tag:
     assert all(c['shared']==('baseline' in tag) for c in clones),clones
     print(tag,'clone isolation probe complete',flush=True);sys.exit(0)
+assert all(not c['shared'] and not c['canonicalShared'] for c in clones),clones
 if 'antique' in tag:
     send('start',**{'class':'knight','quick':True,'traits':['antique'],'seed':'SPIRELEGACY-ITEMS-55','manorTier':0});ready()
     r=send('item-antique-empty')
@@ -63,3 +64,12 @@ elif 'edges' in tag:
     for cls in ['knight','mage','ranger']:
         send('start',**{'class':cls,'quick':True,'traits':[],'seed':'SPIRELEGACY-ITEMS-55','manorTier':0});ready()
         send('item-potion-edges');send('abandon');print(tag,cls,'belt and queue edges checked',flush=True)
+elif 'controller' in tag:
+    for cls in ['knight','mage','ranger']:
+        send('start',**{'class':cls,'quick':True,'traits':[],'seed':'SPIRELEGACY-ITEMS-55','manorTier':0});ready()
+        send('potion-clear')
+        for key in ['borrowed_breath','briar_vial','triune_draught']:send('potion-obtain',potion=key,shop=False)
+        for key in ['borrowed_breath','briar_vial','triune_draught']:
+            r=send('potion-controller-use',potion=key);potion_effect(cls,r)
+            assert r['nativeUses']==1 and (key!='briar_vial' or r['cancelPreserved']),r
+        send('abandon');print(tag,cls,'native controller callbacks checked',flush=True)
