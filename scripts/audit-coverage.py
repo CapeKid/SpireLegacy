@@ -5,6 +5,7 @@ from pathlib import Path
 root=Path(__file__).resolve().parents[1]
 def owner(path):
     name=Path(path).name
+    if name in {'PowerAuditOracle.cs','sts2-power-audit.py','sts2-power-evidence.py','adversarial-powers.md','adversarial-powers-evidence.json'}:return 53
     if name in {'CardResolutionOracle.cs','CardChoiceBoundaryOracle.cs','CardFlushOracle.cs','CardCoopOracle.cs','sts2-card-resolution-check.py','adversarial-cards.md','adversarial-cards-evidence.json','adversarial-card-plays.csv'}:return 52
     if name in {'TraitAuditOracle.cs','TraitChecks.cs','sts2-trait-audit.py','adversarial-traits.md','adversarial-traits-evidence.json','adversarial-traits-consumers.json'}:return 51
     if name in {'CoopSelectionState.cs','CoopChecks.cs','CoopAdversarialOracle.cs','CoopOracle.cs','run-coop-audit.ps1','sts2-coop-audit.py','adversarial-coop.md','adversarial-coop-evidence.json'}:return 50
