@@ -2,7 +2,7 @@
 
 Every player must install the same Spire Legacy version and BaseLib version, and use the same Slay the Spire 2 game version. The mod supports regular and public-beta, but a regular game cannot join a beta game with a different native version. Native compatibility checks remain enabled.
 
-Host or join through the game's normal co-op menu. Select The Heir and open **Family Manor & Heir Lab** to choose your class and traits and confirm manor purchases. Steam Deck uses the existing Y shortcut or D-pad navigation to the manor button, A to select, B to close, and the shoulder buttons to scroll. Finish your selection before pressing Ready. Unready before changing it.
+Host or join through the game's normal co-op menu. Select The Heir and open **Family Manor & Heir Lab** to choose your class and traits and confirm manor purchases. Steam Deck uses the existing Y shortcut or D-pad navigation to the manor button, A to select, B to close, and the shoulder buttons to scroll. Finish your selection before pressing Ready. Unready before changing it. Purchase confirmation and heir selection recheck Ready and active-run restrictions when activated; an already-open confirmation cannot spend crowns after Ready. A Manor opened in the lobby closes on embark, and browsing during a climb leaves networking running.
 
 Ready freezes each player's heir, manor bonuses, banner, motto and Chronicle relic unlocks. Everyone receives those snapshots before embark. Multiple players may choose The Heir with different classes or traits, and Heirs may play alongside native characters. Co-op always uses the native opening flow; solo's first-generation quick start does not skip a co-op room.
 
