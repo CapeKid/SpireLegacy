@@ -33,7 +33,7 @@ while True:
     assert time.monotonic()<deadline;time.sleep(.2)
 beforeGuest=send(guest,'lifecycle-state')
 if 'baseline' not in tag:assert not send(host,'manor-audit')['open'],'Lobby modal survived embark'
-send(host,'manor');state=send(host,'manor-state');assert not state['paused']
+assert send(host,'manor-run-launch')['open'];state=send(host,'manor-state');assert not state['paused']
 assert all(b['disabled'] for b in state['buttons'] if b['text'].startswith('Select upgrade'))
 send(guest,'coop-play');send(host,'manor-state')
 assert send(guest,'lifecycle-state')['profile']['crowns']==beforeGuest['profile']['crowns']

@@ -5,6 +5,11 @@ namespace SpireLegacy;
 public static class ManorAuditOracle
 {
     private static SceneTree Tree=>(SceneTree)Engine.GetMainLoop();
+    public static object LaunchRun()
+    {
+        var button=NativeTestBridge.Descendants(Tree.Root).OfType<Button>().Single(b=>b.IsVisibleInTree()&&b.Text.EndsWith(" · Family / Traits"));
+        button.EmitSignal(Button.SignalName.Pressed);return Inspect();
+    }
     public static object Duplicate(string text)
     {
         var button=NativeTestBridge.Descendants(Tree.Root).OfType<Button>().First(b=>b.IsVisibleInTree()&&!b.Disabled&&b.Text==text);

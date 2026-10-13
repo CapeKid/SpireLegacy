@@ -157,7 +157,10 @@ public static class ManorUi
         var hover=(StyleBoxFlat)normal.Duplicate(); hover.BgColor=new("3C4F70"); button.AddThemeStyleboxOverride("hover",hover);
         button.AddThemeColorOverride("font_color",new("F5F3EC"));
         button.AddThemeFontSizeOverride("font_size",24);
-        var owner=modal;
+        CanvasLayer? owner=null;
+        // A run launcher can be created while an old lobby modal is closing.
+        // Capture actual ancestry after attachment, rather than creation time.
+        button.TreeEntered += () => owner=modal is {} layer && layer.IsAncestorOf(button)?layer:null;
         button.Pressed += () => {
             // Queued input can still refer to a button from the previous page.
             if(!GodotObject.IsInstanceValid(button)||!button.IsInsideTree()||button.IsQueuedForDeletion()||button.Disabled)return;
