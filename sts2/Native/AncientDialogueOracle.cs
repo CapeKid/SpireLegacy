@@ -58,6 +58,6 @@ public static class AncientDialogueOracle
         if(advance){if(index>=dialogue.Count-1)throw new InvalidDataException("Already on final line.");hitbox.EmitSignal(NClickableControl.SignalName.Released,hitbox);index=(int)AccessTools.Field(typeof(NAncientEventLayout),"_currentDialogueLine").GetValue(layout)!;}
         return new{index,lines=dialogue.Select(l=>new{speaker=l.Speaker.ToString(),key=l.LineText!.LocEntryKey,text=l.LineText.GetFormattedText(),next=l.NextButtonText?.GetFormattedText()}).ToArray(),
             // Before the last line, native accept hotkey advances dialogue without focus.
-            focusable=index<dialogue.Count-1?hitbox.IsVisibleInTree()&&hitbox.IsEnabled&&!string.IsNullOrEmpty(hitbox.GetHotkey()):layout.DefaultFocusedControl?.FocusMode==Control.FocusModeEnum.All,options=layout.OptionButtons.Select(o=>o.Name.ToString()).ToArray()};
+            focusable=index<dialogue.Count-1?hitbox.IsVisibleInTree()&&hitbox.IsEnabled&&!string.IsNullOrEmpty(hitbox.GetHotkey()):layout.DefaultFocusedControl is NClickableControl control&&control.IsVisibleInTree()&&control.IsEnabled&&control.FocusMode==Control.FocusModeEnum.All,options=layout.OptionButtons.Select(o=>o.Name.ToString()).ToArray()};
     }
 }

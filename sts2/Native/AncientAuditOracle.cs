@@ -37,14 +37,15 @@ public static class AncientAuditOracle
     public static async Task<object> Choose(RunState run)
     {
         var model=Event(run);var option=model.CurrentOptions.First(o=>!o.IsLocked);var before=model.Owner!.Relics.Count();var deck=model.Owner.Deck.Cards.Count;
-        var choice=option.Chosen();var tree=(SceneTree)Engine.GetMainLoop();var deadline=Time.GetTicksMsec()+25000;var rewardSelections=0;
-        while(!choice.IsCompleted){
+        var tree=(SceneTree)Engine.GetMainLoop();var button=NativeTestBridge.Descendants(tree.Root).OfType<NEventOptionButton>().Single(b=>b.Option==option&&b.IsVisibleInTree());Require(button.IsEnabled,"Reward button disabled.");
+        button.EmitSignal(NClickableControl.SignalName.Released,button);var deadline=Time.GetTicksMsec()+25000;var rewardSelections=0;
+        while(!model.IsFinished){
             if(Time.GetTicksMsec()>deadline)throw new TimeoutException("Ancient reward selection.");
             var rewardScreen=NativeTestBridge.Descendants(tree.Root).OfType<NCardRewardSelectionScreen>().FirstOrDefault(n=>n.IsVisibleInTree());
             if(rewardScreen!=null){var holder=NativeTestBridge.Descendants(rewardScreen).OfType<NCardHolder>().FirstOrDefault(h=>h.CardModel!=null&&h.IsVisibleInTree());if(holder!=null){holder.EmitSignal(NCardHolder.SignalName.Pressed,holder);rewardSelections++;}}
             await tree.ToSignal(tree,SceneTree.SignalName.ProcessFrame);
         }
-        await choice;Require(option.WasChosen,"Native reward callback did not execute.");
+        Require(option.WasChosen,"Native reward callback did not execute.");
         var after=model.Owner.Relics.Count();var acquired=model.Owner.Relics.Skip(before).Select(r=>r.Id.ToString()).ToArray();
         // Native EventOption guards repeated activation of this same choice.
         await option.Chosen();Require(model.Owner.Relics.Count()==after,"Reward callback acquired twice.");
