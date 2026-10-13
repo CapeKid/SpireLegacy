@@ -78,10 +78,17 @@ public static class AncientAuditOracle
     public static async Task<object> Owners(RunState run)
     {
         var prior=PlayerBloodlines.EligibilityOwner.Value;var results=new List<object>();
-        foreach(var player in run.Players){var model=(TheArchitect)ModelDb.Event<TheArchitect>().ToMutable();await model.BeginEvent(player,false);var dialogue=(AncientDialogue)AccessTools.Field(typeof(TheArchitect),"_dialogue").GetValue(model)!;
+        foreach(var player in run.Players){var model=(TheArchitect)ModelDb.Event<TheArchitect>().ToMutable();await model.BeginEvent(player,false);var dialogue=(AncientDialogue)AccessTools.Field(typeof(TheArchitect),"_dialogue").GetValue(model)!;var ancientKeys=new List<string>();
             if(player.Character is HeirCharacter){var cls=PlayerBloodlines.Heir(player).classId;Require(dialogue.Lines.All(l=>l.LineText!.LocEntryKey.StartsWith("SPIRELEGACY.ARCHITECT."+cls+".")),"Remote ending used another heir's class.");}
             else Require(dialogue.Lines.All(l=>!l.LineText!.LocEntryKey.StartsWith("SPIRELEGACY")),"Native ending contaminated.");
-            results.Add(new{owner=player.NetId,cls=player.Character.Id.ToString(),keys=dialogue.Lines.Select(l=>l.LineText!.LocEntryKey).ToArray()});}
+            try{PlayerBloodlines.EligibilityOwner.Value=player;
+                foreach(var ancient in ModelDb.AllAncients)foreach(var visits in new[]{0,1,100}){
+                    var lines=ancient.DialogueSet.GetValidDialogues(player.Character.Id,visits,200,true).First().Lines;
+                    if(player.Character is HeirCharacter)Require(lines.All(l=>l.LineText!.LocEntryKey.StartsWith("SPIRELEGACY.ANCIENT."+ancient.Id.Entry+"."+PlayerBloodlines.Heir(player).classId+".")),"Remote Ancient selector used another heir.");
+                    else Require(lines.All(l=>!l.LineText!.LocEntryKey.StartsWith("SPIRELEGACY")),"Native Ancient selector contaminated.");ancientKeys.Add(lines[0].LineText!.LocEntryKey);
+                }
+            }finally{PlayerBloodlines.EligibilityOwner.Value=prior;}
+            results.Add(new{owner=player.NetId,cls=player.Character.Id.ToString(),keys=dialogue.Lines.Select(l=>l.LineText!.LocEntryKey).ToArray(),ancientKeys});}
         Require(PlayerBloodlines.EligibilityOwner.Value==prior,"Dialogue owner scope leaked.");return results;
     }
 }

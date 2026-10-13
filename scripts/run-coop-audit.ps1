@@ -4,9 +4,11 @@ param(
     [ValidateRange(1024,65530)][int]$Port=25001,
     [ValidateSet('all','party')][string]$Scope='all',
     [switch]$Pair,
+    [switch]$AncientChecks,
     [string]$Python='python'
 )
 $ErrorActionPreference='Stop'
+if($AncientChecks -and !$Pair){throw 'Ancient checks require the pair launcher.'}
 if($Tag -notmatch '^[A-Za-z0-9_-]+$'){throw 'Plain evidence tag required'}
 $repo=Split-Path $PSScriptRoot -Parent
 $private=(Resolve-Path (Join-Path $repo 'private')).Path
@@ -30,7 +32,7 @@ try {
         $clients+=Start-Process $image -WorkingDirectory $lab -ArgumentList '--force-steam=off --rendering-method gl_compatibility --rendering-driver opengl3 --position -2000,-2000' -WindowStyle Hidden -PassThru -RedirectStandardOutput (Join-Path $profile 'launch.log') -RedirectStandardError (Join-Path $profile 'errors.log')
         $profiles+=$profile;$images+=$image
     }
-    if($Pair){& $Python (Join-Path $PSScriptRoot 'sts2-harness-native-check.py') coop $profiles[0] $profiles[1] $Tag $Port}
+    if($Pair){$pairDriver=if($AncientChecks){'sts2-ancient-coop.py'}else{'sts2-harness-native-check.py'};& $Python (Join-Path $PSScriptRoot $pairDriver) coop $profiles[0] $profiles[1] $Tag $Port}
     else {& $Python (Join-Path $PSScriptRoot 'sts2-coop-audit.py') $Tag $Port @profiles $Scope}
     if($LASTEXITCODE -ne 0){throw 'Co-op audit driver failed'}
 } finally {
