@@ -1,0 +1,431 @@
+{
+  "issue": 52,
+  "baselineSource": "995842a",
+  "productionCardChanges": false,
+  "coreAssertions": 124044,
+  "harnessChecks": 20,
+  "preflight": {
+    "sheets": 32,
+    "rows": 2062,
+    "cells": 26477
+  },
+  "branches": [
+    {
+      "branch": "regular",
+      "game": "v0.107.1",
+      "baseLib": "3.4.7",
+      "mod": "1.0.29",
+      "stages": [
+        {
+          "file": "card-resolution-cards52-regular-catalog.json",
+          "replies": 4294,
+          "sourceCheckpoints": [
+            "ed5b28a9f69f05166efba570502a7d73f2e1f137"
+          ],
+          "dllSha256": "c4b1c8095a384b88e159247c206810bd729e17a0ff21a5d694a8bc5b35cb307c",
+          "commands": {
+            "trait-speed": 1,
+            "start": 3,
+            "state": 2577,
+            "enter": 856,
+            "card-resolution": 856,
+            "abandon": 1
+          },
+          "seeds": [
+            "SPIRELEGACY-CARDS-52"
+          ],
+          "platforms": [
+            "Microsoft Windows 10.0.26300"
+          ],
+          "distinctPaidForms": 856,
+          "registeredCards": 360,
+          "allClasses": true,
+          "sharedOwnerVariants": true
+        },
+        {
+          "file": "card-resolution-cards52-regular-extras.json",
+          "replies": 774,
+          "sourceCheckpoints": [
+            "ed5b28a9f69f05166efba570502a7d73f2e1f137"
+          ],
+          "dllSha256": "c4b1c8095a384b88e159247c206810bd729e17a0ff21a5d694a8bc5b35cb307c",
+          "commands": {
+            "trait-speed": 1,
+            "start": 87,
+            "state": 465,
+            "nimble-eligibility": 1,
+            "nimble-play": 18,
+            "card-flush": 64,
+            "enter": 69,
+            "card-flush-next": 64,
+            "card-resolution": 4,
+            "abandon": 1
+          },
+          "seeds": [
+            "SPIRELEGACY-CARDS-52"
+          ],
+          "platforms": [
+            "Microsoft Windows 10.0.26300"
+          ],
+          "nimbleEligibility": 720,
+          "paidNimbleForms": 18,
+          "flushForms": 64,
+          "nextCombatResets": 64,
+          "noTargetAutoplay": 4
+        },
+        {
+          "file": "card-resolution-cards52-regular-edges-model-final.json",
+          "replies": 1851,
+          "sourceCheckpoints": [
+            "4830a748d172cd13055a8aad70e2c4c49edac672"
+          ],
+          "dllSha256": "c6cb638573ac7a6ee78105eba84aea3a77aecd6a4dcae570d662a1a72694ea7a",
+          "commands": {
+            "trait-speed": 1,
+            "start": 70,
+            "state": 1151,
+            "enter": 314,
+            "card-resolution": 314,
+            "abandon": 1
+          },
+          "seeds": [
+            "SPIRELEGACY-CARDS-52"
+          ],
+          "platforms": [
+            "Microsoft Windows 10.0.26300"
+          ],
+          "effectFamilies": 28,
+          "edgePlays": 314,
+          "modes": {
+            "empty": 56,
+            "full": 56,
+            "discount": 56,
+            "save-copy": 56,
+            "dupe": 56,
+            "replay": 8,
+            "invalid": 8,
+            "lethal": 10,
+            "self-death": 8
+          }
+        },
+        {
+          "file": "card-resolution-cards52-regular-choices-queued.json",
+          "replies": 318,
+          "sourceCheckpoints": [
+            "a05b0a453dfa565cd4a48f658a79f79045eb01e1"
+          ],
+          "dllSha256": "0dfd34a9ebc8bdeac1d4d9bd5fffadef2e11b62250e45798b0235aadefa57d99",
+          "commands": {
+            "trait-speed": 1,
+            "start": 32,
+            "state": 186,
+            "card-choice-boundary": 32,
+            "resume": 32,
+            "card-deck-identity": 32,
+            "enter": 2,
+            "abandon": 1
+          },
+          "seeds": [
+            "SPIRELEGACY-CARDS-52"
+          ],
+          "platforms": [
+            "Microsoft Windows 10.0.26300"
+          ],
+          "heldChoiceSaves": 32,
+          "queuedCards": 32,
+          "nativeResumes": 32
+        },
+        {
+          "file": "harness-cards52-owner-regular-coop.json",
+          "replies": 105,
+          "sourceCheckpoints": [
+            "a05b0a453dfa565cd4a48f658a79f79045eb01e1"
+          ],
+          "dllSha256": "0dfd34a9ebc8bdeac1d4d9bd5fffadef2e11b62250e45798b0235aadefa57d99",
+          "commands": {
+            "coop-host": 1,
+            "coop-ready": 2,
+            "coop-join": 1,
+            "coop-state": 56,
+            "coop-roundtrip": 4,
+            "harness-owner-diagnostic": 1,
+            "coop-vote": 2,
+            "card-coop-prepare": 8,
+            "card-coop-play": 8,
+            "coop-play": 2,
+            "lifecycle-owners": 2,
+            "lifecycle-state": 17,
+            "coop-abandon": 1
+          },
+          "seeds": [
+            "SHB9R5FVKT"
+          ],
+          "platforms": [
+            "Microsoft Windows 10.0.26300"
+          ],
+          "owners": 2,
+          "sharedPaidCards": 8,
+          "nativeBurstReplay": true
+        },
+        {
+          "file": "card-resolution-cards52-regular-controls.json",
+          "replies": 421,
+          "sourceCheckpoints": [
+            "4830a748d172cd13055a8aad70e2c4c49edac672"
+          ],
+          "dllSha256": "c6cb638573ac7a6ee78105eba84aea3a77aecd6a4dcae570d662a1a72694ea7a",
+          "commands": {
+            "trait-speed": 1,
+            "start": 42,
+            "enter": 84,
+            "state": 251,
+            "card-resolution": 42,
+            "abandon": 1
+          },
+          "seeds": [
+            "SPIRELEGACY-CARDS-52"
+          ],
+          "platforms": [
+            "Microsoft Windows 10.0.26300"
+          ],
+          "nativeControlPlays": 42
+        },
+        {
+          "file": "card-resolution-cards52-regular-zero-replay.json",
+          "replies": 76,
+          "sourceCheckpoints": [
+            "4830a748d172cd13055a8aad70e2c4c49edac672"
+          ],
+          "dllSha256": "c6cb638573ac7a6ee78105eba84aea3a77aecd6a4dcae570d662a1a72694ea7a",
+          "commands": {
+            "trait-speed": 1,
+            "start": 8,
+            "state": 48,
+            "enter": 10,
+            "card-resolution": 8,
+            "abandon": 1
+          },
+          "seeds": [
+            "SPIRELEGACY-CARDS-52"
+          ],
+          "platforms": [
+            "Microsoft Windows 10.0.26300"
+          ],
+          "terminalAreaReplays": 8
+        }
+      ]
+    },
+    {
+      "branch": "beta",
+      "game": "v0.111.0",
+      "baseLib": "3.4.7",
+      "mod": "1.0.29",
+      "stages": [
+        {
+          "file": "card-resolution-cards52-beta-catalog.json",
+          "replies": 4294,
+          "sourceCheckpoints": [
+            "ed5b28a9f69f05166efba570502a7d73f2e1f137"
+          ],
+          "dllSha256": "c4b1c8095a384b88e159247c206810bd729e17a0ff21a5d694a8bc5b35cb307c",
+          "commands": {
+            "trait-speed": 1,
+            "start": 3,
+            "state": 2577,
+            "enter": 856,
+            "card-resolution": 856,
+            "abandon": 1
+          },
+          "seeds": [
+            "SPIRELEGACY-CARDS-52"
+          ],
+          "platforms": [
+            "Microsoft Windows 10.0.26300"
+          ],
+          "distinctPaidForms": 856,
+          "registeredCards": 360,
+          "allClasses": true,
+          "sharedOwnerVariants": true
+        },
+        {
+          "file": "card-resolution-cards52-beta-extras.json",
+          "replies": 775,
+          "sourceCheckpoints": [
+            "ed5b28a9f69f05166efba570502a7d73f2e1f137"
+          ],
+          "dllSha256": "c4b1c8095a384b88e159247c206810bd729e17a0ff21a5d694a8bc5b35cb307c",
+          "commands": {
+            "trait-speed": 1,
+            "start": 87,
+            "state": 466,
+            "nimble-eligibility": 1,
+            "nimble-play": 18,
+            "card-flush": 64,
+            "enter": 69,
+            "card-flush-next": 64,
+            "card-resolution": 4,
+            "abandon": 1
+          },
+          "seeds": [
+            "SPIRELEGACY-CARDS-52"
+          ],
+          "platforms": [
+            "Microsoft Windows 10.0.26300"
+          ],
+          "nimbleEligibility": 720,
+          "paidNimbleForms": 18,
+          "flushForms": 64,
+          "nextCombatResets": 64,
+          "noTargetAutoplay": 4
+        },
+        {
+          "file": "card-resolution-cards52-beta-edges-model-final.json",
+          "replies": 1852,
+          "sourceCheckpoints": [
+            "4830a748d172cd13055a8aad70e2c4c49edac672"
+          ],
+          "dllSha256": "c6cb638573ac7a6ee78105eba84aea3a77aecd6a4dcae570d662a1a72694ea7a",
+          "commands": {
+            "trait-speed": 1,
+            "start": 70,
+            "state": 1152,
+            "enter": 314,
+            "card-resolution": 314,
+            "abandon": 1
+          },
+          "seeds": [
+            "SPIRELEGACY-CARDS-52"
+          ],
+          "platforms": [
+            "Microsoft Windows 10.0.26300"
+          ],
+          "effectFamilies": 28,
+          "edgePlays": 314,
+          "modes": {
+            "empty": 56,
+            "full": 56,
+            "discount": 56,
+            "save-copy": 56,
+            "dupe": 56,
+            "replay": 8,
+            "invalid": 8,
+            "lethal": 10,
+            "self-death": 8
+          }
+        },
+        {
+          "file": "card-resolution-cards52-beta-choices-queued.json",
+          "replies": 319,
+          "sourceCheckpoints": [
+            "a05b0a453dfa565cd4a48f658a79f79045eb01e1"
+          ],
+          "dllSha256": "0dfd34a9ebc8bdeac1d4d9bd5fffadef2e11b62250e45798b0235aadefa57d99",
+          "commands": {
+            "trait-speed": 1,
+            "start": 32,
+            "state": 187,
+            "card-choice-boundary": 32,
+            "resume": 32,
+            "card-deck-identity": 32,
+            "enter": 2,
+            "abandon": 1
+          },
+          "seeds": [
+            "SPIRELEGACY-CARDS-52"
+          ],
+          "platforms": [
+            "Microsoft Windows 10.0.26300"
+          ],
+          "heldChoiceSaves": 32,
+          "queuedCards": 32,
+          "nativeResumes": 32
+        },
+        {
+          "file": "harness-cards52-owner-beta-coop.json",
+          "replies": 94,
+          "sourceCheckpoints": [
+            "a05b0a453dfa565cd4a48f658a79f79045eb01e1"
+          ],
+          "dllSha256": "0dfd34a9ebc8bdeac1d4d9bd5fffadef2e11b62250e45798b0235aadefa57d99",
+          "commands": {
+            "coop-host": 1,
+            "coop-ready": 2,
+            "coop-join": 1,
+            "coop-state": 56,
+            "coop-roundtrip": 4,
+            "harness-owner-diagnostic": 1,
+            "coop-vote": 2,
+            "card-coop-prepare": 8,
+            "card-coop-play": 8,
+            "coop-play": 2,
+            "lifecycle-owners": 2,
+            "lifecycle-state": 6,
+            "coop-abandon": 1
+          },
+          "seeds": [
+            "U3K0V9VGXYJA"
+          ],
+          "platforms": [
+            "Microsoft Windows 10.0.26300"
+          ],
+          "owners": 2,
+          "sharedPaidCards": 8,
+          "nativeBurstReplay": true
+        },
+        {
+          "file": "card-resolution-cards52-beta-controls.json",
+          "replies": 422,
+          "sourceCheckpoints": [
+            "4830a748d172cd13055a8aad70e2c4c49edac672"
+          ],
+          "dllSha256": "c6cb638573ac7a6ee78105eba84aea3a77aecd6a4dcae570d662a1a72694ea7a",
+          "commands": {
+            "trait-speed": 1,
+            "start": 42,
+            "enter": 84,
+            "state": 252,
+            "card-resolution": 42,
+            "abandon": 1
+          },
+          "seeds": [
+            "SPIRELEGACY-CARDS-52"
+          ],
+          "platforms": [
+            "Microsoft Windows 10.0.26300"
+          ],
+          "nativeControlPlays": 42
+        },
+        {
+          "file": "card-resolution-cards52-beta-zero-replay.json",
+          "replies": 76,
+          "sourceCheckpoints": [
+            "4830a748d172cd13055a8aad70e2c4c49edac672"
+          ],
+          "dllSha256": "c6cb638573ac7a6ee78105eba84aea3a77aecd6a4dcae570d662a1a72694ea7a",
+          "commands": {
+            "trait-speed": 1,
+            "start": 8,
+            "state": 48,
+            "enter": 10,
+            "card-resolution": 8,
+            "abandon": 1
+          },
+          "seeds": [
+            "SPIRELEGACY-CARDS-52"
+          ],
+          "platforms": [
+            "Microsoft Windows 10.0.26300"
+          ],
+          "terminalAreaReplays": 8
+        }
+      ]
+    }
+  ],
+  "binaryNote": "Catalogue/extras: c4b1c8095a384b88e159247c206810bd729e17a0ff21a5d694a8bc5b35cb307c. Queued choices/co-op: 0dfd34a9ebc8bdeac1d4d9bd5fffadef2e11b62250e45798b0235aadefa57d99. Final mod edges/native controls/terminal replays: c6cb638573ac7a6ee78105eba84aea3a77aecd6a4dcae570d662a1a72694ea7a. Later binaries change only opt-in diagnostics. Production card/core/runtime effect files remain identical to baseline main; none of these binaries is published.",
+  "knownDeferrals": [
+    "native beta NCard pool/WorkerThreadPool diagnostics, cause unestablished (#110/#58)",
+    "physical Deck/Linux and real transport/input",
+    "full campaigns and every power/relic/trait combination (#53/#55/#60)",
+    "native unsupported task cancellation"
+  ]
+}
