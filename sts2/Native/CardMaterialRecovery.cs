@@ -8,7 +8,7 @@ namespace SpireLegacy;
 // Native card widgets survive scene transitions in NodePool. AssetCache disposes
 // their unseen/locked portrait materials, but Reload only checks for null.
 // Let native Reload reacquire invalid materials through its own asset cache.
-[HarmonyPatch(typeof(NCard),nameof(NCard.Reload))]
+[HarmonyPatch(typeof(NCard),"Reload")]
 public static class CardMaterialRecovery
 {
     private static readonly FieldInfo[] Materials=new[]{"_portraitBlurMaterial","_canvasGroupMaskBlurMaterial","_canvasGroupBlurMaterial","_canvasGroupMaskMaterial"}
