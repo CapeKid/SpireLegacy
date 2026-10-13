@@ -18,6 +18,7 @@ public static class CrownOracle
         var player=PlayerBloodlines.LocalPlayer!;var earned=CrownAccounting.Earned(state,player);
         return new{floor=state.TotalFloor,gold=player.Gold,earnedFloors=earned.floors,earnedGold=earned.gold,
             finished=state.CurrentRoom?.IsPreFinished,dead=!player.Creature.IsAlive,abandoned=RunManager.Instance.IsAbandoned,
+            manualPlays=MegaCrit.Sts2.Core.Combat.CombatManager.Instance.History.CardPlaysFinished.Count(e=>e.CardPlay.Card.Owner==player&&!e.CardPlay.IsAutoPlay),
             history=state.MapPointHistory.SelectMany(a=>a).Select(p=>new{type=p.MapPointType.ToString(),rooms=p.Rooms.Select(r=>r.RoomType.ToString()),stats=p.PlayerStats.Select(s=>new{s.PlayerId,s.GoldGained,s.GoldSpent,s.GoldLost,s.GoldStolen})}),bank=Runtime.Profile.crowns};
     }
     public static async Task<object> Play(RunState state,bool upgrade,bool win)

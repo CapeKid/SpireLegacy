@@ -25,6 +25,30 @@ def settled(expected,bank,generation):
         time.sleep(.1)
     raise TimeoutError('Native settlement')
 send('trait-speed',value=8)
+if 'campaign' in tag:
+    for cls in ['knight','mage','ranger']:
+        send('start',**{'class':cls,'quick':False,'traits':[],'seed':'SPIRELEGACY-CROWNS-105','manorTier':0})
+        before=send('lifecycle-state')['profile'];ended=False
+        for step in range(200):
+            result=send('balance-campaign-step',policy='tactical',rewardPolicy='defensive')
+            action=result['action'];s=result['state']
+            assert not action.startswith('unsupported') and action not in ['play-cap','turn-cap'],result
+            if action=='finished':ended=True;break
+            if s['floor']>=6:break
+            time.sleep(.1)
+        else:raise TimeoutError('Bounded normal campaign comparison')
+        p=send('crown-state');stats=[s for h in p['history'] for s in h['stats']]
+        completed=p['history'] if p['finished'] else p['history'][:-1]
+        combat=any(any(r in ['Monster','Elite','Boss'] for r in h['rooms']) for h in completed)
+        participation=p['dead'] and p['manualPlays']>0 and not p['abandoned']
+        points=sum(h['type'] not in ['Ancient','Unassigned'] for h in completed)+(1 if participation else 0)
+        gold=min(p['gold'],max(0,sum(s['GoldGained'] for s in stats)-sum(s['GoldSpent']+s['GoldLost'] for s in stats)-max(0,sum(s['GoldStolen'] for s in stats))))
+        if not combat and not participation:points=gold=0
+        assert (p['earnedFloors'],p['earnedGold'])==(points,gold),p
+        if not ended:send('abandon')
+        settled(points*2+gold//25,before['crowns'],before['generation'])
+        print(tag,cls,'natural map comparison',p['floor'],points,gold,'pass',flush=True)
+    sys.exit(0)
 for cls in ['knight','mage','ranger']:
     for quick in [False,True]:
         send('start',**{'class':cls,'quick':quick,'traits':[],'seed':'SPIRELEGACY-CROWNS-105','manorTier':0})
