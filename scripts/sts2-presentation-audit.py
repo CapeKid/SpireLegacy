@@ -12,7 +12,9 @@ def ready():
     deadline=time.monotonic()+45
     while send('state')['phase']!='Play':
         assert time.monotonic()<deadline;time.sleep(.15)
+trait_ids={r['id'] for r in json.loads((root/'sheets/traits.json').read_text())}
 def start(cls,traits=[]):
+    assert set(traits)<=trait_ids
     send('start',**{'class':cls,'traits':traits,'quick':True,'seed':'SPIRELEGACY-PRESENTATION-58'});ready()
 def shot(name):
     p=send('screenshot')['path'];shutil.copyfile(p,root/'private/sts2-evidence'/f'presentation58-{tag}-{name}.png')
@@ -34,7 +36,7 @@ if not baseline:
     negative=send('presentation-texture-failures');assert negative['disposed'] and negative['reloaded'] and len(negative['errors'])==3
     trend=[]
     for cycle in range(3):
-        for cls,traits in [('knight',['small','nocolor']),('mage',['big','colortrails']),('ranger',['youareblue','disposition'])]:
+        for cls,traits in [('knight',['small','nocolor']),('mage',['large','colortrails']),('ranger',['youareblue','disposition'])]:
             start(cls,traits);v=send('visual');assert len(v)==1 and v[0]['classId']==cls and v[0]['visible']
             if cycle==0:
                 for upgrade in [False,True]:
