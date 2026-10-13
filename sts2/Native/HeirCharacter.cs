@@ -70,7 +70,7 @@ public sealed class HeirRelicPool : RelicPoolModel,ICustomEnergyIconPool
     public override string EnergyColorName=>BaseLib.Patches.UI.CustomEnergyIconPatches.GetEnergyColorName(Id);
     public string BigEnergyIconPath=>HeirPresentation.TexturePath(HeirPresentation.ClassId+"-energy-icon");
     public string TextEnergyIconPath=>HeirPresentation.TexturePath(HeirPresentation.ClassId+"-energy-text");
-    protected override RelicModel[] GenerateAllRelics() => [ModelDb.Relic<BloodlineRelic>(),..HeirDropRelics.All];
+    protected override RelicModel[] GenerateAllRelics() => [ModelDb.Relic<BloodlineRelic>(),ModelDb.Relic<RefinedBloodlineRelic>(),..HeirDropRelics.All];
     public override IEnumerable<RelicModel> GetUnlockedRelics(MegaCrit.Sts2.Core.Unlocks.UnlockState unlockState)=>AllRelics.Where(r=>r is not FamilyDropRelic relic||(PlayerBloodlines.EligibilityOwner.Value is {} player ? PlayerBloodlines.Eligible(player,relic.Key) : FamilyChronicle.RelicAvailable(Runtime.Profile,relic.Key)));
 }
 public static class NativeCards
