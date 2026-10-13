@@ -29,6 +29,7 @@ public static class PoolAuditOracle
         Require(pools.Select(p=>p.Id).Distinct().Count()==pools.Length,"Duplicate pool ID.");
         var historical=Design.Rows("cards").Select(r=>NativeCards.Get(r.Text("id"))).ToArray();
         Require(historical.All(c=>!c.IsMutable&&cards.Single(m=>m.Id==c.Id)==c&&ModelDb.GetById<CardModel>(c.Id)==c),"Historical lookup/canonical identity changed.");
+        Require(historical.Cast<LegacyCard>().All(c=>!c.IsUpgraded&&c.TraitSnapshot.Length==0&&c.RetainedGrowth==0&&c.DiscardRewardTurn==-1&&c.DynamicVars.Damage.BaseValue==new CardDesign(c.Key).Damage&&c.DynamicVars.Block.BaseValue==new CardDesign(c.Key).Block),"A historical canonical inherited mutable stats or run state.");
         Require(pools.Where(p=>p is not FamilyCardPool).All(p=>p.AllCards.All(c=>c is not LegacyCard)),"Heir cards contaminated a native pool.");
         var detail=pools.OfType<FamilyCardPool>().Select(p=>new{pool=p.Id.ToString(),cards=p.AllCards.Cast<LegacyCard>().Select(c=>new{key=c.Key,rarity=c.Rarity.ToString(),mutable=c.IsMutable}).ToArray()}).ToArray();
         Require(detail.All(p=>p.cards.All(c=>!c.mutable)),"Mutable pool canonical.");
