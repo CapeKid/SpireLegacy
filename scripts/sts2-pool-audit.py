@@ -43,6 +43,8 @@ for cls in ['knight','mage','ranger','ironclad']:
     send('start',**{'class':cls,'quick':True,'traits':[],'seed':'SPIRELEGACY-POOLS-54','manorTier':0})
     if cls=='ironclad':send('enter',room='Monster')
     ready()
+    if 'eggs' in tag:
+        assert len(send('pool-audit-eggs'))==7;send('pool-audit-registry');send('abandon');print(tag,cls,'native egg reward/shop modifiers pass',flush=True);continue
     if 'crossrun' in tag:
         send('abandon')
         source=root/'private/sts2-evidence'/f'pool54-{"regular" if beta else "beta"}-{cls}-run.json'

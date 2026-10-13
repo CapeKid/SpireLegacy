@@ -280,6 +280,7 @@ public static class NativeTestBridge
                 case "pool-audit-import-run":result=await PoolAuditOracle.ImportRun();break;
                 case "pool-audit-owner":result=PoolAuditOracle.Owner(RunState());break;
                 case "pool-audit-modifiers":result=PoolAuditOracle.Modifiers(RunState());break;
+                case "pool-audit-eggs":result=PoolAuditOracle.Eggs(RunState());break;
                 case "pool-audit-sparse":result=PoolAuditOracle.Sparse(RunState());break;
                 case "pool-audit-history":result=PoolAuditOracle.Historical(RunState(),request.TryGetProperty("import",out var poolImport)&&poolImport.GetBoolean());break;
                 case "pool-audit-library":

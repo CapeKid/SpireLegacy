@@ -143,6 +143,25 @@ public static class PoolAuditOracle
         }
         return results;
     }
+    public static object Eggs(RunState run)
+    {
+        var player=run.Players.Single();var eggs=new RelicModel[]{ModelDb.Relic<MegaCrit.Sts2.Core.Models.Relics.MoltenEgg>().ToMutable(),ModelDb.Relic<MegaCrit.Sts2.Core.Models.Relics.ToxicEgg>().ToMutable(),ModelDb.Relic<MegaCrit.Sts2.Core.Models.Relics.FrozenEgg>().ToMutable()};
+        var results=new List<object>();foreach(var egg in eggs)player.AddRelicInternal(egg,silent:true);
+        try
+        {
+            foreach(var room in new[]{RoomType.Monster,RoomType.Elite,RoomType.Boss})foreach(var bypass in new[]{false,true})
+            {
+                var flags=CardCreationFlags.NoUpgradeRoll|(bypass?CardCreationFlags.NoHookUpgrades:0);
+                var reward=new CardReward(CardCreationOptions.ForRoom(player,room).WithFlags(flags),6,player);reward.Populate();var cards=reward.Cards.ToArray();
+                Require(cards.Length==6&&cards.Select(c=>c.Id).Distinct().Count()==6&&cards.All(c=>c.Owner==player&&c.IsUpgraded==!bypass),"Egg reward upgrades/bypass failed.");
+                results.Add(new{room=room.ToString(),bypass,cards=cards.Select(c=>new{id=c.Id.ToString(),upgraded=c.IsUpgraded,type=c.Type.ToString()}).ToArray()});foreach(var card in cards)run.RemoveCard(card);
+            }
+            var shop=MerchantInventory.CreateForNormalMerchant(player);Require(shop.CharacterCardEntries.All(e=>e.CreationResult!.Card.IsUpgraded),"Egg shop upgrades failed.");
+            results.Add(new{shop=true,cards=shop.CharacterCardEntries.Select(e=>new{id=e.CreationResult!.Card.Id.ToString(),upgraded=e.CreationResult.Card.IsUpgraded}).ToArray()});foreach(var entry in shop.CardEntries)run.RemoveCard(entry.CreationResult!.Card);
+            return results;
+        }
+        finally {foreach(var egg in eggs)player.RemoveRelicInternal(egg,silent:true);}
+    }
     public static async Task<object> Library(RunState? run,bool heir)
     {
         var tree=(SceneTree)Engine.GetMainLoop();MegaCrit.Sts2.Core.Nodes.Screens.MainMenu.NSubmenuStack stack=run==null?MegaCrit.Sts2.Core.Nodes.NGame.Instance!.MainMenu!.SubmenuStack:MegaCrit.Sts2.Core.Nodes.NRun.Instance!.GlobalUi.SubmenuStack.Stack;
