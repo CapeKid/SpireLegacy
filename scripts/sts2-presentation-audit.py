@@ -19,6 +19,17 @@ def start(cls,traits=[]):
 def shot(name):
     p=send('screenshot')['path'];shutil.copyfile(p,root/'private/sts2-evidence'/f'presentation58-{tag}-{name}.png')
 if not baseline:send('manor-resize',width=1280,height=800)
+send('presentation-prepare')
+if 'cleanup' in tag:
+    for cls in ['knight','mage','ranger']:
+        r=send('presentation-motion',**{'class':cls});assert r['moving'] and r['secondMove']
+        for room in ['RestSite','Shop']:
+            start(cls);send('enter',room=room);time.sleep(.3);send('abandon');time.sleep(1)
+            ending=send('ending-visual');assert len(ending)==1 and not ending[0]['sprites'][0]['placeholderVisible']
+    time.sleep(.3)
+    errors=(profile/'errors.log').read_text(errors='replace')
+    assert 'disconnect a nonexistent connection' not in errors and 'NCombatRulesFtue.Start' not in errors
+    print(tag,'live reparenting and all-class room-ending cleanup passed',flush=True);raise SystemExit(0)
 for cls in ['knight'] if baseline else ['knight','mage','ranger']:
     start(cls);send('presentation-crab');ready()
     for upgraded in [False,True]:

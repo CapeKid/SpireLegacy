@@ -163,9 +163,13 @@ public partial class HeirRoomMotion:Node2D
 {
     private HeirSprite sprite=null!;private bool rest;private double clock;
     public static void Attach(Node2D parent,HeirSprite sprite,bool rest) {
-        var motion=new HeirRoomMotion{Name="HeirRoomMotion",sprite=sprite,rest=rest};parent.AddChild(motion);
+        var motion=new HeirRoomMotion{Name="HeirRoomMotion",sprite=sprite,rest=rest};
         // External mod classes are not imported Godot scripts. Use a native signal callback.
-        var tree=(SceneTree)Engine.GetMainLoop();tree.ProcessFrame+=motion.Update;motion.TreeExiting+=()=>tree.ProcessFrame-=motion.Update;
+        var tree=(SceneTree)Engine.GetMainLoop();var callback=Callable.From(motion.Update);
+        // Native game-over relayers room visuals before eventually freeing them.
+        motion.TreeEntered+=()=>{if(!tree.IsConnected(SceneTree.SignalName.ProcessFrame,callback))tree.Connect(SceneTree.SignalName.ProcessFrame,callback);};
+        motion.TreeExiting+=()=>{if(tree.IsConnected(SceneTree.SignalName.ProcessFrame,callback))tree.Disconnect(SceneTree.SignalName.ProcessFrame,callback);};
+        parent.AddChild(motion);
     }
     private void Update()
     {

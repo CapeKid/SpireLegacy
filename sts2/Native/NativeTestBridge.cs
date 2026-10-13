@@ -310,6 +310,8 @@ public static class NativeTestBridge
                     result=new{expanded=NativePoolParity.Expanded,ids=available.Select(c=>c.Key).ToArray(),compendium=available.All(c=>ModelDb.AllCards.Any(m=>m.Id==c.Id))};break;
                 case "visual": result = HeirVisuals.Diagnostic(); break;
                 case "presentation-resources":result=PresentationAuditOracle.Resources();break;
+                case "presentation-prepare":result=PresentationAuditOracle.Prepare();break;
+                case "presentation-motion":result=await PresentationAuditOracle.Motion(request.GetProperty("class").GetString()!);break;
                 case "presentation-shop":result=await PresentationAuditOracle.Shop(RunState());break;
                 case "presentation-room-facing":result=PresentationAuditOracle.RoomFacing();break;
                 case "presentation-texture-failures":result=PresentationAuditOracle.TextureFailures();break;

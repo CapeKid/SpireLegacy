@@ -15,6 +15,23 @@ namespace SpireLegacy;
 public static class PresentationAuditOracle
 {
     private static SceneTree Tree=>(SceneTree)Engine.GetMainLoop();
+    public static object Prepare()
+    {
+        foreach(var key in new[]{"accept_tutorials_ftue","map_select_ftue","combat_rules_ftue","shuffle_ftue","multiplayer_ftue"})MegaCrit.Sts2.Core.Saves.SaveManager.Instance.MarkFtueAsComplete(key);
+        return new {privateTutorialsComplete=true};
+    }
+    public static async Task<object> Motion(string cls)
+    {
+        var source=new Node2D();var destination=new Node2D();var visual=new Node2D();var sprite=HeirSprite.Create(cls,1);
+        Tree.Root.AddChild(source);Tree.Root.AddChild(destination);source.AddChild(visual);visual.AddChild(sprite);HeirRoomMotion.Attach(visual,sprite,false);
+        try {
+            await Task.Delay(450);var before=sprite.Position;
+            source.RemoveChild(visual);destination.AddChild(visual);await Task.Delay(450);
+            var after=sprite.Position;var moving=before!=after;
+            destination.RemoveChild(visual);source.AddChild(visual);await Task.Delay(450);var again=sprite.Position;
+            return new {cls,before=before.ToString(),after=after.ToString(),again=again.ToString(),moving,secondMove=again!=after};
+        }finally {source.QueueFree();destination.QueueFree();}
+    }
     public static object Resources()=>new {nodes=(long)Performance.GetMonitor(Performance.Monitor.ObjectNodeCount),resources=(long)Performance.GetMonitor(Performance.Monitor.ObjectResourceCount),orphans=(long)Performance.GetMonitor(Performance.Monitor.ObjectOrphanNodeCount),memory=System.Diagnostics.Process.GetCurrentProcess().PrivateMemorySize64,nativeMemory=(long)Performance.GetMonitor(Performance.Monitor.MemoryStatic),frameSeconds=Performance.GetMonitor(Performance.Monitor.TimeProcess),sprites=NativeTestBridge.Descendants(Tree.Root).OfType<HeirSprite>().Count(),audio=NativeTestBridge.Descendants(Tree.Root).OfType<AudioStreamPlayer>().Count(a=>a.HasMeta("spirelegacy_sound")),nativeAudio=NativeTestBridge.Descendants(Tree.Root).OfType<AudioStreamPlayer>().Count(a=>!a.HasMeta("spirelegacy_sound")),trails=NativeTestBridge.Descendants(Tree.Root).OfType<NCardTrailVfx>().Count(),textureSlots=((System.Collections.IDictionary)AccessTools.Field(typeof(Runtime),"Textures").GetValue(null)!).Count};
     public static async Task<object> Shop(RunState run)
     {
