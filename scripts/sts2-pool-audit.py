@@ -54,6 +54,8 @@ for cls in ['knight','mage','ranger','ironclad']:
             saved=send('pool-audit-history');assert len(saved['checks'])==720
             shutil.copy2(profile/'pool-cards.json',root/'private/sts2-evidence'/f'pool54-{"beta" if beta else "regular"}-{cls}-cards.json')
     result=send('pool-audit-owner');assert len(result)==1
+    modifiers=send('pool-audit-modifiers')
+    if cls!='ironclad':assert modifiers[0]['ownerPoolOnly'],modifiers
     if cls!='ironclad':
         design={r['id']:r for r in json.loads((root/'sheets/cards.json').read_text())}
         assert set(result[0]['allowed'])=={r['cardId'] for r in membership if r['classId']==cls and design[r['cardId']]['rarity'] in ['COMMON','UNCOMMON','RARE']},result
