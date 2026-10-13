@@ -10,3 +10,7 @@ scripts/melty-read.ps1
 sts2/**/bin/
 sts2/**/obj/
 sts2/.godot/
+
+# Local working journal and generated audit inventory.
+/MODLOG.md
+/docs/adversarial-audit-coverage.json
