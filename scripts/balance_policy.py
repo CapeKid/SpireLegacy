@@ -48,6 +48,6 @@ def balance_manor(row):
 
 def class_rules(row):
     if row['id'] == 'knight':
-        row['summary'] = 'Playing a Skill primes your next Attack for +2 damage on its first hit to each enemy. Attacking consumes the counter.'
+        row['summary'] = 'Playing a Skill primes your next Attack for +2 damage on every hit. Attacking consumes the counter.'
     if row['id'] == 'mage':
-        row['summary'] = 'Each Skill grants one charge, up to two. Your next Attack gains +1 damage per charge on its first hit to each enemy and consumes them.'
+        row['summary'] = 'Each Skill grants one charge, up to two. Your next Attack gains +1 damage per charge on every hit and consumes them.'

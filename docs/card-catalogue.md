@@ -111,7 +111,7 @@ Each class has 82 rewards on regular (20 common, 36 uncommon, 26 rare), or 85 on
 | Spell Surge | Rare | Power | 1 | Class unique; 2 Strength |
 | Nova | Rare | Attack | 3 | Class unique; 27 damage; Exhaust |
 | Meditate | Rare | Skill | 0 | Shared family card; 1 draw; 1 Energy; Exhaust |
-| Arcane Reservoir | Uncommon | Power | 1 | Class unique; Each Arcane Charge adds 1 extra damage on the first hit to each enemy. |
+| Arcane Reservoir | Uncommon | Power | 1 | Class unique; Each Arcane Charge adds 1 extra damage to every hit of your next Attack. |
 | Brave Advance | Common | Attack | 1 | Shared family card; 5 damage; 1 Energy next turn |
 | Long Reach | Common | Attack | 1 | Shared family card; 4 damage; 1 draw |
 | Reforge | Common | Skill | 1 | Shared family card; 3 Block; 1 draw; Exhaust 1 card(s) from your hand. |

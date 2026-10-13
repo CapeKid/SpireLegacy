@@ -126,6 +126,34 @@ public static class PowerAuditOracle
             return new{power,up,first,next=hits.Single().damage,vigorRemaining=player.Creature.GetPowerAmount<VigorPower>()};
         }finally{observed=null;NativeStartup.Remove(patch);}
     }
+    public static async Task<object> MultihitCoopPrepare(RunState run,bool up)
+    {
+        foreach(var enemy in run.Players[0].Creature.CombatState!.GetOpponentsOf(run.Players[0].Creature)){enemy.SetMaxHpInternal(10000);enemy.SetCurrentHpInternal(10000);}
+        foreach(var player in run.Players.OrderBy(p=>p.NetId)){
+            foreach(var held in player.PlayerCombatState!.Hand.Cards.ToArray())await CardPileCmd.Add(held,PileType.Draw,skipVisuals:true);
+            await PlayerCmd.GainEnergy(20,player);
+            for(var i=0;i<2;i++)await Add(player,ModelDb.Card<DefendIronclad>(),up);
+            for(var i=0;i<2;i++)await Add(player,ModelDb.Card<TwinStrike>(),up);
+        }
+        return new{prepared=true,up};
+    }
+    public static async Task<object> MultihitCoopPlay(RunState run,bool up)
+    {
+        const string patch="CapeKid.SpireLegacy2.MultiHitCoop";var harmony=new Harmony(patch);var player=PlayerBloodlines.LocalPlayer!;var checkpoint=RunManager.Instance.ChecksumTracker.NextId;
+        var others=run.Players.Where(p=>p!=player).Select(p=>new{p,charges=p.Creature.GetPower<P_class>()!.Charges,hand=p.PlayerCombatState!.Hand.Cards.Count,energy=p.PlayerCombatState.Energy}).ToArray();
+        try{
+            harmony.Patch(typeof(Hook).GetMethods(BindingFlags.Public|BindingFlags.Static).Single(m=>m.Name=="AfterDamageGiven"),prefix:new HarmonyMethod(typeof(PowerAuditOracle),nameof(Observe)));
+            foreach(var card in player.PlayerCombatState!.Hand.Cards.OfType<DefendIronclad>().ToArray())await Play(card);
+            var counter=player.Creature.GetPower<P_class>()!;var primed=counter.Charges;Require(primed==(PlayerBloodlines.Heir(player).classId=="knight"?1:2),"Co-op class priming.");
+            var target=player.Creature.CombatState!.GetOpponentsOf(player.Creature).First(e=>e.IsAlive);var measured=new List<int[]>();
+            foreach(var card in player.PlayerCombatState.Hand.Cards.OfType<TwinStrike>().ToArray()){
+                observed=card;hits.Clear();await Play(card,target);measured.Add(hits.Select(h=>h.damage).ToArray());Require(counter.Charges==0,"Co-op charge consumption.");
+            }
+            var damage=up?7:5;Require(measured.Count==2&&measured[0].SequenceEqual(new[]{damage+2,damage+2})&&measured[1].SequenceEqual(new[]{damage,damage}),"Co-op multi-hit class effect.");
+            Require(others.All(o=>o.p.Creature.GetPower<P_class>()!.Charges==o.charges&&o.p.PlayerCombatState!.Hand.Cards.Count==o.hand&&o.p.PlayerCombatState.Energy==o.energy),"Multi-hit class effect leaked owners.");
+            return new{owner=player.NetId,cls=PlayerBloodlines.Heir(player).classId,up,primed,hits=measured,counter.Charges,ownerOnly=true,checksumNext=checkpoint+4};
+        }finally{observed=null;NativeStartup.Remove(patch);}
+    }
     public static async Task<object> Rhythm(RunState run,bool up,string mode,IDisposable selector)
     {
         using(selector) {
