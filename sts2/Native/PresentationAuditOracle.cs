@@ -26,6 +26,7 @@ public static class PresentationAuditOracle
         var bought=await entry.OnTryPurchaseWrapper(inventory);
         return new {owner=player.NetId,bought,goldSpent=gold-player.Gold,cardsAdded=player.Deck.Cards.Count-deck,sprites=sprites.Select((s,i)=>new {owner=s.GetMeta("spirelegacy_owner").AsUInt64(),cls=s.ClassId,skillEvents=s.Events.Count(e=>e=="skill")-counts[i]}).ToArray()};
     }
+    public static object RoomFacing()=>NativeTestBridge.Descendants(Tree.Root).OfType<HeirSprite>().Where(s=>s.Name=="SpireLegacyRoomHeir"&&s.IsVisibleInTree()).Select(s=>new {owner=s.GetMeta("spirelegacy_owner").AsUInt64(),cls=s.ClassId,nativeX=s.GetParent().GetChildren().OfType<Node2D>().First(n=>n.GetClass()=="SpineSprite").Scale.X,spriteX=s.Scale.X}).ToArray();
     public static object TextureFailures()
     {
         var path=Path.Combine(Runtime.DataDirectory,"presentation-fixture.svg");

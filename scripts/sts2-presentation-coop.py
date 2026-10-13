@@ -12,8 +12,9 @@ def send(profile,command,**args):
         records.append(r);output.write_text(json.dumps(records,indent=2))
     assert r['response']['ok'],r
     return r['response']['result']
-send(host,'coop-host',**{'class':'ironclad' if 'native' in tag else 'knight','traits':[],'port':port,'manor':{}});send(host,'coop-ready')
-send(guest,'coop-join',**{'class':'ranger' if 'ranger' in tag else 'mage','traits':[],'port':port,'manor':{}})
+send(host,'coop-host',**{'class':'knight','traits':['small','nocolor'],'port':port,'manor':{}});send(host,'coop-ready')
+guest_class='ranger' if 'ranger' in tag else 'mage'
+send(guest,'coop-join',**{'class':guest_class,'traits':['large','colortrails'],'port':port,'manor':{}})
 deadline=time.monotonic()+45
 while True:
     a,b=[send(p,'coop-state') for p in [host,guest]]
@@ -28,10 +29,15 @@ while True:
     if time.monotonic()>deadline:raise TimeoutError('Native peer synchronization')
     time.sleep(.2)
 with ThreadPoolExecutor(max_workers=2) as pool:
+    list(pool.map(lambda p:send(p,'enter',room='RestSite'),[host,guest]))
+for profile in [host,guest]:
+    r=send(profile,'presentation-room-facing');print(tag,'rest facing',r,flush=True)
+    if 'baseline' not in tag:assert all((s['nativeX']<0)==(s['spriteX']<0) for s in r),r
+with ThreadPoolExecutor(max_workers=2) as pool:
     list(pool.map(lambda p:send(p,'enter',room='Shop'),[host,guest]))
 for profile in [host,guest]:
     before=send(profile,'room-visual');assert len(before)==2
-    assert {a['classId'] for a in before}=={'knight','mage'}
+    assert {a['classId'] for a in before}=={'knight',guest_class}
     r=send(profile,'presentation-shop');assert r['bought'] and r['goldSpent']>0 and r['cardsAdded']==1
     print(tag,'shop response',r,flush=True)
     if 'baseline' not in tag:assert all(s['skillEvents']==(1 if s['owner']==r['owner'] else 0) for s in r['sprites']),r

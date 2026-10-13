@@ -311,6 +311,7 @@ public static class NativeTestBridge
                 case "visual": result = HeirVisuals.Diagnostic(); break;
                 case "presentation-resources":result=PresentationAuditOracle.Resources();break;
                 case "presentation-shop":result=await PresentationAuditOracle.Shop(RunState());break;
+                case "presentation-room-facing":result=PresentationAuditOracle.RoomFacing();break;
                 case "presentation-texture-failures":result=PresentationAuditOracle.TextureFailures();break;
                 case "presentation-crab":result=await PresentationAuditOracle.Crab();break;
                 case "presentation-paid":result=await PresentationAuditOracle.Paid(RunState(),request.GetProperty("card").GetString()!,request.GetProperty("upgrade").GetBoolean(),request.TryGetProperty("left",out var leftFacing)&&leftFacing.GetBoolean());break;
