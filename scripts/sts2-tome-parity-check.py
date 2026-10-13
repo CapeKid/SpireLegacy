@@ -22,7 +22,11 @@ send('trait-speed',value=8)
 for cls in ['knight','mage','ranger','ironclad']:
     for removed in [False,True]:
         start(cls);result=send('tome-parity',removeBasics=removed);assert result['upgraded'] and result['offerChecks']==60,result
-        send('save');send('resume');ready();send('tome-parity',inspect=True);send('abandon')
+        send('save');send('resume')
+        # Native control's debug combat is not a persisted map location; its save
+        # resumes the original event room. Deck/relic parity needs no combat phase.
+        if cls!='ironclad':ready()
+        send('tome-parity',inspect=True);send('abandon')
 for upgraded in [False,True]:
     start('ranger');send('tome-parity',forced='ranger_ancient_canopy')
     played=send('ancient-play',card='ranger_ancient_canopy',upgrade=upgraded)['played']
