@@ -33,7 +33,7 @@ public static class CardResolutionOracle
             Require(enemies.Length>0,"Fixture needs a live native enemy.");
             foreach(var enemy in enemies) {
                 foreach(var power in enemy.Powers.ToArray())await PowerCmd.Remove(power);
-                enemy.SetMaxHpInternal(10000);enemy.SetCurrentHpInternal(mode=="lethal"?1:mode=="zero-enemies"?0:10000);
+                enemy.SetMaxHpInternal(10000);enemy.SetCurrentHpInternal(mode=="lethal"?1:mode is "zero-enemies" or "auto-empty"?0:10000);
                 enemy.LoseBlockInternal(enemy.Block);
             }
             creature.SetCurrentHpInternal(mode=="self-death"?1:creature.MaxHp-20);
@@ -78,11 +78,15 @@ public static class CardResolutionOracle
                 Require(card.Pile?.Type==PileType.Hand&&player.PlayerCombatState.Energy==energy,"Rejected play spent energy or moved its card.");
                 return new {key,upgraded,mode,rejected=true,cost,pile="Hand",conserved=true};
             }
-            Require(card.TryManualPlay(target),"Native paid play refused "+key+" / "+mode);
+            if(mode=="auto-empty") {
+                Require(card.TargetType==TargetType.AnyEnemy,"No-target autoplay fixture needs a targeted card.");
+                await CardCmd.AutoPlay(context,card,null);
+            }else Require(card.TryManualPlay(target),"Native paid play refused "+key+" / "+mode);
             await Wait(()=>!creature.IsAlive||card.Pile?.Type is not (PileType.Hand or PileType.Play),"Paid card unresolved: "+key);
             await Wait(()=>!creature.IsAlive||NCard.FindOnTable(card)==null,"Card remains hovering: "+key);
             await Wait(()=>!RunManager.Instance.ActionExecutor.IsRunning,"Native card action did not complete: "+key);
             Require(CardPlayDiagnostics.LastFailure==failure,"Paid action raised a new exception: "+CardPlayDiagnostics.LastFailure);
+            if(mode=="auto-empty")Require(creature.CurrentHp==hp&&player.PlayerCombatState.Energy==energy&&card.Pile?.Type is not (PileType.Hand or PileType.Play),"No-target autoplay spent resources or stranded a card.");
             if(!creature.IsAlive||!enemies.Any(e=>e.IsAlive))return new {key,upgraded,mode,terminal=true,alive=creature.IsAlive,pile=card.Pile?.Type.ToString(),newFailure=false};
             var actual=CardPile.GetCards(player,Piles).ToArray();
             Require(actual.Distinct().Count()==actual.Length,"Card appears in multiple native piles.");
@@ -101,8 +105,11 @@ public static class CardResolutionOracle
             Require(restored.Id==card.Id&&restored.IsUpgraded==upgraded,"Resolved card identity did not round-trip.");
             // Native SerializableCard excludes transient dupe/keyword overrides.
             // Dupes are removed from play, never promised as durable deck copies.
-            if(!card.IsDupe)Require(restored.GetDescriptionForPile(PileType.Deck)==card.GetDescriptionForPile(PileType.Deck),"Resolved card text did not round-trip.");
-            else if(card is LegacyCard legacy)Require(((LegacyCard)restored).DesignCard.Rules()==legacy.DesignCard.Rules(),"Dupe underlying saved design differs.");
+            if(card is LegacyCard legacy) {
+                var savedLegacy=(LegacyCard)restored;
+                Require(savedLegacy.DesignCard.Rules()==legacy.DesignCard.Rules()&&savedLegacy.TraitSnapshot==legacy.TraitSnapshot&&savedLegacy.RetainedGrowth==legacy.RetainedGrowth&&savedLegacy.DiscardRewardTurn==legacy.DiscardRewardTurn,"Saved inherited fields/design differ.");
+                Require(savedLegacy.DynamicVars.Damage.BaseValue==legacy.DynamicVars.Damage.BaseValue&&savedLegacy.DynamicVars.Block.BaseValue==legacy.DynamicVars.Block.BaseValue,"Saved base card stats differ.");
+            }else if(!card.IsDupe)Require(restored.GetDescriptionForPile(PileType.Deck)==card.GetDescriptionForPile(PileType.Deck),"Native saved card text differs.");
             run.RemoveCard(restored);
             return new {key,upgraded,mode,cost,pile=expectedPile.ToString(),energyDelta=player.PlayerCombatState.Energy-energy,hpDelta=creature.CurrentHp-hp,blockDelta=creature.Block-block,
                 damage=enemies.Select((e,i)=>enemyHp[i]-e.CurrentHp).ToArray(),hand=player.PlayerCombatState.Hand.Cards.Count,cardCount=actual.Length,generated,conserved=true,saveRoundTrip=true,tableNodePresent=false};

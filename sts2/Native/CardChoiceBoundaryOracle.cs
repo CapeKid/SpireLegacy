@@ -43,6 +43,7 @@ public static class CardChoiceBoundaryOracle
             }
             var canonical=key.StartsWith("native:")?ModelDb.GetById<CardModel>(ModelDb.GetId(typeof(CardModel).Assembly.GetType("MegaCrit.Sts2.Core.Models.Cards."+key[7..],true)!)):NativeCards.Get(key);
             var card=combat.CreateCard(canonical,player);if(upgraded)CardCmd.Upgrade(card);await CardPileCmd.Add(card,PileType.Hand,skipVisuals:true);
+            var queued=combat.CreateCard(NativeCards.Get(guard),player);await CardPileCmd.Add(queued,PileType.Hand,skipVisuals:true);
             var deck=player.Deck.Cards.Select(c=>c.Id.ToString()+":"+c.CurrentUpgradeLevel).ToArray();
             await PlayerCmd.GainEnergy(10,player);var energy=player.PlayerCombatState!.Energy;var cost=card.EnergyCost.GetWithModifiers(CostModifiers.All);var failure=CardPlayDiagnostics.LastFailure;
             Require(card.TryManualPlay(card.TargetType==TargetType.AnyEnemy?combat.GetOpponentsOf(player.Creature).First(e=>e.IsAlive):null),"Held-choice card refused.");
@@ -52,11 +53,14 @@ public static class CardChoiceBoundaryOracle
             var save=SaveManager.Instance.LoadRunSave();Require(save.Success&&save.SaveData!=null,"Save during choice failed.");
             var saved=save.SaveData!.Players.Single(p=>p.NetId==player.NetId);
             Require(saved.Deck.Select(c=>c.Id?.ToString()+":"+c.CurrentUpgradeLevel).SequenceEqual(deck),"Pending choice lost or added a durable deck card.");
+            var queuedCost=queued.EnergyCost.GetWithModifiers(CostModifiers.All);
+            Require(queued.TryManualPlay(null),"Could not enqueue a card behind the held native choice.");
             held.Complete(decline);
-            await Wait(()=>card.Pile?.Type is not (PileType.Hand or PileType.Play));await Wait(()=>NCard.FindOnTable(card)==null&&!RunManager.Instance.ActionExecutor.IsRunning);
+            await Wait(()=>card.Pile?.Type is not (PileType.Hand or PileType.Play)&&queued.Pile?.Type is not (PileType.Hand or PileType.Play));await Wait(()=>NCard.FindOnTable(card)==null&&NCard.FindOnTable(queued)==null&&!RunManager.Instance.ActionExecutor.IsRunning);
             Require(CardPlayDiagnostics.LastFailure==failure,"Held-choice paid action failed.");
+            Require(player.PlayerCombatState.Energy==energy-cost-queuedCost,"Queued cards were not charged exactly once.");
             Require(player.Deck.Cards.Select(c=>c.Id.ToString()+":"+c.CurrentUpgradeLevel).SequenceEqual(deck),"Resolved choice changed durable deck identity.");
-            return new {key,upgraded,decline,held.Min,held.Max,options=held.Options.Length,pile=card.Pile?.Type.ToString(),cost,deck,saveDuringChoice=true,deckPreserved=true,tableNodePresent=false};
+            return new {key,upgraded,decline,held.Min,held.Max,options=held.Options.Length,pile=card.Pile?.Type.ToString(),cost,queuedCost,queuedPile=queued.Pile?.Type.ToString(),deck,saveDuringChoice=true,deckPreserved=true,tableNodePresent=false};
         }finally{held.Complete(false);}
     }
 }

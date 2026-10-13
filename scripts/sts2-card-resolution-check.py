@@ -24,7 +24,20 @@ def start(cls):
     ready()
 def play(row,up,mode='normal'):
     send('enter',room='Monster');ready()
-    return send('card-resolution',card=row['id'],upgrade=up,mode=mode)
+    result=send('card-resolution',card=row['id'],upgrade=up,mode=mode)
+    if mode=='normal' and not row['id'].startswith('native:') and row['power']=='none':
+        amount=lambda key:row[key]+(row['upgradeMagic'] if up and row[key]>0 and key!='hpLoss' else 0)
+        assert result['hpDelta']==min(20+row['hpLoss'],amount('heal'))-row['hpLoss'],result
+        damage=row['damage']+(row['upgradeDamage'] if up else 0)
+        if row['special'] in ['block_damage','chain_damage']:damage=0
+        if row['special']=='exhaust_damage':damage+=row['specialAmount']+(row['upgradeSpecial'] if up else 0)
+        assert sum(result['damage'])==damage*row['hits']*(len(result['damage']) if row['aoe'] else 1),result
+        block=row['block']+(row['upgradeBlock'] if up else 0)
+        if row['special']=='double_block':block*=2
+        if row['special']=='exhaust_block':block+=row['specialAmount']+(row['upgradeSpecial'] if up else 0)
+        if row['special']=='exhaust_nonattacks':block+=(row['specialAmount']+(row['upgradeSpecial'] if up else 0))*(3+amount('draw')-amount('discard'))
+        assert result['blockDelta']==block,result
+    return result
 cards=json.loads((root/'sheets/cards.json').read_text())
 send('trait-speed',value=8)
 if 'choices' in tag:
