@@ -44,7 +44,7 @@ assert send('manor-double-press',text=upgrade)['removed']
 assert any(c['text'].startswith('Selected 1 upgrades') for c in send('manor-audit')['controls'] if c['type']=='Label')
 activate('Close');activate('Discard and close');assert not send('manor-audit')['open']
 assert send('lifecycle-state')['profile']==after['profile']
-send('manor');traits=send('manor-trait-fixture')['traits'];time.sleep(.2)
+send('manor');fixture=send('manor-trait-fixture',offset=0);traits=fixture['traits'];time.sleep(.2)
 for width,height in [(1280,800),(1280,720),(1200,900),(1920,1080)]:
     state=send('manor-resize',width=width,height=height)
     assert all(c['rect']['x']>=0 and c['rect']['x']+c['rect']['width']<=float(state['viewport'].strip('()').split(',')[0])+1 for c in state['controls'] if c['type'] in ['Button','Label','LineEdit'])
@@ -53,6 +53,11 @@ for width,height in [(1280,800),(1280,720),(1200,900),(1920,1080)]:
     assert not any(l['focusable'] for l in labels)
     send('input',action='ui_up',milliseconds=1600)
     path=send('screenshot')['path'];shutil.copyfile(path,root/'private/sts2-evidence'/f'manor-{tag}-{width}x{height}.png')
+for offset in range(3,fixture['total'],3):
+    traits=send('manor-trait-fixture',offset=offset)['traits'];time.sleep(.15)
+    state=send('manor-audit');labels=[c for c in state['controls'] if c['type']=='Label']
+    assert all(any(t['name']+': '+t['summary'] in l['text'] for l in labels) for t in traits)
+    send('input',action='mega_view_exhaust_pile_and_tab_right');assert send('manor-state')['scroll']>0
 send('input',action='ui_cancel');assert not send('manor-audit')['open'];send('select')
 for cls in ['knight','mage','ranger']:
     send('start',**{'class':cls,'traits':[],'quick':True,'seed':'SPIRELEGACY-MANOR-57'})

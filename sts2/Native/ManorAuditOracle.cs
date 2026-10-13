@@ -11,13 +11,14 @@ public static class ManorAuditOracle
         button.GrabFocus();button.EmitSignal(Button.SignalName.Pressed);button.EmitSignal(Button.SignalName.Pressed);
         return new {removed=!button.IsInsideTree(),state=Inspect()};
     }
-    public static object Traits()
+    public static object Traits(int offset)
     {
         if(Runtime.Profile.active!=null)throw new InvalidOperationException("End the private run before replacing offers.");
-        var rows=Design.Rows("traits").OrderByDescending(r=>r.Text("summary").Length).ToArray();
+        var rows=Design.Rows("traits").OrderByDescending(r=>r.Text("summary").Length).Skip(offset).Take(3).ToArray();
+        if(rows.Length==0)throw new ArgumentOutOfRangeException(nameof(offset));
         Runtime.Profile.offers=rows.Select((r,i)=>new FamilyProfile.Heir{name="ABCDEFGHIJKLMNOPQRSTUVWX",classId=new[]{"knight","mage","ranger"}[i%3],traits=[r.Text("id")]}).ToList();
         Runtime.Profile.Save(Runtime.FamilyPath);ManorUi.Close();ManorUi.Open();
-        return new {traits=rows.Select(r=>new{id=r.Text("id"),name=r.Text("name"),summary=r.Text("summary")}).ToArray()};
+        return new {total=Design.Rows("traits").Count(),traits=rows.Select(r=>new{id=r.Text("id"),name=r.Text("name"),summary=r.Text("summary")}).ToArray()};
     }
     public static object Inspect()
     {

@@ -182,7 +182,7 @@ public static class NativeTestBridge
                 case "manor": ManorUi.Open(); result = new { open = true }; break;
                 case "manor-audit":result=ManorAuditOracle.Inspect();break;
                 case "manor-double-press":result=ManorAuditOracle.Duplicate(request.GetProperty("text").GetString()!);break;
-                case "manor-trait-fixture":result=ManorAuditOracle.Traits();break;
+                case "manor-trait-fixture":result=ManorAuditOracle.Traits(request.GetProperty("offset").GetInt32());break;
                 case "manor-resize":result=await ManorAuditOracle.Resize(request.GetProperty("width").GetInt32(),request.GetProperty("height").GetInt32());break;
                 case "chronicle-fixture":result=ChronicleOracle.Fixture(request.GetProperty("unlocked").GetBoolean());break;
                 case "chronicle-state":result=ChronicleOracle.State();break;
