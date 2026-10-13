@@ -23,9 +23,13 @@ send('presentation-prepare')
 if 'cleanup' in tag:
     for cls in ['knight','mage','ranger']:
         r=send('presentation-motion',**{'class':cls});assert r['moving'] and r['secondMove']
-        for room in ['RestSite','Shop']:
-            start(cls);send('enter',room=room);time.sleep(.3);send('abandon');time.sleep(1)
+        for room in ['RestSite','Shop','Monster']:
+            start(cls);send('enter',room=room)
+            if room=='Monster':ready();send('kill',player=True)
+            else:time.sleep(.3);send('abandon')
+            time.sleep(1)
             ending=send('ending-visual');assert len(ending)==1 and not ending[0]['sprites'][0]['placeholderVisible']
+            shot(cls+'-'+room+'-ending')
     time.sleep(.3)
     errors=(profile/'errors.log').read_text(errors='replace')
     assert 'disconnect a nonexistent connection' not in errors and 'NCombatRulesFtue.Start' not in errors
