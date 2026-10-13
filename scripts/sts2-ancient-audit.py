@@ -32,7 +32,7 @@ elif 'endings' in tag:
             print(tag,cls,wins,'native victory passed',flush=True)
 elif 'cards' in tag:
     for cls in ['knight','mage','ranger']:
-        for traits in [[],['cantattack'],['cantdoharm'],['superhealer']]:
+        for traits in [[],['cantattack'],['megahealth'],['superhealer']]:
             start(cls,traits);send('ancient-audit-tome');send('save');send('resume');ready();send('abandon')
     for row in json.loads((root/'sheets/ancient_cards.json').read_text()):
         for up in [False,True]:

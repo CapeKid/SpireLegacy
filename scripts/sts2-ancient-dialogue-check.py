@@ -19,7 +19,6 @@ def ready():
         time.sleep(.1)
     raise TimeoutError('play')
 try:
-    send('start',**{'class':'knight','traits':[],'quick':True});ready()
     coverage=send('ancient-dialogues');assert coverage['checks']==240 and len(coverage['ancients'])==8,coverage
     assert len(send('architect-dialogues'))==15
     for cls in ['knight','mage','ranger']:

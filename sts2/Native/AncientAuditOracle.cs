@@ -70,8 +70,10 @@ public static class AncientAuditOracle
         var model=Event(run);Require((int)AccessTools.Field(typeof(TheArchitect),"_currentLineIndex").GetValue(model)! == 3,"Not at final Proceed.");var option=model.CurrentOptions.Single();
         var id=Runtime.Profile.active!.id;var generation=Runtime.Profile.generation;
         await option.Chosen();await Wait(()=>Runtime.Profile.active==null&&Runtime.Profile.settledId==id);
-        var after=Runtime.Profile.generation;await option.Chosen();Require(Runtime.Profile.generation==after&&after==generation+1,"Ending settled twice.");
-        return new{nativeGameOver=run.IsGameOver,settled=id,generation=after,once=true,wins=Runtime.Profile.chronicle.classes.Values.Sum(c=>c.wins)};
+        var after=Runtime.Profile.generation;string? repeatDiagnostic=null;
+        try{await option.Chosen();}catch(Exception error){Require(run.IsGameOver&&model.IsFinished,"Unfinished ending repeat failed.");repeatDiagnostic=error.ToString();}
+        Require(Runtime.Profile.generation==after&&after==generation+1,"Ending settled twice.");
+        return new{nativeGameOver=run.IsGameOver,settled=id,generation=after,once=true,repeatDiagnostic,wins=Runtime.Profile.chronicle.classes.Values.Sum(c=>c.wins)};
     }
     public static async Task<object> Owners(RunState run)
     {
