@@ -364,6 +364,7 @@ public static class NativeTestBridge
                 case "ancient-dialogues":result=AncientDialogueOracle.Inspect();break;
                 case "ancient-audit-selectors":result=AncientDialogueOracle.Inspect(true);break;
                 case "ancient-audit-fallbacks":result=AncientAuditOracle.Fallbacks();break;
+                case "ancient-audit-finished":var finishedEvent=((MegaCrit.Sts2.Core.Rooms.EventRoom)RunState().CurrentRoom!).LocalMutableEvent;if(!finishedEvent.IsFinished)throw new InvalidDataException("Saved Ancient reward was offered again.");result=new{finished=true,options=finishedEvent.CurrentOptions.Select(o=>o.TextKey).ToArray()};break;
                 case "ancient-audit-next":result=await AncientAuditOracle.Advance(RunState(),request.GetProperty("controller").GetBoolean());break;
                 case "ancient-audit-choose":using(UseTestSelector())result=await AncientAuditOracle.Choose(RunState());break;
                 case "ancient-audit-tome":result=await AncientAuditOracle.Tome(RunState());break;

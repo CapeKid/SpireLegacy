@@ -23,6 +23,15 @@ if 'selectors' in tag:
     assert send('ancient-audit-fallbacks')['emptyPreserved']
     endings=send('architect-dialogues');assert len(endings)==15
     assert all(all(l['key'].startswith('SPIRELEGACY.ARCHITECT.'+r['classId']+'.') for l in r['lines']) for r in endings)
+elif 'saveboundaries' in tag:
+    for cls in ['knight','mage','ranger']:
+        for visits in [0,4]:
+            start(cls);send('ancient-audit-tome');send('save');send('resume');ready();assert send('tome-parity',inspect=True)['saved']
+            send('ancient-enter',ancient='NEOW',visits=visits);send('save');send('resume')
+            state=send('ancient-state');assert state['index']==0 and all('.'+cls+'.' in l['key'] for l in state['lines']),state
+            for index in [1,2,3]:assert send('ancient-audit-next',controller=visits>0)['index']==index
+            time.sleep(.4);send('ancient-audit-choose');send('save');send('resume');assert send('ancient-audit-finished')['finished'];send('abandon')
+            print(tag,cls,visits,'before/after reward and Tome saved boundary passed',flush=True)
 elif 'endings' in tag:
     for cls in ['knight','mage','ranger']:
         for wins in [0,4]:
