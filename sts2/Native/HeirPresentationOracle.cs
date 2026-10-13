@@ -63,7 +63,7 @@ public static class HeirPresentationOracle
         if(icon!=Runtime.Texture("heir/presentation/"+cls+"-cookie.svg")||large!=icon||outline!=Runtime.Texture("heir/presentation/"+cls+"-cookie-outline.svg"))throw new InvalidDataException("Cookie did not resolve class art.");
         var native=ModelDb.Character<Ironclad>();if(!native.CharacterSelectSfx.Contains("ironclad")||!native.TrailPath.Contains("ironclad"))throw new InvalidDataException("Changed native identity.");
         var trail=MegaCrit.Sts2.Core.Assets.PreloadManager.Cache.GetScene(model.TrailPath).Instantiate();
-        if(trail is not MegaCrit.Sts2.Core.Nodes.Vfx.NCardTrailVfx||trail.GetNodeOrNull<Node>("Sprites/FamilyRibbon")==null)throw new InvalidDataException("Heir trail cannot instantiate.");trail.Free();
+        if(trail is not MegaCrit.Sts2.Core.Nodes.Vfx.NCardTrailVfx||trail.GetNodeOrNull<Node>("Trails/FamilyRibbon")==null)throw new InvalidDataException("Heir trail cannot instantiate.");trail.Free();
         var mat=MegaCrit.Sts2.Core.Assets.PreloadManager.Cache.GetMaterial(model.CharacterSelectTransitionPath);
         if(mat is not ShaderMaterial material||!material.Shader.Code.Contains("threshold"))throw new InvalidDataException("Heir transition did not load.");
         var before=HeirPresentation.Sounds.Count;

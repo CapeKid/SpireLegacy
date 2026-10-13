@@ -18,6 +18,7 @@ public partial class HeirSprite : AnimatedSprite2D
     private int deathCell;
     private float deathScale = 1;
     private Vector2 normalScale;
+    private bool facingLeft;
     public List<int> DeathFrames { get; } = new();
     private readonly ShaderMaterial material = new() { Shader = new Shader { Code = "shader_type canvas_item; uniform bool gray = false; uniform float damage_flash = 0.0; void fragment() { vec4 c = texture(TEXTURE, UV) * COLOR; if (c.a < 0.06) { discard; } if (gray) { float g = dot(c.rgb, vec3(0.299,0.587,0.114)); c.rgb = vec3(g); } c.rgb = mix(c.rgb, vec3(1.0,0.2,0.2), damage_flash * 0.7); COLOR = c; }" } };
 
@@ -63,6 +64,10 @@ public partial class HeirSprite : AnimatedSprite2D
         return sprite;
     }
     public void SetGray(bool gray) => material.SetShaderParameter("gray",gray);
+    public void SetFacingLeft(bool left)
+    {
+        facingLeft=left;Scale=new Vector2(Math.Abs(Scale.X)*(left?-1:1),Scale.Y);
+    }
     public void SetDamageFlash(float amount) => material.SetShaderParameter("damage_flash",amount);
     public void PlayPose(string pose)
     {
@@ -79,12 +84,12 @@ public partial class HeirSprite : AnimatedSprite2D
             if (!DeathFrames.Contains(Frame)) DeathFrames.Add(Frame);
             if (deathFeet.Length > 0)
             {
-                Scale = normalScale * deathScale;
+                Scale = normalScale * deathScale * new Vector2(facingLeft?-1:1,1);
                 Offset = new Vector2(-deathCell / 2f,-deathFeet[Math.Clamp(Frame,0,deathFeet.Length-1)]);
                 return;
             }
         }
-        Scale = normalScale;
+        Scale = normalScale * new Vector2(facingLeft?-1:1,1);
         if (!Poses.TryGetValue(Animation.ToString(),out var indices) || feet.Length == 0) return;
         var index = indices[Math.Clamp(Frame,0,indices.Length - 1)];
         Offset = new Vector2(-cell / 2f + insets[index],-feet[index]);

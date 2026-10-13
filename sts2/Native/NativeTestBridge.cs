@@ -309,6 +309,12 @@ public static class NativeTestBridge
                     var poolPlayer=RunState().Players.Single();var available=poolPlayer.Character.CardPool.GetUnlockedCards(poolPlayer.UnlockState,poolPlayer.RunState.CardMultiplayerConstraint).OfType<LegacyCard>().ToArray();
                     result=new{expanded=NativePoolParity.Expanded,ids=available.Select(c=>c.Key).ToArray(),compendium=available.All(c=>ModelDb.AllCards.Any(m=>m.Id==c.Id))};break;
                 case "visual": result = HeirVisuals.Diagnostic(); break;
+                case "presentation-resources":result=PresentationAuditOracle.Resources();break;
+                case "presentation-shop":result=await PresentationAuditOracle.Shop(RunState());break;
+                case "presentation-texture-failures":result=PresentationAuditOracle.TextureFailures();break;
+                case "presentation-crab":result=await PresentationAuditOracle.Crab();break;
+                case "presentation-paid":result=await PresentationAuditOracle.Paid(RunState(),request.GetProperty("card").GetString()!,request.GetProperty("upgrade").GetBoolean(),request.TryGetProperty("left",out var leftFacing)&&leftFacing.GetBoolean());break;
+                case "presentation-trail":result=await PresentationAuditOracle.Trail(request.GetProperty("class").GetString()!);break;
                 case "presentation":result=await HeirPresentationOracle.Inspect(RunState());break;
                 case "presentation-rest":result=await HeirPresentationOracle.Rest(RunState());break;
                 case "presentation-transition":

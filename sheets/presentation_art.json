@@ -12,7 +12,7 @@
     "id": "knight-trail-scene",
     "path": "heir/presentation/knight-trail.tscn",
     "kind": "scene",
-    "sha256": "7b95557e1ea52eddbd955fecd360a2f5a564b3fa9765aafa2d418edf6c286c8d",
+    "sha256": "61ecebffebe9bf047ef0be66d5ee61a2bbd5074361bc39aea1a7d85366fd8135",
     "author": "CapeKid",
     "license": "MIT",
     "provenance": "Original geometry / deterministic sine-and-noise synthesis; scripts/author-heir-presentation.py"
@@ -165,7 +165,7 @@
     "id": "mage-trail-scene",
     "path": "heir/presentation/mage-trail.tscn",
     "kind": "scene",
-    "sha256": "d76f2007748d435e57802180af82d50cfe78f6a1e38516754d0231eaa8370e8e",
+    "sha256": "f6711a7727f0e993b604557e2ac2991cad60a4dbd7c6ae42b104becd05a34296",
     "author": "CapeKid",
     "license": "MIT",
     "provenance": "Original geometry / deterministic sine-and-noise synthesis; scripts/author-heir-presentation.py"
@@ -318,7 +318,7 @@
     "id": "ranger-trail-scene",
     "path": "heir/presentation/ranger-trail.tscn",
     "kind": "scene",
-    "sha256": "3d2bda8d8af160592d99630e14594b1b4308c800ec248686381327eaf53ecf8a",
+    "sha256": "92bf51a5ab1cb1593ba1d1110aa0bc399a9369da7bc24bc724e3b932f4dc1d99",
     "author": "CapeKid",
     "license": "MIT",
     "provenance": "Original geometry / deterministic sine-and-noise synthesis; scripts/author-heir-presentation.py"

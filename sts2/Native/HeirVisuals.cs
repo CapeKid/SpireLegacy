@@ -21,6 +21,7 @@ public static class HeirVisuals
         var roomSize = (visual is MegaCrit.Sts2.Core.Nodes.RestSite.NRestSiteCharacter ? 3.6f : 1.4f) * factor;
         var portrait = HeirSprite.Create(PlayerBloodlines.Heir(player).classId, roomSize);
         portrait.Name = "SpireLegacyRoomHeir"; portrait.Modulate = Colors.White;
+        portrait.SetMeta("spirelegacy_owner",player.NetId);
         visual.AddChild(portrait);
         HeirRoomMotion.Attach(visual,portrait,visual is MegaCrit.Sts2.Core.Nodes.RestSite.NRestSiteCharacter);
         TraitAppearance.Attach(visual,portrait,roomSize,PlayerBloodlines.Heir(player));
@@ -71,6 +72,9 @@ public static class HeirVisuals
         {
             var player=actor.creature.Entity.Player!;
             actor.creature.Visuals.GetCurrentBody().Visible = false;
+            // Surrounded (the crab fight) flips Body, not the visual container.
+            // Mirror our sibling sprite without mirroring badges or readable text.
+            actor.sprite.SetFacingLeft(actor.creature.Body.Scale.X<0);
             if (actor.creature.Entity.IsDead) actor.sprite.PlayPose("dead");
             actor.banner.Color = ManorUi.BannerColorFor(Banner(player));
             actor.symbol.Text=Symbols[Banner(player)];
