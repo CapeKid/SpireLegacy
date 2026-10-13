@@ -161,9 +161,11 @@ public static class BalanceAuditOracle
             var player=PlayerBloodlines.LocalPlayer!;
             var others=run.Players.Where(p=>p!=player).Select(p=>new{p,energy=p.PlayerCombatState!.Energy,block=p.Creature.Block,hand=PileType.Hand.GetPile(p).Cards.Count}).ToArray();
             var card=PileType.Hand.GetPile(player).Cards.OfType<LegacyCard>().Single(c=>c.Key=="knight_battle_meditation");
+            var choiceField=AccessTools.Field(typeof(NPlayerHand),"_selectionCompletionSource");
+            var previousChoice=choiceField.GetValue(NPlayerHand.Instance);
             var before=player.PlayerCombatState!.Energy;var playing=BalanceOracle.Play(card);
             var tree=(SceneTree)Engine.GetMainLoop();var deadline=Time.GetTicksMsec()+20000;
-            while(NPlayerHand.Instance?.IsInCardSelection!=true){
+            while(NPlayerHand.Instance?.IsInCardSelection!=true||ReferenceEquals(choiceField.GetValue(NPlayerHand.Instance),previousChoice)){
                 if(playing.IsCompleted){await playing;throw new InvalidDataException("Expected a live native discard choice.");}
                 if(Time.GetTicksMsec()>deadline)throw new TimeoutException("Native owner discard choice did not open.");
                 await tree.ToSignal(tree,SceneTree.SignalName.ProcessFrame);
@@ -171,7 +173,8 @@ public static class BalanceAuditOracle
             // Exercise the actual hand-choice completion. CardSelectCmd sends its
             // native synchronized choice to the other peer; no selector override.
             var hand=NPlayerHand.Instance!;
-            var holder=hand.CardHolderContainer.GetChildren().OfType<NHandCardHolder>().First(h=>h.CardNode?.Model is DefendIronclad);
+            var live=PileType.Hand.GetPile(player).Cards;
+            var holder=hand.CardHolderContainer.GetChildren().OfType<NHandCardHolder>().First(h=>h.CardNode?.Model is DefendIronclad fuel&&live.Contains(fuel));
             AccessTools.Method(typeof(NPlayerHand),"SelectCardInSimpleMode").Invoke(hand,[holder]);
             var confirm=AccessTools.Field(typeof(NPlayerHand),"_selectModeConfirmButton").GetValue(hand);
             AccessTools.Method(typeof(NPlayerHand),"OnSelectModeConfirmButtonPressed").Invoke(hand,[confirm]);
