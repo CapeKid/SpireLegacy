@@ -34,7 +34,7 @@ Each class has 82 rewards on regular (20 common, 36 uncommon, 26 rare), or 85 on
 | Serrated Spear | Uncommon | Attack | 1 | Class unique; Public-beta only; 5 damage; 1 Vulnerable |
 | Sword Dance | Uncommon | Attack | 1 | Class unique; 2 damage ×4 |
 | Second Wind | Uncommon | Skill | 1 | Class unique; 9 Block; Exhaust 1 card(s) from your hand. |
-| Battle Meditation | Uncommon | Skill | 1 | Shared family card; 2 draw; 1 discard |
+| Battle Meditation | Uncommon | Skill | 1 | Shared family card; 3 draw; 1 discard |
 | Reinforce | Uncommon | Skill | 1 | Class unique; 5 Block; 5 Block next turn |
 | Double Guard | Uncommon | Skill | 1 | Class unique; Double your current Block.; Exhaust |
 | Clean Armor | Uncommon | Skill | 1 | Shared family card; 4 Block; Remove all debuffs from yourself.; Exhaust |
@@ -116,7 +116,7 @@ Each class has 82 rewards on regular (20 common, 36 uncommon, 26 rare), or 85 on
 | Long Reach | Common | Attack | 1 | Shared family card; 4 damage; 1 draw |
 | Reforge | Common | Skill | 1 | Shared family card; 3 Block; 1 draw; Exhaust 1 card(s) from your hand. |
 | Merciless | Uncommon | Attack | 1 | Shared family card; 6 damage; 2 Weak; 2 Vulnerable; Exhaust |
-| Battle Meditation | Uncommon | Skill | 1 | Shared family card; 2 draw; 1 discard |
+| Battle Meditation | Uncommon | Skill | 1 | Shared family card; 3 draw; 1 discard |
 | Clean Armor | Uncommon | Skill | 1 | Shared family card; 4 Block; Remove all debuffs from yourself.; Exhaust |
 | Last Stand | Uncommon | Skill | 0 | Shared family card; 9 Block; 3 HP cost; Exhaust |
 | Arms Vault | Uncommon | Skill | 1 | Shared family card; 1 draw; Return a card from your Exhaust pile to your hand. Cannot return Spire Legacy cards with this effect.; Exhaust |
@@ -209,7 +209,7 @@ Each class has 82 rewards on regular (20 common, 36 uncommon, 26 rare), or 85 on
 | Long Reach | Common | Attack | 1 | Shared family card; 4 damage; 1 draw |
 | Reforge | Common | Skill | 1 | Shared family card; 3 Block; 1 draw; Exhaust 1 card(s) from your hand. |
 | Merciless | Uncommon | Attack | 1 | Shared family card; 6 damage; 2 Weak; 2 Vulnerable; Exhaust |
-| Battle Meditation | Uncommon | Skill | 1 | Shared family card; 2 draw; 1 discard |
+| Battle Meditation | Uncommon | Skill | 1 | Shared family card; 3 draw; 1 discard |
 | Clean Armor | Uncommon | Skill | 1 | Shared family card; 4 Block; Remove all debuffs from yourself.; Exhaust |
 | Last Stand | Uncommon | Skill | 0 | Shared family card; 9 Block; 3 HP cost; Exhaust |
 | Arms Vault | Uncommon | Skill | 1 | Shared family card; 1 draw; Return a card from your Exhaust pile to your hand. Cannot return Spire Legacy cards with this effect.; Exhaust |

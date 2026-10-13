@@ -385,6 +385,11 @@ foreach(var up in new[]{false,true}) {
 }
 Check(new CardDesign("mage_memory_prism").Rules().Contains("Spire Legacy recovery cards"),"Recovery text does not imply native recovery cards are forbidden");
 Check(new CardDesign("knight_arms_vault").Rules().Contains("Spire Legacy cards with this effect"),"Exhaust recovery text names the actual restricted effect family");
+foreach(var up in new[]{false,true}) {
+    var meditation=new CardDesign("knight_battle_meditation",up);var study=new CardDesign("study",up);
+    Check(meditation.Cost==1&&meditation.Amount("draw")==3+(up?1:0)&&meditation.Amount("discard")==1,"Battle Meditation matches the paid native dig budget without a free upgrade");
+    Check(meditation.Amount("draw")-meditation.Amount("discard")==study.Amount("draw"),"Meditation preserves Study hand advantage while digging one card deeper");
+}
 PersistenceChecks.Run(Check,directory);
 Console.WriteLine(JsonSerializer.Serialize(new { result = "passed", assertions = count, cards = 360, inheritedTraits = traitIds.Length, familyFixture = directory }));
 
