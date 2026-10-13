@@ -14,17 +14,18 @@ namespace SpireLegacy;
 // Explicitly opt-in fixtures operating on the isolated native save backend only.
 public static class AncientDialogueOracle
 {
-    public static object Inspect()
+    public static object Inspect(bool adversarial=false)
     {
+        if(PlayerBloodlines.LocalPlayer!=null)throw new InvalidDataException("Inspect dialogue selectors from the menu; live heirs use frozen class snapshots.");
         var original=Runtime.Heir.classId;var checks=new List<object>();
         try {
             foreach(var ancient in ModelDb.AllAncients) {
                 if(!AncientConversation.Supported.Contains(ancient.Id.Entry))throw new InvalidDataException("New Ancient needs an authored conversation: "+ancient.Id);
                 var optionIds=ancient.AllPossibleOptions.Select(o=>o.TextKey).ToArray();
                 var set=ancient.DialogueSet;
-                foreach(var cls in new[]{"knight","mage","ranger"})foreach(var visits in new[]{0,1,4,10,100})foreach(var total in new[]{0,200}) {
+                foreach(var cls in new[]{"knight","mage","ranger"})foreach(var visits in adversarial?new[]{-1,0,1,4,10,100,int.MaxValue}:new[]{0,1,4,10,100})foreach(var total in new[]{0,200})foreach(var allowAny in adversarial?new[]{false,true}:new[]{true}) {
                     Runtime.Heir.classId=cls;
-                    var dialogue=set.GetValidDialogues(ModelDb.Character<HeirCharacter>().Id,visits,total,true).Single();
+                    var dialogue=set.GetValidDialogues(ModelDb.Character<HeirCharacter>().Id,visits,total,allowAny).Single();
                     var content=AncientConversation.For(ancient.Id.Entry,cls,visits);
                     if(dialogue.Lines.Count!=4||dialogue.IsRepeating!=(visits>0))throw new InvalidDataException("Wrong Ancient visit sequence.");
                     for(var i=0;i<4;i++) {
@@ -32,7 +33,7 @@ public static class AncientDialogueOracle
                         if(line.LineText!.GetFormattedText()!=content[i].Text||line.Speaker!=(i%2==0?AncientDialogueSpeaker.Ancient:AncientDialogueSpeaker.Character)||!line.LineText.LocEntryKey.StartsWith("SPIRELEGACY.ANCIENT."))throw new InvalidDataException("Wrong Ancient line/speaker/localization.");
                         if(i<3&&line.NextButtonText?.GetFormattedText()!=(i%2==0?"Respond":"Continue"))throw new InvalidDataException("Wrong response prompt.");
                     }
-                    checks.Add(new{ancient=ancient.Id.Entry,cls,visits,total,keys=dialogue.Lines.Select(l=>l.LineText!.LocEntryKey).ToArray()});
+                    checks.Add(new{ancient=ancient.Id.Entry,cls,visits,total,allowAny,keys=dialogue.Lines.Select(l=>l.LineText!.LocEntryKey).ToArray()});
                 }
                 if(!optionIds.SequenceEqual(ancient.AllPossibleOptions.Select(o=>o.TextKey)))throw new InvalidDataException("Changed Ancient option catalog.");
                 var native=set.GetValidDialogues(ModelDb.Character<Ironclad>().Id,0,0,true).First();

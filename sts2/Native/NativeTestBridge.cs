@@ -361,6 +361,14 @@ public static class NativeTestBridge
                     } finally {Runtime.Heir.classId=endingClass;}
                     result=endingChecks;break;
                 case "ancient-dialogues":result=AncientDialogueOracle.Inspect();break;
+                case "ancient-audit-selectors":result=AncientDialogueOracle.Inspect(true);break;
+                case "ancient-audit-next":result=await AncientAuditOracle.Advance(RunState(),request.GetProperty("controller").GetBoolean());break;
+                case "ancient-audit-choose":using(UseTestSelector())result=await AncientAuditOracle.Choose(RunState());break;
+                case "ancient-audit-tome":result=await AncientAuditOracle.Tome(RunState());break;
+                case "ancient-audit-ending-enter":result=await AncientAuditOracle.EndingEnter(RunState(),request.GetProperty("wins").GetInt32());break;
+                case "ancient-audit-ending-next":result=await AncientAuditOracle.EndingAdvance(RunState());break;
+                case "ancient-audit-ending-win":result=await AncientAuditOracle.EndingWin(RunState());break;
+                case "ancient-audit-owners":result=await AncientAuditOracle.Owners(RunState());break;
                 case "ancient-state":result=AncientDialogueOracle.State(false);break;
                 case "neow-energy":result=await HeirPresentationOracle.NeowEnergy(RunState());break;
                 case "ancient-next":result=AncientDialogueOracle.State(true);break;

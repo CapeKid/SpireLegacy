@@ -1,0 +1,52 @@
+"""#56 native dialogue/reward/ending audit with correlated exact-build receipts."""
+import hashlib,json,sys,time
+from pathlib import Path
+from oracle_protocol import call
+root=Path(__file__).resolve().parents[1];profile=Path(sys.argv[1]);tag=sys.argv[2];records=[]
+expected=hashlib.sha256((root/'sts2/bin/Release/net9.0/SpireLegacy.dll').read_bytes()).hexdigest()
+output=root/'private/sts2-evidence'/('ancient-audit-'+tag+'.json');assert not output.exists()
+def send(command,**args):
+    r=call(profile,dict(command=command,**args),timeout=90,expected_hash=expected);records.append(r);output.write_text(json.dumps(records,indent=2));assert r['response']['ok'],r
+    return r['response']['result']
+def ready():
+    deadline=time.monotonic()+45
+    while time.monotonic()<deadline:
+        s=send('state')
+        if s['phase']=='Play':return
+        time.sleep(.1)
+    raise TimeoutError('Playable native combat')
+def start(cls,traits=[]):
+    send('start',**{'class':cls,'traits':traits,'quick':True,'seed':'SPIRELEGACY-ANCIENTS-56','manorTier':0});ready()
+send('trait-speed',value=8)
+if 'selectors' in tag:
+    assert send('ancient-audit-selectors')['checks']==672
+    endings=send('architect-dialogues');assert len(endings)==15
+    assert all(all(l['key'].startswith('SPIRELEGACY.ARCHITECT.'+r['classId']+'.') for l in r['lines']) for r in endings)
+elif 'endings' in tag:
+    for cls in ['knight','mage','ranger']:
+        for wins in [0,4]:
+            start(cls);r=send('ancient-audit-ending-enter',wins=wins)
+            assert all('.'+cls+'.'+('first' if wins==0 else 'return')+'.' in k for k in r['lines']),r
+            for index in [1,2,3]:assert send('ancient-audit-ending-next')['index']==index
+            r=send('ancient-audit-ending-win');assert r['nativeGameOver'] and r['once'],r
+            print(tag,cls,wins,'native victory passed',flush=True)
+elif 'cards' in tag:
+    for cls in ['knight','mage','ranger']:
+        for traits in [[],['cantattack'],['cantdoharm'],['superhealer']]:
+            start(cls,traits);send('ancient-audit-tome');send('save');send('resume');ready();send('abandon')
+    for row in json.loads((root/'sheets/ancient_cards.json').read_text()):
+        for up in [False,True]:
+            start(row['classId']);send('ancient-play',card=row['cardId'],upgrade=up);send('abandon')
+elif 'dialogues' in tag:
+    for cls in ['knight','mage','ranger']:
+        for npc in ['NEOW','DARV','TEZCATARA','OROBAS','PAEL','NONUPEIPE','TANX','VAKUU']:
+            for visits in [0,4]:
+                start(cls);s=send('ancient-enter',ancient=npc,visits=visits)
+                assert all('.'+cls+'.'+('first' if visits==0 else 'return')+'.' in l['key'] for l in s['lines']),s
+                for index in [1,2,3]:assert send('ancient-audit-next',controller=visits>0)['index']==index
+                time.sleep(.4);assert send('ancient-state')['focusable']
+                r=send('ancient-audit-choose');assert r['once'],r
+                send('save');send('resume');send('abandon')
+            print(tag,cls,npc,'dialogue/reward/save passed',flush=True)
+else:raise ValueError(tag)
+print(tag,'completed',flush=True)
