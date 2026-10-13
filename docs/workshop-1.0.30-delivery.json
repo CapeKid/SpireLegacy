@@ -1,0 +1,88 @@
+{
+  "version": "1.0.30",
+  "item": 3816525393,
+  "app": 2868840,
+  "mergedMain": "3b8ce8e",
+  "buildSourceSha": "6bd7e96fc437db925022a49567936f7eec5264bb",
+  "visibility": "private",
+  "regularAllowed": true,
+  "betaAllowed": true,
+  "branchRangeCount": 0,
+  "stagedFiles": 530,
+  "allFilesMatch": true,
+  "dllSha256": "f2b8964b46244ebe9f2c75237580f3396cc0b9d9513ae5ebe8e5015a4023cc39",
+  "coreAssertions": 164059,
+  "preflight": {
+    "sheets": 32,
+    "rows": 2062,
+    "cells": 26477
+  },
+  "harnessChecks": 20,
+  "publishLint": {
+    "files": 535,
+    "failures": 0,
+    "warnings": 0
+  },
+  "packages": [
+    {
+      "kind": "standalone",
+      "file": "SpireLegacy-StS2-1.0.30.zip",
+      "size": 39605255,
+      "sha256": "b0a6248d21b34e67ad087a7847d2e124026704640513f9e9801f8a61f94da41d",
+      "files": 530,
+      "dllSha256": "f2b8964b46244ebe9f2c75237580f3396cc0b9d9513ae5ebe8e5015a4023cc39"
+    },
+    {
+      "kind": "workshop",
+      "file": "SpireLegacy-StS2-1.0.30-workshop.zip",
+      "size": 39984016,
+      "sha256": "a58c8dc5ebdb710561c27ff9dd4e47bb87e286b1a1878f0b134288cf1ba03aa1",
+      "files": 534,
+      "dllSha256": "f2b8964b46244ebe9f2c75237580f3396cc0b9d9513ae5ebe8e5015a4023cc39"
+    },
+    {
+      "kind": "melty",
+      "file": "SpireLegacy-StS2-1.0.30-melty.zip",
+      "size": 40071143,
+      "sha256": "f1bbcafa073488dfade2bc978225c07400c4c73ba25ce7123f3fd7c5eea0e7ac",
+      "files": 534,
+      "dllSha256": "f2b8964b46244ebe9f2c75237580f3396cc0b9d9513ae5ebe8e5015a4023cc39"
+    }
+  ],
+  "nativeReleaseEvidence": [
+    {
+      "branch": "regular",
+      "game": "v0.107.1",
+      "files": [
+        "adversarial-balance-workshop130-fixed-regular.json",
+        "balance-coop-workshop130-coop-regular-mage.json"
+      ],
+      "correlatedReplies": [
+        184,
+        77
+      ],
+      "soloCases": 12,
+      "coopCases": 8
+    },
+    {
+      "branch": "beta",
+      "game": "v0.111.0",
+      "files": [
+        "adversarial-balance-workshop130-fixed-beta.json",
+        "balance-coop-workshop130-coop-beta-ranger.json"
+      ],
+      "correlatedReplies": [
+        219,
+        77
+      ],
+      "soloCases": 12,
+      "coopCases": 8
+    }
+  ],
+  "verifiedUtc": "2026-10-13T21:54:18.313188+00:00",
+  "limitations": [
+    "Isolated Windows native labs; no physical Steam Deck/Linux retest",
+    "Private ENet pair checks; no full multiplayer campaign or Steam transport retest",
+    "Melty package prepared only"
+  ]
+}
