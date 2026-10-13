@@ -91,6 +91,7 @@ public static class HeirPresentation
         }
         var settings=SaveManager.Instance.SettingsSave;
         var audio=new AudioStreamPlayer{Stream=(AudioStream)resource,VolumeLinear=Math.Clamp(volume,0,1)*MathF.Pow(settings.VolumeMaster,2)*MathF.Pow(settings.VolumeSfx,2)};
+        audio.SetMeta("spirelegacy_sound",path);
         var tree=(SceneTree)Engine.GetMainLoop();tree.Root.AddChild(audio);audio.Finished+=audio.QueueFree;audio.Play();
         Sounds.Add(path);if(Sounds.Count>48)Sounds.RemoveAt(0);return true;
     }
