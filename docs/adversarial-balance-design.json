@@ -1,6 +1,6 @@
 {
   "issue": 60,
-  "sourceSha": "d5413b20ac787004923e1df5d2d705a749d2337f",
+  "sourceSha": "50597b7ff27f12ed9826bb676cbe053e2524a0e7",
   "cards": 360,
   "forms": 720,
   "activeRegistered": 196,
@@ -48,9 +48,9 @@
     "garden": 240
   },
   "sheetHashes": {
-    "cards": "c5ec40f731dee3598027cbce21b62398dc9001e701f3ec71141ee09cd55497cf",
+    "cards": "9f8254ea623bef01232bfedfd28c3a2d0bf2e57be99fb4385c272f82f69e36f8",
     "card_builds": "6734ecb9d3ee574b6d06064b721ae427e8b9dcf9e0392828e4cef6343510dbdf",
-    "balance_changes": "9cf4f9ad41dab0c5eeebf5cb1dc4e53fe3ede04876ff65bdf85174610b295e11",
+    "balance_changes": "75b3e7bcceea91949a9b5a1d05c48386747ed048ad0e77deb25ad6e5180a2fb5",
     "class_mechanics": "bf01fdb0f21ca1684b3c2ec967012c9dd65d6723aee5608fd1800b45452d32e7",
     "traits": "0b570895b54674dda2ca8594b9fab8d94e47397e4137fefeb163c9e4454fec85",
     "manor": "ee4ab2b3b55487398d34376218aee33edc727b649637e79f1e3567ffc6b983cc",

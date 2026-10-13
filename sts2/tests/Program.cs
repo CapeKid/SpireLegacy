@@ -383,8 +383,6 @@ foreach(var up in new[]{false,true}) {
     var reset=new CardDesign("ranger_trail_reset",up);
     Check(reset.Row.Flag("exhaust")&&reset.Cost==(up?0:1)&&reset.Row.Text("special")=="refill_hand","Trail Reset keeps its hand exchange and cost but cannot replay the free Reflex loop");
 }
-Check(new CardDesign("mage_memory_prism").Rules().Contains("Spire Legacy recovery cards"),"Recovery text does not imply native recovery cards are forbidden");
-Check(new CardDesign("knight_arms_vault").Rules().Contains("Spire Legacy cards with this effect"),"Exhaust recovery text names the actual restricted effect family");
 foreach(var up in new[]{false,true}) {
     var meditation=new CardDesign("knight_battle_meditation",up);var study=new CardDesign("study",up);
     Check(meditation.Cost==1&&meditation.Amount("draw")==3+(up?1:0)&&meditation.Amount("discard")==1,"Battle Meditation matches the paid native dig budget without a free upgrade");

@@ -1,6 +1,5 @@
 """Literal-budget sweep for #60; engine/conditional effects require native probes."""
 import hashlib,json,subprocess
-from collections import Counter
 from pathlib import Path
 from balance_policy import CARD_OVERRIDES
 root=Path(__file__).resolve().parents[1]
