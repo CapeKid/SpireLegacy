@@ -42,10 +42,10 @@ cards=json.loads((root/'sheets/cards.json').read_text())
 send('trait-speed',value=8)
 if 'zero' in tag:
     for cls in ['knight','mage','ranger']:
-        row=next(r for r in cards if r['classId']==cls and r['aoe'] and r['hpLoss']==0)
-        for up in [False,True]:start(cls);play(row,up,'zero-enemies')
-    for up in [False,True]:start('ironclad');play({'id':'native:Cleave'},up,'zero-enemies')
-    send('abandon');print(tag+': zero-enemy area effects and native Cleave control pass',flush=True);sys.exit(0)
+        row=next(r for r in cards if r['classId']==cls and r['aoe'] and r['damage']>0 and r['hpLoss']==0)
+        for up in [False,True]:start(cls);play(row,up,'replay-lethal')
+    for up in [False,True]:start('ironclad');play({'id':'native:Thunderclap'},up,'replay-lethal')
+    send('abandon');print(tag+': area replay after killing all enemies and native Thunderclap control pass',flush=True);sys.exit(0)
 if 'extras' in tag:
     start('knight');send('nimble-eligibility')
     for key in ['knight_guard','knight_reinforce','knight_stand_ready','mage_crystal_shell','mage_scripted_spark','ranger_ancient_canopy','knight_salvage_guard','mage_spell_pyre','ranger_shed_cloak']:
@@ -90,7 +90,7 @@ if 'edges' in tag:
                 start(row['classId'])
                 play(row,up,mode)
     start('ironclad')
-    for key in ['StrikeIronclad','TwinStrike','Cleave','BurningPact','Hemokinesis']:
+    for key in ['StrikeIronclad','TwinStrike','Thunderclap','BurningPact','Hemokinesis']:
         for up in [False,True]:
             for mode in (['self-death'] if key=='Hemokinesis' else ['empty','full','replay','save-copy','dupe']):
                 start('ironclad')

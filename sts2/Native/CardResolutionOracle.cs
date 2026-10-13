@@ -33,7 +33,7 @@ public static class CardResolutionOracle
             Require(enemies.Length>0,"Fixture needs a live native enemy.");
             foreach(var enemy in enemies) {
                 foreach(var power in enemy.Powers.ToArray())await PowerCmd.Remove(power);
-                enemy.SetMaxHpInternal(10000);enemy.SetCurrentHpInternal(mode=="lethal"?1:mode is "zero-enemies" or "auto-empty"?0:10000);
+                enemy.SetMaxHpInternal(10000);enemy.SetCurrentHpInternal(mode is "lethal" or "replay-lethal"?1:mode=="auto-empty"?0:10000);
                 enemy.LoseBlockInternal(enemy.Block);
             }
             creature.SetCurrentHpInternal(mode=="self-death"?1:creature.MaxHp-20);
@@ -61,7 +61,7 @@ public static class CardResolutionOracle
                 var method=AccessTools.Method(typeof(CardModel),"CreateDupe");
                 card=(CardModel)method.Invoke(card,method.GetParameters().Select(p=>p.ParameterType==typeof(Player)?player:p.HasDefaultValue?p.DefaultValue:throw new MissingMethodException("Unknown dupe parameter.")).ToArray())!;
             }
-            if(mode=="replay")await PowerCmd.Apply(context,LegacyPowers.Get(card.Type==CardType.Attack?"double_tap":"burst").ToMutable(),creature,1,creature,null);
+            if(mode is "replay" or "replay-lethal")await PowerCmd.Apply(context,LegacyPowers.Get(card.Type==CardType.Attack?"double_tap":"burst").ToMutable(),creature,1,creature,null);
             if(mode=="discount")card.SetToFreeThisTurn();
             await CardPileCmd.Add(card,PileType.Hand,skipVisuals:true);
             await PlayerCmd.GainEnergy(20,player);
@@ -96,7 +96,7 @@ public static class CardResolutionOracle
             // Native RemoveFromCombat removes pile membership, retaining the model
             // in combat scope until cleanup (including native Powers and dupes).
             Require(expectedPile!=PileType.None||!actual.Contains(card),"Removed card remains in a native pile.");
-            var plays=mode=="replay"?2:1;
+            var plays=mode is "replay" or "replay-lethal"?2:1;
             var design=(card as LegacyCard)?.DesignCard;
             var generated=row?.Text("special")=="wounds"?design!.SpecialAmount*plays:0;
             Require(actual.Length==countBefore+generated-(expectedPile==PileType.None?1:0),"Native card count was not conserved: "+key);
