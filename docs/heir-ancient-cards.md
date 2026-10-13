@@ -1,6 +1,6 @@
 # Heir Ancient cards
 
-Each class has two Ancient cards, outside its ordinary Common, Uncommon and Rare reward pool. Dusty Tome uses the game's native selection, upgraded-card preview and deck acquisition. No Ancient card replaces an ordinary reward slot.
+Each class has two Ancient cards, outside its ordinary Common, Uncommon and Rare reward pool. Dusty Tome uses the game's native selection, upgraded-card preview and deck acquisition. No Ancient card replaces an ordinary reward slot. Dusty Tome intentionally previews and grants its selected card upgraded, just as it does for native characters; the starting deck does not cause this upgrade. See [the native parity investigation](ancient-tome-parity.md).
 
 | Class | Card | Base | Upgrade |
 |---|---|---|---|

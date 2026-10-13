@@ -23,6 +23,8 @@ def start(cls,traits,quick=True):
     send('start',**{'class':cls,'traits':traits,'quick':quick,'manorTier':0,'seed':'SPIRELEGACY-TRAITS-51'})
     if cls=='ironclad':send('enter',room='Monster')
     return ready() if quick else send('state')
+if 'tome93' in tag:
+    subprocess.run([sys.executable,str(root/'scripts/sts2-tome-parity-check.py'),str(profile),tag],check=True);sys.exit(0)
 send('trait-speed',value=8)
 if 'edges' in tag:
     for cls in ['knight','mage','ranger']:
