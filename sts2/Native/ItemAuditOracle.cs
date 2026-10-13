@@ -34,7 +34,8 @@ public static class ItemAuditOracle
     private static async Task<CardModel> Add(Player player,string key,bool up=false){var card=player.Creature.CombatState!.CreateCard(NativeCards.Get(key),player);if(up)CardCmd.Upgrade(card);await CardPileCmd.Add(card,PileType.Hand,skipVisuals:true);return card;}
     private static async Task Play(CardModel card){var enemy=card.Owner.Creature.CombatState!.GetOpponentsOf(card.Owner.Creature).First(c=>c.IsAlive);var energy=card.Owner.PlayerCombatState!.Energy;var cost=card.EnergyCost.GetWithModifiers(CostModifiers.All);var failure=CardPlayDiagnostics.LastFailure;
         Require(card.TryManualPlay(card.TargetType==TargetType.AnyEnemy?enemy:null),"Paid item play refused.");await Wait(()=>card.Pile?.Type is not (PileType.Hand or PileType.Play)&&NCard.FindOnTable(card)==null&&!RunManager.Instance.ActionExecutor.IsRunning);
-        Require(CardPlayDiagnostics.LastFailure==failure&&card.Owner.PlayerCombatState.Energy==energy-cost,"Item play payment/diagnostic.");}
+        var gained=card is LegacyCard legacy?legacy.DesignCard.Amount("energy"):0;
+        Require(CardPlayDiagnostics.LastFailure==failure&&card.Owner.PlayerCombatState.Energy==energy-cost+gained,"Item play payment/diagnostic.");}
     public static async Task<object> Relic(RunState run,string key,bool up)
     {
         var player=run.Players.Single();var combat=player.Creature.CombatState!;foreach(var enemy in combat.GetOpponentsOf(player.Creature)){enemy.SetMaxHpInternal(10000);enemy.SetCurrentHpInternal(10000);}
@@ -45,14 +46,14 @@ public static class ItemAuditOracle
         var first=player.PlayerCombatState.TurnNumber;var block=player.Creature.Block;var draw=player.PlayerCombatState.Hand.Cards.Count;
         var power="knight_forge_memory";var attack=PlayerBloodlines.Heir(player).classId+"_strike";var skill=PlayerBloodlines.Heir(player).classId+"_guard";
         var plays=new List<object>();
-        async Task Paid(string cardKey){var card=await Add(player,cardKey,up);var beforeBlock=player.Creature.Block;var beforeHand=player.PlayerCombatState.Hand.Cards.Count;await Play(card);plays.Add(new{card=cardKey,up,block=player.Creature.Block-beforeBlock,draw=player.PlayerCombatState.Hand.Cards.Count-beforeHand+1,claimed=relic.CombatClaimed,turn=relic.TriggerTurn,mask=relic.TypeMask,counter=relic.DisplayAmount});}
+        async Task Paid(string cardKey){var card=await Add(player,cardKey,up);var beforeBlock=player.Creature.Block;var beforeHand=player.PlayerCombatState.Hand.Cards.Count;await Play(card);plays.Add(new{card=cardKey,up,block=player.Creature.Block-beforeBlock,draw=player.PlayerCombatState.Hand.Cards.Count-beforeHand+1,vigor=player.Creature.GetPowerAmount<VigorPower>(),charges=player.Creature.GetPower<P_class>()?.Charges,claimed=relic.CombatClaimed,turn=relic.TriggerTurn,mask=relic.TypeMask,counter=relic.DisplayAmount});}
         switch(key){
             case "heirloom_brooch":case "scholar_bookmark":await Paid(power);await Paid(power);break;
             case "training_dummy":case "guardian_knot":await CreatureCmd.GainBlock(player.Creature,20,ValueProp.Unpowered,null);await Paid(attack);await Paid(attack);break;
             case "triune_crest":await Paid(PlayerBloodlines.Heir(player).classId=="ranger"?attack:skill);await Paid(PlayerBloodlines.Heir(player).classId=="ranger"?attack:skill);break;
             case "family_seal":await Paid(power);await Paid(skill);await Paid(attack);await Paid(power);await Paid(skill);await Paid(attack);break;
             case "threadbound_ledger":await Paid("knight_king_s_ransom");await Paid("knight_king_s_ransom");break;
-            case "wayfarer_ribbon":await Paid("ranger_empty_quiver");await Paid("ranger_empty_quiver");break;
+            case "wayfarer_ribbon":await Add(player,skill);await Paid("ranger_empty_quiver");await Paid("ranger_empty_quiver");break;
             case "legacy_hourglass":case "trail_compass":
                 // Actual turn start, not an invented counter callback.
                 while(player.PlayerCombatState.TurnNumber<relic.Row.Number("threshold")){CombatManager.Instance.SetReadyToEndTurn(player,false);await Wait(()=>player.PlayerCombatState.Phase==PlayerTurnPhase.Play&&player.PlayerCombatState.TurnNumber>first);first=player.PlayerCombatState.TurnNumber;}
