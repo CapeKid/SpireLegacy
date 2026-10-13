@@ -27,6 +27,18 @@ def play(row,up,mode='normal'):
     return send('card-resolution',card=row['id'],upgrade=up,mode=mode)
 cards=json.loads((root/'sheets/cards.json').read_text())
 send('trait-speed',value=8)
+if 'choices' in tag:
+    for cls in ['knight','mage','ranger']:
+        for special in ['scry','exhaust_one','retrieve','exhume']:
+            row=next(r for r in cards if r['special']==special)
+            for up in [False,True]:
+                for decline in ([False,True] if special=='scry' else [False]):
+                    start(cls);send('card-choice-boundary',card=row['id'],upgrade=up,decline=decline)
+                    send('resume');ready();send('cards')
+    for up in [False,True]:
+        start('ironclad');send('card-choice-boundary',card='native:BurningPact',upgrade=up)
+        send('resume');send('cards')
+    send('abandon');print(tag+': legal held/declined native choices, actual saved deck and resume checks pass',flush=True);sys.exit(0)
 if 'edges' in tag:
     representative={}
     for row in cards:
