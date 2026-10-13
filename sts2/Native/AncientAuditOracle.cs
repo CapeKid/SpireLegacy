@@ -9,6 +9,7 @@ using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Nodes.CommonUi;
 using MegaCrit.Sts2.Core.Nodes.Events;
 using MegaCrit.Sts2.Core.Nodes.Cards.Holders;
+using MegaCrit.Sts2.Core.Nodes.Cards;
 using MegaCrit.Sts2.Core.Nodes.Screens.CardSelection;
 using MegaCrit.Sts2.Core.Nodes.GodotExtensions;
 using MegaCrit.Sts2.Core.Rooms;
@@ -51,18 +52,23 @@ public static class AncientAuditOracle
     {
         var model=Event(run);var option=model.CurrentOptions.First(o=>!o.IsLocked);var before=model.Owner!.Relics.Count();var deck=model.Owner.Deck.Cards.Count;
         var tree=(SceneTree)Engine.GetMainLoop();var button=NativeTestBridge.Descendants(tree.Root).OfType<NEventOptionButton>().Single(b=>b.Option==option&&b.IsVisibleInTree());Require(button.IsEnabled,"Reward button disabled.");
-        button.ForceClick();var deadline=Time.GetTicksMsec()+25000;var rewardSelections=0;
+        button.ForceClick();var deadline=Time.GetTicksMsec()+25000;var rewardSelections=0;var bundleStages=new Dictionary<NChooseABundleSelectionScreen,int>();
         while(!model.IsFinished){
             if(Time.GetTicksMsec()>deadline){tree.Root.GetViewport().GetTexture().GetImage().SavePng(System.IO.Path.Combine(Runtime.DataDirectory,"ancient-choice-timeout.png"));throw new TimeoutException($"Ancient reward selection: {option.Relic?.Id}; chosen={option.WasChosen}; acquired={model.Owner.Relics.Count()-before}; visible={string.Join(',',NativeTestBridge.Descendants(tree.Root).OfType<Control>().Where(c=>c.IsVisibleInTree()).Select(c=>c.GetType().Name).Distinct())}");}
             var rewardScreen=NativeTestBridge.Descendants(tree.Root).OfType<NCardRewardSelectionScreen>().FirstOrDefault(n=>n.IsVisibleInTree());
             if(rewardScreen!=null){var holder=NativeTestBridge.Descendants(rewardScreen).OfType<NCardHolder>().FirstOrDefault(h=>h.CardModel!=null&&h.IsVisibleInTree());if(holder!=null){holder.EmitSignal(NCardHolder.SignalName.Pressed,holder);rewardSelections++;}}
+            var bundleScreen=NativeTestBridge.Descendants(tree.Root).OfType<NChooseABundleSelectionScreen>().FirstOrDefault(n=>n.IsVisibleInTree());
+            if(bundleScreen!=null){var stage=bundleStages.GetValueOrDefault(bundleScreen);var selected=AccessTools.Field(bundleScreen.GetType(),"_selectedBundle").GetValue(bundleScreen);
+                if((stage==0||stage==2)&&selected==null){NativeTestBridge.Descendants(bundleScreen).OfType<NCardBundle>().First(n=>n.IsVisibleInTree()).Hitbox.ForceClick();bundleStages[bundleScreen]=stage+1;}
+                else if(stage==1||stage==3){var control=(NButton)AccessTools.Field(bundleScreen.GetType(),stage==1?"_previewCancelButton":"_previewConfirmButton").GetValue(bundleScreen)!;if(control.IsEnabled){control.ForceClick();bundleStages[bundleScreen]=stage+1;}}
+            }
             await tree.ToSignal(tree,SceneTree.SignalName.ProcessFrame);
         }
         Require(option.WasChosen,"Native reward callback did not execute.");
         var after=model.Owner.Relics.Count();var acquired=model.Owner.Relics.Skip(before).Select(r=>r.Id.ToString()).ToArray();
         // Native EventOption guards repeated activation of this same choice.
         await option.Chosen();Require(model.Owner.Relics.Count()==after,"Reward callback acquired twice.");
-        return new{key=option.TextKey,finished=model.IsFinished,acquired,deckDelta=model.Owner.Deck.Cards.Count-deck,rewardSelections,once=true,options=model.CurrentOptions.Select(o=>o.TextKey).ToArray()};
+        return new{key=option.TextKey,finished=model.IsFinished,acquired,deckDelta=model.Owner.Deck.Cards.Count-deck,rewardSelections,bundleCancelAndConfirm=bundleStages.Count,once=true,options=model.CurrentOptions.Select(o=>o.TextKey).ToArray()};
     }
     public static async Task<object> Tome(RunState run)
     {
@@ -102,7 +108,8 @@ public static class AncientAuditOracle
     {
         var prior=PlayerBloodlines.EligibilityOwner.Value;var results=new List<object>();
         foreach(var player in run.Players){var model=(TheArchitect)ModelDb.Event<TheArchitect>().ToMutable();var begin=AccessTools.Method(typeof(EventModel),"BeginEvent");
-            await (Task)begin.Invoke(model,begin.GetParameters().Length==2?[player,false]:[player,null,false])!;
+            var synchronizer=AccessTools.Field(RunManager.Instance.EventSynchronizer.GetType(),"_combatSynchronizer")?.GetValue(RunManager.Instance.EventSynchronizer);
+            await (Task)begin.Invoke(model,begin.GetParameters().Length==2?[player,false]:[player,synchronizer,false])!;
             var dialogue=(AncientDialogue)AccessTools.Field(typeof(TheArchitect),"_dialogue").GetValue(model)!;var ancientKeys=new List<string>();
             if(player.Character is HeirCharacter){var cls=PlayerBloodlines.Heir(player).classId;Require(dialogue.Lines.All(l=>l.LineText!.LocEntryKey.StartsWith("SPIRELEGACY.ARCHITECT."+cls+".")),"Remote ending used another heir's class.");}
             else Require(dialogue.Lines.All(l=>!l.LineText!.LocEntryKey.StartsWith("SPIRELEGACY")),"Native ending contaminated.");
