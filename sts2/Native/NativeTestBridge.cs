@@ -227,6 +227,10 @@ public static class NativeTestBridge
                     result = new { edited=true }; break;
                 case "start":
                     NModalContainer.Instance?.Clear(); ManorUi.Close();
+                    // These fixture settings are process-local, including when
+                    // extending a family without injecting a new manor tier.
+                    MegaCrit.Sts2.Core.Saves.SaveManager.Instance.SetFtuesEnabled(false);
+                    MegaCrit.Sts2.Core.Saves.SaveManager.Instance.ObtainEpochOverride(MegaCrit.Sts2.Core.Timeline.EpochModel.GetId<MegaCrit.Sts2.Core.Timeline.Epochs.NeowEpoch>(),MegaCrit.Sts2.Core.Saves.EpochState.Revealed);
                     if(NRun.Instance != null) {
                         if(Runtime.Profile.active != null) await (Task)AccessTools.Method(typeof(RunManager),"AbandonInternal").Invoke(RunManager.Instance,[])!;
                         if(RunState().IsGameOver && Runtime.Profile.active is {} testOrphan)Runtime.Profile.Settle(testOrphan.id,testOrphan.floors,0,false);
@@ -235,8 +239,6 @@ public static class NativeTestBridge
                     if (Runtime.Profile.active is {} orphan) Runtime.Profile.Settle(orphan.id,orphan.floors,0,false);
                     if(request.TryGetProperty("manorTier",out var balanceTier)) {
                         var tier=balanceTier.GetInt32();if(tier is <0 or >2)throw new ArgumentOutOfRangeException("manorTier");
-                        MegaCrit.Sts2.Core.Saves.SaveManager.Instance.SetFtuesEnabled(false);
-                        MegaCrit.Sts2.Core.Saves.SaveManager.Instance.ObtainEpochOverride(MegaCrit.Sts2.Core.Timeline.EpochModel.GetId<MegaCrit.Sts2.Core.Timeline.Epochs.NeowEpoch>(),MegaCrit.Sts2.Core.Saves.EpochState.Revealed);
                         Runtime.Profile.manor=Design.Rows("manor").ToDictionary(r=>r.Text("id"),r=>tier==2?r.Number("maxLevel"):tier==1?r.Number("maxLevel")/2:0);
                     }
                     var cls = request.GetProperty("class").GetString()!;

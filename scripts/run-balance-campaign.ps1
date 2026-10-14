@@ -31,6 +31,9 @@ param(
     [switch]$PackageChecks,
     [switch]$PacingChecks,
     [string]$ResumePacingReport='',
+    [string]$ContinuePacingReport='',
+    [switch]$ForkCompletedProfile,
+    [ValidateRange(1,200)][int]$EndRun=12,
     [string]$ForcedReward='',
     [int]$ForcedRewardFloor=0,
     [ValidateSet('standalone','deck','defensive')][string]$Rewards='standalone'
@@ -50,15 +53,23 @@ $buildSource=([Diagnostics.FileVersionInfo]::GetVersionInfo((Join-Path $repoPath
 if($buildSource -notmatch '^[a-f0-9]{40}$'){throw 'Audit DLL must carry its committed build source.'}
 if (Get-CimInstance Win32_Process | Where-Object ExecutablePath -EQ $exePath) { throw 'The selected lab already has a client.' }
 $profilePath=Join-Path $privatePath "campaign-$Tag-profile"
-if($ResumePacingReport){
+if($ResumePacingReport -and $ContinuePacingReport){throw 'Choose checkpoint recovery or completed-trajectory continuation.'}
+if($ForkCompletedProfile -and !$ContinuePacingReport){throw 'Only completed trajectory receipts can seed a new private fork.'}
+if($ResumePacingReport -or $ContinuePacingReport){
     if(!$PacingChecks){throw 'Only pacing trajectories may continue.'}
-    $prior=(Resolve-Path $ResumePacingReport).Path
+    $prior=(Resolve-Path $(if($ResumePacingReport){$ResumePacingReport}else{$ContinuePacingReport})).Path
     if(!$prior.StartsWith($privatePath+[IO.Path]::DirectorySeparatorChar,[StringComparison]::OrdinalIgnoreCase)){throw 'Prior report must be private.'}
     $priorData=Get-Content -LiteralPath $prior -Raw|ConvertFrom-Json
-    if($priorData.status -ne 'error' -or !$priorData.runs.Count){throw 'Only an explicitly failed recorded trajectory may resume.'}
+    $requiredStatus=if($ResumePacingReport){'error'}else{'finished'}
+    if($priorData.status -ne $requiredStatus -or !$priorData.runs.Count){throw 'Prior report has the wrong completion state.'}
     $priorProfile=(Resolve-Path $priorData.evidence[0].response.metadata.profile).Path
     if(!$priorProfile.StartsWith($privatePath+[IO.Path]::DirectorySeparatorChar,[StringComparison]::OrdinalIgnoreCase)){throw 'Recorded private profile required.'}
-    $profilePath=$priorProfile
+    if($ForkCompletedProfile){
+        if(Test-Path -LiteralPath $profilePath){throw 'Fork requires a new private profile.'}
+        New-Item -ItemType Directory -Path $profilePath | Out-Null
+        & $Python (Join-Path $PSScriptRoot 'pacing_state.py') $prior $Class (Join-Path $profilePath 'family.json')
+        if($LASTEXITCODE -ne 0){throw 'Durable receipt could not seed fork.'}
+    }else{$profilePath=$priorProfile}
 }else{
     if (Test-Path -LiteralPath $profilePath) { throw 'A new disposable profile is required.' }
     New-Item -ItemType Directory -Path $profilePath | Out-Null
@@ -76,11 +87,22 @@ try {
     if($ReleaseModDirectory){$packageInstall=Install-PackageLabMod $privatePath $labPath $ReleaseModDirectory $Tag}
     $env:HEIR_TEST_MODE='1';$env:HEIR_TEST_ROOT=$privatePath;$env:HEIR_DATA_DIR=$profilePath
     $env:HEIR_TEST_SOURCE_SHA=$buildSource
+    if($ResumePacingReport -or $ContinuePacingReport){
+        foreach($logName in @('launch.log','errors.log')){
+            $oldLog=Join-Path $profilePath $logName
+            if(Test-Path -LiteralPath $oldLog){Copy-Item -LiteralPath $oldLog -Destination (Join-Path $profilePath "$Tag-previous-$logName")}
+        }
+    }
     $client=Start-Process $exePath -WorkingDirectory $labPath -ArgumentList '--force-steam=off --rendering-method gl_compatibility --rendering-driver opengl3 --position -2000,-2000' -WindowStyle Hidden -PassThru -RedirectStandardOutput (Join-Path $profilePath 'launch.log') -RedirectStandardError (Join-Path $profilePath 'errors.log')
     $driver=if($PacingChecks){'sts2-pacing-campaign.py'}elseif($Checks){'sts2-tactical-check.py'}elseif($DelayedChecks){'sts2-delayed-reward-check.py'}elseif($RewardChecks){'sts2-reward-intervention-check.py'}elseif($PayoffChecks){'sts2-finisher-payoff-check.py'}elseif($ReleaseChecks){'sts2-release-check.py'}elseif($CandidateChecks){'sts2-six-candidates-check.py'}elseif($LifecycleChecks){'sts2-lifecycle-check.py'}elseif($LifecycleUiChecks){'sts2-lifecycle-ui-check.py'}elseif($TraitAuditChecks){'sts2-trait-audit.py'}elseif($OrobasChecks){'sts2-orobas-check.py'}elseif($CardResolutionChecks){'sts2-card-resolution-check.py'}elseif($PowerAuditChecks){'sts2-power-audit.py'}elseif($CrownChecks){'sts2-crown-check.py'}elseif($PoolAuditChecks){'sts2-pool-audit.py'}elseif($ItemAuditChecks){'sts2-item-audit.py'}elseif($AncientAuditChecks){'sts2-ancient-audit.py'}elseif($ManorAuditChecks){'sts2-manor-audit.py'}elseif($PresentationAuditChecks){'sts2-presentation-audit.py'}elseif($BalanceAuditChecks){'sts2-adversarial-balance.py'}elseif($PackageChecks){'sts2-package-native.py'}else{'sts2-balance-campaign.py'}
     $traitArgument=if($Traits){$Traits}else{'-'}
     $rewardArgument=if($ForcedReward){$ForcedReward}else{'-'}
-    if($ResumePacingReport){& $Python (Join-Path $PSScriptRoot $driver) $profilePath $Tag $Class --resume-report $prior}
+    if($ContinuePacingReport){
+        if($ForkCompletedProfile){& $Python (Join-Path $PSScriptRoot $driver) $profilePath $Tag $Class --continue-report $prior --end-run $EndRun --forked-profile}
+        else{& $Python (Join-Path $PSScriptRoot $driver) $profilePath $Tag $Class --continue-report $prior --end-run $EndRun}
+    }
+    elseif($ResumePacingReport){& $Python (Join-Path $PSScriptRoot $driver) $profilePath $Tag $Class --resume-report $prior --end-run $EndRun}
+    elseif($PacingChecks){& $Python (Join-Path $PSScriptRoot $driver) $profilePath $Tag $Class --end-run $EndRun}
     else{& $Python (Join-Path $PSScriptRoot $driver) $profilePath $Tag $Class $Tier $Policy $Seed $Ascension $traitArgument $Rewards $rewardArgument $ForcedRewardFloor}
     if ($LASTEXITCODE -ne 0) { throw "Campaign driver failed; inspect $profilePath" }
 } finally {

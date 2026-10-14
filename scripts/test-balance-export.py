@@ -36,6 +36,8 @@ class EvidenceChecks(unittest.TestCase):
         for name, report in [('balance-campaign-balance146-fixture.json', self.campaign),
                              ('pacing-campaign-balance146-fixture.json', self.pacing)]:
             (self.source/name).write_text(json.dumps(report), encoding='utf-8')
+        if hasattr(self,'extension'):
+            (self.source/'pacing-campaign-balance146-extended.json').write_text(json.dumps(self.extension),encoding='utf-8')
         with contextlib.redirect_stdout(io.StringIO()):
             module.export(self.source, self.root/'output')
 
@@ -62,6 +64,25 @@ class EvidenceChecks(unittest.TestCase):
     def test_crown_creation_rejected(self):
         self.pacing['runs'][1]['crownsAfter'] += 1
         with self.assertRaises(AssertionError): self.run_export()
+
+    def extend(self):
+        self.extension=copy.deepcopy(self.pacing)
+        self.extension['targetReturns']=24
+        self.extension['batches']=[dict(priorReport='pacing-campaign-balance146-fixture.json',afterRun=12,endRun=24)]
+        for n in range(13,25):
+            self.extension['runs'].append(dict(run=n,seed=str(n),status='finished',settledId=str(n),
+                crownsBefore=(n-1)*10,crownsAfter=n*10,earned=10,lastState=dict(floor=2)))
+
+    def test_extended_prefix_counted_once(self):
+        self.extend();self.run_export()
+        self.assertEqual(len((self.root/'output/trajectories.csv').read_text().splitlines()),25)
+        manifest=json.loads((self.root/'output/manifest.json').read_text())
+        old=next(r for r in manifest if r['trial']=='pacing-campaign-balance146-fixture')
+        self.assertFalse(old['included'])
+
+    def test_changed_completed_prefix_rejected(self):
+        self.extend();self.extension['runs'][0]['earned']=99
+        with self.assertRaises(AssertionError):self.run_export()
 
 
 if __name__ == '__main__': unittest.main()

@@ -20,6 +20,17 @@ def export(source, target):
     superseded = {f'pacing-campaign-balance146-pacing-knight-regular{i}.json' for i in (1, 2, 3)}
     paths = sorted(source.glob('*campaign-balance146-*.json'))
     assert paths, 'No issue 146 receipts found'
+    reports={path.name:json.loads(path.read_text(encoding='utf-8')) for path in paths}
+    for name,data in reports.items():
+        if data['status']=='finished':
+            for batch in data.get('batches',[]):
+                prior=reports[batch['priorReport']]
+                assert prior['status']=='finished' and prior['cls']==data['cls']
+                assert data['runs'][:len(prior['runs'])]==prior['runs'], 'Changed completed trajectory prefix'
+                assert data['purchases'][:len(prior['purchases'])]==prior['purchases'], 'Changed prior paid purchases'
+                assert data['evidence'][:len(prior['evidence'])]==prior['evidence'], 'Changed prior command receipts'
+                assert batch['afterRun']==len(prior['runs']) and batch['endRun']<=len(data['runs'])
+                superseded.add(batch['priorReport'])
     for path in paths:
         report = json.loads(path.read_text(encoding='utf-8'))
         assert report['status'] != 'running', f'Worker still active: {path.name}'
@@ -59,7 +70,9 @@ def export(source, target):
                 cards[path.stem, card, 'handEntries'] += count
             for play in detail.get('plays', []):
                 cards[path.stem, play['id'], 'played'] += 1
-        profile = Path(report['evidence'][0]['response']['metadata']['profile'])
+        # A continued trajectory can span several private profiles. These counts
+        # describe the latest launch only; prior logs remain separately archived.
+        profile = Path(report['evidence'][-1]['response']['metadata']['profile'])
         log_counts = {}
         for log_name in ('launch.log', 'errors.log'):
             log = profile/log_name
@@ -82,7 +95,7 @@ def export(source, target):
                                   floor=state['floor'], act=state['act'], hp=state['hp'], wins=state['wins'],
                                   crowns=state['crowns'], earned=state['lastEarned']))
             continue
-        assert len(report['runs']) == 12
+        assert len(report['runs']) == report.get('targetReturns',12)
         purchases = {p['run']: p for p in report['purchases']}
         assert len(purchases) == len(report['purchases'])
         settled, bank = set(), report['runs'][0]['crownsBefore']
