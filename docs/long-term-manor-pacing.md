@@ -31,6 +31,10 @@ The Ranger fork subsequently settled through return 83, then timed out waiting f
 
 The separate trial passed that encounter and settled return 84 as a floor-33 loss, earning 63 crowns and purchasing Vitality level 3. The first timed-out attempt remains excluded. This observation does not establish a Long Reach defect or identify the timeout's cause; it also does not make the branched trajectory uninterrupted.
 
+Knight settled through return 67, then reached an unsupported `NCrystalSphereScreen` observation during return 68. This was a successfully answered observation, not a failed card mutation. The pilot now performs one ordinary cell/proceed action per request, selecting visible fog cells in row order and capping attempts at twenty. It does not inspect unrevealed item contents. Because the event charges gold and its exact UI save state was not verified, the unsupported attempt remains excluded; a new labelled fork starts from the completed 67-return family snapshot.
+
+Ranger paid all sixteen upgrades by return 120: 2,653 crowns earned, 2,620 spent, 33 remaining. The stop flag in the initial PowerShell wrapper was inadvertently splatted as individual characters, so the test began an unnecessary return 121 before hitting the 8,000-receipt guard. That unsettled return is excluded. The verified full-manor lifecycle receipt at return 120 is exported as `full-manor-checkpoint`, rather than claiming that the original worker stopped normally at the milestone. The launcher now preserves the flag as a string array; tests exercise the actual assignment and native Python argument binding with the flag both enabled and disabled.
+
 ```powershell
 ./scripts/run-balance-campaign.ps1 -Lab private/YOUR-OWNED-LAB `
   -Tag YOUR-UNUSED-TAG -Class knight -PacingChecks `
@@ -57,3 +61,5 @@ Twelve trait-free Knight A10 fixtures used seeds `BALANCE146-C` and `BALANCE146-
 The tested DLL was built from source `52cd89c`, SHA-256 `b13c50b1cdfa6a59e7125f39fc6798b06d2a08a0ac701705d8ad538431ae22d3`, with BaseLib 3.4.7 and mod manifest 1.0.30. The later pacing fixture correction uses a different DLL and is recorded separately in its receipts. These outcomes suggest survival improvement in this limited policy, but do not establish experienced-player difficulty or justify tuning cards on their own. The user's Steam Deck/public-beta full-manor A10 Knight victory is separate qualitative evidence.
 
 The FTUE-corrected pacing DLL is source `07bcf006998747c5932bdcf9f041cd7e39a8b6bf`, SHA-256 `3f3cd3fe23b95bf619030eb285cef385c31bc459a28f6ed8d10ebe7f0f1d0d12`. Python/PowerShell receipt handling was subsequently improved without rebuilding that DLL. Each command records the loaded runtime artifact; newer tooling commits must not be presented as that DLL's source.
+
+The Crystal Sphere fixture DLL is source `06a9266823ec104de8c81b5a973558bedd173e25`, SHA-256 `b8478fed248ee04451ac089be60a5e02e136b741e828af7b70e00832033c3a37`. It compiles against both owned game versions. Its event policy change is a separate measurement stage; ordinary gameplay, card stats, prices and payout rules remain unchanged.

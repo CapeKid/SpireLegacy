@@ -99,7 +99,9 @@ def export(source, target, stopped_reports=()):
                              status='interrupted' if path.name in stopped_reports else report['status'], included=included, stages=list(stages.values()),
                              commands=len(seen), hasError=bool(report.get('error')),
                              checkpointRecoveries=len(report.get('continuations', [])), batches=report.get('batches',[]),
-                             targetReturns=report.get('targetReturns'), checkpointExtraction=report.get('checkpointExtraction'), logMatches=log_counts))
+                             targetReturns=report.get('targetReturns'), returnCap=report.get('returnCap'),
+                             stopReason=report.get('stopReason'), stopAtFullManor=report.get('stopAtFullManor'),
+                             checkpointExtraction=report.get('checkpointExtraction'), logMatches=log_counts))
         if not included:
             continue
         if not pacing:
