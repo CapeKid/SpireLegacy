@@ -54,7 +54,8 @@ public static class CampaignPlanning
         if(chosen==null)return new{action="shop-done",offers};
         var gold=player.Gold;var id=Id(chosen);var cost=chosen.Cost;var before=player.Deck.Cards.Select(c=>c.Id.ToString()).ToArray();
         using(Select(false))if(!await chosen.OnTryPurchaseWrapper(inventory))throw new InvalidDataException("Native planned shop purchase failed.");
-        if(gold-player.Gold!=cost)throw new InvalidDataException("Native planned shop price changed unexpectedly.");
-        return new{action="shop-purchase",offers,picked=id,cost,goldBefore=gold,goldAfter=player.Gold,deckBefore=before,deckAfter=player.Deck.Cards.Select(c=>c.Id.ToString()).ToArray()};
+        // Native acquisition hooks (for example Lucky Fysh) can grant gold
+        // during a purchase. Net balance change is not the displayed price.
+        return new{action="shop-purchase",offers,picked=id,cost,goldBefore=gold,goldAfter=player.Gold,netGoldSpent=gold-player.Gold,goldAdjustment=player.Gold-(gold-cost),relics=player.Relics.Select(r=>r.Id.ToString()).ToArray(),deckBefore=before,deckAfter=player.Deck.Cards.Select(c=>c.Id.ToString()).ToArray()};
     }
 }
