@@ -1,4 +1,6 @@
 #!/usr/bin/env bash
+printf '%s\n' 'Retired StS1 launcher. Use Slay the Spire 2 Play with Mods; see docs/sts2-port.md.' >&2
+exit 1
 set -euo pipefail
 package_dir="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)"
 reader_python="$package_dir/ReaderLinux/bin/python3.12"

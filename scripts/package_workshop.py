@@ -1,4 +1,6 @@
 """Stage the official uploader workspace; both platform readers, no game assets."""
+from historical_tools import retired
+retired("package_workshop.py")
 from pathlib import Path
 import json, shutil, zipfile, hashlib
 from PIL import Image

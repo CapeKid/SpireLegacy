@@ -1,3 +1,4 @@
+throw 'Retired StS1 entry point. Use sts2/SpireLegacy.csproj and scripts/sts2-package.py; see docs/historical-sts1-audit.md.'
 $ErrorActionPreference = 'Stop'
 $taskRoot = Split-Path -Parent $PSScriptRoot
 $taskLab = Join-Path $taskRoot 'private/lab'

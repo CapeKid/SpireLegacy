@@ -1,3 +1,5 @@
+from historical_tools import retired
+retired("inspect_rl.py")
 from pathlib import Path
 import json
 import UnityPy

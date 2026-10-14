@@ -1,7 +1,8 @@
 """Activate and balance original historical cards for native regular/beta pool parity.
 
 All identities and illustrations already existed; preserve saves and artwork provenance.
-Run after historical authoring scripts, before sts2-generate.py.
+Run against current checked-in sheets, before sts2-generate.py. Historical
+reconstruction scripts are retired; do not regenerate their old baseline first.
 """
 import json
 from pathlib import Path

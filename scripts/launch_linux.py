@@ -1,4 +1,7 @@
 """Native Steam Deck/Linux launcher. No system installation or Proton required."""
+from historical_tools import retired
+if __name__ == "__main__":
+    retired("launch_linux.py")
 import argparse,json,os,re,subprocess,sys
 from pathlib import Path
 

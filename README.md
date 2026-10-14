@@ -32,6 +32,8 @@ All 360 original illustrations and their generation records are preserved. Revie
 
 Private game files, extracted content, logs, test saves and release archives are ignored. Never distribute owned DLLs/PCKs or extracted RL2 images. The old StS1 Workshop item remains separate from the StS2 port.
 
+Historical StS1 launchers, packagers and reconstruction writers fail before execution. Archived Melty/Workshop configuration is under `historical/sts1/`; current configuration is exclusively under `sts2/`. See the [historical isolation audit](docs/historical-sts1-audit.md) before inspecting retired tools.
+
 ## License and credits
 
 Original mod code and illustrations: **CapeKid, MIT**. Remixes with attribution are allowed. Slay the Spire 2 belongs to Mega Crit; Rogue Legacy 2 belongs to Cellar Door Games. The standalone StS2 package contains original mod assets; neither game's extracted assets are distributed.

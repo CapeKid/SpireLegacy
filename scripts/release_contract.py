@@ -27,6 +27,18 @@ def safe_name(name):
     require(not any(ord(c)<32 for c in name),'Control character in archive path')
     return name
 
+def exclude_historical_files(files):
+    """Retired executable content is forbidden even if future inputs declare it."""
+    for name in files:
+        safe_name(name)
+        parts=name.lower().split('/')
+        require(not any(p in {'reader','readerlinux','spirelegacyruntime','historical'} for p in parts),
+                'Historical runtime directory in native release: '+name)
+        require(not parts[-1].endswith(('.jar','.java','.py','.cmd','.sh','.exe')),
+                'Historical executable/source in native release: '+name)
+        require(parts[-1] not in {'content-reader.zip','assets.json','host_assets.json','source.json','family.json'},
+                'Historical reader or save data in native release: '+name)
+
 def configuration(root):
     manifest=read_json(root/'sts2/SpireLegacy.json');require(isinstance(manifest,dict),'Invalid mod manifest');v=version(manifest.get('version'))
     require(manifest.get('id')=='SpireLegacy' and manifest.get('author')=='CapeKid','Wrong mod identity/author')
@@ -107,6 +119,7 @@ def payloads(root,expected_hash,baselib=None):
     workspace={'content/SpireLegacy/'+name:data for name,data in mod.items()}
     workspace.update({'workshop.json':(root/'sts2/workshop.json').read_bytes(),'README.md':mod['README.md'],'traits.md':mod['traits.md'],'image.png':image.getvalue()})
     bundle=dict(standalone);bundle.update({'mods/BaseLib/'+name:data for name,data in base_files.items()});bundle['melty.json']=(root/'sts2/melty.json').read_bytes()
+    for files in (standalone,workspace,bundle):exclude_historical_files(files)
     return v,dict(standalone=standalone,workshop=workspace,melty=bundle)
 
 def check_links(mod):

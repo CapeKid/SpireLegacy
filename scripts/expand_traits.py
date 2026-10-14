@@ -3,6 +3,8 @@
 Names and enum identifiers are factual references; descriptions below are original.
 The private audit and extracted game text are never packaged.
 """
+from historical_tools import retired
+retired("expand_traits.py")
 import json
 import re
 from pathlib import Path

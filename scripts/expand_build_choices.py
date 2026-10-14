@@ -1,4 +1,6 @@
 """Add 45 individually designed cards per class without replacing existing IDs."""
+from historical_tools import retired
+retired("expand_build_choices.py")
 import json, re
 from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]

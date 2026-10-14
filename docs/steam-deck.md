@@ -1,4 +1,4 @@
-# Steam Deck — Slay the Spire 2
+# Steam Deck â€” Slay the Spire 2
 
 For the current mod, follow the [StS2 installation guide](sts2-port.md#workshop-installation). Install Slay the Spire 2, BaseLib and the StS2 Spire Legacy Workshop item; Rogue Legacy 2 and a content reader are no longer required. Regular and public-beta are supported; co-op peers must use matching game and mod versions.
 
@@ -8,11 +8,11 @@ The family-name and playtest crown editors offer controller-selectable on-screen
 
 Solo Manor browsing pauses the game and restores its previous pause state on close. Co-op browsing keeps networking and gameplay running. The modal closes when leaving its owning character-select/run screen. Family progression uses `SpireLegacy2/family.json` in the platform local application-data directory, or `HEIR_DATA_DIR`; old StS1 family files and caches use a different directory.
 
-The [Manor audit](adversarial-manor.md) records native Windows controller-action checks on both branches, including a 1280×800/16:10 layout and two-peer networking. Synthetic actions and inspected screenshots do not certify physical Deck buttons, touch/keyboard switching or Linux/Proton transport; those remain device playtests under #110.
+The [Manor audit](adversarial-manor.md) records native Windows controller-action checks on both branches, including a 1280Ã—800/16:10 layout and two-peer networking. Synthetic actions and inspected screenshots do not certify physical Deck buttons, touch/keyboard switching or Linux/Proton transport; those remain device playtests under #110.
 
 ## Historical StS1 instructions
 
-The remainder documents the retired StS1 package and is not the installation procedure for the current StS2 mod.
+The remainder documents the retired StS1 package and is not the installation procedure for the current StS2 mod. Historical launch/build commands are disabled in the current checkout; see the [historical isolation audit](historical-sts1-audit.md). The paths and dependency versions below are preserved records, not current recommendations.
 
 Spire Legacy has a native Linux x86_64 launcher and bundled content-reader runtime. Steam Deck uses this package; no Proton setting, Python installation, sudo command or SteamOS system change is required by the mod. The creator verified Workshop loading, gameplay and controls with both Steam Linux Runtime and Proton after the 0.1.8 update. The 0.4.0 shared-pool revision is verified in the owned Windows game; it has not yet had a full Deck playthrough.
 

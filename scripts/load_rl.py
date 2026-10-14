@@ -1,4 +1,7 @@
 """Read only selected sprites from the player's own Rogue Legacy 2 installation."""
+from historical_tools import retired
+if __name__ == "__main__":
+    retired("load_rl.py")
 import argparse, hashlib, json, os, re, sys, tempfile, zipfile, io
 import types
 from pathlib import Path
