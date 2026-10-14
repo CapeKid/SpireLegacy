@@ -28,7 +28,7 @@ public static class CoopSurvivalOracle
         var card=player.PlayerCombatState.Hand.Cards.FirstOrDefault(c=>c.CanPlay()&&
             (attack?c.Type==CardType.Attack:c is LegacyCard lc&&lc.Key=="knight_guard"));
         card??=player.PlayerCombatState.Hand.Cards.FirstOrDefault(c=>c.CanPlay()&&c is MegaCrit.Sts2.Core.Models.Cards.Slimed);
-        if(card==null){CombatManager.Instance.SetReadyToEndTurn(player,false);return new{action="end-turn",state=CoopOracle.State()};}
+        if(card==null){CoopOracle.EndTurn();return new{action="end-turn",state=CoopOracle.State()};}
         var energy=player.PlayerCombatState.Energy;
         var cost=card.EnergyCost.GetWithModifiers(CostModifiers.All);
         var target=card.TargetType==TargetType.AnyEnemy?player.Creature.CombatState!.GetOpponentsOf(player.Creature).First(c=>c.IsAlive):null;

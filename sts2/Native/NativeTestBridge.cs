@@ -135,7 +135,7 @@ public static class NativeTestBridge
                 case "coop-revival-checks":result=await CoopAdversarialOracle.Revival(RunState());break;
                 case "coop-random-seed":result=CoopAdversarialOracle.RandomHeirSeed();break;
                 case "coop-hold":CoopBloodlines.TestHoldSelections=request.GetProperty("hold").GetBoolean();if(!CoopBloodlines.TestHoldSelections)CoopBloodlines.Resend();result=new{holding=CoopBloodlines.TestHoldSelections};break;
-                case "coop-turn":MegaCrit.Sts2.Core.Combat.CombatManager.Instance.SetReadyToEndTurn(PlayerBloodlines.LocalPlayer!,false);result=CoopOracle.State();break;
+                case "coop-turn":CoopOracle.EndTurn();result=CoopOracle.State();break;
                 case "coop-save-quit":await MegaCrit.Sts2.Core.Saves.SaveManager.Instance.SaveRun(null);await NGame.Instance!.ReturnToMainMenu();result=new{saved=true};break;
                 case "coop-resume-host":result=await CoopOracle.Resume(request,true);break;
                 case "coop-resume-join":result=await CoopOracle.Resume(request,false);break;

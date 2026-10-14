@@ -63,6 +63,12 @@ public static class CoopOracle
         RunManager.Instance.ActionQueueSynchronizer.RequestEnqueue(new MegaCrit.Sts2.Core.GameActions.VoteForMapCoordAction(PlayerBloodlines.LocalPlayer!,run.MapLocation,vote));
         return new{voted=next.coord.ToString()};
     }
+    public static void EndTurn()
+    {
+        var player=PlayerBloodlines.LocalPlayer!;
+        RunManager.Instance.ActionQueueSynchronizer.RequestEnqueue(
+            new MegaCrit.Sts2.Core.GameActions.Multiplayer.EndPlayerTurnAction(player,player.PlayerCombatState!.TurnNumber));
+    }
     public static async Task<object> Play(bool upgraded=false)
     {
         var player=PlayerBloodlines.LocalPlayer!;
