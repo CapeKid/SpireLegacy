@@ -18,7 +18,8 @@ namespace SpireLegacy;
 public static class TacticalPilot
 {
     public record Decision(CardModel Card,Creature? Target,double Score,string Reason);
-    public static int Incoming(Player player)=>player.Creature.CombatState!.GetOpponentsOf(player.Creature).Where(e=>e.IsAlive).Sum(e=>e.Monster!.NextMove.Intents.OfType<MegaCrit.Sts2.Core.MonsterMoves.Intents.AttackIntent>().Sum(a=>a.GetTotalDamage(new[]{player.Creature},e)));
+    public static int Threat(Player player,Creature enemy)=>enemy.IsAlive?enemy.Monster!.NextMove.Intents.OfType<MegaCrit.Sts2.Core.MonsterMoves.Intents.AttackIntent>().Sum(a=>a.GetTotalDamage(new[]{player.Creature},enemy)):0;
+    public static int Incoming(Player player)=>player.Creature.CombatState!.GetOpponentsOf(player.Creature).Sum(e=>Threat(player,e));
     private static int Cost(CardModel card)=>card.EnergyCost.CostsX?card.Owner.PlayerCombatState!.Energy:Math.Max(0,card.EnergyCost.GetWithModifiers(CostModifiers.All));
     private static decimal Damage(CardModel card,Creature target)
     {

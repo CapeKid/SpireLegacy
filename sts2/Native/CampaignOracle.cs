@@ -161,8 +161,10 @@ public static class CampaignOracle
                         }
                         if(i==49)return Result("play-cap",new{turn,entries,plays});
                         var energy=player.PlayerCombatState.Energy;var hp=player.Creature.CurrentHp;
+                        var blockBefore=player.Creature.Block;
+                        var targetThreat=decision?.Target is {} selectedTarget?TacticalPilot.Threat(player,selectedTarget):0;
                         await BalanceOracle.Play(next,decision?.Target);Observe();
-                        plays.Add(new{id=Key(next),upgraded=next.IsUpgraded,netEnergy=player.PlayerCombatState is {} remaining?(int?)(energy-remaining.Energy):null,netHpLost=hp-player.Creature.CurrentHp,reason=decision?.Reason,target=decision?.Target?.Monster?.Id.ToString()});
+                        plays.Add(new{id=Key(next),upgraded=next.IsUpgraded,netEnergy=player.PlayerCombatState is {} remaining?(int?)(energy-remaining.Energy):null,netHpLost=hp-player.Creature.CurrentHp,reason=decision?.Reason,score=decision?.Score,incomingBefore=incoming,blockBefore,targetThreat,target=decision?.Target?.Monster?.Id.ToString()});
                     }
                     if(tactical){
                         var limit=player.Potions.Count();
