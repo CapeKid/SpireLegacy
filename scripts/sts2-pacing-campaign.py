@@ -21,14 +21,17 @@ try:
         if number==1:args.update(manorTier=0,quick=False)
         send('start',**args)
         entry=dict(run=number,seed=args['seed'],crownsBefore=before['crowns'],manorBefore=before['manor'],status='running');report['runs'].append(entry)
-        deadline=time.monotonic()+1200;stalls=0
+        deadline=time.monotonic()+1200;waiting_since=None
         for step in range(1200):
             assert time.monotonic()<deadline,'20-minute run cap'
             result=send('balance-campaign-step',policy='planned',rewardPolicy='defensive')
             entry['lastState']=result['state'];action=result['action']
             if action=='finished':entry['status']='finished';break
             assert not action.startswith('unsupported') and action not in ('play-cap','turn-cap'),result
-            stalls=stalls+1 if action=='wait' else 0;assert stalls<30,'Stalled trajectory'
+            if action=='wait':
+                waiting_since=waiting_since or time.monotonic()
+                assert time.monotonic()-waiting_since<45,('Stalled trajectory',result)
+            else:waiting_since=None
             time.sleep(.2)
         else:raise AssertionError('Decision cap')
         final=send('lifecycle-state');assert final['profile']['active'] is None and final['profile']==final['persisted'],final

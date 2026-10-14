@@ -50,7 +50,7 @@ try:
     assert not (profile/'family.json').exists(), 'Campaign requires a fresh family profile.'
     send('start', **{'class': cls, 'manorTier': tier, 'quick': False,
                     'seed': seed, 'ascension': ascension, 'traits': traits})
-    stalled = 0
+    waiting_since = None
     deadline = time.monotonic() + 1200
     for step in range(1200):
         if time.monotonic() > deadline:
@@ -70,8 +70,9 @@ try:
         if action.startswith('unsupported') or action in {'play-cap', 'turn-cap'}:
             report['status'] = action
             break
-        stalled = stalled + 1 if action == 'wait' else 0
-        if stalled >= 30:
+        if action == 'wait':waiting_since=waiting_since or time.monotonic()
+        else:waiting_since=None
+        if waiting_since is not None and time.monotonic()-waiting_since>=45:
             report['status'] = 'stalled'
             break
         time.sleep(.25)
