@@ -66,7 +66,7 @@ Requires .NET SDK 9 or later and your owned StS2 assemblies. Set `Sts2DataDir` t
 ```powershell
 python scripts/sts2-pool-expansion.py
 python scripts/sts2-generate.py
-dotnet build sts2/SpireLegacy.csproj -c Release -p:Sts2DataDir="C:/path/to/StS2/data_sts2_windows_x86_64"
+dotnet build sts2/SpireLegacy.csproj -c Release -p:DesignPython="C:/path/to/python.exe" -p:Sts2DataDir="C:/path/to/StS2/data_sts2_windows_x86_64"
 dotnet run --project sts2/tests/SpireLegacy.CoreChecks.csproj
 python scripts/sts2-package.py
 ```
@@ -154,3 +154,5 @@ Inline energy symbols in descriptions and Neow options match native 24px text ar
 ## 1.0.27 startup compatibility
 
 Initialization runs once, validates supported branch APIs and removes partial patches on failure before family generation. Includes the merged guarded test-harness changes. The same release DLL passed owned regular v0.107.1 and public-beta v0.111.0, all three heirs, solo/co-op, paid card cleanup, same-branch resume and native character controls. See `docs/adversarial-startup.md` in the source repository for detailed coverage. Native beta saves can contain RNG values unsupported by regular builds; complete campaign migration between branches remains unverified.
+
+Build-time design validation requires Python 3.10+ with Pillow (`python -m pip install Pillow`). Set `DesignPython` when Python is not on PATH. This is a contributor requirement; installed mods require no Python. The build runs preflight and checks generated models before compiling. Edit the checked-in contracts in `scripts/design-schema.json` deliberately when adding fields, then regenerate with `scripts/sts2-generate.py`. Bounds are authoring guards, not balance targets.

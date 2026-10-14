@@ -1,0 +1,446 @@
+{
+  "ancient_cards": {
+    "types": ["dict"],
+    "required": ["cardId", "classId", "id", "reason", "reference", "role"],
+    "fields": {
+      "cardId": {"types": ["str"]},
+      "classId": {"types": ["str"]},
+      "id": {"types": ["str"], "pattern": "[A-Za-z][A-Za-z0-9_-]*"},
+      "reason": {"types": ["str"]},
+      "reference": {"types": ["str"]},
+      "role": {"types": ["str"]}
+    }
+  },
+  "ancient_dialogue": {
+    "types": ["dict"],
+    "required": ["ancient", "classId", "closing", "followup", "id", "opening", "reply", "visit"],
+    "fields": {
+      "ancient": {"types": ["str"], "enum": ["DARV", "NEOW", "NONUPEIPE", "OROBAS", "PAEL", "TANX", "TEZCATARA", "VAKUU"]},
+      "classId": {"types": ["str"]},
+      "closing": {"types": ["str"]},
+      "followup": {"types": ["str"]},
+      "id": {"types": ["str"], "pattern": "[A-Za-z][A-Za-z0-9_-]*"},
+      "opening": {"types": ["str"]},
+      "reply": {"types": ["str"]},
+      "visit": {"types": ["str"], "enum": ["first", "return"]}
+    }
+  },
+  "assets": {
+    "types": ["dict"],
+    "required": ["id", "output", "sourceFile", "sourceName", "sourceType"],
+    "fields": {
+      "id": {"types": ["str"], "pattern": "[A-Za-z][A-Za-z0-9_-]*"},
+      "output": {"types": ["str"]},
+      "sourceFile": {"types": ["str"]},
+      "sourceName": {"types": ["str"]},
+      "sourceType": {"types": ["str"]}
+    }
+  },
+  "balance_changes": {
+    "types": ["dict"],
+    "required": ["after", "before", "id", "reason", "reference"],
+    "fields": {
+      "after": {"types": ["dict"], "fields": {"block": {"types": ["int"], "min": -10000, "max": 10000}, "cost": {"types": ["int"], "min": -10000, "max": 10000}, "damage": {"types": ["int"], "min": -10000, "max": 10000}, "dexterity": {"types": ["int"], "min": -10000, "max": 10000}, "discard": {"types": ["int"], "min": -10000, "max": 10000}, "draw": {"types": ["int"], "min": -10000, "max": 10000}, "energy": {"types": ["int"], "min": -10000, "max": 10000}, "exhaust": {"types": ["bool"]}, "heal": {"types": ["int"], "min": -10000, "max": 10000}, "hits": {"types": ["int"], "min": -10000, "max": 10000}, "hpLoss": {"types": ["int"], "min": -10000, "max": 10000}, "magic": {"types": ["int"], "min": -10000, "max": 10000}, "nextBlock": {"types": ["int"], "min": -10000, "max": 10000}, "nextDraw": {"types": ["int"], "min": -10000, "max": 10000}, "nextEnergy": {"types": ["int"], "min": -10000, "max": 10000}, "plated": {"types": ["int"], "min": -10000, "max": 10000}, "poison": {"types": ["int"], "min": -10000, "max": 10000}, "power": {"types": ["str"]}, "special": {"types": ["str"]}, "specialAmount": {"types": ["int"], "min": -10000, "max": 10000}, "strength": {"types": ["int"], "min": -10000, "max": 10000}, "thorns": {"types": ["int"], "min": -10000, "max": 10000}, "upgradeBlock": {"types": ["int"], "min": -10000, "max": 10000}, "upgradeCost": {"types": ["bool"]}, "upgradeDamage": {"types": ["int"], "min": -10000, "max": 10000}, "upgradeDiscard": {"types": ["int"], "min": -10000, "max": 10000}, "upgradeDraw": {"types": ["int"], "min": -10000, "max": 10000}, "upgradeMagic": {"types": ["int"], "min": -10000, "max": 10000}, "upgradeSpecial": {"types": ["int"], "min": -10000, "max": 10000}, "vigor": {"types": ["int"], "min": -10000, "max": 10000}, "vulnerable": {"types": ["int"], "min": -10000, "max": 10000}, "weak": {"types": ["int"], "min": -10000, "max": 10000}}, "required": ["block", "cost", "damage", "dexterity", "discard", "draw", "energy", "exhaust", "heal", "hits", "hpLoss", "magic", "nextBlock", "nextDraw", "nextEnergy", "plated", "poison", "power", "special", "specialAmount", "strength", "thorns", "upgradeBlock", "upgradeCost", "upgradeDamage", "upgradeDiscard", "upgradeMagic", "upgradeSpecial", "vigor", "vulnerable", "weak"]},
+      "before": {"types": ["dict"], "fields": {"block": {"types": ["int"], "min": -10000, "max": 10000}, "cost": {"types": ["int"], "min": -10000, "max": 10000}, "damage": {"types": ["int"], "min": -10000, "max": 10000}, "dexterity": {"types": ["int"], "min": -10000, "max": 10000}, "discard": {"types": ["int"], "min": -10000, "max": 10000}, "draw": {"types": ["int"], "min": -10000, "max": 10000}, "energy": {"types": ["int"], "min": -10000, "max": 10000}, "exhaust": {"types": ["bool"]}, "heal": {"types": ["int"], "min": -10000, "max": 10000}, "hits": {"types": ["int"], "min": -10000, "max": 10000}, "hpLoss": {"types": ["int"], "min": -10000, "max": 10000}, "magic": {"types": ["int"], "min": -10000, "max": 10000}, "nextBlock": {"types": ["int"], "min": -10000, "max": 10000}, "nextDraw": {"types": ["int"], "min": -10000, "max": 10000}, "nextEnergy": {"types": ["int"], "min": -10000, "max": 10000}, "plated": {"types": ["int"], "min": -10000, "max": 10000}, "poison": {"types": ["int"], "min": -10000, "max": 10000}, "power": {"types": ["str"]}, "special": {"types": ["str"]}, "specialAmount": {"types": ["int"], "min": -10000, "max": 10000}, "strength": {"types": ["int"], "min": -10000, "max": 10000}, "thorns": {"types": ["int"], "min": -10000, "max": 10000}, "upgradeBlock": {"types": ["int"], "min": -10000, "max": 10000}, "upgradeCost": {"types": ["bool"]}, "upgradeDamage": {"types": ["int"], "min": -10000, "max": 10000}, "upgradeDiscard": {"types": ["int"], "min": -10000, "max": 10000}, "upgradeMagic": {"types": ["int"], "min": -10000, "max": 10000}, "upgradeSpecial": {"types": ["int"], "min": -10000, "max": 10000}, "vigor": {"types": ["int"], "min": -10000, "max": 10000}, "vulnerable": {"types": ["int"], "min": -10000, "max": 10000}, "weak": {"types": ["int"], "min": -10000, "max": 10000}}, "required": ["block", "cost", "damage", "dexterity", "discard", "draw", "energy", "exhaust", "heal", "hits", "hpLoss", "magic", "nextBlock", "nextDraw", "nextEnergy", "plated", "poison", "power", "special", "specialAmount", "strength", "thorns", "upgradeBlock", "upgradeCost", "upgradeDamage", "upgradeDiscard", "upgradeMagic", "upgradeSpecial", "vigor", "vulnerable", "weak"]},
+      "id": {"types": ["str"], "pattern": "[A-Za-z][A-Za-z0-9_-]*"},
+      "reason": {"types": ["str"]},
+      "reference": {"types": ["str"]}
+    }
+  },
+  "branch_cards": {
+    "types": ["dict"],
+    "required": ["cardId", "classId", "id", "scope"],
+    "fields": {
+      "cardId": {"types": ["str"]},
+      "classId": {"types": ["str"]},
+      "id": {"types": ["str"], "pattern": "[A-Za-z][A-Za-z0-9_-]*"},
+      "scope": {"types": ["str"], "enum": ["shared", "unique"]}
+    }
+  },
+  "card_art": {
+    "types": ["dict"],
+    "required": ["cardId", "generator", "height", "id", "name", "path", "prompt", "sha256", "width"],
+    "fields": {
+      "cardId": {"types": ["str"]},
+      "generator": {"types": ["str"]},
+      "height": {"types": ["int"], "min": 1, "max": 10000},
+      "id": {"types": ["str"], "pattern": "[A-Za-z][A-Za-z0-9_-]*"},
+      "name": {"types": ["str"]},
+      "path": {"types": ["str"]},
+      "prompt": {"types": ["str"]},
+      "sha256": {"types": ["str"], "pattern": "[a-f0-9]{64}"},
+      "width": {"types": ["int"], "min": 1, "max": 10000}
+    }
+  },
+  "card_builds": {
+    "types": ["dict"],
+    "required": ["build", "classId", "id", "role"],
+    "fields": {
+      "build": {"types": ["str"]},
+      "classId": {"types": ["str"]},
+      "id": {"types": ["str"], "pattern": "[A-Za-z][A-Za-z0-9_-]*"},
+      "role": {"types": ["str"]}
+    }
+  },
+  "card_pools": {
+    "types": ["dict"],
+    "required": ["cardId", "classId", "id", "scope"],
+    "fields": {
+      "cardId": {"types": ["str"]},
+      "classId": {"types": ["str"]},
+      "id": {"types": ["str"], "pattern": "[A-Za-z][A-Za-z0-9_-]*"},
+      "scope": {"types": ["str"], "enum": ["shared", "unique"]}
+    }
+  },
+  "cards": {
+    "types": ["dict"],
+    "required": ["aoe", "art", "asset", "block", "classId", "cost", "damage", "dexterity", "discard", "draw", "energy", "ethereal", "exhaust", "heal", "hits", "hpLoss", "id", "innate", "magic", "name", "nextBlock", "nextDraw", "nextEnergy", "plated", "poison", "power", "rarity", "retain", "special", "specialAmount", "strength", "thorns", "type", "upgradeBlock", "upgradeCost", "upgradeDamage", "upgradeDiscard", "upgradeDraw", "upgradeMagic", "upgradeSpecial", "vigor", "vulnerable", "weak"],
+    "fields": {
+      "aoe": {"types": ["bool"]},
+      "art": {"types": ["str"]},
+      "asset": {"types": ["str"]},
+      "block": {"types": ["int"], "min": 0, "max": 10000},
+      "classId": {"types": ["str"]},
+      "cost": {"types": ["int"], "min": 0, "max": 10},
+      "damage": {"types": ["int"], "min": 0, "max": 10000},
+      "dexterity": {"types": ["int"], "min": 0, "max": 10000},
+      "discard": {"types": ["int"], "min": 0, "max": 10000},
+      "draw": {"types": ["int"], "min": 0, "max": 10000},
+      "energy": {"types": ["int"], "min": 0, "max": 10000},
+      "ethereal": {"types": ["bool"]},
+      "exhaust": {"types": ["bool"]},
+      "heal": {"types": ["int"], "min": 0, "max": 10000},
+      "hits": {"types": ["int"], "min": 1, "max": 100},
+      "hpLoss": {"types": ["int"], "min": 0, "max": 10000},
+      "id": {"types": ["str"], "pattern": "[a-z][a-z0-9_]*"},
+      "innate": {"types": ["bool"]},
+      "magic": {"types": ["int"], "min": 0, "max": 10000},
+      "name": {"types": ["str"]},
+      "nextBlock": {"types": ["int"], "min": 0, "max": 10000},
+      "nextDraw": {"types": ["int"], "min": 0, "max": 10000},
+      "nextEnergy": {"types": ["int"], "min": 0, "max": 10000},
+      "plated": {"types": ["int"], "min": 0, "max": 10000},
+      "poison": {"types": ["int"], "min": 0, "max": 10000},
+      "power": {"types": ["str"]},
+      "rarity": {"types": ["str"], "enum": ["BASIC", "COMMON", "UNCOMMON", "RARE", "ANCIENT"]},
+      "retain": {"types": ["bool"]},
+      "special": {"types": ["str"]},
+      "specialAmount": {"types": ["int"], "min": 0, "max": 10000},
+      "strength": {"types": ["int"], "min": 0, "max": 10000},
+      "thorns": {"types": ["int"], "min": 0, "max": 10000},
+      "type": {"types": ["str"], "enum": ["ATTACK", "SKILL", "POWER"]},
+      "upgradeBlock": {"types": ["int"], "min": 0, "max": 10000},
+      "upgradeCost": {"types": ["bool"]},
+      "upgradeDamage": {"types": ["int"], "min": 0, "max": 10000},
+      "upgradeDiscard": {"types": ["int"], "min": 0, "max": 10000},
+      "upgradeDraw": {"types": ["int"], "min": -1, "max": 10000},
+      "upgradeMagic": {"types": ["int"], "min": 0, "max": 10000},
+      "upgradeSpecial": {"types": ["int"], "min": 0, "max": 10000},
+      "vigor": {"types": ["int"], "min": 0, "max": 10000},
+      "vulnerable": {"types": ["int"], "min": 0, "max": 10000},
+      "weak": {"types": ["int"], "min": 0, "max": 10000}
+    }
+  },
+  "character_art": {
+    "types": ["dict"],
+    "required": ["cell", "death", "feet", "height", "id", "insets", "path", "regions", "sha256"],
+    "fields": {
+      "cell": {"types": ["int"], "min": 1, "max": 10000},
+      "death": {"types": ["dict", "str"], "fields": {"cell": {"types": ["int"], "min": -10000, "max": 10000}, "feet": {"types": ["list"], "items": {"types": ["int"], "min": -10000, "max": 10000}}, "height": {"types": ["int"], "min": -10000, "max": 10000}, "path": {"types": ["str"]}, "regions": {"types": ["list"], "items": {"types": ["list"], "items": {"types": ["int"], "min": -10000, "max": 10000}}}, "sha256": {"types": ["str"]}}, "required": ["cell", "feet", "height", "path", "regions", "sha256"], "enumStrings": ["none"]},
+      "feet": {"types": ["list"], "items": {"types": ["int"], "min": -10000, "max": 10000}},
+      "height": {"types": ["int"], "min": 1, "max": 10000},
+      "id": {"types": ["str"], "pattern": "[A-Za-z][A-Za-z0-9_-]*"},
+      "insets": {"types": ["list"], "items": {"types": ["int"], "min": -10000, "max": 10000}},
+      "path": {"types": ["str"]},
+      "regions": {"types": ["list"], "items": {"types": ["list"], "items": {"types": ["int"], "min": -10000, "max": 10000}}},
+      "sha256": {"types": ["str"], "pattern": "[a-f0-9]{64}"}
+    }
+  },
+  "class_mechanics": {
+    "types": ["dict"],
+    "required": ["amount", "effect", "id", "limit", "name", "summary"],
+    "fields": {
+      "amount": {"types": ["int"], "min": 0, "max": 10000},
+      "effect": {"types": ["str"], "enum": ["charges", "counterguard", "rhythm"]},
+      "id": {"types": ["str"], "pattern": "[A-Za-z][A-Za-z0-9_-]*"},
+      "limit": {"types": ["int"], "min": 0, "max": 10000},
+      "name": {"types": ["str"]},
+      "summary": {"types": ["str"]}
+    }
+  },
+  "classes": {
+    "types": ["dict"],
+    "required": ["asset", "dexterity", "heal", "hp", "id", "name", "signature", "strength", "summary"],
+    "fields": {
+      "asset": {"types": ["str"]},
+      "dexterity": {"types": ["int"], "min": 0, "max": 10000},
+      "heal": {"types": ["int"], "min": 0, "max": 10000},
+      "hp": {"types": ["int"], "min": 1, "max": 10000},
+      "id": {"types": ["str"], "pattern": "[A-Za-z][A-Za-z0-9_-]*"},
+      "name": {"types": ["str"]},
+      "signature": {"types": ["str"]},
+      "strength": {"types": ["int"], "min": 0, "max": 10000},
+      "summary": {"types": ["str"]}
+    }
+  },
+  "decks": {
+    "types": ["dict"],
+    "required": ["cards", "classId", "id"],
+    "fields": {
+      "cards": {"types": ["list"], "items": {"types": ["str"]}},
+      "classId": {"types": ["str"]},
+      "id": {"types": ["str"], "pattern": "[A-Za-z][A-Za-z0-9_-]*"}
+    }
+  },
+  "family_chronicle": {
+    "types": ["dict"],
+    "required": ["classId", "id", "requirement", "rewardId", "rewardKind", "story", "title"],
+    "fields": {
+      "classId": {"types": ["str"]},
+      "id": {"types": ["str"], "pattern": "[A-Za-z][A-Za-z0-9_-]*"},
+      "requirement": {"types": ["str"]},
+      "rewardId": {"types": ["str"]},
+      "rewardKind": {"types": ["str"], "enum": ["motto", "relic", "story"]},
+      "story": {"types": ["str"]},
+      "title": {"types": ["str"]}
+    }
+  },
+  "heir_potions": {
+    "types": ["dict"],
+    "required": ["amount", "baseline", "description", "extra", "id", "rarity", "target", "title"],
+    "fields": {
+      "amount": {"types": ["int"], "min": 0, "max": 10000},
+      "baseline": {"types": ["str"]},
+      "description": {"types": ["str"]},
+      "extra": {"types": ["int"], "min": 0, "max": 10000},
+      "id": {"types": ["str"], "pattern": "[A-Za-z][A-Za-z0-9_-]*"},
+      "rarity": {"types": ["str"], "enum": ["Common", "Uncommon"]},
+      "target": {"types": ["str"], "enum": ["AnyEnemy", "Self"]},
+      "title": {"types": ["str"]}
+    }
+  },
+  "heir_relics": {
+    "types": ["dict"],
+    "required": ["amount", "baseline", "description", "extra", "flavor", "id", "rarity", "route", "threshold", "title"],
+    "fields": {
+      "amount": {"types": ["int"], "min": 0, "max": 10000},
+      "baseline": {"types": ["str"]},
+      "description": {"types": ["str"]},
+      "extra": {"types": ["int"], "min": 0, "max": 10000},
+      "flavor": {"types": ["str"]},
+      "id": {"types": ["str"], "pattern": "[A-Za-z][A-Za-z0-9_-]*"},
+      "rarity": {"types": ["str"], "enum": ["Common", "Rare", "Uncommon"]},
+      "route": {"types": ["str"]},
+      "threshold": {"types": ["int"], "min": 0, "max": 10000},
+      "title": {"types": ["str"]}
+    }
+  },
+  "hooks": {
+    "types": ["dict"],
+    "required": ["api", "id", "implementation", "system"],
+    "fields": {
+      "api": {"types": ["str"]},
+      "id": {"types": ["str"], "pattern": "[A-Za-z][A-Za-z0-9_-]*"},
+      "implementation": {"types": ["str"]},
+      "system": {"types": ["str"]}
+    }
+  },
+  "host_assets": {
+    "types": ["dict"],
+    "required": ["id", "output", "resize", "sourceFile", "sourceName"],
+    "fields": {
+      "id": {"types": ["str"], "pattern": "[A-Za-z][A-Za-z0-9_-]*"},
+      "output": {"types": ["str"]},
+      "resize": {"types": ["int"], "min": 0, "max": 10000},
+      "sourceFile": {"types": ["str"]},
+      "sourceName": {"types": ["str"]}
+    }
+  },
+  "icon_art": {
+    "types": ["dict"],
+    "required": ["author", "height", "id", "kind", "license", "name", "path", "provenance", "sha256", "subjectId", "width"],
+    "fields": {
+      "author": {"types": ["str"], "enum": ["CapeKid"]},
+      "height": {"types": ["int"], "min": 1, "max": 10000},
+      "id": {"types": ["str"], "pattern": "[A-Za-z][A-Za-z0-9_-]*"},
+      "kind": {"types": ["str"]},
+      "license": {"types": ["str"], "enum": ["MIT"]},
+      "name": {"types": ["str"]},
+      "path": {"types": ["str"]},
+      "provenance": {"types": ["str"]},
+      "sha256": {"types": ["str"], "pattern": "[a-f0-9]{64}"},
+      "subjectId": {"types": ["str"]},
+      "width": {"types": ["int"], "min": 1, "max": 10000}
+    }
+  },
+  "manor": {
+    "types": ["dict"],
+    "required": ["baseCost", "costStep", "effect", "id", "maxLevel", "name", "perLevel", "requires", "summary"],
+    "fields": {
+      "baseCost": {"types": ["int"], "min": 1, "max": 10000},
+      "costStep": {"types": ["int"], "min": 0, "max": 10000},
+      "effect": {"types": ["str"], "enum": ["dexterity", "draw", "gold", "heal", "hp", "strength"]},
+      "id": {"types": ["str"], "pattern": "[A-Za-z][A-Za-z0-9_-]*"},
+      "maxLevel": {"types": ["int"], "min": 1, "max": 10000},
+      "name": {"types": ["str"]},
+      "perLevel": {"types": ["int"], "min": 0, "max": 10000},
+      "requires": {"types": ["str"]},
+      "summary": {"types": ["str"]}
+    }
+  },
+  "pool_expansion": {
+    "types": ["dict"],
+    "required": ["availability", "build", "cardId", "classId", "id", "reference"],
+    "fields": {
+      "availability": {"types": ["str"], "enum": ["all", "public-beta"]},
+      "build": {"types": ["str"]},
+      "cardId": {"types": ["str"]},
+      "classId": {"types": ["str"]},
+      "id": {"types": ["str"], "pattern": "[A-Za-z][A-Za-z0-9_-]*"},
+      "reference": {"types": ["str"]}
+    }
+  },
+  "pool_targets": {
+    "types": ["dict"],
+    "required": ["basic", "common", "id", "rare", "reference", "total", "uncommon"],
+    "fields": {
+      "basic": {"types": ["int"], "min": 0, "max": 10000},
+      "common": {"types": ["int"], "min": 0, "max": 10000},
+      "id": {"types": ["str"], "pattern": "[A-Za-z][A-Za-z0-9_-]*"},
+      "rare": {"types": ["int"], "min": 0, "max": 10000},
+      "reference": {"types": ["str"]},
+      "total": {"types": ["int"], "min": 0, "max": 10000},
+      "uncommon": {"types": ["int"], "min": 0, "max": 10000}
+    }
+  },
+  "potion_art": {
+    "types": ["dict"],
+    "required": ["author", "id", "license", "outline", "outlineSha256", "path", "provenance", "sha256"],
+    "fields": {
+      "author": {"types": ["str"], "enum": ["CapeKid"]},
+      "id": {"types": ["str"], "pattern": "[A-Za-z][A-Za-z0-9_-]*"},
+      "license": {"types": ["str"], "enum": ["MIT"]},
+      "outline": {"types": ["str"]},
+      "outlineSha256": {"types": ["str"], "pattern": "[a-f0-9]{64}"},
+      "path": {"types": ["str"]},
+      "provenance": {"types": ["str"]},
+      "sha256": {"types": ["str"], "pattern": "[a-f0-9]{64}"}
+    }
+  },
+  "power_effects": {
+    "types": ["dict"],
+    "required": ["id", "summary"],
+    "fields": {
+      "id": {"types": ["str"], "pattern": "[a-z][a-z0-9_]*", "enum": ["after_image", "arcane_echo", "attack_vigor", "barricade", "berserk", "brutality", "buffer", "burst", "combust", "dark_embrace", "demon_form", "discard_block", "discard_energy", "double_tap", "envenom", "equilibrium", "establishment", "evolve", "exhaust_damage", "feel_no_pain", "fire_breathing", "flame_barrier", "foresight", "juggernaut", "metallicize", "noxious", "panache", "power_draw", "rupture", "sadistic", "scry_block", "skill_block", "skill_energy", "thorns", "thousand_cuts", "tools", "well_laid"]},
+      "summary": {"types": ["str"]}
+    }
+  },
+  "presentation_art": {
+    "types": ["dict"],
+    "required": ["author", "id", "kind", "license", "path", "provenance", "sha256"],
+    "fields": {
+      "author": {"types": ["str"], "enum": ["CapeKid"]},
+      "id": {"types": ["str"], "pattern": "[A-Za-z][A-Za-z0-9_-]*"},
+      "kind": {"types": ["str"], "enum": ["vector", "audio", "material", "scene"]},
+      "license": {"types": ["str"], "enum": ["MIT"]},
+      "path": {"types": ["str"]},
+      "provenance": {"types": ["str"]},
+      "sha256": {"types": ["str"], "pattern": "[a-f0-9]{64}"}
+    }
+  },
+  "relic_art": {
+    "types": ["dict"],
+    "required": ["author", "id", "license", "outline", "outlineSha256", "path", "provenance", "sha256"],
+    "fields": {
+      "author": {"types": ["str"], "enum": ["CapeKid"]},
+      "id": {"types": ["str"], "pattern": "[A-Za-z][A-Za-z0-9_-]*"},
+      "license": {"types": ["str"], "enum": ["MIT"]},
+      "outline": {"types": ["str"]},
+      "outlineSha256": {"types": ["str"], "pattern": "[a-f0-9]{64}"},
+      "path": {"types": ["str"]},
+      "provenance": {"types": ["str"]},
+      "sha256": {"types": ["str"], "pattern": "[a-f0-9]{64}"}
+    }
+  },
+  "special_effects": {
+    "types": ["dict"],
+    "required": ["id", "summary"],
+    "fields": {
+      "id": {"types": ["str"], "pattern": "[a-z][a-z0-9_]*", "enum": ["block_damage", "chain_damage", "charge_gain", "cleanse", "discard_block", "discard_draw", "discard_energy", "discount_hand", "double_block", "double_poison", "execute", "exhaust_block", "exhaust_damage", "exhaust_nonattacks", "exhaust_one", "exhume", "free_hand", "guard_bonus", "guarded_strength", "marked_bonus", "random_attack", "refill_hand", "retain_block", "retain_damage", "retrieve", "scry", "upgrade_attacks", "wounds"]},
+      "summary": {"types": ["str"]}
+    }
+  },
+  "starter_genes": {
+    "types": ["dict"],
+    "required": ["block", "damage", "draw", "heal", "id", "mercy", "poison", "summary"],
+    "fields": {
+      "block": {"types": ["int"], "min": -10000, "max": 10000},
+      "damage": {"types": ["int"], "min": -10000, "max": 10000},
+      "draw": {"types": ["int"], "min": -10000, "max": 10000},
+      "heal": {"types": ["int"], "min": -10000, "max": 10000},
+      "id": {"types": ["str"], "pattern": "[A-Za-z][A-Za-z0-9_-]*"},
+      "mercy": {"types": ["bool"]},
+      "poison": {"types": ["int"], "min": -10000, "max": 10000},
+      "summary": {"types": ["str"]}
+    }
+  },
+  "systems": {
+    "types": ["dict"],
+    "required": ["amount", "enabled", "hook", "id", "summary"],
+    "fields": {
+      "amount": {"types": ["int"], "min": 0, "max": 10000},
+      "enabled": {"types": ["bool"]},
+      "hook": {"types": ["str"]},
+      "id": {"types": ["str"], "pattern": "[A-Za-z][A-Za-z0-9_-]*"},
+      "summary": {"types": ["str"]}
+    }
+  },
+  "trait_coverage": {
+    "types": ["dict"],
+    "required": ["id", "name", "source", "sourceRarity", "status", "traitId"],
+    "fields": {
+      "id": {"types": ["str"], "pattern": "[A-Za-z][A-Za-z0-9_-]*"},
+      "name": {"types": ["str"]},
+      "source": {"types": ["str"]},
+      "sourceRarity": {"types": ["int"], "min": 0, "max": 10000},
+      "status": {"types": ["str"], "enum": ["adapted", "disabled_in_source"]},
+      "traitId": {"types": ["str"]}
+    }
+  },
+  "traits": {
+    "types": ["dict"],
+    "required": ["amount", "asset", "dexterity", "draw", "effect", "enabled", "excludes", "goldBonus", "heal", "hp", "id", "name", "scale", "source", "strength", "summary"],
+    "fields": {
+      "amount": {"types": ["int"], "min": -10000, "max": 10000},
+      "asset": {"types": ["str"]},
+      "dexterity": {"types": ["int"], "min": -10000, "max": 10000},
+      "draw": {"types": ["int"], "min": -10000, "max": 10000},
+      "effect": {"types": ["str"]},
+      "enabled": {"types": ["bool"]},
+      "excludes": {"types": ["list"], "items": {"types": ["str"]}},
+      "goldBonus": {"types": ["int"], "min": 0, "max": 10000},
+      "heal": {"types": ["int"], "min": -10000, "max": 10000},
+      "hp": {"types": ["int"], "min": -10000, "max": 10000},
+      "id": {"types": ["str"], "pattern": "[A-Za-z][A-Za-z0-9_-]*"},
+      "name": {"types": ["str"]},
+      "scale": {"types": ["float"], "min": 0.05, "max": 10},
+      "source": {"types": ["str"]},
+      "strength": {"types": ["int"], "min": -10000, "max": 10000},
+      "summary": {"types": ["str"]}
+    }
+  },
+  "ui_art": {
+    "types": ["dict"],
+    "required": ["generator", "height", "id", "path", "prompt", "sha256", "transparent", "width"],
+    "fields": {
+      "generator": {"types": ["str"]},
+      "height": {"types": ["int"], "min": 1, "max": 10000},
+      "id": {"types": ["str"], "pattern": "[A-Za-z][A-Za-z0-9_-]*"},
+      "path": {"types": ["str"]},
+      "prompt": {"types": ["str"]},
+      "sha256": {"types": ["str"], "pattern": "[a-f0-9]{64}"},
+      "transparent": {"types": ["bool"]},
+      "width": {"types": ["int"], "min": 1, "max": 10000}
+    }
+  }
+}

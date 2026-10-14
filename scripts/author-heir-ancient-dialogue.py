@@ -1,7 +1,9 @@
 """Original Heir conversations; no copied game dialogue."""
 import json
 from pathlib import Path
+from design_schema import load_sheets
 root=Path(__file__).resolve().parents[1]
+tables = load_sheets(root)
 # Opening/followup belong to the Ancient; each pair of replies is Knight, Mage, Ranger.
 scripts={
 'NEOW':[
@@ -50,5 +52,5 @@ for ancient,visits in scripts.items():
     for visit,(opening,followup,replies) in zip(['first','return'],visits):
         for cls,(reply,closing) in zip(['knight','mage','ranger'],replies):
             rows.append(dict(id=ancient.lower()+'_'+cls+'_'+visit,ancient=ancient,classId=cls,visit=visit,opening=opening,reply=reply,followup=followup,closing=closing))
-(root/'sheets/ancient_dialogue.json').write_text(json.dumps(rows,indent=2)+'\n')
+(root/'sheets/ancient_dialogue.json').write_text(json.dumps(rows,indent=2)+'\n', encoding='utf-8', newline='\n')
 print('Authored',len(rows),'original four-line conversations')

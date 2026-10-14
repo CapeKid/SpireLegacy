@@ -1,7 +1,9 @@
 """Reproducible original relic silhouettes, with separate white selection outlines."""
 import hashlib,json,re
 from pathlib import Path
+from design_schema import load_sheets
 root=Path(__file__).resolve().parents[1]
+tables = load_sheets(root)
 out=root/'src/main/resources/heir/relics';out.mkdir(parents=True,exist_ok=True)
 symbols={
  'heirloom_brooch':'<path d="M35 22L93 22L102 44L88 105L40 105L26 44Z" fill="#e7bc66"/><path d="M44 40Q64 26 84 40L81 80L64 96L47 80Z" fill="#7cc6d9"/><path d="M53 62L64 48L75 62L64 76Z" fill="#e6f2ed"/><circle cx="35" cy="30" r="6" fill="#eeede1"/><circle cx="93" cy="30" r="6" fill="#eeede1"/>',
@@ -18,9 +20,9 @@ symbols={
 rows=[]
 for key,body in symbols.items():
     svg='<svg xmlns="http://www.w3.org/2000/svg" width="128" height="128" viewBox="0 0 128 128"><g stroke="#302b36" stroke-width="5" stroke-linejoin="round" stroke-linecap="round">'+body+'</g></svg>\n'
-    path=out/(key+'.svg');path.write_text(svg,encoding='utf-8')
+    path=out/(key+'.svg');path.write_text(svg,encoding='utf-8', newline='\n')
     outline=re.sub(r'#[0-9a-fA-F]{6}', '#ffffff', svg).replace('stroke-width="5"','stroke-width="9"')
-    op=out/(key+'-outline.svg');op.write_text(outline,encoding='utf-8')
+    op=out/(key+'-outline.svg');op.write_text(outline,encoding='utf-8', newline='\n')
     rows.append(dict(id=key,path=path.relative_to(root/'src/main/resources').as_posix(),sha256=hashlib.sha256(path.read_bytes()).hexdigest(),outline=op.relative_to(root/'src/main/resources').as_posix(),outlineSha256=hashlib.sha256(op.read_bytes()).hexdigest(),author='CapeKid',license='MIT',provenance='Original hand-authored vector geometry; scripts/author-heir-relics.py; no game-derived or external assets.'))
-(root/'sheets/relic_art.json').write_text(json.dumps(rows,indent=2)+'\n',encoding='utf-8')
+(root/'sheets/relic_art.json').write_text(json.dumps(rows,indent=2)+'\n',encoding='utf-8', newline='\n')
 print('Authored ten original relic icons and ten selection outlines.')
