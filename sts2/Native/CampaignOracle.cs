@@ -140,6 +140,9 @@ public static class CampaignOracle
                 var shopNodes=nodes.OfType<NMerchantRoom>().FirstOrDefault();
                 if(shopNodes!=null){
                     if(!shopNodes.Inventory.IsOpen){shopNodes.OpenInventory();return Result("shop-open");}
+                    // Native UseSelector refuses nesting. Release the generic
+                    // combat selector before the shop's purpose-specific scope.
+                    selector.Dispose();
                     var purchase=await CampaignPlanning.Shop(run);
                     var action=(string)purchase.GetType().GetProperty("action")!.GetValue(purchase)!;
                     if(action=="shop-purchase")return Result(action,purchase);
@@ -164,7 +167,7 @@ public static class CampaignOracle
                 var needsHeal=player.Creature.CurrentHp<player.Creature.MaxHp*.55&&PlayerBloodlines.Traits(player).Healing(30)>0;
                 var choice=planned?(needsHeal?heal??smith:smith??heal)??rest[0]:heal??rest[0];
                 var before=player.Deck.Cards.ToDictionary(c=>c,c=>c.CurrentUpgradeLevel);var hp=player.Creature.CurrentHp;
-                if(planned&&choice==smith){using(CampaignPlanning.Select(true))await (Task)AccessTools.Method(choice.GetType(),"SelectOption").Invoke(choice,[choice.Option])!;}
+                if(planned&&choice==smith){selector.Dispose();using(CampaignPlanning.Select(true))await (Task)AccessTools.Method(choice.GetType(),"SelectOption").Invoke(choice,[choice.Option])!;}
                 else await UiHelper.Click(choice);
                 return Result("rest",new{choice=choice.Option.GetType().Name,hpBefore=hp,hpAfter=player.Creature.CurrentHp,upgraded=before.Where(p=>p.Key.CurrentUpgradeLevel>p.Value).Select(p=>Key(p.Key)).ToArray()});
             }
