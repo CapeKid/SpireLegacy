@@ -5,6 +5,7 @@ using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Nodes.Cards.Holders;
+using MegaCrit.Sts2.Core.Nodes.Cards;
 using MegaCrit.Sts2.Core.Nodes.CommonUi;
 using MegaCrit.Sts2.Core.Nodes.Events;
 using MegaCrit.Sts2.Core.Nodes.GodotExtensions;
@@ -87,6 +88,23 @@ public static class CampaignOracle
                 var leave=UiHelper.FindAll<NProceedButton>(rewards).FirstOrDefault(b=>b.IsEnabled&&b.IsVisibleInTree());
                 if(leave!=null){await UiHelper.Click(leave,500);return Result("reward-proceed");}
                 return Result("wait");
+            }
+            if(overlay is NChooseABundleSelectionScreen bundles){
+                var selected=AccessTools.Field(bundles.GetType(),"_selectedBundle").GetValue(bundles);
+                if(selected==null){
+                    var choices=NativeTestBridge.Descendants(bundles).OfType<NCardBundle>().Where(b=>b.IsVisibleInTree()).ToArray();
+                    if(choices.Length==0)return Result("wait");
+                    var deck=player.Deck.Cards.Select(PilotCardInfo.Describe).ToArray();
+                    CardModel[] Cards(NCardBundle b)=>NativeTestBridge.Descendants(b).OfType<NCardHolder>().Where(h=>h.CardModel!=null).Select(h=>h.CardModel!).ToArray();
+                    var offers=choices.Select((b,i)=>new{index=i,cards=Cards(b).Select(Key).ToArray(),score=Cards(b).Sum(c=>CampaignPlanning.Score(c,deck))}).ToArray();
+                    var picked=offers.OrderByDescending(o=>o.score).ThenBy(o=>o.index).First().index;
+                    await UiHelper.Click(choices[picked].Hitbox);
+                    return Result("bundle-preview",new{offers,picked});
+                }
+                var confirm=(NButton)AccessTools.Field(bundles.GetType(),"_previewConfirmButton").GetValue(bundles)!;
+                if(!confirm.IsEnabled)return Result("wait");
+                var before=player.Deck.Cards.Count;await UiHelper.Click(confirm);
+                return Result("bundle-confirm",new{deckBefore=before,deckAfter=player.Deck.Cards.Count});
             }
             if(overlay!=null)return Result("unsupported-overlay",new{type=overlay.GetType().Name});
             if(CombatManager.Instance.IsInProgress){

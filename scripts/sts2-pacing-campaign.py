@@ -14,8 +14,12 @@ if resume:
     # Never resume a timed-out or failed mutation. This path only recovers a
     # completed terminal observation whose settlement assertion ran too early.
     assert all(r['response']['ok'] for r in report['evidence'])
-    assert report['runs'][-1]['status']=='finished' and 'earned' not in report['runs'][-1]
-    report.update(status='running',continuation=dict(priorReport=prior.name,reason='native-checkpoint recovery after early settlement observation'))
+    last=report['evidence'][-1]['response'].get('result',{})
+    supported=last.get('action')=='unsupported-overlay' and last.get('detail',{}).get('type')=='NChooseABundleSelectionScreen'
+    assert (report['runs'][-1]['status']=='finished' or supported) and 'earned' not in report['runs'][-1]
+    if 'continuation' in report:report.setdefault('continuations',[]).append(report.pop('continuation'))
+    report.setdefault('continuations',[]).append(dict(priorReport=prior.name,reason='native-checkpoint recovery after early settlement observation or unsupported bundle'))
+    report.update(status='running')
     report.pop('error',None)
 def save():output.parent.mkdir(exist_ok=True);output.write_text(json.dumps(report,indent=2),encoding='utf-8')
 def send(command,**args):
