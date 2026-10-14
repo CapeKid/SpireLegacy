@@ -3,7 +3,7 @@ param(
     [Parameter(Mandatory=$true)][string]$Tag,
     [Parameter(Mandatory=$true)][ValidateSet('knight','mage','ranger','ironclad')][string]$Class,
     [ValidateRange(0,2)][int]$Tier=0,
-    [ValidateSet('attack','defense','tactical')][string]$Policy='defense',
+    [ValidateSet('attack','defense','tactical','planned')][string]$Policy='defense',
     [string]$Seed='SPIRELEGACY-CAMPAIGN-1',
     [ValidateRange(0,10)][int]$Ascension=0,
     [string]$Traits='',

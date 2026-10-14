@@ -34,7 +34,8 @@ public static class CampaignOracle
     public static async Task<object> Step(RunState run,string policy,IDisposable selector,string rewardPolicy="standalone",string? forcedReward=null,int forcedRewardFloor=0)
     {
         using(selector){
-            if(policy is not ("defense" or "attack" or "tactical"))throw new ArgumentException("Unknown campaign policy.");
+            if(policy is not ("defense" or "attack" or "tactical" or "planned"))throw new ArgumentException("Unknown campaign policy.");
+            var planned=policy=="planned";var tactical=policy is "tactical" or "planned";
             if(rewardPolicy is not ("standalone" or "deck" or "defensive"))throw new ArgumentException("Unknown reward policy.");
             if(forcedReward!=null&&(rewardPolicy=="standalone"||forcedRewardFloor<=0))throw new ArgumentException("Reward intervention requires deck policy and a positive floor.");
             var player=run.Players.Single();
@@ -42,10 +43,12 @@ public static class CampaignOracle
             object Result(string action,object? detail=null)=>new{action,detail,state=Snapshot()};
             if(run.IsGameOver){await Task.Delay(500);return Result("finished");}
             if(NMapScreen.Instance?.IsOpen==true){
-                var next=run.CurrentMapPoint?.Children.FirstOrDefault()??run.Map.StartingMapPoint;
+                var paths=run.CurrentMapPoint?.Children.ToArray()??[run.Map.StartingMapPoint];
+                double Route(MegaCrit.Sts2.Core.Map.MapPoint p)=>p.PointType.ToString() switch {"RestSite"=>player.Creature.CurrentHp<player.Creature.MaxHp*.6?100:55,"Shop"=>player.Gold>=120?90:5,"Treasure"=>80,"Elite"=>player.Creature.CurrentHp>player.Creature.MaxHp*.8&&player.Deck.Cards.Count>15?60:0,"Monster"=>40,_=>30};
+                var next=planned?paths.OrderByDescending(Route).ThenBy(p=>p.coord.col).FirstOrDefault():paths.FirstOrDefault();
                 if(next==null)return Result("unsupported-map");
                 await RunManager.Instance.EnterMapCoord(next.coord);
-                return Result("map",new{row=next.coord.row,col=next.coord.col});
+                return Result("map",new{row=next.coord.row,col=next.coord.col,type=next.PointType.ToString(),policy,offers=paths.Select(p=>new{p.coord.row,p.coord.col,type=p.PointType.ToString(),score=Route(p)}).ToArray()});
             }
             var overlay=NOverlayStack.Instance?.Peek();
             if(overlay is NCardRewardSelectionScreen cards){
@@ -100,8 +103,8 @@ public static class CampaignOracle
                         if(!player.Creature.IsAlive||CombatManager.Instance.IsEnding||!combat.GetOpponentsOf(player.Creature).Any(e=>e.IsAlive))break;
                         var incoming=TacticalPilot.Incoming(player);
                         var hand=PileType.Hand.GetPile(player);
-                        var decision=policy=="tactical"?TacticalPilot.Choose(player,incoming):null;
-                        var next=policy=="tactical"?decision?.Card:hand.Cards.Where(c=>c.CanPlay()).OrderByDescending(c=>policy=="attack"&&c.Type==CardType.Attack?200+BalanceOracle.Score(c,0):BalanceOracle.Score(c,incoming-player.Creature.Block)).ThenBy(Key,StringComparer.Ordinal).FirstOrDefault();
+                        var decision=tactical?TacticalPilot.Choose(player,incoming):null;
+                        var next=tactical?decision?.Card:hand.Cards.Where(c=>c.CanPlay()).OrderByDescending(c=>policy=="attack"&&c.Type==CardType.Attack?200+BalanceOracle.Score(c,0):BalanceOracle.Score(c,incoming-player.Creature.Block)).ThenBy(Key,StringComparer.Ordinal).FirstOrDefault();
                         if(next==null)break;
                         if(i==49)return Result("play-cap",new{turn,entries,plays});
                         var energy=player.PlayerCombatState.Energy;var hp=player.Creature.CurrentHp;
@@ -109,7 +112,7 @@ public static class CampaignOracle
                         plays.Add(new{id=Key(next),upgraded=next.IsUpgraded,netEnergy=player.PlayerCombatState is {} remaining?(int?)(energy-remaining.Energy):null,netHpLost=hp-player.Creature.CurrentHp,reason=decision?.Reason,target=decision?.Target?.Monster?.Id.ToString()});
                     }
                     var potions=new List<PilotPotions.Used>();
-                    if(policy=="tactical"){
+                    if(tactical){
                         var limit=player.Potions.Count();
                         for(var p=0;p<limit&&player.Creature.IsAlive&&!CombatManager.Instance.IsEnding&&combat.GetOpponentsOf(player.Creature).Any(e=>e.IsAlive);p++){
                             var used=await PilotPotions.EmergencyBlock(player,TacticalPilot.Incoming(player));
@@ -126,6 +129,19 @@ public static class CampaignOracle
                 }finally{if(observing)Tree.ProcessFrame-=Observe;Engine.TimeScale=oldScale;}
             }
             var nodes=NativeTestBridge.Descendants(Tree.Root).ToArray();
+            if(planned&&run.CurrentRoom is MegaCrit.Sts2.Core.Rooms.MerchantRoom){
+                var shopNodes=nodes.OfType<NMerchantRoom>().FirstOrDefault();
+                if(shopNodes!=null){
+                    if(!shopNodes.Inventory.IsOpen){shopNodes.OpenInventory();return Result("shop-open");}
+                    var purchase=await CampaignPlanning.Shop(run);
+                    var action=(string)purchase.GetType().GetProperty("action")!.GetValue(purchase)!;
+                    if(action=="shop-purchase")return Result(action,purchase);
+                    shopNodes.Inventory.Close();
+                    var exit=nodes.OfType<NProceedButton>().FirstOrDefault(b=>b.IsVisibleInTree()&&b.IsEnabled);
+                    if(exit!=null)await UiHelper.Click(exit);
+                    return Result(action,purchase);
+                }
+            }
             var options=nodes.OfType<NEventOptionButton>().Where(b=>b.IsVisibleInTree()&&b.IsEnabled&&!b.Option.IsLocked).ToArray();
             if(options.Length>0){
                 var choice=options.FirstOrDefault(b=>b.Option.WillKillPlayer==null||!b.Option.WillKillPlayer(player))??options[0];
@@ -136,8 +152,14 @@ public static class CampaignOracle
             if(dialogue!=null){await UiHelper.Click(dialogue);return Result("dialogue");}
             var rest=nodes.OfType<NRestSiteButton>().Where(b=>b.IsVisibleInTree()&&b.IsEnabled&&b.Option.IsEnabled).ToArray();
             if(rest.Length>0){
-                var choice=rest.FirstOrDefault(b=>b.Option.GetType().Name=="HealRestSiteOption")??rest[0];
-                await UiHelper.Click(choice);return Result("rest",new{choice=choice.Option.GetType().Name});
+                var heal=rest.FirstOrDefault(b=>b.Option.GetType().Name=="HealRestSiteOption");
+                var smith=rest.FirstOrDefault(b=>b.Option.GetType().Name=="SmithRestSiteOption");
+                var needsHeal=player.Creature.CurrentHp<player.Creature.MaxHp*.55&&PlayerBloodlines.Traits(player).Healing(30)>0;
+                var choice=planned?(needsHeal?heal??smith:smith??heal)??rest[0]:heal??rest[0];
+                var before=player.Deck.Cards.ToDictionary(c=>c,c=>c.CurrentUpgradeLevel);var hp=player.Creature.CurrentHp;
+                if(planned&&choice==smith){using(CampaignPlanning.Select(true))await (Task)AccessTools.Method(choice.GetType(),"SelectOption").Invoke(choice,[choice.Option])!;}
+                else await UiHelper.Click(choice);
+                return Result("rest",new{choice=choice.Option.GetType().Name,hpBefore=hp,hpAfter=player.Creature.CurrentHp,upgraded=before.Where(p=>p.Key.CurrentUpgradeLevel>p.Value).Select(p=>Key(p.Key)).ToArray()});
             }
             var relic=nodes.OfType<NTreasureRoomRelicHolder>().FirstOrDefault(b=>b.IsVisibleInTree()&&b.IsEnabled);
             if(relic!=null){await UiHelper.Click(relic);return Result("treasure-relic");}
