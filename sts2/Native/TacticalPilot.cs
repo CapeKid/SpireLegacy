@@ -18,7 +18,8 @@ namespace SpireLegacy;
 public static class TacticalPilot
 {
     public record Decision(CardModel Card,Creature? Target,double Score,string Reason);
-    public static int Incoming(Player player)=>player.Creature.CombatState!.GetOpponentsOf(player.Creature).Where(e=>e.IsAlive).Sum(e=>e.Monster!.NextMove.Intents.OfType<MegaCrit.Sts2.Core.MonsterMoves.Intents.AttackIntent>().Sum(a=>a.GetTotalDamage(new[]{player.Creature},e)));
+    public static int Threat(Player player,Creature enemy)=>enemy.IsAlive?enemy.Monster!.NextMove.Intents.OfType<MegaCrit.Sts2.Core.MonsterMoves.Intents.AttackIntent>().Sum(a=>a.GetTotalDamage(new[]{player.Creature},enemy)):0;
+    public static int Incoming(Player player)=>player.Creature.CombatState!.GetOpponentsOf(player.Creature).Sum(e=>Threat(player,e));
     private static int Cost(CardModel card)=>card.EnergyCost.CostsX?card.Owner.PlayerCombatState!.Energy:Math.Max(0,card.EnergyCost.GetWithModifiers(CostModifiers.All));
     private static decimal Damage(CardModel card,Creature target)
     {
@@ -69,7 +70,13 @@ public static class TacticalPilot
                     }
                     // Known single-hit paths only; the native preview already includes conditional bonuses.
                     // Multi-hit, reflect and phase effects need a richer solver.
-                    if(target!=null&&PilotCardInfo.SimpleAttack(card)&&damage>=target.CurrentHp+target.Block){score+=100;reason="estimated-lethal";}
+                    if(target!=null&&PilotCardInfo.SimpleAttack(card)&&damage>=target.CurrentHp+target.Block){
+                        // Equal lethals should remove an immediate attacker before a harmless
+                        // lower-HP target. Covered damage has no extra survival value. Only
+                        // verified single-hit paths receive this credit, not speculative kills.
+                        score+=100+Math.Min(need,Threat(player,target))*1.6;
+                        reason="estimated-lethal";
+                    }
                 }
                 score-=PilotHealth.Penalty(player.Creature.CurrentHp,hpLoss);
                 // Do not spend a dormant Block/chain finisher for no estimated payoff.

@@ -1,0 +1,826 @@
+[
+  {
+    "trial": "tactical-pilot-balance146-threat-regressions-regular",
+    "receiptSha256": "80a0e1d27405b6a285a7c04c5629c4280aa5eed9375b2bcfc7198367baae0acd",
+    "synthetic": true,
+    "source": "01ad843bb0ae9c6b765cf75fb33945adc0a09c10",
+    "dllSha256": "871ea7a01a4fbf4b4bb16d10daab5edb3348d3a88b67299ea6d54fcb148425a0",
+    "game": "v0.107.1",
+    "mod": "1.0.30",
+    "mods": [
+      {
+        "id": "BaseLib",
+        "version": "v3.4.7"
+      },
+      {
+        "id": "SpireLegacy",
+        "version": "1.0.30"
+      }
+    ],
+    "cases": [
+      {
+        "kind": "potion-danger",
+        "result": {
+          "kind": "potion-danger",
+          "used": true,
+          "consumed": true,
+          "block": 12,
+          "energySpent": 0,
+          "hpLost": 0
+        }
+      },
+      {
+        "kind": "potion-healthy",
+        "result": {
+          "kind": "potion-healthy",
+          "used": false,
+          "consumed": false,
+          "block": 0,
+          "energySpent": 0,
+          "hpLost": 0
+        }
+      },
+      {
+        "kind": "potion-covered",
+        "result": {
+          "kind": "potion-covered",
+          "used": false,
+          "consumed": false,
+          "block": 12,
+          "energySpent": 0,
+          "hpLost": 0
+        }
+      },
+      {
+        "kind": "potion-disabled",
+        "result": {
+          "kind": "potion-disabled",
+          "used": false,
+          "consumed": false,
+          "block": 0,
+          "energySpent": 0,
+          "hpLost": 0
+        }
+      },
+      {
+        "kind": "potion-campaign",
+        "result": {
+          "kind": "potion-campaign",
+          "consumed": true,
+          "alive": true,
+          "hp": 1,
+          "incoming": 6,
+          "journaled": true
+        }
+      },
+      {
+        "kind": "vulnerable",
+        "result": {
+          "kind": "vulnerable",
+          "first": "challenge",
+          "second": "knight_strike",
+          "vulnerable": 2,
+          "followUpDamage": 7,
+          "energySpent": 3
+        }
+      },
+      {
+        "kind": "exhaust",
+        "result": {
+          "kind": "exhaust",
+          "picked": "knight_reforge",
+          "fuelExhausted": true,
+          "blockGained": 6
+        }
+      },
+      {
+        "kind": "lethal",
+        "result": {
+          "kind": "lethal",
+          "picked": "knight_strike",
+          "targetDead": true,
+          "Reason": "estimated-lethal"
+        }
+      },
+      {
+        "kind": "area",
+        "result": {
+          "kind": "area",
+          "picked": "knight_sweeping_edge",
+          "damage": [
+            3,
+            3
+          ]
+        }
+      },
+      {
+        "kind": "execute",
+        "result": {
+          "kind": "execute",
+          "key": "knight_executioner_axe",
+          "upgraded": false,
+          "expected": 18,
+          "damage": 18,
+          "targetDead": true,
+          "beforeReason": "",
+          "Reason": "estimated-lethal",
+          "growth": 0,
+          "rewardSpecial": "execute",
+          "rewardAmount": 2
+        }
+      },
+      {
+        "kind": "execute-upgraded",
+        "result": {
+          "kind": "execute-upgraded",
+          "key": "knight_executioner_axe",
+          "upgraded": true,
+          "expected": 22,
+          "damage": 22,
+          "targetDead": true,
+          "beforeReason": "",
+          "Reason": "estimated-lethal",
+          "growth": 0,
+          "rewardSpecial": "execute",
+          "rewardAmount": 2
+        }
+      },
+      {
+        "kind": "guarded",
+        "result": {
+          "kind": "guarded",
+          "key": "knight_counter_lunge",
+          "upgraded": false,
+          "expected": 10,
+          "damage": 10,
+          "targetDead": true,
+          "beforeReason": "utility",
+          "Reason": "estimated-lethal",
+          "growth": 0,
+          "rewardSpecial": "guard_bonus",
+          "rewardAmount": 4
+        }
+      },
+      {
+        "kind": "guarded-upgraded",
+        "result": {
+          "kind": "guarded-upgraded",
+          "key": "knight_counter_lunge",
+          "upgraded": true,
+          "expected": 13,
+          "damage": 13,
+          "targetDead": true,
+          "beforeReason": "utility",
+          "Reason": "estimated-lethal",
+          "growth": 0,
+          "rewardSpecial": "guard_bonus",
+          "rewardAmount": 5
+        }
+      },
+      {
+        "kind": "marked",
+        "result": {
+          "kind": "marked",
+          "key": "ranger_ambush",
+          "upgraded": false,
+          "expected": 11,
+          "damage": 11,
+          "targetDead": true,
+          "beforeReason": "utility",
+          "Reason": "estimated-lethal",
+          "growth": 0,
+          "rewardSpecial": "marked_bonus",
+          "rewardAmount": 5
+        }
+      },
+      {
+        "kind": "marked-upgraded",
+        "result": {
+          "kind": "marked-upgraded",
+          "key": "ranger_ambush",
+          "upgraded": true,
+          "expected": 14,
+          "damage": 14,
+          "targetDead": true,
+          "beforeReason": "utility",
+          "Reason": "estimated-lethal",
+          "growth": 0,
+          "rewardSpecial": "marked_bonus",
+          "rewardAmount": 6
+        }
+      },
+      {
+        "kind": "retained",
+        "result": {
+          "kind": "retained",
+          "key": "knight_patient_riposte",
+          "upgraded": false,
+          "expected": 12,
+          "damage": 12,
+          "targetDead": true,
+          "beforeReason": "",
+          "Reason": "estimated-lethal",
+          "growth": 3,
+          "rewardSpecial": "retain_damage",
+          "rewardAmount": 3
+        }
+      },
+      {
+        "kind": "retained-upgraded",
+        "result": {
+          "kind": "retained-upgraded",
+          "key": "knight_patient_riposte",
+          "upgraded": true,
+          "expected": 15,
+          "damage": 15,
+          "targetDead": true,
+          "beforeReason": "",
+          "Reason": "estimated-lethal",
+          "growth": 4,
+          "rewardSpecial": "retain_damage",
+          "rewardAmount": 4
+        }
+      },
+      {
+        "kind": "block-finisher",
+        "result": {
+          "kind": "block-finisher",
+          "key": "knight_shield_slam",
+          "upgraded": false,
+          "expected": 8,
+          "damage": 8,
+          "targetDead": true,
+          "dormantDeclined": true,
+          "Reason": "estimated-lethal"
+        }
+      },
+      {
+        "kind": "block-finisher-upgraded",
+        "result": {
+          "kind": "block-finisher-upgraded",
+          "key": "knight_shield_slam",
+          "upgraded": true,
+          "expected": 8,
+          "damage": 8,
+          "targetDead": true,
+          "dormantDeclined": true,
+          "Reason": "estimated-lethal"
+        }
+      },
+      {
+        "kind": "chain-finisher",
+        "result": {
+          "kind": "chain-finisher",
+          "key": "ranger_finishing_flurry",
+          "upgraded": false,
+          "expected": 6,
+          "damage": 6,
+          "targetDead": true,
+          "dormantDeclined": true,
+          "Reason": "estimated-lethal"
+        }
+      },
+      {
+        "kind": "chain-finisher-upgraded",
+        "result": {
+          "kind": "chain-finisher-upgraded",
+          "key": "ranger_finishing_flurry",
+          "upgraded": true,
+          "expected": 8,
+          "damage": 8,
+          "targetDead": true,
+          "dormantDeclined": true,
+          "Reason": "estimated-lethal"
+        }
+      },
+      {
+        "kind": "exhaust-finisher",
+        "result": {
+          "kind": "exhaust-finisher",
+          "key": "knight_ashen_advance",
+          "upgraded": false,
+          "expected": 13,
+          "damage": 13,
+          "targetDead": true,
+          "dormantDeclined": false,
+          "Reason": "estimated-lethal"
+        }
+      },
+      {
+        "kind": "exhaust-finisher-upgraded",
+        "result": {
+          "kind": "exhaust-finisher-upgraded",
+          "key": "knight_ashen_advance",
+          "upgraded": true,
+          "expected": 25,
+          "damage": 25,
+          "targetDead": true,
+          "dormantDeclined": false,
+          "Reason": "estimated-lethal"
+        }
+      },
+      {
+        "kind": "bash",
+        "result": {
+          "kind": "bash",
+          "damage": 9,
+          "vulnerable": 2
+        }
+      },
+      {
+        "kind": "shrug",
+        "result": {
+          "kind": "shrug",
+          "block": 8,
+          "draw": 1,
+          "handCount": 2,
+          "previousCount": 2
+        }
+      },
+      {
+        "kind": "repeat",
+        "result": {
+          "kind": "repeat",
+          "damage": 10,
+          "hits": 2
+        }
+      },
+      {
+        "kind": "skip",
+        "result": {
+          "kind": "skip",
+          "rewardPolicy": "deck",
+          "unchangedDeck": true,
+          "added": 0,
+          "successfullySelected": false,
+          "replaySkipped": false,
+          "closed": true
+        }
+      },
+      {
+        "kind": "lethal-cost",
+        "result": {
+          "kind": "lethal-cost",
+          "dead": true,
+          "gameOver": true
+        }
+      },
+      {
+        "kind": "avoid-offering",
+        "result": {
+          "kind": "avoid-offering",
+          "alive": true,
+          "hpLost": 0,
+          "paidSelected": false
+        }
+      },
+      {
+        "kind": "avoid-bloodletting",
+        "result": {
+          "kind": "avoid-bloodletting",
+          "alive": true,
+          "hpLost": 0,
+          "paidSelected": false
+        }
+      },
+      {
+        "kind": "avoid-hemokinesis",
+        "result": {
+          "kind": "avoid-hemokinesis",
+          "alive": true,
+          "hpLost": 0,
+          "paidSelected": false
+        }
+      },
+      {
+        "kind": "safe-offering",
+        "result": {
+          "kind": "safe-offering",
+          "alive": true,
+          "hpLost": 6,
+          "paidSelected": true
+        }
+      },
+      {
+        "kind": "only-fatal",
+        "result": {
+          "kind": "only-fatal",
+          "declined": true,
+          "hp": 6
+        }
+      }
+    ]
+  },
+  {
+    "trial": "tactical-pilot-balance146-threat-regressions-beta",
+    "receiptSha256": "ca1eae5d7b5d3bff44433c86bd4f68b50667e7528fefc568c257ceb8e988a079",
+    "synthetic": true,
+    "source": "01ad843bb0ae9c6b765cf75fb33945adc0a09c10",
+    "dllSha256": "871ea7a01a4fbf4b4bb16d10daab5edb3348d3a88b67299ea6d54fcb148425a0",
+    "game": "v0.111.0",
+    "mod": "1.0.30",
+    "mods": [
+      {
+        "id": "BaseLib",
+        "version": "v3.4.7"
+      },
+      {
+        "id": "SpireLegacy",
+        "version": "1.0.30"
+      }
+    ],
+    "cases": [
+      {
+        "kind": "potion-danger",
+        "result": {
+          "kind": "potion-danger",
+          "used": true,
+          "consumed": true,
+          "block": 12,
+          "energySpent": 0,
+          "hpLost": 0
+        }
+      },
+      {
+        "kind": "potion-healthy",
+        "result": {
+          "kind": "potion-healthy",
+          "used": false,
+          "consumed": false,
+          "block": 0,
+          "energySpent": 0,
+          "hpLost": 0
+        }
+      },
+      {
+        "kind": "potion-covered",
+        "result": {
+          "kind": "potion-covered",
+          "used": false,
+          "consumed": false,
+          "block": 12,
+          "energySpent": 0,
+          "hpLost": 0
+        }
+      },
+      {
+        "kind": "potion-disabled",
+        "result": {
+          "kind": "potion-disabled",
+          "used": false,
+          "consumed": false,
+          "block": 0,
+          "energySpent": 0,
+          "hpLost": 0
+        }
+      },
+      {
+        "kind": "potion-campaign",
+        "result": {
+          "kind": "potion-campaign",
+          "consumed": true,
+          "alive": true,
+          "hp": 1,
+          "incoming": 6,
+          "journaled": true
+        }
+      },
+      {
+        "kind": "vulnerable",
+        "result": {
+          "kind": "vulnerable",
+          "first": "challenge",
+          "second": "knight_strike",
+          "vulnerable": 2,
+          "followUpDamage": 7,
+          "energySpent": 3
+        }
+      },
+      {
+        "kind": "exhaust",
+        "result": {
+          "kind": "exhaust",
+          "picked": "knight_reforge",
+          "fuelExhausted": true,
+          "blockGained": 6
+        }
+      },
+      {
+        "kind": "lethal",
+        "result": {
+          "kind": "lethal",
+          "picked": "knight_strike",
+          "targetDead": true,
+          "Reason": "estimated-lethal"
+        }
+      },
+      {
+        "kind": "area",
+        "result": {
+          "kind": "area",
+          "picked": "knight_sweeping_edge",
+          "damage": [
+            3,
+            3
+          ]
+        }
+      },
+      {
+        "kind": "execute",
+        "result": {
+          "kind": "execute",
+          "key": "knight_executioner_axe",
+          "upgraded": false,
+          "expected": 18,
+          "damage": 18,
+          "targetDead": true,
+          "beforeReason": "",
+          "Reason": "estimated-lethal",
+          "growth": 0,
+          "rewardSpecial": "execute",
+          "rewardAmount": 2
+        }
+      },
+      {
+        "kind": "execute-upgraded",
+        "result": {
+          "kind": "execute-upgraded",
+          "key": "knight_executioner_axe",
+          "upgraded": true,
+          "expected": 22,
+          "damage": 22,
+          "targetDead": true,
+          "beforeReason": "",
+          "Reason": "estimated-lethal",
+          "growth": 0,
+          "rewardSpecial": "execute",
+          "rewardAmount": 2
+        }
+      },
+      {
+        "kind": "guarded",
+        "result": {
+          "kind": "guarded",
+          "key": "knight_counter_lunge",
+          "upgraded": false,
+          "expected": 10,
+          "damage": 10,
+          "targetDead": true,
+          "beforeReason": "utility",
+          "Reason": "estimated-lethal",
+          "growth": 0,
+          "rewardSpecial": "guard_bonus",
+          "rewardAmount": 4
+        }
+      },
+      {
+        "kind": "guarded-upgraded",
+        "result": {
+          "kind": "guarded-upgraded",
+          "key": "knight_counter_lunge",
+          "upgraded": true,
+          "expected": 13,
+          "damage": 13,
+          "targetDead": true,
+          "beforeReason": "utility",
+          "Reason": "estimated-lethal",
+          "growth": 0,
+          "rewardSpecial": "guard_bonus",
+          "rewardAmount": 5
+        }
+      },
+      {
+        "kind": "marked",
+        "result": {
+          "kind": "marked",
+          "key": "ranger_ambush",
+          "upgraded": false,
+          "expected": 11,
+          "damage": 11,
+          "targetDead": true,
+          "beforeReason": "utility",
+          "Reason": "estimated-lethal",
+          "growth": 0,
+          "rewardSpecial": "marked_bonus",
+          "rewardAmount": 5
+        }
+      },
+      {
+        "kind": "marked-upgraded",
+        "result": {
+          "kind": "marked-upgraded",
+          "key": "ranger_ambush",
+          "upgraded": true,
+          "expected": 14,
+          "damage": 14,
+          "targetDead": true,
+          "beforeReason": "utility",
+          "Reason": "estimated-lethal",
+          "growth": 0,
+          "rewardSpecial": "marked_bonus",
+          "rewardAmount": 6
+        }
+      },
+      {
+        "kind": "retained",
+        "result": {
+          "kind": "retained",
+          "key": "knight_patient_riposte",
+          "upgraded": false,
+          "expected": 12,
+          "damage": 12,
+          "targetDead": true,
+          "beforeReason": "",
+          "Reason": "estimated-lethal",
+          "growth": 3,
+          "rewardSpecial": "retain_damage",
+          "rewardAmount": 3
+        }
+      },
+      {
+        "kind": "retained-upgraded",
+        "result": {
+          "kind": "retained-upgraded",
+          "key": "knight_patient_riposte",
+          "upgraded": true,
+          "expected": 15,
+          "damage": 15,
+          "targetDead": true,
+          "beforeReason": "",
+          "Reason": "estimated-lethal",
+          "growth": 4,
+          "rewardSpecial": "retain_damage",
+          "rewardAmount": 4
+        }
+      },
+      {
+        "kind": "block-finisher",
+        "result": {
+          "kind": "block-finisher",
+          "key": "knight_shield_slam",
+          "upgraded": false,
+          "expected": 8,
+          "damage": 8,
+          "targetDead": true,
+          "dormantDeclined": true,
+          "Reason": "estimated-lethal"
+        }
+      },
+      {
+        "kind": "block-finisher-upgraded",
+        "result": {
+          "kind": "block-finisher-upgraded",
+          "key": "knight_shield_slam",
+          "upgraded": true,
+          "expected": 8,
+          "damage": 8,
+          "targetDead": true,
+          "dormantDeclined": true,
+          "Reason": "estimated-lethal"
+        }
+      },
+      {
+        "kind": "chain-finisher",
+        "result": {
+          "kind": "chain-finisher",
+          "key": "ranger_finishing_flurry",
+          "upgraded": false,
+          "expected": 6,
+          "damage": 6,
+          "targetDead": true,
+          "dormantDeclined": true,
+          "Reason": "estimated-lethal"
+        }
+      },
+      {
+        "kind": "chain-finisher-upgraded",
+        "result": {
+          "kind": "chain-finisher-upgraded",
+          "key": "ranger_finishing_flurry",
+          "upgraded": true,
+          "expected": 8,
+          "damage": 8,
+          "targetDead": true,
+          "dormantDeclined": true,
+          "Reason": "estimated-lethal"
+        }
+      },
+      {
+        "kind": "exhaust-finisher",
+        "result": {
+          "kind": "exhaust-finisher",
+          "key": "knight_ashen_advance",
+          "upgraded": false,
+          "expected": 13,
+          "damage": 13,
+          "targetDead": true,
+          "dormantDeclined": false,
+          "Reason": "estimated-lethal"
+        }
+      },
+      {
+        "kind": "exhaust-finisher-upgraded",
+        "result": {
+          "kind": "exhaust-finisher-upgraded",
+          "key": "knight_ashen_advance",
+          "upgraded": true,
+          "expected": 25,
+          "damage": 25,
+          "targetDead": true,
+          "dormantDeclined": false,
+          "Reason": "estimated-lethal"
+        }
+      },
+      {
+        "kind": "bash",
+        "result": {
+          "kind": "bash",
+          "damage": 9,
+          "vulnerable": 2
+        }
+      },
+      {
+        "kind": "shrug",
+        "result": {
+          "kind": "shrug",
+          "block": 8,
+          "draw": 1,
+          "handCount": 2,
+          "previousCount": 2
+        }
+      },
+      {
+        "kind": "repeat",
+        "result": {
+          "kind": "repeat",
+          "damage": 10,
+          "hits": 2
+        }
+      },
+      {
+        "kind": "skip",
+        "result": {
+          "kind": "skip",
+          "rewardPolicy": "deck",
+          "unchangedDeck": true,
+          "added": 0,
+          "successfullySelected": false,
+          "replaySkipped": false,
+          "closed": true
+        }
+      },
+      {
+        "kind": "lethal-cost",
+        "result": {
+          "kind": "lethal-cost",
+          "dead": true,
+          "gameOver": true
+        }
+      },
+      {
+        "kind": "avoid-offering",
+        "result": {
+          "kind": "avoid-offering",
+          "alive": true,
+          "hpLost": 0,
+          "paidSelected": false
+        }
+      },
+      {
+        "kind": "avoid-bloodletting",
+        "result": {
+          "kind": "avoid-bloodletting",
+          "alive": true,
+          "hpLost": 0,
+          "paidSelected": false
+        }
+      },
+      {
+        "kind": "avoid-hemokinesis",
+        "result": {
+          "kind": "avoid-hemokinesis",
+          "alive": true,
+          "hpLost": 0,
+          "paidSelected": false
+        }
+      },
+      {
+        "kind": "safe-offering",
+        "result": {
+          "kind": "safe-offering",
+          "alive": true,
+          "hpLost": 6,
+          "paidSelected": true
+        }
+      },
+      {
+        "kind": "only-fatal",
+        "result": {
+          "kind": "only-fatal",
+          "declined": true,
+          "hp": 6
+        }
+      }
+    ]
+  }
+]
