@@ -31,9 +31,20 @@ try:
         else:waiting=None
         if 'sphere-proceed' in actions and action=='map':
             assert 'sphere-cell' in actions
-            report.update(status='finished',actions=actions,cells=actions.count('sphere-cell'),exitAction=action)
+            report.update(actions=actions,cells=actions.count('sphere-cell'),exitAction=action)
             break
         time.sleep(.2)
     else:raise AssertionError('Sphere fixture decision cap')
+    send('autoplay-start-fixture')
+    native_waits=0
+    for _ in range(60):
+        result=send('balance-campaign-step',policy='planned',rewardPolicy='defensive')
+        assert not result['action'].startswith('unsupported'),result
+        if result['action']=='wait' and (result.get('detail') or {}).get('reason')=='native-start-phase':native_waits+=1
+        if result['action']=='combat-turn':
+            report.update(status='finished',syntheticRelic=True,nativeStartWaits=native_waits,autoplayTurn=True)
+            break
+        time.sleep(.2)
+    else:raise AssertionError('Autoplay fixture decision cap')
 except Exception as error:report.update(status='error',error=str(error));raise
 finally:save()

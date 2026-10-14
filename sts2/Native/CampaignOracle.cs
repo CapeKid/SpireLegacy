@@ -35,6 +35,8 @@ public static class CampaignOracle
     private static readonly ConditionalWeakTable<RunState,HashSet<string>> appliedInterventions=new();
     private sealed class SphereAttempts{public int Count;}
     private static readonly ConditionalWeakTable<NCrystalSphereScreen,SphereAttempts> sphereAttempts=new();
+    private static object Snapshot(RunState run) { var player=run.Players.Single();return new{character=player.Character.Id.ToString(),act=run.CurrentActIndex+1,floor=run.TotalFloor,room=run.CurrentRoom?.RoomType.ToString(),hp=player.Creature.CurrentHp,maxHp=player.Creature.MaxHp,gold=player.Gold,crowns=Runtime.Profile.crowns,lastEarned=Runtime.Profile.lastEarned,wins=player.Character is HeirCharacter?Runtime.Profile.chronicle.classes.Values.Sum(h=>h.wins):run.IsGameOver&&run.CurrentRoom is MegaCrit.Sts2.Core.Rooms.EventRoom e&&e.LocalMutableEvent is MegaCrit.Sts2.Core.Models.Events.TheArchitect?1:0,manor=Runtime.Profile.manor,deck=player.Deck.Cards.Select(Key).ToArray(),relics=player.Relics.Select(r=>r.Id.ToString()).ToArray(),phase=player.PlayerCombatState?.Phase.ToString(),turn=player.PlayerCombatState?.TurnNumber,combatInProgress=CombatManager.Instance.IsInProgress,combatEnding=CombatManager.Instance.IsEnding,actionRunning=RunManager.Instance.ActionExecutor.IsRunning,paused=Tree.Paused,enemies=player.Creature.CombatState?.Enemies.Select(c=>new{id=c.Monster?.Id.ToString(),hp=c.CurrentHp}).ToArray()}; }
+    public static object WaitingForNativeTurn(RunState run)=>new{action="wait",detail=new{reason="native-start-phase"},state=Snapshot(run)};
     public static async Task<object> Step(RunState run,string policy,IDisposable selector,string rewardPolicy="standalone",string? forcedReward=null,int forcedRewardFloor=0)
     {
         using(selector){
@@ -43,8 +45,7 @@ public static class CampaignOracle
             if(rewardPolicy is not ("standalone" or "deck" or "defensive"))throw new ArgumentException("Unknown reward policy.");
             if(forcedReward!=null&&(rewardPolicy=="standalone"||forcedRewardFloor<=0))throw new ArgumentException("Reward intervention requires deck policy and a positive floor.");
             var player=run.Players.Single();
-            object Snapshot()=>new{character=player.Character.Id.ToString(),act=run.CurrentActIndex+1,floor=run.TotalFloor,room=run.CurrentRoom?.RoomType.ToString(),hp=player.Creature.CurrentHp,maxHp=player.Creature.MaxHp,gold=player.Gold,crowns=Runtime.Profile.crowns,lastEarned=Runtime.Profile.lastEarned,wins=player.Character is HeirCharacter?Runtime.Profile.chronicle.classes.Values.Sum(h=>h.wins):run.IsGameOver&&run.CurrentRoom is MegaCrit.Sts2.Core.Rooms.EventRoom e&&e.LocalMutableEvent is MegaCrit.Sts2.Core.Models.Events.TheArchitect?1:0,manor=Runtime.Profile.manor,deck=player.Deck.Cards.Select(Key).ToArray(),relics=player.Relics.Select(r=>r.Id.ToString()).ToArray(),phase=player.PlayerCombatState?.Phase.ToString(),turn=player.PlayerCombatState?.TurnNumber,combatInProgress=CombatManager.Instance.IsInProgress,combatEnding=CombatManager.Instance.IsEnding,actionRunning=RunManager.Instance.ActionExecutor.IsRunning,paused=Tree.Paused,enemies=player.Creature.CombatState?.Enemies.Select(c=>new{id=c.Monster?.Id.ToString(),hp=c.CurrentHp}).ToArray()};
-            object Result(string action,object? detail=null)=>new{action,detail,state=Snapshot()};
+            object Result(string action,object? detail=null)=>new{action,detail,state=Snapshot(run)};
             if(run.IsGameOver){
                 await Task.Delay(500);
                 // Instant-death effects can mark game-over before the native

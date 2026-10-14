@@ -71,7 +71,12 @@ public static class NativeTestBridge
                 case "balance-tactical-probe":await WaitForPlay(RunState().Players.Single());result=await TacticalPilot.Probe(RunState(),request.GetProperty("kind").GetString()!);break;
                 case "balance-campaign-step":
                     var pilotPolicy=request.GetProperty("policy").GetString()!;
-                    result=await CampaignOracle.Step(RunState(),pilotPolicy,pilotPolicy is "tactical" or "planned"?TacticalPilot.Selector(pilotPolicy=="planned"):UseTestSelector(),request.TryGetProperty("rewardPolicy",out var rewardsPolicy)?rewardsPolicy.GetString()!:"standalone",request.TryGetProperty("forcedReward",out var forcedReward)?forcedReward.GetString():null,request.TryGetProperty("forcedRewardFloor",out var forcedFloor)?forcedFloor.GetInt32():0);break;
+                    var pilotRun=RunState();
+                    // Native first-turn autoplay (e.g. Whispering Earring) owns
+                    // its selector until the normal Play phase. Observe first;
+                    // never install a competing selector during that phase.
+                    if(MegaCrit.Sts2.Core.Combat.CombatManager.Instance.IsInProgress&&pilotRun.Players.Single().PlayerCombatState?.Phase!=MegaCrit.Sts2.Core.Combat.PlayerTurnPhase.Play){result=CampaignOracle.WaitingForNativeTurn(pilotRun);break;}
+                    result=await CampaignOracle.Step(pilotRun,pilotPolicy,pilotPolicy is "tactical" or "planned"?TacticalPilot.Selector(pilotPolicy=="planned"):UseTestSelector(),request.TryGetProperty("rewardPolicy",out var rewardsPolicy)?rewardsPolicy.GetString()!:"standalone",request.TryGetProperty("forcedReward",out var forcedReward)?forcedReward.GetString():null,request.TryGetProperty("forcedRewardFloor",out var forcedFloor)?forcedFloor.GetInt32():0);break;
                 case "balance-probe":await WaitForPlay(RunState().Players.Single());var probeKey=request.GetProperty("card").GetString()!;result=await BalanceOracle.Probe(RunState(),probeKey,request.GetProperty("upgrade").GetBoolean(),probeKey=="mage_eternal_bookmark"?BalanceOracle.MaxChoices():UseTestSelector(),request.TryGetProperty("supported",out var supported)&&supported.GetBoolean());break;
                 case "balance-loop":await WaitForPlay(RunState().Players.Single());result=await BalanceOracle.RecoveryLoop(RunState(),UseTestSelector(),request.TryGetProperty("kind",out var recoveryKind)&&recoveryKind.GetString()=="discard");break;
                 case "balance-retention":await WaitForPlay(RunState().Players.Single());result=await BalanceOracle.RetentionSnapshots(RunState());break;
@@ -471,6 +476,10 @@ public static class NativeTestBridge
                     await RunManager.Instance.EnterRoomDebug(roomType,model:roomModel,showTransition:false);
                     RunManager.Instance.ActionExecutor.Unpause();
                     result = RunState().Players.Count==1?StateSummary():CoopOracle.State(); break;
+                case "autoplay-start-fixture":
+                    await RelicCmd.Obtain(ModelDb.Relic<MegaCrit.Sts2.Core.Models.Relics.WhisperingEarring>().ToMutable(),RunState().Players.Single());
+                    await RunManager.Instance.EnterRoomDebug(MegaCrit.Sts2.Core.Rooms.RoomType.Monster,model:ModelDb.Encounter<MegaCrit.Sts2.Core.Models.Encounters.NibbitsNormal>().ToMutable(),showTransition:false);
+                    RunManager.Instance.ActionExecutor.Unpause();result=StateSummary();break;
                 case "tome-parity":result=await TomeParityOracle.Check(RunState(),request.TryGetProperty("removeBasics",out var tomeRemove)&&tomeRemove.GetBoolean(),request.TryGetProperty("forced",out var tomeForced)?tomeForced.GetString():null,request.TryGetProperty("inspect",out var tomeInspect)&&tomeInspect.GetBoolean());break;
                 case "advance":
                     var advancing=RunState();
