@@ -79,10 +79,10 @@ public static class TacticalPilot
         }
         return choices.OrderByDescending(c=>c.Score).ThenBy(c=>c.Card.Id.ToString(),StringComparer.Ordinal).ThenBy(c=>c.Target?.CurrentHp??0).FirstOrDefault();
     }
-    public static IDisposable Selector()
+    public static IDisposable Selector(bool planned=false)
     {
         var method=AccessTools.Method(typeof(CardSelectCmd),"UseSelector",[typeof(ICardSelector),typeof(bool)])??AccessTools.Method(typeof(CardSelectCmd),"UseSelector",[typeof(ICardSelector)]);
-        return (IDisposable)method.Invoke(null,method.GetParameters().Length==2?[new FuelSelector(),false]:[new FuelSelector()])!;
+        return (IDisposable)method.Invoke(null,method.GetParameters().Length==2?[new FuelSelector(planned),false]:[new FuelSelector(planned)])!;
     }
     public static async Task<object> Probe(RunState run,string kind)
     {
@@ -236,14 +236,14 @@ public static class TacticalPilot
             throw new ArgumentException("Unknown tactical probe.");
         }
     }
-    private sealed class FuelSelector:ICardSelector
+    private sealed class FuelSelector(bool planned=false):ICardSelector
     {
-        private static double Value(CardModel card)=>card.Type is CardType.Status or CardType.Curse?-100:BalanceOracle.Score(card,0);
+        private double Value(CardModel card)=>card.Type is CardType.Status or CardType.Curse?-100:BalanceOracle.Score(card,planned&&card.Owner?.Creature.CombatState!=null?Math.Max(0,Incoming(card.Owner)-card.Owner.Creature.Block):0);
         public Task<IEnumerable<CardModel>> GetSelectedCards(IEnumerable<CardModel> options,int minSelect,int maxSelect)
         {
             var cards=options.ToArray();var recovery=cards.Length>0&&cards.All(c=>c.Pile?.Type is PileType.Exhaust or PileType.Discard);
             var ordered=recovery?cards.OrderByDescending(Value):cards.OrderBy(Value);
-            return Task.FromResult<IEnumerable<CardModel>>(ordered.ThenBy(c=>c.Id.ToString(),StringComparer.Ordinal).Take(Math.Min(maxSelect,minSelect)).ToArray());
+            return Task.FromResult<IEnumerable<CardModel>>(ordered.ThenBy(c=>c.Id.ToString(),StringComparer.Ordinal).Take(planned?Math.Max(minSelect,Math.Min(1,maxSelect)):Math.Min(maxSelect,minSelect)).ToArray());
         }
         public CardRewardSelection GetSelectedCardReward(IReadOnlyList<CardCreationResult> options,IReadOnlyList<CardRewardAlternative> alternatives)=>new(){card=options.OrderByDescending(o=>Value(o.Card)).FirstOrDefault()?.Card};
     }
