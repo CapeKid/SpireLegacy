@@ -1,0 +1,832 @@
+[
+  {
+    "trial": "threat-pilot-balance146-threat-baseline-regular",
+    "receiptSha256": "799c44fef55851632dc81457ce14fa7e1f2b035852d8ffbad2a2272c64f862ed",
+    "synthetic": true,
+    "status": "failed",
+    "source": "3f0e287f89c63754e38d65efb9ad78f04ca49a46",
+    "dllSha256": "70284588af277114aef114d89a7e71d48fe9859f10ac936bd413e4ad809f92bd",
+    "game": "v0.107.1",
+    "mod": "1.0.30",
+    "mods": [
+      {
+        "id": "BaseLib",
+        "version": "v3.4.7"
+      },
+      {
+        "id": "SpireLegacy",
+        "version": "1.0.30"
+      }
+    ],
+    "cases": [
+      {
+        "cls": "knight",
+        "kind": "threat",
+        "passed": false,
+        "result": {
+          "key": "knight_strike",
+          "kind": "threat",
+          "incoming": 7,
+          "blockBefore": 0,
+          "chosenAttacker": false,
+          "attackerHpBefore": 2,
+          "attackerHpAfter": 2,
+          "harmlessHpBefore": 1,
+          "harmlessHpAfter": 0,
+          "attackerDead": false,
+          "harmlessDead": true,
+          "energySpent": 1,
+          "Score": 105,
+          "Reason": "estimated-lethal"
+        }
+      },
+      {
+        "cls": "knight",
+        "kind": "covered",
+        "passed": true,
+        "result": {
+          "key": "knight_strike",
+          "kind": "covered",
+          "incoming": 7,
+          "blockBefore": 7,
+          "chosenAttacker": false,
+          "attackerHpBefore": 2,
+          "attackerHpAfter": 2,
+          "harmlessHpBefore": 1,
+          "harmlessHpAfter": 0,
+          "attackerDead": false,
+          "harmlessDead": true,
+          "energySpent": 1,
+          "Score": 105,
+          "Reason": "estimated-lethal"
+        }
+      },
+      {
+        "cls": "knight",
+        "kind": "nonlethal",
+        "passed": true,
+        "result": {
+          "key": "knight_strike",
+          "kind": "nonlethal",
+          "incoming": 7,
+          "blockBefore": 0,
+          "chosenAttacker": false,
+          "attackerHpBefore": 44,
+          "attackerHpAfter": 44,
+          "harmlessHpBefore": 1,
+          "harmlessHpAfter": 0,
+          "attackerDead": false,
+          "harmlessDead": true,
+          "energySpent": 1,
+          "Score": 105,
+          "Reason": "estimated-lethal"
+        }
+      },
+      {
+        "cls": "mage",
+        "kind": "threat",
+        "passed": false,
+        "result": {
+          "key": "mage_strike",
+          "kind": "threat",
+          "incoming": 7,
+          "blockBefore": 0,
+          "chosenAttacker": false,
+          "attackerHpBefore": 2,
+          "attackerHpAfter": 2,
+          "harmlessHpBefore": 1,
+          "harmlessHpAfter": 0,
+          "attackerDead": false,
+          "harmlessDead": true,
+          "energySpent": 1,
+          "Score": 105,
+          "Reason": "estimated-lethal"
+        }
+      },
+      {
+        "cls": "mage",
+        "kind": "covered",
+        "passed": true,
+        "result": {
+          "key": "mage_strike",
+          "kind": "covered",
+          "incoming": 7,
+          "blockBefore": 7,
+          "chosenAttacker": false,
+          "attackerHpBefore": 2,
+          "attackerHpAfter": 2,
+          "harmlessHpBefore": 1,
+          "harmlessHpAfter": 0,
+          "attackerDead": false,
+          "harmlessDead": true,
+          "energySpent": 1,
+          "Score": 105,
+          "Reason": "estimated-lethal"
+        }
+      },
+      {
+        "cls": "mage",
+        "kind": "nonlethal",
+        "passed": true,
+        "result": {
+          "key": "mage_strike",
+          "kind": "nonlethal",
+          "incoming": 7,
+          "blockBefore": 0,
+          "chosenAttacker": false,
+          "attackerHpBefore": 44,
+          "attackerHpAfter": 44,
+          "harmlessHpBefore": 1,
+          "harmlessHpAfter": 0,
+          "attackerDead": false,
+          "harmlessDead": true,
+          "energySpent": 1,
+          "Score": 105,
+          "Reason": "estimated-lethal"
+        }
+      },
+      {
+        "cls": "ranger",
+        "kind": "threat",
+        "passed": false,
+        "result": {
+          "key": "ranger_strike",
+          "kind": "threat",
+          "incoming": 7,
+          "blockBefore": 0,
+          "chosenAttacker": false,
+          "attackerHpBefore": 2,
+          "attackerHpAfter": 2,
+          "harmlessHpBefore": 1,
+          "harmlessHpAfter": 0,
+          "attackerDead": false,
+          "harmlessDead": true,
+          "energySpent": 1,
+          "Score": 105,
+          "Reason": "estimated-lethal"
+        }
+      },
+      {
+        "cls": "ranger",
+        "kind": "covered",
+        "passed": true,
+        "result": {
+          "key": "ranger_strike",
+          "kind": "covered",
+          "incoming": 7,
+          "blockBefore": 7,
+          "chosenAttacker": false,
+          "attackerHpBefore": 2,
+          "attackerHpAfter": 2,
+          "harmlessHpBefore": 1,
+          "harmlessHpAfter": 0,
+          "attackerDead": false,
+          "harmlessDead": true,
+          "energySpent": 1,
+          "Score": 105,
+          "Reason": "estimated-lethal"
+        }
+      },
+      {
+        "cls": "ranger",
+        "kind": "nonlethal",
+        "passed": true,
+        "result": {
+          "key": "ranger_strike",
+          "kind": "nonlethal",
+          "incoming": 7,
+          "blockBefore": 0,
+          "chosenAttacker": false,
+          "attackerHpBefore": 44,
+          "attackerHpAfter": 44,
+          "harmlessHpBefore": 1,
+          "harmlessHpAfter": 0,
+          "attackerDead": false,
+          "harmlessDead": true,
+          "energySpent": 1,
+          "Score": 105,
+          "Reason": "estimated-lethal"
+        }
+      },
+      {
+        "cls": "ironclad",
+        "kind": "threat",
+        "passed": false,
+        "result": {
+          "key": "ironclad",
+          "kind": "threat",
+          "incoming": 7,
+          "blockBefore": 0,
+          "chosenAttacker": false,
+          "attackerHpBefore": 2,
+          "attackerHpAfter": 2,
+          "harmlessHpBefore": 1,
+          "harmlessHpAfter": 0,
+          "attackerDead": false,
+          "harmlessDead": true,
+          "energySpent": 1,
+          "Score": 106,
+          "Reason": "estimated-lethal"
+        }
+      },
+      {
+        "cls": "ironclad",
+        "kind": "covered",
+        "passed": true,
+        "result": {
+          "key": "ironclad",
+          "kind": "covered",
+          "incoming": 7,
+          "blockBefore": 7,
+          "chosenAttacker": false,
+          "attackerHpBefore": 2,
+          "attackerHpAfter": 2,
+          "harmlessHpBefore": 1,
+          "harmlessHpAfter": 0,
+          "attackerDead": false,
+          "harmlessDead": true,
+          "energySpent": 1,
+          "Score": 106,
+          "Reason": "estimated-lethal"
+        }
+      },
+      {
+        "cls": "ironclad",
+        "kind": "nonlethal",
+        "passed": true,
+        "result": {
+          "key": "ironclad",
+          "kind": "nonlethal",
+          "incoming": 7,
+          "blockBefore": 0,
+          "chosenAttacker": false,
+          "attackerHpBefore": 44,
+          "attackerHpAfter": 44,
+          "harmlessHpBefore": 1,
+          "harmlessHpAfter": 0,
+          "attackerDead": false,
+          "harmlessDead": true,
+          "energySpent": 1,
+          "Score": 106,
+          "Reason": "estimated-lethal"
+        }
+      }
+    ],
+    "violations": [
+      "knight/threat",
+      "mage/threat",
+      "ranger/threat",
+      "ironclad/threat"
+    ]
+  },
+  {
+    "trial": "threat-pilot-balance146-threat-fixed-regular",
+    "receiptSha256": "56ff28089341ccce47323ce6fb11f5022d0701d832e56cbd6c7a5ab57c79ca85",
+    "synthetic": true,
+    "status": "passed",
+    "source": "01ad843bb0ae9c6b765cf75fb33945adc0a09c10",
+    "dllSha256": "871ea7a01a4fbf4b4bb16d10daab5edb3348d3a88b67299ea6d54fcb148425a0",
+    "game": "v0.107.1",
+    "mod": "1.0.30",
+    "mods": [
+      {
+        "id": "BaseLib",
+        "version": "v3.4.7"
+      },
+      {
+        "id": "SpireLegacy",
+        "version": "1.0.30"
+      }
+    ],
+    "cases": [
+      {
+        "cls": "knight",
+        "kind": "threat",
+        "passed": true,
+        "result": {
+          "key": "knight_strike",
+          "kind": "threat",
+          "incoming": 7,
+          "blockBefore": 0,
+          "chosenAttacker": true,
+          "attackerHpBefore": 2,
+          "attackerHpAfter": 0,
+          "harmlessHpBefore": 1,
+          "harmlessHpAfter": 1,
+          "attackerDead": true,
+          "harmlessDead": false,
+          "energySpent": 1,
+          "Score": 116.2,
+          "Reason": "estimated-lethal"
+        }
+      },
+      {
+        "cls": "knight",
+        "kind": "covered",
+        "passed": true,
+        "result": {
+          "key": "knight_strike",
+          "kind": "covered",
+          "incoming": 7,
+          "blockBefore": 7,
+          "chosenAttacker": false,
+          "attackerHpBefore": 2,
+          "attackerHpAfter": 2,
+          "harmlessHpBefore": 1,
+          "harmlessHpAfter": 0,
+          "attackerDead": false,
+          "harmlessDead": true,
+          "energySpent": 1,
+          "Score": 105,
+          "Reason": "estimated-lethal"
+        }
+      },
+      {
+        "cls": "knight",
+        "kind": "nonlethal",
+        "passed": true,
+        "result": {
+          "key": "knight_strike",
+          "kind": "nonlethal",
+          "incoming": 7,
+          "blockBefore": 0,
+          "chosenAttacker": false,
+          "attackerHpBefore": 44,
+          "attackerHpAfter": 44,
+          "harmlessHpBefore": 1,
+          "harmlessHpAfter": 0,
+          "attackerDead": false,
+          "harmlessDead": true,
+          "energySpent": 1,
+          "Score": 105,
+          "Reason": "estimated-lethal"
+        }
+      },
+      {
+        "cls": "mage",
+        "kind": "threat",
+        "passed": true,
+        "result": {
+          "key": "mage_strike",
+          "kind": "threat",
+          "incoming": 7,
+          "blockBefore": 0,
+          "chosenAttacker": true,
+          "attackerHpBefore": 2,
+          "attackerHpAfter": 0,
+          "harmlessHpBefore": 1,
+          "harmlessHpAfter": 1,
+          "attackerDead": true,
+          "harmlessDead": false,
+          "energySpent": 1,
+          "Score": 116.2,
+          "Reason": "estimated-lethal"
+        }
+      },
+      {
+        "cls": "mage",
+        "kind": "covered",
+        "passed": true,
+        "result": {
+          "key": "mage_strike",
+          "kind": "covered",
+          "incoming": 7,
+          "blockBefore": 7,
+          "chosenAttacker": false,
+          "attackerHpBefore": 2,
+          "attackerHpAfter": 2,
+          "harmlessHpBefore": 1,
+          "harmlessHpAfter": 0,
+          "attackerDead": false,
+          "harmlessDead": true,
+          "energySpent": 1,
+          "Score": 105,
+          "Reason": "estimated-lethal"
+        }
+      },
+      {
+        "cls": "mage",
+        "kind": "nonlethal",
+        "passed": true,
+        "result": {
+          "key": "mage_strike",
+          "kind": "nonlethal",
+          "incoming": 7,
+          "blockBefore": 0,
+          "chosenAttacker": false,
+          "attackerHpBefore": 44,
+          "attackerHpAfter": 44,
+          "harmlessHpBefore": 1,
+          "harmlessHpAfter": 0,
+          "attackerDead": false,
+          "harmlessDead": true,
+          "energySpent": 1,
+          "Score": 105,
+          "Reason": "estimated-lethal"
+        }
+      },
+      {
+        "cls": "ranger",
+        "kind": "threat",
+        "passed": true,
+        "result": {
+          "key": "ranger_strike",
+          "kind": "threat",
+          "incoming": 7,
+          "blockBefore": 0,
+          "chosenAttacker": true,
+          "attackerHpBefore": 2,
+          "attackerHpAfter": 0,
+          "harmlessHpBefore": 1,
+          "harmlessHpAfter": 1,
+          "attackerDead": true,
+          "harmlessDead": false,
+          "energySpent": 1,
+          "Score": 116.2,
+          "Reason": "estimated-lethal"
+        }
+      },
+      {
+        "cls": "ranger",
+        "kind": "covered",
+        "passed": true,
+        "result": {
+          "key": "ranger_strike",
+          "kind": "covered",
+          "incoming": 7,
+          "blockBefore": 7,
+          "chosenAttacker": false,
+          "attackerHpBefore": 2,
+          "attackerHpAfter": 2,
+          "harmlessHpBefore": 1,
+          "harmlessHpAfter": 0,
+          "attackerDead": false,
+          "harmlessDead": true,
+          "energySpent": 1,
+          "Score": 105,
+          "Reason": "estimated-lethal"
+        }
+      },
+      {
+        "cls": "ranger",
+        "kind": "nonlethal",
+        "passed": true,
+        "result": {
+          "key": "ranger_strike",
+          "kind": "nonlethal",
+          "incoming": 7,
+          "blockBefore": 0,
+          "chosenAttacker": false,
+          "attackerHpBefore": 44,
+          "attackerHpAfter": 44,
+          "harmlessHpBefore": 1,
+          "harmlessHpAfter": 0,
+          "attackerDead": false,
+          "harmlessDead": true,
+          "energySpent": 1,
+          "Score": 105,
+          "Reason": "estimated-lethal"
+        }
+      },
+      {
+        "cls": "ironclad",
+        "kind": "threat",
+        "passed": true,
+        "result": {
+          "key": "ironclad",
+          "kind": "threat",
+          "incoming": 7,
+          "blockBefore": 0,
+          "chosenAttacker": true,
+          "attackerHpBefore": 2,
+          "attackerHpAfter": 0,
+          "harmlessHpBefore": 1,
+          "harmlessHpAfter": 1,
+          "attackerDead": true,
+          "harmlessDead": false,
+          "energySpent": 1,
+          "Score": 117.2,
+          "Reason": "estimated-lethal"
+        }
+      },
+      {
+        "cls": "ironclad",
+        "kind": "covered",
+        "passed": true,
+        "result": {
+          "key": "ironclad",
+          "kind": "covered",
+          "incoming": 7,
+          "blockBefore": 7,
+          "chosenAttacker": false,
+          "attackerHpBefore": 2,
+          "attackerHpAfter": 2,
+          "harmlessHpBefore": 1,
+          "harmlessHpAfter": 0,
+          "attackerDead": false,
+          "harmlessDead": true,
+          "energySpent": 1,
+          "Score": 106,
+          "Reason": "estimated-lethal"
+        }
+      },
+      {
+        "cls": "ironclad",
+        "kind": "nonlethal",
+        "passed": true,
+        "result": {
+          "key": "ironclad",
+          "kind": "nonlethal",
+          "incoming": 7,
+          "blockBefore": 0,
+          "chosenAttacker": false,
+          "attackerHpBefore": 44,
+          "attackerHpAfter": 44,
+          "harmlessHpBefore": 1,
+          "harmlessHpAfter": 0,
+          "attackerDead": false,
+          "harmlessDead": true,
+          "energySpent": 1,
+          "Score": 106,
+          "Reason": "estimated-lethal"
+        }
+      }
+    ],
+    "violations": []
+  },
+  {
+    "trial": "threat-pilot-balance146-threat-fixed-beta",
+    "receiptSha256": "e81ad17bf6c5e1c3aca584be765b2c75db87ae7a0d0002661de87ab3a30d2ec0",
+    "synthetic": true,
+    "status": "passed",
+    "source": "01ad843bb0ae9c6b765cf75fb33945adc0a09c10",
+    "dllSha256": "871ea7a01a4fbf4b4bb16d10daab5edb3348d3a88b67299ea6d54fcb148425a0",
+    "game": "v0.111.0",
+    "mod": "1.0.30",
+    "mods": [
+      {
+        "id": "BaseLib",
+        "version": "v3.4.7"
+      },
+      {
+        "id": "SpireLegacy",
+        "version": "1.0.30"
+      }
+    ],
+    "cases": [
+      {
+        "cls": "knight",
+        "kind": "threat",
+        "passed": true,
+        "result": {
+          "key": "knight_strike",
+          "kind": "threat",
+          "incoming": 7,
+          "blockBefore": 0,
+          "chosenAttacker": true,
+          "attackerHpBefore": 2,
+          "attackerHpAfter": 0,
+          "harmlessHpBefore": 1,
+          "harmlessHpAfter": 1,
+          "attackerDead": true,
+          "harmlessDead": false,
+          "energySpent": 1,
+          "Score": 116.2,
+          "Reason": "estimated-lethal"
+        }
+      },
+      {
+        "cls": "knight",
+        "kind": "covered",
+        "passed": true,
+        "result": {
+          "key": "knight_strike",
+          "kind": "covered",
+          "incoming": 7,
+          "blockBefore": 7,
+          "chosenAttacker": false,
+          "attackerHpBefore": 2,
+          "attackerHpAfter": 2,
+          "harmlessHpBefore": 1,
+          "harmlessHpAfter": 0,
+          "attackerDead": false,
+          "harmlessDead": true,
+          "energySpent": 1,
+          "Score": 105,
+          "Reason": "estimated-lethal"
+        }
+      },
+      {
+        "cls": "knight",
+        "kind": "nonlethal",
+        "passed": true,
+        "result": {
+          "key": "knight_strike",
+          "kind": "nonlethal",
+          "incoming": 7,
+          "blockBefore": 0,
+          "chosenAttacker": false,
+          "attackerHpBefore": 45,
+          "attackerHpAfter": 45,
+          "harmlessHpBefore": 1,
+          "harmlessHpAfter": 0,
+          "attackerDead": false,
+          "harmlessDead": true,
+          "energySpent": 1,
+          "Score": 105,
+          "Reason": "estimated-lethal"
+        }
+      },
+      {
+        "cls": "mage",
+        "kind": "threat",
+        "passed": true,
+        "result": {
+          "key": "mage_strike",
+          "kind": "threat",
+          "incoming": 7,
+          "blockBefore": 0,
+          "chosenAttacker": true,
+          "attackerHpBefore": 2,
+          "attackerHpAfter": 0,
+          "harmlessHpBefore": 1,
+          "harmlessHpAfter": 1,
+          "attackerDead": true,
+          "harmlessDead": false,
+          "energySpent": 1,
+          "Score": 116.2,
+          "Reason": "estimated-lethal"
+        }
+      },
+      {
+        "cls": "mage",
+        "kind": "covered",
+        "passed": true,
+        "result": {
+          "key": "mage_strike",
+          "kind": "covered",
+          "incoming": 7,
+          "blockBefore": 7,
+          "chosenAttacker": false,
+          "attackerHpBefore": 2,
+          "attackerHpAfter": 2,
+          "harmlessHpBefore": 1,
+          "harmlessHpAfter": 0,
+          "attackerDead": false,
+          "harmlessDead": true,
+          "energySpent": 1,
+          "Score": 105,
+          "Reason": "estimated-lethal"
+        }
+      },
+      {
+        "cls": "mage",
+        "kind": "nonlethal",
+        "passed": true,
+        "result": {
+          "key": "mage_strike",
+          "kind": "nonlethal",
+          "incoming": 7,
+          "blockBefore": 0,
+          "chosenAttacker": false,
+          "attackerHpBefore": 45,
+          "attackerHpAfter": 45,
+          "harmlessHpBefore": 1,
+          "harmlessHpAfter": 0,
+          "attackerDead": false,
+          "harmlessDead": true,
+          "energySpent": 1,
+          "Score": 105,
+          "Reason": "estimated-lethal"
+        }
+      },
+      {
+        "cls": "ranger",
+        "kind": "threat",
+        "passed": true,
+        "result": {
+          "key": "ranger_strike",
+          "kind": "threat",
+          "incoming": 7,
+          "blockBefore": 0,
+          "chosenAttacker": true,
+          "attackerHpBefore": 2,
+          "attackerHpAfter": 0,
+          "harmlessHpBefore": 1,
+          "harmlessHpAfter": 1,
+          "attackerDead": true,
+          "harmlessDead": false,
+          "energySpent": 1,
+          "Score": 116.2,
+          "Reason": "estimated-lethal"
+        }
+      },
+      {
+        "cls": "ranger",
+        "kind": "covered",
+        "passed": true,
+        "result": {
+          "key": "ranger_strike",
+          "kind": "covered",
+          "incoming": 7,
+          "blockBefore": 7,
+          "chosenAttacker": false,
+          "attackerHpBefore": 2,
+          "attackerHpAfter": 2,
+          "harmlessHpBefore": 1,
+          "harmlessHpAfter": 0,
+          "attackerDead": false,
+          "harmlessDead": true,
+          "energySpent": 1,
+          "Score": 105,
+          "Reason": "estimated-lethal"
+        }
+      },
+      {
+        "cls": "ranger",
+        "kind": "nonlethal",
+        "passed": true,
+        "result": {
+          "key": "ranger_strike",
+          "kind": "nonlethal",
+          "incoming": 7,
+          "blockBefore": 0,
+          "chosenAttacker": false,
+          "attackerHpBefore": 45,
+          "attackerHpAfter": 45,
+          "harmlessHpBefore": 1,
+          "harmlessHpAfter": 0,
+          "attackerDead": false,
+          "harmlessDead": true,
+          "energySpent": 1,
+          "Score": 105,
+          "Reason": "estimated-lethal"
+        }
+      },
+      {
+        "cls": "ironclad",
+        "kind": "threat",
+        "passed": true,
+        "result": {
+          "key": "ironclad",
+          "kind": "threat",
+          "incoming": 7,
+          "blockBefore": 0,
+          "chosenAttacker": true,
+          "attackerHpBefore": 2,
+          "attackerHpAfter": 0,
+          "harmlessHpBefore": 1,
+          "harmlessHpAfter": 1,
+          "attackerDead": true,
+          "harmlessDead": false,
+          "energySpent": 1,
+          "Score": 117.2,
+          "Reason": "estimated-lethal"
+        }
+      },
+      {
+        "cls": "ironclad",
+        "kind": "covered",
+        "passed": true,
+        "result": {
+          "key": "ironclad",
+          "kind": "covered",
+          "incoming": 7,
+          "blockBefore": 7,
+          "chosenAttacker": false,
+          "attackerHpBefore": 2,
+          "attackerHpAfter": 2,
+          "harmlessHpBefore": 1,
+          "harmlessHpAfter": 0,
+          "attackerDead": false,
+          "harmlessDead": true,
+          "energySpent": 1,
+          "Score": 106,
+          "Reason": "estimated-lethal"
+        }
+      },
+      {
+        "cls": "ironclad",
+        "kind": "nonlethal",
+        "passed": true,
+        "result": {
+          "key": "ironclad",
+          "kind": "nonlethal",
+          "incoming": 7,
+          "blockBefore": 0,
+          "chosenAttacker": false,
+          "attackerHpBefore": 45,
+          "attackerHpAfter": 45,
+          "harmlessHpBefore": 1,
+          "harmlessHpAfter": 0,
+          "attackerDead": false,
+          "harmlessDead": true,
+          "energySpent": 1,
+          "Score": 106,
+          "Reason": "estimated-lethal"
+        }
+      }
+    ],
+    "violations": []
+  }
+]

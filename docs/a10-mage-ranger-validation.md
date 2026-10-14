@@ -50,6 +50,8 @@ Collect only the twelve new `balance-campaign-balance146-a10-{mage,ranger}-regul
 
 ## Remaining scope
 
+The subsequent [threat-choice calibration](threat-pilot-calibration.md) reproduces and corrects one pilot target-selection error against all three heirs and native Ironclad. Its synthetic fixtures remain separate from these natural outcomes.
+
 Issue #146 remains open for recorded current-build winning campaigns, experienced archetype decisions and representative hard-trait/relic combinations. This matrix covers higher-Ascension class/investment configurations, not twelve hand-built archetypes or beta parity. The user's A10 full-manor Knight win on Steam Deck/public-beta remains a qualitative report with unknown seed, exact build and decision record.
 
 The next useful step is to calibrate class-specific decision policies against recorded combat choices and matched native controls, then collect campaigns that actually reach shops/rest sites and develop an archetype. Repeating the same early-loss policy on more seeds will not resolve the experienced-play gap. Follow with hard-trait/relic cases under the calibrated policy and complete winning campaigns, preserving build, branch and policy distinctions. The completed 80/120-return paid manor curves need no additional identical loss-heavy extension for this purpose.
