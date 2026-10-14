@@ -1,15 +1,17 @@
 """Original vector geometry and synthesized SFX; no source-game artwork or recordings."""
 import hashlib,json,math,random,struct,wave
 from pathlib import Path
+from design_schema import load_sheets
 root=Path(__file__).resolve().parents[1];out=root/'src/main/resources/heir/presentation';out.mkdir(parents=True,exist_ok=True);rows=[]
+tables = load_sheets(root)
 def record(path,kind):
     rows.append(dict(id=path.stem+'-'+kind,path=path.relative_to(root/'src/main/resources').as_posix(),kind=kind,sha256=hashlib.sha256(path.read_bytes()).hexdigest(),author='CapeKid',license='MIT',provenance='Original geometry / deterministic sine-and-noise synthesis; scripts/author-heir-presentation.py'))
 def svg(name,body,size=128):
-    p=out/(name+'.svg');p.write_text(f'<svg xmlns="http://www.w3.org/2000/svg" width="{size}" height="{size}" viewBox="0 0 128 128">'+body+'</svg>');record(p,'vector')
+    p=out/(name+'.svg');p.write_text(f'<svg xmlns="http://www.w3.org/2000/svg" width="{size}" height="{size}" viewBox="0 0 128 128">'+body+'</svg>', encoding='utf-8', newline='\n');record(p,'vector')
 for cls,color in [('knight','#dfb968'),('mage','#bb94e9'),('ranger','#83c690')]:
     rgb=tuple(int(color[i:i+2],16)/255 for i in [1,3,5]);tint=', '.join(str(round(v,5)) for v in rgb)
     shader='shader_type canvas_item; uniform float threshold = 0.0; uniform vec4 tint : source_color; void fragment() { float edge = UV.x * 0.65 + UV.y * 0.25 + abs(fract(UV.y * 7.0) - 0.5) * 0.1; float a = threshold < 0.001 ? 0.0 : smoothstep(edge - 0.015, edge + 0.015, threshold); COLOR = vec4(tint.rgb * 0.22, a); }'
-    p=out/f'{cls}-transition.tres';p.write_text('[gd_resource type="ShaderMaterial" load_steps=2 format=3]\n\n[sub_resource type="Shader" id="Shader_family"]\ncode = '+json.dumps(shader)+'\n\n[resource]\nshader = SubResource("Shader_family")\nshader_parameter/threshold = 0.0\nshader_parameter/tint = Color('+tint+', 1)\n');record(p,'material')
+    p=out/f'{cls}-transition.tres';p.write_text('[gd_resource type="ShaderMaterial" load_steps=2 format=3]\n\n[sub_resource type="Shader" id="Shader_family"]\ncode = '+json.dumps(shader)+'\n\n[resource]\nshader = SubResource("Shader_family")\nshader_parameter/threshold = 0.0\nshader_parameter/tint = Color('+tint+', 1)\n', encoding='utf-8', newline='\n');record(p,'material')
     shape={'knight':'-20, -24, 20, -24, 20, 6, 0, 24, -20, 6','mage':'0, -28, 7, -7, 28, 0, 7, 7, 0, 28, -7, 7, -28, 0, -7, -7','ranger':'-25, -7, 5, -7, 5, -18, 28, 0, 5, 18, 5, 7, -25, 7'}[cls]
     p=out/f'{cls}-trail.tscn';p.write_text('''[gd_scene load_steps=4 format=3]
 
@@ -36,7 +38,7 @@ script = ExtResource("2")
 [node name="Crest" type="Polygon2D" parent="Sprites"]
 polygon = PackedVector2Array('''+shape+''')
 color = Color('''+tint+''', 0.45)
-''');record(p,'scene')
+''', encoding='utf-8', newline='\n');record(p,'scene')
     layers=[f'<circle cx="64" cy="64" r="57" fill="#1d2631" stroke="#111820" stroke-width="8"/><circle cx="64" cy="64" r="51" fill="none" stroke="{color}" stroke-width="5"/>',
       f'<circle cx="64" cy="64" r="43" fill="none" stroke="{color}" stroke-width="2" stroke-dasharray="14 8"/>',
       f'<path d="M64 7l3 5-3 5-3-5zM64 111l3 5-3 5-3-5zM7 64l5-3 5 3-5 3zM111 64l5-3 5 3-5 3z" fill="{color}"/>',
@@ -65,5 +67,5 @@ color = Color('''+tint+''', 0.45)
         p=out/f'{cls}-{role}.wav'
         with wave.open(str(p),'wb') as w:w.setparams((1,2,rate,0,'NONE','not compressed'));w.writeframes(data)
         record(p,'audio')
-(root/'sheets/presentation_art.json').write_text(json.dumps(rows,indent=2)+'\n')
+(root/'sheets/presentation_art.json').write_text(json.dumps(rows,indent=2)+'\n', encoding='utf-8', newline='\n')
 print('Authored',len(rows),'original presentation assets')

@@ -1,9 +1,12 @@
 """Author original vector icons. No game images, fonts, external references or extraction."""
 import hashlib
 import json
+from html import escape
 from pathlib import Path
+from design_schema import load_sheets
 
 ROOT = Path(__file__).resolve().parents[1]
+tables = load_sheets(ROOT)
 OUT = ROOT / 'src/main/resources/heir/icons'
 OUT.mkdir(parents=True, exist_ok=True)
 
@@ -134,12 +137,12 @@ ICONS = {
 
 rows = []
 for table, kind in [('traits', 'trait'), ('classes', 'class')]:
-    for row in json.loads((ROOT/'sheets'/f'{table}.json').read_text()):
+    for row in tables[table]:
         key = row['id']
         art = ICONS[key] if kind == 'trait' else compose({'knight':'sword', 'mage':'wand', 'ranger':'bow'}[key])
-        svg = '<svg xmlns="http://www.w3.org/2000/svg" width="128" height="128" viewBox="0 0 128 128"><title>'+row['name']+'</title><g stroke="#302432" stroke-width="5" stroke-linejoin="round" stroke-linecap="round"><rect x="5" y="5" width="118" height="118" rx="27" fill="#514164"/><rect x="10" y="10" width="108" height="108" rx="23" fill="none" stroke="#c9a775" stroke-width="3"/>'+art+'</g></svg>\n'
+        svg = '<svg xmlns="http://www.w3.org/2000/svg" width="128" height="128" viewBox="0 0 128 128"><title>'+escape(row['name'])+'</title><g stroke="#302432" stroke-width="5" stroke-linejoin="round" stroke-linecap="round"><rect x="5" y="5" width="118" height="118" rx="27" fill="#514164"/><rect x="10" y="10" width="108" height="108" rx="23" fill="none" stroke="#c9a775" stroke-width="3"/>'+art+'</g></svg>\n'
         target = OUT / f'{kind}-{key}.svg'
-        target.write_text(svg, encoding='utf-8')
+        target.write_text(svg, encoding='utf-8', newline='\n')
         rows.append(dict(id=f'{kind}_{key}', subjectId=key, kind=kind, name=row['name'], path='heir/icons/'+target.name, sha256=hashlib.sha256(target.read_bytes()).hexdigest(), width=128, height=128, author='CapeKid', license='MIT', provenance='Original hand-authored SVG geometry; scripts/author-heir-icons.py; no imported artwork'))
-(ROOT/'sheets/icon_art.json').write_text(json.dumps(rows,indent=2)+'\n',encoding='utf-8')
+(ROOT/'sheets/icon_art.json').write_text(json.dumps(rows,indent=2)+'\n',encoding='utf-8', newline='\n')
 print(f'Authored {len(rows)} original vector icons.')

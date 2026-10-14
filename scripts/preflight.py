@@ -3,10 +3,15 @@ import hashlib
 import re
 from PIL import Image
 from pathlib import Path
+from design_schema import DesignError, load_sheets, validate_assets
 ROOT=Path(__file__).resolve().parents[1]
 
 def validate(historical_assets=False):
-    sheets={p.stem:json.loads(p.read_text()) for p in (ROOT/'sheets').glob('*.json')}
+    try:
+        sheets=load_sheets(ROOT)
+        validate_assets(ROOT, sheets)
+    except DesignError as error:
+        print(error); raise SystemExit(1)
     errors=[]; cells=0
     for name,rows in sheets.items():
         if not rows: errors.append(f'{name}: empty sheet'); continue
@@ -22,6 +27,25 @@ def validate(historical_assets=False):
     classes={r['id'] for r in sheets['classes']}; assets={r['id'] for r in sheets['assets']}; cards={r['id'] for r in sheets['cards']}; manor={r['id'] for r in sheets['manor']}; systems={r['id'] for r in sheets['systems']}
     def ref(name,row,col,ids):
         if row[col] not in ids: errors.append(f'{name}.{row["id"]}.{col}: unresolved {row[col]}')
+    for table in ('ancient_cards','pool_expansion'):
+        for row in sheets[table]:
+            ref(table,row,'cardId',cards);ref(table,row,'classId',classes|({'shared'} if table=='pool_expansion' else set()))
+    for table in ('character_art','ancient_dialogue','family_chronicle'):
+        for row in sheets[table]:
+            ref(table,row,'id' if table=='character_art' else 'classId',classes|({'none'} if table=='family_chronicle' else set()))
+    for row in sheets['card_art']:
+        if row['id']!=row['cardId']:errors.append(f'card_art.{row["id"]}.cardId: art/card identity mismatch')
+    for row in sheets['balance_changes']:
+        ref('balance_changes',row,'id',cards)
+        card=next((c for c in sheets['cards'] if c['id']==row['id']),None)
+        if card:
+            for key,value in row['after'].items():
+                if key not in card or card[key]!=value:errors.append(f'balance_changes.{row["id"]}.after.{key}: stale current stat')
+    for row in sheets['manor']:
+        seen={row['id']};parent=row['requires']
+        while parent!='none' and parent in manor:
+            if parent in seen:errors.append(f'manor.{row["id"]}.requires: prerequisite cycle');break
+            seen.add(parent);parent=next(r['requires'] for r in sheets['manor'] if r['id']==parent)
     for row in sheets['classes']: ref('classes',row,'asset',assets); ref('classes',row,'signature',cards)
     traits={r['id'] for r in sheets['traits']}
     effects={'none','gray','skill_block','nature','poison','skill_draw','fragile','pacifist','turn_block','first_attack_block','weak','enemy_guard','costly','gold','shop','histrionic','sepia','enemy_strength','hurt_weak','rainbow','vegan','diva','algesia','energy','no_heal','coin_loss','hurt_energy','super_heal','relics','thorns','blue','perfectionist','shock','chest','explosions','medium','festive','kit','piercing','exhausted'}
@@ -42,6 +66,7 @@ def validate(historical_assets=False):
         ref('cards',row,'classId',classes); ref('cards',row,'asset',assets)
         ref('cards',row,'art',{r['id'] for r in sheets.get('card_art',[])})
         if row['type'] not in ('ATTACK','SKILL','POWER'): errors.append('invalid card type '+row['id'])
+        if row['upgradeCost'] and row['cost']==0:errors.append(f'cards.{row["id"]}.upgradeCost: upgrade produces negative cost')
         if not isinstance(row.get('upgradeDraw',-1),int) or row.get('upgradeDraw',-1)<-1:errors.append('Invalid draw upgrade override '+row['id'])
         if row['power'] not in {'none','reservoir','quiver'}|{r['id'] for r in sheets.get('power_effects',[])}:errors.append('Unsupported class power '+row['id'])
         if row.get('special','none') not in {'none'}|{r['id'] for r in sheets.get('special_effects',[])}:errors.append('Unsupported card mechanic '+row['id'])
@@ -111,7 +136,8 @@ def validate(historical_assets=False):
         if row['id'] not in active:continue
         for upgraded in (False,True):
             cost=max(0,row['cost']-(1 if upgraded and row['upgradeCost'] else 0))
-            draw=row['draw']+(row['upgradeMagic'] if upgraded and row['draw'] else 0)
+            increment=row['upgradeDraw'] if row['upgradeDraw']>=0 else row['upgradeMagic']
+            draw=row['draw']+(increment if upgraded and row['draw'] else 0)
             discard=row['discard']+(row['upgradeDiscard'] if upgraded else 0)
             if cost==0 and not row['exhaust'] and draw>discard:errors.append('Repeatable free positive-draw card '+row['id'])
     for target in sheets.get('pool_targets',[]):
@@ -152,6 +178,7 @@ def validate(historical_assets=False):
         ref('decks',row,'classId',classes)
         for c in row['cards']:
             if c not in cards: errors.append('deck references '+c)
+            elif row['classId'] in membership and c not in membership[row['classId']]:errors.append(f'decks.{row["id"]}.cards: foreign starter {c}')
     for row in sheets['manor']: ref('manor',row,'requires',manor|{'none'})
     for row in sheets['hooks']: ref('hooks',row,'system',systems)
     art_hashes=set()

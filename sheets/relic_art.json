@@ -2,9 +2,9 @@
   {
     "id": "heirloom_brooch",
     "path": "heir/relics/heirloom_brooch.svg",
-    "sha256": "e42091a1c0a7c147435f4df47f05b0fa4725e4056dce0807846da56e3e887cd8",
+    "sha256": "ccead8c030771f99eb46fcff44424d1e8280e5e99d3d0396ae8362241c02c845",
     "outline": "heir/relics/heirloom_brooch-outline.svg",
-    "outlineSha256": "026b97ac818978ea563e4fcade1ef150be1eb514902504ee4336a5898facb155",
+    "outlineSha256": "891fa1251777b7f6cdaa3d062e5f6e5be94ca077f6be36169da29459a59503ad",
     "author": "CapeKid",
     "license": "MIT",
     "provenance": "Original hand-authored vector geometry; scripts/author-heir-relics.py; no game-derived or external assets."
@@ -12,9 +12,9 @@
   {
     "id": "training_dummy",
     "path": "heir/relics/training_dummy.svg",
-    "sha256": "75d1cf9e751cc6b77250dbc8e6ab698a09a088c182c3b79c1e4c7d07c5e816d1",
+    "sha256": "f255429649d690df05566ad2c93a7adf08ed6ef99526e25535d9d1bac3cdf823",
     "outline": "heir/relics/training_dummy-outline.svg",
-    "outlineSha256": "a1707bf509bef7928714b550dd52bb89d7c0d1d44ff4d5a9ef74aa832870c377",
+    "outlineSha256": "010418a9148e384617586cca1f8320825f689dd1990df09add98271a2354c789",
     "author": "CapeKid",
     "license": "MIT",
     "provenance": "Original hand-authored vector geometry; scripts/author-heir-relics.py; no game-derived or external assets."
@@ -22,9 +22,9 @@
   {
     "id": "threadbound_ledger",
     "path": "heir/relics/threadbound_ledger.svg",
-    "sha256": "373b83dc6537a427b781ae619760cb779a7d665c336d65b859792d2ce8a2e61b",
+    "sha256": "b9750f3533ea15158af5d1a265cde9057e575c962cc4bd819b63c2895325f593",
     "outline": "heir/relics/threadbound_ledger-outline.svg",
-    "outlineSha256": "2fe89fdee162c46a20389c01ad21927d5e4c85c6a88fb81a881909e24f5123d8",
+    "outlineSha256": "c5ae2790fc05cc75d31bf18098c2709b2c58fd3a18495d4cbe14cb2f1b3eee78",
     "author": "CapeKid",
     "license": "MIT",
     "provenance": "Original hand-authored vector geometry; scripts/author-heir-relics.py; no game-derived or external assets."
@@ -32,9 +32,9 @@
   {
     "id": "wayfarer_ribbon",
     "path": "heir/relics/wayfarer_ribbon.svg",
-    "sha256": "e673b6ea65261c13e3203056ca3207be300de36d507785406deaa9d094044043",
+    "sha256": "f9f3207442f0e5cc7f4935da0b4e3e0958698d4a023589d23ee9546412e62544",
     "outline": "heir/relics/wayfarer_ribbon-outline.svg",
-    "outlineSha256": "6736eac4143454501cc67152cd1029557b6ee882cadb7b245988d0fe0b55aaee",
+    "outlineSha256": "9921e527e4f7106fdea841304ede9a8e9d17e75ef84aa1d9a08f466911e2a44b",
     "author": "CapeKid",
     "license": "MIT",
     "provenance": "Original hand-authored vector geometry; scripts/author-heir-relics.py; no game-derived or external assets."
@@ -42,9 +42,9 @@
   {
     "id": "triune_crest",
     "path": "heir/relics/triune_crest.svg",
-    "sha256": "9218e655eaf3bdee38a3d6cb9de9315994ba55265c721c40976d1f5adaf60059",
+    "sha256": "cdfe731934a05a8a0c56c459e68edd605b54bad76b3c8148b111756ac78e9f1d",
     "outline": "heir/relics/triune_crest-outline.svg",
-    "outlineSha256": "30e85697e4eb7a5c630bbfee26c18eef9990848ca68395a00eac8a1a2276fec7",
+    "outlineSha256": "423dec03a0f86a2d22138efed75ba36e8feffe6f29ed5a78cabec43a162b1f0a",
     "author": "CapeKid",
     "license": "MIT",
     "provenance": "Original hand-authored vector geometry; scripts/author-heir-relics.py; no game-derived or external assets."
@@ -52,9 +52,9 @@
   {
     "id": "legacy_hourglass",
     "path": "heir/relics/legacy_hourglass.svg",
-    "sha256": "3a3d954b646592d3c156c5d44c70f258a2d14d1cf0cb39ace31a3ea596b9b5c8",
+    "sha256": "ed46c7ffd8f0249ddb2619b3652171a4e986e7a099dcaafba76702c6e4a82378",
     "outline": "heir/relics/legacy_hourglass-outline.svg",
-    "outlineSha256": "35f882d226857d619c700deb6d4be026361d1d3d210c46251289931f02974095",
+    "outlineSha256": "ddd76c7d5cd10a3460c100ea45c10c2b414d08015acd3ee5b64ec19c32211e33",
     "author": "CapeKid",
     "license": "MIT",
     "provenance": "Original hand-authored vector geometry; scripts/author-heir-relics.py; no game-derived or external assets."
@@ -62,9 +62,9 @@
   {
     "id": "family_seal",
     "path": "heir/relics/family_seal.svg",
-    "sha256": "12fe1cabc5a43ec21fa05746fe10a80c690349bfe6368882d57c437ff1adc5f2",
+    "sha256": "a755dac830a139235bf6963f26344f84a8bd7ccf20b047804581eaa4e5e2161e",
     "outline": "heir/relics/family_seal-outline.svg",
-    "outlineSha256": "f6ed3a1059a633fc8cca42173683aa80cc2d4719fd0d21ed2cba99435ceb633a",
+    "outlineSha256": "2514487160757f32a001b772aab699d26a3a48ca4875a058b7ed8bf11f3312a7",
     "author": "CapeKid",
     "license": "MIT",
     "provenance": "Original hand-authored vector geometry; scripts/author-heir-relics.py; no game-derived or external assets."
@@ -72,9 +72,9 @@
   {
     "id": "guardian_knot",
     "path": "heir/relics/guardian_knot.svg",
-    "sha256": "d9e6ba8aeaabaccfbc4a05e531b29b936960059bc95ecdeba1f0030ddc67ffb5",
+    "sha256": "51e30f75838e1aca78287bf594d4e59be949f95febc96b7457f69199aa65cd76",
     "outline": "heir/relics/guardian_knot-outline.svg",
-    "outlineSha256": "df6446676fdd2ca7e41811325da9e03052e32f40500305cd1ac6bb8893590893",
+    "outlineSha256": "a0c3cc3cf4241e03e501ec9bd5fa4cc6dd09f7702e2f16736bc2bc0e1288d459",
     "author": "CapeKid",
     "license": "MIT",
     "provenance": "Original hand-authored vector geometry; scripts/author-heir-relics.py; no game-derived or external assets."
@@ -82,9 +82,9 @@
   {
     "id": "scholar_bookmark",
     "path": "heir/relics/scholar_bookmark.svg",
-    "sha256": "48c0264efe959b960ea79ff5effdcee5af2a76464f45a8368ac84dd5976e4672",
+    "sha256": "1d25dc8565e7cb9d7bfd6d5ea387bf886b651910c5225386dbfecf710b7843bd",
     "outline": "heir/relics/scholar_bookmark-outline.svg",
-    "outlineSha256": "7042ae5957544d6da0e75392b46926c3ebbd4c91e086c43928385aba67906213",
+    "outlineSha256": "35df642995dcf2c3d11e811aacaba800ff32664e9209790eb34d9cc485f4b7b3",
     "author": "CapeKid",
     "license": "MIT",
     "provenance": "Original hand-authored vector geometry; scripts/author-heir-relics.py; no game-derived or external assets."
@@ -92,9 +92,9 @@
   {
     "id": "trail_compass",
     "path": "heir/relics/trail_compass.svg",
-    "sha256": "8a1ac26e8b65597fe54b36a40bd603768563479a16e0c8844f4b36e9a54cb82e",
+    "sha256": "580e86f36e4f36b34adfc09c1d9bf0c31292cb778a28be53421a369d2f405243",
     "outline": "heir/relics/trail_compass-outline.svg",
-    "outlineSha256": "9626d491097cd9a03b07f273fb269bba9e8b4720e342f204a173fe1b053509bb",
+    "outlineSha256": "ae4fac60399320a5d36b2e286ec0de09ac065b0ed456567fe9b30e10a8fee970",
     "author": "CapeKid",
     "license": "MIT",
     "provenance": "Original hand-authored vector geometry; scripts/author-heir-relics.py; no game-derived or external assets."

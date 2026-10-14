@@ -1,1 +1,5 @@
 *.sh text eol=lf
+*.svg text eol=lf
+*.tres text eol=lf
+*.tscn text eol=lf
+sts2/Generated/*.cs text eol=lf

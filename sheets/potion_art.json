@@ -2,9 +2,9 @@
   {
     "id": "borrowed_breath",
     "path": "heir/potions/borrowed_breath.svg",
-    "sha256": "4c2478b741609b7e7c04a1ea244b20ea507320aa1e16b307570d0ae8a6d2dfae",
+    "sha256": "197e95993fc866f13774dfe15f3c6fbedf4fb08a54f6f9b426b01c9ceb909be8",
     "outline": "heir/potions/borrowed_breath-outline.svg",
-    "outlineSha256": "e1330ebf72d2ea7f34c45030a015507993634be18f8ca87118877310182d9e06",
+    "outlineSha256": "8e8c6726e95f1153a10b84e1ea7ed9e0ee5fec626580716f0c8d8f67dbbe3bac",
     "author": "CapeKid",
     "license": "MIT",
     "provenance": "Original hand-authored vector geometry; scripts/author-heir-potions.py; no game-derived or external assets."
@@ -12,9 +12,9 @@
   {
     "id": "briar_vial",
     "path": "heir/potions/briar_vial.svg",
-    "sha256": "832de239de75dfffa74c394869522e3303cf89186fd5084d5c99e979ab1927bc",
+    "sha256": "20578b3ef4d8f200668d40f7d10f5fba80faf6ec90fc9d5dba3bc2dc1312e6ef",
     "outline": "heir/potions/briar_vial-outline.svg",
-    "outlineSha256": "d3e7ab2665fe85d0f4a3c2bd9d62c7f044447776e7daa3e08a932ca077aff58c",
+    "outlineSha256": "ae124341a2ca58b9d36e7a2d9838c6b5dfa62584ac83549f4d891937ba295296",
     "author": "CapeKid",
     "license": "MIT",
     "provenance": "Original hand-authored vector geometry; scripts/author-heir-potions.py; no game-derived or external assets."
@@ -22,9 +22,9 @@
   {
     "id": "triune_draught",
     "path": "heir/potions/triune_draught.svg",
-    "sha256": "e46e5b70c2879cd707c1b794057c907125dc7a90b4ff592361821ab583fa4279",
+    "sha256": "7cde18a1e61340f5b8951e8f96661400392a11089cab2d444e74308310260c03",
     "outline": "heir/potions/triune_draught-outline.svg",
-    "outlineSha256": "d198b79855e4e94c09bd7eeb628d070b8a308a8d83cba69aa24baf445573ab11",
+    "outlineSha256": "1cdc1246c98208d55b4cdf4e6de56a9199188c882c9e4a545278bb20a67c1662",
     "author": "CapeKid",
     "license": "MIT",
     "provenance": "Original hand-authored vector geometry; scripts/author-heir-potions.py; no game-derived or external assets."
