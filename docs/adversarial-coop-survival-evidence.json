@@ -1,0 +1,125 @@
+{
+  "issue": 110,
+  "runtimeSourceSha": "3c2bba98fdb0de3effc49d8dda4e132ac9876b63",
+  "dllSha256": "d1cef83bdb62ae3358fcb5431db13d6cf3597191f1e3fb6a879cbb218577ada7",
+  "harnessChecks": 20,
+  "build": {
+    "warnings": 0,
+    "errors": 0,
+    "sheets": 32,
+    "rows": 2063,
+    "cells": 26488
+  },
+  "runs": [
+    {
+      "branch": "regular",
+      "game": "v0.107.1",
+      "mod": "1.0.30",
+      "baseLib": "v3.4.7",
+      "recordFile": "coop-survival-coop110-natural-final-regular.json",
+      "receiptCount": 1089,
+      "paidPlays": 76,
+      "allPaymentsChecked": true,
+      "cases": [
+        {
+          "class": "mage",
+          "trait": "megahealth",
+          "seed": "REVIVAL1",
+          "victimStartingHp": 92,
+          "deathTurn": 10,
+          "victoryTurn": 17,
+          "victoryGuardianHp": 53,
+          "revivedHp": 1,
+          "endedTurns": 16
+        },
+        {
+          "class": "ranger",
+          "trait": "superhealer",
+          "seed": "REVIVAL2",
+          "victimStartingHp": 41,
+          "deathTurn": 5,
+          "victoryTurn": 11,
+          "victoryGuardianHp": 70,
+          "revivedHp": 1,
+          "endedTurns": 10
+        }
+      ],
+      "logs": [
+        {
+          "peer": 1,
+          "errorCount": 0,
+          "invalidTaskIdCount": 0,
+          "particleWarnings": 3,
+          "doubleFreeCount": 0,
+          "stderrSha256": "a78f3b2662102a4fb4d0eb506f32583142f82667415ef6de29853361e86d426a"
+        },
+        {
+          "peer": 2,
+          "errorCount": 0,
+          "invalidTaskIdCount": 0,
+          "particleWarnings": 3,
+          "doubleFreeCount": 0,
+          "stderrSha256": "a78f3b2662102a4fb4d0eb506f32583142f82667415ef6de29853361e86d426a"
+        }
+      ]
+    },
+    {
+      "branch": "beta",
+      "game": "v0.111.0",
+      "mod": "1.0.30",
+      "baseLib": "v3.4.7",
+      "recordFile": "coop-survival-coop110-natural-final-beta.json",
+      "receiptCount": 1303,
+      "paidPlays": 98,
+      "allPaymentsChecked": true,
+      "cases": [
+        {
+          "class": "mage",
+          "trait": "megahealth",
+          "seed": "REVIVAL1",
+          "victimStartingHp": 92,
+          "deathTurn": 11,
+          "victoryTurn": 20,
+          "victoryGuardianHp": 84,
+          "revivedHp": 1,
+          "endedTurns": 19
+        },
+        {
+          "class": "ranger",
+          "trait": "superhealer",
+          "seed": "REVIVAL2",
+          "victimStartingHp": 41,
+          "deathTurn": 6,
+          "victoryTurn": 15,
+          "victoryGuardianHp": 78,
+          "revivedHp": 1,
+          "endedTurns": 14
+        }
+      ],
+      "logs": [
+        {
+          "peer": 1,
+          "errorCount": 2,
+          "invalidTaskIdCount": 2,
+          "particleWarnings": 2,
+          "doubleFreeCount": 0,
+          "stderrSha256": "ced61e7ba6a774d32b2689d0f774bb64e6943ddaf29419aea21202ab787cc4ee"
+        },
+        {
+          "peer": 2,
+          "errorCount": 1,
+          "invalidTaskIdCount": 1,
+          "particleWarnings": 2,
+          "doubleFreeCount": 0,
+          "stderrSha256": "71262a4e5813a88777f43f70819b45a0e442fd20308cc9360bc089058c34a830"
+        }
+      ]
+    }
+  ],
+  "physicalDeckValidated": false,
+  "steamTransportValidated": false,
+  "fullCampaignValidated": false,
+  "exactEmbarkLossValidated": false,
+  "singleSteamAccountAvailable": true,
+  "receiptCount": 2392
+}
