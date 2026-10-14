@@ -153,6 +153,7 @@ public static class CoopOracle
         foreach(var key in new[]{"accept_tutorials_ftue","map_select_ftue","combat_rules_ftue","shuffle_ftue","multiplayer_ftue"})MegaCrit.Sts2.Core.Saves.SaveManager.Instance.MarkFtueAsComplete(key);
         var tree=(SceneTree)Engine.GetMainLoop();
         var menu=NGame.Instance!.MainMenu!;
+        if(host&&request.TryGetProperty("seed",out var seed))NGame.Instance.DebugSeedOverride=seed.GetString();
         var screen=menu.SubmenuStack.GetSubmenuType<NCharacterSelectScreen>();
         var port=(ushort)request.GetProperty("port").GetInt32();
         if(host) {
@@ -180,10 +181,12 @@ public static class CoopOracle
             paused=((SceneTree)Engine.GetMainLoop()).Paused,pending=CoopBloodlines.Pending.Keys.ToArray(),
             connected=run==null?CoopBloodlines.Lobby?.NetService.IsConnected:RunManager.Instance.NetService.IsConnected,
             actionRunning=run!=null&&RunManager.Instance.ActionExecutor.IsRunning,
+            combatInProgress=run!=null&&MegaCrit.Sts2.Core.Combat.CombatManager.Instance.IsInProgress,
+            enemies=run?.Players.FirstOrDefault()?.Creature.CombatState?.Enemies.Select(e=>new{id=e.Monster?.Id.ToString(),hp=e.CurrentHp}).ToArray(),
             session=CoopBloodlines.Selections.Session,protocol=CoopBloodlines.Protocol,
             family=Runtime.Profile.family,familyId=Runtime.Profile.familyId,crowns=Runtime.Profile.crowns,active=Runtime.Profile.active?.id,
             lobby=run==null&&CoopBloodlines.Lobby is {} lobby?CoopBloodlines.Players(lobby).Select(p=>new{id=CoopBloodlines.Id(p),character=CoopBloodlines.Character(p).Id.ToString(),ready=CoopBloodlines.IsReady(p),snapshot=CoopBloodlines.Pending.GetValueOrDefault(CoopBloodlines.Id(p))?.heir.classId}).ToArray():null,
             floor=run?.TotalFloor,room=run?.CurrentRoom?.GetType().Name,
-            players=run?.Players.Select(p=>new{p.NetId,character=p.Character.Id.ToString(),heir=JsonSerializer.SerializeToElement(PlayerBloodlines.Heir(p),FamilyProfile.JsonOptions),snapshot=PlayerBloodlines.State(p)==null?(JsonElement?)null:JsonSerializer.SerializeToElement(PlayerBloodlines.State(p),FamilyProfile.JsonOptions),hp=p.Creature.CurrentHp,maxHp=p.Creature.MaxHp,block=p.Creature.Block,energy=p.PlayerCombatState?.Energy,phase=p.PlayerCombatState?.Phase.ToString(),pool=p.Character.CardPool.Id.ToString(),deck=p.Deck.Cards.Select(c=>c.Id.ToString()).ToArray(),hand=p.PlayerCombatState?.Hand.Cards.Select(c=>c.Id.ToString()).ToArray(),powers=p.Creature.Powers.Select(power=>new{id=power.Id.ToString(),power.Amount,charges=power is P_class cp?cp.Charges:0}).ToArray()}).ToArray()};
+            players=run?.Players.Select(p=>new{p.NetId,character=p.Character.Id.ToString(),heir=JsonSerializer.SerializeToElement(PlayerBloodlines.Heir(p),FamilyProfile.JsonOptions),snapshot=PlayerBloodlines.State(p)==null?(JsonElement?)null:JsonSerializer.SerializeToElement(PlayerBloodlines.State(p),FamilyProfile.JsonOptions),hp=p.Creature.CurrentHp,maxHp=p.Creature.MaxHp,block=p.Creature.Block,energy=p.PlayerCombatState?.Energy,turn=p.PlayerCombatState?.TurnNumber,phase=p.PlayerCombatState?.Phase.ToString(),pool=p.Character.CardPool.Id.ToString(),deck=p.Deck.Cards.Select(c=>c.Id.ToString()).ToArray(),hand=p.PlayerCombatState?.Hand.Cards.Select(c=>c.Id.ToString()).ToArray(),powers=p.Creature.Powers.Select(power=>new{id=power.Id.ToString(),power.Amount,charges=power is P_class cp?cp.Charges:0}).ToArray()}).ToArray()};
     }
 }

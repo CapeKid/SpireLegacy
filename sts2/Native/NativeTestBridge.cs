@@ -121,6 +121,8 @@ public static class NativeTestBridge
                 case "coop-state":result=CoopOracle.State();break;
                 case "coop-ui-select":result=await CoopTimingOracle.Select(request.GetProperty("control").GetString()!);break;
                 case "coop-disconnect":result=CoopTimingOracle.Disconnect();break;
+                case "coop-survival-enter":result=await CoopSurvivalOracle.Enter();break;
+                case "coop-survival-step":result=await CoopSurvivalOracle.Step(request.GetProperty("attack").GetBoolean());break;
                 case "coop-vote":result=CoopOracle.Vote();break;
                 case "coop-play":result=await CoopOracle.Play(request.TryGetProperty("upgrade",out var coopUpgrade)&&coopUpgrade.GetBoolean());break;
                 case "coop-upgrade":result=CoopOracle.UpgradeOwnedCard(request.GetProperty("owner").GetUInt64());break;
