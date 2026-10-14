@@ -136,7 +136,7 @@ with tempfile.TemporaryDirectory(prefix='package62-',dir=root/'private') as dire
     except ReleaseError:pass
     else:raise AssertionError('CRC corruption accepted')
     passed('corrupt ZIP CRC reports a release error')
-    checker=root/'scripts/check-sts2-release.py'
+    checker=source/'scripts/check-sts2-release.py'
     # A malformed archive still fails under -O: no assertion-based bypass.
     archive=archives['standalone'];old=archive.read_bytes();archive.write_bytes(invalid.read_bytes())
     result=subprocess.run([sys.executable,'-O',str(checker),'--expected-dll-sha256',h,'--output-root',str(output)],capture_output=True,text=True)

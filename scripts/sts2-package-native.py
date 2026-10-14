@@ -20,11 +20,13 @@ def ready():
     raise TimeoutError('Package lab not playable')
 send('trait-speed',value=8)
 for cls in ['knight','mage','ranger']:
-    send('start',**{'class':cls,'traits':[],'quick':True,'manorTier':0,'seed':'SPIRELEGACY-PACKAGE-62'});ready()
-    appearance=send('trait-appearance');assert any(a['classId']==cls and a['visible'] for a in appearance),appearance
     for kind in ['strike','guard']:
         card=cls+'_'+kind
         for upgraded in [False,True]:
+            # A fresh initial turn has three Energy; do not chain four paid plays.
+            send('start',**{'class':cls,'traits':[],'quick':True,'manorTier':0,'seed':'SPIRELEGACY-PACKAGE-62'});ready()
+            if kind=='strike' and not upgraded:
+                appearance=send('trait-appearance');assert any(a['classId']==cls and a['visible'] for a in appearance),appearance
             result=send('expansion-play',card=card,upgrade=upgraded)
             assert result['pile']=='Discard' and not result['tableNodePresent'],result
             assert result['energyChange']==-result['cost'] and result['saveRoundTrip'],result
