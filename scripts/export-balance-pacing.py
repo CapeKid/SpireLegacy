@@ -17,7 +17,7 @@ from pathlib import Path
 
 def export(source, target, stopped_reports=()):
     target.mkdir(parents=True, exist_ok=True)
-    manifest, campaigns, trajectories, decisions = [], [], [], []
+    manifest, campaigns, trajectories, decisions, initial_conditions = [], [], [], [], []
     cards = collections.Counter()
     superseded = {f'pacing-campaign-balance146-pacing-knight-regular{i}.json' for i in (1, 2, 3)}
     paths = sorted(source.glob('*campaign-balance146-*.json'))
@@ -51,6 +51,21 @@ def export(source, target, stopped_reports=()):
         assert report['status'] != 'running' or path.name in stopped_reports, f'Worker still active: {path.name}'
         pacing = path.name.startswith('pacing-')
         included = report['status'] == 'finished' and path.name not in superseded
+        if not pacing:
+            starts = [e for e in report['evidence'] if e['request'].get('command') == 'start' and e['response']['ok']]
+            assert len(starts) <= 1, 'Standalone campaign has multiple starts'
+            if starts:
+                start = starts[0]
+                request, state, metadata = start['request'], start['response']['result'], start['response']['metadata']
+                assert request['class'] == report['cls'] and request['traits'] == report['traits'], 'Changed starting inputs'
+                assert request['manorTier'] == report['tier'] and request['ascension'] == report['ascension'] and request['seed'] == report['seed'], 'Changed campaign configuration'
+                verified = report['cls'] != 'ironclad'
+                if verified:
+                    assert state['heir']['classId'] == report['cls'] and sorted(state['heir']['traits']) == sorted(report['traits']), 'Loaded heir differs from requested traits/class'
+                initial_conditions.append(dict(trial=path.stem, included=included,
+                    source=metadata['sourceSha'], dllSha256=metadata['dllSha256'], game=metadata['game'],
+                    cls=report['cls'], traits=report['traits'], heirVerified=verified,
+                    hp=state['hp'], maxHp=state['maxHp'], relics=[r['id'] for r in state['relics']]))
         stages, seen = {}, set()
         for record in report['evidence']:
             request, response = record['request'], record['response']
@@ -93,8 +108,13 @@ def export(source, target, stopped_reports=()):
             log = profile/log_name
             if log.exists():
                 lines = log.read_text(encoding='utf-8', errors='replace').splitlines()
-                log_counts[log_name] = {pattern: sum(pattern.lower() in line.lower() for line in lines)
-                                        for pattern in ('ERROR', 'InvalidTaskId', 'double free', 'particles', 'backup')}
+                def matches(pattern, line):
+                    # Godot prints "Invalid Task ID"; managed traces may omit spaces.
+                    if pattern == 'InvalidTaskId':
+                        return pattern.lower() in re.sub(r'\s+', '', line).lower()
+                    return pattern.lower() in line.lower()
+                log_counts[log_name] = {pattern: sum(matches(pattern, line) for line in lines)
+                                        for pattern in ('ERROR', 'InvalidTaskId', 'Fatal error', 'double free', 'particles', 'backup')}
         manifest.append(dict(trial=path.stem, receiptSha256=hashlib.sha256(path.read_bytes()).hexdigest(),
                              status='interrupted' if path.name in stopped_reports else report['status'], included=included, stages=list(stages.values()),
                              commands=len(seen), hasError=bool(report.get('error')),
@@ -142,6 +162,7 @@ def export(source, target, stopped_reports=()):
                                      checkpointRecovered=run.get('checkpointRecovered', False)))
         assert bank == sum(r['earned'] for r in report['runs']) - sum(p['crownsBefore']-p['crownsAfter'] for p in report['purchases'])
     (target/'manifest.json').write_text(json.dumps(manifest, indent=2)+'\n', encoding='utf-8')
+    (target/'initial-conditions.json').write_text(json.dumps(initial_conditions, indent=2)+'\n', encoding='utf-8')
     (target/'decisions.jsonl').write_text(''.join(json.dumps(d)+'\n' for d in decisions), encoding='utf-8')
     empty_headers = {
         'campaigns': 'trial cls tier policy rewardPolicy ascension seed traits floor act hp wins crowns earned'.split(),

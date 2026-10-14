@@ -1,0 +1,731 @@
+[
+  {
+    "trial": "balance-campaign-balance146-traits-mage-beta-challenge",
+    "status": "error",
+    "included": false,
+    "receiptSha256": "3b2bf5a1dcd29f36a96303ec20814d58f2f0acb9e166675309284c4776484caa",
+    "lastObserved": {
+      "floor": 23,
+      "hp": 3
+    },
+    "rewardChoices": [
+      {
+        "offers": [
+          {
+            "id": "barrier",
+            "upgraded": false,
+            "score": 12
+          },
+          {
+            "id": "mage_chilling_words",
+            "upgraded": false,
+            "score": 8.5
+          },
+          {
+            "id": "knight_merciless",
+            "upgraded": false,
+            "score": 14
+          }
+        ],
+        "picked": "knight_merciless",
+        "skip": false,
+        "rewardPolicy": "defensive",
+        "intervention": false
+      },
+      {
+        "offers": [
+          {
+            "id": "knight_burnished_legacy",
+            "upgraded": false,
+            "score": 6
+          },
+          {
+            "id": "fireball",
+            "upgraded": false,
+            "score": 7.5
+          },
+          {
+            "id": "mage_perfect_ward",
+            "upgraded": false,
+            "score": 2.25
+          }
+        ],
+        "picked": "fireball",
+        "skip": false,
+        "rewardPolicy": "defensive",
+        "intervention": false
+      },
+      {
+        "offers": [
+          {
+            "id": "mage_crystal_seed",
+            "upgraded": false,
+            "score": 5.5
+          },
+          {
+            "id": "ranger_tripwire",
+            "upgraded": false,
+            "score": 6.5
+          },
+          {
+            "id": "fireball",
+            "upgraded": false,
+            "score": 4.5
+          }
+        ],
+        "picked": "ranger_tripwire",
+        "skip": false,
+        "rewardPolicy": "defensive",
+        "intervention": false
+      },
+      {
+        "offers": [
+          {
+            "id": "mage_time_pocket",
+            "upgraded": false,
+            "score": 3
+          },
+          {
+            "id": "mage_ember_dart",
+            "upgraded": false,
+            "score": 3
+          },
+          {
+            "id": "mage_crystal_seed",
+            "upgraded": false,
+            "score": 5.5
+          }
+        ],
+        "picked": "mage_crystal_seed",
+        "skip": false,
+        "rewardPolicy": "defensive",
+        "intervention": false
+      },
+      {
+        "offers": [
+          {
+            "id": "knight_brave_advance",
+            "upgraded": false,
+            "score": 7
+          },
+          {
+            "id": "mage_arcane_missile",
+            "upgraded": false,
+            "score": 6
+          },
+          {
+            "id": "frost",
+            "upgraded": false,
+            "score": 10
+          }
+        ],
+        "picked": "frost",
+        "skip": false,
+        "rewardPolicy": "defensive",
+        "intervention": false
+      },
+      {
+        "offers": [
+          {
+            "id": "mage_hex_rain",
+            "upgraded": false,
+            "score": 6
+          },
+          {
+            "id": "mage_kindle",
+            "upgraded": false,
+            "score": 3
+          },
+          {
+            "id": "mage_warding_verse",
+            "upgraded": false,
+            "score": 3
+          }
+        ],
+        "picked": "mage_hex_rain",
+        "skip": false,
+        "rewardPolicy": "defensive",
+        "intervention": false
+      },
+      {
+        "offers": [
+          {
+            "id": "mage_memory_prism",
+            "upgraded": false,
+            "score": 0
+          },
+          {
+            "id": "mage_time_pocket",
+            "upgraded": false,
+            "score": 3
+          },
+          {
+            "id": "mage_stored_ember",
+            "upgraded": false,
+            "score": 4
+          }
+        ],
+        "picked": null,
+        "skip": true,
+        "rewardPolicy": "defensive"
+      },
+      {
+        "offers": [
+          {
+            "id": "reservoir",
+            "upgraded": false,
+            "score": 6
+          },
+          {
+            "id": "mage_spell_notes",
+            "upgraded": false,
+            "score": 6
+          },
+          {
+            "id": "ranger_master_plan",
+            "upgraded": false,
+            "score": 0
+          }
+        ],
+        "picked": "mage_spell_notes",
+        "skip": false,
+        "rewardPolicy": "defensive",
+        "intervention": false
+      },
+      {
+        "offers": [
+          {
+            "id": "mage_ember_dart",
+            "upgraded": false,
+            "score": 3
+          },
+          {
+            "id": "mage_spell_threads",
+            "upgraded": false,
+            "score": 6
+          },
+          {
+            "id": "mage_spell_notes",
+            "upgraded": false,
+            "score": 3
+          }
+        ],
+        "picked": "mage_spell_threads",
+        "skip": false,
+        "rewardPolicy": "defensive",
+        "intervention": false
+      },
+      {
+        "offers": [
+          {
+            "id": "mage_infinite_script",
+            "upgraded": false,
+            "score": 7.5
+          },
+          {
+            "id": "mage_grand_thesis",
+            "upgraded": false,
+            "score": 9
+          },
+          {
+            "id": "mage_starfall",
+            "upgraded": false,
+            "score": 6
+          }
+        ],
+        "picked": "mage_grand_thesis",
+        "skip": false,
+        "rewardPolicy": "defensive",
+        "intervention": false
+      },
+      {
+        "offers": [
+          {
+            "id": "fireball",
+            "upgraded": true,
+            "score": 6.5
+          },
+          {
+            "id": "mage_witchfire",
+            "upgraded": false,
+            "score": 5
+          },
+          {
+            "id": "mage_spell_notes",
+            "upgraded": false,
+            "score": 3
+          }
+        ],
+        "picked": "fireball",
+        "skip": false,
+        "rewardPolicy": "defensive",
+        "intervention": false
+      },
+      {
+        "offers": [
+          {
+            "id": "knight_long_reach",
+            "upgraded": false,
+            "score": 7
+          },
+          {
+            "id": "knight_last_stand",
+            "upgraded": true,
+            "score": 14
+          },
+          {
+            "id": "mage_arcane_missile",
+            "upgraded": false,
+            "score": 6
+          }
+        ],
+        "picked": "knight_last_stand",
+        "skip": false,
+        "rewardPolicy": "defensive",
+        "intervention": false
+      },
+      {
+        "offers": [
+          {
+            "id": "knight_last_stand",
+            "upgraded": false,
+            "score": 9
+          },
+          {
+            "id": "surge",
+            "upgraded": false,
+            "score": 14
+          },
+          {
+            "id": "mage_spell_notes",
+            "upgraded": false,
+            "score": 3
+          }
+        ],
+        "picked": "surge",
+        "skip": false,
+        "rewardPolicy": "defensive",
+        "intervention": false
+      },
+      {
+        "offers": [
+          {
+            "id": "ranger_tracking_rhythm",
+            "upgraded": true,
+            "score": 6
+          },
+          {
+            "id": "mage_arcane_missile",
+            "upgraded": false,
+            "score": 6
+          },
+          {
+            "id": "mage_frost_ring",
+            "upgraded": true,
+            "score": 9
+          }
+        ],
+        "picked": "mage_frost_ring",
+        "skip": false,
+        "rewardPolicy": "defensive",
+        "intervention": false
+      }
+    ],
+    "played": {
+      "flame": 9,
+      "mage_strike": 83,
+      "knight_merciless": 13,
+      "fireball": 23,
+      "ranger_tripwire": 14,
+      "frost": 25,
+      "mage_crystal_seed": 7,
+      "CARD.SLIMED": 1,
+      "barrier": 9,
+      "mage_spell_notes": 7,
+      "mage_guard": 4,
+      "mage_grand_thesis": 5,
+      "mage_spell_threads": 1,
+      "knight_last_stand": 3,
+      "surge": 2,
+      "mage_frost_ring": 1
+    },
+    "lastCombatTurns": [
+      {
+        "floor": 23,
+        "turn": 2,
+        "entries": {
+          "frost": 1,
+          "mage_crystal_seed": 1,
+          "mage_grand_thesis": 1,
+          "knight_merciless": 1,
+          "barrier": 1,
+          "mage_spell_threads": 1,
+          "mage_guard": 2,
+          "ranger_tripwire": 1,
+          "mage_strike": 1
+        },
+        "plays": [
+          {
+            "id": "knight_merciless",
+            "upgraded": true,
+            "netEnergy": 1,
+            "netHpLost": 0,
+            "reason": "vulnerable-follow-up",
+            "score": 20,
+            "incomingBefore": 0,
+            "blockBefore": 0,
+            "targetThreat": 0,
+            "target": "MONSTER.LOUSE_PROGENITOR"
+          },
+          {
+            "id": "frost",
+            "upgraded": false,
+            "netEnergy": 1,
+            "netHpLost": 0,
+            "reason": "utility",
+            "score": 12,
+            "incomingBefore": 0,
+            "blockBefore": 0,
+            "targetThreat": 0,
+            "target": "MONSTER.LOUSE_PROGENITOR"
+          },
+          {
+            "id": "mage_grand_thesis",
+            "upgraded": false,
+            "netEnergy": 1,
+            "netHpLost": 0,
+            "reason": "utility",
+            "score": 9,
+            "incomingBefore": 0,
+            "blockBefore": 0,
+            "targetThreat": 0,
+            "target": null
+          }
+        ],
+        "potions": [],
+        "unplayed": [
+          "mage_crystal_seed",
+          "barrier",
+          "mage_spell_threads",
+          "mage_guard",
+          "ranger_tripwire",
+          "mage_strike",
+          "mage_guard"
+        ],
+        "victory": false
+      },
+      {
+        "floor": 23,
+        "turn": 3,
+        "entries": {
+          "mage_crystal_seed": 1,
+          "mage_frost_ring": 1,
+          "mage_guard": 1,
+          "mage_spell_notes": 1,
+          "mage_hex_rain": 1,
+          "surge": 1,
+          "flame": 1,
+          "mage_strike": 1
+        },
+        "plays": [
+          {
+            "id": "mage_frost_ring",
+            "upgraded": true,
+            "netEnergy": 1,
+            "netHpLost": 0,
+            "reason": "utility",
+            "score": 15.9,
+            "incomingBefore": 14,
+            "blockBefore": 0,
+            "targetThreat": 0,
+            "target": null
+          },
+          {
+            "id": "mage_strike",
+            "upgraded": false,
+            "netEnergy": 1,
+            "netHpLost": 0,
+            "reason": "utility",
+            "score": 12.9,
+            "incomingBefore": 14,
+            "blockBefore": 0,
+            "targetThreat": 14,
+            "target": "MONSTER.LOUSE_PROGENITOR"
+          },
+          {
+            "id": "flame",
+            "upgraded": true,
+            "netEnergy": 1,
+            "netHpLost": 0,
+            "reason": "utility",
+            "score": 10.8,
+            "incomingBefore": 14,
+            "blockBefore": 0,
+            "targetThreat": 0,
+            "target": null
+          },
+          {
+            "id": "surge",
+            "upgraded": false,
+            "netEnergy": 1,
+            "netHpLost": 0,
+            "reason": "utility",
+            "score": 10.4,
+            "incomingBefore": 14,
+            "blockBefore": 6,
+            "targetThreat": 0,
+            "target": null
+          }
+        ],
+        "potions": [],
+        "unplayed": [
+          "mage_crystal_seed",
+          "mage_guard",
+          "mage_spell_notes",
+          "mage_hex_rain"
+        ],
+        "victory": false
+      },
+      {
+        "floor": 23,
+        "turn": 4,
+        "entries": {
+          "mage_crystal_seed": 1,
+          "mage_spell_notes": 1,
+          "barrier": 1,
+          "mage_spell_threads": 1,
+          "mage_strike": 1,
+          "mage_guard": 3,
+          "fireball": 1,
+          "mage_hex_rain": 1
+        },
+        "plays": [
+          {
+            "id": "fireball",
+            "upgraded": true,
+            "netEnergy": 2,
+            "netHpLost": 0,
+            "reason": "utility",
+            "score": 19.6,
+            "incomingBefore": 10,
+            "blockBefore": 0,
+            "targetThreat": 10,
+            "target": "MONSTER.LOUSE_PROGENITOR"
+          },
+          {
+            "id": "mage_strike",
+            "upgraded": false,
+            "netEnergy": 1,
+            "netHpLost": 0,
+            "reason": "utility",
+            "score": 16.7,
+            "incomingBefore": 10,
+            "blockBefore": 0,
+            "targetThreat": 10,
+            "target": "MONSTER.LOUSE_PROGENITOR"
+          },
+          {
+            "id": "barrier",
+            "upgraded": false,
+            "netEnergy": 1,
+            "netHpLost": 0,
+            "reason": "utility",
+            "score": 15.8,
+            "incomingBefore": 10,
+            "blockBefore": 0,
+            "targetThreat": 0,
+            "target": null
+          }
+        ],
+        "potions": [],
+        "unplayed": [
+          "mage_crystal_seed",
+          "mage_spell_notes",
+          "mage_spell_threads",
+          "mage_guard",
+          "mage_guard",
+          "mage_guard",
+          "mage_hex_rain"
+        ],
+        "victory": false
+      }
+    ],
+    "nativeCrash": {
+      "code": "0xC0000005",
+      "frames": [
+        "Godot.GodotObject.Dispose",
+        "MegaSpineBinding.Dispose",
+        "NCreature.GetCurrentAnimationTimeRemaining",
+        "NCreature.AnimDie"
+      ],
+      "lastLoggedCard": "SPIRELEGACY-C_FROST",
+      "enemyInLastPlayLog": "Louse Progenitor",
+      "cause": "unconfirmed",
+      "acceleratedCombat": 6,
+      "concurrentCopiedClients": 2
+    }
+  },
+  {
+    "trial": "balance-campaign-balance146-traits-ranger-regular-challenge",
+    "status": "turn-cap",
+    "included": false,
+    "receiptSha256": "c806b5820354d2593c8d86d430cb03e22d8e6343cdbec4a8a7e3d795d87c21fe",
+    "lastObserved": {
+      "floor": 7,
+      "hp": 6
+    },
+    "rewardChoices": [
+      {
+        "offers": [
+          {
+            "id": "ranger_snap_shot",
+            "upgraded": false,
+            "score": 5
+          },
+          {
+            "id": "ranger_tripwire",
+            "upgraded": false,
+            "score": 6.5
+          },
+          {
+            "id": "knight_merciless",
+            "upgraded": false,
+            "score": 14
+          }
+        ],
+        "picked": "knight_merciless",
+        "skip": false,
+        "rewardPolicy": "defensive",
+        "intervention": false
+      },
+      {
+        "offers": [
+          {
+            "id": "ranger_tracking_rhythm",
+            "upgraded": false,
+            "score": 6
+          },
+          {
+            "id": "knight_guardian_angel",
+            "upgraded": false,
+            "score": 0
+          },
+          {
+            "id": "knight_reforge",
+            "upgraded": false,
+            "score": 10.5
+          }
+        ],
+        "picked": "knight_reforge",
+        "skip": false,
+        "rewardPolicy": "defensive",
+        "intervention": false
+      },
+      {
+        "offers": [
+          {
+            "id": "double",
+            "upgraded": false,
+            "score": 6
+          },
+          {
+            "id": "volley",
+            "upgraded": false,
+            "score": 7.5
+          },
+          {
+            "id": "retreat",
+            "upgraded": false,
+            "score": 12
+          }
+        ],
+        "picked": "retreat",
+        "skip": false,
+        "rewardPolicy": "defensive",
+        "intervention": false
+      }
+    ],
+    "played": {
+      "ranger_guard": 60,
+      "ranger_strike": 14,
+      "aim": 26,
+      "CARD.SLIMED": 7,
+      "knight_reforge": 43,
+      "retreat": 10
+    },
+    "lastCombatTurns": [
+      {
+        "floor": 7,
+        "turn": 38,
+        "entries": {
+          "knight_reforge": 1
+        },
+        "plays": [
+          {
+            "id": "knight_reforge",
+            "upgraded": false,
+            "netEnergy": 1,
+            "netHpLost": 0,
+            "reason": "utility",
+            "score": 11,
+            "incomingBefore": 10,
+            "blockBefore": 0,
+            "targetThreat": 0,
+            "target": null
+          }
+        ],
+        "potions": [],
+        "unplayed": [],
+        "victory": false
+      },
+      {
+        "floor": 7,
+        "turn": 39,
+        "entries": {
+          "knight_reforge": 1
+        },
+        "plays": [
+          {
+            "id": "knight_reforge",
+            "upgraded": false,
+            "netEnergy": 1,
+            "netHpLost": 0,
+            "reason": "utility",
+            "score": 7.800000000000001,
+            "incomingBefore": 3,
+            "blockBefore": 0,
+            "targetThreat": 0,
+            "target": null
+          }
+        ],
+        "potions": [],
+        "unplayed": [],
+        "victory": false
+      },
+      {
+        "floor": 7,
+        "turn": 40,
+        "entries": {
+          "knight_reforge": 1
+        },
+        "plays": [
+          {
+            "id": "knight_reforge",
+            "upgraded": false,
+            "netEnergy": 1,
+            "netHpLost": 0,
+            "reason": "utility",
+            "score": 11,
+            "incomingBefore": 6,
+            "blockBefore": 0,
+            "targetThreat": 0,
+            "target": null
+          }
+        ],
+        "potions": [],
+        "unplayed": [],
+        "victory": false
+      }
+    ]
+  }
+]

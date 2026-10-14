@@ -1,0 +1,224 @@
+[
+  {
+    "trial": "balance-campaign-balance146-traits-knight-beta-challenge",
+    "included": true,
+    "source": "01ad843bb0ae9c6b765cf75fb33945adc0a09c10",
+    "dllSha256": "871ea7a01a4fbf4b4bb16d10daab5edb3348d3a88b67299ea6d54fcb148425a0",
+    "game": "v0.111.0",
+    "cls": "knight",
+    "traits": [
+      "antique",
+      "megahealth"
+    ],
+    "heirVerified": true,
+    "hp": 96,
+    "maxHp": 120,
+    "relics": [
+      "RELIC.SPIRELEGACY-BLOODLINE_RELIC",
+      "RELIC.GORGET"
+    ]
+  },
+  {
+    "trial": "balance-campaign-balance146-traits-knight-beta-control",
+    "included": true,
+    "source": "01ad843bb0ae9c6b765cf75fb33945adc0a09c10",
+    "dllSha256": "871ea7a01a4fbf4b4bb16d10daab5edb3348d3a88b67299ea6d54fcb148425a0",
+    "game": "v0.111.0",
+    "cls": "knight",
+    "traits": [
+      "antique"
+    ],
+    "heirVerified": true,
+    "hp": 64,
+    "maxHp": 80,
+    "relics": [
+      "RELIC.SPIRELEGACY-BLOODLINE_RELIC",
+      "RELIC.GORGET"
+    ]
+  },
+  {
+    "trial": "balance-campaign-balance146-traits-knight-regular-challenge",
+    "included": true,
+    "source": "01ad843bb0ae9c6b765cf75fb33945adc0a09c10",
+    "dllSha256": "871ea7a01a4fbf4b4bb16d10daab5edb3348d3a88b67299ea6d54fcb148425a0",
+    "game": "v0.107.1",
+    "cls": "knight",
+    "traits": [
+      "antique",
+      "megahealth"
+    ],
+    "heirVerified": true,
+    "hp": 96,
+    "maxHp": 120,
+    "relics": [
+      "RELIC.SPIRELEGACY-BLOODLINE_RELIC",
+      "RELIC.MEAL_TICKET"
+    ]
+  },
+  {
+    "trial": "balance-campaign-balance146-traits-knight-regular-control",
+    "included": true,
+    "source": "01ad843bb0ae9c6b765cf75fb33945adc0a09c10",
+    "dllSha256": "871ea7a01a4fbf4b4bb16d10daab5edb3348d3a88b67299ea6d54fcb148425a0",
+    "game": "v0.107.1",
+    "cls": "knight",
+    "traits": [
+      "antique"
+    ],
+    "heirVerified": true,
+    "hp": 64,
+    "maxHp": 80,
+    "relics": [
+      "RELIC.SPIRELEGACY-BLOODLINE_RELIC",
+      "RELIC.MEAL_TICKET"
+    ]
+  },
+  {
+    "trial": "balance-campaign-balance146-traits-mage-beta-challenge",
+    "included": false,
+    "source": "01ad843bb0ae9c6b765cf75fb33945adc0a09c10",
+    "dllSha256": "871ea7a01a4fbf4b4bb16d10daab5edb3348d3a88b67299ea6d54fcb148425a0",
+    "game": "v0.111.0",
+    "cls": "mage",
+    "traits": [
+      "antique",
+      "bonusmagicstrength"
+    ],
+    "heirVerified": true,
+    "hp": 43,
+    "maxHp": 54,
+    "relics": [
+      "RELIC.SPIRELEGACY-BLOODLINE_RELIC",
+      "RELIC.GORGET"
+    ]
+  },
+  {
+    "trial": "balance-campaign-balance146-traits-mage-beta-control",
+    "included": true,
+    "source": "01ad843bb0ae9c6b765cf75fb33945adc0a09c10",
+    "dllSha256": "871ea7a01a4fbf4b4bb16d10daab5edb3348d3a88b67299ea6d54fcb148425a0",
+    "game": "v0.111.0",
+    "cls": "mage",
+    "traits": [
+      "antique"
+    ],
+    "heirVerified": true,
+    "hp": 57,
+    "maxHp": 72,
+    "relics": [
+      "RELIC.SPIRELEGACY-BLOODLINE_RELIC",
+      "RELIC.GORGET"
+    ]
+  },
+  {
+    "trial": "balance-campaign-balance146-traits-mage-regular-challenge",
+    "included": true,
+    "source": "01ad843bb0ae9c6b765cf75fb33945adc0a09c10",
+    "dllSha256": "871ea7a01a4fbf4b4bb16d10daab5edb3348d3a88b67299ea6d54fcb148425a0",
+    "game": "v0.107.1",
+    "cls": "mage",
+    "traits": [
+      "antique",
+      "bonusmagicstrength"
+    ],
+    "heirVerified": true,
+    "hp": 43,
+    "maxHp": 54,
+    "relics": [
+      "RELIC.SPIRELEGACY-BLOODLINE_RELIC",
+      "RELIC.MEAL_TICKET"
+    ]
+  },
+  {
+    "trial": "balance-campaign-balance146-traits-mage-regular-control",
+    "included": true,
+    "source": "01ad843bb0ae9c6b765cf75fb33945adc0a09c10",
+    "dllSha256": "871ea7a01a4fbf4b4bb16d10daab5edb3348d3a88b67299ea6d54fcb148425a0",
+    "game": "v0.107.1",
+    "cls": "mage",
+    "traits": [
+      "antique"
+    ],
+    "heirVerified": true,
+    "hp": 57,
+    "maxHp": 72,
+    "relics": [
+      "RELIC.SPIRELEGACY-BLOODLINE_RELIC",
+      "RELIC.MEAL_TICKET"
+    ]
+  },
+  {
+    "trial": "balance-campaign-balance146-traits-ranger-beta-challenge",
+    "included": true,
+    "source": "01ad843bb0ae9c6b765cf75fb33945adc0a09c10",
+    "dllSha256": "871ea7a01a4fbf4b4bb16d10daab5edb3348d3a88b67299ea6d54fcb148425a0",
+    "game": "v0.111.0",
+    "cls": "ranger",
+    "traits": [
+      "antique",
+      "cantattack"
+    ],
+    "heirVerified": true,
+    "hp": 60,
+    "maxHp": 76,
+    "relics": [
+      "RELIC.SPIRELEGACY-BLOODLINE_RELIC",
+      "RELIC.GORGET"
+    ]
+  },
+  {
+    "trial": "balance-campaign-balance146-traits-ranger-beta-control",
+    "included": true,
+    "source": "01ad843bb0ae9c6b765cf75fb33945adc0a09c10",
+    "dllSha256": "871ea7a01a4fbf4b4bb16d10daab5edb3348d3a88b67299ea6d54fcb148425a0",
+    "game": "v0.111.0",
+    "cls": "ranger",
+    "traits": [
+      "antique"
+    ],
+    "heirVerified": true,
+    "hp": 60,
+    "maxHp": 76,
+    "relics": [
+      "RELIC.SPIRELEGACY-BLOODLINE_RELIC",
+      "RELIC.GORGET"
+    ]
+  },
+  {
+    "trial": "balance-campaign-balance146-traits-ranger-regular-challenge",
+    "included": false,
+    "source": "01ad843bb0ae9c6b765cf75fb33945adc0a09c10",
+    "dllSha256": "871ea7a01a4fbf4b4bb16d10daab5edb3348d3a88b67299ea6d54fcb148425a0",
+    "game": "v0.107.1",
+    "cls": "ranger",
+    "traits": [
+      "antique",
+      "cantattack"
+    ],
+    "heirVerified": true,
+    "hp": 60,
+    "maxHp": 76,
+    "relics": [
+      "RELIC.SPIRELEGACY-BLOODLINE_RELIC",
+      "RELIC.MEAL_TICKET"
+    ]
+  },
+  {
+    "trial": "balance-campaign-balance146-traits-ranger-regular-control",
+    "included": true,
+    "source": "01ad843bb0ae9c6b765cf75fb33945adc0a09c10",
+    "dllSha256": "871ea7a01a4fbf4b4bb16d10daab5edb3348d3a88b67299ea6d54fcb148425a0",
+    "game": "v0.107.1",
+    "cls": "ranger",
+    "traits": [
+      "antique"
+    ],
+    "heirVerified": true,
+    "hp": 60,
+    "maxHp": 76,
+    "relics": [
+      "RELIC.SPIRELEGACY-BLOODLINE_RELIC",
+      "RELIC.MEAL_TICKET"
+    ]
+  }
+]
