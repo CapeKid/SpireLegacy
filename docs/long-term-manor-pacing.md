@@ -25,6 +25,10 @@ A later turn interruption terminated both native jobs. The stored Ranger report 
 
 For export, verified stopped reports may be explicitly passed with `--stopped-report FILENAME`. Their raw hashes remain unchanged, their manifest status is `interrupted`, and their outcomes are excluded. Running reports remain rejected by default. Derived checkpoints are checked against the original receipt hash and settled prefix before being included.
 
+The Ranger fork subsequently settled through return 83, then timed out waiting for a combat-turn response on return 84 (seed `PACING146-84`, Vantom fight). Its last successful response was turn 4; the last native play log entry was Long Reach during turn 5. The log also contains Godot worker-pool `Invalid Task ID` messages, without evidence establishing their causal relationship to the timeout. Return 84 has no verified settlement and earns no crowns in the canonical trajectory. Its failed profile/report remain preserved. A separate explicitly labelled private fork from the completed 83-return snapshot tests the same deterministic seed independently; no command is replayed against the failed save.
+
+The separate trial passed that encounter and settled return 84 as a floor-33 loss, earning 63 crowns and purchasing Vitality level 3. The first timed-out attempt remains excluded. This observation does not establish a Long Reach defect or identify the timeout's cause; it also does not make the branched trajectory uninterrupted.
+
 ```powershell
 ./scripts/run-balance-campaign.ps1 -Lab private/YOUR-OWNED-LAB `
   -Tag YOUR-UNUSED-TAG -Class knight -PacingChecks `
