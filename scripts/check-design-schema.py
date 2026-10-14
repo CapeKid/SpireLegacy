@@ -60,7 +60,7 @@ with tempfile.TemporaryDirectory(prefix='design61-',dir=root/'private') as direc
             if rule['types']==['int']:
                 mutate(table,lambda rows,f=field:rows[0].update({f:True}),f'.{field}: expected int','row')
     print('schema mutations passed',len(report['mutations']),flush=True)
-    for value in [-1,2147483648,True,1.5,'5',None]:
+    for value in [-1,2147483648,10**1000,True,1.5,'5',None]:
         mutate('cards',lambda rows,v=value:rows[0].update(damage=v),'cards.knight_strike.damage')
     for field,value in [('id','../../outside'),('type','NOT_A_CARD'),('rarity','MYTHIC'),('upgradeDraw',-2),('exhaust',1),('surprise',0)]:
         mutate('cards',lambda rows,f=field,v=value:rows[0].update({f:v}),'cards.knight_strike.'+field if field!='id' else 'invalid identifier')

@@ -25,7 +25,9 @@ def read_json(path):
         def invalid_number(value):
             raise DesignError(f'{path.name}: invalid number {value}')
         return json.loads(path.read_text(encoding='utf-8-sig'), object_pairs_hook=unique, parse_constant=invalid_number)
-    except (OSError, UnicodeError, json.JSONDecodeError) as error:
+    except DesignError:
+        raise
+    except (OSError, UnicodeError, ValueError) as error:
         raise DesignError(f'{path.name}: {error}') from error
 
 
@@ -47,7 +49,7 @@ def check(value, spec, location, errors):
         for index, child in enumerate(value):
             check(child, spec['items'], f'{location}[{index}]', errors)
     elif kind in {'int', 'float'}:
-        if not math.isfinite(value) or not spec.get('min', -10000) <= value <= spec.get('max', 10000):
+        if (kind=='float' and not math.isfinite(value)) or not spec.get('min', -10000) <= value <= spec.get('max', 10000):
             errors.append(f'{location}: number outside authoring bounds {spec.get("min")}..{spec.get("max")}')
     elif kind == 'str':
         if not value.strip():
