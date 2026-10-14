@@ -1,0 +1,123 @@
+{
+  "issue": 110,
+  "runtimeSourceSha": "32d4c230f9c2004b59a18a5121bef4a4cd359331",
+  "dllSha256": "bd1ed9bfa3ddcd9b102c26cce67b85e87f9dd17cbbb010bb0bffbd4b6db1a71b",
+  "coreAssertions": 164059,
+  "harnessChecks": 20,
+  "runs": [
+    {
+      "tag": "coop110-input-hostloss-regular5",
+      "recordFile": "coop-timing-coop110-input-hostloss-regular5.json",
+      "receiptCount": 95,
+      "game": "v0.107.1",
+      "mod": "1.0.30",
+      "baseLib": "v3.4.7",
+      "seed": "C23QFX981F",
+      "nativeCharacters": false,
+      "allPassed": true,
+      "logs": [
+        {
+          "peer": 1,
+          "errors": 0,
+          "invalidTaskId": 0,
+          "doubleFree": 0,
+          "logSha256": "c997a5d2658667aad7b2d9a85f2af53c95abb7828059b40253150174ae49f8c5"
+        },
+        {
+          "peer": 2,
+          "errors": 0,
+          "invalidTaskId": 0,
+          "doubleFree": 0,
+          "logSha256": "2b3120b58b48dc53e6e4d8c735ddae229ebf9b42d2c03c9e71f452f83e30f32a"
+        }
+      ]
+    },
+    {
+      "tag": "coop110-input-hostloss-beta1",
+      "recordFile": "coop-timing-coop110-input-hostloss-beta1.json",
+      "receiptCount": 89,
+      "game": "v0.111.0",
+      "mod": "1.0.30",
+      "baseLib": "v3.4.7",
+      "seed": "JK8GZ3X889GX",
+      "nativeCharacters": false,
+      "allPassed": true,
+      "logs": [
+        {
+          "peer": 1,
+          "errors": 1,
+          "invalidTaskId": 1,
+          "doubleFree": 0,
+          "logSha256": "4e5fcbae1f49ea435cb9466a1f288c5bc041a6b7c49bbb58e60db7dc0ff78b4f"
+        },
+        {
+          "peer": 2,
+          "errors": 1,
+          "invalidTaskId": 1,
+          "doubleFree": 0,
+          "logSha256": "4e5fcbae1f49ea435cb9466a1f288c5bc041a6b7c49bbb58e60db7dc0ff78b4f"
+        }
+      ]
+    },
+    {
+      "tag": "coop110-native-control-regular1",
+      "recordFile": "coop-timing-coop110-native-control-regular1.json",
+      "receiptCount": 87,
+      "game": "v0.107.1",
+      "mod": "1.0.30",
+      "baseLib": "v3.4.7",
+      "seed": "FWLP9Q6HT8",
+      "nativeCharacters": true,
+      "allPassed": true,
+      "logs": [
+        {
+          "peer": 1,
+          "errors": 0,
+          "invalidTaskId": 0,
+          "doubleFree": 0,
+          "logSha256": "c997a5d2658667aad7b2d9a85f2af53c95abb7828059b40253150174ae49f8c5"
+        },
+        {
+          "peer": 2,
+          "errors": 0,
+          "invalidTaskId": 0,
+          "doubleFree": 0,
+          "logSha256": "2b3120b58b48dc53e6e4d8c735ddae229ebf9b42d2c03c9e71f452f83e30f32a"
+        }
+      ]
+    },
+    {
+      "tag": "coop110-native-control-beta1",
+      "recordFile": "coop-timing-coop110-native-control-beta1.json",
+      "receiptCount": 88,
+      "game": "v0.111.0",
+      "mod": "1.0.30",
+      "baseLib": "v3.4.7",
+      "seed": "6BEAG3LAYTXM",
+      "nativeCharacters": true,
+      "allPassed": true,
+      "logs": [
+        {
+          "peer": 1,
+          "errors": 0,
+          "invalidTaskId": 0,
+          "doubleFree": 0,
+          "logSha256": "2b3120b58b48dc53e6e4d8c735ddae229ebf9b42d2c03c9e71f452f83e30f32a"
+        },
+        {
+          "peer": 2,
+          "errors": 1,
+          "invalidTaskId": 1,
+          "doubleFree": 0,
+          "logSha256": "4e5fcbae1f49ea435cb9466a1f288c5bc041a6b7c49bbb58e60db7dc0ff78b4f"
+        }
+      ]
+    }
+  ],
+  "physicalDeviceValidated": false,
+  "steamTransportValidated": false,
+  "exactEmbarkDisconnectValidated": false,
+  "naturalDeathValidated": false,
+  "fullCampaignValidated": false,
+  "modFreeNativeControl": false
+}

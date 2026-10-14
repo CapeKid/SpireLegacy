@@ -9,6 +9,7 @@ param(
     [switch]$PresentationChecks,
     [switch]$BalanceChecks,
     [switch]$TimingChecks,
+    [switch]$NativeCharacters,
     [string]$Python='python',
     [string]$ReleaseModDirectory=''
 )
@@ -16,6 +17,7 @@ $ErrorActionPreference='Stop'
 if(($AncientChecks -or $ManorChecks -or $PresentationChecks -or $BalanceChecks -or $TimingChecks) -and !$Pair){throw 'Specialized checks require the pair launcher.'}
 if(([int]$AncientChecks.IsPresent+[int]$ManorChecks.IsPresent+[int]$PresentationChecks.IsPresent+[int]$BalanceChecks.IsPresent+[int]$TimingChecks.IsPresent) -gt 1){throw 'Select one pair driver.'}
 if($Tag -notmatch '^[A-Za-z0-9_-]+$'){throw 'Plain evidence tag required'}
+if($NativeCharacters -and !$TimingChecks){throw 'Native-character control requires TimingChecks.'}
 $repo=Split-Path $PSScriptRoot -Parent
 $private=(Resolve-Path (Join-Path $repo 'private')).Path
 $buildSource=([Diagnostics.FileVersionInfo]::GetVersionInfo((Join-Path $repo 'sts2/bin/Release/net9.0/SpireLegacy.dll')).ProductVersion -split '\+')[-1]
@@ -43,7 +45,7 @@ try {
         $clients+=Start-Process $image -WorkingDirectory $lab -ArgumentList '--force-steam=off --rendering-method gl_compatibility --rendering-driver opengl3 --position -2000,-2000' -WindowStyle Hidden -PassThru -RedirectStandardOutput (Join-Path $profile 'launch.log') -RedirectStandardError (Join-Path $profile 'errors.log')
         $profiles+=$profile;$images+=$image
     }
-    if($Pair){$pairDriver=if($AncientChecks){'sts2-ancient-coop.py'}elseif($ManorChecks){'sts2-manor-coop.py'}elseif($PresentationChecks){'sts2-presentation-coop.py'}elseif($BalanceChecks){'sts2-balance-coop.py'}elseif($TimingChecks){'sts2-coop-timing.py'}else{'sts2-harness-native-check.py'};& $Python (Join-Path $PSScriptRoot $pairDriver) coop $profiles[0] $profiles[1] $Tag $Port}
+    if($Pair){$pairDriver=if($AncientChecks){'sts2-ancient-coop.py'}elseif($ManorChecks){'sts2-manor-coop.py'}elseif($PresentationChecks){'sts2-presentation-coop.py'}elseif($BalanceChecks){'sts2-balance-coop.py'}elseif($TimingChecks){'sts2-coop-timing.py'}else{'sts2-harness-native-check.py'};$driverArgs=@('coop',$profiles[0],$profiles[1],$Tag,$Port);if($NativeCharacters){$driverArgs+='native-characters'};& $Python (Join-Path $PSScriptRoot $pairDriver) @driverArgs}
     else {& $Python (Join-Path $PSScriptRoot 'sts2-coop-audit.py') $Tag $Port @profiles $Scope}
     if($LASTEXITCODE -ne 0){throw 'Co-op audit driver failed'}
 } finally {
