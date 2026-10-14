@@ -6,8 +6,10 @@ from pacing_state import ORDER,completed,assert_live
 root=Path(__file__).resolve().parents[1];profile=Path(sys.argv[1]);tag,cls=sys.argv[2:4]
 count=int(sys.argv[sys.argv.index('--end-run')+1]) if '--end-run' in sys.argv else 12
 assert 1<=count<=200
+stop_full='--stop-when-full' in sys.argv
 expected=hashlib.sha256((root/'sts2/bin/Release/net9.0/SpireLegacy.dll').read_bytes()).hexdigest()
 output=root/'private/sts2-evidence'/f'pacing-campaign-{tag}.json';assert not output.exists()
+journal=output.with_suffix('.jsonl');assert not journal.exists()
 report=dict(cls=cls,status='running',runs=[],purchases=[],evidence=[])
 resume='--resume-report' in sys.argv
 extend='--continue-report' in sys.argv
@@ -38,7 +40,14 @@ if resume:
 def save():output.parent.mkdir(exist_ok=True);output.write_text(json.dumps(report,indent=2),encoding='utf-8')
 def send(command,**args):
     record=call(profile,dict(command=command,**args),timeout=180,expected_hash=expected)
-    report['evidence'].append(record);save();assert record['response']['ok'],record
+    # Append every receipt immediately; avoid rewriting an increasingly large
+    # trajectory on every decision. Full reports checkpoint every 25 receipts
+    # and at every durable return/exception. A crash journal is not a replay API.
+    with journal.open('a',encoding='utf-8') as stream:
+        stream.write(json.dumps(record)+'\n');stream.flush()
+    report['evidence'].append(record)
+    if not output.exists() or len(report['evidence'])%25==0:save()
+    assert record['response']['ok'],record
     return record['response']['result']
 try:
     assert resume or extend or not (profile/'family.json').exists()
@@ -47,6 +56,8 @@ try:
     purchased=len(report['purchases']);last_purchase=report['purchases'][-1]['run'] if purchased else 0
     first=report['runs'][-1]['run'] if resume else continuity['run']+1 if extend else 1
     report['targetReturns']=count
+    report['returnCap']=count
+    report['stopAtFullManor']=stop_full
     for number in range(first,count+1):
         before=send('lifecycle-state')['profile']
         args=dict(**{'class':cls},traits=[],seed='PACING146-'+str(number),ascension=0)
@@ -81,6 +92,9 @@ try:
                 report['purchases'].append(purchase);purchased+=1;last_purchase=number
                 durable=send('lifecycle-state');assert durable['profile']==durable['persisted']
         print(tag,number,entry['lastState']['floor'],entry['earned'],after['crowns'],'purchases',purchased,flush=True);save()
+        if stop_full and purchased==len(order):
+            report.update(targetReturns=number,stopReason='full-manor');break
+    else:report['stopReason']='return-cap'
     report['status']='finished'
 except Exception as error:report.update(status='error',error=str(error));raise
 finally:save()

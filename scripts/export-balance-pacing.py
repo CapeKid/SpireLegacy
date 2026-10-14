@@ -4,6 +4,8 @@ Run after all balance146 workers stop. Interrupted receipts are retained in the
 manifest, but never treated as completed campaigns. Superseded trajectories are
 not counted twice. No profile paths, Steam identifiers, or save UUIDs are exported.
 """
+if not __debug__:
+    raise RuntimeError('Balance evidence export checks require assertions; do not use Python -O.')
 import argparse
 import collections
 import csv
@@ -29,7 +31,8 @@ def export(source, target):
                 assert data['runs'][:len(prior['runs'])]==prior['runs'], 'Changed completed trajectory prefix'
                 assert data['purchases'][:len(prior['purchases'])]==prior['purchases'], 'Changed prior paid purchases'
                 assert data['evidence'][:len(prior['evidence'])]==prior['evidence'], 'Changed prior command receipts'
-                assert batch['afterRun']==len(prior['runs']) and batch['endRun']<=len(data['runs'])
+                assert batch['afterRun']==len(prior['runs']) and batch['endRun']>batch['afterRun']
+                assert batch['endRun']<=len(data['runs']) or data.get('stopReason')=='full-manor'
                 superseded.add(batch['priorReport'])
     for path in paths:
         report = json.loads(path.read_text(encoding='utf-8'))
@@ -83,7 +86,8 @@ def export(source, target):
         manifest.append(dict(trial=path.stem, receiptSha256=hashlib.sha256(path.read_bytes()).hexdigest(),
                              status=report['status'], included=included, stages=list(stages.values()),
                              commands=len(seen), hasError=bool(report.get('error')),
-                             checkpointRecoveries=len(report.get('continuations', [])), logMatches=log_counts))
+                             checkpointRecoveries=len(report.get('continuations', [])), batches=report.get('batches',[]),
+                             targetReturns=report.get('targetReturns'), logMatches=log_counts))
         if not included:
             continue
         if not pacing:
@@ -96,6 +100,10 @@ def export(source, target):
                                   crowns=state['crowns'], earned=state['lastEarned']))
             continue
         assert len(report['runs']) == report.get('targetReturns',12)
+        if report.get('stopReason')=='full-manor':
+            from pacing_state import ORDER,completed
+            completed(report,report['cls'])
+            assert [p['upgrade'] for p in report['purchases']]==ORDER
         purchases = {p['run']: p for p in report['purchases']}
         assert len(purchases) == len(report['purchases'])
         settled, bank = set(), report['runs'][0]['crownsBefore']

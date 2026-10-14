@@ -38,5 +38,16 @@ class Continuity(unittest.TestCase):
         self.assertEqual(durable_snapshot(self.report,'knight'),profile)
     def test_fork_rejects_missing_snapshot(self):
         with self.assertRaises(ValueError):durable_snapshot(self.report,'knight')
+    def paid(self, level=1):
+        self.report['purchases']=[dict(run=8,upgrade='vitality',level=level,purchased=True,crownsBefore=80,crownsAfter=0)]
+        for run in self.report['runs'][8:]:
+            run['crownsBefore']-=80;run['crownsAfter']-=80
+    def test_paid_bank_preserved(self):
+        self.paid();expected=completed(self.report,'knight')
+        self.assertEqual(expected['crowns'],40)
+        self.assertEqual(expected['manor'],dict(vitality=1))
+    def test_skipped_upgrade_level_rejected(self):
+        self.paid(level=2)
+        with self.assertRaises(ValueError):completed(self.report,'knight')
 
 if __name__=='__main__':unittest.main()

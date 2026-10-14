@@ -6,6 +6,8 @@ import io
 import json
 from pathlib import Path
 import tempfile
+import subprocess
+import sys
 import unittest
 
 spec = importlib.util.spec_from_file_location('balance_export', Path(__file__).with_name('export-balance-pacing.py'))
@@ -83,6 +85,13 @@ class EvidenceChecks(unittest.TestCase):
     def test_changed_completed_prefix_rejected(self):
         self.extend();self.extension['runs'][0]['earned']=99
         with self.assertRaises(AssertionError):self.run_export()
+
+    def test_optimized_cli_rejected(self):
+        result=subprocess.run([sys.executable,'-O',str(Path(__file__).with_name('export-balance-pacing.py')),
+                               str(self.source),str(self.root/'output')],capture_output=True,text=True)
+        self.assertNotEqual(result.returncode,0)
+        self.assertIn('require assertions',result.stderr)
+        self.assertFalse((self.root/'output').exists())
 
 
 if __name__ == '__main__': unittest.main()

@@ -26,6 +26,8 @@ def completed(report, cls):
         if purchase:
             if not purchase['purchased'] or purchase['crownsBefore']!=bank or not 0<=purchase['crownsAfter']<bank:
                 raise ValueError('Invalid paid purchase receipt')
+            if purchase['level']!=manor.get(purchase['upgrade'],0)+1:
+                raise ValueError('Purchase skipped a manor level')
             bank=purchase['crownsAfter'];manor[purchase['upgrade']]=purchase['level']
     if any(n not in range(1,len(report['runs'])+1) for n in byrun):raise ValueError('Purchase outside trajectory')
     return dict(run=report['runs'][-1]['run'],crowns=bank,manor=manor,

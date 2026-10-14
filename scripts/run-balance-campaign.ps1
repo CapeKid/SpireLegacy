@@ -34,6 +34,7 @@ param(
     [string]$ContinuePacingReport='',
     [switch]$ForkCompletedProfile,
     [ValidateRange(1,200)][int]$EndRun=12,
+    [switch]$StopAtFullManor,
     [string]$ForcedReward='',
     [int]$ForcedRewardFloor=0,
     [ValidateSet('standalone','deck','defensive')][string]$Rewards='standalone'
@@ -97,12 +98,13 @@ try {
     $driver=if($PacingChecks){'sts2-pacing-campaign.py'}elseif($Checks){'sts2-tactical-check.py'}elseif($DelayedChecks){'sts2-delayed-reward-check.py'}elseif($RewardChecks){'sts2-reward-intervention-check.py'}elseif($PayoffChecks){'sts2-finisher-payoff-check.py'}elseif($ReleaseChecks){'sts2-release-check.py'}elseif($CandidateChecks){'sts2-six-candidates-check.py'}elseif($LifecycleChecks){'sts2-lifecycle-check.py'}elseif($LifecycleUiChecks){'sts2-lifecycle-ui-check.py'}elseif($TraitAuditChecks){'sts2-trait-audit.py'}elseif($OrobasChecks){'sts2-orobas-check.py'}elseif($CardResolutionChecks){'sts2-card-resolution-check.py'}elseif($PowerAuditChecks){'sts2-power-audit.py'}elseif($CrownChecks){'sts2-crown-check.py'}elseif($PoolAuditChecks){'sts2-pool-audit.py'}elseif($ItemAuditChecks){'sts2-item-audit.py'}elseif($AncientAuditChecks){'sts2-ancient-audit.py'}elseif($ManorAuditChecks){'sts2-manor-audit.py'}elseif($PresentationAuditChecks){'sts2-presentation-audit.py'}elseif($BalanceAuditChecks){'sts2-adversarial-balance.py'}elseif($PackageChecks){'sts2-package-native.py'}else{'sts2-balance-campaign.py'}
     $traitArgument=if($Traits){$Traits}else{'-'}
     $rewardArgument=if($ForcedReward){$ForcedReward}else{'-'}
+    $pacingTail=if($StopAtFullManor){@('--stop-when-full')}else{@()}
     if($ContinuePacingReport){
-        if($ForkCompletedProfile){& $Python (Join-Path $PSScriptRoot $driver) $profilePath $Tag $Class --continue-report $prior --end-run $EndRun --forked-profile}
-        else{& $Python (Join-Path $PSScriptRoot $driver) $profilePath $Tag $Class --continue-report $prior --end-run $EndRun}
+        if($ForkCompletedProfile){& $Python (Join-Path $PSScriptRoot $driver) $profilePath $Tag $Class --continue-report $prior --end-run $EndRun --forked-profile @pacingTail}
+        else{& $Python (Join-Path $PSScriptRoot $driver) $profilePath $Tag $Class --continue-report $prior --end-run $EndRun @pacingTail}
     }
-    elseif($ResumePacingReport){& $Python (Join-Path $PSScriptRoot $driver) $profilePath $Tag $Class --resume-report $prior --end-run $EndRun}
-    elseif($PacingChecks){& $Python (Join-Path $PSScriptRoot $driver) $profilePath $Tag $Class --end-run $EndRun}
+    elseif($ResumePacingReport){& $Python (Join-Path $PSScriptRoot $driver) $profilePath $Tag $Class --resume-report $prior --end-run $EndRun @pacingTail}
+    elseif($PacingChecks){& $Python (Join-Path $PSScriptRoot $driver) $profilePath $Tag $Class --end-run $EndRun @pacingTail}
     else{& $Python (Join-Path $PSScriptRoot $driver) $profilePath $Tag $Class $Tier $Policy $Seed $Ascension $traitArgument $Rewards $rewardArgument $ForcedRewardFloor}
     if ($LASTEXITCODE -ne 0) { throw "Campaign driver failed; inspect $profilePath" }
 } finally {

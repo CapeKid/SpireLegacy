@@ -29,4 +29,6 @@ This technique operates only on recorded disposable profiles. It does not read, 
 # add -ForkCompletedProfile
 ```
 
-Bounds remain 20 minutes/1200 decisions per run, 50 plays per combat decision, and 45 seconds of continuous waiting. A capped/unsupported/failed run is incomplete evidence. EndRun is a recording bound, not proof of full-manor coverage. Detailed results and remaining gaps accompany the derived evidence export.
+Bounds remain 20 minutes/1200 decisions per run, 50 plays per combat decision, and 45 seconds of continuous waiting. A capped/unsupported/failed run is incomplete evidence. EndRun is a recording bound, not proof of full-manor coverage. `-StopAtFullManor -EndRun 200` stops after the six upgrade lines reach their paid maximum levels, or records a return-cap outcome. The exporter distinguishes these outcomes and verifies all sixteen purchases for a full-manor claim.
+
+Long batches append every completed command receipt immediately to a private JSONL journal. Full reports checkpoint every 25 receipts, at each durable return, and on exceptions. This reduces repeated whole-history writes. Journals are evidence, not a mutation replay or automatic crash-recovery interface. Detailed results and remaining gaps accompany the derived evidence export.
