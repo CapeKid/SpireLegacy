@@ -431,7 +431,7 @@
   },
   "ui_art": {
     "types": ["dict"],
-    "required": ["generator", "height", "id", "path", "prompt", "sha256", "transparent", "width"],
+    "required": ["generator", "height", "id", "path", "prompt", "sha256", "transparent", "width", "exportMode"],
     "fields": {
       "generator": {"types": ["str"]},
       "height": {"types": ["int"], "min": 1, "max": 10000},
@@ -440,7 +440,8 @@
       "prompt": {"types": ["str"]},
       "sha256": {"types": ["str"], "pattern": "[a-f0-9]{64}"},
       "transparent": {"types": ["bool"]},
-      "width": {"types": ["int"], "min": 1, "max": 10000}
+      "width": {"types": ["int"], "min": 1, "max": 10000},
+      "exportMode": {"types": ["str"], "enum": ["fit", "preserve"]}
     }
   }
 }

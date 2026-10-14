@@ -102,6 +102,12 @@ def load_sheets(root):
         tables[name] = rows
     if errors:
         raise DesignError('\n'.join(errors))
+    registry=read_json(root/'scripts/saved-model-ids.json')
+    for table, identities in registry.items():
+        if table not in tables: continue  # Synthetic native power aliases are checked by the generator.
+        missing=set(identities)-{r['id'] for r in tables[table]}
+        if missing:errors.append(f'{table}: removed saved model IDs: '+', '.join(sorted(missing)))
+    if errors:raise DesignError('\n'.join(errors))
     return tables
 
 

@@ -66,6 +66,8 @@ with tempfile.TemporaryDirectory(prefix='design61-',dir=root/'private') as direc
         mutate('cards',lambda rows,f=field,v=value:rows[0].update({f:v}),'cards.knight_strike.'+field if field!='id' else 'invalid identifier')
     for value in ['../outside.png','/tmp/out.png','C:/out.png','heir\\out.png','heir/./out.png']:
         mutate('card_art',lambda rows,v=value:rows[0].update(path=v),'unsafe resource path')
+    for table,field in [('assets','output'),('assets','sourceFile')]:
+        mutate(table,lambda rows,f=field:rows[0].update({f:'../outside'}),'unsafe resource path')
     for table,field in [('cards','classId'),('cards','asset'),('cards','art'),('classes','signature'),('ancient_cards','cardId'),('pool_expansion','cardId'),('ancient_dialogue','classId')]:
         mutate(table,lambda rows,f=field:rows[0].update({f:'unknown'}),'unresolved','preflight')
     mutate('decks',lambda rows:rows[0]['cards'].__setitem__(0,'mage_strike'),'foreign starter','preflight')
@@ -82,6 +84,8 @@ with tempfile.TemporaryDirectory(prefix='design61-',dir=root/'private') as direc
         row=tables['icon_art'][0];path=lab/'src/main/resources'/row['path'];original=path.read_bytes();path.write_bytes(invalid)
         try:mutate('icon_art',lambda rows:rows[0].update(sha256=hashlib.sha256(invalid).hexdigest()),fragment,'assets')
         finally:path.write_bytes(original)
+    for table in ['classes','traits','manor','heir_relics','heir_potions','family_chronicle']:
+        mutate(table,lambda rows:rows[0].update(id='renamed_saved_identity'),'removed saved model IDs')
     print('reference and asset mutations passed',flush=True)
     # JSON decoding failures are contextual and duplicate properties cannot hide IDs.
     path=lab/'sheets/cards.json';original=path.read_bytes()
@@ -119,7 +123,7 @@ with tempfile.TemporaryDirectory(prefix='design61-',dir=root/'private') as direc
     report['generated']=dict(cards=360,powers=41,hashes=generated,invalidInputPreservesOutputs=True,staleRejected=True,orphanRejected=True)
     # Even deliberately regenerated output cannot silently drop the saved registry.
     path=lab/'scripts/saved-model-ids.json';saved=path.read_bytes();registry=json.loads(saved);registry['cards'].append('retired_saved_identity');path.write_text(json.dumps(registry))
-    failed=run(lab,'sts2-generate.py',ok=False);assert failed.returncode and 'removed saved model IDs' in failed.stderr;path.write_bytes(saved)
+    failed=run(lab,'sts2-generate.py',ok=False);assert failed.returncode and 'removed saved model IDs' in failed.stdout+failed.stderr;path.write_bytes(saved)
     print('stable model generation passed',flush=True)
     # All deterministic authors run twice. Art manifests must describe exact files;
     # retained PNG originals are inputs, not something an AI generator can reproduce.
@@ -135,7 +139,8 @@ with tempfile.TemporaryDirectory(prefix='design61-',dir=root/'private') as direc
     for value in ['../../escaped','unknown']:
         before=snapshots();assert run(lab,'export_expansion_art.py',value,str(lab/'art/originals/knight_strike.png'),ok=False).returncode;assert before==snapshots()
     for name,table in [('prepare_card_art.py','card_art'),('prepare_ui_art.py','ui_art')]:
-        original=lab/'art/originals'/(tables[table][-1]['id']+'.png');data=original.read_bytes();original.write_bytes(b'corrupt input')
+        selected=next(row for row in tables[table] if row.get('exportMode','fit')=='fit')
+        original=lab/'art/originals'/(selected['id']+'.png');data=original.read_bytes();original.write_bytes(b'corrupt input')
         before=snapshots();result=run(lab,name,ok=False);assert result.returncode and before==snapshots(),(name,result.stderr)
         original.write_bytes(data)
     path=lab/'sheets/traits.json';original=path.read_bytes();rows=json.loads(original);rows[0]['name']='Épée & <famille>';path.write_text(json.dumps(rows,ensure_ascii=False),encoding='utf-8-sig')

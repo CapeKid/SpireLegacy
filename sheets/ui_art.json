@@ -7,7 +7,8 @@
     "prompt": "An original character selection icon for Spire Legacy. Match the playful Rogue Legacy 2 cartoon style of reference: chibi knight face and shoulders, rounded silver helmet, vivid red plume, red scarf, thick crisp dark outlines, simple hard cel shading, expressive determined eyes. Front three-quarter portrait, centered full helmet and plume, compact readable silhouette, square format. Transparent background. No sword action, text, UI, border or watermark.",
     "generator": "built-in imagegen",
     "sha256": "da0daf8b0bad0a587bef9b2553a82d0be3b502ef7318452dee73c48d4d37f9e1",
-    "transparent": true
+    "transparent": true,
+    "exportMode": "fit"
   },
   {
     "id": "select_bg",
@@ -17,6 +18,18 @@
     "prompt": "An original landscape character-selection background for Spire Legacy matching the reference's playful Rogue Legacy 2 cartoon style: thick crisp dark outlines, clean flat colors, minimal hard cel shading, rounded chibi proportions. A courageous silver-armored red-plumed knight, red-hatted white-bearded mage and green-cloaked archer stand together as a family of heirs in front of a sunny medieval manor with banners and a distant spire. Three heroes grouped on the RIGHT two-thirds of the canvas. LEFT third is quiet dark navy sky and soft castle silhouettes so white game UI remains legible. Wide landscape 16:10 format. Charming illustrated game art, no painterly realism or gritty texture. No text, letters, title, UI, card frames or watermark.",
     "generator": "built-in imagegen",
     "sha256": "da44d784857012198c8e69765b9519827b036384c1a0d22772d56ad77f7755c4",
-    "transparent": false
+    "transparent": false,
+    "exportMode": "fit"
+  },
+  {
+    "id": "heir_portrait",
+    "path": "heir/ui/heir-portrait.png",
+    "width": 1024,
+    "height": 1536,
+    "prompt": "Retained original Heir selection portrait; the historical generation prompt was not recorded.",
+    "generator": "Retained original mod PNG",
+    "sha256": "c596c37da8618c2371cf2d0a18fa37055b526c59a12a8b2595c57e116916e9b1",
+    "transparent": false,
+    "exportMode": "preserve"
   }
 ]
