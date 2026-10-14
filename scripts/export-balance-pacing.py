@@ -143,11 +143,15 @@ def export(source, target, stopped_reports=()):
         assert bank == sum(r['earned'] for r in report['runs']) - sum(p['crownsBefore']-p['crownsAfter'] for p in report['purchases'])
     (target/'manifest.json').write_text(json.dumps(manifest, indent=2)+'\n', encoding='utf-8')
     (target/'decisions.jsonl').write_text(''.join(json.dumps(d)+'\n' for d in decisions), encoding='utf-8')
+    empty_headers = {
+        'campaigns': 'trial cls tier policy rewardPolicy ascension seed traits floor act hp wins crowns earned'.split(),
+        'trajectories': 'trial cls run seed floor earned bankBefore bankAfter upgrade cost runsSincePurchase checkpointRecovered'.split(),
+        'cards': 'trial card observation count'.split(),
+    }
     for name, rows in [('campaigns', campaigns), ('trajectories', trajectories),
                        ('cards', [dict(trial=t, card=c, observation=o, count=n) for (t,c,o),n in sorted(cards.items())])]:
-        assert rows, name
         with (target/(name+'.csv')).open('w', newline='', encoding='utf-8') as stream:
-            writer = csv.DictWriter(stream, fieldnames=list(rows[0]))
+            writer = csv.DictWriter(stream, fieldnames=list(rows[0]) if rows else empty_headers[name])
             writer.writeheader(); writer.writerows(rows)
     print(f'Exported {len(campaigns)} completed campaigns, {len(trajectories)} settled returns, {len(decisions)} decisions')
 

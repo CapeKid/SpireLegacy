@@ -50,6 +50,24 @@ class EvidenceChecks(unittest.TestCase):
         self.run_export()
         self.assertEqual(len((self.root/'output/trajectories.csv').read_text().splitlines()), 13)
 
+    def test_standalone_campaign_study_has_no_invented_trajectories(self):
+        (self.source/'balance-campaign-balance146-fixture.json').write_text(json.dumps(self.campaign), encoding='utf-8')
+        module.export(self.source, self.root/'output')
+        self.assertEqual(len((self.root/'output/campaigns.csv').read_text().splitlines()), 2)
+        self.assertEqual((self.root/'output/trajectories.csv').read_text().splitlines(),
+            ['trial,cls,run,seed,floor,earned,bankBefore,bankAfter,upgrade,cost,runsSincePurchase,checkpointRecovered'])
+
+    def test_failed_only_study_retains_manifest_without_results(self):
+        self.campaign['status']='error'
+        self.campaign['error']='fixture failure'
+        (self.source/'balance-campaign-balance146-fixture.json').write_text(json.dumps(self.campaign), encoding='utf-8')
+        module.export(self.source, self.root/'output')
+        manifest=json.loads((self.root/'output/manifest.json').read_text())
+        self.assertFalse(manifest[0]['included'])
+        for name in ('campaigns','trajectories','cards'):
+            self.assertEqual(len((self.root/f'output/{name}.csv').read_text().splitlines()), 1)
+        self.assertEqual((self.root/'output/decisions.jsonl').read_text(), '')
+
     def test_running_worker_rejected(self):
         self.campaign['status'] = 'running'
         with self.assertRaises(AssertionError): self.run_export()

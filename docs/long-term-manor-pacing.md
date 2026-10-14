@@ -104,6 +104,8 @@ The observed first-upgrade timing matches the documented 5–7-return target in 
 
 ## Validation and remaining scope
 
+The subsequent [A10 Mage/Ranger checkpoint](a10-mage-ranger-validation.md) adds twelve matched regular-branch class/investment trials across two seeds. It records early losses and explicitly distinguishes configured shop/potion/upgrade support from decisions that were actually exercised.
+
 The final fixture build passes design preflight and compilation with zero warnings/errors, 20 harness checks, 17 continuity/launcher tests and 14 exporter tests. Native Crystal Sphere and separate-run Whispering Earring fixtures pass on both game versions. The export checks unchanged prefixes, checkpoint hashes, unique command/settlement IDs, paid level order and crown conservation. Failed, interrupted and unsupported attempts remain visible in the manifest and contribute no unverified earnings.
 
 Issue #146 remains open. These measurements complete the paid full-manor curves and add controlled A10 Knight comparisons, but do not establish experienced-player win rates, current-build winning campaigns with recorded decisions, controlled higher-Ascension Ranger/Mage archetypes, or representative hard-trait/relic campaign combinations. The user's reported A10 Steam Deck Knight win supports qualitative viability; its unknown seed/build/deck prevents treating it as a matched fixture. No gameplay balance change is warranted from these pilot losses alone.
