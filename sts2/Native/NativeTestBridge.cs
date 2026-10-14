@@ -119,6 +119,8 @@ public static class NativeTestBridge
                 case "coop-join":result=await CoopOracle.Lobby(request,false);break;
                 case "coop-ready":CoopBloodlines.Lobby!.SetReady(request.TryGetProperty("ready",out var coopReady)?coopReady.GetBoolean():true);result=CoopOracle.State();break;
                 case "coop-state":result=CoopOracle.State();break;
+                case "coop-ui-select":result=await CoopTimingOracle.Select(request.GetProperty("control").GetString()!);break;
+                case "coop-disconnect":result=CoopTimingOracle.Disconnect();break;
                 case "coop-vote":result=CoopOracle.Vote();break;
                 case "coop-play":result=await CoopOracle.Play(request.TryGetProperty("upgrade",out var coopUpgrade)&&coopUpgrade.GetBoolean());break;
                 case "coop-upgrade":result=CoopOracle.UpgradeOwnedCard(request.GetProperty("owner").GetUInt64());break;

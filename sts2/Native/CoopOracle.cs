@@ -178,6 +178,7 @@ public static class CoopOracle
         var run=AccessTools.Property(typeof(RunManager),"State").GetValue(RunManager.Instance) as RunState;
         return new{local=run==null?CoopBloodlines.Lobby?.NetService.NetId:RunManager.Instance.NetService.NetId,
             paused=((SceneTree)Engine.GetMainLoop()).Paused,pending=CoopBloodlines.Pending.Keys.ToArray(),
+            connected=run==null?CoopBloodlines.Lobby?.NetService.IsConnected:RunManager.Instance.NetService.IsConnected,
             actionRunning=run!=null&&RunManager.Instance.ActionExecutor.IsRunning,
             session=CoopBloodlines.Selections.Session,protocol=CoopBloodlines.Protocol,
             family=Runtime.Profile.family,familyId=Runtime.Profile.familyId,crowns=Runtime.Profile.crowns,active=Runtime.Profile.active?.id,
