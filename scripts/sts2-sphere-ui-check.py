@@ -35,6 +35,9 @@ try:
             break
         time.sleep(.2)
     else:raise AssertionError('Sphere fixture decision cap')
+    # The map-travel proof can already start a combat. Use a separate fresh run
+    # for the relic fixture instead of interrupting that combat's start hooks.
+    send('start',**{'class':'knight'},traits=[],seed='SPHERE146-AUTOPLAY',ascension=0,manorTier=0,quick=False)
     send('autoplay-start-fixture')
     native_waits=0
     for _ in range(60):
