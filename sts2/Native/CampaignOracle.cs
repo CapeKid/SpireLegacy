@@ -100,7 +100,7 @@ public static class CampaignOracle
                 try{
                     Observe();
                     var potions=new List<object>();
-                    if(planned)for(var p=0,limit=player.Potions.Count();p<limit;p++){
+                    if(planned)for(int p=0,limit=player.Potions.Count();p<limit;p++){
                         var used=await PilotPotions.Planned(player);if(used==null)break;potions.Add(used);Observe();
                     }
                     for(var i=0;i<50;i++){
