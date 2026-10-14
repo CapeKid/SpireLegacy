@@ -50,6 +50,53 @@ class EvidenceChecks(unittest.TestCase):
         self.run_export()
         self.assertEqual(len((self.root/'output/trajectories.csv').read_text().splitlines()), 13)
 
+    def test_native_task_id_spellings_and_fatal_crash_counted(self):
+        (self.root/'errors.log').write_text('ERROR: Invalid Task ID\nERROR: InvalidTaskId\nFatal error. 0xC0000005\n',encoding='utf-8')
+        self.run_export()
+        row=json.loads((self.root/'output/manifest.json').read_text())[0]
+        self.assertEqual(row['logMatches']['errors.log']['InvalidTaskId'],2)
+        self.assertEqual(row['logMatches']['errors.log']['Fatal error'],1)
+
+    def with_start(self):
+        start=copy.deepcopy(self.campaign['evidence'][0])
+        start['request']=dict(requestId='e'*32,command='start',**{'class':'knight','traits':[], 'manorTier':0,'ascension':0,'seed':'fixture'})
+        start['response']['requestId']='e'*32
+        start['response']['metadata']['requestId']='e'*32
+        start['response']['result']=dict(heir=dict(classId='knight',traits=[],name='PrivateName'), hp=60,maxHp=70,relics=[dict(id='RELIC.FIXTURE',title='PrivateTitle')])
+        self.campaign['evidence'].insert(0,start)
+        return start
+
+    def test_start_conditions_export_ids_without_names_or_paths(self):
+        self.with_start();self.run_export()
+        output=(self.root/'output/initial-conditions.json').read_text()
+        rows=json.loads(output)
+        self.assertEqual(len(rows),1)
+        self.assertTrue(rows[0]['heirVerified'])
+        self.assertEqual(rows[0]['relics'],['RELIC.FIXTURE'])
+        self.assertEqual((rows[0]['hp'],rows[0]['maxHp']),(60,70))
+        for private in ('PrivateName','PrivateTitle',str(self.root)):self.assertNotIn(private,output)
+
+    def test_loaded_traits_mismatch_rejected(self):
+        self.with_start()['response']['result']['heir']['traits']=['antique']
+        with self.assertRaises(AssertionError):self.run_export()
+
+    def test_changed_start_seed_rejected(self):
+        self.with_start()['request']['seed']='different'
+        with self.assertRaises(AssertionError):self.run_export()
+
+    def test_multiple_starts_rejected(self):
+        start=self.with_start()
+        self.campaign['evidence'].insert(0,copy.deepcopy(start))
+        with self.assertRaises(AssertionError):self.run_export()
+
+    def test_native_control_does_not_claim_unused_heir_verification(self):
+        start=self.with_start()
+        self.campaign['cls']='ironclad';start['request']['class']='ironclad'
+        self.run_export()
+        row=json.loads((self.root/'output/initial-conditions.json').read_text())[0]
+        self.assertEqual(row['cls'],'ironclad')
+        self.assertFalse(row['heirVerified'])
+
     def test_standalone_campaign_study_has_no_invented_trajectories(self):
         (self.source/'balance-campaign-balance146-fixture.json').write_text(json.dumps(self.campaign), encoding='utf-8')
         module.export(self.source, self.root/'output')
