@@ -7,7 +7,9 @@ The user clarified a completed Ascension 10 Knight run with full manor investmen
 ## Measurement method
 
 - Extend the existing trait-free A0 earned-fund trajectories beyond twelve returns. Carry the recorded family, manor and Chronicle, and continue deterministic seeds `PACING146-N`. Use the same one-purchase-per-return order as the original checkpoint. Never inject new crowns or reset investment.
+- This is one fixed purchase policy, not an optimized order or a human estimate of the time needed to complete the manor. Library precedes several cheaper later levels; trait bonuses and choosing different heirs are excluded.
 - Compare Knight at A10 on seeds `BALANCE146-C` and `BALANCE146-D`, with no/partial/full manor on regular and public-beta. These are twelve fresh-family fixtures, using the existing planned pilot and defensive reward scoring. They are not expert human choices.
+- The two long trajectories pair Knight with regular and Ranger with public-beta. Class and branch are therefore confounded: their purchase dates cannot rank class balance or isolate branch effects. Identical seed strings also need not produce identical native content across game versions.
 - Validate completed receipts and the live durable family before extending. Check contiguous settlements, purchase order, crown conservation, class, generation, manor and settled ID. Reject failed/timed-out mutations and active or mismatched families.
 - Archive previous launch logs before restarting a trajectory. The exporter validates unchanged completed prefixes and counts only the latest completed chain, avoiding double counting. Log counts describe the latest launch, not the whole historical chain.
 

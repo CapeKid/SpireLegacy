@@ -33,7 +33,7 @@ def export(source, target, stopped_reports=()):
                 prior_path=source/checkpoint['priorReport']
                 assert hashlib.sha256(prior_path.read_bytes()).hexdigest()==checkpoint['receiptSha256']
                 expected=completed_prefix(reports[checkpoint['priorReport']],data['cls'])
-                assert all(data[key]==expected[key] for key in ('runs','purchases','evidence')), 'Changed extracted durable checkpoint'
+                assert all(data[key][:len(expected[key])]==expected[key] for key in ('runs','purchases','evidence')), 'Changed extracted durable checkpoint prefix'
                 assert all(checkpoint[key]==expected['checkpointExtraction'][key] for key in ('settledReturns','excludedRuns')), 'Changed checkpoint exclusion metadata'
                 superseded.add(checkpoint['priorReport'])
             for batch in data.get('batches',[]):

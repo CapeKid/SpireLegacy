@@ -41,6 +41,8 @@ class EvidenceChecks(unittest.TestCase):
             (self.source/name).write_text(json.dumps(report), encoding='utf-8')
         if hasattr(self,'extension'):
             (self.source/'pacing-campaign-balance146-extended.json').write_text(json.dumps(self.extension),encoding='utf-8')
+        if hasattr(self,'checkpoint_report'):
+            (self.source/'pacing-campaign-balance146-checkpoint.json').write_text(json.dumps(self.checkpoint_report),encoding='utf-8')
         with contextlib.redirect_stdout(io.StringIO()):
             module.export(self.source, self.root/'output',getattr(self,'stopped_reports',[]))
 
@@ -90,6 +92,16 @@ class EvidenceChecks(unittest.TestCase):
     def test_changed_checkpoint_metadata_rejected(self):
         self.checkpoint();self.extension['checkpointExtraction']['excludedRuns']=[]
         with self.assertRaises(AssertionError):self.run_export()
+
+    def test_continued_checkpoint_preserves_prefix_and_counts_once(self):
+        self.checkpoint();self.checkpoint_report=copy.deepcopy(self.extension)
+        self.extension['targetReturns']=24
+        self.extension['batches']=[dict(priorReport='pacing-campaign-balance146-checkpoint.json',afterRun=12,endRun=24)]
+        for n in range(13,25):
+            self.extension['runs'].append(dict(run=n,seed=str(n),status='finished',settledId=str(n),generation=n+3,
+                crownsBefore=(n-1)*10,crownsAfter=n*10,earned=10,lastState=dict(floor=2)))
+        self.run_export()
+        self.assertEqual(len((self.root/'output/trajectories.csv').read_text().splitlines()),25)
 
     def test_duplicate_command_rejected(self):
         self.campaign['evidence'].append(copy.deepcopy(self.campaign['evidence'][0]))
