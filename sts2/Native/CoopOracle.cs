@@ -63,6 +63,12 @@ public static class CoopOracle
         RunManager.Instance.ActionQueueSynchronizer.RequestEnqueue(new MegaCrit.Sts2.Core.GameActions.VoteForMapCoordAction(PlayerBloodlines.LocalPlayer!,run.MapLocation,vote));
         return new{voted=next.coord.ToString()};
     }
+    public static void EndTurn()
+    {
+        var player=PlayerBloodlines.LocalPlayer!;
+        RunManager.Instance.ActionQueueSynchronizer.RequestEnqueue(
+            new MegaCrit.Sts2.Core.GameActions.EndPlayerTurnAction(player,player.PlayerCombatState!.TurnNumber));
+    }
     public static async Task<object> Play(bool upgraded=false)
     {
         var player=PlayerBloodlines.LocalPlayer!;
@@ -171,6 +177,9 @@ public static class CoopOracle
         // The cached submenu built this button before the fixture revealed epochs.
         if(choice=="random")button.DebugUnlock();
         screen.SelectCharacter(button,button.Character);
+        // Opening character select clears the debug override; set it only once
+        // the native initialization/selection sequence has completed.
+        if(host&&request.TryGetProperty("seed",out var seed))NGame.Instance.DebugSeedOverride=seed.GetString();
         return State();
     }
     public static object State()
@@ -180,10 +189,12 @@ public static class CoopOracle
             paused=((SceneTree)Engine.GetMainLoop()).Paused,pending=CoopBloodlines.Pending.Keys.ToArray(),
             connected=run==null?CoopBloodlines.Lobby?.NetService.IsConnected:RunManager.Instance.NetService.IsConnected,
             actionRunning=run!=null&&RunManager.Instance.ActionExecutor.IsRunning,
+            combatInProgress=run!=null&&MegaCrit.Sts2.Core.Combat.CombatManager.Instance.IsInProgress,
+            enemies=run?.Players.FirstOrDefault()?.Creature.CombatState?.Enemies.Select(e=>new{id=e.Monster?.Id.ToString(),hp=e.CurrentHp}).ToArray(),
             session=CoopBloodlines.Selections.Session,protocol=CoopBloodlines.Protocol,
             family=Runtime.Profile.family,familyId=Runtime.Profile.familyId,crowns=Runtime.Profile.crowns,active=Runtime.Profile.active?.id,
             lobby=run==null&&CoopBloodlines.Lobby is {} lobby?CoopBloodlines.Players(lobby).Select(p=>new{id=CoopBloodlines.Id(p),character=CoopBloodlines.Character(p).Id.ToString(),ready=CoopBloodlines.IsReady(p),snapshot=CoopBloodlines.Pending.GetValueOrDefault(CoopBloodlines.Id(p))?.heir.classId}).ToArray():null,
             floor=run?.TotalFloor,room=run?.CurrentRoom?.GetType().Name,
-            players=run?.Players.Select(p=>new{p.NetId,character=p.Character.Id.ToString(),heir=JsonSerializer.SerializeToElement(PlayerBloodlines.Heir(p),FamilyProfile.JsonOptions),snapshot=PlayerBloodlines.State(p)==null?(JsonElement?)null:JsonSerializer.SerializeToElement(PlayerBloodlines.State(p),FamilyProfile.JsonOptions),hp=p.Creature.CurrentHp,maxHp=p.Creature.MaxHp,block=p.Creature.Block,energy=p.PlayerCombatState?.Energy,phase=p.PlayerCombatState?.Phase.ToString(),pool=p.Character.CardPool.Id.ToString(),deck=p.Deck.Cards.Select(c=>c.Id.ToString()).ToArray(),hand=p.PlayerCombatState?.Hand.Cards.Select(c=>c.Id.ToString()).ToArray(),powers=p.Creature.Powers.Select(power=>new{id=power.Id.ToString(),power.Amount,charges=power is P_class cp?cp.Charges:0}).ToArray()}).ToArray()};
+            players=run?.Players.Select(p=>new{p.NetId,character=p.Character.Id.ToString(),heir=JsonSerializer.SerializeToElement(PlayerBloodlines.Heir(p),FamilyProfile.JsonOptions),snapshot=PlayerBloodlines.State(p)==null?(JsonElement?)null:JsonSerializer.SerializeToElement(PlayerBloodlines.State(p),FamilyProfile.JsonOptions),hp=p.Creature.CurrentHp,maxHp=p.Creature.MaxHp,block=p.Creature.Block,energy=p.PlayerCombatState?.Energy,turn=p.PlayerCombatState?.TurnNumber,phase=p.PlayerCombatState?.Phase.ToString(),pool=p.Character.CardPool.Id.ToString(),deck=p.Deck.Cards.Select(c=>c.Id.ToString()).ToArray(),hand=p.PlayerCombatState?.Hand.Cards.Select(c=>c.Id.ToString()).ToArray(),powers=p.Creature.Powers.Select(power=>new{id=power.Id.ToString(),power.Amount,charges=power is P_class cp?cp.Charges:0}).ToArray()}).ToArray()};
     }
 }
