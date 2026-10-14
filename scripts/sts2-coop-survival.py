@@ -14,11 +14,15 @@ def invoke(index,command,**args):
     r=call(profiles[index],dict(command=command,**args),timeout=60,expected_hash=expected)
     r['peer']=index+1
     return r
-def collect(r):
-    records.append(r);store();assert r['response']['ok'],r
+def collect(r,logged=False):
+    if not logged:records.append(r);store()
+    assert r['response']['ok'],r
     assert {m['id'] for m in r['response']['metadata']['mods']}=={'BaseLib','SpireLegacy'}
     return r['response']['result']
-def send(index,command,**args):return collect(invoke(index,command,**args))
+def send(index,command,**args):
+    record=call(profiles[index],dict(command=command,**args),timeout=60,expected_hash=expected)
+    record['peer']=index+1;records.append(record);store()
+    return collect(record,logged=True)
 def both(command):
     # Native room loading has a peer barrier. Never await one peer's mutation
     # before dispatching the other, and never replay a timed-out mutation.
@@ -49,6 +53,8 @@ for number,(cls,trait) in enumerate([('mage','megahealth'),('ranger','superheale
     both('coop-survival-enter')
     state=wait(lambda: (a if (a:=sync()) and all(p['phase']=='Play' for p in a['players']) else False))
     case['initial']=state;store()
+    actual=next(r['response']['metadata']['seed'] for r in reversed(records) if r['response']['metadata']['seed'])
+    assert actual==seed,(seed,actual)
     deadline=time.monotonic()+900
     for step in range(1000):
         assert time.monotonic()<deadline,'Natural battle exceeded 15-minute cap'

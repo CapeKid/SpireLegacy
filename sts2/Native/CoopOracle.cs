@@ -159,7 +159,6 @@ public static class CoopOracle
         foreach(var key in new[]{"accept_tutorials_ftue","map_select_ftue","combat_rules_ftue","shuffle_ftue","multiplayer_ftue"})MegaCrit.Sts2.Core.Saves.SaveManager.Instance.MarkFtueAsComplete(key);
         var tree=(SceneTree)Engine.GetMainLoop();
         var menu=NGame.Instance!.MainMenu!;
-        if(host&&request.TryGetProperty("seed",out var seed))NGame.Instance.DebugSeedOverride=seed.GetString();
         var screen=menu.SubmenuStack.GetSubmenuType<NCharacterSelectScreen>();
         var port=(ushort)request.GetProperty("port").GetInt32();
         if(host) {
@@ -178,6 +177,9 @@ public static class CoopOracle
         // The cached submenu built this button before the fixture revealed epochs.
         if(choice=="random")button.DebugUnlock();
         screen.SelectCharacter(button,button.Character);
+        // Opening character select clears the debug override; set it only once
+        // the native initialization/selection sequence has completed.
+        if(host&&request.TryGetProperty("seed",out var seed))NGame.Instance.DebugSeedOverride=seed.GetString();
         return State();
     }
     public static object State()
