@@ -8,6 +8,8 @@ The opt-in `planned` pilot makes legal native card plays and purchases. It score
 
 Standalone campaigns use fresh private families, deterministic seeds `BALANCE146-A` and `BALANCE146-B`, A0/A5, and no/partial/full manor investment. The matrix includes all three heir classes, native Ironclad controls, and Hero Complex cases. The CSV lists the precise coverage; this is not a fully crossed matrix.
 
+The final export includes 22 completed standalone campaigns, 24 durable trajectory returns, and 3,770 non-wait decisions. All automated campaigns ended in natural losses. The latest regular full-manor seed B checks reached floors 33 (Knight), 15 (Mage), and 17 (Ranger); corresponding beta checks reached 22, 21, and 21. Source stages differ and are listed in the manifest, so these are descriptive outcomes rather than a clean branch comparison.
+
 Two trajectories carry actual crowns, manor purchases, and Chronicle progress across twelve natural returns. They use trait-free A0 heirs and seeds `PACING146-1` through `PACING146-12`. Purchases use earned funds and the real prerequisite/cost/persistence path. The pilot tries at most one purchase after each return, in this order: vitality, armory, smith, garden, library, vitality, smith, armory, garden, vitality, vitality, vitality, then four vault levels. No crowns are injected into these trajectories.
 
 | Trajectory | Earned over 12 returns | First upgrade | Second upgrade | Final bank |
