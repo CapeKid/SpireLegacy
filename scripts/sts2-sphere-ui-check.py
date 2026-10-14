@@ -40,7 +40,7 @@ try:
     for _ in range(60):
         result=send('balance-campaign-step',policy='planned',rewardPolicy='defensive')
         assert not result['action'].startswith('unsupported'),result
-        if result['action']=='wait' and (result.get('detail') or {}).get('reason')=='native-start-phase':native_waits+=1
+        if result['action']=='wait' and (result.get('detail') or {}).get('reason') in ('native-start-phase','native-selector'):native_waits+=1
         if result['action']=='combat-turn':
             report.update(status='finished',syntheticRelic=True,nativeStartWaits=native_waits,autoplayTurn=True)
             break

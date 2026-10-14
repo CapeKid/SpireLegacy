@@ -75,6 +75,7 @@ public static class NativeTestBridge
                     // Native first-turn autoplay (e.g. Whispering Earring) owns
                     // its selector until the normal Play phase. Observe first;
                     // never install a competing selector during that phase.
+                    if(CardSelectCmd.Selector!=null){result=CampaignOracle.WaitingForNativeTurn(pilotRun,"native-selector");break;}
                     if(MegaCrit.Sts2.Core.Combat.CombatManager.Instance.IsInProgress&&pilotRun.Players.Single().PlayerCombatState?.Phase!=MegaCrit.Sts2.Core.Combat.PlayerTurnPhase.Play){result=CampaignOracle.WaitingForNativeTurn(pilotRun);break;}
                     result=await CampaignOracle.Step(pilotRun,pilotPolicy,pilotPolicy is "tactical" or "planned"?TacticalPilot.Selector(pilotPolicy=="planned"):UseTestSelector(),request.TryGetProperty("rewardPolicy",out var rewardsPolicy)?rewardsPolicy.GetString()!:"standalone",request.TryGetProperty("forcedReward",out var forcedReward)?forcedReward.GetString():null,request.TryGetProperty("forcedRewardFloor",out var forcedFloor)?forcedFloor.GetInt32():0);break;
                 case "balance-probe":await WaitForPlay(RunState().Players.Single());var probeKey=request.GetProperty("card").GetString()!;result=await BalanceOracle.Probe(RunState(),probeKey,request.GetProperty("upgrade").GetBoolean(),probeKey=="mage_eternal_bookmark"?BalanceOracle.MaxChoices():UseTestSelector(),request.TryGetProperty("supported",out var supported)&&supported.GetBoolean());break;
