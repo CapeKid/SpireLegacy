@@ -49,3 +49,5 @@ Twelve trait-free Knight A10 fixtures used seeds `BALANCE146-C` and `BALANCE146-
 | Public-beta v0.111.0 | 7 / 6 | 7 / 7 | 13 / 7 |
 
 The tested DLL was built from source `52cd89c`, SHA-256 `b13c50b1cdfa6a59e7125f39fc6798b06d2a08a0ac701705d8ad538431ae22d3`, with BaseLib 3.4.7 and mod manifest 1.0.30. The later pacing fixture correction uses a different DLL and is recorded separately in its receipts. These outcomes suggest survival improvement in this limited policy, but do not establish experienced-player difficulty or justify tuning cards on their own. The user's Steam Deck/public-beta full-manor A10 Knight victory is separate qualitative evidence.
+
+The FTUE-corrected pacing DLL is source `07bcf006998747c5932bdcf9f041cd7e39a8b6bf`, SHA-256 `3f3cd3fe23b95bf619030eb285cef385c31bc459a28f6ed8d10ebe7f0f1d0d12`. Python/PowerShell receipt handling was subsequently improved without rebuilding that DLL. Each command records the loaded runtime artifact; newer tooling commits must not be presented as that DLL's source.

@@ -1,6 +1,7 @@
 """Evidence integrity checks: corrupted receipts must not become public results."""
 import contextlib
 import copy
+import hashlib
 import importlib.util
 import io
 import json
@@ -64,6 +65,30 @@ class EvidenceChecks(unittest.TestCase):
 
     def test_unknown_stopped_receipt_rejected(self):
         self.stopped_reports=['missing.json']
+        with self.assertRaises(AssertionError):self.run_export()
+
+    def checkpoint(self):
+        from pacing_state import completed_prefix
+        for run in self.pacing['runs']:run['generation']=run['run']+3
+        snapshot=copy.deepcopy(self.pacing['evidence'][0])
+        snapshot['request'].update(requestId='d'*32,command='lifecycle-state')
+        snapshot['response']['requestId']='d'*32
+        snapshot['response']['metadata']['requestId']='d'*32
+        profile=dict(crowns=120,manor={},active=None,settledId='12',generation=15)
+        snapshot['response']['result']=dict(profile=profile,persisted=copy.deepcopy(profile))
+        self.pacing['evidence'].append(snapshot)
+        self.pacing['status']='running'
+        self.pacing['runs'].append(dict(run=13,status='running'))
+        self.extension=completed_prefix(self.pacing,'knight')
+        self.extension['checkpointExtraction'].update(priorReport='pacing-campaign-balance146-fixture.json',receiptSha256=hashlib.sha256(json.dumps(self.pacing).encode()).hexdigest())
+        self.stopped_reports=['pacing-campaign-balance146-fixture.json']
+
+    def test_verified_checkpoint_counts_only_settled_prefix(self):
+        self.checkpoint();self.run_export()
+        self.assertEqual(len((self.root/'output/trajectories.csv').read_text().splitlines()),13)
+
+    def test_changed_checkpoint_metadata_rejected(self):
+        self.checkpoint();self.extension['checkpointExtraction']['excludedRuns']=[]
         with self.assertRaises(AssertionError):self.run_export()
 
     def test_duplicate_command_rejected(self):

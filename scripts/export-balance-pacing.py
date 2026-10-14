@@ -24,6 +24,7 @@ def export(source, target, stopped_reports=()):
     assert paths, 'No issue 146 receipts found'
     reports={path.name:json.loads(path.read_text(encoding='utf-8')) for path in paths}
     assert set(stopped_reports)<=set(reports), 'Unknown explicitly stopped report'
+    assert all(reports[name]['status']=='running' for name in stopped_reports), 'Only interrupted running receipts need explicit stopped annotation'
     for name,data in reports.items():
         if data['status']=='finished':
             checkpoint=data.get('checkpointExtraction')
@@ -33,6 +34,7 @@ def export(source, target, stopped_reports=()):
                 assert hashlib.sha256(prior_path.read_bytes()).hexdigest()==checkpoint['receiptSha256']
                 expected=completed_prefix(reports[checkpoint['priorReport']],data['cls'])
                 assert all(data[key]==expected[key] for key in ('runs','purchases','evidence')), 'Changed extracted durable checkpoint'
+                assert all(checkpoint[key]==expected['checkpointExtraction'][key] for key in ('settledReturns','excludedRuns')), 'Changed checkpoint exclusion metadata'
                 superseded.add(checkpoint['priorReport'])
             for batch in data.get('batches',[]):
                 prior=reports[batch['priorReport']]
