@@ -33,10 +33,10 @@ for path in sorted(files):
     elif path.startswith('licenses/python-build-standalone/'):
         category='historical reader license record; not executable'
     else:continue
-    rows.append(dict(path=path,classification=category,sha256=hashlib.sha256((ROOT/path).read_bytes()).hexdigest()))
+    rows.append(dict(path=path,classification=category,sha256LF=hashlib.sha256((ROOT/path).read_bytes().replace(b'\r\n',b'\n')).hexdigest()))
 assert sum(r['path'].startswith('src/main/java/') for r in rows)==389
 assert sum(r['path'].startswith('src/main/java/heir/cards/') for r in rows)==360
 output=ROOT/'docs/historical-sts1-coverage.csv'
 with output.open('w',encoding='utf-8',newline='') as stream:
-    writer=csv.DictWriter(stream,fieldnames=['path','classification','sha256']);writer.writeheader();writer.writerows(rows)
+    writer=csv.DictWriter(stream,fieldnames=['path','classification','sha256LF']);writer.writeheader();writer.writerows(rows)
 print(f'{len(rows)} source/config/tool records classified; 389 Java files, including 360 card identities')

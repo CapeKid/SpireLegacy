@@ -13,7 +13,7 @@ The obsolete root command names emit the current StS2 instructions instead of si
 
 ## Coverage and execution boundaries
 
-The companion [coverage CSV](historical-sts1-coverage.csv) inventories every historical Java file, non-StS2 script, historical configuration and applicable resource/license record, with content hashes and classifications. The [inventory generator](../scripts/historical-audit-inventory.py) reads source only. The generic audit manifest remains ignored.
+The companion [coverage CSV](historical-sts1-coverage.csv) inventories 482 historical Java, non-StS2 script, configuration and applicable resource/license records, with classifications and SHA-256 hashes after CRLF-to-LF normalization. The [inventory generator](../scripts/historical-audit-inventory.py) reads source only. The generic audit manifest remains ignored.
 
 | Boundary | Review and disposition |
 | --- | --- |
@@ -46,6 +46,6 @@ python scripts/check-release-packages.py
 
 The focused fixture uses a temporary mirror, sentinel design/save/package files, a source snapshot of the baseline initializer, and fake atlas/image data. It executes all retired Python CLIs/imports, PowerShell wrappers, Windows/Bash launchers, and release exclusions. Expected refusals leave the mirror byte-identical. It never launches a game, queries personal Steam libraries, or uses owned/extracted assets. Failures and assertions are not accepted as completed passes.
 
-Baseline release checks passed 13 checks across three synthetic Windows/Linux/Proton layouts; design checks passed 438 mutations and eight deterministic authors. Focused retirement checks passed 59 checks. Final build/package verification is recorded in the PR. Raw fixture receipts remain ignored under `private/`.
+Baseline and final release checks passed 13 checks across three synthetic Windows/Linux/Proton layouts; design checks passed 438 mutations and eight deterministic authors. Focused retirement checks passed 60 checks, including refusal of optimized Python that would disable assertions. Ten synthetic reader-discovery and seven Linux-launch-planning checks passed. The StS2 release build passed with zero warnings/errors. [Validation evidence](historical-sts1-evidence.json) records the exact DLL/source/reference identities and explicit non-native limits. Raw fixture receipts remain ignored under `private/`.
 
 No native C# runtime path changes, so the issue's Knight/Mage/Ranger, base/upgraded and co-op runtime matrix does not apply to this patch. The packaging fixtures demonstrate file/configuration isolation, not physical Deck gameplay, native Steam transport or a Melty-installed launch. No publishing or personal-game-folder changes are part of this audit.

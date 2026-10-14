@@ -1,4 +1,6 @@
 """Challenge retired entry points in a disposable tree; never launch a game."""
+if not __debug__:
+    raise RuntimeError('Historical isolation checks require assertions; do not use Python -O.')
 import hashlib
 import io
 import json
@@ -40,6 +42,9 @@ def main():
         (scratch/'profile').mkdir(); (scratch/'profile/family.json').write_text('personal-save-sentinel')
         (scratch/'dist').mkdir(); (scratch/'dist/current.zip').write_bytes(b'current-package-sentinel')
         env = dict(os.environ, PYTHONDONTWRITEBYTECODE='1', HEIR_DATA_DIR=str(scratch/'profile'))
+        optimized=execute([sys.executable,'-O',str(Path(__file__).resolve())],scratch,env)
+        assert optimized.returncode != 0 and 'require assertions' in optimized.stderr
+        passed('optimized Python cannot report disabled assertions as passes')
         # Before-fix reproduction uses only a historical source snapshot in scratch.
         old = subprocess.check_output(['git', 'show', BASE+':scripts/create_sheets.py'], cwd=ROOT)
         baseline = scratch/'baseline'; (baseline/'scripts').mkdir(parents=True); (baseline/'sheets').mkdir()
