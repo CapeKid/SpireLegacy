@@ -30,6 +30,7 @@ param(
     [switch]$BalanceAuditChecks,
     [switch]$PackageChecks,
     [switch]$PacingChecks,
+    [string]$ResumePacingReport='',
     [string]$ForcedReward='',
     [int]$ForcedRewardFloor=0,
     [ValidateSet('standalone','deck','defensive')][string]$Rewards='standalone'
@@ -49,8 +50,19 @@ $buildSource=([Diagnostics.FileVersionInfo]::GetVersionInfo((Join-Path $repoPath
 if($buildSource -notmatch '^[a-f0-9]{40}$'){throw 'Audit DLL must carry its committed build source.'}
 if (Get-CimInstance Win32_Process | Where-Object ExecutablePath -EQ $exePath) { throw 'The selected lab already has a client.' }
 $profilePath=Join-Path $privatePath "campaign-$Tag-profile"
-if (Test-Path -LiteralPath $profilePath) { throw 'A new disposable profile is required.' }
-New-Item -ItemType Directory -Path $profilePath | Out-Null
+if($ResumePacingReport){
+    if(!$PacingChecks){throw 'Only pacing trajectories may continue.'}
+    $prior=(Resolve-Path $ResumePacingReport).Path
+    if(!$prior.StartsWith($privatePath+[IO.Path]::DirectorySeparatorChar,[StringComparison]::OrdinalIgnoreCase)){throw 'Prior report must be private.'}
+    $priorData=Get-Content -LiteralPath $prior -Raw|ConvertFrom-Json
+    if($priorData.status -ne 'error' -or !$priorData.runs.Count){throw 'Only an explicitly failed recorded trajectory may resume.'}
+    $priorProfile=(Resolve-Path $priorData.evidence[0].response.metadata.profile).Path
+    if(!$priorProfile.StartsWith($privatePath+[IO.Path]::DirectorySeparatorChar,[StringComparison]::OrdinalIgnoreCase)){throw 'Recorded private profile required.'}
+    $profilePath=$priorProfile
+}else{
+    if (Test-Path -LiteralPath $profilePath) { throw 'A new disposable profile is required.' }
+    New-Item -ItemType Directory -Path $profilePath | Out-Null
+}
 Copy-Item -LiteralPath (Join-Path $repoPath 'sts2/bin/Release/net9.0/SpireLegacy.dll') -Destination (Join-Path $labPath 'mods/SpireLegacy/SpireLegacy.dll')
 Copy-Item -LiteralPath (Join-Path $repoPath 'sts2/SpireLegacy.json') -Destination (Join-Path $labPath 'mods/SpireLegacy/SpireLegacy.json')
 if($PresentationAuditChecks){Copy-Item -Path (Join-Path $repoPath 'src/main/resources/heir/presentation/*') -Destination (Join-Path $labPath 'mods/SpireLegacy/heir/presentation') -Force}
@@ -68,7 +80,8 @@ try {
     $driver=if($PacingChecks){'sts2-pacing-campaign.py'}elseif($Checks){'sts2-tactical-check.py'}elseif($DelayedChecks){'sts2-delayed-reward-check.py'}elseif($RewardChecks){'sts2-reward-intervention-check.py'}elseif($PayoffChecks){'sts2-finisher-payoff-check.py'}elseif($ReleaseChecks){'sts2-release-check.py'}elseif($CandidateChecks){'sts2-six-candidates-check.py'}elseif($LifecycleChecks){'sts2-lifecycle-check.py'}elseif($LifecycleUiChecks){'sts2-lifecycle-ui-check.py'}elseif($TraitAuditChecks){'sts2-trait-audit.py'}elseif($OrobasChecks){'sts2-orobas-check.py'}elseif($CardResolutionChecks){'sts2-card-resolution-check.py'}elseif($PowerAuditChecks){'sts2-power-audit.py'}elseif($CrownChecks){'sts2-crown-check.py'}elseif($PoolAuditChecks){'sts2-pool-audit.py'}elseif($ItemAuditChecks){'sts2-item-audit.py'}elseif($AncientAuditChecks){'sts2-ancient-audit.py'}elseif($ManorAuditChecks){'sts2-manor-audit.py'}elseif($PresentationAuditChecks){'sts2-presentation-audit.py'}elseif($BalanceAuditChecks){'sts2-adversarial-balance.py'}elseif($PackageChecks){'sts2-package-native.py'}else{'sts2-balance-campaign.py'}
     $traitArgument=if($Traits){$Traits}else{'-'}
     $rewardArgument=if($ForcedReward){$ForcedReward}else{'-'}
-    & $Python (Join-Path $PSScriptRoot $driver) $profilePath $Tag $Class $Tier $Policy $Seed $Ascension $traitArgument $Rewards $rewardArgument $ForcedRewardFloor
+    if($ResumePacingReport){& $Python (Join-Path $PSScriptRoot $driver) $profilePath $Tag $Class --resume-report $prior}
+    else{& $Python (Join-Path $PSScriptRoot $driver) $profilePath $Tag $Class $Tier $Policy $Seed $Ascension $traitArgument $Rewards $rewardArgument $ForcedRewardFloor}
     if ($LASTEXITCODE -ne 0) { throw "Campaign driver failed; inspect $profilePath" }
 } finally {
     foreach ($name in $names) { [Environment]::SetEnvironmentVariable($name,$previous[$name],'Process') }

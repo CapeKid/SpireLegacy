@@ -41,7 +41,13 @@ public static class CampaignOracle
             var player=run.Players.Single();
             object Snapshot()=>new{character=player.Character.Id.ToString(),act=run.CurrentActIndex+1,floor=run.TotalFloor,room=run.CurrentRoom?.RoomType.ToString(),hp=player.Creature.CurrentHp,maxHp=player.Creature.MaxHp,gold=player.Gold,crowns=Runtime.Profile.crowns,lastEarned=Runtime.Profile.lastEarned,wins=player.Character is HeirCharacter?Runtime.Profile.chronicle.classes.Values.Sum(h=>h.wins):run.IsGameOver&&run.CurrentRoom is MegaCrit.Sts2.Core.Rooms.EventRoom e&&e.LocalMutableEvent is MegaCrit.Sts2.Core.Models.Events.TheArchitect?1:0,manor=Runtime.Profile.manor,deck=player.Deck.Cards.Select(Key).ToArray(),relics=player.Relics.Select(r=>r.Id.ToString()).ToArray(),phase=player.PlayerCombatState?.Phase.ToString(),turn=player.PlayerCombatState?.TurnNumber,combatInProgress=CombatManager.Instance.IsInProgress,combatEnding=CombatManager.Instance.IsEnding,actionRunning=RunManager.Instance.ActionExecutor.IsRunning,paused=Tree.Paused,enemies=player.Creature.CombatState?.Enemies.Select(c=>new{id=c.Monster?.Id.ToString(),hp=c.CurrentHp}).ToArray()};
             object Result(string action,object? detail=null)=>new{action,detail,state=Snapshot()};
-            if(run.IsGameOver){await Task.Delay(500);return Result("finished");}
+            if(run.IsGameOver){
+                await Task.Delay(500);
+                // Instant-death effects can mark game-over before the native
+                // animation/history and family settlement callbacks complete.
+                if(!run.IsGameOver||player.Character is HeirCharacter&&Runtime.Profile.active!=null)return Result("wait");
+                return Result("finished");
+            }
             if(NMapScreen.Instance?.IsOpen==true){
                 var paths=run.CurrentMapPoint?.Children.ToArray()??[run.Map.StartingMapPoint];
                 double Route(MegaCrit.Sts2.Core.Map.MapPoint p)=>p.PointType.ToString() switch {"RestSite"=>player.Creature.CurrentHp<player.Creature.MaxHp*.6?100:55,"Shop"=>player.Gold>=120?90:5,"Treasure"=>80,"Elite"=>player.Creature.CurrentHp>player.Creature.MaxHp*.8&&player.Deck.Cards.Count>15?60:0,"Monster"=>40,_=>30};
