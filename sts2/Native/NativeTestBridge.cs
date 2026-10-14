@@ -252,6 +252,12 @@ public static class NativeTestBridge
                     if(request.TryGetProperty("quick",out var quick) && Runtime.Profile.active==null)Runtime.Profile.generation=quick.GetBoolean()?0:3;
                     await NGame.Instance.StartNewSingleplayerRun(cls=="ironclad"?ModelDb.Character<MegaCrit.Sts2.Core.Models.Characters.Ironclad>():ModelDb.Character<HeirCharacter>(),true,ModelDb.ActsByIndex.Select(a=>a.First()).ToArray(),[],request.TryGetProperty("seed",out var balanceSeed)?balanceSeed.GetString()!:"SPIRELEGACY-PORT-TEST",GameMode.Standard,request.TryGetProperty("ascension",out var ascension)?ascension.GetInt32():0);
                     result = StateSummary(); break;
+                case "campaign-purchase":
+                    if(Runtime.Profile.active!=null||PlayerBloodlines.LocalPlayer!=null)throw new InvalidOperationException("Return the completed lab run to the menu before purchasing.");
+                    var purchaseId=request.GetProperty("upgrade").GetString()!;
+                    var purchaseBefore=Runtime.Profile.crowns;
+                    var purchased=Runtime.Profile.CommitPurchases([purchaseId],Runtime.FamilyPath);
+                    result=new{purchased,upgrade=purchaseId,crownsBefore=purchaseBefore,crownsAfter=Runtime.Profile.crowns,level=Runtime.Profile.Level(purchaseId)};break;
                 case "state": result = StateSummary(); break;
                 case "item-clones":result=ItemAuditOracle.Clones();break;
                 case "item-relic-edges":result=await ItemAuditOracle.RelicEdges(RunState());break;
