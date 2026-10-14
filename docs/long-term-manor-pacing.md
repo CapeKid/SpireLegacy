@@ -2,7 +2,7 @@
 
 Follow-up to the [initial measurement checkpoint](balance-pacing-validation.md), starting from main `523ea49058cbf0784e8af281a3048d54796aa547`. No card stats, manor prices, or payout rules change.
 
-The user clarified a completed Ascension 10 Knight run with full manor investment on public-beta. The seed, exact build, and card/decision records are unavailable. This is human viability evidence, not a matched-seed result or an estimated win rate.
+The user clarified a completed Ascension 10 Knight run with full manor investment on Steam Deck/public-beta. The seed, exact build, and card/decision records are unavailable. This is user-reported human viability evidence, not a locally verified matched-seed result or an estimated win rate.
 
 ## Measurement method
 
