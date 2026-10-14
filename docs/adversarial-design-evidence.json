@@ -1,0 +1,204 @@
+{
+  "issue": 61,
+  "baselineSource": "308847cf06ad73f3d1e8cfbf769f5db99fdc68b4",
+  "buildSource": "d8e8687f2d15f24da3d9e9ba7ad00488879940e5",
+  "matrixSource": "8632c9bcae05f08a7628e3fad07576c374571245",
+  "modVersion": "1.0.30",
+  "dllSha256": "45fdcd6e9f64b84d24e9a7d3425a1cd12bd99abf42ff3e95ca315903473c62ba",
+  "seed": "SPIRELEGACY-DESIGN-61",
+  "confirmedIssues": [
+    149,
+    150,
+    151
+  ],
+  "baselineDefects": [
+    {
+      "field": "cards.knight_strike.damage",
+      "acceptedValues": [
+        -1,
+        2147483648,
+        true
+      ]
+    },
+    {
+      "generatorInvalidPool": "ranger 84 instead of 85",
+      "overwroteBeforeReject": true
+    },
+    {
+      "icon": "trait-nocolor.svg",
+      "windowsHash": "52322d6fc1eab72412fd49c0769fd0acbea1acfcbf7c71dc92a6877653684d0b",
+      "gitLfHash": "5e816689f4120b39939732f3eaaf1b6c71f53a7d68a9f9281f234343d12b081d"
+    }
+  ],
+  "checks": {
+    "coreAssertions": 164059,
+    "preflight": {
+      "sheets": 32,
+      "rows": 2063,
+      "cells": 26488
+    },
+    "harness": 20,
+    "balanceRegeneration": true,
+    "mutationRejections": 437,
+    "byLayer": {
+      "typed-row": 324,
+      "schema": 90,
+      "preflight": 13,
+      "assets": 6,
+      "malformed-json": 4
+    },
+    "byTable": {
+      "ancient_cards": 9,
+      "ancient_dialogue": 11,
+      "assets": 9,
+      "balance_changes": 8,
+      "branch_cards": 6,
+      "card_art": 19,
+      "card_builds": 6,
+      "card_pools": 6,
+      "cards": 94,
+      "character_art": 15,
+      "class_mechanics": 10,
+      "classes": 17,
+      "decks": 6,
+      "family_chronicle": 10,
+      "heir_potions": 13,
+      "heir_relics": 16,
+      "hooks": 6,
+      "host_assets": 8,
+      "icon_art": 18,
+      "manor": 17,
+      "pool_expansion": 9,
+      "pool_targets": 14,
+      "potion_art": 10,
+      "power_effects": 4,
+      "presentation_art": 9,
+      "relic_art": 11,
+      "special_effects": 4,
+      "starter_genes": 15,
+      "systems": 8,
+      "trait_coverage": 9,
+      "traits": 27,
+      "ui_art": 13
+    },
+    "generated": {
+      "cards": 360,
+      "powers": 41,
+      "hashes": {
+        "Cards.cs": "2009c4b4aaf5633278a01091ed86611e3a044909bd2ebccf16704a9d4a5c113c",
+        "Powers.cs": "e66afe16a3f039892f39982945e4b784a1edbbd2f65689cee44126c878c2a439"
+      },
+      "invalidInputPreservesOutputs": true,
+      "staleRejected": true,
+      "orphanRejected": true
+    },
+    "msbuildRejectsInvalidDesign": true,
+    "bomUnicodeWorkingDirectory": true,
+    "authors": [
+      {
+        "script": "author-heir-icons.py",
+        "byteIdenticalTwice": true,
+        "changedFromInput": []
+      },
+      {
+        "script": "author-heir-relics.py",
+        "byteIdenticalTwice": true,
+        "changedFromInput": []
+      },
+      {
+        "script": "author-heir-potions.py",
+        "byteIdenticalTwice": true,
+        "changedFromInput": []
+      },
+      {
+        "script": "author-heir-presentation.py",
+        "byteIdenticalTwice": true,
+        "changedFromInput": []
+      },
+      {
+        "script": "author-heir-ancient-dialogue.py",
+        "byteIdenticalTwice": true,
+        "changedFromInput": [
+          "sheets/ancient_dialogue.json"
+        ]
+      },
+      {
+        "script": "prepare_card_art.py",
+        "byteIdenticalTwice": true,
+        "changedFromInput": [
+          "sheets/card_art.json"
+        ]
+      },
+      {
+        "script": "prepare_ui_art.py",
+        "byteIdenticalTwice": true,
+        "changedFromInput": [
+          "sheets/ui_art.json"
+        ]
+      },
+      {
+        "script": "sts2-pool-expansion.py",
+        "byteIdenticalTwice": true,
+        "changedFromInput": []
+      }
+    ],
+    "focused": {
+      "authors": [
+        {
+          "script": "author-heir-ancient-dialogue.py",
+          "identicalJsonValues": true
+        },
+        {
+          "script": "prepare_card_art.py",
+          "identicalJsonValues": true
+        },
+        {
+          "script": "prepare_ui_art.py",
+          "identicalJsonValues": true
+        }
+      ],
+      "truncatedPcmRejected": true
+    },
+    "extremeInteger": {
+      "hugeIntegerRejected": true,
+      "decoderLimitContextual": true,
+      "bigIntegerDigits": 1001
+    },
+    "cleanGitExport": {
+      "sourceSha": "d8e8687f2d15f24da3d9e9ba7ad00488879940e5",
+      "gitExportLfBytes": true,
+      "preflight": true,
+      "generatedCheck": true,
+      "physicalLinuxTest": false
+    }
+  },
+  "persistentIdentities": {
+    "cards": 360,
+    "powers": 41,
+    "classes": 3,
+    "traits": 63,
+    "manor": 6,
+    "heir_relics": 10,
+    "heir_potions": 3,
+    "family_chronicle": 9
+  },
+  "activeAssetManifests": 510,
+  "gameplayDataUnchanged": true,
+  "nativeSourceUnchanged": true,
+  "nativeBaseline": {
+    "receipt": "workshop-1.0.30-delivery.json",
+    "dllSha256": "f2b8964b46244ebe9f2c75237580f3396cc0b9d9513ae5ebe8e5015a4023cc39",
+    "regular": "v0.107.1",
+    "beta": "v0.111.0",
+    "baseLib": "3.4.7",
+    "newNativeExecution": false
+  },
+  "limitations": [
+    "Canonical Git export tested on Windows; no physical Linux/Deck execution",
+    "No new native gameplay hooks or changes; prior 1.0.30 native baseline is separate from this newly built DLL",
+    "Device/co-op campaign validation remains #110; install/update/package audit remains #62; historical writer isolation remains #63",
+    "AI image generation is not prompt-reproducible; retained original PNGs are required inputs",
+    "Superseded partial invocation excluded; full matrix at 8632c9b followed by focused huge-integer correction/tests and final clean build at d8e8687"
+  ],
+  "verifiedUtc": "2026-10-14T00:30:58.074571+00:00"
+}
