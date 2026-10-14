@@ -70,7 +70,13 @@ public static class TacticalPilot
                     }
                     // Known single-hit paths only; the native preview already includes conditional bonuses.
                     // Multi-hit, reflect and phase effects need a richer solver.
-                    if(target!=null&&PilotCardInfo.SimpleAttack(card)&&damage>=target.CurrentHp+target.Block){score+=100;reason="estimated-lethal";}
+                    if(target!=null&&PilotCardInfo.SimpleAttack(card)&&damage>=target.CurrentHp+target.Block){
+                        // Equal lethals should remove an immediate attacker before a harmless
+                        // lower-HP target. Covered damage has no extra survival value. Only
+                        // verified single-hit paths receive this credit, not speculative kills.
+                        score+=100+Math.Min(need,Threat(player,target))*1.6;
+                        reason="estimated-lethal";
+                    }
                 }
                 score-=PilotHealth.Penalty(player.Creature.CurrentHp,hpLoss);
                 // Do not spend a dormant Block/chain finisher for no estimated payoff.
