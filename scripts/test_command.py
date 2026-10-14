@@ -1,4 +1,6 @@
 """Send one command to an explicitly enabled local test build."""
+from historical_tools import retired
+retired("test_command.py")
 import argparse,json,time,os,uuid
 from pathlib import Path
 parser=argparse.ArgumentParser();parser.add_argument('command');parser.add_argument('--data',type=Path);args=parser.parse_args()

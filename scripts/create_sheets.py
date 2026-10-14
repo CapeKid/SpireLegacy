@@ -1,4 +1,6 @@
 """Initial approved design. Subsequent edits belong in sheets, not this initializer."""
+from historical_tools import retired
+retired("create_sheets.py")
 import json
 from pathlib import Path
 

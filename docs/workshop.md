@@ -1,4 +1,6 @@
-# Steam Workshop build
+# Historical StS1 Steam Workshop build
+
+These instructions and item IDs describe the retired StS1 release. Its launchers, builders and packagers are disabled in the current checkout. Current releases use the [StS2 guide](sts2-port.md) and `sts2/workshop.json`; archived configuration is under `historical/sts1/workshop/`. See the [historical isolation audit](historical-sts1-audit.md). Do not use the steps below to publish a current build.
 
 The Workshop package contains one mod JAR and a `SpireLegacyRuntime` directory beside it with Windows x64 and Linux x86_64 content readers. Keep that directory beside the JAR. ModTheSpire and BaseMod are separate Workshop dependencies, not bundled copies.
 

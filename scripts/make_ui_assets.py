@@ -1,3 +1,5 @@
+from historical_tools import retired
+retired("make_ui_assets.py")
 from pathlib import Path
 from PIL import Image,ImageDraw
 root=Path(__file__).resolve().parents[1]/'src/main/resources/heir'

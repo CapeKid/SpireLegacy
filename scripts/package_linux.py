@@ -1,4 +1,6 @@
 """Build a native Linux x86_64 package using redistributable reader dependencies."""
+from historical_tools import retired
+retired("package_linux.py")
 import json,shutil,zipfile,hashlib,importlib.metadata as metadata
 from pathlib import Path
 from preflight import validate,ROOT

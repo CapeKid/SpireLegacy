@@ -1,4 +1,6 @@
 """Summarize a private, installed-game trait audit without exporting game text."""
+from historical_tools import retired
+retired("summarize_rl_traits.py")
 import json,re
 from pathlib import Path
 root=Path(__file__).resolve().parents[1]

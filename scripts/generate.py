@@ -1,3 +1,5 @@
+from historical_tools import retired
+retired("generate.py")
 import json
 from pathlib import Path
 from preflight import validate, ROOT

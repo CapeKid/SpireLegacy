@@ -1,4 +1,6 @@
 """Package only original content and redistributable dependencies; never private game files."""
+from historical_tools import retired
+retired("package.py")
 from pathlib import Path
 import importlib.metadata as metadata
 import json,shutil,zipfile,hashlib

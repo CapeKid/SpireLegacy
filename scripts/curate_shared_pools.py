@@ -1,4 +1,6 @@
 """Curate normal-sized overlapping libraries without deleting saved card IDs."""
+from historical_tools import retired
+retired("curate_shared_pools.py")
 import json
 from pathlib import Path
 

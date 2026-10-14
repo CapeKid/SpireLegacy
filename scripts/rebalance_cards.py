@@ -3,6 +3,8 @@
 The first run records original stats; later runs always reuse those originals.
 Native baseline rules are audited privately in the owned running game.
 """
+from historical_tools import retired
+retired("rebalance_cards.py")
 import json
 import math
 from balance_policy import balance_card, balance_manor, class_rules

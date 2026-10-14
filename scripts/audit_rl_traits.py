@@ -1,4 +1,6 @@
 """Inspect the installed trait catalog locally; never distribute extracted data."""
+from historical_tools import retired
+retired("audit_rl_traits.py")
 import json,sys,types,argparse
 from pathlib import Path
 sys.modules['fmod_toolkit']=types.ModuleType('fmod_toolkit')
