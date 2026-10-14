@@ -71,7 +71,7 @@ public static class NativeTestBridge
                 case "balance-tactical-probe":await WaitForPlay(RunState().Players.Single());result=await TacticalPilot.Probe(RunState(),request.GetProperty("kind").GetString()!);break;
                 case "balance-campaign-step":
                     var pilotPolicy=request.GetProperty("policy").GetString()!;
-                    result=await CampaignOracle.Step(RunState(),pilotPolicy,pilotPolicy=="tactical"?TacticalPilot.Selector():UseTestSelector(),request.TryGetProperty("rewardPolicy",out var rewardsPolicy)?rewardsPolicy.GetString()!:"standalone",request.TryGetProperty("forcedReward",out var forcedReward)?forcedReward.GetString():null,request.TryGetProperty("forcedRewardFloor",out var forcedFloor)?forcedFloor.GetInt32():0);break;
+                    result=await CampaignOracle.Step(RunState(),pilotPolicy,pilotPolicy is "tactical" or "planned"?TacticalPilot.Selector(pilotPolicy=="planned"):UseTestSelector(),request.TryGetProperty("rewardPolicy",out var rewardsPolicy)?rewardsPolicy.GetString()!:"standalone",request.TryGetProperty("forcedReward",out var forcedReward)?forcedReward.GetString():null,request.TryGetProperty("forcedRewardFloor",out var forcedFloor)?forcedFloor.GetInt32():0);break;
                 case "balance-probe":await WaitForPlay(RunState().Players.Single());var probeKey=request.GetProperty("card").GetString()!;result=await BalanceOracle.Probe(RunState(),probeKey,request.GetProperty("upgrade").GetBoolean(),probeKey=="mage_eternal_bookmark"?BalanceOracle.MaxChoices():UseTestSelector(),request.TryGetProperty("supported",out var supported)&&supported.GetBoolean());break;
                 case "balance-loop":await WaitForPlay(RunState().Players.Single());result=await BalanceOracle.RecoveryLoop(RunState(),UseTestSelector(),request.TryGetProperty("kind",out var recoveryKind)&&recoveryKind.GetString()=="discard");break;
                 case "balance-retention":await WaitForPlay(RunState().Players.Single());result=await BalanceOracle.RetentionSnapshots(RunState());break;
@@ -252,6 +252,12 @@ public static class NativeTestBridge
                     if(request.TryGetProperty("quick",out var quick) && Runtime.Profile.active==null)Runtime.Profile.generation=quick.GetBoolean()?0:3;
                     await NGame.Instance.StartNewSingleplayerRun(cls=="ironclad"?ModelDb.Character<MegaCrit.Sts2.Core.Models.Characters.Ironclad>():ModelDb.Character<HeirCharacter>(),true,ModelDb.ActsByIndex.Select(a=>a.First()).ToArray(),[],request.TryGetProperty("seed",out var balanceSeed)?balanceSeed.GetString()!:"SPIRELEGACY-PORT-TEST",GameMode.Standard,request.TryGetProperty("ascension",out var ascension)?ascension.GetInt32():0);
                     result = StateSummary(); break;
+                case "campaign-purchase":
+                    if(Runtime.Profile.active!=null||PlayerBloodlines.LocalPlayer!=null)throw new InvalidOperationException("Return the completed lab run to the menu before purchasing.");
+                    var purchaseId=request.GetProperty("upgrade").GetString()!;
+                    var purchaseBefore=Runtime.Profile.crowns;
+                    var purchased=Runtime.Profile.CommitPurchases([purchaseId],Runtime.FamilyPath);
+                    result=new{purchased,upgrade=purchaseId,crownsBefore=purchaseBefore,crownsAfter=Runtime.Profile.crowns,level=Runtime.Profile.Level(purchaseId)};break;
                 case "state": result = StateSummary(); break;
                 case "item-clones":result=ItemAuditOracle.Clones();break;
                 case "item-relic-edges":result=await ItemAuditOracle.RelicEdges(RunState());break;

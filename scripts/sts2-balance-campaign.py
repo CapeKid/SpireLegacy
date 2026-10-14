@@ -16,7 +16,7 @@ profile = Path(sys.argv[1]).resolve()
 tag, cls, tier, policy = sys.argv[2:6]
 tier = int(tier)
 assert cls in {'knight', 'mage', 'ranger','ironclad'} and tier in range(3)
-assert policy in {'defense', 'attack', 'tactical'}
+assert policy in {'defense', 'attack', 'tactical','planned'}
 seed = sys.argv[6] if len(sys.argv) > 6 else 'SPIRELEGACY-CAMPAIGN-1'
 ascension = int(sys.argv[7]) if len(sys.argv) > 7 else 0
 traits = sys.argv[8].split(',') if len(sys.argv) > 8 and sys.argv[8] not in {'','-'} else []
@@ -50,7 +50,7 @@ try:
     assert not (profile/'family.json').exists(), 'Campaign requires a fresh family profile.'
     send('start', **{'class': cls, 'manorTier': tier, 'quick': False,
                     'seed': seed, 'ascension': ascension, 'traits': traits})
-    stalled = 0
+    waiting_since = None
     deadline = time.monotonic() + 1200
     for step in range(1200):
         if time.monotonic() > deadline:
@@ -70,8 +70,9 @@ try:
         if action.startswith('unsupported') or action in {'play-cap', 'turn-cap'}:
             report['status'] = action
             break
-        stalled = stalled + 1 if action == 'wait' else 0
-        if stalled >= 30:
+        if action == 'wait':waiting_since=waiting_since or time.monotonic()
+        else:waiting_since=None
+        if waiting_since is not None and time.monotonic()-waiting_since>=45:
             report['status'] = 'stalled'
             break
         time.sleep(.25)
