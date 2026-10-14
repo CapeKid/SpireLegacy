@@ -31,11 +31,12 @@ public static class CoopTimingOracle
         try {
             // Route through Godot's actual focus/disabled-control dispatch.
             // This remains separate from physical Steam Input validation.
-            button.GrabFocus();
+            if(button.FocusMode!=Control.FocusModeEnum.None)button.GrabFocus();
             var focused=tree.Root.GuiGetFocusOwner()==button;
-            Input.ParseInputEvent(new InputEventAction{Action=MegaInput.select,Pressed=true,Strength=1});
+            var action=control=="unready"?MegaInput.cancel:MegaInput.select;
+            Input.ParseInputEvent(new InputEventAction{Action=action,Pressed=true,Strength=1});
             await tree.ToSignal(tree,SceneTree.SignalName.ProcessFrame);
-            Input.ParseInputEvent(new InputEventAction{Action=MegaInput.select,Pressed=false});
+            Input.ParseInputEvent(new InputEventAction{Action=action,Pressed=false});
             await tree.ToSignal(tree,SceneTree.SignalName.ProcessFrame);
             return new{control,enabled,focused,releases,state=CoopOracle.State()};
         } finally {button.Released-=Released;}

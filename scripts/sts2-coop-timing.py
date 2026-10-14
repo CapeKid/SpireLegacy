@@ -29,7 +29,7 @@ def wait(predicate,seconds=45):
 def local(state,peer):
     return next(p for p in state['lobby'] if p['id']==peer+1)
 
-send(0,'coop-host',**{'class':'knight','traits':['herocomplex'],'port':port})
+send(0,'coop-host',**{'class':'knight','traits':['megahealth'],'port':port})
 send(1,'coop-join',**{'class':'mage','traits':['superhealer'],'port':port})
 wait(lambda: (a:=send(0,'coop-state'))['session'] and a['session']==send(1,'coop-state')['session'])
 time.sleep(1)  # deferred native Enable()/hotkey activation
