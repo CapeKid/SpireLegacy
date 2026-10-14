@@ -136,7 +136,7 @@ public static class CampaignOracle
                     var purchase=await CampaignPlanning.Shop(run);
                     var action=(string)purchase.GetType().GetProperty("action")!.GetValue(purchase)!;
                     if(action=="shop-purchase")return Result(action,purchase);
-                    shopNodes.Inventory.Close();
+                    AccessTools.Method(shopNodes.Inventory.GetType(),"Close").Invoke(shopNodes.Inventory,[]);
                     var exit=nodes.OfType<NProceedButton>().FirstOrDefault(b=>b.IsVisibleInTree()&&b.IsEnabled);
                     if(exit!=null)await UiHelper.Click(exit);
                     return Result(action,purchase);
