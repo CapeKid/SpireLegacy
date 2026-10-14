@@ -99,23 +99,30 @@ public static class CampaignOracle
                 var oldScale=Engine.TimeScale;Engine.TimeScale=6;Tree.ProcessFrame+=Observe;var observing=true;
                 try{
                     Observe();
+                    var potions=new List<object>();
+                    if(planned)for(var p=0,limit=player.Potions.Count();p<limit;p++){
+                        var used=await PilotPotions.Planned(player);if(used==null)break;potions.Add(used);Observe();
+                    }
                     for(var i=0;i<50;i++){
                         if(!player.Creature.IsAlive||CombatManager.Instance.IsEnding||!combat.GetOpponentsOf(player.Creature).Any(e=>e.IsAlive))break;
                         var incoming=TacticalPilot.Incoming(player);
                         var hand=PileType.Hand.GetPile(player);
                         var decision=tactical?TacticalPilot.Choose(player,incoming):null;
                         var next=tactical?decision?.Card:hand.Cards.Where(c=>c.CanPlay()).OrderByDescending(c=>policy=="attack"&&c.Type==CardType.Attack?200+BalanceOracle.Score(c,0):BalanceOracle.Score(c,incoming-player.Creature.Block)).ThenBy(Key,StringComparer.Ordinal).FirstOrDefault();
-                        if(next==null)break;
+                        if(next==null){
+                            var resource=planned?await PilotPotions.Planned(player,true):null;
+                            if(resource!=null){potions.Add(resource);Observe();continue;}
+                            break;
+                        }
                         if(i==49)return Result("play-cap",new{turn,entries,plays});
                         var energy=player.PlayerCombatState.Energy;var hp=player.Creature.CurrentHp;
                         await BalanceOracle.Play(next,decision?.Target);Observe();
                         plays.Add(new{id=Key(next),upgraded=next.IsUpgraded,netEnergy=player.PlayerCombatState is {} remaining?(int?)(energy-remaining.Energy):null,netHpLost=hp-player.Creature.CurrentHp,reason=decision?.Reason,target=decision?.Target?.Monster?.Id.ToString()});
                     }
-                    var potions=new List<PilotPotions.Used>();
                     if(tactical){
                         var limit=player.Potions.Count();
                         for(var p=0;p<limit&&player.Creature.IsAlive&&!CombatManager.Instance.IsEnding&&combat.GetOpponentsOf(player.Creature).Any(e=>e.IsAlive);p++){
-                            var used=await PilotPotions.EmergencyBlock(player,TacticalPilot.Incoming(player));
+                            var used=await PilotPotions.EmergencyBlock(player,TacticalPilot.Incoming(player),planned);
                             if(used==null)break;potions.Add(used);Observe();
                         }
                     }
