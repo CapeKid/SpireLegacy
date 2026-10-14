@@ -110,9 +110,9 @@ public static class CampaignOracle
                 return Result("bundle-confirm",new{deckBefore=before,deckAfter=player.Deck.Cards.Count});
             }
             if(overlay is NCrystalSphereScreen sphere){
-                var proceed=sphere.GetNodeOrNull<NProceedButton>("%ProceedButton");
-                if(proceed is {IsEnabled:true}&&proceed.IsVisibleInTree()){
-                    await UiHelper.Click(proceed,500);return Result("sphere-proceed");
+                var sphereProceed=sphere.GetNodeOrNull<NProceedButton>("%ProceedButton");
+                if(sphereProceed is {IsEnabled:true}&&sphereProceed.IsVisibleInTree()){
+                    await UiHelper.Click(sphereProceed,500);return Result("sphere-proceed");
                 }
                 // Use only the visible fog/coordinates, never hidden item contents.
                 // Each request performs one ordinary controller-button action.
