@@ -19,6 +19,8 @@ The failed report and active private profile are preserved. Its timed-out turn i
 
 This technique operates only on recorded disposable profiles. It does not read, restore or mutate personal saves. Completed-family continuation and checkpoint recovery are separate modes.
 
+After the fork completed return 36, a subsequent launch selected the original profile from the first inherited receipt rather than the fork's latest receipt. The completed-family guard rejected that launch on its read-only lifecycle check, before any run started. The launcher now selects the latest receipt's profile. The failed report remains preserved; the next batch uses a new evidence tag and the already completed 36-return fork, without replaying a mutation.
+
 ```powershell
 ./scripts/run-balance-campaign.ps1 -Lab private/YOUR-OWNED-LAB `
   -Tag YOUR-UNUSED-TAG -Class knight -PacingChecks `
@@ -32,3 +34,14 @@ This technique operates only on recorded disposable profiles. It does not read, 
 Bounds remain 20 minutes/1200 decisions per run, 50 plays per combat decision, and 45 seconds of continuous waiting. A capped/unsupported/failed run is incomplete evidence. EndRun is a recording bound, not proof of full-manor coverage. `-StopAtFullManor -EndRun 200` stops after the six upgrade lines reach their paid maximum levels, or records a return-cap outcome. The exporter distinguishes these outcomes and verifies all sixteen purchases for a full-manor claim.
 
 Long batches append every completed command receipt immediately to a private JSONL journal. Full reports checkpoint every 25 receipts, at each durable return, and on exceptions. This reduces repeated whole-history writes. Journals are evidence, not a mutation replay or automatic crash-recovery interface. Detailed results and remaining gaps accompany the derived evidence export.
+
+## Completed higher-Ascension comparison
+
+Twelve trait-free Knight A10 fixtures used seeds `BALANCE146-C` and `BALANCE146-D`. Every fixture ended naturally at zero HP, with no victory. The cells below give terminal floors for C/D; these are paired observations, not estimates of win rates.
+
+| Branch | No manor | Partial manor | Full manor |
+| --- | --- | --- | --- |
+| Regular v0.107.1 | 7 / 5 | 8 / 6 | 9 / 7 |
+| Public-beta v0.111.0 | 7 / 6 | 7 / 7 | 13 / 7 |
+
+The tested DLL was built from source `52cd89c`, SHA-256 `b13c50b1cdfa6a59e7125f39fc6798b06d2a08a0ac701705d8ad538431ae22d3`, with BaseLib 3.4.7 and mod manifest 1.0.30. The later pacing fixture correction uses a different DLL and is recorded separately in its receipts. These outcomes suggest survival improvement in this limited policy, but do not establish experienced-player difficulty or justify tuning cards on their own. The user's Steam Deck/public-beta full-manor A10 Knight victory is separate qualitative evidence.

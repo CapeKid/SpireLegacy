@@ -63,7 +63,9 @@ if($ResumePacingReport -or $ContinuePacingReport){
     $priorData=Get-Content -LiteralPath $prior -Raw|ConvertFrom-Json
     $requiredStatus=if($ResumePacingReport){'error'}else{'finished'}
     if($priorData.status -ne $requiredStatus -or !$priorData.runs.Count){throw 'Prior report has the wrong completion state.'}
-    $priorProfile=(Resolve-Path $priorData.evidence[0].response.metadata.profile).Path
+    # A completed chain can include a separately labelled durable-receipt fork.
+    # Continue its latest profile, not the abandoned ancestor at the prefix.
+    $priorProfile=(Resolve-Path $priorData.evidence[-1].response.metadata.profile).Path
     if(!$priorProfile.StartsWith($privatePath+[IO.Path]::DirectorySeparatorChar,[StringComparison]::OrdinalIgnoreCase)){throw 'Recorded private profile required.'}
     if($ForkCompletedProfile){
         if(Test-Path -LiteralPath $profilePath){throw 'Fork requires a new private profile.'}
