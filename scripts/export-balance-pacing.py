@@ -4,6 +4,8 @@ Run after all balance146 workers stop. Interrupted receipts are retained in the
 manifest, but never treated as completed campaigns. Superseded trajectories are
 not counted twice. No profile paths, Steam identifiers, or save UUIDs are exported.
 """
+if not __debug__:
+    raise RuntimeError('Balance evidence export checks require assertions; do not use Python -O.')
 import argparse
 import collections
 import csv
@@ -13,16 +15,40 @@ import re
 from pathlib import Path
 
 
-def export(source, target):
+def export(source, target, stopped_reports=()):
     target.mkdir(parents=True, exist_ok=True)
     manifest, campaigns, trajectories, decisions = [], [], [], []
     cards = collections.Counter()
     superseded = {f'pacing-campaign-balance146-pacing-knight-regular{i}.json' for i in (1, 2, 3)}
     paths = sorted(source.glob('*campaign-balance146-*.json'))
     assert paths, 'No issue 146 receipts found'
+    reports={path.name:json.loads(path.read_text(encoding='utf-8')) for path in paths}
+    assert set(stopped_reports)<=set(reports), 'Unknown explicitly stopped report'
+    assert all(reports[name]['status']=='running' for name in stopped_reports), 'Only interrupted running receipts need explicit stopped annotation'
+    for name,data in reports.items():
+        if data['status']=='finished':
+            checkpoint=data.get('checkpointExtraction')
+            if checkpoint:
+                from pacing_state import completed_prefix
+                prior_path=source/checkpoint['priorReport']
+                assert hashlib.sha256(prior_path.read_bytes()).hexdigest()==checkpoint['receiptSha256']
+                expected=completed_prefix(reports[checkpoint['priorReport']],data['cls'])
+                assert all(data[key][:len(expected[key])]==expected[key] for key in ('runs','purchases','evidence')), 'Changed extracted durable checkpoint prefix'
+                assert all(checkpoint[key]==expected['checkpointExtraction'][key] for key in ('settledReturns','excludedRuns')), 'Changed checkpoint exclusion metadata'
+                if 'fullManor' in checkpoint:assert checkpoint['fullManor']==expected['checkpointExtraction']['fullManor']
+                superseded.add(checkpoint['priorReport'])
+            for batch in data.get('batches',[]):
+                prior=reports[batch['priorReport']]
+                assert prior['status']=='finished' and prior['cls']==data['cls']
+                assert data['runs'][:len(prior['runs'])]==prior['runs'], 'Changed completed trajectory prefix'
+                assert data['purchases'][:len(prior['purchases'])]==prior['purchases'], 'Changed prior paid purchases'
+                assert data['evidence'][:len(prior['evidence'])]==prior['evidence'], 'Changed prior command receipts'
+                assert batch['afterRun']==len(prior['runs']) and batch['endRun']>batch['afterRun']
+                assert batch['endRun']<=len(data['runs']) or data.get('stopReason')=='full-manor'
+                superseded.add(batch['priorReport'])
     for path in paths:
         report = json.loads(path.read_text(encoding='utf-8'))
-        assert report['status'] != 'running', f'Worker still active: {path.name}'
+        assert report['status'] != 'running' or path.name in stopped_reports, f'Worker still active: {path.name}'
         pacing = path.name.startswith('pacing-')
         included = report['status'] == 'finished' and path.name not in superseded
         stages, seen = {}, set()
@@ -59,7 +85,9 @@ def export(source, target):
                 cards[path.stem, card, 'handEntries'] += count
             for play in detail.get('plays', []):
                 cards[path.stem, play['id'], 'played'] += 1
-        profile = Path(report['evidence'][0]['response']['metadata']['profile'])
+        # A continued trajectory can span several private profiles. These counts
+        # describe the latest launch only; prior logs remain separately archived.
+        profile = Path(report['evidence'][-1]['response']['metadata']['profile'])
         log_counts = {}
         for log_name in ('launch.log', 'errors.log'):
             log = profile/log_name
@@ -68,9 +96,12 @@ def export(source, target):
                 log_counts[log_name] = {pattern: sum(pattern.lower() in line.lower() for line in lines)
                                         for pattern in ('ERROR', 'InvalidTaskId', 'double free', 'particles', 'backup')}
         manifest.append(dict(trial=path.stem, receiptSha256=hashlib.sha256(path.read_bytes()).hexdigest(),
-                             status=report['status'], included=included, stages=list(stages.values()),
+                             status='interrupted' if path.name in stopped_reports else report['status'], included=included, stages=list(stages.values()),
                              commands=len(seen), hasError=bool(report.get('error')),
-                             checkpointRecoveries=len(report.get('continuations', [])), logMatches=log_counts))
+                             checkpointRecoveries=len(report.get('continuations', [])), batches=report.get('batches',[]),
+                             targetReturns=report.get('targetReturns'), returnCap=report.get('returnCap'),
+                             stopReason=report.get('stopReason'), stopAtFullManor=report.get('stopAtFullManor'),
+                             checkpointExtraction=report.get('checkpointExtraction'), logMatches=log_counts))
         if not included:
             continue
         if not pacing:
@@ -82,7 +113,11 @@ def export(source, target):
                                   floor=state['floor'], act=state['act'], hp=state['hp'], wins=state['wins'],
                                   crowns=state['crowns'], earned=state['lastEarned']))
             continue
-        assert len(report['runs']) == 12
+        assert len(report['runs']) == report.get('targetReturns',12)
+        if report.get('stopReason') in ('full-manor','full-manor-checkpoint'):
+            from pacing_state import ORDER,completed
+            completed(report,report['cls'])
+            assert [p['upgrade'] for p in report['purchases']]==ORDER
         purchases = {p['run']: p for p in report['purchases']}
         assert len(purchases) == len(report['purchases'])
         settled, bank = set(), report['runs'][0]['crownsBefore']
@@ -121,5 +156,6 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('source', type=Path)
     parser.add_argument('target', type=Path)
+    parser.add_argument('--stopped-report', action='append',default=[],help='Explicitly verified stopped worker; preserve raw running receipt hash, exclude its outcomes')
     args = parser.parse_args()
-    export(args.source, args.target)
+    export(args.source, args.target,args.stopped_report)

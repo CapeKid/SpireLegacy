@@ -71,7 +71,13 @@ public static class NativeTestBridge
                 case "balance-tactical-probe":await WaitForPlay(RunState().Players.Single());result=await TacticalPilot.Probe(RunState(),request.GetProperty("kind").GetString()!);break;
                 case "balance-campaign-step":
                     var pilotPolicy=request.GetProperty("policy").GetString()!;
-                    result=await CampaignOracle.Step(RunState(),pilotPolicy,pilotPolicy is "tactical" or "planned"?TacticalPilot.Selector(pilotPolicy=="planned"):UseTestSelector(),request.TryGetProperty("rewardPolicy",out var rewardsPolicy)?rewardsPolicy.GetString()!:"standalone",request.TryGetProperty("forcedReward",out var forcedReward)?forcedReward.GetString():null,request.TryGetProperty("forcedRewardFloor",out var forcedFloor)?forcedFloor.GetInt32():0);break;
+                    var pilotRun=RunState();
+                    // Native first-turn autoplay (e.g. Whispering Earring) owns
+                    // its selector until the normal Play phase. Observe first;
+                    // never install a competing selector during that phase.
+                    if(CardSelectCmd.Selector!=null){result=CampaignOracle.WaitingForNativeTurn(pilotRun,"native-selector");break;}
+                    if(MegaCrit.Sts2.Core.Combat.CombatManager.Instance.IsInProgress&&pilotRun.Players.Single().PlayerCombatState?.Phase!=MegaCrit.Sts2.Core.Combat.PlayerTurnPhase.Play){result=CampaignOracle.WaitingForNativeTurn(pilotRun);break;}
+                    result=await CampaignOracle.Step(pilotRun,pilotPolicy,pilotPolicy is "tactical" or "planned"?TacticalPilot.Selector(pilotPolicy=="planned"):UseTestSelector(),request.TryGetProperty("rewardPolicy",out var rewardsPolicy)?rewardsPolicy.GetString()!:"standalone",request.TryGetProperty("forcedReward",out var forcedReward)?forcedReward.GetString():null,request.TryGetProperty("forcedRewardFloor",out var forcedFloor)?forcedFloor.GetInt32():0);break;
                 case "balance-probe":await WaitForPlay(RunState().Players.Single());var probeKey=request.GetProperty("card").GetString()!;result=await BalanceOracle.Probe(RunState(),probeKey,request.GetProperty("upgrade").GetBoolean(),probeKey=="mage_eternal_bookmark"?BalanceOracle.MaxChoices():UseTestSelector(),request.TryGetProperty("supported",out var supported)&&supported.GetBoolean());break;
                 case "balance-loop":await WaitForPlay(RunState().Players.Single());result=await BalanceOracle.RecoveryLoop(RunState(),UseTestSelector(),request.TryGetProperty("kind",out var recoveryKind)&&recoveryKind.GetString()=="discard");break;
                 case "balance-retention":await WaitForPlay(RunState().Players.Single());result=await BalanceOracle.RetentionSnapshots(RunState());break;
@@ -227,6 +233,10 @@ public static class NativeTestBridge
                     result = new { edited=true }; break;
                 case "start":
                     NModalContainer.Instance?.Clear(); ManorUi.Close();
+                    // These fixture settings are process-local, including when
+                    // extending a family without injecting a new manor tier.
+                    MegaCrit.Sts2.Core.Saves.SaveManager.Instance.SetFtuesEnabled(false);
+                    MegaCrit.Sts2.Core.Saves.SaveManager.Instance.ObtainEpochOverride(MegaCrit.Sts2.Core.Timeline.EpochModel.GetId<MegaCrit.Sts2.Core.Timeline.Epochs.NeowEpoch>(),MegaCrit.Sts2.Core.Saves.EpochState.Revealed);
                     if(NRun.Instance != null) {
                         if(Runtime.Profile.active != null) await (Task)AccessTools.Method(typeof(RunManager),"AbandonInternal").Invoke(RunManager.Instance,[])!;
                         if(RunState().IsGameOver && Runtime.Profile.active is {} testOrphan)Runtime.Profile.Settle(testOrphan.id,testOrphan.floors,0,false);
@@ -235,8 +245,6 @@ public static class NativeTestBridge
                     if (Runtime.Profile.active is {} orphan) Runtime.Profile.Settle(orphan.id,orphan.floors,0,false);
                     if(request.TryGetProperty("manorTier",out var balanceTier)) {
                         var tier=balanceTier.GetInt32();if(tier is <0 or >2)throw new ArgumentOutOfRangeException("manorTier");
-                        MegaCrit.Sts2.Core.Saves.SaveManager.Instance.SetFtuesEnabled(false);
-                        MegaCrit.Sts2.Core.Saves.SaveManager.Instance.ObtainEpochOverride(MegaCrit.Sts2.Core.Timeline.EpochModel.GetId<MegaCrit.Sts2.Core.Timeline.Epochs.NeowEpoch>(),MegaCrit.Sts2.Core.Saves.EpochState.Revealed);
                         Runtime.Profile.manor=Design.Rows("manor").ToDictionary(r=>r.Text("id"),r=>tier==2?r.Number("maxLevel"):tier==1?r.Number("maxLevel")/2:0);
                     }
                     var cls = request.GetProperty("class").GetString()!;
@@ -465,9 +473,14 @@ public static class NativeTestBridge
                     AbstractModel? roomModel=encounter;
                     if(request.TryGetProperty("event",out var eventName) && eventName.GetString()=="Neow")roomModel=ModelDb.Event<MegaCrit.Sts2.Core.Models.Events.Neow>();
                     if(request.TryGetProperty("event",out var endingName) && endingName.GetString()=="Architect")roomModel=ModelDb.Event<MegaCrit.Sts2.Core.Models.Events.TheArchitect>();
+                    if(request.TryGetProperty("event",out var sphereName) && sphereName.GetString()=="CrystalSphere")roomModel=ModelDb.Event<MegaCrit.Sts2.Core.Models.Events.CrystalSphere>();
                     await RunManager.Instance.EnterRoomDebug(roomType,model:roomModel,showTransition:false);
                     RunManager.Instance.ActionExecutor.Unpause();
                     result = RunState().Players.Count==1?StateSummary():CoopOracle.State(); break;
+                case "autoplay-start-fixture":
+                    await RelicCmd.Obtain(ModelDb.Relic<MegaCrit.Sts2.Core.Models.Relics.WhisperingEarring>().ToMutable(),RunState().Players.Single());
+                    await RunManager.Instance.EnterRoomDebug(MegaCrit.Sts2.Core.Rooms.RoomType.Monster,model:ModelDb.Encounter<MegaCrit.Sts2.Core.Models.Encounters.NibbitsNormal>().ToMutable(),showTransition:false);
+                    RunManager.Instance.ActionExecutor.Unpause();result=StateSummary();break;
                 case "tome-parity":result=await TomeParityOracle.Check(RunState(),request.TryGetProperty("removeBasics",out var tomeRemove)&&tomeRemove.GetBoolean(),request.TryGetProperty("forced",out var tomeForced)?tomeForced.GetString():null,request.TryGetProperty("inspect",out var tomeInspect)&&tomeInspect.GetBoolean());break;
                 case "advance":
                     var advancing=RunState();

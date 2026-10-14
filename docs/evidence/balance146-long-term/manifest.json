@@ -1,0 +1,3075 @@
+[
+  {
+    "trial": "balance-campaign-balance146-a10-knight-beta-t0-C",
+    "receiptSha256": "739d0be775a40ba1d12773dfe5f3978617749cddf01d7780719b827adbb81f87",
+    "status": "finished",
+    "included": true,
+    "stages": [
+      {
+        "source": "52cd89c4fe949d43d48f3cdc570dfcab39d3c7f7",
+        "dllSha256": "b13c50b1cdfa6a59e7125f39fc6798b06d2a08a0ac701705d8ad538431ae22d3",
+        "game": "v0.111.0",
+        "mod": "1.0.30",
+        "baseLib": "v3.4.7"
+      }
+    ],
+    "commands": 137,
+    "hasError": false,
+    "checkpointRecoveries": 0,
+    "batches": [],
+    "targetReturns": null,
+    "returnCap": null,
+    "stopReason": null,
+    "stopAtFullManor": null,
+    "checkpointExtraction": null,
+    "logMatches": {
+      "launch.log": {
+        "ERROR": 0,
+        "InvalidTaskId": 0,
+        "double free": 0,
+        "particles": 0,
+        "backup": 0
+      },
+      "errors.log": {
+        "ERROR": 1,
+        "InvalidTaskId": 0,
+        "double free": 0,
+        "particles": 1,
+        "backup": 0
+      }
+    }
+  },
+  {
+    "trial": "balance-campaign-balance146-a10-knight-beta-t0-D",
+    "receiptSha256": "be7e52745e428e5fdcd62b91e3d23fb3dcd255c46769fcd4d1d4361c7b74d392",
+    "status": "finished",
+    "included": true,
+    "stages": [
+      {
+        "source": "52cd89c4fe949d43d48f3cdc570dfcab39d3c7f7",
+        "dllSha256": "b13c50b1cdfa6a59e7125f39fc6798b06d2a08a0ac701705d8ad538431ae22d3",
+        "game": "v0.111.0",
+        "mod": "1.0.30",
+        "baseLib": "v3.4.7"
+      }
+    ],
+    "commands": 103,
+    "hasError": false,
+    "checkpointRecoveries": 0,
+    "batches": [],
+    "targetReturns": null,
+    "returnCap": null,
+    "stopReason": null,
+    "stopAtFullManor": null,
+    "checkpointExtraction": null,
+    "logMatches": {
+      "launch.log": {
+        "ERROR": 0,
+        "InvalidTaskId": 0,
+        "double free": 0,
+        "particles": 0,
+        "backup": 0
+      },
+      "errors.log": {
+        "ERROR": 8,
+        "InvalidTaskId": 0,
+        "double free": 0,
+        "particles": 1,
+        "backup": 0
+      }
+    }
+  },
+  {
+    "trial": "balance-campaign-balance146-a10-knight-beta-t1-C",
+    "receiptSha256": "d91eaefa88e4d545d0bcf2b65a3e6229b930e213fb001ac137b7481a4fe82719",
+    "status": "finished",
+    "included": true,
+    "stages": [
+      {
+        "source": "52cd89c4fe949d43d48f3cdc570dfcab39d3c7f7",
+        "dllSha256": "b13c50b1cdfa6a59e7125f39fc6798b06d2a08a0ac701705d8ad538431ae22d3",
+        "game": "v0.111.0",
+        "mod": "1.0.30",
+        "baseLib": "v3.4.7"
+      }
+    ],
+    "commands": 141,
+    "hasError": false,
+    "checkpointRecoveries": 0,
+    "batches": [],
+    "targetReturns": null,
+    "returnCap": null,
+    "stopReason": null,
+    "stopAtFullManor": null,
+    "checkpointExtraction": null,
+    "logMatches": {
+      "launch.log": {
+        "ERROR": 0,
+        "InvalidTaskId": 0,
+        "double free": 0,
+        "particles": 0,
+        "backup": 0
+      },
+      "errors.log": {
+        "ERROR": 1,
+        "InvalidTaskId": 0,
+        "double free": 0,
+        "particles": 1,
+        "backup": 0
+      }
+    }
+  },
+  {
+    "trial": "balance-campaign-balance146-a10-knight-beta-t1-D",
+    "receiptSha256": "1571d268da8d266d50dd5ab6c05f85b37f1f31a537904c77468f5935fc30540c",
+    "status": "finished",
+    "included": true,
+    "stages": [
+      {
+        "source": "52cd89c4fe949d43d48f3cdc570dfcab39d3c7f7",
+        "dllSha256": "b13c50b1cdfa6a59e7125f39fc6798b06d2a08a0ac701705d8ad538431ae22d3",
+        "game": "v0.111.0",
+        "mod": "1.0.30",
+        "baseLib": "v3.4.7"
+      }
+    ],
+    "commands": 142,
+    "hasError": false,
+    "checkpointRecoveries": 0,
+    "batches": [],
+    "targetReturns": null,
+    "returnCap": null,
+    "stopReason": null,
+    "stopAtFullManor": null,
+    "checkpointExtraction": null,
+    "logMatches": {
+      "launch.log": {
+        "ERROR": 0,
+        "InvalidTaskId": 0,
+        "double free": 0,
+        "particles": 0,
+        "backup": 0
+      },
+      "errors.log": {
+        "ERROR": 0,
+        "InvalidTaskId": 0,
+        "double free": 0,
+        "particles": 1,
+        "backup": 0
+      }
+    }
+  },
+  {
+    "trial": "balance-campaign-balance146-a10-knight-beta-t2-C",
+    "receiptSha256": "c3af39bfb06bb658b77e2aea20a045dfe5b5b43d989d865c93840c1b2bcbc82a",
+    "status": "finished",
+    "included": true,
+    "stages": [
+      {
+        "source": "52cd89c4fe949d43d48f3cdc570dfcab39d3c7f7",
+        "dllSha256": "b13c50b1cdfa6a59e7125f39fc6798b06d2a08a0ac701705d8ad538431ae22d3",
+        "game": "v0.111.0",
+        "mod": "1.0.30",
+        "baseLib": "v3.4.7"
+      }
+    ],
+    "commands": 265,
+    "hasError": false,
+    "checkpointRecoveries": 0,
+    "batches": [],
+    "targetReturns": null,
+    "returnCap": null,
+    "stopReason": null,
+    "stopAtFullManor": null,
+    "checkpointExtraction": null,
+    "logMatches": {
+      "launch.log": {
+        "ERROR": 0,
+        "InvalidTaskId": 0,
+        "double free": 0,
+        "particles": 0,
+        "backup": 0
+      },
+      "errors.log": {
+        "ERROR": 0,
+        "InvalidTaskId": 0,
+        "double free": 0,
+        "particles": 1,
+        "backup": 0
+      }
+    }
+  },
+  {
+    "trial": "balance-campaign-balance146-a10-knight-beta-t2-D",
+    "receiptSha256": "a706bd8dcd1029c08156f8e7a6c33f9c6b9515474aed9988595f428ec74be44d",
+    "status": "finished",
+    "included": true,
+    "stages": [
+      {
+        "source": "52cd89c4fe949d43d48f3cdc570dfcab39d3c7f7",
+        "dllSha256": "b13c50b1cdfa6a59e7125f39fc6798b06d2a08a0ac701705d8ad538431ae22d3",
+        "game": "v0.111.0",
+        "mod": "1.0.30",
+        "baseLib": "v3.4.7"
+      }
+    ],
+    "commands": 142,
+    "hasError": false,
+    "checkpointRecoveries": 0,
+    "batches": [],
+    "targetReturns": null,
+    "returnCap": null,
+    "stopReason": null,
+    "stopAtFullManor": null,
+    "checkpointExtraction": null,
+    "logMatches": {
+      "launch.log": {
+        "ERROR": 0,
+        "InvalidTaskId": 0,
+        "double free": 0,
+        "particles": 0,
+        "backup": 0
+      },
+      "errors.log": {
+        "ERROR": 0,
+        "InvalidTaskId": 0,
+        "double free": 0,
+        "particles": 1,
+        "backup": 0
+      }
+    }
+  },
+  {
+    "trial": "balance-campaign-balance146-a10-knight-regular-t0-C",
+    "receiptSha256": "3d9647c6bdadc0d4f94c371a6e30f465dcaa97df67d511b1407ab9833654d689",
+    "status": "finished",
+    "included": true,
+    "stages": [
+      {
+        "source": "52cd89c4fe949d43d48f3cdc570dfcab39d3c7f7",
+        "dllSha256": "b13c50b1cdfa6a59e7125f39fc6798b06d2a08a0ac701705d8ad538431ae22d3",
+        "game": "v0.107.1",
+        "mod": "1.0.30",
+        "baseLib": "v3.4.7"
+      }
+    ],
+    "commands": 120,
+    "hasError": false,
+    "checkpointRecoveries": 0,
+    "batches": [],
+    "targetReturns": null,
+    "returnCap": null,
+    "stopReason": null,
+    "stopAtFullManor": null,
+    "checkpointExtraction": null,
+    "logMatches": {
+      "launch.log": {
+        "ERROR": 0,
+        "InvalidTaskId": 0,
+        "double free": 0,
+        "particles": 0,
+        "backup": 0
+      },
+      "errors.log": {
+        "ERROR": 0,
+        "InvalidTaskId": 0,
+        "double free": 0,
+        "particles": 2,
+        "backup": 0
+      }
+    }
+  },
+  {
+    "trial": "balance-campaign-balance146-a10-knight-regular-t0-D",
+    "receiptSha256": "c2183fc2beee992b3537d52dc33e034a157a58ca58d818659aa581acbcd8ba47",
+    "status": "finished",
+    "included": true,
+    "stages": [
+      {
+        "source": "52cd89c4fe949d43d48f3cdc570dfcab39d3c7f7",
+        "dllSha256": "b13c50b1cdfa6a59e7125f39fc6798b06d2a08a0ac701705d8ad538431ae22d3",
+        "game": "v0.107.1",
+        "mod": "1.0.30",
+        "baseLib": "v3.4.7"
+      }
+    ],
+    "commands": 92,
+    "hasError": false,
+    "checkpointRecoveries": 0,
+    "batches": [],
+    "targetReturns": null,
+    "returnCap": null,
+    "stopReason": null,
+    "stopAtFullManor": null,
+    "checkpointExtraction": null,
+    "logMatches": {
+      "launch.log": {
+        "ERROR": 0,
+        "InvalidTaskId": 0,
+        "double free": 0,
+        "particles": 0,
+        "backup": 0
+      },
+      "errors.log": {
+        "ERROR": 9,
+        "InvalidTaskId": 0,
+        "double free": 0,
+        "particles": 2,
+        "backup": 0
+      }
+    }
+  },
+  {
+    "trial": "balance-campaign-balance146-a10-knight-regular-t1-C",
+    "receiptSha256": "123ef520be6d0881e524d8679c0bfa2b653b922e0f5f6c48f94ea472bb7561cd",
+    "status": "finished",
+    "included": true,
+    "stages": [
+      {
+        "source": "52cd89c4fe949d43d48f3cdc570dfcab39d3c7f7",
+        "dllSha256": "b13c50b1cdfa6a59e7125f39fc6798b06d2a08a0ac701705d8ad538431ae22d3",
+        "game": "v0.107.1",
+        "mod": "1.0.30",
+        "baseLib": "v3.4.7"
+      }
+    ],
+    "commands": 150,
+    "hasError": false,
+    "checkpointRecoveries": 0,
+    "batches": [],
+    "targetReturns": null,
+    "returnCap": null,
+    "stopReason": null,
+    "stopAtFullManor": null,
+    "checkpointExtraction": null,
+    "logMatches": {
+      "launch.log": {
+        "ERROR": 0,
+        "InvalidTaskId": 0,
+        "double free": 0,
+        "particles": 0,
+        "backup": 0
+      },
+      "errors.log": {
+        "ERROR": 0,
+        "InvalidTaskId": 0,
+        "double free": 0,
+        "particles": 2,
+        "backup": 0
+      }
+    }
+  },
+  {
+    "trial": "balance-campaign-balance146-a10-knight-regular-t1-D",
+    "receiptSha256": "d06c86bc73f7611313b3debf894e3472c7ad6e99aa5558ef397eb5b3484df556",
+    "status": "finished",
+    "included": true,
+    "stages": [
+      {
+        "source": "52cd89c4fe949d43d48f3cdc570dfcab39d3c7f7",
+        "dllSha256": "b13c50b1cdfa6a59e7125f39fc6798b06d2a08a0ac701705d8ad538431ae22d3",
+        "game": "v0.107.1",
+        "mod": "1.0.30",
+        "baseLib": "v3.4.7"
+      }
+    ],
+    "commands": 123,
+    "hasError": false,
+    "checkpointRecoveries": 0,
+    "batches": [],
+    "targetReturns": null,
+    "returnCap": null,
+    "stopReason": null,
+    "stopAtFullManor": null,
+    "checkpointExtraction": null,
+    "logMatches": {
+      "launch.log": {
+        "ERROR": 0,
+        "InvalidTaskId": 0,
+        "double free": 0,
+        "particles": 0,
+        "backup": 0
+      },
+      "errors.log": {
+        "ERROR": 0,
+        "InvalidTaskId": 0,
+        "double free": 0,
+        "particles": 2,
+        "backup": 0
+      }
+    }
+  },
+  {
+    "trial": "balance-campaign-balance146-a10-knight-regular-t2-C",
+    "receiptSha256": "d73feefa7ddc6a9b053af9e8559bd471731cf7d60933712e14d18237618ead8c",
+    "status": "finished",
+    "included": true,
+    "stages": [
+      {
+        "source": "52cd89c4fe949d43d48f3cdc570dfcab39d3c7f7",
+        "dllSha256": "b13c50b1cdfa6a59e7125f39fc6798b06d2a08a0ac701705d8ad538431ae22d3",
+        "game": "v0.107.1",
+        "mod": "1.0.30",
+        "baseLib": "v3.4.7"
+      }
+    ],
+    "commands": 177,
+    "hasError": false,
+    "checkpointRecoveries": 0,
+    "batches": [],
+    "targetReturns": null,
+    "returnCap": null,
+    "stopReason": null,
+    "stopAtFullManor": null,
+    "checkpointExtraction": null,
+    "logMatches": {
+      "launch.log": {
+        "ERROR": 0,
+        "InvalidTaskId": 0,
+        "double free": 0,
+        "particles": 0,
+        "backup": 0
+      },
+      "errors.log": {
+        "ERROR": 0,
+        "InvalidTaskId": 0,
+        "double free": 0,
+        "particles": 2,
+        "backup": 0
+      }
+    }
+  },
+  {
+    "trial": "balance-campaign-balance146-a10-knight-regular-t2-D",
+    "receiptSha256": "ae24a596065fe757172c3a6b3e61e8b817cebe94226ff0697d8d247c7be45939",
+    "status": "finished",
+    "included": true,
+    "stages": [
+      {
+        "source": "52cd89c4fe949d43d48f3cdc570dfcab39d3c7f7",
+        "dllSha256": "b13c50b1cdfa6a59e7125f39fc6798b06d2a08a0ac701705d8ad538431ae22d3",
+        "game": "v0.107.1",
+        "mod": "1.0.30",
+        "baseLib": "v3.4.7"
+      }
+    ],
+    "commands": 146,
+    "hasError": false,
+    "checkpointRecoveries": 0,
+    "batches": [],
+    "targetReturns": null,
+    "returnCap": null,
+    "stopReason": null,
+    "stopAtFullManor": null,
+    "checkpointExtraction": null,
+    "logMatches": {
+      "launch.log": {
+        "ERROR": 0,
+        "InvalidTaskId": 0,
+        "double free": 0,
+        "particles": 0,
+        "backup": 0
+      },
+      "errors.log": {
+        "ERROR": 0,
+        "InvalidTaskId": 0,
+        "double free": 0,
+        "particles": 2,
+        "backup": 0
+      }
+    }
+  },
+  {
+    "trial": "balance-campaign-balance146-beta-control-ironclad-A",
+    "receiptSha256": "ced286126d37ea49fca95529dff58d86b65f44a6eedd1c74af6eb3e10d0589c0",
+    "status": "finished",
+    "included": true,
+    "stages": [
+      {
+        "source": "fced4ccb123e4684b3226d7a3fa2aa2704b36484",
+        "dllSha256": "c69a371f5e70d88af4a5adc3e7652256d1e580fe7d0d8b2565d07c8db02d7be7",
+        "game": "v0.111.0",
+        "mod": "1.0.30",
+        "baseLib": "v3.4.7"
+      }
+    ],
+    "commands": 154,
+    "hasError": false,
+    "checkpointRecoveries": 0,
+    "batches": [],
+    "targetReturns": null,
+    "returnCap": null,
+    "stopReason": null,
+    "stopAtFullManor": null,
+    "checkpointExtraction": null,
+    "logMatches": {
+      "launch.log": {
+        "ERROR": 0,
+        "InvalidTaskId": 0,
+        "double free": 0,
+        "particles": 0,
+        "backup": 0
+      },
+      "errors.log": {
+        "ERROR": 0,
+        "InvalidTaskId": 0,
+        "double free": 0,
+        "particles": 3,
+        "backup": 0
+      }
+    }
+  },
+  {
+    "trial": "balance-campaign-balance146-beta-control-ironclad-B",
+    "receiptSha256": "5cd72e1f43f6afcad7f0525a7aab933d62abd58c4c4b974a3bee547fa2556035",
+    "status": "finished",
+    "included": true,
+    "stages": [
+      {
+        "source": "fced4ccb123e4684b3226d7a3fa2aa2704b36484",
+        "dllSha256": "c69a371f5e70d88af4a5adc3e7652256d1e580fe7d0d8b2565d07c8db02d7be7",
+        "game": "v0.111.0",
+        "mod": "1.0.30",
+        "baseLib": "v3.4.7"
+      }
+    ],
+    "commands": 130,
+    "hasError": false,
+    "checkpointRecoveries": 0,
+    "batches": [],
+    "targetReturns": null,
+    "returnCap": null,
+    "stopReason": null,
+    "stopAtFullManor": null,
+    "checkpointExtraction": null,
+    "logMatches": {
+      "launch.log": {
+        "ERROR": 0,
+        "InvalidTaskId": 0,
+        "double free": 0,
+        "particles": 0,
+        "backup": 0
+      },
+      "errors.log": {
+        "ERROR": 1,
+        "InvalidTaskId": 0,
+        "double free": 0,
+        "particles": 1,
+        "backup": 0
+      }
+    }
+  },
+  {
+    "trial": "balance-campaign-balance146-beta-control-mage-C",
+    "receiptSha256": "eff10873045918b13fa39a2c7fdd9a3889eec8c5c60f577f1a11cd2aec4e0393",
+    "status": "finished",
+    "included": true,
+    "stages": [
+      {
+        "source": "fced4ccb123e4684b3226d7a3fa2aa2704b36484",
+        "dllSha256": "c69a371f5e70d88af4a5adc3e7652256d1e580fe7d0d8b2565d07c8db02d7be7",
+        "game": "v0.111.0",
+        "mod": "1.0.30",
+        "baseLib": "v3.4.7"
+      }
+    ],
+    "commands": 222,
+    "hasError": false,
+    "checkpointRecoveries": 0,
+    "batches": [],
+    "targetReturns": null,
+    "returnCap": null,
+    "stopReason": null,
+    "stopAtFullManor": null,
+    "checkpointExtraction": null,
+    "logMatches": {
+      "launch.log": {
+        "ERROR": 0,
+        "InvalidTaskId": 0,
+        "double free": 0,
+        "particles": 0,
+        "backup": 0
+      },
+      "errors.log": {
+        "ERROR": 0,
+        "InvalidTaskId": 0,
+        "double free": 0,
+        "particles": 3,
+        "backup": 0
+      }
+    }
+  },
+  {
+    "trial": "balance-campaign-balance146-beta-knight-t1-a5-B",
+    "receiptSha256": "d222d4edc5d7ef33fd1b3284a6540c3e45944aae6fc4cb094c8ea96424f2ba09",
+    "status": "finished",
+    "included": true,
+    "stages": [
+      {
+        "source": "2c7ae5d01c88d8b3f76c71106ebb9da64aaf0f82",
+        "dllSha256": "01f751ff6422cc9bdc2c83c632b93f27020663a14ef7653b63b3852b474b23de",
+        "game": "v0.111.0",
+        "mod": "1.0.30",
+        "baseLib": "v3.4.7"
+      }
+    ],
+    "commands": 122,
+    "hasError": false,
+    "checkpointRecoveries": 0,
+    "batches": [],
+    "targetReturns": null,
+    "returnCap": null,
+    "stopReason": null,
+    "stopAtFullManor": null,
+    "checkpointExtraction": null,
+    "logMatches": {
+      "launch.log": {
+        "ERROR": 0,
+        "InvalidTaskId": 0,
+        "double free": 0,
+        "particles": 0,
+        "backup": 0
+      },
+      "errors.log": {
+        "ERROR": 0,
+        "InvalidTaskId": 0,
+        "double free": 0,
+        "particles": 1,
+        "backup": 0
+      }
+    }
+  },
+  {
+    "trial": "balance-campaign-balance146-beta-mage-t2-a0-B",
+    "receiptSha256": "7351bb343fa8518960abe1dfa25bdbb6bb25327544ea82bd310600d9e3fd8dfc",
+    "status": "finished",
+    "included": true,
+    "stages": [
+      {
+        "source": "2c7ae5d01c88d8b3f76c71106ebb9da64aaf0f82",
+        "dllSha256": "01f751ff6422cc9bdc2c83c632b93f27020663a14ef7653b63b3852b474b23de",
+        "game": "v0.111.0",
+        "mod": "1.0.30",
+        "baseLib": "v3.4.7"
+      }
+    ],
+    "commands": 406,
+    "hasError": false,
+    "checkpointRecoveries": 0,
+    "batches": [],
+    "targetReturns": null,
+    "returnCap": null,
+    "stopReason": null,
+    "stopAtFullManor": null,
+    "checkpointExtraction": null,
+    "logMatches": {
+      "launch.log": {
+        "ERROR": 0,
+        "InvalidTaskId": 0,
+        "double free": 0,
+        "particles": 0,
+        "backup": 0
+      },
+      "errors.log": {
+        "ERROR": 0,
+        "InvalidTaskId": 0,
+        "double free": 0,
+        "particles": 3,
+        "backup": 0
+      }
+    }
+  },
+  {
+    "trial": "balance-campaign-balance146-beta-ranger-t0-a5-A",
+    "receiptSha256": "b14e650ce43abdc5f32c647853dbef7ccb9931eea054b3c93bbab008bd3976df",
+    "status": "finished",
+    "included": true,
+    "stages": [
+      {
+        "source": "2c7ae5d01c88d8b3f76c71106ebb9da64aaf0f82",
+        "dllSha256": "01f751ff6422cc9bdc2c83c632b93f27020663a14ef7653b63b3852b474b23de",
+        "game": "v0.111.0",
+        "mod": "1.0.30",
+        "baseLib": "v3.4.7"
+      }
+    ],
+    "commands": 129,
+    "hasError": false,
+    "checkpointRecoveries": 0,
+    "batches": [],
+    "targetReturns": null,
+    "returnCap": null,
+    "stopReason": null,
+    "stopAtFullManor": null,
+    "checkpointExtraction": null,
+    "logMatches": {
+      "launch.log": {
+        "ERROR": 0,
+        "InvalidTaskId": 0,
+        "double free": 0,
+        "particles": 0,
+        "backup": 0
+      },
+      "errors.log": {
+        "ERROR": 0,
+        "InvalidTaskId": 0,
+        "double free": 0,
+        "particles": 1,
+        "backup": 0
+      }
+    }
+  },
+  {
+    "trial": "balance-campaign-balance146-beta-ranger-t2-a5-A",
+    "receiptSha256": "2204570be075cf51e5bd1044460f461888a22a18da12356917df86e17a10fedc",
+    "status": "finished",
+    "included": true,
+    "stages": [
+      {
+        "source": "2c7ae5d01c88d8b3f76c71106ebb9da64aaf0f82",
+        "dllSha256": "01f751ff6422cc9bdc2c83c632b93f27020663a14ef7653b63b3852b474b23de",
+        "game": "v0.111.0",
+        "mod": "1.0.30",
+        "baseLib": "v3.4.7"
+      }
+    ],
+    "commands": 248,
+    "hasError": false,
+    "checkpointRecoveries": 0,
+    "batches": [],
+    "targetReturns": null,
+    "returnCap": null,
+    "stopReason": null,
+    "stopAtFullManor": null,
+    "checkpointExtraction": null,
+    "logMatches": {
+      "launch.log": {
+        "ERROR": 0,
+        "InvalidTaskId": 0,
+        "double free": 0,
+        "particles": 0,
+        "backup": 0
+      },
+      "errors.log": {
+        "ERROR": 0,
+        "InvalidTaskId": 0,
+        "double free": 0,
+        "particles": 3,
+        "backup": 0
+      }
+    }
+  },
+  {
+    "trial": "balance-campaign-balance146-final-regular-knight",
+    "receiptSha256": "6dcdd7ba7dbe676827968ba4544a9145ff7405a586efc3018daee70f3fab3215",
+    "status": "finished",
+    "included": true,
+    "stages": [
+      {
+        "source": "560ac82f95f69a1d9a28a8a966f311a5b8d9bb4b",
+        "dllSha256": "7b7898e0d3815c596cf264cd9149ee8078178c6e141b718ff60ce66b7c56c037",
+        "game": "v0.107.1",
+        "mod": "1.0.30",
+        "baseLib": "v3.4.7"
+      }
+    ],
+    "commands": 567,
+    "hasError": false,
+    "checkpointRecoveries": 0,
+    "batches": [],
+    "targetReturns": null,
+    "returnCap": null,
+    "stopReason": null,
+    "stopAtFullManor": null,
+    "checkpointExtraction": null,
+    "logMatches": {
+      "launch.log": {
+        "ERROR": 0,
+        "InvalidTaskId": 0,
+        "double free": 0,
+        "particles": 0,
+        "backup": 0
+      },
+      "errors.log": {
+        "ERROR": 0,
+        "InvalidTaskId": 0,
+        "double free": 0,
+        "particles": 3,
+        "backup": 0
+      }
+    }
+  },
+  {
+    "trial": "balance-campaign-balance146-final-regular-mage",
+    "receiptSha256": "ad823eeaf184c17f3d95e2916d6b404de2257090ddaa0a36053ca4cf81fd4073",
+    "status": "finished",
+    "included": true,
+    "stages": [
+      {
+        "source": "560ac82f95f69a1d9a28a8a966f311a5b8d9bb4b",
+        "dllSha256": "7b7898e0d3815c596cf264cd9149ee8078178c6e141b718ff60ce66b7c56c037",
+        "game": "v0.107.1",
+        "mod": "1.0.30",
+        "baseLib": "v3.4.7"
+      }
+    ],
+    "commands": 245,
+    "hasError": false,
+    "checkpointRecoveries": 0,
+    "batches": [],
+    "targetReturns": null,
+    "returnCap": null,
+    "stopReason": null,
+    "stopAtFullManor": null,
+    "checkpointExtraction": null,
+    "logMatches": {
+      "launch.log": {
+        "ERROR": 0,
+        "InvalidTaskId": 0,
+        "double free": 0,
+        "particles": 0,
+        "backup": 0
+      },
+      "errors.log": {
+        "ERROR": 0,
+        "InvalidTaskId": 0,
+        "double free": 0,
+        "particles": 3,
+        "backup": 0
+      }
+    }
+  },
+  {
+    "trial": "balance-campaign-balance146-final-regular-ranger",
+    "receiptSha256": "3a2a613eab63180b0a361ca85c8fb6fb7e0d969d6f8094dd6aa3ef0d564da06e",
+    "status": "finished",
+    "included": true,
+    "stages": [
+      {
+        "source": "560ac82f95f69a1d9a28a8a966f311a5b8d9bb4b",
+        "dllSha256": "7b7898e0d3815c596cf264cd9149ee8078178c6e141b718ff60ce66b7c56c037",
+        "game": "v0.107.1",
+        "mod": "1.0.30",
+        "baseLib": "v3.4.7"
+      }
+    ],
+    "commands": 285,
+    "hasError": false,
+    "checkpointRecoveries": 0,
+    "batches": [],
+    "targetReturns": null,
+    "returnCap": null,
+    "stopReason": null,
+    "stopAtFullManor": null,
+    "checkpointExtraction": null,
+    "logMatches": {
+      "launch.log": {
+        "ERROR": 0,
+        "InvalidTaskId": 0,
+        "double free": 0,
+        "particles": 0,
+        "backup": 0
+      },
+      "errors.log": {
+        "ERROR": 0,
+        "InvalidTaskId": 0,
+        "double free": 0,
+        "particles": 3,
+        "backup": 0
+      }
+    }
+  },
+  {
+    "trial": "balance-campaign-balance146-planned-knight-regular2",
+    "receiptSha256": "ac9a7ab7d144bb9a2a936ce6bb65f5e38a5ba59ef78229cf7f76a82194330d71",
+    "status": "finished",
+    "included": true,
+    "stages": [
+      {
+        "source": "2c7ae5d01c88d8b3f76c71106ebb9da64aaf0f82",
+        "dllSha256": "01f751ff6422cc9bdc2c83c632b93f27020663a14ef7653b63b3852b474b23de",
+        "game": "v0.107.1",
+        "mod": "1.0.30",
+        "baseLib": "v3.4.7"
+      }
+    ],
+    "commands": 404,
+    "hasError": false,
+    "checkpointRecoveries": 0,
+    "batches": [],
+    "targetReturns": null,
+    "returnCap": null,
+    "stopReason": null,
+    "stopAtFullManor": null,
+    "checkpointExtraction": null,
+    "logMatches": {
+      "launch.log": {
+        "ERROR": 0,
+        "InvalidTaskId": 0,
+        "double free": 0,
+        "particles": 0,
+        "backup": 0
+      },
+      "errors.log": {
+        "ERROR": 0,
+        "InvalidTaskId": 0,
+        "double free": 0,
+        "particles": 3,
+        "backup": 0
+      }
+    }
+  },
+  {
+    "trial": "balance-campaign-balance146-planned-mage-beta2",
+    "receiptSha256": "fe6e221cd2fe3bb242a786f9565c2bd8193ccf016d084e65ad782bfaa8dbd1e7",
+    "status": "finished",
+    "included": true,
+    "stages": [
+      {
+        "source": "2c7ae5d01c88d8b3f76c71106ebb9da64aaf0f82",
+        "dllSha256": "01f751ff6422cc9bdc2c83c632b93f27020663a14ef7653b63b3852b474b23de",
+        "game": "v0.111.0",
+        "mod": "1.0.30",
+        "baseLib": "v3.4.7"
+      }
+    ],
+    "commands": 249,
+    "hasError": false,
+    "checkpointRecoveries": 0,
+    "batches": [],
+    "targetReturns": null,
+    "returnCap": null,
+    "stopReason": null,
+    "stopAtFullManor": null,
+    "checkpointExtraction": null,
+    "logMatches": {
+      "launch.log": {
+        "ERROR": 0,
+        "InvalidTaskId": 0,
+        "double free": 0,
+        "particles": 0,
+        "backup": 0
+      },
+      "errors.log": {
+        "ERROR": 2,
+        "InvalidTaskId": 0,
+        "double free": 0,
+        "particles": 3,
+        "backup": 0
+      }
+    }
+  },
+  {
+    "trial": "balance-campaign-balance146-regular-control-ironclad-A",
+    "receiptSha256": "c49dae07b6e1373e0bfe76226d84d4760a9233a7623d97b3d14af8f406601994",
+    "status": "finished",
+    "included": true,
+    "stages": [
+      {
+        "source": "fced4ccb123e4684b3226d7a3fa2aa2704b36484",
+        "dllSha256": "c69a371f5e70d88af4a5adc3e7652256d1e580fe7d0d8b2565d07c8db02d7be7",
+        "game": "v0.107.1",
+        "mod": "1.0.30",
+        "baseLib": "v3.4.7"
+      }
+    ],
+    "commands": 262,
+    "hasError": false,
+    "checkpointRecoveries": 0,
+    "batches": [],
+    "targetReturns": null,
+    "returnCap": null,
+    "stopReason": null,
+    "stopAtFullManor": null,
+    "checkpointExtraction": null,
+    "logMatches": {
+      "launch.log": {
+        "ERROR": 0,
+        "InvalidTaskId": 0,
+        "double free": 0,
+        "particles": 0,
+        "backup": 0
+      },
+      "errors.log": {
+        "ERROR": 0,
+        "InvalidTaskId": 0,
+        "double free": 0,
+        "particles": 3,
+        "backup": 0
+      }
+    }
+  },
+  {
+    "trial": "balance-campaign-balance146-regular-control-ironclad-B",
+    "receiptSha256": "a947ce89fd0bce1a5ed1c1087effb6c4d4209c6f5609c66ca580849c3d56bf47",
+    "status": "finished",
+    "included": true,
+    "stages": [
+      {
+        "source": "fced4ccb123e4684b3226d7a3fa2aa2704b36484",
+        "dllSha256": "c69a371f5e70d88af4a5adc3e7652256d1e580fe7d0d8b2565d07c8db02d7be7",
+        "game": "v0.107.1",
+        "mod": "1.0.30",
+        "baseLib": "v3.4.7"
+      }
+    ],
+    "commands": 208,
+    "hasError": false,
+    "checkpointRecoveries": 0,
+    "batches": [],
+    "targetReturns": null,
+    "returnCap": null,
+    "stopReason": null,
+    "stopAtFullManor": null,
+    "checkpointExtraction": null,
+    "logMatches": {
+      "launch.log": {
+        "ERROR": 0,
+        "InvalidTaskId": 0,
+        "double free": 0,
+        "particles": 0,
+        "backup": 0
+      },
+      "errors.log": {
+        "ERROR": 0,
+        "InvalidTaskId": 0,
+        "double free": 0,
+        "particles": 3,
+        "backup": 0
+      }
+    }
+  },
+  {
+    "trial": "balance-campaign-balance146-regular-control-mage-C",
+    "receiptSha256": "2d5c863c90a43d00c2d4788b537cc14b1d64f9411a96f0e320c58d5c0639d5d2",
+    "status": "finished",
+    "included": true,
+    "stages": [
+      {
+        "source": "bfae60d1e9a6d8ce92b75864fe39c420f488d350",
+        "dllSha256": "217a63175ee318a59b4791336c08cab5eef48baf801e32a874915977c9b10984",
+        "game": "v0.107.1",
+        "mod": "1.0.30",
+        "baseLib": "v3.4.7"
+      }
+    ],
+    "commands": 172,
+    "hasError": false,
+    "checkpointRecoveries": 0,
+    "batches": [],
+    "targetReturns": null,
+    "returnCap": null,
+    "stopReason": null,
+    "stopAtFullManor": null,
+    "checkpointExtraction": null,
+    "logMatches": {
+      "launch.log": {
+        "ERROR": 0,
+        "InvalidTaskId": 0,
+        "double free": 0,
+        "particles": 0,
+        "backup": 0
+      },
+      "errors.log": {
+        "ERROR": 0,
+        "InvalidTaskId": 0,
+        "double free": 0,
+        "particles": 2,
+        "backup": 0
+      }
+    }
+  },
+  {
+    "trial": "balance-campaign-balance146-regular-mage-t1-a5-B",
+    "receiptSha256": "a749a2f904d98da4aad0ac17a00a93d077e278598b6164f0bbe116566f1e0d9d",
+    "status": "finished",
+    "included": true,
+    "stages": [
+      {
+        "source": "fced4ccb123e4684b3226d7a3fa2aa2704b36484",
+        "dllSha256": "c69a371f5e70d88af4a5adc3e7652256d1e580fe7d0d8b2565d07c8db02d7be7",
+        "game": "v0.107.1",
+        "mod": "1.0.30",
+        "baseLib": "v3.4.7"
+      }
+    ],
+    "commands": 141,
+    "hasError": false,
+    "checkpointRecoveries": 0,
+    "batches": [],
+    "targetReturns": null,
+    "returnCap": null,
+    "stopReason": null,
+    "stopAtFullManor": null,
+    "checkpointExtraction": null,
+    "logMatches": {
+      "launch.log": {
+        "ERROR": 0,
+        "InvalidTaskId": 0,
+        "double free": 0,
+        "particles": 0,
+        "backup": 0
+      },
+      "errors.log": {
+        "ERROR": 0,
+        "InvalidTaskId": 0,
+        "double free": 0,
+        "particles": 3,
+        "backup": 0
+      }
+    }
+  },
+  {
+    "trial": "balance-campaign-balance146-regular-mage-t2-a0-B",
+    "receiptSha256": "dc25cabbe2bb895fc4cb1c5660eb4c949c30d13ec475d67f3cf9d3273a7ea8c5",
+    "status": "finished",
+    "included": true,
+    "stages": [
+      {
+        "source": "fced4ccb123e4684b3226d7a3fa2aa2704b36484",
+        "dllSha256": "c69a371f5e70d88af4a5adc3e7652256d1e580fe7d0d8b2565d07c8db02d7be7",
+        "game": "v0.107.1",
+        "mod": "1.0.30",
+        "baseLib": "v3.4.7"
+      }
+    ],
+    "commands": 217,
+    "hasError": false,
+    "checkpointRecoveries": 0,
+    "batches": [],
+    "targetReturns": null,
+    "returnCap": null,
+    "stopReason": null,
+    "stopAtFullManor": null,
+    "checkpointExtraction": null,
+    "logMatches": {
+      "launch.log": {
+        "ERROR": 0,
+        "InvalidTaskId": 0,
+        "double free": 0,
+        "particles": 0,
+        "backup": 0
+      },
+      "errors.log": {
+        "ERROR": 0,
+        "InvalidTaskId": 0,
+        "double free": 0,
+        "particles": 3,
+        "backup": 0
+      }
+    }
+  },
+  {
+    "trial": "balance-campaign-balance146-regular-ranger-t0-a5-A",
+    "receiptSha256": "a6fe6b8d3e28246d532f9102e90e423b036e4ef7f51eacaed6f74122bc4fea19",
+    "status": "finished",
+    "included": true,
+    "stages": [
+      {
+        "source": "fced4ccb123e4684b3226d7a3fa2aa2704b36484",
+        "dllSha256": "c69a371f5e70d88af4a5adc3e7652256d1e580fe7d0d8b2565d07c8db02d7be7",
+        "game": "v0.107.1",
+        "mod": "1.0.30",
+        "baseLib": "v3.4.7"
+      }
+    ],
+    "commands": 93,
+    "hasError": false,
+    "checkpointRecoveries": 0,
+    "batches": [],
+    "targetReturns": null,
+    "returnCap": null,
+    "stopReason": null,
+    "stopAtFullManor": null,
+    "checkpointExtraction": null,
+    "logMatches": {
+      "launch.log": {
+        "ERROR": 0,
+        "InvalidTaskId": 0,
+        "double free": 0,
+        "particles": 0,
+        "backup": 0
+      },
+      "errors.log": {
+        "ERROR": 0,
+        "InvalidTaskId": 0,
+        "double free": 0,
+        "particles": 2,
+        "backup": 0
+      }
+    }
+  },
+  {
+    "trial": "balance-campaign-balance146-regular-ranger-t2-a5-A",
+    "receiptSha256": "1dd392717cfff422c65c9a2b0d3c74f4c347ecf982557681b200bb42038222c7",
+    "status": "finished",
+    "included": true,
+    "stages": [
+      {
+        "source": "fced4ccb123e4684b3226d7a3fa2aa2704b36484",
+        "dllSha256": "c69a371f5e70d88af4a5adc3e7652256d1e580fe7d0d8b2565d07c8db02d7be7",
+        "game": "v0.107.1",
+        "mod": "1.0.30",
+        "baseLib": "v3.4.7"
+      }
+    ],
+    "commands": 412,
+    "hasError": false,
+    "checkpointRecoveries": 0,
+    "batches": [],
+    "targetReturns": null,
+    "returnCap": null,
+    "stopReason": null,
+    "stopAtFullManor": null,
+    "checkpointExtraction": null,
+    "logMatches": {
+      "launch.log": {
+        "ERROR": 0,
+        "InvalidTaskId": 0,
+        "double free": 0,
+        "particles": 0,
+        "backup": 0
+      },
+      "errors.log": {
+        "ERROR": 0,
+        "InvalidTaskId": 0,
+        "double free": 0,
+        "particles": 2,
+        "backup": 0
+      }
+    }
+  },
+  {
+    "trial": "balance-campaign-balance146-smoke-knight-regular",
+    "receiptSha256": "eb44c5ae28305c844609e99f45871f21ef0d4e516fc54ff6aeea1cadb7dc069d",
+    "status": "error",
+    "included": false,
+    "stages": [
+      {
+        "source": "823407993efb0eaddca2c34f0f59038daaf24dc9",
+        "dllSha256": "ae7f035bf3683a88ffc3857cafb10f7bc467bed39ef5a0c84daa8a92ce70772d",
+        "game": "v0.107.1",
+        "mod": "1.0.30",
+        "baseLib": "v3.4.7"
+      }
+    ],
+    "commands": 205,
+    "hasError": true,
+    "checkpointRecoveries": 0,
+    "batches": [],
+    "targetReturns": null,
+    "returnCap": null,
+    "stopReason": null,
+    "stopAtFullManor": null,
+    "checkpointExtraction": null,
+    "logMatches": {
+      "launch.log": {
+        "ERROR": 0,
+        "InvalidTaskId": 0,
+        "double free": 0,
+        "particles": 0,
+        "backup": 0
+      },
+      "errors.log": {
+        "ERROR": 2,
+        "InvalidTaskId": 0,
+        "double free": 0,
+        "particles": 2,
+        "backup": 0
+      }
+    }
+  },
+  {
+    "trial": "balance-campaign-balance146-smoke-mage-beta",
+    "receiptSha256": "4d6294b3fd22ea4ab9c4a9f756d0082f3814a3b07ee8c047b51442120c440ceb",
+    "status": "error",
+    "included": false,
+    "stages": [
+      {
+        "source": "823407993efb0eaddca2c34f0f59038daaf24dc9",
+        "dllSha256": "ae7f035bf3683a88ffc3857cafb10f7bc467bed39ef5a0c84daa8a92ce70772d",
+        "game": "v0.111.0",
+        "mod": "1.0.30",
+        "baseLib": "v3.4.7"
+      }
+    ],
+    "commands": 103,
+    "hasError": true,
+    "checkpointRecoveries": 0,
+    "batches": [],
+    "targetReturns": null,
+    "returnCap": null,
+    "stopReason": null,
+    "stopAtFullManor": null,
+    "checkpointExtraction": null,
+    "logMatches": {
+      "launch.log": {
+        "ERROR": 0,
+        "InvalidTaskId": 0,
+        "double free": 0,
+        "particles": 0,
+        "backup": 0
+      },
+      "errors.log": {
+        "ERROR": 2,
+        "InvalidTaskId": 0,
+        "double free": 0,
+        "particles": 1,
+        "backup": 0
+      }
+    }
+  },
+  {
+    "trial": "balance-campaign-balance146-v2-beta-knight",
+    "receiptSha256": "886171643c15180a41711a818a6de76d4efda24015f59e190d2c8423ca7ce815",
+    "status": "finished",
+    "included": true,
+    "stages": [
+      {
+        "source": "da4cff92814b7f893edbe8c45eaac5e6e1d4c5d0",
+        "dllSha256": "0e3b5839c972ec374e3739fec1ece344b4c9d5f9e56f46c3724a0197272b36e3",
+        "game": "v0.111.0",
+        "mod": "1.0.30",
+        "baseLib": "v3.4.7"
+      }
+    ],
+    "commands": 439,
+    "hasError": false,
+    "checkpointRecoveries": 0,
+    "batches": [],
+    "targetReturns": null,
+    "returnCap": null,
+    "stopReason": null,
+    "stopAtFullManor": null,
+    "checkpointExtraction": null,
+    "logMatches": {
+      "launch.log": {
+        "ERROR": 0,
+        "InvalidTaskId": 0,
+        "double free": 0,
+        "particles": 0,
+        "backup": 0
+      },
+      "errors.log": {
+        "ERROR": 0,
+        "InvalidTaskId": 0,
+        "double free": 0,
+        "particles": 3,
+        "backup": 0
+      }
+    }
+  },
+  {
+    "trial": "balance-campaign-balance146-v2-beta-mage",
+    "receiptSha256": "b074556f627e622a3ae321eaa0ac547b3abdaeecd62906e8fb87e84d3d4fb9a5",
+    "status": "finished",
+    "included": true,
+    "stages": [
+      {
+        "source": "d562fe30d06fd20ea4bafcbc2eee494bb6fc00b3",
+        "dllSha256": "a019f0768747299201a097bb335751006802aa4cfcfe22d2f7da1c5e7df868cc",
+        "game": "v0.111.0",
+        "mod": "1.0.30",
+        "baseLib": "v3.4.7"
+      }
+    ],
+    "commands": 407,
+    "hasError": false,
+    "checkpointRecoveries": 0,
+    "batches": [],
+    "targetReturns": null,
+    "returnCap": null,
+    "stopReason": null,
+    "stopAtFullManor": null,
+    "checkpointExtraction": null,
+    "logMatches": {
+      "launch.log": {
+        "ERROR": 0,
+        "InvalidTaskId": 0,
+        "double free": 0,
+        "particles": 0,
+        "backup": 0
+      },
+      "errors.log": {
+        "ERROR": 0,
+        "InvalidTaskId": 0,
+        "double free": 0,
+        "particles": 3,
+        "backup": 0
+      }
+    }
+  },
+  {
+    "trial": "balance-campaign-balance146-v2-beta-ranger",
+    "receiptSha256": "757c2169cc8440fb7738cf13d0f93d9509dc72480748de19b06466a85e1619a5",
+    "status": "finished",
+    "included": true,
+    "stages": [
+      {
+        "source": "560ac82f95f69a1d9a28a8a966f311a5b8d9bb4b",
+        "dllSha256": "7b7898e0d3815c596cf264cd9149ee8078178c6e141b718ff60ce66b7c56c037",
+        "game": "v0.111.0",
+        "mod": "1.0.30",
+        "baseLib": "v3.4.7"
+      }
+    ],
+    "commands": 400,
+    "hasError": false,
+    "checkpointRecoveries": 0,
+    "batches": [],
+    "targetReturns": null,
+    "returnCap": null,
+    "stopReason": null,
+    "stopAtFullManor": null,
+    "checkpointExtraction": null,
+    "logMatches": {
+      "launch.log": {
+        "ERROR": 0,
+        "InvalidTaskId": 0,
+        "double free": 0,
+        "particles": 0,
+        "backup": 0
+      },
+      "errors.log": {
+        "ERROR": 1,
+        "InvalidTaskId": 0,
+        "double free": 0,
+        "particles": 3,
+        "backup": 0
+      }
+    }
+  },
+  {
+    "trial": "balance-campaign-balance146-v2-regular-knight",
+    "receiptSha256": "4ebf030d5f87e2a0622b7bcfdac50759c99a80671ded232f9507b9aef2056b68",
+    "status": "error",
+    "included": false,
+    "stages": [
+      {
+        "source": "da4cff92814b7f893edbe8c45eaac5e6e1d4c5d0",
+        "dllSha256": "0e3b5839c972ec374e3739fec1ece344b4c9d5f9e56f46c3724a0197272b36e3",
+        "game": "v0.107.1",
+        "mod": "1.0.30",
+        "baseLib": "v3.4.7"
+      }
+    ],
+    "commands": 486,
+    "hasError": true,
+    "checkpointRecoveries": 0,
+    "batches": [],
+    "targetReturns": null,
+    "returnCap": null,
+    "stopReason": null,
+    "stopAtFullManor": null,
+    "checkpointExtraction": null,
+    "logMatches": {
+      "launch.log": {
+        "ERROR": 0,
+        "InvalidTaskId": 0,
+        "double free": 0,
+        "particles": 0,
+        "backup": 0
+      },
+      "errors.log": {
+        "ERROR": 2,
+        "InvalidTaskId": 0,
+        "double free": 0,
+        "particles": 3,
+        "backup": 0
+      }
+    }
+  },
+  {
+    "trial": "pacing-campaign-balance146-full-knight-autoplay73",
+    "receiptSha256": "3149fd417f2dcb0cee482f82fbb974ab05a294a1fb06c1b94eea40aa0b9b2988",
+    "status": "finished",
+    "included": true,
+    "stages": [
+      {
+        "source": "fced4ccb123e4684b3226d7a3fa2aa2704b36484",
+        "dllSha256": "c69a371f5e70d88af4a5adc3e7652256d1e580fe7d0d8b2565d07c8db02d7be7",
+        "game": "v0.107.1",
+        "mod": "1.0.30",
+        "baseLib": "v3.4.7"
+      },
+      {
+        "source": "da4cff92814b7f893edbe8c45eaac5e6e1d4c5d0",
+        "dllSha256": "0e3b5839c972ec374e3739fec1ece344b4c9d5f9e56f46c3724a0197272b36e3",
+        "game": "v0.107.1",
+        "mod": "1.0.30",
+        "baseLib": "v3.4.7"
+      },
+      {
+        "source": "d562fe30d06fd20ea4bafcbc2eee494bb6fc00b3",
+        "dllSha256": "a019f0768747299201a097bb335751006802aa4cfcfe22d2f7da1c5e7df868cc",
+        "game": "v0.107.1",
+        "mod": "1.0.30",
+        "baseLib": "v3.4.7"
+      },
+      {
+        "source": "07bcf006998747c5932bdcf9f041cd7e39a8b6bf",
+        "dllSha256": "3f3cd3fe23b95bf619030eb285cef385c31bc459a28f6ed8d10ebe7f0f1d0d12",
+        "game": "v0.107.1",
+        "mod": "1.0.30",
+        "baseLib": "v3.4.7"
+      },
+      {
+        "source": "06a9266823ec104de8c81b5a973558bedd173e25",
+        "dllSha256": "b8478fed248ee04451ac089be60a5e02e136b741e828af7b70e00832033c3a37",
+        "game": "v0.107.1",
+        "mod": "1.0.30",
+        "baseLib": "v3.4.7"
+      },
+      {
+        "source": "ebb006d3ad50d06a9a9cb74825f8634148ed0c77",
+        "dllSha256": "0babb0eb02ba9d839f3ee85984b5ccf53267f0522c823bdd933e92af22c22e62",
+        "game": "v0.107.1",
+        "mod": "1.0.30",
+        "baseLib": "v3.4.7"
+      }
+    ],
+    "commands": 21033,
+    "hasError": false,
+    "checkpointRecoveries": 2,
+    "batches": [
+      {
+        "priorReport": "pacing-campaign-balance146-pacing-knight-regular4.json",
+        "afterRun": 12,
+        "endRun": 36,
+        "forkedFromDurableReceipt": true
+      },
+      {
+        "priorReport": "pacing-campaign-balance146-long-knight-regular-fork.json",
+        "afterRun": 36,
+        "endRun": 43,
+        "forkedFromDurableReceipt": false
+      },
+      {
+        "priorReport": "pacing-campaign-balance146-settled-knight43.json",
+        "afterRun": 43,
+        "endRun": 67,
+        "forkedFromDurableReceipt": true
+      },
+      {
+        "priorReport": "pacing-campaign-balance146-settled-knight67.json",
+        "afterRun": 67,
+        "endRun": 73,
+        "forkedFromDurableReceipt": true
+      },
+      {
+        "priorReport": "pacing-campaign-balance146-settled-knight73.json",
+        "afterRun": 73,
+        "endRun": 200,
+        "forkedFromDurableReceipt": true
+      }
+    ],
+    "targetReturns": 80,
+    "returnCap": 200,
+    "stopReason": "full-manor",
+    "stopAtFullManor": true,
+    "checkpointExtraction": {
+      "settledReturns": 73,
+      "excludedRuns": [
+        74
+      ],
+      "fullManor": false,
+      "priorReport": "pacing-campaign-balance146-full-knight-sphere67.json",
+      "receiptSha256": "06968c22a2d13add46262a110f7208ea4bdcb9c8c34de81eade21aafe4ee22b0"
+    },
+    "logMatches": {
+      "launch.log": {
+        "ERROR": 0,
+        "InvalidTaskId": 0,
+        "double free": 0,
+        "particles": 0,
+        "backup": 0
+      },
+      "errors.log": {
+        "ERROR": 0,
+        "InvalidTaskId": 0,
+        "double free": 0,
+        "particles": 3,
+        "backup": 0
+      }
+    }
+  },
+  {
+    "trial": "pacing-campaign-balance146-full-knight-fork43",
+    "receiptSha256": "f9a764fadb7e5c39f8ebeebfad443a960e53e7a6a11d66cecf942aebdad96261",
+    "status": "error",
+    "included": false,
+    "stages": [
+      {
+        "source": "fced4ccb123e4684b3226d7a3fa2aa2704b36484",
+        "dllSha256": "c69a371f5e70d88af4a5adc3e7652256d1e580fe7d0d8b2565d07c8db02d7be7",
+        "game": "v0.107.1",
+        "mod": "1.0.30",
+        "baseLib": "v3.4.7"
+      },
+      {
+        "source": "da4cff92814b7f893edbe8c45eaac5e6e1d4c5d0",
+        "dllSha256": "0e3b5839c972ec374e3739fec1ece344b4c9d5f9e56f46c3724a0197272b36e3",
+        "game": "v0.107.1",
+        "mod": "1.0.30",
+        "baseLib": "v3.4.7"
+      },
+      {
+        "source": "d562fe30d06fd20ea4bafcbc2eee494bb6fc00b3",
+        "dllSha256": "a019f0768747299201a097bb335751006802aa4cfcfe22d2f7da1c5e7df868cc",
+        "game": "v0.107.1",
+        "mod": "1.0.30",
+        "baseLib": "v3.4.7"
+      },
+      {
+        "source": "07bcf006998747c5932bdcf9f041cd7e39a8b6bf",
+        "dllSha256": "3f3cd3fe23b95bf619030eb285cef385c31bc459a28f6ed8d10ebe7f0f1d0d12",
+        "game": "v0.107.1",
+        "mod": "1.0.30",
+        "baseLib": "v3.4.7"
+      }
+    ],
+    "commands": 16365,
+    "hasError": true,
+    "checkpointRecoveries": 2,
+    "batches": [
+      {
+        "priorReport": "pacing-campaign-balance146-pacing-knight-regular4.json",
+        "afterRun": 12,
+        "endRun": 36,
+        "forkedFromDurableReceipt": true
+      },
+      {
+        "priorReport": "pacing-campaign-balance146-long-knight-regular-fork.json",
+        "afterRun": 36,
+        "endRun": 43,
+        "forkedFromDurableReceipt": false
+      },
+      {
+        "priorReport": "pacing-campaign-balance146-settled-knight43.json",
+        "afterRun": 43,
+        "endRun": 200,
+        "forkedFromDurableReceipt": true
+      }
+    ],
+    "targetReturns": 200,
+    "returnCap": 200,
+    "stopReason": "settled-checkpoint",
+    "stopAtFullManor": false,
+    "checkpointExtraction": {
+      "settledReturns": 43,
+      "excludedRuns": [],
+      "priorReport": "pacing-campaign-balance146-full-knight-regular2.json",
+      "receiptSha256": "29dfb2429b8de49f3b981724f2acf4018c4c5f38c065b53f6f698d3ce67de9f8"
+    },
+    "logMatches": {
+      "launch.log": {
+        "ERROR": 0,
+        "InvalidTaskId": 0,
+        "double free": 0,
+        "particles": 0,
+        "backup": 0
+      },
+      "errors.log": {
+        "ERROR": 218,
+        "InvalidTaskId": 0,
+        "double free": 0,
+        "particles": 3,
+        "backup": 0
+      }
+    }
+  },
+  {
+    "trial": "pacing-campaign-balance146-full-knight-regular",
+    "receiptSha256": "35918f0717d81efd00772aa1c167dadbcc440ef7e11a71fe6c4b24e5d4b7af5e",
+    "status": "error",
+    "included": false,
+    "stages": [
+      {
+        "source": "fced4ccb123e4684b3226d7a3fa2aa2704b36484",
+        "dllSha256": "c69a371f5e70d88af4a5adc3e7652256d1e580fe7d0d8b2565d07c8db02d7be7",
+        "game": "v0.107.1",
+        "mod": "1.0.30",
+        "baseLib": "v3.4.7"
+      },
+      {
+        "source": "da4cff92814b7f893edbe8c45eaac5e6e1d4c5d0",
+        "dllSha256": "0e3b5839c972ec374e3739fec1ece344b4c9d5f9e56f46c3724a0197272b36e3",
+        "game": "v0.107.1",
+        "mod": "1.0.30",
+        "baseLib": "v3.4.7"
+      },
+      {
+        "source": "d562fe30d06fd20ea4bafcbc2eee494bb6fc00b3",
+        "dllSha256": "a019f0768747299201a097bb335751006802aa4cfcfe22d2f7da1c5e7df868cc",
+        "game": "v0.107.1",
+        "mod": "1.0.30",
+        "baseLib": "v3.4.7"
+      },
+      {
+        "source": "07bcf006998747c5932bdcf9f041cd7e39a8b6bf",
+        "dllSha256": "3f3cd3fe23b95bf619030eb285cef385c31bc459a28f6ed8d10ebe7f0f1d0d12",
+        "game": "v0.107.1",
+        "mod": "1.0.30",
+        "baseLib": "v3.4.7"
+      }
+    ],
+    "commands": 5148,
+    "hasError": true,
+    "checkpointRecoveries": 2,
+    "batches": [
+      {
+        "priorReport": "pacing-campaign-balance146-pacing-knight-regular4.json",
+        "afterRun": 12,
+        "endRun": 36,
+        "forkedFromDurableReceipt": true
+      },
+      {
+        "priorReport": "pacing-campaign-balance146-long-knight-regular-fork.json",
+        "afterRun": 36,
+        "endRun": 200,
+        "forkedFromDurableReceipt": false
+      }
+    ],
+    "targetReturns": 36,
+    "returnCap": null,
+    "stopReason": null,
+    "stopAtFullManor": null,
+    "checkpointExtraction": null,
+    "logMatches": {
+      "launch.log": {
+        "ERROR": 0,
+        "InvalidTaskId": 0,
+        "double free": 0,
+        "particles": 0,
+        "backup": 0
+      },
+      "errors.log": {
+        "ERROR": 0,
+        "InvalidTaskId": 0,
+        "double free": 0,
+        "particles": 0,
+        "backup": 0
+      }
+    }
+  },
+  {
+    "trial": "pacing-campaign-balance146-full-knight-regular2",
+    "receiptSha256": "29dfb2429b8de49f3b981724f2acf4018c4c5f38c065b53f6f698d3ce67de9f8",
+    "status": "interrupted",
+    "included": false,
+    "stages": [
+      {
+        "source": "fced4ccb123e4684b3226d7a3fa2aa2704b36484",
+        "dllSha256": "c69a371f5e70d88af4a5adc3e7652256d1e580fe7d0d8b2565d07c8db02d7be7",
+        "game": "v0.107.1",
+        "mod": "1.0.30",
+        "baseLib": "v3.4.7"
+      },
+      {
+        "source": "da4cff92814b7f893edbe8c45eaac5e6e1d4c5d0",
+        "dllSha256": "0e3b5839c972ec374e3739fec1ece344b4c9d5f9e56f46c3724a0197272b36e3",
+        "game": "v0.107.1",
+        "mod": "1.0.30",
+        "baseLib": "v3.4.7"
+      },
+      {
+        "source": "d562fe30d06fd20ea4bafcbc2eee494bb6fc00b3",
+        "dllSha256": "a019f0768747299201a097bb335751006802aa4cfcfe22d2f7da1c5e7df868cc",
+        "game": "v0.107.1",
+        "mod": "1.0.30",
+        "baseLib": "v3.4.7"
+      },
+      {
+        "source": "07bcf006998747c5932bdcf9f041cd7e39a8b6bf",
+        "dllSha256": "3f3cd3fe23b95bf619030eb285cef385c31bc459a28f6ed8d10ebe7f0f1d0d12",
+        "game": "v0.107.1",
+        "mod": "1.0.30",
+        "baseLib": "v3.4.7"
+      }
+    ],
+    "commands": 7327,
+    "hasError": false,
+    "checkpointRecoveries": 2,
+    "batches": [
+      {
+        "priorReport": "pacing-campaign-balance146-pacing-knight-regular4.json",
+        "afterRun": 12,
+        "endRun": 36,
+        "forkedFromDurableReceipt": true
+      },
+      {
+        "priorReport": "pacing-campaign-balance146-long-knight-regular-fork.json",
+        "afterRun": 36,
+        "endRun": 200,
+        "forkedFromDurableReceipt": false
+      }
+    ],
+    "targetReturns": 200,
+    "returnCap": 200,
+    "stopReason": null,
+    "stopAtFullManor": false,
+    "checkpointExtraction": null,
+    "logMatches": {
+      "launch.log": {
+        "ERROR": 12,
+        "InvalidTaskId": 0,
+        "double free": 0,
+        "particles": 0,
+        "backup": 0
+      },
+      "errors.log": {
+        "ERROR": 0,
+        "InvalidTaskId": 0,
+        "double free": 0,
+        "particles": 3,
+        "backup": 0
+      }
+    }
+  },
+  {
+    "trial": "pacing-campaign-balance146-full-knight-sphere67",
+    "receiptSha256": "06968c22a2d13add46262a110f7208ea4bdcb9c8c34de81eade21aafe4ee22b0",
+    "status": "error",
+    "included": false,
+    "stages": [
+      {
+        "source": "fced4ccb123e4684b3226d7a3fa2aa2704b36484",
+        "dllSha256": "c69a371f5e70d88af4a5adc3e7652256d1e580fe7d0d8b2565d07c8db02d7be7",
+        "game": "v0.107.1",
+        "mod": "1.0.30",
+        "baseLib": "v3.4.7"
+      },
+      {
+        "source": "da4cff92814b7f893edbe8c45eaac5e6e1d4c5d0",
+        "dllSha256": "0e3b5839c972ec374e3739fec1ece344b4c9d5f9e56f46c3724a0197272b36e3",
+        "game": "v0.107.1",
+        "mod": "1.0.30",
+        "baseLib": "v3.4.7"
+      },
+      {
+        "source": "d562fe30d06fd20ea4bafcbc2eee494bb6fc00b3",
+        "dllSha256": "a019f0768747299201a097bb335751006802aa4cfcfe22d2f7da1c5e7df868cc",
+        "game": "v0.107.1",
+        "mod": "1.0.30",
+        "baseLib": "v3.4.7"
+      },
+      {
+        "source": "07bcf006998747c5932bdcf9f041cd7e39a8b6bf",
+        "dllSha256": "3f3cd3fe23b95bf619030eb285cef385c31bc459a28f6ed8d10ebe7f0f1d0d12",
+        "game": "v0.107.1",
+        "mod": "1.0.30",
+        "baseLib": "v3.4.7"
+      },
+      {
+        "source": "06a9266823ec104de8c81b5a973558bedd173e25",
+        "dllSha256": "b8478fed248ee04451ac089be60a5e02e136b741e828af7b70e00832033c3a37",
+        "game": "v0.107.1",
+        "mod": "1.0.30",
+        "baseLib": "v3.4.7"
+      }
+    ],
+    "commands": 18451,
+    "hasError": true,
+    "checkpointRecoveries": 2,
+    "batches": [
+      {
+        "priorReport": "pacing-campaign-balance146-pacing-knight-regular4.json",
+        "afterRun": 12,
+        "endRun": 36,
+        "forkedFromDurableReceipt": true
+      },
+      {
+        "priorReport": "pacing-campaign-balance146-long-knight-regular-fork.json",
+        "afterRun": 36,
+        "endRun": 43,
+        "forkedFromDurableReceipt": false
+      },
+      {
+        "priorReport": "pacing-campaign-balance146-settled-knight43.json",
+        "afterRun": 43,
+        "endRun": 67,
+        "forkedFromDurableReceipt": true
+      },
+      {
+        "priorReport": "pacing-campaign-balance146-settled-knight67.json",
+        "afterRun": 67,
+        "endRun": 200,
+        "forkedFromDurableReceipt": true
+      }
+    ],
+    "targetReturns": 200,
+    "returnCap": 200,
+    "stopReason": "settled-checkpoint",
+    "stopAtFullManor": true,
+    "checkpointExtraction": {
+      "settledReturns": 67,
+      "excludedRuns": [
+        68
+      ],
+      "fullManor": false,
+      "priorReport": "pacing-campaign-balance146-full-knight-fork43.json",
+      "receiptSha256": "f9a764fadb7e5c39f8ebeebfad443a960e53e7a6a11d66cecf942aebdad96261"
+    },
+    "logMatches": {
+      "launch.log": {
+        "ERROR": 0,
+        "InvalidTaskId": 0,
+        "double free": 0,
+        "particles": 0,
+        "backup": 0
+      },
+      "errors.log": {
+        "ERROR": 4,
+        "InvalidTaskId": 0,
+        "double free": 0,
+        "particles": 3,
+        "backup": 0
+      }
+    }
+  },
+  {
+    "trial": "pacing-campaign-balance146-full-ranger-beta",
+    "receiptSha256": "dd685252681fdb2b5714b6190bf723afda30cce8d2664d3346d7a3038ff292a2",
+    "status": "interrupted",
+    "included": false,
+    "stages": [
+      {
+        "source": "2c7ae5d01c88d8b3f76c71106ebb9da64aaf0f82",
+        "dllSha256": "01f751ff6422cc9bdc2c83c632b93f27020663a14ef7653b63b3852b474b23de",
+        "game": "v0.111.0",
+        "mod": "1.0.30",
+        "baseLib": "v3.4.7"
+      },
+      {
+        "source": "52cd89c4fe949d43d48f3cdc570dfcab39d3c7f7",
+        "dllSha256": "b13c50b1cdfa6a59e7125f39fc6798b06d2a08a0ac701705d8ad538431ae22d3",
+        "game": "v0.111.0",
+        "mod": "1.0.30",
+        "baseLib": "v3.4.7"
+      },
+      {
+        "source": "07bcf006998747c5932bdcf9f041cd7e39a8b6bf",
+        "dllSha256": "3f3cd3fe23b95bf619030eb285cef385c31bc459a28f6ed8d10ebe7f0f1d0d12",
+        "game": "v0.111.0",
+        "mod": "1.0.30",
+        "baseLib": "v3.4.7"
+      }
+    ],
+    "commands": 9750,
+    "hasError": false,
+    "checkpointRecoveries": 0,
+    "batches": [
+      {
+        "priorReport": "pacing-campaign-balance146-pacing-ranger-beta1.json",
+        "afterRun": 12,
+        "endRun": 36
+      },
+      {
+        "priorReport": "pacing-campaign-balance146-long-ranger-beta.json",
+        "afterRun": 36,
+        "endRun": 200,
+        "forkedFromDurableReceipt": false
+      }
+    ],
+    "targetReturns": 200,
+    "returnCap": 200,
+    "stopReason": null,
+    "stopAtFullManor": false,
+    "checkpointExtraction": null,
+    "logMatches": {
+      "launch.log": {
+        "ERROR": 0,
+        "InvalidTaskId": 0,
+        "double free": 0,
+        "particles": 0,
+        "backup": 0
+      },
+      "errors.log": {
+        "ERROR": 3,
+        "InvalidTaskId": 0,
+        "double free": 0,
+        "particles": 3,
+        "backup": 0
+      }
+    }
+  },
+  {
+    "trial": "pacing-campaign-balance146-full-ranger-fork66",
+    "receiptSha256": "94e39bbae2589d8076a174f76a8b3b2131421e5ce76ebaf440216f7b70075def",
+    "status": "error",
+    "included": false,
+    "stages": [
+      {
+        "source": "2c7ae5d01c88d8b3f76c71106ebb9da64aaf0f82",
+        "dllSha256": "01f751ff6422cc9bdc2c83c632b93f27020663a14ef7653b63b3852b474b23de",
+        "game": "v0.111.0",
+        "mod": "1.0.30",
+        "baseLib": "v3.4.7"
+      },
+      {
+        "source": "52cd89c4fe949d43d48f3cdc570dfcab39d3c7f7",
+        "dllSha256": "b13c50b1cdfa6a59e7125f39fc6798b06d2a08a0ac701705d8ad538431ae22d3",
+        "game": "v0.111.0",
+        "mod": "1.0.30",
+        "baseLib": "v3.4.7"
+      },
+      {
+        "source": "07bcf006998747c5932bdcf9f041cd7e39a8b6bf",
+        "dllSha256": "3f3cd3fe23b95bf619030eb285cef385c31bc459a28f6ed8d10ebe7f0f1d0d12",
+        "game": "v0.111.0",
+        "mod": "1.0.30",
+        "baseLib": "v3.4.7"
+      }
+    ],
+    "commands": 13798,
+    "hasError": true,
+    "checkpointRecoveries": 0,
+    "batches": [
+      {
+        "priorReport": "pacing-campaign-balance146-pacing-ranger-beta1.json",
+        "afterRun": 12,
+        "endRun": 36
+      },
+      {
+        "priorReport": "pacing-campaign-balance146-long-ranger-beta.json",
+        "afterRun": 36,
+        "endRun": 66,
+        "forkedFromDurableReceipt": false
+      },
+      {
+        "priorReport": "pacing-campaign-balance146-settled-ranger66.json",
+        "afterRun": 66,
+        "endRun": 200,
+        "forkedFromDurableReceipt": true
+      }
+    ],
+    "targetReturns": 200,
+    "returnCap": 200,
+    "stopReason": "settled-checkpoint",
+    "stopAtFullManor": false,
+    "checkpointExtraction": {
+      "settledReturns": 66,
+      "excludedRuns": [
+        67
+      ],
+      "priorReport": "pacing-campaign-balance146-full-ranger-beta.json",
+      "receiptSha256": "dd685252681fdb2b5714b6190bf723afda30cce8d2664d3346d7a3038ff292a2"
+    },
+    "logMatches": {
+      "launch.log": {
+        "ERROR": 0,
+        "InvalidTaskId": 0,
+        "double free": 0,
+        "particles": 0,
+        "backup": 0
+      },
+      "errors.log": {
+        "ERROR": 2,
+        "InvalidTaskId": 0,
+        "double free": 0,
+        "particles": 3,
+        "backup": 0
+      }
+    }
+  },
+  {
+    "trial": "pacing-campaign-balance146-full-ranger-fork83",
+    "receiptSha256": "ae07b03bbb66b6bdc9271650d71c123fe940a18bebcb4f91bb4c6139097018ea",
+    "status": "error",
+    "included": false,
+    "stages": [
+      {
+        "source": "2c7ae5d01c88d8b3f76c71106ebb9da64aaf0f82",
+        "dllSha256": "01f751ff6422cc9bdc2c83c632b93f27020663a14ef7653b63b3852b474b23de",
+        "game": "v0.111.0",
+        "mod": "1.0.30",
+        "baseLib": "v3.4.7"
+      },
+      {
+        "source": "52cd89c4fe949d43d48f3cdc570dfcab39d3c7f7",
+        "dllSha256": "b13c50b1cdfa6a59e7125f39fc6798b06d2a08a0ac701705d8ad538431ae22d3",
+        "game": "v0.111.0",
+        "mod": "1.0.30",
+        "baseLib": "v3.4.7"
+      },
+      {
+        "source": "07bcf006998747c5932bdcf9f041cd7e39a8b6bf",
+        "dllSha256": "3f3cd3fe23b95bf619030eb285cef385c31bc459a28f6ed8d10ebe7f0f1d0d12",
+        "game": "v0.111.0",
+        "mod": "1.0.30",
+        "baseLib": "v3.4.7"
+      }
+    ],
+    "commands": 23477,
+    "hasError": true,
+    "checkpointRecoveries": 0,
+    "batches": [
+      {
+        "priorReport": "pacing-campaign-balance146-pacing-ranger-beta1.json",
+        "afterRun": 12,
+        "endRun": 36
+      },
+      {
+        "priorReport": "pacing-campaign-balance146-long-ranger-beta.json",
+        "afterRun": 36,
+        "endRun": 66,
+        "forkedFromDurableReceipt": false
+      },
+      {
+        "priorReport": "pacing-campaign-balance146-settled-ranger66.json",
+        "afterRun": 66,
+        "endRun": 83,
+        "forkedFromDurableReceipt": true
+      },
+      {
+        "priorReport": "pacing-campaign-balance146-settled-ranger83.json",
+        "afterRun": 83,
+        "endRun": 200,
+        "forkedFromDurableReceipt": true
+      }
+    ],
+    "targetReturns": 200,
+    "returnCap": 200,
+    "stopReason": "settled-checkpoint",
+    "stopAtFullManor": false,
+    "checkpointExtraction": {
+      "settledReturns": 83,
+      "excludedRuns": [
+        84
+      ],
+      "priorReport": "pacing-campaign-balance146-full-ranger-fork66.json",
+      "receiptSha256": "94e39bbae2589d8076a174f76a8b3b2131421e5ce76ebaf440216f7b70075def"
+    },
+    "logMatches": {
+      "launch.log": {
+        "ERROR": 0,
+        "InvalidTaskId": 0,
+        "double free": 0,
+        "particles": 0,
+        "backup": 0
+      },
+      "errors.log": {
+        "ERROR": 9,
+        "InvalidTaskId": 0,
+        "double free": 0,
+        "particles": 3,
+        "backup": 0
+      }
+    }
+  },
+  {
+    "trial": "pacing-campaign-balance146-long-knight-regular-fork",
+    "receiptSha256": "1817dba4fab70ac55c1b36528d0a84f6c8bb932c57dcabb3f8cd4a57bc14ff0a",
+    "status": "finished",
+    "included": false,
+    "stages": [
+      {
+        "source": "fced4ccb123e4684b3226d7a3fa2aa2704b36484",
+        "dllSha256": "c69a371f5e70d88af4a5adc3e7652256d1e580fe7d0d8b2565d07c8db02d7be7",
+        "game": "v0.107.1",
+        "mod": "1.0.30",
+        "baseLib": "v3.4.7"
+      },
+      {
+        "source": "da4cff92814b7f893edbe8c45eaac5e6e1d4c5d0",
+        "dllSha256": "0e3b5839c972ec374e3739fec1ece344b4c9d5f9e56f46c3724a0197272b36e3",
+        "game": "v0.107.1",
+        "mod": "1.0.30",
+        "baseLib": "v3.4.7"
+      },
+      {
+        "source": "d562fe30d06fd20ea4bafcbc2eee494bb6fc00b3",
+        "dllSha256": "a019f0768747299201a097bb335751006802aa4cfcfe22d2f7da1c5e7df868cc",
+        "game": "v0.107.1",
+        "mod": "1.0.30",
+        "baseLib": "v3.4.7"
+      },
+      {
+        "source": "07bcf006998747c5932bdcf9f041cd7e39a8b6bf",
+        "dllSha256": "3f3cd3fe23b95bf619030eb285cef385c31bc459a28f6ed8d10ebe7f0f1d0d12",
+        "game": "v0.107.1",
+        "mod": "1.0.30",
+        "baseLib": "v3.4.7"
+      }
+    ],
+    "commands": 5147,
+    "hasError": false,
+    "checkpointRecoveries": 2,
+    "batches": [
+      {
+        "priorReport": "pacing-campaign-balance146-pacing-knight-regular4.json",
+        "afterRun": 12,
+        "endRun": 36,
+        "forkedFromDurableReceipt": true
+      }
+    ],
+    "targetReturns": 36,
+    "returnCap": null,
+    "stopReason": null,
+    "stopAtFullManor": null,
+    "checkpointExtraction": null,
+    "logMatches": {
+      "launch.log": {
+        "ERROR": 12,
+        "InvalidTaskId": 0,
+        "double free": 0,
+        "particles": 0,
+        "backup": 0
+      },
+      "errors.log": {
+        "ERROR": 0,
+        "InvalidTaskId": 0,
+        "double free": 0,
+        "particles": 3,
+        "backup": 0
+      }
+    }
+  },
+  {
+    "trial": "pacing-campaign-balance146-long-knight-regular",
+    "receiptSha256": "1f21030380f2ca3dafeb1a86c706ede08e87fff635e19d3f2d54aa36a8693b0d",
+    "status": "error",
+    "included": false,
+    "stages": [
+      {
+        "source": "fced4ccb123e4684b3226d7a3fa2aa2704b36484",
+        "dllSha256": "c69a371f5e70d88af4a5adc3e7652256d1e580fe7d0d8b2565d07c8db02d7be7",
+        "game": "v0.107.1",
+        "mod": "1.0.30",
+        "baseLib": "v3.4.7"
+      },
+      {
+        "source": "da4cff92814b7f893edbe8c45eaac5e6e1d4c5d0",
+        "dllSha256": "0e3b5839c972ec374e3739fec1ece344b4c9d5f9e56f46c3724a0197272b36e3",
+        "game": "v0.107.1",
+        "mod": "1.0.30",
+        "baseLib": "v3.4.7"
+      },
+      {
+        "source": "d562fe30d06fd20ea4bafcbc2eee494bb6fc00b3",
+        "dllSha256": "a019f0768747299201a097bb335751006802aa4cfcfe22d2f7da1c5e7df868cc",
+        "game": "v0.107.1",
+        "mod": "1.0.30",
+        "baseLib": "v3.4.7"
+      },
+      {
+        "source": "52cd89c4fe949d43d48f3cdc570dfcab39d3c7f7",
+        "dllSha256": "b13c50b1cdfa6a59e7125f39fc6798b06d2a08a0ac701705d8ad538431ae22d3",
+        "game": "v0.107.1",
+        "mod": "1.0.30",
+        "baseLib": "v3.4.7"
+      }
+    ],
+    "commands": 1687,
+    "hasError": true,
+    "checkpointRecoveries": 2,
+    "batches": [
+      {
+        "priorReport": "pacing-campaign-balance146-pacing-knight-regular4.json",
+        "afterRun": 12,
+        "endRun": 36
+      }
+    ],
+    "targetReturns": 36,
+    "returnCap": null,
+    "stopReason": null,
+    "stopAtFullManor": null,
+    "checkpointExtraction": null,
+    "logMatches": {
+      "launch.log": {
+        "ERROR": 0,
+        "InvalidTaskId": 0,
+        "double free": 0,
+        "particles": 0,
+        "backup": 0
+      },
+      "errors.log": {
+        "ERROR": 0,
+        "InvalidTaskId": 0,
+        "double free": 0,
+        "particles": 0,
+        "backup": 0
+      }
+    }
+  },
+  {
+    "trial": "pacing-campaign-balance146-long-ranger-beta",
+    "receiptSha256": "a68e93061477cb65c590453ab52ce2d81dad86ab3a2e4a2cfd3c33aac44dac26",
+    "status": "finished",
+    "included": false,
+    "stages": [
+      {
+        "source": "2c7ae5d01c88d8b3f76c71106ebb9da64aaf0f82",
+        "dllSha256": "01f751ff6422cc9bdc2c83c632b93f27020663a14ef7653b63b3852b474b23de",
+        "game": "v0.111.0",
+        "mod": "1.0.30",
+        "baseLib": "v3.4.7"
+      },
+      {
+        "source": "52cd89c4fe949d43d48f3cdc570dfcab39d3c7f7",
+        "dllSha256": "b13c50b1cdfa6a59e7125f39fc6798b06d2a08a0ac701705d8ad538431ae22d3",
+        "game": "v0.111.0",
+        "mod": "1.0.30",
+        "baseLib": "v3.4.7"
+      }
+    ],
+    "commands": 4027,
+    "hasError": false,
+    "checkpointRecoveries": 0,
+    "batches": [
+      {
+        "priorReport": "pacing-campaign-balance146-pacing-ranger-beta1.json",
+        "afterRun": 12,
+        "endRun": 36
+      }
+    ],
+    "targetReturns": 36,
+    "returnCap": null,
+    "stopReason": null,
+    "stopAtFullManor": null,
+    "checkpointExtraction": null,
+    "logMatches": {
+      "launch.log": {
+        "ERROR": 0,
+        "InvalidTaskId": 0,
+        "double free": 0,
+        "particles": 0,
+        "backup": 0
+      },
+      "errors.log": {
+        "ERROR": 3,
+        "InvalidTaskId": 0,
+        "double free": 0,
+        "particles": 3,
+        "backup": 0
+      }
+    }
+  },
+  {
+    "trial": "pacing-campaign-balance146-pacing-knight-regular1",
+    "receiptSha256": "14b218b09a0ed1218ec7b1d94c81e2fd4fbf728bffaca4859e47c82cb47da1ce",
+    "status": "error",
+    "included": false,
+    "stages": [
+      {
+        "source": "2c7ae5d01c88d8b3f76c71106ebb9da64aaf0f82",
+        "dllSha256": "01f751ff6422cc9bdc2c83c632b93f27020663a14ef7653b63b3852b474b23de",
+        "game": "v0.107.1",
+        "mod": "1.0.30",
+        "baseLib": "v3.4.7"
+      }
+    ],
+    "commands": 445,
+    "hasError": true,
+    "checkpointRecoveries": 0,
+    "batches": [],
+    "targetReturns": null,
+    "returnCap": null,
+    "stopReason": null,
+    "stopAtFullManor": null,
+    "checkpointExtraction": null,
+    "logMatches": {
+      "launch.log": {
+        "ERROR": 0,
+        "InvalidTaskId": 0,
+        "double free": 0,
+        "particles": 0,
+        "backup": 0
+      },
+      "errors.log": {
+        "ERROR": 0,
+        "InvalidTaskId": 0,
+        "double free": 0,
+        "particles": 2,
+        "backup": 0
+      }
+    }
+  },
+  {
+    "trial": "pacing-campaign-balance146-pacing-knight-regular2",
+    "receiptSha256": "3a8dbc5faf3390ea4c023675d034d4035c99bada9309cfe2aef5b955f22447a6",
+    "status": "error",
+    "included": false,
+    "stages": [
+      {
+        "source": "fced4ccb123e4684b3226d7a3fa2aa2704b36484",
+        "dllSha256": "c69a371f5e70d88af4a5adc3e7652256d1e580fe7d0d8b2565d07c8db02d7be7",
+        "game": "v0.107.1",
+        "mod": "1.0.30",
+        "baseLib": "v3.4.7"
+      }
+    ],
+    "commands": 1226,
+    "hasError": true,
+    "checkpointRecoveries": 0,
+    "batches": [],
+    "targetReturns": null,
+    "returnCap": null,
+    "stopReason": null,
+    "stopAtFullManor": null,
+    "checkpointExtraction": null,
+    "logMatches": {
+      "launch.log": {
+        "ERROR": 0,
+        "InvalidTaskId": 0,
+        "double free": 0,
+        "particles": 0,
+        "backup": 0
+      },
+      "errors.log": {
+        "ERROR": 0,
+        "InvalidTaskId": 0,
+        "double free": 0,
+        "particles": 0,
+        "backup": 0
+      }
+    }
+  },
+  {
+    "trial": "pacing-campaign-balance146-pacing-knight-regular3",
+    "receiptSha256": "73e4091f902bdc486b58c8bb4f3e05283fe8cb0f43a0be98fd50d7621a00be1f",
+    "status": "error",
+    "included": false,
+    "stages": [
+      {
+        "source": "fced4ccb123e4684b3226d7a3fa2aa2704b36484",
+        "dllSha256": "c69a371f5e70d88af4a5adc3e7652256d1e580fe7d0d8b2565d07c8db02d7be7",
+        "game": "v0.107.1",
+        "mod": "1.0.30",
+        "baseLib": "v3.4.7"
+      },
+      {
+        "source": "da4cff92814b7f893edbe8c45eaac5e6e1d4c5d0",
+        "dllSha256": "0e3b5839c972ec374e3739fec1ece344b4c9d5f9e56f46c3724a0197272b36e3",
+        "game": "v0.107.1",
+        "mod": "1.0.30",
+        "baseLib": "v3.4.7"
+      }
+    ],
+    "commands": 1255,
+    "hasError": true,
+    "checkpointRecoveries": 0,
+    "batches": [],
+    "targetReturns": null,
+    "returnCap": null,
+    "stopReason": null,
+    "stopAtFullManor": null,
+    "checkpointExtraction": null,
+    "logMatches": {
+      "launch.log": {
+        "ERROR": 0,
+        "InvalidTaskId": 0,
+        "double free": 0,
+        "particles": 0,
+        "backup": 0
+      },
+      "errors.log": {
+        "ERROR": 0,
+        "InvalidTaskId": 0,
+        "double free": 0,
+        "particles": 0,
+        "backup": 0
+      }
+    }
+  },
+  {
+    "trial": "pacing-campaign-balance146-pacing-knight-regular4",
+    "receiptSha256": "2e36ead63d4735607f3f002c7378f3b5d7f65e508e6040702598ea1647c0a3a6",
+    "status": "finished",
+    "included": false,
+    "stages": [
+      {
+        "source": "fced4ccb123e4684b3226d7a3fa2aa2704b36484",
+        "dllSha256": "c69a371f5e70d88af4a5adc3e7652256d1e580fe7d0d8b2565d07c8db02d7be7",
+        "game": "v0.107.1",
+        "mod": "1.0.30",
+        "baseLib": "v3.4.7"
+      },
+      {
+        "source": "da4cff92814b7f893edbe8c45eaac5e6e1d4c5d0",
+        "dllSha256": "0e3b5839c972ec374e3739fec1ece344b4c9d5f9e56f46c3724a0197272b36e3",
+        "game": "v0.107.1",
+        "mod": "1.0.30",
+        "baseLib": "v3.4.7"
+      },
+      {
+        "source": "d562fe30d06fd20ea4bafcbc2eee494bb6fc00b3",
+        "dllSha256": "a019f0768747299201a097bb335751006802aa4cfcfe22d2f7da1c5e7df868cc",
+        "game": "v0.107.1",
+        "mod": "1.0.30",
+        "baseLib": "v3.4.7"
+      }
+    ],
+    "commands": 1676,
+    "hasError": false,
+    "checkpointRecoveries": 2,
+    "batches": [],
+    "targetReturns": null,
+    "returnCap": null,
+    "stopReason": null,
+    "stopAtFullManor": null,
+    "checkpointExtraction": null,
+    "logMatches": {
+      "launch.log": {
+        "ERROR": 0,
+        "InvalidTaskId": 0,
+        "double free": 0,
+        "particles": 0,
+        "backup": 0
+      },
+      "errors.log": {
+        "ERROR": 0,
+        "InvalidTaskId": 0,
+        "double free": 0,
+        "particles": 0,
+        "backup": 0
+      }
+    }
+  },
+  {
+    "trial": "pacing-campaign-balance146-pacing-ranger-beta1",
+    "receiptSha256": "cab613bb7372ccad68e10a5f32ffca9431dd9dc83a4797d14e95e87d1725da1f",
+    "status": "finished",
+    "included": false,
+    "stages": [
+      {
+        "source": "2c7ae5d01c88d8b3f76c71106ebb9da64aaf0f82",
+        "dllSha256": "01f751ff6422cc9bdc2c83c632b93f27020663a14ef7653b63b3852b474b23de",
+        "game": "v0.111.0",
+        "mod": "1.0.30",
+        "baseLib": "v3.4.7"
+      }
+    ],
+    "commands": 1427,
+    "hasError": false,
+    "checkpointRecoveries": 0,
+    "batches": [],
+    "targetReturns": null,
+    "returnCap": null,
+    "stopReason": null,
+    "stopAtFullManor": null,
+    "checkpointExtraction": null,
+    "logMatches": {
+      "launch.log": {
+        "ERROR": 0,
+        "InvalidTaskId": 0,
+        "double free": 0,
+        "particles": 0,
+        "backup": 0
+      },
+      "errors.log": {
+        "ERROR": 3,
+        "InvalidTaskId": 0,
+        "double free": 0,
+        "particles": 3,
+        "backup": 0
+      }
+    }
+  },
+  {
+    "trial": "pacing-campaign-balance146-paid-full-ranger120",
+    "receiptSha256": "adc93904e0f3bef07b43ad76aa294763a9690ec86257196a94a6faf1165f48d2",
+    "status": "finished",
+    "included": true,
+    "stages": [
+      {
+        "source": "2c7ae5d01c88d8b3f76c71106ebb9da64aaf0f82",
+        "dllSha256": "01f751ff6422cc9bdc2c83c632b93f27020663a14ef7653b63b3852b474b23de",
+        "game": "v0.111.0",
+        "mod": "1.0.30",
+        "baseLib": "v3.4.7"
+      },
+      {
+        "source": "52cd89c4fe949d43d48f3cdc570dfcab39d3c7f7",
+        "dllSha256": "b13c50b1cdfa6a59e7125f39fc6798b06d2a08a0ac701705d8ad538431ae22d3",
+        "game": "v0.111.0",
+        "mod": "1.0.30",
+        "baseLib": "v3.4.7"
+      },
+      {
+        "source": "07bcf006998747c5932bdcf9f041cd7e39a8b6bf",
+        "dllSha256": "3f3cd3fe23b95bf619030eb285cef385c31bc459a28f6ed8d10ebe7f0f1d0d12",
+        "game": "v0.111.0",
+        "mod": "1.0.30",
+        "baseLib": "v3.4.7"
+      }
+    ],
+    "commands": 23310,
+    "hasError": false,
+    "checkpointRecoveries": 0,
+    "batches": [
+      {
+        "priorReport": "pacing-campaign-balance146-pacing-ranger-beta1.json",
+        "afterRun": 12,
+        "endRun": 36
+      },
+      {
+        "priorReport": "pacing-campaign-balance146-long-ranger-beta.json",
+        "afterRun": 36,
+        "endRun": 66,
+        "forkedFromDurableReceipt": false
+      },
+      {
+        "priorReport": "pacing-campaign-balance146-settled-ranger66.json",
+        "afterRun": 66,
+        "endRun": 83,
+        "forkedFromDurableReceipt": true
+      },
+      {
+        "priorReport": "pacing-campaign-balance146-settled-ranger83.json",
+        "afterRun": 83,
+        "endRun": 120,
+        "forkedFromDurableReceipt": true
+      }
+    ],
+    "targetReturns": 120,
+    "returnCap": 200,
+    "stopReason": "full-manor-checkpoint",
+    "stopAtFullManor": false,
+    "checkpointExtraction": {
+      "settledReturns": 120,
+      "excludedRuns": [
+        121
+      ],
+      "fullManor": true,
+      "priorReport": "pacing-campaign-balance146-full-ranger-fork83.json",
+      "receiptSha256": "ae07b03bbb66b6bdc9271650d71c123fe940a18bebcb4f91bb4c6139097018ea"
+    },
+    "logMatches": {
+      "launch.log": {
+        "ERROR": 0,
+        "InvalidTaskId": 0,
+        "double free": 0,
+        "particles": 0,
+        "backup": 0
+      },
+      "errors.log": {
+        "ERROR": 9,
+        "InvalidTaskId": 0,
+        "double free": 0,
+        "particles": 3,
+        "backup": 0
+      }
+    }
+  },
+  {
+    "trial": "pacing-campaign-balance146-settled-knight43",
+    "receiptSha256": "d1b6a0f30e40bf9ace323d991e4ae8a28bc531275e8e2044ef484c81a7c75eab",
+    "status": "finished",
+    "included": false,
+    "stages": [
+      {
+        "source": "fced4ccb123e4684b3226d7a3fa2aa2704b36484",
+        "dllSha256": "c69a371f5e70d88af4a5adc3e7652256d1e580fe7d0d8b2565d07c8db02d7be7",
+        "game": "v0.107.1",
+        "mod": "1.0.30",
+        "baseLib": "v3.4.7"
+      },
+      {
+        "source": "da4cff92814b7f893edbe8c45eaac5e6e1d4c5d0",
+        "dllSha256": "0e3b5839c972ec374e3739fec1ece344b4c9d5f9e56f46c3724a0197272b36e3",
+        "game": "v0.107.1",
+        "mod": "1.0.30",
+        "baseLib": "v3.4.7"
+      },
+      {
+        "source": "d562fe30d06fd20ea4bafcbc2eee494bb6fc00b3",
+        "dllSha256": "a019f0768747299201a097bb335751006802aa4cfcfe22d2f7da1c5e7df868cc",
+        "game": "v0.107.1",
+        "mod": "1.0.30",
+        "baseLib": "v3.4.7"
+      },
+      {
+        "source": "07bcf006998747c5932bdcf9f041cd7e39a8b6bf",
+        "dllSha256": "3f3cd3fe23b95bf619030eb285cef385c31bc459a28f6ed8d10ebe7f0f1d0d12",
+        "game": "v0.107.1",
+        "mod": "1.0.30",
+        "baseLib": "v3.4.7"
+      }
+    ],
+    "commands": 7325,
+    "hasError": false,
+    "checkpointRecoveries": 2,
+    "batches": [
+      {
+        "priorReport": "pacing-campaign-balance146-pacing-knight-regular4.json",
+        "afterRun": 12,
+        "endRun": 36,
+        "forkedFromDurableReceipt": true
+      },
+      {
+        "priorReport": "pacing-campaign-balance146-long-knight-regular-fork.json",
+        "afterRun": 36,
+        "endRun": 43,
+        "forkedFromDurableReceipt": false
+      }
+    ],
+    "targetReturns": 43,
+    "returnCap": 200,
+    "stopReason": "settled-checkpoint",
+    "stopAtFullManor": false,
+    "checkpointExtraction": {
+      "settledReturns": 43,
+      "excludedRuns": [],
+      "priorReport": "pacing-campaign-balance146-full-knight-regular2.json",
+      "receiptSha256": "29dfb2429b8de49f3b981724f2acf4018c4c5f38c065b53f6f698d3ce67de9f8"
+    },
+    "logMatches": {
+      "launch.log": {
+        "ERROR": 12,
+        "InvalidTaskId": 0,
+        "double free": 0,
+        "particles": 0,
+        "backup": 0
+      },
+      "errors.log": {
+        "ERROR": 0,
+        "InvalidTaskId": 0,
+        "double free": 0,
+        "particles": 3,
+        "backup": 0
+      }
+    }
+  },
+  {
+    "trial": "pacing-campaign-balance146-settled-knight67",
+    "receiptSha256": "b71dbe009ac7ebe2f5aea176e8f069584cf2131b84ea1c9ec89d0e04bf5c5818",
+    "status": "finished",
+    "included": false,
+    "stages": [
+      {
+        "source": "fced4ccb123e4684b3226d7a3fa2aa2704b36484",
+        "dllSha256": "c69a371f5e70d88af4a5adc3e7652256d1e580fe7d0d8b2565d07c8db02d7be7",
+        "game": "v0.107.1",
+        "mod": "1.0.30",
+        "baseLib": "v3.4.7"
+      },
+      {
+        "source": "da4cff92814b7f893edbe8c45eaac5e6e1d4c5d0",
+        "dllSha256": "0e3b5839c972ec374e3739fec1ece344b4c9d5f9e56f46c3724a0197272b36e3",
+        "game": "v0.107.1",
+        "mod": "1.0.30",
+        "baseLib": "v3.4.7"
+      },
+      {
+        "source": "d562fe30d06fd20ea4bafcbc2eee494bb6fc00b3",
+        "dllSha256": "a019f0768747299201a097bb335751006802aa4cfcfe22d2f7da1c5e7df868cc",
+        "game": "v0.107.1",
+        "mod": "1.0.30",
+        "baseLib": "v3.4.7"
+      },
+      {
+        "source": "07bcf006998747c5932bdcf9f041cd7e39a8b6bf",
+        "dllSha256": "3f3cd3fe23b95bf619030eb285cef385c31bc459a28f6ed8d10ebe7f0f1d0d12",
+        "game": "v0.107.1",
+        "mod": "1.0.30",
+        "baseLib": "v3.4.7"
+      }
+    ],
+    "commands": 15799,
+    "hasError": false,
+    "checkpointRecoveries": 2,
+    "batches": [
+      {
+        "priorReport": "pacing-campaign-balance146-pacing-knight-regular4.json",
+        "afterRun": 12,
+        "endRun": 36,
+        "forkedFromDurableReceipt": true
+      },
+      {
+        "priorReport": "pacing-campaign-balance146-long-knight-regular-fork.json",
+        "afterRun": 36,
+        "endRun": 43,
+        "forkedFromDurableReceipt": false
+      },
+      {
+        "priorReport": "pacing-campaign-balance146-settled-knight43.json",
+        "afterRun": 43,
+        "endRun": 67,
+        "forkedFromDurableReceipt": true
+      }
+    ],
+    "targetReturns": 67,
+    "returnCap": 200,
+    "stopReason": "settled-checkpoint",
+    "stopAtFullManor": false,
+    "checkpointExtraction": {
+      "settledReturns": 67,
+      "excludedRuns": [
+        68
+      ],
+      "fullManor": false,
+      "priorReport": "pacing-campaign-balance146-full-knight-fork43.json",
+      "receiptSha256": "f9a764fadb7e5c39f8ebeebfad443a960e53e7a6a11d66cecf942aebdad96261"
+    },
+    "logMatches": {
+      "launch.log": {
+        "ERROR": 0,
+        "InvalidTaskId": 0,
+        "double free": 0,
+        "particles": 0,
+        "backup": 0
+      },
+      "errors.log": {
+        "ERROR": 218,
+        "InvalidTaskId": 0,
+        "double free": 0,
+        "particles": 3,
+        "backup": 0
+      }
+    }
+  },
+  {
+    "trial": "pacing-campaign-balance146-settled-knight73",
+    "receiptSha256": "0587d5d004f98b60b054fc4cdf8e5e8ff04156ca97482de4071fea95de93b980",
+    "status": "finished",
+    "included": false,
+    "stages": [
+      {
+        "source": "fced4ccb123e4684b3226d7a3fa2aa2704b36484",
+        "dllSha256": "c69a371f5e70d88af4a5adc3e7652256d1e580fe7d0d8b2565d07c8db02d7be7",
+        "game": "v0.107.1",
+        "mod": "1.0.30",
+        "baseLib": "v3.4.7"
+      },
+      {
+        "source": "da4cff92814b7f893edbe8c45eaac5e6e1d4c5d0",
+        "dllSha256": "0e3b5839c972ec374e3739fec1ece344b4c9d5f9e56f46c3724a0197272b36e3",
+        "game": "v0.107.1",
+        "mod": "1.0.30",
+        "baseLib": "v3.4.7"
+      },
+      {
+        "source": "d562fe30d06fd20ea4bafcbc2eee494bb6fc00b3",
+        "dllSha256": "a019f0768747299201a097bb335751006802aa4cfcfe22d2f7da1c5e7df868cc",
+        "game": "v0.107.1",
+        "mod": "1.0.30",
+        "baseLib": "v3.4.7"
+      },
+      {
+        "source": "07bcf006998747c5932bdcf9f041cd7e39a8b6bf",
+        "dllSha256": "3f3cd3fe23b95bf619030eb285cef385c31bc459a28f6ed8d10ebe7f0f1d0d12",
+        "game": "v0.107.1",
+        "mod": "1.0.30",
+        "baseLib": "v3.4.7"
+      },
+      {
+        "source": "06a9266823ec104de8c81b5a973558bedd173e25",
+        "dllSha256": "b8478fed248ee04451ac089be60a5e02e136b741e828af7b70e00832033c3a37",
+        "game": "v0.107.1",
+        "mod": "1.0.30",
+        "baseLib": "v3.4.7"
+      }
+    ],
+    "commands": 17811,
+    "hasError": false,
+    "checkpointRecoveries": 2,
+    "batches": [
+      {
+        "priorReport": "pacing-campaign-balance146-pacing-knight-regular4.json",
+        "afterRun": 12,
+        "endRun": 36,
+        "forkedFromDurableReceipt": true
+      },
+      {
+        "priorReport": "pacing-campaign-balance146-long-knight-regular-fork.json",
+        "afterRun": 36,
+        "endRun": 43,
+        "forkedFromDurableReceipt": false
+      },
+      {
+        "priorReport": "pacing-campaign-balance146-settled-knight43.json",
+        "afterRun": 43,
+        "endRun": 67,
+        "forkedFromDurableReceipt": true
+      },
+      {
+        "priorReport": "pacing-campaign-balance146-settled-knight67.json",
+        "afterRun": 67,
+        "endRun": 73,
+        "forkedFromDurableReceipt": true
+      }
+    ],
+    "targetReturns": 73,
+    "returnCap": 200,
+    "stopReason": "settled-checkpoint",
+    "stopAtFullManor": true,
+    "checkpointExtraction": {
+      "settledReturns": 73,
+      "excludedRuns": [
+        74
+      ],
+      "fullManor": false,
+      "priorReport": "pacing-campaign-balance146-full-knight-sphere67.json",
+      "receiptSha256": "06968c22a2d13add46262a110f7208ea4bdcb9c8c34de81eade21aafe4ee22b0"
+    },
+    "logMatches": {
+      "launch.log": {
+        "ERROR": 0,
+        "InvalidTaskId": 0,
+        "double free": 0,
+        "particles": 0,
+        "backup": 0
+      },
+      "errors.log": {
+        "ERROR": 4,
+        "InvalidTaskId": 0,
+        "double free": 0,
+        "particles": 3,
+        "backup": 0
+      }
+    }
+  },
+  {
+    "trial": "pacing-campaign-balance146-settled-ranger66",
+    "receiptSha256": "a18d3a971bdcf31515ddc4f1bfbdc2e03d07b6c995afb38bcbb02ba410dd8900",
+    "status": "finished",
+    "included": false,
+    "stages": [
+      {
+        "source": "2c7ae5d01c88d8b3f76c71106ebb9da64aaf0f82",
+        "dllSha256": "01f751ff6422cc9bdc2c83c632b93f27020663a14ef7653b63b3852b474b23de",
+        "game": "v0.111.0",
+        "mod": "1.0.30",
+        "baseLib": "v3.4.7"
+      },
+      {
+        "source": "52cd89c4fe949d43d48f3cdc570dfcab39d3c7f7",
+        "dllSha256": "b13c50b1cdfa6a59e7125f39fc6798b06d2a08a0ac701705d8ad538431ae22d3",
+        "game": "v0.111.0",
+        "mod": "1.0.30",
+        "baseLib": "v3.4.7"
+      },
+      {
+        "source": "07bcf006998747c5932bdcf9f041cd7e39a8b6bf",
+        "dllSha256": "3f3cd3fe23b95bf619030eb285cef385c31bc459a28f6ed8d10ebe7f0f1d0d12",
+        "game": "v0.111.0",
+        "mod": "1.0.30",
+        "baseLib": "v3.4.7"
+      }
+    ],
+    "commands": 9699,
+    "hasError": false,
+    "checkpointRecoveries": 0,
+    "batches": [
+      {
+        "priorReport": "pacing-campaign-balance146-pacing-ranger-beta1.json",
+        "afterRun": 12,
+        "endRun": 36
+      },
+      {
+        "priorReport": "pacing-campaign-balance146-long-ranger-beta.json",
+        "afterRun": 36,
+        "endRun": 66,
+        "forkedFromDurableReceipt": false
+      }
+    ],
+    "targetReturns": 66,
+    "returnCap": 200,
+    "stopReason": "settled-checkpoint",
+    "stopAtFullManor": false,
+    "checkpointExtraction": {
+      "settledReturns": 66,
+      "excludedRuns": [
+        67
+      ],
+      "priorReport": "pacing-campaign-balance146-full-ranger-beta.json",
+      "receiptSha256": "dd685252681fdb2b5714b6190bf723afda30cce8d2664d3346d7a3038ff292a2"
+    },
+    "logMatches": {
+      "launch.log": {
+        "ERROR": 0,
+        "InvalidTaskId": 0,
+        "double free": 0,
+        "particles": 0,
+        "backup": 0
+      },
+      "errors.log": {
+        "ERROR": 3,
+        "InvalidTaskId": 0,
+        "double free": 0,
+        "particles": 3,
+        "backup": 0
+      }
+    }
+  },
+  {
+    "trial": "pacing-campaign-balance146-settled-ranger83",
+    "receiptSha256": "8deda28662bbff5b55279e748779b5189961b4459bcff5c713a71eef50353144",
+    "status": "finished",
+    "included": false,
+    "stages": [
+      {
+        "source": "2c7ae5d01c88d8b3f76c71106ebb9da64aaf0f82",
+        "dllSha256": "01f751ff6422cc9bdc2c83c632b93f27020663a14ef7653b63b3852b474b23de",
+        "game": "v0.111.0",
+        "mod": "1.0.30",
+        "baseLib": "v3.4.7"
+      },
+      {
+        "source": "52cd89c4fe949d43d48f3cdc570dfcab39d3c7f7",
+        "dllSha256": "b13c50b1cdfa6a59e7125f39fc6798b06d2a08a0ac701705d8ad538431ae22d3",
+        "game": "v0.111.0",
+        "mod": "1.0.30",
+        "baseLib": "v3.4.7"
+      },
+      {
+        "source": "07bcf006998747c5932bdcf9f041cd7e39a8b6bf",
+        "dllSha256": "3f3cd3fe23b95bf619030eb285cef385c31bc459a28f6ed8d10ebe7f0f1d0d12",
+        "game": "v0.111.0",
+        "mod": "1.0.30",
+        "baseLib": "v3.4.7"
+      }
+    ],
+    "commands": 13476,
+    "hasError": false,
+    "checkpointRecoveries": 0,
+    "batches": [
+      {
+        "priorReport": "pacing-campaign-balance146-pacing-ranger-beta1.json",
+        "afterRun": 12,
+        "endRun": 36
+      },
+      {
+        "priorReport": "pacing-campaign-balance146-long-ranger-beta.json",
+        "afterRun": 36,
+        "endRun": 66,
+        "forkedFromDurableReceipt": false
+      },
+      {
+        "priorReport": "pacing-campaign-balance146-settled-ranger66.json",
+        "afterRun": 66,
+        "endRun": 83,
+        "forkedFromDurableReceipt": true
+      }
+    ],
+    "targetReturns": 83,
+    "returnCap": 200,
+    "stopReason": "settled-checkpoint",
+    "stopAtFullManor": false,
+    "checkpointExtraction": {
+      "settledReturns": 83,
+      "excludedRuns": [
+        84
+      ],
+      "priorReport": "pacing-campaign-balance146-full-ranger-fork66.json",
+      "receiptSha256": "94e39bbae2589d8076a174f76a8b3b2131421e5ce76ebaf440216f7b70075def"
+    },
+    "logMatches": {
+      "launch.log": {
+        "ERROR": 0,
+        "InvalidTaskId": 0,
+        "double free": 0,
+        "particles": 0,
+        "backup": 0
+      },
+      "errors.log": {
+        "ERROR": 2,
+        "InvalidTaskId": 0,
+        "double free": 0,
+        "particles": 3,
+        "backup": 0
+      }
+    }
+  }
+]
