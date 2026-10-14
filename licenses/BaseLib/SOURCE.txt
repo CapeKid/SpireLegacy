@@ -1,0 +1,6 @@
+BaseLib 3.4.7, Alchyr and contributors, MIT.
+NuGet: Alchyr.Sts2.BaseLib 3.4.7.
+Pinned repository commit from the package nuspec:
+https://github.com/Alchyr/BaseLib-StS2/tree/255b1531a5cb6ba7e4e4b76dc3dd2afbc4a42b23
+License copied verbatim from:
+https://github.com/Alchyr/BaseLib-StS2/blob/255b1531a5cb6ba7e4e4b76dc3dd2afbc4a42b23/LICENSE.txt
