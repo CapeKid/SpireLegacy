@@ -33,6 +33,12 @@ The separate trial passed that encounter and settled return 84 as a floor-33 los
 
 Knight settled through return 67, then reached an unsupported `NCrystalSphereScreen` observation during return 68. This was a successfully answered observation, not a failed card mutation. The pilot now performs one ordinary cell/proceed action per request, selecting visible fog cells in row order and capping attempts at twenty. It does not inspect unrevealed item contents. Because the event charges gold and its exact UI save state was not verified, the unsupported attempt remains excluded; a new labelled fork starts from the completed 67-return family snapshot.
 
+The separate natural return 68 finished at floor 23 but did not visit Crystal Sphere, so it does not verify that handler. Controlled event fixtures on regular and beta separately recorded three cell clicks, normal reward collection, Proceed and map travel. These fixtures deliberately enter the event and remain excluded from natural campaign and earned-crown counts. The first fixture setup used a mutable model where the room factory requires a canonical model; those two failed fixture reports are preserved and excluded. The corrected fixtures use source `f0d333134ff9e7e2609357eb880279f001c0bc1c`, DLL SHA-256 `e6c7687ac4788a1b91a0a59753b59846cf3428ab9c7973d4594df48b42f8f723`.
+
+Knight then settled through return 73. During return 74, at Act 3/floor 35, the native Whispering Earring autoplay had installed its own selector while the player was still in Start phase. The bridge attempted to acquire the pilot selector before its existing in-Step readiness check, causing a nested-selector exception. The bridge now performs the phase check before acquiring any pilot selector and returns a read-only wait snapshot until Play phase. The failed attempt remains excluded; a new labelled fork carries the completed 73-return snapshot. Controlled fixtures separately grant the native relic to test that readiness boundary; they are not natural campaign evidence.
+
+The readiness fixtures exposed a second regular-branch timing boundary: the native selector can remain active briefly after Play phase begins. The bridge also observes `CardSelectCmd.Selector` and waits for its release. It does not clear or replace the native selector. The combined event/autoplay fixture must restart into a separate run before entering the autoplay combat, because its event-exit proof may already have started another battle. The final regular/beta fixtures completed normal pilot turns after 25/26 read-only waits respectively. They use source `7bc3db8ec5f4063d887cd6370776b3dec2f743eb`, DLL SHA-256 `5a5e7eeec4ed16b06aaf1e51330bc1784cce81c5b6a70a8b4a3ea8ff8db14d22`. The natural Knight continuation was already running the earlier phase-only fixture DLL; that distinction remains in its receipts.
+
 Ranger paid all sixteen upgrades by return 120: 2,653 crowns earned, 2,620 spent, 33 remaining. The stop flag in the initial PowerShell wrapper was inadvertently splatted as individual characters, so the test began an unnecessary return 121 before hitting the 8,000-receipt guard. That unsettled return is excluded. The verified full-manor lifecycle receipt at return 120 is exported as `full-manor-checkpoint`, rather than claiming that the original worker stopped normally at the milestone. The launcher now preserves the flag as a string array; tests exercise the actual assignment and native Python argument binding with the flag both enabled and disabled.
 
 ```powershell
@@ -63,3 +69,41 @@ The tested DLL was built from source `52cd89c`, SHA-256 `b13c50b1cdfa6a59e7125f3
 The FTUE-corrected pacing DLL is source `07bcf006998747c5932bdcf9f041cd7e39a8b6bf`, SHA-256 `3f3cd3fe23b95bf619030eb285cef385c31bc459a28f6ed8d10ebe7f0f1d0d12`. Python/PowerShell receipt handling was subsequently improved without rebuilding that DLL. Each command records the loaded runtime artifact; newer tooling commits must not be presented as that DLL's source.
 
 The Crystal Sphere fixture DLL is source `06a9266823ec104de8c81b5a973558bedd173e25`, SHA-256 `b8478fed248ee04451ac089be60a5e02e136b741e828af7b70e00832033c3a37`. It compiles against both owned game versions. Its event policy change is a separate measurement stage; ordinary gameplay, card stats, prices and payout rules remain unchanged.
+
+## Final earned-purchase measurements
+
+The [derived export](evidence/balance146-long-term/manifest.json) contains 34 completed standalone campaigns, 200 settled returns and 20,542 decisions. Earlier completed prefixes are superseded, not counted twice. The [controlled UI/relic fixtures](evidence/balance146-long-term/sphere-ui.json) are separate from these counts. Offered, picked and played cards are retained in `cards.csv` and `decisions.jsonl`; hand-entry observations are not claimed as Draw-hook counts.
+
+| Trajectory | Settled returns | Paid upgrades | Earned crowns | Spent crowns | Remaining crowns |
+| --- | ---: | ---: | ---: | ---: | ---: |
+| Knight, regular | 80 | 16 | 2,649 | 2,620 | 29 |
+| Ranger, beta | 120 | 16 | 2,653 | 2,620 | 33 |
+
+Knight stopped normally at full manor with the corrected flag. Its final measurement stage uses source `ebb006d3ad50d06a9a9cb74825f8634148ed0c77`, DLL SHA-256 `0babb0eb02ba9d839f3ee85984b5ccf53267f0522c823bdd933e92af22c22e62`. Ranger's full-manor result is the verified checkpoint described above. Both trajectories have zero winning campaigns. Each purchase below is an actual paid receipt; gaps count settled returns since the preceding purchase.
+
+| Upgrade | Cost | Knight regular return (gap) | Ranger beta return (gap) |
+| --- | ---: | ---: | ---: |
+| Vitality 1 | 80 | 5 (5) | 7 (7) |
+| Armory 1 | 120 | 12 (7) | 16 (9) |
+| Smith 1 | 120 | 18 (6) | 23 (7) |
+| Garden 1 | 100 | 21 (3) | 30 (7) |
+| Library 1 | 350 | 34 (13) | 48 (18) |
+| Vitality 2 | 115 | 38 (4) | 54 (6) |
+| Smith 2 | 200 | 44 (6) | 66 (12) |
+| Armory 2 | 200 | 50 (6) | 74 (8) |
+| Garden 2 | 140 | 53 (3) | 80 (6) |
+| Vitality 3 | 150 | 56 (3) | 84 (4) |
+| Vitality 4 | 185 | 61 (5) | 91 (7) |
+| Vitality 5 | 220 | 67 (6) | 101 (10) |
+| Vault 1 | 100 | 70 (3) | 103 (2) |
+| Vault 2 | 140 | 73 (3) | 107 (4) |
+| Vault 3 | 180 | 76 (3) | 113 (6) |
+| Vault 4 | 220 | 80 (4) | 120 (7) |
+
+The observed first-upgrade timing matches the documented 5–7-return target in this limited pilot. The later Library gap demonstrates the effect of front-loading an expensive upgrade. Neither the full-completion dates nor the higher-Ascension losses establish human difficulty or justify changing prices/cards. These are loss-heavy, branched fixtures with the limitations stated above.
+
+## Validation and remaining scope
+
+The final fixture build passes design preflight and compilation with zero warnings/errors, 20 harness checks, 17 continuity/launcher tests and 14 exporter tests. Native Crystal Sphere and separate-run Whispering Earring fixtures pass on both game versions. The export checks unchanged prefixes, checkpoint hashes, unique command/settlement IDs, paid level order and crown conservation. Failed, interrupted and unsupported attempts remain visible in the manifest and contribute no unverified earnings.
+
+Issue #146 remains open. These measurements complete the paid full-manor curves and add controlled A10 Knight comparisons, but do not establish experienced-player win rates, current-build winning campaigns with recorded decisions, controlled higher-Ascension Ranger/Mage archetypes, or representative hard-trait/relic campaign combinations. The user's reported A10 Steam Deck Knight win supports qualitative viability; its unknown seed/build/deck prevents treating it as a matched fixture. No gameplay balance change is warranted from these pilot losses alone.
