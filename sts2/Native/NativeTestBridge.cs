@@ -467,7 +467,7 @@ public static class NativeTestBridge
                     AbstractModel? roomModel=encounter;
                     if(request.TryGetProperty("event",out var eventName) && eventName.GetString()=="Neow")roomModel=ModelDb.Event<MegaCrit.Sts2.Core.Models.Events.Neow>();
                     if(request.TryGetProperty("event",out var endingName) && endingName.GetString()=="Architect")roomModel=ModelDb.Event<MegaCrit.Sts2.Core.Models.Events.TheArchitect>();
-                    if(request.TryGetProperty("event",out var sphereName) && sphereName.GetString()=="CrystalSphere")roomModel=ModelDb.Event<MegaCrit.Sts2.Core.Models.Events.CrystalSphere>().ToMutable();
+                    if(request.TryGetProperty("event",out var sphereName) && sphereName.GetString()=="CrystalSphere")roomModel=ModelDb.Event<MegaCrit.Sts2.Core.Models.Events.CrystalSphere>();
                     await RunManager.Instance.EnterRoomDebug(roomType,model:roomModel,showTransition:false);
                     RunManager.Instance.ActionExecutor.Unpause();
                     result = RunState().Players.Count==1?StateSummary():CoopOracle.State(); break;
