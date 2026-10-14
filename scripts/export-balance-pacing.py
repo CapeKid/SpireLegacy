@@ -35,6 +35,7 @@ def export(source, target, stopped_reports=()):
                 expected=completed_prefix(reports[checkpoint['priorReport']],data['cls'])
                 assert all(data[key][:len(expected[key])]==expected[key] for key in ('runs','purchases','evidence')), 'Changed extracted durable checkpoint prefix'
                 assert all(checkpoint[key]==expected['checkpointExtraction'][key] for key in ('settledReturns','excludedRuns')), 'Changed checkpoint exclusion metadata'
+                if 'fullManor' in checkpoint:assert checkpoint['fullManor']==expected['checkpointExtraction']['fullManor']
                 superseded.add(checkpoint['priorReport'])
             for batch in data.get('batches',[]):
                 prior=reports[batch['priorReport']]
@@ -111,7 +112,7 @@ def export(source, target, stopped_reports=()):
                                   crowns=state['crowns'], earned=state['lastEarned']))
             continue
         assert len(report['runs']) == report.get('targetReturns',12)
-        if report.get('stopReason')=='full-manor':
+        if report.get('stopReason') in ('full-manor','full-manor-checkpoint'):
             from pacing_state import ORDER,completed
             completed(report,report['cls'])
             assert [p['upgrade'] for p in report['purchases']]==ORDER

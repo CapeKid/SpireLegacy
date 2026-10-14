@@ -75,7 +75,9 @@ def completed_prefix(report, cls):
         except ValueError:continue
         result['evidence']=result['evidence'][:index+1]
         durable_snapshot(result,cls)
-        result['checkpointExtraction']=dict(settledReturns=len(runs),excludedRuns=[r['run'] for r in report['runs'][len(runs):]])
+        full=[p['upgrade'] for p in result['purchases']]==ORDER
+        if full:result['stopReason']='full-manor-checkpoint'
+        result['checkpointExtraction']=dict(settledReturns=len(runs),excludedRuns=[r['run'] for r in report['runs'][len(runs):]],fullManor=full)
         return result
     raise ValueError('No matching completed durable snapshot; do not synthesize settlement')
 

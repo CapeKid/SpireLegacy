@@ -1,6 +1,11 @@
 import copy
 import unittest
-from pacing_state import completed,assert_live,durable_snapshot,completed_prefix
+import json
+import shutil
+import subprocess
+import sys
+from pathlib import Path
+from pacing_state import ORDER,completed,assert_live,durable_snapshot,completed_prefix
 
 class Continuity(unittest.TestCase):
     def setUp(self):
@@ -55,6 +60,39 @@ class Continuity(unittest.TestCase):
         self.interrupted()
         self.report['evidence'][0]['response']['result']['persisted']['crowns']=999
         with self.assertRaises(ValueError):completed_prefix(self.report,'knight')
+    def test_full_paid_checkpoint_excludes_extra_unsettled_return(self):
+        prices=[80,120,120,100,350,115,200,200,140,150,185,220,100,140,180,220]
+        self.assertEqual(sum(prices),2620)
+        self.report.update(status='error',runs=[],purchases=[])
+        levels={}
+        for n,(upgrade,cost) in enumerate(zip(ORDER,prices),1):
+            levels[upgrade]=levels.get(upgrade,0)+1
+            self.report['runs'].append(dict(run=n,status='finished',settledId=str(n),generation=n+3,crownsBefore=0,crownsAfter=cost,earned=cost))
+            self.report['purchases'].append(dict(run=n,upgrade=upgrade,level=levels[upgrade],purchased=True,crownsBefore=cost,crownsAfter=0))
+        profile=dict(crowns=0,manor=levels,active=None,settledId='16',generation=19)
+        record=self.report['evidence'][0];record['request']['command']='lifecycle-state'
+        record['response']['result']=dict(profile=profile,persisted=copy.deepcopy(profile))
+        self.report['runs'].append(dict(run=17,status='running'))
+        result=completed_prefix(self.report,'knight')
+        self.assertEqual(result['stopReason'],'full-manor-checkpoint')
+        self.assertTrue(result['checkpointExtraction']['fullManor'])
+        self.assertEqual(result['checkpointExtraction']['excludedRuns'],[17])
+        self.assertEqual(result['targetReturns'],16)
+    @unittest.skipUnless(shutil.which('pwsh'),'PowerShell launcher contract')
+    def test_launcher_stop_flag_is_one_argument(self):
+        self.launcher_args(True,['--stop-when-full'])
+    @unittest.skipUnless(shutil.which('pwsh'),'PowerShell launcher contract')
+    def test_launcher_without_stop_has_no_tail_argument(self):
+        self.launcher_args(False,[])
+    def launcher_args(self,enabled,expected):
+        script=str(Path(__file__).with_name('run-balance-campaign.ps1').resolve()).replace("'","''")
+        python=sys.executable.replace("'","''")
+        # Execute only the actual launcher's flag assignment, then exercise real
+        # native argument binding. No lab/process/game actions are invoked.
+        code=f"$ast=[System.Management.Automation.Language.Parser]::ParseFile('{script}',[ref]$null,[ref]$null);$assignment=$ast.Find({{param($n) $n -is [System.Management.Automation.Language.AssignmentStatementAst] -and $n.Left.Extent.Text -match 'pacingTail'}},$true);$StopAtFullManor=${str(enabled).lower()};Invoke-Expression $assignment.Extent.Text;& '{python}' -c 'import sys,json;print(json.dumps(sys.argv[1:]))' @pacingTail"
+        run=subprocess.run(['pwsh','-NoProfile','-Command',code],capture_output=True,text=True)
+        self.assertEqual(run.returncode,0,run.stderr)
+        self.assertEqual(json.loads(run.stdout),expected)
     def paid(self, level=1):
         self.report['purchases']=[dict(run=8,upgrade='vitality',level=level,purchased=True,crownsBefore=80,crownsAfter=0)]
         for run in self.report['runs'][8:]:

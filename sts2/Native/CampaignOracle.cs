@@ -8,6 +8,7 @@ using MegaCrit.Sts2.Core.Nodes.Cards.Holders;
 using MegaCrit.Sts2.Core.Nodes.Cards;
 using MegaCrit.Sts2.Core.Nodes.CommonUi;
 using MegaCrit.Sts2.Core.Nodes.Events;
+using MegaCrit.Sts2.Core.Nodes.Events.Custom.CrystalSphere;
 using MegaCrit.Sts2.Core.Nodes.GodotExtensions;
 using MegaCrit.Sts2.Core.Nodes.RestSite;
 using MegaCrit.Sts2.Core.Nodes.Rewards;
@@ -32,6 +33,8 @@ public static class CampaignOracle
     private static string Key(CardModel c)=>c is LegacyCard lc?lc.Key:c.Id.ToString();
     private static readonly ConditionalWeakTable<RunState,HashSet<Reward>> skippedRewards=new();
     private static readonly ConditionalWeakTable<RunState,HashSet<string>> appliedInterventions=new();
+    private sealed class SphereAttempts{public int Count;}
+    private static readonly ConditionalWeakTable<NCrystalSphereScreen,SphereAttempts> sphereAttempts=new();
     public static async Task<object> Step(RunState run,string policy,IDisposable selector,string rewardPolicy="standalone",string? forcedReward=null,int forcedRewardFloor=0)
     {
         using(selector){
@@ -105,6 +108,22 @@ public static class CampaignOracle
                 if(!confirm.IsEnabled)return Result("wait");
                 var before=player.Deck.Cards.Count;await UiHelper.Click(confirm);
                 return Result("bundle-confirm",new{deckBefore=before,deckAfter=player.Deck.Cards.Count});
+            }
+            if(overlay is NCrystalSphereScreen sphere){
+                var proceed=sphere.GetNodeOrNull<NProceedButton>("%ProceedButton");
+                if(proceed is {IsEnabled:true}&&proceed.IsVisibleInTree()){
+                    await UiHelper.Click(proceed,500);return Result("sphere-proceed");
+                }
+                // Use only the visible fog/coordinates, never hidden item contents.
+                // Each request performs one ordinary controller-button action.
+                var cells=NativeTestBridge.Descendants(sphere).OfType<NCrystalSphereCell>()
+                    .Where(c=>c.IsVisibleInTree()&&c.Entity.IsHidden).OrderBy(c=>c.Entity.Y).ThenBy(c=>c.Entity.X).ToArray();
+                if(cells.Length==0)return Result("wait");
+                var attempts=sphereAttempts.GetOrCreateValue(sphere);
+                if(attempts.Count>=20)return Result("unsupported-sphere-cap",new{clicks=attempts.Count});
+                var cell=cells[0];var x=cell.Entity.X;var y=cell.Entity.Y;attempts.Count++;
+                cell.EmitSignal(NClickableControl.SignalName.Released,cell);await Task.Delay(500);
+                return Result("sphere-cell",new{x,y,hiddenBefore=cells.Length,hiddenAfter=NativeTestBridge.Descendants(sphere).OfType<NCrystalSphereCell>().Count(c=>c.Entity.IsHidden),clicks=attempts.Count});
             }
             if(overlay!=null)return Result("unsupported-overlay",new{type=overlay.GetType().Name});
             if(CombatManager.Instance.IsInProgress){
