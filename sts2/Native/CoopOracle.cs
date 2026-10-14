@@ -67,7 +67,7 @@ public static class CoopOracle
     {
         var player=PlayerBloodlines.LocalPlayer!;
         RunManager.Instance.ActionQueueSynchronizer.RequestEnqueue(
-            new MegaCrit.Sts2.Core.GameActions.Multiplayer.EndPlayerTurnAction(player,player.PlayerCombatState!.TurnNumber));
+            new MegaCrit.Sts2.Core.GameActions.EndPlayerTurnAction(player,player.PlayerCombatState!.TurnNumber));
     }
     public static async Task<object> Play(bool upgraded=false)
     {
