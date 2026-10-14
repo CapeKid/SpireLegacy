@@ -33,7 +33,7 @@ Repeat the native checks using an independently copied owned public-beta snapsho
 
 All 22 existing scenario clients use the shared correlated transport and retain native metadata. Set `HEIR_EXPECTED_DLL_SHA256` when running them; the focused harness baseline always computes the expected release hash. Python optimized mode is rejected because it disables their assertions. Responses record the baseline source SHA, optional tracked working-patch hash, actual DLL SHA-256, game/mod/BaseLib versions, platform, loaded mods, isolated profile, request ID and actual active run seed. The single-player fixture uses `SPIRELEGACY-PORT-TEST`; co-op input and port are recorded with the request. Commit the source before a reproducible release run; a dirty baseline SHA is not a claim that the build came from clean main.
 
-Every tracked product file is assigned a primary issue in the committed [coverage manifest](adversarial-audit-coverage.json). The fixture and native scripts store their complete evidence under `private/sts2-evidence`. Keep owned-game copies, screenshots, logs, profiles and receipts private. Publish the result summary, never the game files.
+The [coverage generator](../scripts/audit-coverage.py) assigns tracked product files to primary issues and writes an ignored local coverage manifest for review. The fixture and native scripts store their complete evidence under `private/sts2-evidence`. Keep owned-game copies, screenshots, logs, profiles and receipts private. Publish the result summary, never the game files.
 
 ## Failure semantics
 

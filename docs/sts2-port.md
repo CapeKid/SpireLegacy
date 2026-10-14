@@ -17,7 +17,7 @@ This is the native StS2 successor to Spire Legacy 0.5.0, created by CapeKid. It 
 
 The basic-card baseline remains: plain strikes deal 5 damage, guards supply 4 Block, and class HP starts at 60/52/56 before inheritance and manor bonuses. Upgraded drawing cards retain the safeguards from 0.5.0. Version 1.0.5 removes unrelated trait bonuses and overlapping starter modifiers, limits treasure income to treasure rooms, and makes Flame Barrier a defensive Skill with temporary retaliation. See [trait review](traits.md). Balance against StS2's enemies still needs full-run playtesting.
 
-StS2 adaptations preserve native encounters and rewards. Dusty Tome grants an upgraded rare card from the current heir's pool because the migrated set has no Ancient-rarity cards. Native relics that require a specific base-game starter card or relic keep their eligibility checks. Ancients use generic dialogue where available, with existing Ironclad dialogue as a fallback when the game supplies no custom-character dialogue. The Architect ending uses original Knight, Mage and Ranger conversations, each with first-victory and returning-victory text. The active heir's class selects the dialogue; the game's existing Heir win count selects first or returning lines. Native speakers, response buttons and ending animations are preserved. These six conversations are currently in English.
+StS2 adaptations preserve native encounters and rewards. Six exclusive Ancient cards and 48 original first/return conversations support all three Heir classes. Dusty Tome uses the current class's Ancient-card pool. Native relic eligibility checks remain in place. The Architect uses original first-victory and returning-victory conversations for Knight, Mage and Ranger. These conversations are currently in English.
 
 ## Workshop installation
 
@@ -25,7 +25,7 @@ StS2 adaptations preserve native encounters and rewards. Dusty Tome grants an up
 2. Subscribe to [BaseLib](https://steamcommunity.com/sharedfiles/filedetails/?id=3737335127) and [Spire Legacy for StS2](https://steamcommunity.com/sharedfiles/filedetails/?id=3816525393). The new item is currently private for owner testing. The original StS1 Workshop item is a different mod.
 3. Start StS2 on your selected branch. Accept its mod notice and enable BaseLib and Spire Legacy in the mod list. Restart if requested.
 4. Select **The Heir**. **Family Manor & Heir Lab** appears beneath the character information, clear of Ascension. Press Y, or move down from the portrait and press A. Choose a family/heir and start a solo climb.
-5. After a climb, return to the manor to choose another heir. Selecting upgrades only stages them; **Review purchases ÃƒÂ¢Ã¢â‚¬Â Ã¢â‚¬â„¢ Confirm and save** spends crowns.
+5. After a climb, return to the manor to choose another heir. Selecting upgrades only stages them; **Review purchases, then Confirm and save** spends crowns.
 
 Spire Legacy supports solo and co-op. Each Heir brings their own frozen class, traits and manor bonuses; crowns stay with their local family. All players need matching game/mod versions. See [co-op setup and progression](coop.md).
 
@@ -35,9 +35,9 @@ Use the D-pad or left stick to move through buttons and read trait descriptions;
 
 ## Manual installation
 
-Current prepared release: **1.0.28**. See [release notes and validation](https://github.com/CapeKid/SpireLegacy/blob/main/docs/release-1.0.28.md); the package includes them as `release-notes.md`. Preparation does not change the currently published Workshop/Melty version.
+Use the version in the archive filename and included `SpireLegacy.json`. Its `release-notes.md` describes that build; source changes and a prepared archive do not automatically update the published Workshop/Melty item.
 
-Extract `SpireLegacy-StS2-1.0.28.zip` into your StS2 install folder. Its layout is `mods/SpireLegacy/SpireLegacy.json`, `SpireLegacy.dll` and `heir/`. Subscribe to BaseLib separately, or use the Melty bundle, which includes BaseLib. Launch the normal game executable; no separate mod launcher is required.
+Extract `SpireLegacy-StS2-<version>.zip` into your StS2 install folder. Its layout is `mods/SpireLegacy/SpireLegacy.json`, `SpireLegacy.dll` and `heir/`. Subscribe to BaseLib separately, or use the Melty bundle, which includes BaseLib. Launch the normal game executable; no separate mod launcher is required.
 
 ## Steam Deck
 
@@ -49,7 +49,7 @@ If a card spends energy but never resolves, open **Family / Traits** after the f
 
 ## Melty
 
-`SpireLegacy-StS2-1.0.28-melty.zip` includes the standalone mod and BaseLib 3.4.7. `sts2/melty.json` declares only StS2, installs the two mods and launches `SlayTheSpire2.exe`. This launcher mapping targets Windows. Melty must validate the uploaded mapping and observe a successful launch before publication. A prepared archive alone is not a verified Melty install.
+`SpireLegacy-StS2-<version>-melty.zip` includes the standalone mod and BaseLib 3.4.7. `sts2/melty.json` declares only StS2, installs the two mods and launches `SlayTheSpire2.exe`. This launcher mapping targets Windows. Melty must validate the uploaded mapping and observe a successful launch before publication. A prepared archive alone is not a verified Melty install.
 
 The Workshop package uses Mega Crit's official StS2 uploader workspace format: `content/`, `workshop.json` and a PNG preview below 1 MB. Its visibility defaults to **private**. Update the existing StS2 item **3816525393** and preserve its uploader `mod_id.txt`; the portable archive excludes that local marker. Do not create a duplicate item or supply the StS1 item's ID. BaseLib is a Required Item.
 
@@ -68,14 +68,14 @@ python scripts/sts2-pool-expansion.py
 python scripts/sts2-generate.py
 dotnet build sts2/SpireLegacy.csproj -c Release -p:DesignPython="C:/path/to/python.exe" -p:Sts2DataDir="C:/path/to/StS2/data_sts2_windows_x86_64"
 dotnet run --project sts2/tests/SpireLegacy.CoreChecks.csproj
-python scripts/sts2-package.py
+python scripts/sts2-package.py --expected-dll-sha256 <hash-from-final-release-checks>
 ```
 
 Original icons are reproducible with `python scripts/author-heir-icons.py`; hashes and provenance are recorded in `sheets/icon_art.json` and [original-icons.md](original-icons.md). `scripts/preflight.py` validates the StS2 design and original artwork without an RL2 asset index or StS1 atlas. Historical source-asset validation is available only through `--historical-sts1-assets`.
 
 `scripts/sts2-lab.py` creates a fresh independently copied owned-game oracle with separate saves and Steam Cloud writes disabled. Launch with `HEIR_TEST_MODE=1`, a dedicated lab user directory, and absolute `HEIR_TEST_ROOT`/`HEIR_DATA_DIR` paths; see [the adversarial harness procedure](adversarial-harness.md). `scripts/sts2-oracle.py` exercises the correlated opt-in test bridge. Normal launches do not expose that bridge. Private game files, logs, extracted RL2 content and saves must remain ignored and must never be uploaded.
 
-Validation includes 2,434 core assertions; all 360 base cards and all 360 upgrades executed in native combat; 720 native stat/text/art checks; 549 inherited starter upgrade/save/downgrade round trips; six-choice rewards and shops for all three pools; class counters; native boss victory rewards; normal autosave/resume without duplicating Antique; staged manor purchases, family naming, banners and controller focus. Ancient compatibility adds 90 class-specific reward/serialization checks, actual upgraded reward acquisition and 36 dialogue checks. Shop and rest-site sprites were visually inspected. Full campaign balance, physical Deck play and Melty-installed launch validation remain separate release checks.
+Historical validation included 2,434 core assertions; all 360 base cards and all 360 upgrades executed in native combat; 720 native stat/text/art checks; 549 inherited starter upgrade/save/downgrade round trips; six-choice rewards and shops for all three pools; class counters; native boss victory rewards; normal autosave/resume without duplicating Antique; staged manor purchases, family naming, banners and controller focus. Ancient compatibility adds 90 class-specific reward/serialization checks, actual upgraded reward acquisition and 36 dialogue checks. Shop and rest-site sprites were visually inspected. Full campaign balance, physical Deck play and Melty-installed launch validation remain separate release checks.
 
 ## Credits and license
 
@@ -156,3 +156,13 @@ Inline energy symbols in descriptions and Neow options match native 24px text ar
 Initialization runs once, validates supported branch APIs and removes partial patches on failure before family generation. Includes the merged guarded test-harness changes. The same release DLL passed owned regular v0.107.1 and public-beta v0.111.0, all three heirs, solo/co-op, paid card cleanup, same-branch resume and native character controls. See `docs/adversarial-startup.md` in the source repository for detailed coverage. Native beta saves can contain RNG values unsupported by regular builds; complete campaign migration between branches remains unverified.
 
 Build-time design validation requires Python 3.10+ with Pillow (`python -m pip install Pillow`). Set `DesignPython` when Python is not on PATH. This is a contributor requirement; installed mods require no Python. The build runs preflight and checks generated models before compiling. Edit the checked-in contracts in `scripts/design-schema.json` deliberately when adding fields, then regenerate with `scripts/sts2-generate.py`. Bounds are authoring guards, not balance targets.
+
+## Duplicate copies, updates and uninstall
+
+An enabled manual copy in the game's `mods` directory takes precedence over the same subscribed Workshop mod. If Steam downloads a new version but the game loads an older one, inspect both Spire Legacy and BaseLib. Close the game and move the unwanted manual mod directory outside both scanned roots. Renaming a backup inside `mods` still lets the native recursive scanner find it. Keep one enabled installation method for each mod. Restart the game after updating.
+
+For manual updates, replace the entire `mods/SpireLegacy` directory with the new package's directory after backing up the old mod directory outside the game. Copying files over an old tree can retain obsolete art or binaries. To uninstall, unsubscribe from the Workshop item or move/remove the manual mod directory; leave the separate family and game save directories intact. Uninstalling the mod does not migrate an active modded game run into a native-character run.
+
+Optional contributor diagnostics: `python scripts/sts2-install-check.py --game "<Steam library>/steamapps/common/Slay the Spire 2" --expected-version <version>`. Supply `--workshop` for an independently located Workshop library. It lists discovered versions/hashes and actionable duplicate/dependency errors without changing files, settings or saves. Windows, Linux and Proton directory layouts are covered by filesystem fixtures; this is not a claim of physical Steam Deck testing. Ordinary Workshop installation needs no Python.
+
+Packaging requires the explicit DLL hash from final release checks. The builder verifies all configs and original assets, stages only declared files, and promotes validated output as a recoverable transaction. A subsequent invocation rolls back an interrupted promotion before rebuilding. It preserves only the existing item marker `mod_id.txt` and rejects a marker for a different item. Use `--output-root private/<new-audit-root>` for an isolated dry run. `check-sts2-release.py` accepts the same hash/output arguments and remains effective with Python `-O`.

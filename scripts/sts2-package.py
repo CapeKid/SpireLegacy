@@ -1,98 +1,41 @@
-"""Stage a native StS2 mod and separate Workshop/Melty packages; no owned game files."""
-import hashlib, json, pathlib, shutil, zipfile
-from PIL import Image
+"""Stage exact validated StS2 files; publish nothing and never reuse dirty staging."""
+import argparse,json,pathlib,tempfile,shutil
+from release_contract import payloads,write_archive,digest,ITEM_ID,APP_ID,ReleaseError
+from release_transaction import checked,remove,recover,promote
 repo=pathlib.Path(__file__).resolve().parents[1]
-manifest=json.loads((repo/'sts2/SpireLegacy.json').read_text(encoding='utf-8-sig'))
-version=manifest['version']
-stage=repo/'build/sts2/release'/version
-mod=stage/'mods/SpireLegacy'
-mod.mkdir(parents=True,exist_ok=True)
-def copy(source,target):
-    target.parent.mkdir(parents=True,exist_ok=True);shutil.copy2(source,target)
-copy(repo/'sts2/bin/Release/net9.0/SpireLegacy.dll',mod/'SpireLegacy.dll')
-copy(repo/'sts2/SpireLegacy.json',mod/'SpireLegacy.json')
-release_notes=repo/'docs'/f'release-{version}.md'
-if release_notes.exists():copy(release_notes,mod/'release-notes.md')
-# Remove the obsolete reader when rebuilding a previously staged version.
-(mod/'content-reader.zip').unlink(missing_ok=True)
-icons=json.loads((repo/'sheets/icon_art.json').read_text())
-for icon in icons:
-    source=repo/'src/main/resources'/icon['path']
-    if hashlib.sha256(source.read_bytes()).hexdigest()!=icon['sha256']:raise ValueError('Icon hash mismatch: '+icon['id'])
-    copy(source,mod/icon['path'])
-illustrations=json.loads((repo/'sheets/card_art.json').read_text(encoding='utf-8-sig'))
-for art in illustrations:
-    source=repo/'src/main/resources'/art['path']
-    if hashlib.sha256(source.read_bytes()).hexdigest()!=art['sha256']: raise ValueError('Illustration hash mismatch: '+art['path'])
-    copy(source,mod/art['path'])
-for art in json.loads((repo/'sheets/character_art.json').read_text(encoding='utf-8')):
-    source=repo/'src/main/resources'/art['path']
-    if hashlib.sha256(source.read_bytes()).hexdigest()!=art['sha256']:raise ValueError('Character atlas hash mismatch: '+art['id'])
-    copy(source,mod/art['path'])
-    if isinstance(art.get('death'),dict):
-        source=repo/'src/main/resources'/art['death']['path']
-        if hashlib.sha256(source.read_bytes()).hexdigest()!=art['death']['sha256']:raise ValueError('Death atlas hash mismatch: '+art['id'])
-        copy(source,mod/art['death']['path'])
-for art in ['select-icon.png','select-bg.png','heir-portrait.png']:copy(repo/'src/main/resources/heir/ui'/art,mod/'heir/ui'/art)
-copy(repo/'LICENSE',mod/'LICENSE')
-copy(repo/'private/sts2-baselib/LICENSE.txt',mod/'licenses/BaseLib-MIT.txt')
-copy(repo/'docs/sts2-port.md',mod/'README.md')
-copy(repo/'docs/traits.md',mod/'traits.md')
-copy(repo/'docs/trait-effect-audit.md',mod/'trait-effect-audit.md')
-copy(repo/'docs/character-sprites.md',mod/'character-sprites.md')
-copy(repo/'docs/original-icons.md',mod/'original-icons.md')
-copy(repo/'docs/heir-relics.md',mod/'heir-relics.md')
-for art in json.loads((repo/'sheets/relic_art.json').read_text()):
-    for field,hashfield in [('path','sha256'),('outline','outlineSha256')]:
-        source=repo/'src/main/resources'/art[field]
-        if hashlib.sha256(source.read_bytes()).hexdigest()!=art[hashfield]:raise ValueError('Relic icon hash mismatch: '+art['id'])
-        copy(source,mod/art[field])
-copy(repo/'docs/heir-potions.md',mod/'heir-potions.md')
-copy(repo/'docs/heir-ancient-dialogue.md',mod/'heir-ancient-dialogue.md')
-copy(repo/'docs/family-chronicle.md',mod/'family-chronicle.md')
-copy(repo/'docs/coop.md',mod/'coop.md')
-copy(repo/'docs/heir-presentation.md',mod/'heir-presentation.md')
-for art in json.loads((repo/'sheets/presentation_art.json').read_text()):
-    source=repo/'src/main/resources'/art['path']
-    if hashlib.sha256(source.read_bytes()).hexdigest()!=art['sha256']:raise ValueError('Presentation asset hash mismatch: '+art['id'])
-    copy(source,mod/art['path'])
-copy(repo/'docs/heir-ancient-cards.md',mod/'heir-ancient-cards.md')
-for art in json.loads((repo/'sheets/potion_art.json').read_text()):
-    for field,hashfield in [('path','sha256'),('outline','outlineSha256')]:
-        source=repo/'src/main/resources'/art[field]
-        if hashlib.sha256(source.read_bytes()).hexdigest()!=art[hashfield]:raise ValueError('Potion icon hash mismatch: '+art['id'])
-        copy(source,mod/art[field])
-for name in ['sts2-pool-expansion.md','card-pools.md','card-catalogue.md']:copy(repo/'docs'/name,mod/name)
-def archive(root,target):
-    with zipfile.ZipFile(target,'w',zipfile.ZIP_DEFLATED,compresslevel=6) as output:
-        for path in sorted(root.rglob('*')):
-            if not path.is_file():continue
-            if path.suffix.lower()=='.log' or path.name=='mod_id.txt':continue
-            name=path.relative_to(root).as_posix()
-            if any(token in name.lower() for token in ('family.json','source.json','sts2.dll','godotsharp.dll','slaythespire2.pck','assembly-csharp','host_assets','heir/test','content-reader','readerlinux','readroguelegacy','load_rl.py','assets.dat')):raise ValueError('Forbidden packaged file: '+name)
-            entry=zipfile.ZipInfo(name);entry.create_system=3;entry.compress_type=zipfile.ZIP_DEFLATED;entry.external_attr=0o100644<<16
-            output.writestr(entry,path.read_bytes())
-    with zipfile.ZipFile(target) as check:
-        if check.testzip() is not None:raise ValueError('Archive failed CRC validation')
-    return dict(path=str(target),size=target.stat().st_size,sha256=hashlib.sha256(target.read_bytes()).hexdigest())
-dist=repo/'dist';dist.mkdir(exist_ok=True)
-deliveries=[archive(stage,dist/f'SpireLegacy-StS2-{version}.zip')]
-workshop=repo/'build/sts2/workshop'
-workshop.mkdir(parents=True,exist_ok=True)
-shutil.copytree(mod,workshop/'content/SpireLegacy',dirs_exist_ok=True)
-(workshop/'content/SpireLegacy/content-reader.zip').unlink(missing_ok=True)
-copy(repo/'sts2/workshop.json',workshop/'workshop.json')
-copy(repo/'docs/sts2-port.md',workshop/'README.md')
-copy(repo/'docs/traits.md',workshop/'traits.md')
-Image.open(repo/'src/main/resources/heir/ui/select-bg.png').convert('RGB').resize((640,400),Image.Resampling.LANCZOS).save(workshop/'image.png',optimize=True)
-if (workshop/'image.png').stat().st_size>=1_000_000:raise ValueError('Workshop preview exceeds 1MB')
-deliveries.append(archive(workshop,dist/f'SpireLegacy-StS2-{version}-workshop.zip'))
-melty=repo/'build/sts2/melty'/version
-shutil.copytree(stage,melty,dirs_exist_ok=True)
-nuget=pathlib.Path.home()/'.nuget/packages/alchyr.sts2.baselib/3.4.7'
-for source in [nuget/'lib/net9.0/BaseLib.dll',nuget/'Content/BaseLib.json',nuget/'Content/BaseLib.pck']:copy(source,melty/'mods/BaseLib'/source.name)
-melty_manifest=json.loads((repo/'sts2/melty.json').read_text())
-copy(repo/'sts2/melty.json',melty/'melty.json')
-deliveries.append(archive(melty,dist/f'SpireLegacy-StS2-{version}-melty.zip'))
-(repo/'build/sts2/package-inspection.json').write_text(json.dumps(dict(deliveries=deliveries,mod_sha256=hashlib.sha256((mod/'SpireLegacy.dll').read_bytes()).hexdigest(),card_illustrations=len(illustrations),original_icons=len(icons),requires_rl2=False,melty=melty_manifest),indent=2),encoding='utf-8')
-for item in deliveries:print(json.dumps(item))
+
+def build(root,output,expected_hash,baselib=None,hook=None):
+    root=pathlib.Path(root);output=pathlib.Path(output).resolve();output.mkdir(parents=True,exist_ok=True)
+    checked(output,output/'build/sts2');checked(output,output/'dist')
+    recover(output)
+    v,formats=payloads(root,expected_hash,baselib)
+    parent=output/'build/sts2';parent.mkdir(parents=True,exist_ok=True)
+    transaction=pathlib.Path(tempfile.mkdtemp(prefix='.package-txn-',dir=parent));checked(output,transaction)
+    try:
+        trees=[];archives=[];reports=[]
+        for kind,files in formats.items():
+            tree=transaction/kind;tree.mkdir()
+            for name,data in files.items():
+                target=tree/name;checked(output,target);target.parent.mkdir(parents=True,exist_ok=True);target.write_bytes(data)
+            suffix='' if kind=='standalone' else '-'+kind
+            archive=transaction/f'SpireLegacy-StS2-{v}{suffix}.zip';write_archive(archive,files)
+            trees.append(tree);archives.append(archive);reports.append(dict(kind=kind,file=archive.name,size=archive.stat().st_size,sha256=digest(archive.read_bytes()),files=len(files),dllSha256=expected_hash))
+        marker=output/'build/sts2/workshop/mod_id.txt'
+        if marker.exists():
+            checked(output,marker);value=marker.read_bytes()
+            if value.decode('utf-8-sig').strip()!=str(ITEM_ID):raise ReleaseError('Uploader marker does not match the existing StS2 item')
+            (trees[1]/'mod_id.txt').write_bytes(value)
+        inspection=transaction/'inspection.json'
+        inspection.write_text(json.dumps(dict(version=v,app=APP_ID,item=ITEM_ID,packages=reports,mod_sha256=expected_hash,requires_rl2=False),indent=2)+'\n',encoding='utf-8')
+        promote(output,transaction,v,trees+archives+[inspection],hook)
+        return json.loads((output/'build/sts2/package-inspection.json').read_text())
+    except Exception:
+        if not (output/'build/sts2/package-transaction.json').exists() and transaction.exists():remove(output,transaction)
+        raise
+
+def main():
+    parser=argparse.ArgumentParser(description=__doc__);parser.add_argument('--expected-dll-sha256',required=True);parser.add_argument('--output-root',type=pathlib.Path,default=repo);parser.add_argument('--baselib-root',type=pathlib.Path);args=parser.parse_args()
+    print(json.dumps(build(repo,args.output_root,args.expected_dll_sha256,args.baselib_root),indent=2))
+if __name__=='__main__':
+    try:main()
+    except (ValueError,OSError) as error:raise SystemExit(str(error))
