@@ -41,7 +41,7 @@ class EvidenceChecks(unittest.TestCase):
         if hasattr(self,'extension'):
             (self.source/'pacing-campaign-balance146-extended.json').write_text(json.dumps(self.extension),encoding='utf-8')
         with contextlib.redirect_stdout(io.StringIO()):
-            module.export(self.source, self.root/'output')
+            module.export(self.source, self.root/'output',getattr(self,'stopped_reports',[]))
 
     def test_valid_receipts(self):
         self.run_export()
@@ -50,6 +50,21 @@ class EvidenceChecks(unittest.TestCase):
     def test_running_worker_rejected(self):
         self.campaign['status'] = 'running'
         with self.assertRaises(AssertionError): self.run_export()
+
+    def test_explicitly_stopped_receipt_excluded_and_labelled(self):
+        self.extension=copy.deepcopy(self.pacing)
+        self.pacing['status']='running'
+        self.stopped_reports=['pacing-campaign-balance146-fixture.json']
+        self.run_export()
+        rows=json.loads((self.root/'output/manifest.json').read_text())
+        stopped=next(r for r in rows if r['trial']=='pacing-campaign-balance146-fixture')
+        self.assertEqual(stopped['status'],'interrupted')
+        self.assertFalse(stopped['included'])
+        self.assertEqual(len((self.root/'output/trajectories.csv').read_text().splitlines()),13)
+
+    def test_unknown_stopped_receipt_rejected(self):
+        self.stopped_reports=['missing.json']
+        with self.assertRaises(AssertionError):self.run_export()
 
     def test_duplicate_command_rejected(self):
         self.campaign['evidence'].append(copy.deepcopy(self.campaign['evidence'][0]))

@@ -1,6 +1,6 @@
 import copy
 import unittest
-from pacing_state import completed,assert_live,durable_snapshot
+from pacing_state import completed,assert_live,durable_snapshot,completed_prefix
 
 class Continuity(unittest.TestCase):
     def setUp(self):
@@ -38,6 +38,23 @@ class Continuity(unittest.TestCase):
         self.assertEqual(durable_snapshot(self.report,'knight'),profile)
     def test_fork_rejects_missing_snapshot(self):
         with self.assertRaises(ValueError):durable_snapshot(self.report,'knight')
+    def interrupted(self):
+        self.test_durable_fork()
+        self.report['status']='running'
+        self.report['runs'].append(dict(run=13,status='running'))
+        self.report['evidence'].append(dict(request=dict(requestId='b',command='start'),response=dict(requestId='b',ok=True)))
+    def test_interruption_excludes_unsettled_run_and_mutation_tail(self):
+        self.interrupted();original=copy.deepcopy(self.report)
+        result=completed_prefix(self.report,'knight')
+        self.assertEqual(len(result['runs']),12)
+        self.assertEqual(len(result['evidence']),1)
+        self.assertEqual(result['checkpointExtraction']['excludedRuns'],[13])
+        self.assertEqual(durable_snapshot(result,'knight')['crowns'],120)
+        self.assertEqual(self.report,original)
+    def test_interruption_requires_matching_durable_settlement(self):
+        self.interrupted()
+        self.report['evidence'][0]['response']['result']['persisted']['crowns']=999
+        with self.assertRaises(ValueError):completed_prefix(self.report,'knight')
     def paid(self, level=1):
         self.report['purchases']=[dict(run=8,upgrade='vitality',level=level,purchased=True,crownsBefore=80,crownsAfter=0)]
         for run in self.report['runs'][8:]:

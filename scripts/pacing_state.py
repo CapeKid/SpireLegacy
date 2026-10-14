@@ -52,11 +52,43 @@ def durable_snapshot(report, cls):
     return observed['persisted']
 
 
+def completed_prefix(report, cls):
+    """Extract settled receipts only; never resume/replay the interrupted tail."""
+    import copy
+    if report.get('status') not in ('running','error'):
+        raise ValueError('An interrupted report is required')
+    result=copy.deepcopy(report)
+    runs=[]
+    for run in result['runs']:
+        if run['status']!='finished' or 'earned' not in run:break
+        runs.append(run)
+    if not runs:raise ValueError('No settled prefix')
+    result.update(status='finished',runs=runs,targetReturns=len(runs),stopReason='settled-checkpoint')
+    result.pop('error',None)
+    result['purchases']=[p for p in result['purchases'] if p['run']<=len(runs)]
+    for batch in result.get('batches',[]):batch['endRun']=min(batch['endRun'],len(runs))
+    expected=completed(dict(result,evidence=[r for r in result['evidence'] if r['response']['ok']]),cls)
+    for index in range(len(result['evidence'])-1,-1,-1):
+        record=result['evidence'][index]
+        if record['request'].get('command')!='lifecycle-state' or not record['response']['ok']:continue
+        try:assert_live(expected,record['response']['result'])
+        except ValueError:continue
+        result['evidence']=result['evidence'][:index+1]
+        durable_snapshot(result,cls)
+        result['checkpointExtraction']=dict(settledReturns=len(runs),excludedRuns=[r['run'] for r in report['runs'][len(runs):]])
+        return result
+    raise ValueError('No matching completed durable snapshot; do not synthesize settlement')
+
+
 if __name__=='__main__':
-    import json,sys
+    import hashlib,json,sys
     from pathlib import Path
     private=(Path(__file__).resolve().parents[1]/'private').resolve()
     source=Path(sys.argv[1]).resolve();target=Path(sys.argv[3]).resolve()
-    if not source.is_relative_to(private) or not target.is_relative_to(private) or target.name!='family.json' or target.exists():
-        raise ValueError('Use a private recorded source and a fresh private family.json target')
-    target.write_text(json.dumps(durable_snapshot(json.loads(source.read_text()),sys.argv[2])),encoding='utf-8')
+    extract='--extract' in sys.argv
+    if not source.is_relative_to(private) or not target.is_relative_to(private) or target.exists() or (not extract and target.name!='family.json'):
+        raise ValueError('Use a private recorded source and a fresh private target')
+    original=json.loads(source.read_text())
+    result=completed_prefix(original,sys.argv[2]) if extract else durable_snapshot(original,sys.argv[2])
+    if extract:result['checkpointExtraction'].update(priorReport=source.name,receiptSha256=hashlib.sha256(source.read_bytes()).hexdigest())
+    target.write_text(json.dumps(result,indent=2),encoding='utf-8')

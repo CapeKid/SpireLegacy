@@ -21,6 +21,10 @@ This technique operates only on recorded disposable profiles. It does not read, 
 
 After the fork completed return 36, a subsequent launch selected the original profile from the first inherited receipt rather than the fork's latest receipt. The completed-family guard rejected that launch on its read-only lifecycle check, before any run started. The launcher now selects the latest receipt's profile. The failed report remains preserved; the next batch uses a new evidence tag and the already completed 36-return fork, without replaying a mutation.
 
+A later turn interruption terminated both native jobs. The stored Ranger report has 66 settled returns followed by unfinished return 67; the Knight report has 43 settled returns. `pacing_state.py --extract` derives separate completed checkpoints only when the last settlement, generation, crown balance and paid manor levels match an existing durable lifecycle receipt. It truncates the unsettled command tail, preserves the original files and hashes their provenance. It does not reconstruct a result from the journal, grant currency or resume the interrupted mutation. The next trials explicitly fork those checkpoints into new private profiles. Reusing the next deterministic seed in a new trial is distinct from replaying the old command against its interrupted save.
+
+For export, verified stopped reports may be explicitly passed with `--stopped-report FILENAME`. Their raw hashes remain unchanged, their manifest status is `interrupted`, and their outcomes are excluded. Running reports remain rejected by default. Derived checkpoints are checked against the original receipt hash and settled prefix before being included.
+
 ```powershell
 ./scripts/run-balance-campaign.ps1 -Lab private/YOUR-OWNED-LAB `
   -Tag YOUR-UNUSED-TAG -Class knight -PacingChecks `

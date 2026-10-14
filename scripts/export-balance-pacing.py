@@ -15,7 +15,7 @@ import re
 from pathlib import Path
 
 
-def export(source, target):
+def export(source, target, stopped_reports=()):
     target.mkdir(parents=True, exist_ok=True)
     manifest, campaigns, trajectories, decisions = [], [], [], []
     cards = collections.Counter()
@@ -23,8 +23,17 @@ def export(source, target):
     paths = sorted(source.glob('*campaign-balance146-*.json'))
     assert paths, 'No issue 146 receipts found'
     reports={path.name:json.loads(path.read_text(encoding='utf-8')) for path in paths}
+    assert set(stopped_reports)<=set(reports), 'Unknown explicitly stopped report'
     for name,data in reports.items():
         if data['status']=='finished':
+            checkpoint=data.get('checkpointExtraction')
+            if checkpoint:
+                from pacing_state import completed_prefix
+                prior_path=source/checkpoint['priorReport']
+                assert hashlib.sha256(prior_path.read_bytes()).hexdigest()==checkpoint['receiptSha256']
+                expected=completed_prefix(reports[checkpoint['priorReport']],data['cls'])
+                assert all(data[key]==expected[key] for key in ('runs','purchases','evidence')), 'Changed extracted durable checkpoint'
+                superseded.add(checkpoint['priorReport'])
             for batch in data.get('batches',[]):
                 prior=reports[batch['priorReport']]
                 assert prior['status']=='finished' and prior['cls']==data['cls']
@@ -36,7 +45,7 @@ def export(source, target):
                 superseded.add(batch['priorReport'])
     for path in paths:
         report = json.loads(path.read_text(encoding='utf-8'))
-        assert report['status'] != 'running', f'Worker still active: {path.name}'
+        assert report['status'] != 'running' or path.name in stopped_reports, f'Worker still active: {path.name}'
         pacing = path.name.startswith('pacing-')
         included = report['status'] == 'finished' and path.name not in superseded
         stages, seen = {}, set()
@@ -84,10 +93,10 @@ def export(source, target):
                 log_counts[log_name] = {pattern: sum(pattern.lower() in line.lower() for line in lines)
                                         for pattern in ('ERROR', 'InvalidTaskId', 'double free', 'particles', 'backup')}
         manifest.append(dict(trial=path.stem, receiptSha256=hashlib.sha256(path.read_bytes()).hexdigest(),
-                             status=report['status'], included=included, stages=list(stages.values()),
+                             status='interrupted' if path.name in stopped_reports else report['status'], included=included, stages=list(stages.values()),
                              commands=len(seen), hasError=bool(report.get('error')),
                              checkpointRecoveries=len(report.get('continuations', [])), batches=report.get('batches',[]),
-                             targetReturns=report.get('targetReturns'), logMatches=log_counts))
+                             targetReturns=report.get('targetReturns'), checkpointExtraction=report.get('checkpointExtraction'), logMatches=log_counts))
         if not included:
             continue
         if not pacing:
@@ -142,5 +151,6 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('source', type=Path)
     parser.add_argument('target', type=Path)
+    parser.add_argument('--stopped-report', action='append',default=[],help='Explicitly verified stopped worker; preserve raw running receipt hash, exclude its outcomes')
     args = parser.parse_args()
-    export(args.source, args.target)
+    export(args.source, args.target,args.stopped_report)
