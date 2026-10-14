@@ -95,7 +95,7 @@ public static class CampaignOracle
                     var choices=NativeTestBridge.Descendants(bundles).OfType<NCardBundle>().Where(b=>b.IsVisibleInTree()).ToArray();
                     if(choices.Length==0)return Result("wait");
                     var deck=player.Deck.Cards.Select(PilotCardInfo.Describe).ToArray();
-                    CardModel[] Cards(NCardBundle b)=>NativeTestBridge.Descendants(b).OfType<NCardHolder>().Where(h=>h.CardModel!=null).Select(h=>h.CardModel!).ToArray();
+                    CardModel[] Cards(NCardBundle b)=>b.Bundle.ToArray();
                     var offers=choices.Select((b,i)=>new{index=i,cards=Cards(b).Select(Key).ToArray(),score=Cards(b).Sum(c=>CampaignPlanning.Score(c,deck))}).ToArray();
                     var picked=offers.OrderByDescending(o=>o.score).ThenBy(o=>o.index).First().index;
                     await UiHelper.Click(choices[picked].Hitbox);
