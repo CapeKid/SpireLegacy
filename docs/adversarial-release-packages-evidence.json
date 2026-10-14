@@ -1,0 +1,296 @@
+{
+  "issue": 62,
+  "baselineSource": "a3caaa3daf6ebe815d77a5d1212f4eab58a6accd",
+  "buildSource": "acecfb077e802710b5b412a10b713477444fe0fe",
+  "guideAndTestSource": "2d361b8efa25550744d5868d0de8417b8317afc0",
+  "dllSha256": "c47627e1d29615e1c6553722b6507584b352d21f24382a3e0793a973ed5169e0",
+  "mod": "1.0.30",
+  "baseLib": "3.4.7",
+  "baseLibDllSha256": "55863ca6adc30a61a7544874e157a519ffe148ccf2b18025947609c4bff813ce",
+  "seed": "SPIRELEGACY-PACKAGE-62",
+  "confirmedIssues": [
+    153,
+    154,
+    155
+  ],
+  "native": [
+    {
+      "branch": "regular",
+      "game": "v0.107.1",
+      "evidence": [
+        "package-native-package62-installed-verified-regular.json",
+        "balance-coop-package62-installed-coop-regular-mage.json"
+      ],
+      "correlatedReplies": [
+        84,
+        75
+      ],
+      "classes": [
+        "knight",
+        "mage",
+        "ranger"
+      ],
+      "paidStarterForms": 12,
+      "nativeSaveResumeCases": 3,
+      "coOpPair": [
+        "knight",
+        "mage"
+      ],
+      "coOpPaidForms": 8,
+      "unicodeModDirectory": true
+    },
+    {
+      "branch": "beta",
+      "game": "v0.111.0",
+      "evidence": [
+        "package-native-package62-installed-verified-beta.json",
+        "balance-coop-package62-installed-coop-beta-ranger.json"
+      ],
+      "correlatedReplies": [
+        84,
+        75
+      ],
+      "classes": [
+        "knight",
+        "mage",
+        "ranger"
+      ],
+      "paidStarterForms": 12,
+      "nativeSaveResumeCases": 3,
+      "coOpPair": [
+        "knight",
+        "ranger"
+      ],
+      "coOpPaidForms": 8,
+      "unicodeModDirectory": true
+    }
+  ],
+  "checks": {
+    "coreAssertions": 164059,
+    "harness": 20,
+    "preflight": {
+      "sheets": 32,
+      "rows": 2063,
+      "cells": 26488
+    },
+    "releaseBuildWarnings": 0,
+    "releaseBuildErrors": 0,
+    "publishLint": {
+      "files": 542,
+      "failures": 0,
+      "warnings": 0
+    }
+  },
+  "baseline": {
+    "dirtyObsoleteIncluded": true,
+    "dirtyEnvIncluded": true,
+    "packageExit": 0,
+    "privateLicenseRequired": true
+  },
+  "downloadedBaseline": {
+    "existingDownloadedVersion": "1.0.30",
+    "files": 530,
+    "allFilesMatchOldStage": true,
+    "dllSha256": "f2b8964b46244ebe9f2c75237580f3396cc0b9d9513ae5ebe8e5015a4023cc39",
+    "newPublication": false
+  },
+  "archiveInspection": {
+    "version": "1.0.30",
+    "requiresRL2": false,
+    "packages": [
+      {
+        "kind": "standalone",
+        "file": "SpireLegacy-StS2-1.0.30.zip",
+        "size": 39636899,
+        "sha256": "bd954e7ab5b22a3ac09b1492b4112b76658a5552b4954a972ff20ffe16c48f75",
+        "files": 538
+      },
+      {
+        "kind": "workshop",
+        "file": "SpireLegacy-StS2-1.0.30-workshop.zip",
+        "size": 40016507,
+        "sha256": "af83c1528c286d0be90534b71b771cae7b84f7eea1ed2a46349675e464d424e8",
+        "files": 542
+      },
+      {
+        "kind": "melty",
+        "file": "SpireLegacy-StS2-1.0.30-melty.zip",
+        "size": 40102787,
+        "sha256": "06d277068d7043fbe3e9230d23cf8d185284fa101d938587fdb512fcce4f7cd0",
+        "files": 542
+      }
+    ]
+  },
+  "cleanCheckout": {
+    "source": "2d361b8efa25550744d5868d0de8417b8317afc0",
+    "noPrivateSources": true,
+    "canonicalGitBytes": true,
+    "restoredNugetOnly": true,
+    "allArchivesMatchFinal": true,
+    "packages": [
+      {
+        "kind": "standalone",
+        "file": "SpireLegacy-StS2-1.0.30.zip",
+        "size": 39636899,
+        "sha256": "bd954e7ab5b22a3ac09b1492b4112b76658a5552b4954a972ff20ffe16c48f75",
+        "files": 538
+      },
+      {
+        "kind": "workshop",
+        "file": "SpireLegacy-StS2-1.0.30-workshop.zip",
+        "size": 40016507,
+        "sha256": "af83c1528c286d0be90534b71b771cae7b84f7eea1ed2a46349675e464d424e8",
+        "files": 542
+      },
+      {
+        "kind": "melty",
+        "file": "SpireLegacy-StS2-1.0.30-melty.zip",
+        "size": 40102787,
+        "sha256": "06d277068d7043fbe3e9230d23cf8d185284fa101d938587fdb512fcce4f7cd0",
+        "files": 542
+      }
+    ]
+  },
+  "packagingFixtures": {
+    "seed": "SPIRELEGACY-RELEASE-62",
+    "checks": [
+      "clean release formats and public pinned license",
+      "dirty staging omitted, item marker preserved, deterministic archives",
+      "wrong checked-DLL hash preserves outputs",
+      "invalid version/dependency/branch/Melty configs preserve outputs",
+      "missing current guide cannot silently retain old notes",
+      "wrong uploader marker rejected without changing outputs",
+      "promotion exception restores old outputs byte-for-byte",
+      "process interruption leaves recoverable journal and restores complete old release",
+      "unsafe recovery plan rejected before mutations",
+      "path traversal, case collisions, unknown files, modes and encryption rejected",
+      "corrupt ZIP CRC reports a release error",
+      "optimized Python cannot disable release checks",
+      "Windows/Linux/Proton fresh/update/duplicate/uninstall layouts preserve saves"
+    ],
+    "layouts": [
+      {
+        "platform": "windows",
+        "spacesUnicodeMovedLibrary": true,
+        "freshInstall": true,
+        "wholeDirectoryUpdate": true,
+        "duplicatesActionable": true,
+        "uninstallPreservesSaves": true,
+        "meltyDirectoryMappingFixture": true,
+        "physicalExecution": false
+      },
+      {
+        "platform": "linux",
+        "spacesUnicodeMovedLibrary": true,
+        "freshInstall": true,
+        "wholeDirectoryUpdate": true,
+        "duplicatesActionable": true,
+        "uninstallPreservesSaves": true,
+        "meltyDirectoryMappingFixture": true,
+        "physicalExecution": false
+      },
+      {
+        "platform": "proton",
+        "spacesUnicodeMovedLibrary": true,
+        "freshInstall": true,
+        "wholeDirectoryUpdate": true,
+        "duplicatesActionable": true,
+        "uninstallPreservesSaves": true,
+        "meltyDirectoryMappingFixture": true,
+        "physicalExecution": false
+      }
+    ],
+    "packages": [
+      {
+        "kind": "standalone",
+        "file": "SpireLegacy-StS2-1.0.30.zip",
+        "size": 39636890,
+        "sha256": "2351477bc8477a225f448edc0ba2d0b903bc27b4cbef74dffb7bcedad9513ca2",
+        "files": 538,
+        "dllSha256": "c47627e1d29615e1c6553722b6507584b352d21f24382a3e0793a973ed5169e0"
+      },
+      {
+        "kind": "workshop",
+        "file": "SpireLegacy-StS2-1.0.30-workshop.zip",
+        "size": 40016498,
+        "sha256": "2968cfe5be6430753d8cdb8f4fb896efbb7665de3b067059021d8dd8744ec89a",
+        "files": 542,
+        "dllSha256": "c47627e1d29615e1c6553722b6507584b352d21f24382a3e0793a973ed5169e0"
+      },
+      {
+        "kind": "melty",
+        "file": "SpireLegacy-StS2-1.0.30-melty.zip",
+        "size": 40102778,
+        "sha256": "8197b9f5c6b5d53c5807761f1b4d8c09784d35ee05d7d13f3595871ed32efee2",
+        "files": 542,
+        "dllSha256": "c47627e1d29615e1c6553722b6507584b352d21f24382a3e0793a973ed5169e0"
+      }
+    ],
+    "dllSha256": "c47627e1d29615e1c6553722b6507584b352d21f24382a3e0793a973ed5169e0",
+    "count": 13
+  },
+  "cleanup": {
+    "standardLayoutRestored": true,
+    "backupDirectories": 0,
+    "activeLabProcesses": 0
+  },
+  "published": false,
+  "logDiagnostics": [
+    {
+      "profile": "campaign-package62-installed-verified-regular-profile",
+      "unicodePathLoaded": true,
+      "diagnosticCount": 9,
+      "missingBackupDeletion": 9,
+      "invalidTaskId": 0
+    },
+    {
+      "profile": "campaign-package62-installed-verified-beta-profile",
+      "unicodePathLoaded": true,
+      "diagnosticCount": 10,
+      "missingBackupDeletion": 9,
+      "invalidTaskId": 1
+    },
+    {
+      "profile": "coop-audit-package62-installed-coop-regular-mage-3-profile",
+      "unicodePathLoaded": true,
+      "diagnosticCount": 0,
+      "missingBackupDeletion": 0,
+      "invalidTaskId": 0
+    },
+    {
+      "profile": "coop-audit-package62-installed-coop-regular-mage-4-profile",
+      "unicodePathLoaded": true,
+      "diagnosticCount": 0,
+      "missingBackupDeletion": 0,
+      "invalidTaskId": 0
+    },
+    {
+      "profile": "coop-audit-package62-installed-coop-beta-ranger-3-profile",
+      "unicodePathLoaded": true,
+      "diagnosticCount": 0,
+      "missingBackupDeletion": 0,
+      "invalidTaskId": 0
+    },
+    {
+      "profile": "coop-audit-package62-installed-coop-beta-ranger-4-profile",
+      "unicodePathLoaded": true,
+      "diagnosticCount": 1,
+      "missingBackupDeletion": 0,
+      "invalidTaskId": 1
+    }
+  ],
+  "excludedFailures": [
+    "Initial solo probes tried a fourth 1-Energy card in a 3-Energy initial turn; corrected driver uses a fresh run per case",
+    "First clean Git export exposed a link to ignored audit coverage JSON; corrected to tracked generator",
+    "Superseded optimized-mode probe used an outer mutable source; final probe uses its own fixture checker/DLL"
+  ],
+  "limitations": [
+    "Windows owned native labs only; Linux/Proton layouts are filesystem fixtures, not physical execution",
+    "No connected Melty install or real Steam publication occurred",
+    "Synthetic per-card combats and loopback ENet tests are not full campaigns or physical controller tests",
+    "#110 retains device/Steam-transport/campaign/timing validation; #63 retains retired code isolation",
+    "Documentation-only coverage-guide correction followed native checks; DLL and all runtime/artwork bytes remain unchanged",
+    "Missing-backup deletion and beta Invalid Task ID logs remain recorded without an established broader cause"
+  ],
+  "verifiedUtc": "2026-10-14T01:21:08.720568+00:00"
+}
