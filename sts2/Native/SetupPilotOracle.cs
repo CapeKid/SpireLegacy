@@ -30,10 +30,13 @@ public static class SetupPilotOracle
         foreach(var card in hand.Cards.ToArray())await CardPileCmd.Add(card,PileType.Draw,skipVisuals:true);
         var enemies=player.Creature.CombatState!.HittableEnemies.Where(e=>e.IsAlive).ToArray();
         foreach(var enemy in enemies){enemy.SetMaxHpInternal(1000);enemy.SetCurrentHpInternal(1000);}
-        var setupKey=cls switch{"knight"=>"knight_weapons_master","mage"=>"mage_sorcery_lesson","ranger"=>"ranger_patient_hunter",_=>"native_inflame"};
-        var attackKey=cls switch{"knight"=>"knight_redoubled_blow","mage"=>"mage_cinder_volley","ranger"=>"ranger_rapid_fire",_=>"native_twin_strike"};
+        var setupKey=cls switch{"knight"=>"knight_weapons_master","mage"=>"surge","ranger"=>"ranger_patient_hunter",_=>"native_inflame"};
+        var attackKey=cls switch{"knight"=>"knight_redoubled_blow","mage"=>"mage_conduit_lance","ranger"=>"ranger_rapid_fire",_=>"native_twin_strike"};
         var setup=player.Creature.CombatState.CreateCard(cls=="ironclad"?ModelDb.Card<Inflame>():NativeCards.Get(setupKey),player);
         var attack=player.Creature.CombatState.CreateCard(cls=="ironclad"?ModelDb.Card<TwinStrike>():NativeCards.Get(attackKey),player);
+        // The upgraded five-hit Lance outranks Surge's generic Power score;
+        // the ordinary version already loses that comparison and needs no reordering.
+        if(cls=="mage")CardCmd.Upgrade(attack);
         await CardPileCmd.Add(setup,PileType.Hand,skipVisuals:true);await CardPileCmd.Add(attack,PileType.Hand,skipVisuals:true);
         var attackCost=attack.EnergyCost.GetWithModifiers(CostModifiers.All);
         await PlayerCmd.SetEnergy(kind=="energy"?attackCost:3,player);
@@ -56,7 +59,7 @@ public static class SetupPilotOracle
         await BalanceOracle.Play(attack,target);
         var damage=hp-target.CurrentHp;
         if(kind!="lethal"&&damage!=buffedPreview)throw new InvalidDataException("Native damage disagrees with calibrated preview.");
-        return new{cls,kind,sequence,setupKey,attackKey,selectedSetup,decision.Reason,energyBefore,energySpent=energyBefore-player.PlayerCombatState.Energy,
+        return new{cls,kind,sequence,setupKey,attackKey,attackUpgraded=attack.IsUpgraded,selectedSetup,decision.Reason,energyBefore,energySpent=energyBefore-player.PlayerCombatState.Energy,
             hits=PilotCardInfo.Hits(attack),beforePreview,buffedPreview,damage,strength,vigor,vigorRemaining=player.Creature.GetPowerAmount<VigorPower>(),targetDead=!target.IsAlive};
     }
 }
