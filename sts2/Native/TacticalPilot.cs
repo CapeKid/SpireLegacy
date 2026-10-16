@@ -36,7 +36,7 @@ public static class TacticalPilot
         try{variable.UpdateCardPreview(card,CardPreviewMode.Normal,owner,true);return Math.Max(0,(double)variable.PreviewValue);}
         finally{variable.PreviewValue=old;}
     }
-    public static Decision? Choose(Player player,int incoming)
+    public static Decision? Choose(Player player,int incoming,bool sequenceSetup=true)
     {
         var hand=PileType.Hand.GetPile(player).Cards;
         var enemies=player.Creature.CombatState!.HittableEnemies.Where(e=>e.IsAlive).ToArray();
@@ -85,8 +85,22 @@ public static class TacticalPilot
                 choices.Add(new(card,target,score,reason));
             }
         }
-        return choices.OrderByDescending(c=>c.Score).ThenBy(c=>c.Card.Id.ToString(),StringComparer.Ordinal).ThenBy(c=>c.Target?.CurrentHp??0).FirstOrDefault();
+        var best=choices.OrderByDescending(c=>c.Score).ThenBy(c=>c.Card.Id.ToString(),StringComparer.Ordinal).ThenBy(c=>c.Target?.CurrentHp??0).FirstOrDefault();
+        // A bounded ordering rule, not a damage forecast or a full turn solver.
+        // Preserve the chosen Attack's energy; do not delay immediate protection
+        // or an Attack that already appears lethal. Only known direct buffs qualify.
+        if(!sequenceSetup||best?.Card.Type!=CardType.Attack||best.Target==null||incoming>player.Creature.Block||Damage(best.Card,best.Target)>=best.Target.CurrentHp+best.Target.Block)return best;
+        var setup=choices.Where(c=>c.Card!=best.Card&&DirectAttackSetup(c.Card)&&Cost(c.Card)+Cost(best.Card)<=energy)
+            .OrderByDescending(c=>PilotCardInfo.Amount(c.Card,"strength")+PilotCardInfo.Amount(c.Card,"vigor"))
+            .ThenBy(c=>c.Card.Id.ToString(),StringComparer.Ordinal).FirstOrDefault();
+        return setup==null?best:setup with{Score=best.Score+1,Reason="setup-before-attack"};
     }
+    private static bool DirectAttackSetup(CardModel card)=>card is LegacyCard legacy
+        ?card.Type!=CardType.Attack&&!card.EnergyCost.CostsX&&legacy.DesignCard.Damage==0&&legacy.DesignCard.Amount("hpLoss")==0
+            &&legacy.DesignCard.Amount("draw")==0&&legacy.DesignCard.Amount("discard")==0&&legacy.DesignCard.Amount("heal")==0
+            &&legacy.DesignCard.Row.Text("special")=="none"&&legacy.DesignCard.Row.Text("power")=="none"
+            &&legacy.DesignCard.Amount("strength")+legacy.DesignCard.Amount("vigor")>0
+        :card is MegaCrit.Sts2.Core.Models.Cards.Inflame;
     public static IDisposable Selector(bool planned=false)
     {
         var method=AccessTools.Method(typeof(CardSelectCmd),"UseSelector",[typeof(ICardSelector),typeof(bool)])??AccessTools.Method(typeof(CardSelectCmd),"UseSelector",[typeof(ICardSelector)]);
