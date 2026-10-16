@@ -202,9 +202,14 @@ public static class CampaignOracle
             }
             var options=nodes.OfType<NEventOptionButton>().Where(b=>b.IsVisibleInTree()&&b.IsEnabled&&!b.Option.IsLocked).ToArray();
             if(options.Length>0){
-                var choice=options.FirstOrDefault(b=>b.Option.WillKillPlayer==null||!b.Option.WillKillPlayer(player))??options[0];
-                var title=choice.Option.Title.GetFormattedText();await UiHelper.Click(choice);
-                return Result("event",new{choice=title});
+                var model=(run.CurrentRoom as MegaCrit.Sts2.Core.Rooms.EventRoom)?.LocalMutableEvent;
+                var decision=PilotEvents.Choose(model,options.Select(b=>b.Option).ToArray(),player,planned);
+                if(decision==null)return Result("unsupported-event",new{eventId=model?.Id.ToString(),reason="no-supported-safe-option"});
+                var choice=options.Single(b=>b.Option==decision.Option);
+                var title=choice.Option.Title.GetFormattedText();var hpBefore=player.Creature.CurrentHp;var maxHpBefore=player.Creature.MaxHp;
+                var offers=options.Select(b=>new{key=b.Option.TextKey,lethal=b.Option.WillKillPlayer?.Invoke(player)??false}).ToArray();
+                await UiHelper.Click(choice);
+                return Result("event",new{choice=title,key=choice.Option.TextKey,decision.Reason,eventId=model?.Id.ToString(),hpBefore,maxHpBefore,offers});
             }
             var dialogue=nodes.OfType<NAncientEventLayout>().Select(n=>n.GetNodeOrNull<NButton>("%DialogueHitbox")).FirstOrDefault(b=>b!=null&&b.IsVisibleInTree()&&b.IsEnabled);
             if(dialogue!=null){await UiHelper.Click(dialogue);return Result("dialogue");}

@@ -1,0 +1,512 @@
+{
+  "newNaturalAttempts": 1,
+  "historicalReferences": 1,
+  "config": {
+    "cls": "knight",
+    "tier": 2,
+    "policy": "planned",
+    "rewardPolicy": "defensive",
+    "seed": "BALANCE146-C",
+    "ascension": 10,
+    "traits": [],
+    "forcedReward": null,
+    "forcedRewardFloor": 0,
+    "interventions": 0,
+    "animationSpeed": 6
+  },
+  "equalProjectedPrefix": 73,
+  "projectionFields": "action, floor, end HP; picked/skip/row/col/type/kind/choice; play id/upgraded/target/netEnergy/netHpLost. Excludes other detail/state fields, including added event auditing.",
+  "firstProjectedDifference": {
+    "prior": {
+      "action": "event",
+      "floor": 11,
+      "hp": 44,
+      "choices": {
+        "choice": "Decipher"
+      },
+      "plays": []
+    },
+    "current": {
+      "action": "event",
+      "floor": 11,
+      "hp": 64,
+      "choices": {
+        "choice": "Smash"
+      },
+      "plays": []
+    }
+  },
+  "trials": [
+    {
+      "role": "prior-policy",
+      "trial": "balance-campaign-balance146-a10-current-knight-beta-C",
+      "status": "finished",
+      "actions": {
+        "event": 10,
+        "map": 12,
+        "combat-turn": 35,
+        "collect-rewards": 17,
+        "card-reward": 7,
+        "reward-proceed": 7,
+        "rest": 1,
+        "proceed": 2,
+        "chest": 1,
+        "treasure-relic": 1,
+        "finished": 1
+      },
+      "eventHealth": [
+        {
+          "floor": 1,
+          "hp": 64,
+          "maxHp": 80,
+          "detail": {
+            "choice": "Pomander"
+          }
+        },
+        {
+          "floor": 1,
+          "hp": 64,
+          "maxHp": 80,
+          "detail": {
+            "choice": "Proceed"
+          }
+        },
+        {
+          "floor": 4,
+          "hp": 62,
+          "maxHp": 80,
+          "detail": {
+            "choice": "Consume"
+          }
+        },
+        {
+          "floor": 4,
+          "hp": 62,
+          "maxHp": 80,
+          "detail": {
+            "choice": "Proceed"
+          }
+        },
+        {
+          "floor": 11,
+          "hp": 44,
+          "maxHp": 77,
+          "detail": {
+            "choice": "Decipher"
+          }
+        },
+        {
+          "floor": 11,
+          "hp": 44,
+          "maxHp": 71,
+          "detail": {
+            "choice": "Continue Deciphering"
+          }
+        },
+        {
+          "floor": 11,
+          "hp": 44,
+          "maxHp": 59,
+          "detail": {
+            "choice": "Keep Deciphering"
+          }
+        },
+        {
+          "floor": 11,
+          "hp": 35,
+          "maxHp": 59,
+          "detail": {
+            "choice": "KEEP DECIPHERING"
+          }
+        },
+        {
+          "floor": 11,
+          "hp": 1,
+          "maxHp": 35,
+          "detail": {
+            "choice": "Lose Everything"
+          }
+        },
+        {
+          "floor": 11,
+          "hp": 1,
+          "maxHp": 1,
+          "detail": {
+            "choice": "Proceed"
+          }
+        }
+      ],
+      "lastState": {
+        "character": "CHARACTER.SPIRELEGACY-HEIR_CHARACTER",
+        "act": 1,
+        "floor": 13,
+        "room": "Monster",
+        "hp": 0,
+        "maxHp": 1,
+        "gold": 236,
+        "crowns": 34,
+        "lastEarned": 34,
+        "wins": 0,
+        "manor": {
+          "vitality": 5,
+          "smith": 2,
+          "armory": 2,
+          "vault": 4,
+          "library": 1,
+          "garden": 2
+        },
+        "deck": [
+          "knight_strike",
+          "knight_strike",
+          "knight_strike",
+          "knight_strike",
+          "knight_strike",
+          "knight_guard",
+          "knight_guard",
+          "knight_guard",
+          "knight_guard",
+          "shield",
+          "CARD.ASCENDERS_BANE",
+          "knight_reforge",
+          "knight_pommel_knock",
+          "knight_reinforce",
+          "knight_brave_advance",
+          "fortify",
+          "knight_heavy_harness",
+          "knight_banner_charge"
+        ],
+        "relics": [
+          "RELIC.SPIRELEGACY-BLOODLINE_RELIC",
+          "RELIC.POMANDER",
+          "RELIC.BELLOWS",
+          "RELIC.GORGET"
+        ],
+        "phase": "None",
+        "turn": 3,
+        "combatInProgress": false,
+        "combatEnding": false,
+        "actionRunning": false,
+        "paused": false,
+        "enemies": [
+          {
+            "id": "MONSTER.NIBBIT",
+            "hp": 36
+          }
+        ]
+      }
+    },
+    {
+      "role": "event-policy",
+      "trial": "balance-campaign-balance146-event-knight-beta-C",
+      "status": "finished",
+      "actions": {
+        "event": 10,
+        "map": 32,
+        "combat-turn": 95,
+        "collect-rewards": 41,
+        "card-reward": 18,
+        "reward-proceed": 18,
+        "rest": 6,
+        "proceed": 8,
+        "chest": 2,
+        "treasure-relic": 2,
+        "shop-open": 1,
+        "shop-purchase": 1,
+        "shop-done": 1,
+        "finished": 1
+      },
+      "eventHealth": [
+        {
+          "floor": 1,
+          "hp": 64,
+          "maxHp": 80,
+          "detail": {
+            "choice": "Pomander",
+            "key": "NEOW.pages.INITIAL.options.POMANDER",
+            "Reason": "first-safe-option",
+            "eventId": "EVENT.NEOW",
+            "hpBefore": 64,
+            "maxHpBefore": 80,
+            "offers": [
+              {
+                "key": "NEOW.pages.INITIAL.options.POMANDER",
+                "lethal": false
+              },
+              {
+                "key": "NEOW.pages.INITIAL.options.GOLDEN_PEARL",
+                "lethal": false
+              },
+              {
+                "key": "NEOW.pages.INITIAL.options.NEOWS_BONES",
+                "lethal": false
+              }
+            ]
+          }
+        },
+        {
+          "floor": 1,
+          "hp": 64,
+          "maxHp": 80,
+          "detail": {
+            "choice": "Proceed",
+            "key": "PROCEED",
+            "Reason": "first-safe-option",
+            "eventId": "EVENT.NEOW",
+            "hpBefore": 64,
+            "maxHpBefore": 80,
+            "offers": [
+              {
+                "key": "PROCEED",
+                "lethal": false
+              }
+            ]
+          }
+        },
+        {
+          "floor": 4,
+          "hp": 62,
+          "maxHp": 80,
+          "detail": {
+            "choice": "Consume",
+            "key": "SAPPHIRE_SEED.pages.INITIAL.options.EAT",
+            "Reason": "first-safe-option",
+            "eventId": "EVENT.SAPPHIRE_SEED",
+            "hpBefore": 53,
+            "maxHpBefore": 80,
+            "offers": [
+              {
+                "key": "SAPPHIRE_SEED.pages.INITIAL.options.EAT",
+                "lethal": false
+              },
+              {
+                "key": "SAPPHIRE_SEED.pages.INITIAL.options.PLANT",
+                "lethal": false
+              }
+            ]
+          }
+        },
+        {
+          "floor": 4,
+          "hp": 62,
+          "maxHp": 80,
+          "detail": {
+            "choice": "Proceed",
+            "key": "PROCEED",
+            "Reason": "first-safe-option",
+            "eventId": "EVENT.SAPPHIRE_SEED",
+            "hpBefore": 62,
+            "maxHpBefore": 80,
+            "offers": [
+              {
+                "key": "PROCEED",
+                "lethal": false
+              }
+            ]
+          }
+        },
+        {
+          "floor": 11,
+          "hp": 64,
+          "maxHp": 80,
+          "detail": {
+            "choice": "Smash",
+            "key": "TABLET_OF_TRUTH.pages.INITIAL.options.SMASH",
+            "Reason": "tablet-preserve-health",
+            "eventId": "EVENT.TABLET_OF_TRUTH",
+            "hpBefore": 44,
+            "maxHpBefore": 80,
+            "offers": [
+              {
+                "key": "TABLET_OF_TRUTH.pages.INITIAL.options.DECIPHER_1",
+                "lethal": false
+              },
+              {
+                "key": "TABLET_OF_TRUTH.pages.INITIAL.options.SMASH",
+                "lethal": false
+              }
+            ]
+          }
+        },
+        {
+          "floor": 11,
+          "hp": 64,
+          "maxHp": 80,
+          "detail": {
+            "choice": "Proceed",
+            "key": "PROCEED",
+            "Reason": "first-safe-option",
+            "eventId": "EVENT.TABLET_OF_TRUTH",
+            "hpBefore": 64,
+            "maxHpBefore": 80,
+            "offers": [
+              {
+                "key": "PROCEED",
+                "lethal": false
+              }
+            ]
+          }
+        },
+        {
+          "floor": 18,
+          "hp": 67,
+          "maxHp": 80,
+          "detail": {
+            "choice": "Very Hot Cocoa",
+            "key": "TEZCATARA.pages.INITIAL.options.VERY_HOT_COCOA",
+            "Reason": "first-safe-option",
+            "eventId": "EVENT.TEZCATARA",
+            "hpBefore": 67,
+            "maxHpBefore": 80,
+            "offers": [
+              {
+                "key": "TEZCATARA.pages.INITIAL.options.VERY_HOT_COCOA",
+                "lethal": false
+              },
+              {
+                "key": "TEZCATARA.pages.INITIAL.options.BIIIG_HUG",
+                "lethal": false
+              },
+              {
+                "key": "TEZCATARA.pages.INITIAL.options.TOY_BOX",
+                "lethal": false
+              }
+            ]
+          }
+        },
+        {
+          "floor": 18,
+          "hp": 67,
+          "maxHp": 80,
+          "detail": {
+            "choice": "Proceed",
+            "key": "PROCEED",
+            "Reason": "first-safe-option",
+            "eventId": "EVENT.TEZCATARA",
+            "hpBefore": 67,
+            "maxHpBefore": 80,
+            "offers": [
+              {
+                "key": "PROCEED",
+                "lethal": false
+              }
+            ]
+          }
+        },
+        {
+          "floor": 21,
+          "hp": 71,
+          "maxHp": 80,
+          "detail": {
+            "choice": "Learn Extermination Technique",
+            "key": "BUGSLAYER.pages.INITIAL.options.EXTERMINATION",
+            "Reason": "first-safe-option",
+            "eventId": "EVENT.BUGSLAYER",
+            "hpBefore": 71,
+            "maxHpBefore": 80,
+            "offers": [
+              {
+                "key": "BUGSLAYER.pages.INITIAL.options.EXTERMINATION",
+                "lethal": false
+              },
+              {
+                "key": "BUGSLAYER.pages.INITIAL.options.SQUASH",
+                "lethal": false
+              }
+            ]
+          }
+        },
+        {
+          "floor": 21,
+          "hp": 71,
+          "maxHp": 80,
+          "detail": {
+            "choice": "Proceed",
+            "key": "PROCEED",
+            "Reason": "first-safe-option",
+            "eventId": "EVENT.BUGSLAYER",
+            "hpBefore": 71,
+            "maxHpBefore": 80,
+            "offers": [
+              {
+                "key": "PROCEED",
+                "lethal": false
+              }
+            ]
+          }
+        }
+      ],
+      "lastState": {
+        "character": "CHARACTER.SPIRELEGACY-HEIR_CHARACTER",
+        "act": 2,
+        "floor": 33,
+        "room": "Boss",
+        "hp": 0,
+        "maxHp": 80,
+        "gold": 376,
+        "crowns": 87,
+        "lastEarned": 87,
+        "wins": 0,
+        "manor": {
+          "vitality": 5,
+          "smith": 2,
+          "armory": 2,
+          "vault": 4,
+          "library": 1,
+          "garden": 2
+        },
+        "deck": [
+          "knight_strike",
+          "knight_strike",
+          "knight_strike",
+          "knight_strike",
+          "knight_guard",
+          "knight_guard",
+          "knight_guard",
+          "knight_guard",
+          "shield",
+          "CARD.ASCENDERS_BANE",
+          "knight_reforge",
+          "knight_pommel_knock",
+          "knight_reinforce",
+          "knight_brave_advance",
+          "fortify",
+          "knight_heavy_harness",
+          "knight_banner_charge",
+          "knight_ancestral_fury",
+          "knight_tower_guard",
+          "knight_battle_meditation",
+          "knight_royal_execution",
+          "knight_scar_tissue",
+          "knight_splintered_pike",
+          "CARD.EXTERMINATE",
+          "knight_heavy_harness",
+          "riposte",
+          "knight_reforge",
+          "ranger_tripwire",
+          "knight_banner_charge"
+        ],
+        "relics": [
+          "RELIC.SPIRELEGACY-BLOODLINE_RELIC",
+          "RELIC.POMANDER",
+          "RELIC.BELLOWS",
+          "RELIC.GORGET",
+          "RELIC.PARRYING_SHIELD",
+          "RELIC.VERY_HOT_COCOA",
+          "RELIC.JUZU_BRACELET"
+        ],
+        "phase": "None",
+        "turn": 5,
+        "combatInProgress": false,
+        "combatEnding": false,
+        "actionRunning": false,
+        "paused": false,
+        "enemies": [
+          {
+            "id": "MONSTER.THE_INSATIABLE",
+            "hp": 160
+          }
+        ]
+      }
+    }
+  ]
+}

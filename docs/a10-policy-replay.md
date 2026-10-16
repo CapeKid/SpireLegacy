@@ -37,6 +37,8 @@ The exporter validated correlated unique command IDs, source/DLL identities, sta
 
 Issue #146 remains open. No new victory, experienced-player comparison, Mage/Ranger campaign, hard-trait combination or paid manor trajectory is supplied by these two replays. The next bounded step is to calibrate event decisions against native escalating-cost and safe-exit controls, then revisit this beta seed. Broader archetype decisions and recorded winning campaigns remain required before claiming balance validation complete. The user's A10 full-manor Knight win on Steam Deck/public-beta remains qualitative evidence with unknown seed/build/deck.
 
+The subsequent [event-policy calibration](event-pilot-calibration.md) implements that bounded next step and preserves this replay's original receipts as references.
+
 ## Reproduction
 
 Build the committed source, then run each branch sequentially in an independently copied owned lab with a fresh unused tag:
