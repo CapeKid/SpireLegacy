@@ -1,0 +1,846 @@
+{
+  "synthetic": true,
+  "naturalCampaigns": 0,
+  "trials": [
+    {
+      "trial": "event-policy-balance146-event-regular",
+      "synthetic": true,
+      "status": "passed",
+      "receiptSha256": "f82a59c19bca428977d4bcb3964db1c2d721b852544481cfb299bae1f872456d",
+      "stages": [
+        {
+          "source": "9272275b9768fb6d43f683601d1e51b7dd793240",
+          "dllSha256": "b833f67572f3bf482448913e7e07156759a979e5cbd580aaac70c709ad291b5d",
+          "game": "v0.107.1",
+          "mod": "1.0.30",
+          "baseLib": "v3.4.7"
+        }
+      ],
+      "commands": 10,
+      "cases": [
+        {
+          "kind": "healthy",
+          "forced": 0,
+          "cost": 3,
+          "hpBefore": 80,
+          "maxHpBefore": 80,
+          "hp": 77,
+          "maxHp": 77,
+          "choice": {
+            "action": "event",
+            "detail": {
+              "choice": "Decipher",
+              "key": "TABLET_OF_TRUTH.pages.INITIAL.options.DECIPHER_1",
+              "Reason": "tablet-one-cheap-upgrade",
+              "eventId": "EVENT.TABLET_OF_TRUTH",
+              "hpBefore": 80,
+              "maxHpBefore": 80,
+              "offers": [
+                {
+                  "key": "TABLET_OF_TRUTH.pages.INITIAL.options.DECIPHER_1",
+                  "lethal": false
+                },
+                {
+                  "key": "TABLET_OF_TRUTH.pages.INITIAL.options.SMASH",
+                  "lethal": false
+                }
+              ]
+            },
+            "animationSpeed": 6,
+            "state": {
+              "character": "CHARACTER.SPIRELEGACY-HEIR_CHARACTER",
+              "act": 1,
+              "floor": 2,
+              "room": "Event",
+              "hp": 77,
+              "maxHp": 77,
+              "gold": 99,
+              "crowns": 0,
+              "lastEarned": 0,
+              "wins": 0,
+              "manor": {
+                "vitality": 0,
+                "smith": 0,
+                "armory": 0,
+                "vault": 0,
+                "library": 0,
+                "garden": 0
+              },
+              "deck": [
+                "knight_strike",
+                "knight_strike",
+                "knight_strike",
+                "knight_strike",
+                "knight_strike",
+                "knight_guard",
+                "knight_guard",
+                "knight_guard",
+                "knight_guard",
+                "shield"
+              ],
+              "relics": [
+                "RELIC.SPIRELEGACY-BLOODLINE_RELIC"
+              ],
+              "phase": null,
+              "turn": null,
+              "combatInProgress": false,
+              "combatEnding": false,
+              "actionRunning": false,
+              "paused": false,
+              "enemies": null
+            }
+          },
+          "finished": false,
+          "genericSafeControl": true,
+          "allFatalRejected": true
+        },
+        {
+          "kind": "injured",
+          "forced": 0,
+          "cost": 3,
+          "hpBefore": 44,
+          "maxHpBefore": 80,
+          "hp": 64,
+          "maxHp": 80,
+          "choice": {
+            "action": "event",
+            "detail": {
+              "choice": "Smash",
+              "key": "TABLET_OF_TRUTH.pages.INITIAL.options.SMASH",
+              "Reason": "tablet-preserve-health",
+              "eventId": "EVENT.TABLET_OF_TRUTH",
+              "hpBefore": 44,
+              "maxHpBefore": 80,
+              "offers": [
+                {
+                  "key": "TABLET_OF_TRUTH.pages.INITIAL.options.DECIPHER_1",
+                  "lethal": false
+                },
+                {
+                  "key": "TABLET_OF_TRUTH.pages.INITIAL.options.SMASH",
+                  "lethal": false
+                }
+              ]
+            },
+            "animationSpeed": 6,
+            "state": {
+              "character": "CHARACTER.SPIRELEGACY-HEIR_CHARACTER",
+              "act": 1,
+              "floor": 2,
+              "room": "Event",
+              "hp": 64,
+              "maxHp": 80,
+              "gold": 99,
+              "crowns": 0,
+              "lastEarned": 0,
+              "wins": 0,
+              "manor": {
+                "vitality": 0,
+                "smith": 0,
+                "armory": 0,
+                "vault": 0,
+                "library": 0,
+                "garden": 0
+              },
+              "deck": [
+                "knight_strike",
+                "knight_strike",
+                "knight_strike",
+                "knight_strike",
+                "knight_strike",
+                "knight_guard",
+                "knight_guard",
+                "knight_guard",
+                "knight_guard",
+                "shield"
+              ],
+              "relics": [
+                "RELIC.SPIRELEGACY-BLOODLINE_RELIC"
+              ],
+              "phase": null,
+              "turn": null,
+              "combatInProgress": false,
+              "combatEnding": false,
+              "actionRunning": false,
+              "paused": false,
+              "enemies": null
+            }
+          },
+          "finished": true,
+          "genericSafeControl": true,
+          "allFatalRejected": true
+        },
+        {
+          "kind": "upgraded",
+          "forced": 0,
+          "cost": 3,
+          "hpBefore": 80,
+          "maxHpBefore": 80,
+          "hp": 80,
+          "maxHp": 80,
+          "choice": {
+            "action": "event",
+            "detail": {
+              "choice": "Smash",
+              "key": "TABLET_OF_TRUTH.pages.INITIAL.options.SMASH",
+              "Reason": "tablet-preserve-health",
+              "eventId": "EVENT.TABLET_OF_TRUTH",
+              "hpBefore": 80,
+              "maxHpBefore": 80,
+              "offers": [
+                {
+                  "key": "TABLET_OF_TRUTH.pages.INITIAL.options.DECIPHER_1",
+                  "lethal": false
+                },
+                {
+                  "key": "TABLET_OF_TRUTH.pages.INITIAL.options.SMASH",
+                  "lethal": false
+                }
+              ]
+            },
+            "animationSpeed": 6,
+            "state": {
+              "character": "CHARACTER.SPIRELEGACY-HEIR_CHARACTER",
+              "act": 1,
+              "floor": 2,
+              "room": "Event",
+              "hp": 80,
+              "maxHp": 80,
+              "gold": 99,
+              "crowns": 0,
+              "lastEarned": 0,
+              "wins": 0,
+              "manor": {
+                "vitality": 0,
+                "smith": 0,
+                "armory": 0,
+                "vault": 0,
+                "library": 0,
+                "garden": 0
+              },
+              "deck": [
+                "knight_strike",
+                "knight_strike",
+                "knight_strike",
+                "knight_strike",
+                "knight_strike",
+                "knight_guard",
+                "knight_guard",
+                "knight_guard",
+                "knight_guard",
+                "shield"
+              ],
+              "relics": [
+                "RELIC.SPIRELEGACY-BLOODLINE_RELIC"
+              ],
+              "phase": null,
+              "turn": null,
+              "combatInProgress": false,
+              "combatEnding": false,
+              "actionRunning": false,
+              "paused": false,
+              "enemies": null
+            }
+          },
+          "finished": true,
+          "genericSafeControl": true,
+          "allFatalRejected": true
+        },
+        {
+          "kind": "repeat",
+          "forced": 1,
+          "cost": 6,
+          "hpBefore": 77,
+          "maxHpBefore": 77,
+          "hp": 77,
+          "maxHp": 77,
+          "choice": {
+            "action": "event",
+            "detail": {
+              "choice": "Give Up",
+              "key": "TABLET_OF_TRUTH.pages.DECIPHER.options.GIVE_UP",
+              "Reason": "tablet-preserve-health",
+              "eventId": "EVENT.TABLET_OF_TRUTH",
+              "hpBefore": 77,
+              "maxHpBefore": 77,
+              "offers": [
+                {
+                  "key": "TABLET_OF_TRUTH.pages.DECIPHER_1.options.DECIPHER",
+                  "lethal": false
+                },
+                {
+                  "key": "TABLET_OF_TRUTH.pages.DECIPHER.options.GIVE_UP",
+                  "lethal": false
+                }
+              ]
+            },
+            "animationSpeed": 6,
+            "state": {
+              "character": "CHARACTER.SPIRELEGACY-HEIR_CHARACTER",
+              "act": 1,
+              "floor": 2,
+              "room": "Event",
+              "hp": 77,
+              "maxHp": 77,
+              "gold": 99,
+              "crowns": 0,
+              "lastEarned": 0,
+              "wins": 0,
+              "manor": {
+                "vitality": 0,
+                "smith": 0,
+                "armory": 0,
+                "vault": 0,
+                "library": 0,
+                "garden": 0
+              },
+              "deck": [
+                "knight_strike",
+                "knight_strike",
+                "knight_strike",
+                "knight_strike",
+                "knight_strike",
+                "knight_guard",
+                "knight_guard",
+                "knight_guard",
+                "knight_guard",
+                "shield"
+              ],
+              "relics": [
+                "RELIC.SPIRELEGACY-BLOODLINE_RELIC"
+              ],
+              "phase": null,
+              "turn": null,
+              "combatInProgress": false,
+              "combatEnding": false,
+              "actionRunning": false,
+              "paused": false,
+              "enemies": null
+            }
+          },
+          "finished": true,
+          "genericSafeControl": true,
+          "allFatalRejected": true
+        },
+        {
+          "kind": "late",
+          "forced": 3,
+          "cost": 24,
+          "hpBefore": 59,
+          "maxHpBefore": 59,
+          "hp": 59,
+          "maxHp": 59,
+          "choice": {
+            "action": "event",
+            "detail": {
+              "choice": "Give Up",
+              "key": "TABLET_OF_TRUTH.pages.DECIPHER.options.GIVE_UP",
+              "Reason": "tablet-preserve-health",
+              "eventId": "EVENT.TABLET_OF_TRUTH",
+              "hpBefore": 59,
+              "maxHpBefore": 59,
+              "offers": [
+                {
+                  "key": "TABLET_OF_TRUTH.pages.DECIPHER_3.options.DECIPHER",
+                  "lethal": false
+                },
+                {
+                  "key": "TABLET_OF_TRUTH.pages.DECIPHER.options.GIVE_UP",
+                  "lethal": false
+                }
+              ]
+            },
+            "animationSpeed": 6,
+            "state": {
+              "character": "CHARACTER.SPIRELEGACY-HEIR_CHARACTER",
+              "act": 1,
+              "floor": 2,
+              "room": "Event",
+              "hp": 59,
+              "maxHp": 59,
+              "gold": 99,
+              "crowns": 0,
+              "lastEarned": 0,
+              "wins": 0,
+              "manor": {
+                "vitality": 0,
+                "smith": 0,
+                "armory": 0,
+                "vault": 0,
+                "library": 0,
+                "garden": 0
+              },
+              "deck": [
+                "knight_strike",
+                "knight_strike",
+                "knight_strike",
+                "knight_strike",
+                "knight_strike",
+                "knight_guard",
+                "knight_guard",
+                "knight_guard",
+                "knight_guard",
+                "shield"
+              ],
+              "relics": [
+                "RELIC.SPIRELEGACY-BLOODLINE_RELIC"
+              ],
+              "phase": null,
+              "turn": null,
+              "combatInProgress": false,
+              "combatEnding": false,
+              "actionRunning": false,
+              "paused": false,
+              "enemies": null
+            }
+          },
+          "finished": true,
+          "genericSafeControl": true,
+          "allFatalRejected": true
+        }
+      ],
+      "logMatches": {
+        "launch.log": {
+          "ERROR": 0,
+          "InvalidTaskId": 0,
+          "Fatal error": 0,
+          "already been freed": 0,
+          "backup": 0,
+          "particles": 0,
+          "WASAPI": 0,
+          "not yet finished": 5
+        },
+        "errors.log": {
+          "ERROR": 6,
+          "InvalidTaskId": 0,
+          "Fatal error": 0,
+          "already been freed": 0,
+          "backup": 4,
+          "particles": 1,
+          "WASAPI": 3,
+          "not yet finished": 0
+        }
+      }
+    },
+    {
+      "trial": "event-policy-balance146-event-beta",
+      "synthetic": true,
+      "status": "passed",
+      "receiptSha256": "10186280fa7d863c07cb1f4196125b3773bf94df8c95c6c3fdc371b7a539211d",
+      "stages": [
+        {
+          "source": "9272275b9768fb6d43f683601d1e51b7dd793240",
+          "dllSha256": "b833f67572f3bf482448913e7e07156759a979e5cbd580aaac70c709ad291b5d",
+          "game": "v0.111.0",
+          "mod": "1.0.30",
+          "baseLib": "v3.4.7"
+        }
+      ],
+      "commands": 10,
+      "cases": [
+        {
+          "kind": "healthy",
+          "forced": 0,
+          "cost": 3,
+          "hpBefore": 80,
+          "maxHpBefore": 80,
+          "hp": 77,
+          "maxHp": 77,
+          "choice": {
+            "action": "event",
+            "detail": {
+              "choice": "Decipher",
+              "key": "TABLET_OF_TRUTH.pages.INITIAL.options.DECIPHER_1",
+              "Reason": "tablet-one-cheap-upgrade",
+              "eventId": "EVENT.TABLET_OF_TRUTH",
+              "hpBefore": 80,
+              "maxHpBefore": 80,
+              "offers": [
+                {
+                  "key": "TABLET_OF_TRUTH.pages.INITIAL.options.DECIPHER_1",
+                  "lethal": false
+                },
+                {
+                  "key": "TABLET_OF_TRUTH.pages.INITIAL.options.SMASH",
+                  "lethal": false
+                }
+              ]
+            },
+            "animationSpeed": 6,
+            "state": {
+              "character": "CHARACTER.SPIRELEGACY-HEIR_CHARACTER",
+              "act": 1,
+              "floor": 2,
+              "room": "Event",
+              "hp": 77,
+              "maxHp": 77,
+              "gold": 99,
+              "crowns": 0,
+              "lastEarned": 0,
+              "wins": 0,
+              "manor": {
+                "vitality": 0,
+                "smith": 0,
+                "armory": 0,
+                "vault": 0,
+                "library": 0,
+                "garden": 0
+              },
+              "deck": [
+                "knight_strike",
+                "knight_strike",
+                "knight_strike",
+                "knight_strike",
+                "knight_strike",
+                "knight_guard",
+                "knight_guard",
+                "knight_guard",
+                "knight_guard",
+                "shield"
+              ],
+              "relics": [
+                "RELIC.SPIRELEGACY-BLOODLINE_RELIC"
+              ],
+              "phase": null,
+              "turn": null,
+              "combatInProgress": false,
+              "combatEnding": false,
+              "actionRunning": false,
+              "paused": false,
+              "enemies": null
+            }
+          },
+          "finished": false,
+          "genericSafeControl": true,
+          "allFatalRejected": true
+        },
+        {
+          "kind": "injured",
+          "forced": 0,
+          "cost": 3,
+          "hpBefore": 44,
+          "maxHpBefore": 80,
+          "hp": 64,
+          "maxHp": 80,
+          "choice": {
+            "action": "event",
+            "detail": {
+              "choice": "Smash",
+              "key": "TABLET_OF_TRUTH.pages.INITIAL.options.SMASH",
+              "Reason": "tablet-preserve-health",
+              "eventId": "EVENT.TABLET_OF_TRUTH",
+              "hpBefore": 44,
+              "maxHpBefore": 80,
+              "offers": [
+                {
+                  "key": "TABLET_OF_TRUTH.pages.INITIAL.options.DECIPHER_1",
+                  "lethal": false
+                },
+                {
+                  "key": "TABLET_OF_TRUTH.pages.INITIAL.options.SMASH",
+                  "lethal": false
+                }
+              ]
+            },
+            "animationSpeed": 6,
+            "state": {
+              "character": "CHARACTER.SPIRELEGACY-HEIR_CHARACTER",
+              "act": 1,
+              "floor": 2,
+              "room": "Event",
+              "hp": 64,
+              "maxHp": 80,
+              "gold": 99,
+              "crowns": 0,
+              "lastEarned": 0,
+              "wins": 0,
+              "manor": {
+                "vitality": 0,
+                "smith": 0,
+                "armory": 0,
+                "vault": 0,
+                "library": 0,
+                "garden": 0
+              },
+              "deck": [
+                "knight_strike",
+                "knight_strike",
+                "knight_strike",
+                "knight_strike",
+                "knight_strike",
+                "knight_guard",
+                "knight_guard",
+                "knight_guard",
+                "knight_guard",
+                "shield"
+              ],
+              "relics": [
+                "RELIC.SPIRELEGACY-BLOODLINE_RELIC"
+              ],
+              "phase": null,
+              "turn": null,
+              "combatInProgress": false,
+              "combatEnding": false,
+              "actionRunning": false,
+              "paused": false,
+              "enemies": null
+            }
+          },
+          "finished": true,
+          "genericSafeControl": true,
+          "allFatalRejected": true
+        },
+        {
+          "kind": "upgraded",
+          "forced": 0,
+          "cost": 3,
+          "hpBefore": 80,
+          "maxHpBefore": 80,
+          "hp": 80,
+          "maxHp": 80,
+          "choice": {
+            "action": "event",
+            "detail": {
+              "choice": "Smash",
+              "key": "TABLET_OF_TRUTH.pages.INITIAL.options.SMASH",
+              "Reason": "tablet-preserve-health",
+              "eventId": "EVENT.TABLET_OF_TRUTH",
+              "hpBefore": 80,
+              "maxHpBefore": 80,
+              "offers": [
+                {
+                  "key": "TABLET_OF_TRUTH.pages.INITIAL.options.DECIPHER_1",
+                  "lethal": false
+                },
+                {
+                  "key": "TABLET_OF_TRUTH.pages.INITIAL.options.SMASH",
+                  "lethal": false
+                }
+              ]
+            },
+            "animationSpeed": 6,
+            "state": {
+              "character": "CHARACTER.SPIRELEGACY-HEIR_CHARACTER",
+              "act": 1,
+              "floor": 2,
+              "room": "Event",
+              "hp": 80,
+              "maxHp": 80,
+              "gold": 99,
+              "crowns": 0,
+              "lastEarned": 0,
+              "wins": 0,
+              "manor": {
+                "vitality": 0,
+                "smith": 0,
+                "armory": 0,
+                "vault": 0,
+                "library": 0,
+                "garden": 0
+              },
+              "deck": [
+                "knight_strike",
+                "knight_strike",
+                "knight_strike",
+                "knight_strike",
+                "knight_strike",
+                "knight_guard",
+                "knight_guard",
+                "knight_guard",
+                "knight_guard",
+                "shield"
+              ],
+              "relics": [
+                "RELIC.SPIRELEGACY-BLOODLINE_RELIC"
+              ],
+              "phase": null,
+              "turn": null,
+              "combatInProgress": false,
+              "combatEnding": false,
+              "actionRunning": false,
+              "paused": false,
+              "enemies": null
+            }
+          },
+          "finished": true,
+          "genericSafeControl": true,
+          "allFatalRejected": true
+        },
+        {
+          "kind": "repeat",
+          "forced": 1,
+          "cost": 6,
+          "hpBefore": 77,
+          "maxHpBefore": 77,
+          "hp": 77,
+          "maxHp": 77,
+          "choice": {
+            "action": "event",
+            "detail": {
+              "choice": "Give Up",
+              "key": "TABLET_OF_TRUTH.pages.DECIPHER.options.GIVE_UP",
+              "Reason": "tablet-preserve-health",
+              "eventId": "EVENT.TABLET_OF_TRUTH",
+              "hpBefore": 77,
+              "maxHpBefore": 77,
+              "offers": [
+                {
+                  "key": "TABLET_OF_TRUTH.pages.DECIPHER_1.options.DECIPHER",
+                  "lethal": false
+                },
+                {
+                  "key": "TABLET_OF_TRUTH.pages.DECIPHER.options.GIVE_UP",
+                  "lethal": false
+                }
+              ]
+            },
+            "animationSpeed": 6,
+            "state": {
+              "character": "CHARACTER.SPIRELEGACY-HEIR_CHARACTER",
+              "act": 1,
+              "floor": 2,
+              "room": "Event",
+              "hp": 77,
+              "maxHp": 77,
+              "gold": 99,
+              "crowns": 0,
+              "lastEarned": 0,
+              "wins": 0,
+              "manor": {
+                "vitality": 0,
+                "smith": 0,
+                "armory": 0,
+                "vault": 0,
+                "library": 0,
+                "garden": 0
+              },
+              "deck": [
+                "knight_strike",
+                "knight_strike",
+                "knight_strike",
+                "knight_strike",
+                "knight_strike",
+                "knight_guard",
+                "knight_guard",
+                "knight_guard",
+                "knight_guard",
+                "shield"
+              ],
+              "relics": [
+                "RELIC.SPIRELEGACY-BLOODLINE_RELIC"
+              ],
+              "phase": null,
+              "turn": null,
+              "combatInProgress": false,
+              "combatEnding": false,
+              "actionRunning": false,
+              "paused": false,
+              "enemies": null
+            }
+          },
+          "finished": true,
+          "genericSafeControl": true,
+          "allFatalRejected": true
+        },
+        {
+          "kind": "late",
+          "forced": 3,
+          "cost": 24,
+          "hpBefore": 59,
+          "maxHpBefore": 59,
+          "hp": 59,
+          "maxHp": 59,
+          "choice": {
+            "action": "event",
+            "detail": {
+              "choice": "Give Up",
+              "key": "TABLET_OF_TRUTH.pages.DECIPHER.options.GIVE_UP",
+              "Reason": "tablet-preserve-health",
+              "eventId": "EVENT.TABLET_OF_TRUTH",
+              "hpBefore": 59,
+              "maxHpBefore": 59,
+              "offers": [
+                {
+                  "key": "TABLET_OF_TRUTH.pages.DECIPHER_3.options.DECIPHER",
+                  "lethal": false
+                },
+                {
+                  "key": "TABLET_OF_TRUTH.pages.DECIPHER.options.GIVE_UP",
+                  "lethal": false
+                }
+              ]
+            },
+            "animationSpeed": 6,
+            "state": {
+              "character": "CHARACTER.SPIRELEGACY-HEIR_CHARACTER",
+              "act": 1,
+              "floor": 2,
+              "room": "Event",
+              "hp": 59,
+              "maxHp": 59,
+              "gold": 99,
+              "crowns": 0,
+              "lastEarned": 0,
+              "wins": 0,
+              "manor": {
+                "vitality": 0,
+                "smith": 0,
+                "armory": 0,
+                "vault": 0,
+                "library": 0,
+                "garden": 0
+              },
+              "deck": [
+                "knight_strike",
+                "knight_strike",
+                "knight_strike",
+                "knight_strike",
+                "knight_strike",
+                "knight_guard",
+                "knight_guard",
+                "knight_guard",
+                "knight_guard",
+                "shield"
+              ],
+              "relics": [
+                "RELIC.SPIRELEGACY-BLOODLINE_RELIC"
+              ],
+              "phase": null,
+              "turn": null,
+              "combatInProgress": false,
+              "combatEnding": false,
+              "actionRunning": false,
+              "paused": false,
+              "enemies": null
+            }
+          },
+          "finished": true,
+          "genericSafeControl": true,
+          "allFatalRejected": true
+        }
+      ],
+      "logMatches": {
+        "launch.log": {
+          "ERROR": 0,
+          "InvalidTaskId": 0,
+          "Fatal error": 0,
+          "already been freed": 0,
+          "backup": 0,
+          "particles": 0,
+          "WASAPI": 0,
+          "not yet finished": 5
+        },
+        "errors.log": {
+          "ERROR": 8,
+          "InvalidTaskId": 2,
+          "Fatal error": 0,
+          "already been freed": 0,
+          "backup": 4,
+          "particles": 1,
+          "WASAPI": 3,
+          "not yet finished": 0
+        }
+      }
+    }
+  ]
+}

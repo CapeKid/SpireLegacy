@@ -1,0 +1,88 @@
+[
+  {
+    "trial": "balance-campaign-balance146-a10-current-knight-beta-C",
+    "receiptSha256": "58814a3ecbed0dce69b5efe52fd5152b80430990519e295499181dcf148bd691",
+    "status": "finished",
+    "included": true,
+    "stages": [
+      {
+        "source": "edbd9331d97343457db0ec828c09ff8289140cdd",
+        "dllSha256": "1d16c0ba51b473a952566104386eae5e833b5308f29daf67f8aff6e3d6ea11e9",
+        "game": "v0.111.0",
+        "mod": "1.0.30",
+        "baseLib": "v3.4.7"
+      }
+    ],
+    "commands": 271,
+    "hasError": false,
+    "animationSpeed": 6,
+    "checkpointRecoveries": 0,
+    "batches": [],
+    "targetReturns": null,
+    "returnCap": null,
+    "stopReason": null,
+    "stopAtFullManor": null,
+    "checkpointExtraction": null,
+    "logMatches": {
+      "launch.log": {
+        "ERROR": 0,
+        "InvalidTaskId": 0,
+        "Fatal error": 0,
+        "double free": 0,
+        "particles": 0,
+        "backup": 0
+      },
+      "errors.log": {
+        "ERROR": 0,
+        "InvalidTaskId": 0,
+        "Fatal error": 0,
+        "double free": 0,
+        "particles": 1,
+        "backup": 0
+      }
+    }
+  },
+  {
+    "trial": "balance-campaign-balance146-event-knight-beta-C",
+    "receiptSha256": "073c1e4d7959596eec3e04b434f160de18f6a6e23a02f9253545fa35b1f5e57e",
+    "status": "finished",
+    "included": true,
+    "stages": [
+      {
+        "source": "9272275b9768fb6d43f683601d1e51b7dd793240",
+        "dllSha256": "b833f67572f3bf482448913e7e07156759a979e5cbd580aaac70c709ad291b5d",
+        "game": "v0.111.0",
+        "mod": "1.0.30",
+        "baseLib": "v3.4.7"
+      }
+    ],
+    "commands": 589,
+    "hasError": false,
+    "animationSpeed": 6,
+    "checkpointRecoveries": 0,
+    "batches": [],
+    "targetReturns": null,
+    "returnCap": null,
+    "stopReason": null,
+    "stopAtFullManor": null,
+    "checkpointExtraction": null,
+    "logMatches": {
+      "launch.log": {
+        "ERROR": 0,
+        "InvalidTaskId": 0,
+        "Fatal error": 0,
+        "double free": 0,
+        "particles": 0,
+        "backup": 0
+      },
+      "errors.log": {
+        "ERROR": 3,
+        "InvalidTaskId": 1,
+        "Fatal error": 0,
+        "double free": 0,
+        "particles": 3,
+        "backup": 0
+      }
+    }
+  }
+]
