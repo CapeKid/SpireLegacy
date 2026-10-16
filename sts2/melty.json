@@ -10,7 +10,7 @@
   "components": [
     {
       "id": "main",
-      "fileName": "SpireLegacy-StS2-1.0.30-melty.zip",
+      "fileName": "SpireLegacy-StS2-1.0.31-melty.zip",
       "label": "Spire Legacy for Slay the Spire 2 with BaseLib",
       "kind": "main",
       "required": true

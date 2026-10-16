@@ -10,7 +10,7 @@ This is the native StS2 successor to Spire Legacy 0.5.0, created by CapeKid. It 
 - 82 reward cards per class on regular (20 common / 36 uncommon / 26 rare), matching native characters. Public-beta has 85 (20 / 38 / 27), also matching native characters. Each class has three additional basics and 34 shared family cards. See [pool expansion](sts2-pool-expansion.md). All 360 historical card definitions, upgrades and original illustrations remain registered.
 - All 61 eligible inherited RL2 traits, compatible pairs, inherited starter changes, three heirs after a climb and the first family's quick start.
 - Seven original [Heir-exclusive relics](heir-relics.md), with native reward/shop eligibility and bounded per-turn/per-combat effects. Family Bloodline remains starter-only.
-- Six manor upgrades, slower crown earnings, staged purchases with an explicit confirmation, family naming, four visible banner emblems and a temporary playtest crown editor.
+- Six manor upgrades, slower crown earnings, staged purchases with an explicit confirmation, family naming, four visible banner emblems. The public Manor has no crown-balance editor.
 - Full wrapped, scrolling trait descriptions, mouse tooltips and keyboard/controller navigation with an on-screen text keyboard.
 - Family run identities, inherited card snapshots, atomic saves and backup recovery. A completed run settles crowns once.
 - Original class sprites, portraits, card illustrations and 66 original trait/class vector icons included in the download. No game assets or content readers are distributed. Rogue Legacy 2 is not required.

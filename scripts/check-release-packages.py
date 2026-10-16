@@ -29,7 +29,7 @@ with tempfile.TemporaryDirectory(prefix='package62-',dir=root/'private') as dire
         shutil.rmtree(path)
     source=base/'source é with spaces';source.mkdir()
     for folder in ['scripts','sheets','docs','licenses','src/main/resources']:shutil.copytree(root/folder,source/folder)
-    for rel in ['LICENSE','sts2/SpireLegacy.json','sts2/melty.json','sts2/workshop.json','sts2/bin/Release/net9.0/SpireLegacy.dll']:
+    for rel in ['LICENSE','README.md','sts2/SpireLegacy.json','sts2/melty.json','sts2/workshop.json','sts2/bin/Release/net9.0/SpireLegacy.dll']:
         target=source/rel;target.parent.mkdir(parents=True,exist_ok=True);shutil.copy2(root/rel,target)
     # No ignored source-license directory or installed game is available here.
     h=digest((source/'sts2/bin/Release/net9.0/SpireLegacy.dll').read_bytes());v,formats=payloads(source,h)
@@ -52,12 +52,14 @@ with tempfile.TemporaryDirectory(prefix='package62-',dir=root/'private') as dire
     except ReleaseError:pass
     else:raise AssertionError('wrong DLL accepted')
     assert tree_hash(output)==stable;passed('wrong checked-DLL hash preserves outputs')
-    cases=[('sts2/melty.json',lambda data:data['components'][0].update(fileName='old.zip')),('sts2/workshop.json',lambda data:data.update(dependencies=[1])),('sts2/workshop.json',lambda data:data.update(minBranch='unsupported')),('sts2/SpireLegacy.json',lambda data:data.update(version='../../outside'))]
+    cases=[('sts2/melty.json',lambda data:data['components'][0].update(fileName='old.zip')),('sts2/workshop.json',lambda data:data.update(dependencies=[1])),('sts2/workshop.json',lambda data:data.update(minBranch='unsupported')),('sts2/SpireLegacy.json',lambda data:data.update(version='../../outside')),
+           ('sheets/systems.json',lambda data:next(r for r in data if r['id']=='playtest_crowns').update(enabled=True)),
+           ('sheets/icon_art.json',lambda data:data[0].update(license='unreviewed'))]
     for rel,edit in cases:
         path=source/rel;original=path.read_bytes();data=json.loads(original);edit(data);path.write_text(json.dumps(data))
         try:
             try:pack.build(source,output,h)
-            except ReleaseError:pass
+            except ValueError:pass
             else:raise AssertionError('bad config accepted '+rel)
             assert tree_hash(output)==stable
         finally:path.write_bytes(original)

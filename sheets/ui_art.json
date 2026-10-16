@@ -26,8 +26,8 @@
     "path": "heir/ui/heir-portrait.png",
     "width": 1024,
     "height": 1536,
-    "prompt": "Retained original Heir selection portrait; the historical generation prompt was not recorded.",
-    "generator": "Retained original mod PNG",
+    "prompt": "Use case: style-transfer. Asset type: tall Slay the Spire 2 character-selection portrait tile for the original Spire Legacy Heir. Image 1 is the edit target: redraw its silver knight helmet, small golden crown crest with emerald gem, and green scarf. Images 2 and 3 are PRIVATE GAME STYLE AND FRAMING REFERENCES ONLY: match their tall rectangular portrait composition, broad hand-painted angular shadow shapes, restrained linework, earthy colors, and simple opaque colored backdrop; do not copy their characters, masks, or artwork. Produce a NEW original portrait of the Heir in a 2:3 tall canvas (ideally 1024x1536). Extreme close-up three-quarter head portrait facing right, tightly cropped shoulders and scarf at bottom. Helmet and face occupy nearly the entire width. Small crown sits near the top edge; simplify its silhouette so it stays readable. Keep Rogue Legacy-inspired medieval character design but render with hand-painted game UI shading, fewer graphic outlines, broad readable forms, no tiny metallic detailing. Matte silver helmet with warm ivory highlights and slate shadows, gold crown, emerald scarf, subtle amber eye slit. Flat muted ochre/gold background fills every corner with a narrow understated darker ochre edge matching the reference tile framing. Fill the entire tall rectangle with art: no transparency, no square cutout, no empty margins, no floating sticker silhouette, no border outside the image, no text or watermarks. At a final on-screen size of 100x154 pixels, head must be comparable in size and visual weight to the reference character heads. Save the replacement original asset and report its local file path.",
+    "generator": "built-in imagegen",
     "sha256": "c596c37da8618c2371cf2d0a18fa37055b526c59a12a8b2595c57e116916e9b1",
     "transparent": false,
     "exportMode": "preserve"

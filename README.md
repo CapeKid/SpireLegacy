@@ -6,7 +6,7 @@ A custom character by **CapeKid** for solo and co-op on the regular and public-b
 
 - **82 reward cards per class on regular, 85 on public-beta**, plus three basics. Each includes 34 shared family cards alongside class specialties. All 360 historical definitions, saved IDs and original illustrations are retained.
 - All 61 eligible Rogue Legacy 2 traits, compatible inheritance, three new heirs after each climb and the first family's quick start.
-- Six manor upgrades, family naming, visible banner emblems, full trait descriptions, confirmed purchases and a temporary crown editor.
+- Six manor upgrades, family naming, visible banner emblems, full trait descriptions, confirmed purchases. Crown balances cannot be edited from the public Manor UI.
 - Crowns reward completed progress and earned, unspent gold. Untouched or unfinished abandoned starts earn zero; a played combat loss retains participation credit. See [payout rules](docs/earned-crowns.md).
 - Seven [Heir-exclusive relic drops](docs/heir-relics.md) support guarded attacks, exhaust, discard, mixed card types and class resources.
 - Three [Heir potions](docs/heir-potions.md) support flexible defense, targeted Poison/Weak and one-use class resources, alongside a single shared potion pool.

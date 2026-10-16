@@ -20,6 +20,8 @@ def activate(text):
 send('chronicle-fixture',unlocked=True)
 send('select',previewAscension=10);send('input',action='controller_face_button_north')
 state=send('manor-state');assert state['paused'] and state['focusableLabels']==0
+assert not any('set crown' in b['text'].lower() or 'playtest' in b['text'].lower() for b in state['buttons']),state
+original_crowns=send('lifecycle-state')['profile']['crowns']
 activate(next(b['text'] for b in state['buttons'] if b['text'].startswith('Family Chronicle')))
 story=next(b['text'] for b in send('manor-state')['buttons'] if b['text'].endswith('The oath outlives the armor') and not b['disabled'])
 activate(story);activate('Use family motto: Unbroken Oath')
@@ -33,10 +35,8 @@ assert next(c['text'] for c in send('manor-audit')['controls'] if c['type']=='Li
 activate('Save');assert send('lifecycle-state')['profile']['family']=='AB c'
 activate('Name your family');send('edit',value='ABCDEFGHIJKLMNOPQRSTUVWX');activate('Save')
 before=send('lifecycle-state')['profile'];assert before['family']=='ABCDEFGHIJKLMNOPQRSTUVWX'
+assert before['crowns']==original_crowns
 activate('Change banner');assert send('lifecycle-state')['profile']['banner']==(before['banner']+1)%4
-activate('PLAYTEST: Set crowns');send('edit',value='-1');activate('Save')
-assert send('manor-audit')['open'] and send('lifecycle-state')['profile']['crowns']==before['crowns']
-send('edit',value='100000');activate('Save')
 before=send('lifecycle-state')['profile']
 state=send('manor-state');upgrade=next(b['text'] for b in state['buttons'] if b['text'].startswith('Select upgrade') and not b['disabled'])
 activate(upgrade);state=send('manor-state');assert state['focusText'].startswith('Select upgrade')
