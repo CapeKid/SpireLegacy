@@ -51,7 +51,7 @@ public static class PacifistPilotOracle
         if(pacifist){
             foreach(var c in hand.Cards.ToArray())await CardPileCmd.Add(c,PileType.Exhaust,skipVisuals:true);
             await CardPileCmd.Add(starter,PileType.Hand,skipVisuals:true);
-            await Add("aim");var transmutation=await Add("mage_transmutation");
+            await Add("ranger_guard");var transmutation=await Add("mage_transmutation");
             multiGuarded=TacticalPilot.WouldExhaustLastOffense(transmutation);
             if(!multiGuarded)throw new InvalidDataException("Mandatory two-card exhaust would consume the last Poison source.");
         }
