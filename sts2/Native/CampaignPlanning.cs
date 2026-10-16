@@ -13,12 +13,13 @@ namespace SpireLegacy;
 // Opt-in measurement policy, not an expert/human win-rate model.
 public static class CampaignPlanning
 {
-    public static double Score(CardModel card,IReadOnlyList<PilotRewards.Card> deck)=>PilotRewards.Score(PilotCardInfo.Describe(card),deck,true);
+    public static double Score(CardModel card,IReadOnlyList<PilotRewards.Card> deck,int? hp=null)=>PilotRewards.Score(PilotCardInfo.Describe(card),deck,true,hp??card.Owner?.Creature.CurrentHp);
     public static double UpgradeValue(CardModel card,IReadOnlyList<PilotRewards.Card> deck)
     {
         if(!card.IsUpgradable)return double.NegativeInfinity;
         var clone=(CardModel)card.MutableClone();clone.UpgradeInternal();clone.FinalizeUpgradeInternal();
-        return Score(clone,deck)-Score(card,deck);
+        var hp=card.Owner?.Creature.CurrentHp;
+        return Score(clone,deck,hp)-Score(card,deck,hp);
     }
     public sealed class Selector(bool upgrade):ICardSelector
     {

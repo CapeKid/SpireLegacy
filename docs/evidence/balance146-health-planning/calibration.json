@@ -1,0 +1,2932 @@
+{
+  "synthetic": true,
+  "naturalCampaigns": 0,
+  "trials": [
+    {
+      "trial": "health-planning-balance146-health-planning-regular",
+      "synthetic": true,
+      "status": "passed",
+      "included": false,
+      "exclusionReason": "Superseded reward fixture made an unnecessary follow-up call after native overlay closure, advancing combat.",
+      "receiptSha256": "1db05d552a6e725322a00f2dbecbdb4c5128a7f9bb6ac68eb36aaf4cfe483830",
+      "stages": [
+        {
+          "source": "7944a6906e01bb99a0863cc3583b2a7492e41d4e",
+          "dllSha256": "37e8d034a3d6b990de9aa36da851048dab1279617b6c32e58f5fd1089b662483",
+          "game": "v0.107.1",
+          "mod": "1.0.30",
+          "baseLib": "v3.4.7"
+        }
+      ],
+      "commands": 12,
+      "modelForms": 38,
+      "healthContexts": 148,
+      "omittedSupersededModelRows": 38,
+      "cases": [
+        {
+          "cls": "knight",
+          "kind": "reward-low",
+          "hp": 1,
+          "choice": {
+            "action": "card-reward",
+            "detail": {
+              "offers": [
+                {
+                  "id": "knight_bloodied_blade",
+                  "upgraded": false,
+                  "score": -10000
+                },
+                {
+                  "id": "knight_measured_cut",
+                  "upgraded": false,
+                  "score": 5
+                }
+              ],
+              "picked": "knight_measured_cut",
+              "skip": false,
+              "rewardPolicy": "defensive",
+              "intervention": false
+            },
+            "animationSpeed": 6,
+            "state": {
+              "character": "CHARACTER.SPIRELEGACY-HEIR_CHARACTER",
+              "act": 1,
+              "floor": 2,
+              "room": "Monster",
+              "hp": 3,
+              "maxHp": 60,
+              "gold": 99,
+              "crowns": 0,
+              "lastEarned": 0,
+              "wins": 0,
+              "manor": {
+                "vitality": 0,
+                "smith": 0,
+                "armory": 0,
+                "vault": 0,
+                "library": 0,
+                "garden": 0
+              },
+              "deck": [
+                "knight_strike",
+                "knight_strike",
+                "knight_strike",
+                "knight_strike",
+                "knight_strike",
+                "knight_guard",
+                "knight_guard",
+                "knight_guard",
+                "knight_guard",
+                "shield",
+                "knight_measured_cut"
+              ],
+              "relics": [
+                "RELIC.SPIRELEGACY-BLOODLINE_RELIC"
+              ],
+              "phase": "Play",
+              "turn": 1,
+              "combatInProgress": true,
+              "combatEnding": false,
+              "actionRunning": false,
+              "paused": false,
+              "enemies": [
+                {
+                  "id": "MONSTER.NIBBIT",
+                  "hp": 45
+                },
+                {
+                  "id": "MONSTER.NIBBIT",
+                  "hp": 42
+                }
+              ]
+            }
+          },
+          "successfullySelected": true,
+          "acquired": [
+            "knight_measured_cut"
+          ]
+        },
+        {
+          "cls": "knight",
+          "kind": "reward-high",
+          "hp": 58,
+          "choice": {
+            "action": "card-reward",
+            "detail": {
+              "offers": [
+                {
+                  "id": "knight_bloodied_blade",
+                  "upgraded": false,
+                  "score": 5.842105263157895
+                },
+                {
+                  "id": "knight_measured_cut",
+                  "upgraded": false,
+                  "score": 5
+                }
+              ],
+              "picked": "knight_bloodied_blade",
+              "skip": false,
+              "rewardPolicy": "defensive",
+              "intervention": false
+            },
+            "animationSpeed": 6,
+            "state": {
+              "character": "CHARACTER.SPIRELEGACY-HEIR_CHARACTER",
+              "act": 1,
+              "floor": 2,
+              "room": "Monster",
+              "hp": 60,
+              "maxHp": 60,
+              "gold": 99,
+              "crowns": 0,
+              "lastEarned": 0,
+              "wins": 0,
+              "manor": {
+                "vitality": 0,
+                "smith": 0,
+                "armory": 0,
+                "vault": 0,
+                "library": 0,
+                "garden": 0
+              },
+              "deck": [
+                "knight_strike",
+                "knight_strike",
+                "knight_strike",
+                "knight_strike",
+                "knight_strike",
+                "knight_guard",
+                "knight_guard",
+                "knight_guard",
+                "knight_guard",
+                "shield",
+                "knight_bloodied_blade"
+              ],
+              "relics": [
+                "RELIC.SPIRELEGACY-BLOODLINE_RELIC"
+              ],
+              "phase": "Play",
+              "turn": 1,
+              "combatInProgress": true,
+              "combatEnding": false,
+              "actionRunning": false,
+              "paused": false,
+              "enemies": [
+                {
+                  "id": "MONSTER.NIBBIT",
+                  "hp": 45
+                },
+                {
+                  "id": "MONSTER.NIBBIT",
+                  "hp": 42
+                }
+              ]
+            }
+          },
+          "successfullySelected": true,
+          "acquired": [
+            "knight_bloodied_blade"
+          ]
+        }
+      ],
+      "logMatches": {
+        "launch.log": {
+          "ERROR": 0,
+          "InvalidTaskId": 0,
+          "Fatal error": 0,
+          "already been freed": 0,
+          "backup": 0,
+          "particles": 0
+        },
+        "errors.log": {
+          "ERROR": 3,
+          "InvalidTaskId": 0,
+          "Fatal error": 0,
+          "already been freed": 0,
+          "backup": 3,
+          "particles": 1
+        }
+      }
+    },
+    {
+      "trial": "health-planning-balance146-health-planning-beta",
+      "synthetic": true,
+      "status": "passed",
+      "included": false,
+      "exclusionReason": "Superseded reward fixture made an unnecessary follow-up call after native overlay closure, advancing combat.",
+      "receiptSha256": "23ebef1f7b7be537e2ba9fc8d27c499cfba6d10e568520ddb09f3f2505555d23",
+      "stages": [
+        {
+          "source": "7944a6906e01bb99a0863cc3583b2a7492e41d4e",
+          "dllSha256": "37e8d034a3d6b990de9aa36da851048dab1279617b6c32e58f5fd1089b662483",
+          "game": "v0.111.0",
+          "mod": "1.0.30",
+          "baseLib": "v3.4.7"
+        }
+      ],
+      "commands": 12,
+      "modelForms": 38,
+      "healthContexts": 148,
+      "omittedSupersededModelRows": 38,
+      "cases": [
+        {
+          "cls": "knight",
+          "kind": "reward-low",
+          "hp": 1,
+          "choice": {
+            "action": "card-reward",
+            "detail": {
+              "offers": [
+                {
+                  "id": "knight_bloodied_blade",
+                  "upgraded": false,
+                  "score": -10000
+                },
+                {
+                  "id": "knight_measured_cut",
+                  "upgraded": false,
+                  "score": 5
+                }
+              ],
+              "picked": "knight_measured_cut",
+              "skip": false,
+              "rewardPolicy": "defensive",
+              "intervention": false
+            },
+            "animationSpeed": 6,
+            "state": {
+              "character": "CHARACTER.SPIRELEGACY-HEIR_CHARACTER",
+              "act": 1,
+              "floor": 2,
+              "room": "Monster",
+              "hp": 3,
+              "maxHp": 60,
+              "gold": 99,
+              "crowns": 0,
+              "lastEarned": 0,
+              "wins": 0,
+              "manor": {
+                "vitality": 0,
+                "smith": 0,
+                "armory": 0,
+                "vault": 0,
+                "library": 0,
+                "garden": 0
+              },
+              "deck": [
+                "knight_strike",
+                "knight_strike",
+                "knight_strike",
+                "knight_strike",
+                "knight_strike",
+                "knight_guard",
+                "knight_guard",
+                "knight_guard",
+                "knight_guard",
+                "shield",
+                "knight_measured_cut"
+              ],
+              "relics": [
+                "RELIC.SPIRELEGACY-BLOODLINE_RELIC"
+              ],
+              "phase": "Play",
+              "turn": 1,
+              "combatInProgress": true,
+              "combatEnding": false,
+              "actionRunning": false,
+              "paused": false,
+              "enemies": [
+                {
+                  "id": "MONSTER.NIBBIT",
+                  "hp": 43
+                },
+                {
+                  "id": "MONSTER.NIBBIT",
+                  "hp": 44
+                }
+              ]
+            }
+          },
+          "successfullySelected": true,
+          "acquired": [
+            "knight_measured_cut"
+          ]
+        },
+        {
+          "cls": "knight",
+          "kind": "reward-high",
+          "hp": 58,
+          "choice": {
+            "action": "card-reward",
+            "detail": {
+              "offers": [
+                {
+                  "id": "knight_bloodied_blade",
+                  "upgraded": false,
+                  "score": 5.842105263157895
+                },
+                {
+                  "id": "knight_measured_cut",
+                  "upgraded": false,
+                  "score": 5
+                }
+              ],
+              "picked": "knight_bloodied_blade",
+              "skip": false,
+              "rewardPolicy": "defensive",
+              "intervention": false
+            },
+            "animationSpeed": 6,
+            "state": {
+              "character": "CHARACTER.SPIRELEGACY-HEIR_CHARACTER",
+              "act": 1,
+              "floor": 2,
+              "room": "Monster",
+              "hp": 60,
+              "maxHp": 60,
+              "gold": 99,
+              "crowns": 0,
+              "lastEarned": 0,
+              "wins": 0,
+              "manor": {
+                "vitality": 0,
+                "smith": 0,
+                "armory": 0,
+                "vault": 0,
+                "library": 0,
+                "garden": 0
+              },
+              "deck": [
+                "knight_strike",
+                "knight_strike",
+                "knight_strike",
+                "knight_strike",
+                "knight_strike",
+                "knight_guard",
+                "knight_guard",
+                "knight_guard",
+                "knight_guard",
+                "shield",
+                "knight_bloodied_blade"
+              ],
+              "relics": [
+                "RELIC.SPIRELEGACY-BLOODLINE_RELIC"
+              ],
+              "phase": "Play",
+              "turn": 1,
+              "combatInProgress": true,
+              "combatEnding": false,
+              "actionRunning": false,
+              "paused": false,
+              "enemies": [
+                {
+                  "id": "MONSTER.NIBBIT",
+                  "hp": 43
+                },
+                {
+                  "id": "MONSTER.NIBBIT",
+                  "hp": 44
+                }
+              ]
+            }
+          },
+          "successfullySelected": true,
+          "acquired": [
+            "knight_bloodied_blade"
+          ]
+        }
+      ],
+      "logMatches": {
+        "launch.log": {
+          "ERROR": 0,
+          "InvalidTaskId": 0,
+          "Fatal error": 0,
+          "already been freed": 0,
+          "backup": 0,
+          "particles": 0
+        },
+        "errors.log": {
+          "ERROR": 3,
+          "InvalidTaskId": 0,
+          "Fatal error": 0,
+          "already been freed": 0,
+          "backup": 3,
+          "particles": 1
+        }
+      }
+    },
+    {
+      "trial": "health-planning-balance146-health-planning-final-regular",
+      "synthetic": true,
+      "status": "passed",
+      "included": true,
+      "exclusionReason": null,
+      "receiptSha256": "292c5947d68cdf8648d0bc047012fa839541f71863a474ea24f573031d5a827e",
+      "stages": [
+        {
+          "source": "7b36b34cc80f2399d8192808816b9ebc39cbd743",
+          "dllSha256": "75f55f4b90748675340c79db54e9916c04c2b5a00393b08f8cda3bc368c373ef",
+          "game": "v0.107.1",
+          "mod": "1.0.30",
+          "baseLib": "v3.4.7"
+        }
+      ],
+      "commands": 12,
+      "modelForms": 38,
+      "healthContexts": 148,
+      "omittedSupersededModelRows": 0,
+      "cases": [
+        {
+          "cls": "knight",
+          "kind": "models",
+          "rows": [
+            {
+              "id": "knight_blood_price",
+              "upgraded": false,
+              "hpLoss": 3,
+              "contexts": [
+                {
+                  "hp": 1,
+                  "score": -10000,
+                  "upgradeValue": 0
+                },
+                {
+                  "hp": 3,
+                  "score": -10000,
+                  "upgradeValue": 0
+                },
+                {
+                  "hp": 4,
+                  "score": -5,
+                  "upgradeValue": 4
+                },
+                {
+                  "hp": 60,
+                  "score": 0.8421052631578947,
+                  "upgradeValue": 4
+                }
+              ]
+            },
+            {
+              "id": "knight_blood_price",
+              "upgraded": true,
+              "hpLoss": 3,
+              "contexts": [
+                {
+                  "hp": 1,
+                  "score": -10000,
+                  "upgradeValue": null
+                },
+                {
+                  "hp": 3,
+                  "score": -10000,
+                  "upgradeValue": null
+                },
+                {
+                  "hp": 4,
+                  "score": -1,
+                  "upgradeValue": null
+                },
+                {
+                  "hp": 60,
+                  "score": 4.842105263157895,
+                  "upgradeValue": null
+                }
+              ]
+            },
+            {
+              "id": "knight_bloodied_blade",
+              "upgraded": false,
+              "hpLoss": 3,
+              "contexts": [
+                {
+                  "hp": 1,
+                  "score": -10000,
+                  "upgradeValue": 0
+                },
+                {
+                  "hp": 3,
+                  "score": -10000,
+                  "upgradeValue": 0
+                },
+                {
+                  "hp": 4,
+                  "score": 0,
+                  "upgradeValue": 2
+                },
+                {
+                  "hp": 60,
+                  "score": 5.842105263157895,
+                  "upgradeValue": 2
+                }
+              ]
+            },
+            {
+              "id": "knight_bloodied_blade",
+              "upgraded": true,
+              "hpLoss": 3,
+              "contexts": [
+                {
+                  "hp": 1,
+                  "score": -10000,
+                  "upgradeValue": null
+                },
+                {
+                  "hp": 3,
+                  "score": -10000,
+                  "upgradeValue": null
+                },
+                {
+                  "hp": 4,
+                  "score": 2,
+                  "upgradeValue": null
+                },
+                {
+                  "hp": 60,
+                  "score": 7.842105263157895,
+                  "upgradeValue": null
+                }
+              ]
+            },
+            {
+              "id": "knight_last_stand",
+              "upgraded": false,
+              "hpLoss": 3,
+              "contexts": [
+                {
+                  "hp": 1,
+                  "score": -10000,
+                  "upgradeValue": 0
+                },
+                {
+                  "hp": 3,
+                  "score": -10000,
+                  "upgradeValue": 0
+                },
+                {
+                  "hp": 4,
+                  "score": 3,
+                  "upgradeValue": 2
+                },
+                {
+                  "hp": 60,
+                  "score": 8.842105263157894,
+                  "upgradeValue": 2
+                }
+              ]
+            },
+            {
+              "id": "knight_last_stand",
+              "upgraded": true,
+              "hpLoss": 3,
+              "contexts": [
+                {
+                  "hp": 1,
+                  "score": -10000,
+                  "upgradeValue": null
+                },
+                {
+                  "hp": 3,
+                  "score": -10000,
+                  "upgradeValue": null
+                },
+                {
+                  "hp": 4,
+                  "score": 5,
+                  "upgradeValue": null
+                },
+                {
+                  "hp": 60,
+                  "score": 10.842105263157894,
+                  "upgradeValue": null
+                }
+              ]
+            },
+            {
+              "id": "knight_crimson_sweep",
+              "upgraded": false,
+              "hpLoss": 4,
+              "contexts": [
+                {
+                  "hp": 1,
+                  "score": -10000,
+                  "upgradeValue": 0
+                },
+                {
+                  "hp": 4,
+                  "score": -10000,
+                  "upgradeValue": 0
+                },
+                {
+                  "hp": 5,
+                  "score": -6,
+                  "upgradeValue": 1
+                },
+                {
+                  "hp": 60,
+                  "score": 1.7142857142857144,
+                  "upgradeValue": 1
+                }
+              ]
+            },
+            {
+              "id": "knight_crimson_sweep",
+              "upgraded": true,
+              "hpLoss": 4,
+              "contexts": [
+                {
+                  "hp": 1,
+                  "score": -10000,
+                  "upgradeValue": null
+                },
+                {
+                  "hp": 4,
+                  "score": -10000,
+                  "upgradeValue": null
+                },
+                {
+                  "hp": 5,
+                  "score": -5,
+                  "upgradeValue": null
+                },
+                {
+                  "hp": 60,
+                  "score": 2.7142857142857144,
+                  "upgradeValue": null
+                }
+              ]
+            },
+            {
+              "id": "knight_siege_resolve",
+              "upgraded": false,
+              "hpLoss": 3,
+              "contexts": [
+                {
+                  "hp": 1,
+                  "score": -10000,
+                  "upgradeValue": 0
+                },
+                {
+                  "hp": 3,
+                  "score": -10000,
+                  "upgradeValue": 0
+                },
+                {
+                  "hp": 4,
+                  "score": -3,
+                  "upgradeValue": 0
+                },
+                {
+                  "hp": 60,
+                  "score": 2.8421052631578947,
+                  "upgradeValue": 0
+                }
+              ]
+            },
+            {
+              "id": "knight_siege_resolve",
+              "upgraded": true,
+              "hpLoss": 3,
+              "contexts": [
+                {
+                  "hp": 1,
+                  "score": -10000,
+                  "upgradeValue": null
+                },
+                {
+                  "hp": 3,
+                  "score": -10000,
+                  "upgradeValue": null
+                },
+                {
+                  "hp": 4,
+                  "score": -3,
+                  "upgradeValue": null
+                },
+                {
+                  "hp": 60,
+                  "score": 2.8421052631578947,
+                  "upgradeValue": null
+                }
+              ]
+            },
+            {
+              "id": "knight_blood_oath",
+              "upgraded": false,
+              "hpLoss": 2,
+              "contexts": [
+                {
+                  "hp": 1,
+                  "score": -10000,
+                  "upgradeValue": 0
+                },
+                {
+                  "hp": 2,
+                  "score": -10000,
+                  "upgradeValue": 0
+                },
+                {
+                  "hp": 3,
+                  "score": -2,
+                  "upgradeValue": 0
+                },
+                {
+                  "hp": 60,
+                  "score": 1.9310344827586206,
+                  "upgradeValue": 0
+                }
+              ]
+            },
+            {
+              "id": "knight_blood_oath",
+              "upgraded": true,
+              "hpLoss": 2,
+              "contexts": [
+                {
+                  "hp": 1,
+                  "score": -10000,
+                  "upgradeValue": null
+                },
+                {
+                  "hp": 2,
+                  "score": -10000,
+                  "upgradeValue": null
+                },
+                {
+                  "hp": 3,
+                  "score": -2,
+                  "upgradeValue": null
+                },
+                {
+                  "hp": 60,
+                  "score": 1.9310344827586206,
+                  "upgradeValue": null
+                }
+              ]
+            },
+            {
+              "id": "knight_grit_teeth",
+              "upgraded": false,
+              "hpLoss": 2,
+              "contexts": [
+                {
+                  "hp": 1,
+                  "score": -10000,
+                  "upgradeValue": 0
+                },
+                {
+                  "hp": 2,
+                  "score": -10000,
+                  "upgradeValue": 0
+                },
+                {
+                  "hp": 3,
+                  "score": 1.5,
+                  "upgradeValue": 2.5
+                },
+                {
+                  "hp": 60,
+                  "score": 5.431034482758621,
+                  "upgradeValue": 2.5
+                }
+              ]
+            },
+            {
+              "id": "knight_grit_teeth",
+              "upgraded": true,
+              "hpLoss": 2,
+              "contexts": [
+                {
+                  "hp": 1,
+                  "score": -10000,
+                  "upgradeValue": null
+                },
+                {
+                  "hp": 2,
+                  "score": -10000,
+                  "upgradeValue": null
+                },
+                {
+                  "hp": 3,
+                  "score": 4,
+                  "upgradeValue": null
+                },
+                {
+                  "hp": 60,
+                  "score": 7.931034482758621,
+                  "upgradeValue": null
+                }
+              ]
+            },
+            {
+              "id": "knight_blood_temper",
+              "upgraded": false,
+              "hpLoss": 2,
+              "contexts": [
+                {
+                  "hp": 1,
+                  "score": -10000,
+                  "upgradeValue": 0
+                },
+                {
+                  "hp": 2,
+                  "score": -10000,
+                  "upgradeValue": 0
+                },
+                {
+                  "hp": 3,
+                  "score": 2,
+                  "upgradeValue": 2
+                },
+                {
+                  "hp": 60,
+                  "score": 5.931034482758621,
+                  "upgradeValue": 2
+                }
+              ]
+            },
+            {
+              "id": "knight_blood_temper",
+              "upgraded": true,
+              "hpLoss": 2,
+              "contexts": [
+                {
+                  "hp": 1,
+                  "score": -10000,
+                  "upgradeValue": null
+                },
+                {
+                  "hp": 2,
+                  "score": -10000,
+                  "upgradeValue": null
+                },
+                {
+                  "hp": 3,
+                  "score": 4,
+                  "upgradeValue": null
+                },
+                {
+                  "hp": 60,
+                  "score": 7.931034482758621,
+                  "upgradeValue": null
+                }
+              ]
+            },
+            {
+              "id": "knight_painful_lesson",
+              "upgraded": false,
+              "hpLoss": 2,
+              "contexts": [
+                {
+                  "hp": 1,
+                  "score": -10000,
+                  "upgradeValue": 0
+                },
+                {
+                  "hp": 2,
+                  "score": -10000,
+                  "upgradeValue": 0
+                },
+                {
+                  "hp": 3,
+                  "score": 3,
+                  "upgradeValue": 3
+                },
+                {
+                  "hp": 60,
+                  "score": 6.931034482758621,
+                  "upgradeValue": 3
+                }
+              ]
+            },
+            {
+              "id": "knight_painful_lesson",
+              "upgraded": true,
+              "hpLoss": 2,
+              "contexts": [
+                {
+                  "hp": 1,
+                  "score": -10000,
+                  "upgradeValue": null
+                },
+                {
+                  "hp": 2,
+                  "score": -10000,
+                  "upgradeValue": null
+                },
+                {
+                  "hp": 3,
+                  "score": 6,
+                  "upgradeValue": null
+                },
+                {
+                  "hp": 60,
+                  "score": 9.931034482758621,
+                  "upgradeValue": null
+                }
+              ]
+            },
+            {
+              "id": "knight_king_s_ransom",
+              "upgraded": false,
+              "hpLoss": 4,
+              "contexts": [
+                {
+                  "hp": 1,
+                  "score": -10000,
+                  "upgradeValue": 0
+                },
+                {
+                  "hp": 4,
+                  "score": -10000,
+                  "upgradeValue": 0
+                },
+                {
+                  "hp": 5,
+                  "score": -4,
+                  "upgradeValue": 4
+                },
+                {
+                  "hp": 60,
+                  "score": 3.7142857142857144,
+                  "upgradeValue": 4
+                }
+              ]
+            },
+            {
+              "id": "knight_king_s_ransom",
+              "upgraded": true,
+              "hpLoss": 4,
+              "contexts": [
+                {
+                  "hp": 1,
+                  "score": -10000,
+                  "upgradeValue": null
+                },
+                {
+                  "hp": 4,
+                  "score": -10000,
+                  "upgradeValue": null
+                },
+                {
+                  "hp": 5,
+                  "score": 0,
+                  "upgradeValue": null
+                },
+                {
+                  "hp": 60,
+                  "score": 7.714285714285714,
+                  "upgradeValue": null
+                }
+              ]
+            }
+          ],
+          "upgrade": {
+            "lowPicked": "knight_guard",
+            "highPicked": "knight_blood_price",
+            "lowPaid": 0,
+            "lowGuard": 3,
+            "highPaid": 4,
+            "highGuard": 3,
+            "guardUpgraded": true,
+            "paidUnchanged": true
+          }
+        },
+        {
+          "cls": "mage",
+          "kind": "models",
+          "rows": [
+            {
+              "id": "mage_mana_burn",
+              "upgraded": false,
+              "hpLoss": 3,
+              "contexts": [
+                {
+                  "hp": 1,
+                  "score": -10000,
+                  "upgradeValue": 0
+                },
+                {
+                  "hp": 3,
+                  "score": -10000,
+                  "upgradeValue": 0
+                },
+                {
+                  "hp": 4,
+                  "score": 0,
+                  "upgradeValue": 2
+                },
+                {
+                  "hp": 52,
+                  "score": 5.816326530612245,
+                  "upgradeValue": 2
+                }
+              ]
+            },
+            {
+              "id": "mage_mana_burn",
+              "upgraded": true,
+              "hpLoss": 3,
+              "contexts": [
+                {
+                  "hp": 1,
+                  "score": -10000,
+                  "upgradeValue": null
+                },
+                {
+                  "hp": 3,
+                  "score": -10000,
+                  "upgradeValue": null
+                },
+                {
+                  "hp": 4,
+                  "score": 2,
+                  "upgradeValue": null
+                },
+                {
+                  "hp": 52,
+                  "score": 7.816326530612245,
+                  "upgradeValue": null
+                }
+              ]
+            },
+            {
+              "id": "mage_overcharge",
+              "upgraded": false,
+              "hpLoss": 3,
+              "contexts": [
+                {
+                  "hp": 1,
+                  "score": -10000,
+                  "upgradeValue": 0
+                },
+                {
+                  "hp": 3,
+                  "score": -10000,
+                  "upgradeValue": 0
+                },
+                {
+                  "hp": 4,
+                  "score": -6,
+                  "upgradeValue": 3
+                },
+                {
+                  "hp": 52,
+                  "score": -0.18367346938775508,
+                  "upgradeValue": 3
+                }
+              ]
+            },
+            {
+              "id": "mage_overcharge",
+              "upgraded": true,
+              "hpLoss": 3,
+              "contexts": [
+                {
+                  "hp": 1,
+                  "score": -10000,
+                  "upgradeValue": null
+                },
+                {
+                  "hp": 3,
+                  "score": -10000,
+                  "upgradeValue": null
+                },
+                {
+                  "hp": 4,
+                  "score": -3,
+                  "upgradeValue": null
+                },
+                {
+                  "hp": 52,
+                  "score": 2.816326530612245,
+                  "upgradeValue": null
+                }
+              ]
+            },
+            {
+              "id": "mage_blood_to_mana",
+              "upgraded": false,
+              "hpLoss": 4,
+              "contexts": [
+                {
+                  "hp": 1,
+                  "score": -10000,
+                  "upgradeValue": 0
+                },
+                {
+                  "hp": 4,
+                  "score": -10000,
+                  "upgradeValue": 0
+                },
+                {
+                  "hp": 5,
+                  "score": -4,
+                  "upgradeValue": 4
+                },
+                {
+                  "hp": 52,
+                  "score": 3.666666666666667,
+                  "upgradeValue": 4
+                }
+              ]
+            },
+            {
+              "id": "mage_blood_to_mana",
+              "upgraded": true,
+              "hpLoss": 4,
+              "contexts": [
+                {
+                  "hp": 1,
+                  "score": -10000,
+                  "upgradeValue": null
+                },
+                {
+                  "hp": 4,
+                  "score": -10000,
+                  "upgradeValue": null
+                },
+                {
+                  "hp": 5,
+                  "score": 0,
+                  "upgradeValue": null
+                },
+                {
+                  "hp": 52,
+                  "score": 7.666666666666667,
+                  "upgradeValue": null
+                }
+              ]
+            }
+          ],
+          "upgrade": null
+        },
+        {
+          "cls": "ranger",
+          "kind": "models",
+          "rows": [
+            {
+              "id": "ranger_shadow_arrow",
+              "upgraded": false,
+              "hpLoss": 2,
+              "contexts": [
+                {
+                  "hp": 1,
+                  "score": -10000,
+                  "upgradeValue": 0
+                },
+                {
+                  "hp": 2,
+                  "score": -10000,
+                  "upgradeValue": 0
+                },
+                {
+                  "hp": 3,
+                  "score": 2,
+                  "upgradeValue": 2
+                },
+                {
+                  "hp": 56,
+                  "score": 5.925925925925926,
+                  "upgradeValue": 2
+                }
+              ]
+            },
+            {
+              "id": "ranger_shadow_arrow",
+              "upgraded": true,
+              "hpLoss": 2,
+              "contexts": [
+                {
+                  "hp": 1,
+                  "score": -10000,
+                  "upgradeValue": null
+                },
+                {
+                  "hp": 2,
+                  "score": -10000,
+                  "upgradeValue": null
+                },
+                {
+                  "hp": 3,
+                  "score": 4,
+                  "upgradeValue": null
+                },
+                {
+                  "hp": 56,
+                  "score": 7.925925925925926,
+                  "upgradeValue": null
+                }
+              ]
+            },
+            {
+              "id": "ranger_perfect_timing",
+              "upgraded": false,
+              "hpLoss": 3,
+              "contexts": [
+                {
+                  "hp": 1,
+                  "score": -10000,
+                  "upgradeValue": 0
+                },
+                {
+                  "hp": 3,
+                  "score": -10000,
+                  "upgradeValue": 0
+                },
+                {
+                  "hp": 4,
+                  "score": -3,
+                  "upgradeValue": 0
+                },
+                {
+                  "hp": 56,
+                  "score": 2.830188679245283,
+                  "upgradeValue": 0
+                }
+              ]
+            },
+            {
+              "id": "ranger_perfect_timing",
+              "upgraded": true,
+              "hpLoss": 3,
+              "contexts": [
+                {
+                  "hp": 1,
+                  "score": -10000,
+                  "upgradeValue": null
+                },
+                {
+                  "hp": 3,
+                  "score": -10000,
+                  "upgradeValue": null
+                },
+                {
+                  "hp": 4,
+                  "score": -3,
+                  "upgradeValue": null
+                },
+                {
+                  "hp": 56,
+                  "score": 2.830188679245283,
+                  "upgradeValue": null
+                }
+              ]
+            }
+          ],
+          "upgrade": null
+        },
+        {
+          "cls": "ironclad",
+          "kind": "models",
+          "rows": [
+            {
+              "id": "CARD.OFFERING",
+              "upgraded": false,
+              "hpLoss": 6,
+              "contexts": [
+                {
+                  "hp": 1,
+                  "score": -10000,
+                  "upgradeValue": 0
+                },
+                {
+                  "hp": 6,
+                  "score": -10000,
+                  "upgradeValue": 0
+                },
+                {
+                  "hp": 7,
+                  "score": -1,
+                  "upgradeValue": 6
+                },
+                {
+                  "hp": 80,
+                  "score": 10.513513513513512,
+                  "upgradeValue": 6
+                }
+              ]
+            },
+            {
+              "id": "CARD.OFFERING",
+              "upgraded": true,
+              "hpLoss": 6,
+              "contexts": [
+                {
+                  "hp": 1,
+                  "score": -10000,
+                  "upgradeValue": null
+                },
+                {
+                  "hp": 6,
+                  "score": -10000,
+                  "upgradeValue": null
+                },
+                {
+                  "hp": 7,
+                  "score": 5,
+                  "upgradeValue": null
+                },
+                {
+                  "hp": 80,
+                  "score": 16.513513513513512,
+                  "upgradeValue": null
+                }
+              ]
+            },
+            {
+              "id": "CARD.BLOODLETTING",
+              "upgraded": false,
+              "hpLoss": 3,
+              "contexts": [
+                {
+                  "hp": 1,
+                  "score": -10000,
+                  "upgradeValue": 0
+                },
+                {
+                  "hp": 3,
+                  "score": -10000,
+                  "upgradeValue": 0
+                },
+                {
+                  "hp": 4,
+                  "score": -1,
+                  "upgradeValue": 4
+                },
+                {
+                  "hp": 80,
+                  "score": 4.883116883116884,
+                  "upgradeValue": 4
+                }
+              ]
+            },
+            {
+              "id": "CARD.BLOODLETTING",
+              "upgraded": true,
+              "hpLoss": 3,
+              "contexts": [
+                {
+                  "hp": 1,
+                  "score": -10000,
+                  "upgradeValue": null
+                },
+                {
+                  "hp": 3,
+                  "score": -10000,
+                  "upgradeValue": null
+                },
+                {
+                  "hp": 4,
+                  "score": 3,
+                  "upgradeValue": null
+                },
+                {
+                  "hp": 80,
+                  "score": 8.883116883116884,
+                  "upgradeValue": null
+                }
+              ]
+            },
+            {
+              "id": "CARD.HEMOKINESIS",
+              "upgraded": false,
+              "hpLoss": 2,
+              "contexts": [
+                {
+                  "hp": 1,
+                  "score": -10000,
+                  "upgradeValue": 0
+                },
+                {
+                  "hp": 2,
+                  "score": -10000,
+                  "upgradeValue": 0
+                },
+                {
+                  "hp": 3,
+                  "score": 9,
+                  "upgradeValue": 5
+                },
+                {
+                  "hp": 80,
+                  "score": 12.948717948717949,
+                  "upgradeValue": 5
+                }
+              ]
+            },
+            {
+              "id": "CARD.HEMOKINESIS",
+              "upgraded": true,
+              "hpLoss": 2,
+              "contexts": [
+                {
+                  "hp": 1,
+                  "score": -10000,
+                  "upgradeValue": null
+                },
+                {
+                  "hp": 2,
+                  "score": -10000,
+                  "upgradeValue": null
+                },
+                {
+                  "hp": 3,
+                  "score": 14,
+                  "upgradeValue": null
+                },
+                {
+                  "hp": 80,
+                  "score": 17.94871794871795,
+                  "upgradeValue": null
+                }
+              ]
+            },
+            {
+              "id": "CARD.HAUNT",
+              "upgraded": false,
+              "hpLoss": 0,
+              "contexts": [
+                {
+                  "hp": 1,
+                  "score": 6,
+                  "upgradeValue": 0
+                },
+                {
+                  "hp": 80,
+                  "score": 6,
+                  "upgradeValue": 0
+                }
+              ]
+            },
+            {
+              "id": "CARD.HAUNT",
+              "upgraded": true,
+              "hpLoss": 0,
+              "contexts": [
+                {
+                  "hp": 1,
+                  "score": 6,
+                  "upgradeValue": null
+                },
+                {
+                  "hp": 80,
+                  "score": 6,
+                  "upgradeValue": null
+                }
+              ]
+            }
+          ],
+          "upgrade": null
+        },
+        {
+          "cls": "knight",
+          "kind": "reward-low",
+          "hpBefore": 3,
+          "hp": 3,
+          "turnBefore": 1,
+          "turnAfter": 1,
+          "choice": {
+            "action": "card-reward",
+            "detail": {
+              "offers": [
+                {
+                  "id": "knight_bloodied_blade",
+                  "upgraded": false,
+                  "score": -10000
+                },
+                {
+                  "id": "knight_measured_cut",
+                  "upgraded": false,
+                  "score": 5
+                }
+              ],
+              "picked": "knight_measured_cut",
+              "skip": false,
+              "rewardPolicy": "defensive",
+              "intervention": false
+            },
+            "animationSpeed": 6,
+            "state": {
+              "character": "CHARACTER.SPIRELEGACY-HEIR_CHARACTER",
+              "act": 1,
+              "floor": 2,
+              "room": "Monster",
+              "hp": 3,
+              "maxHp": 60,
+              "gold": 99,
+              "crowns": 0,
+              "lastEarned": 0,
+              "wins": 0,
+              "manor": {
+                "vitality": 0,
+                "smith": 0,
+                "armory": 0,
+                "vault": 0,
+                "library": 0,
+                "garden": 0
+              },
+              "deck": [
+                "knight_strike",
+                "knight_strike",
+                "knight_strike",
+                "knight_strike",
+                "knight_strike",
+                "knight_guard",
+                "knight_guard",
+                "knight_guard",
+                "knight_guard",
+                "shield",
+                "knight_measured_cut"
+              ],
+              "relics": [
+                "RELIC.SPIRELEGACY-BLOODLINE_RELIC"
+              ],
+              "phase": "Play",
+              "turn": 1,
+              "combatInProgress": true,
+              "combatEnding": false,
+              "actionRunning": false,
+              "paused": false,
+              "enemies": [
+                {
+                  "id": "MONSTER.NIBBIT",
+                  "hp": 45
+                },
+                {
+                  "id": "MONSTER.NIBBIT",
+                  "hp": 42
+                }
+              ]
+            }
+          },
+          "successfullySelected": true,
+          "acquired": [
+            "knight_measured_cut"
+          ]
+        },
+        {
+          "cls": "knight",
+          "kind": "reward-high",
+          "hpBefore": 60,
+          "hp": 60,
+          "turnBefore": 1,
+          "turnAfter": 1,
+          "choice": {
+            "action": "card-reward",
+            "detail": {
+              "offers": [
+                {
+                  "id": "knight_bloodied_blade",
+                  "upgraded": false,
+                  "score": 5.842105263157895
+                },
+                {
+                  "id": "knight_measured_cut",
+                  "upgraded": false,
+                  "score": 5
+                }
+              ],
+              "picked": "knight_bloodied_blade",
+              "skip": false,
+              "rewardPolicy": "defensive",
+              "intervention": false
+            },
+            "animationSpeed": 6,
+            "state": {
+              "character": "CHARACTER.SPIRELEGACY-HEIR_CHARACTER",
+              "act": 1,
+              "floor": 2,
+              "room": "Monster",
+              "hp": 60,
+              "maxHp": 60,
+              "gold": 99,
+              "crowns": 0,
+              "lastEarned": 0,
+              "wins": 0,
+              "manor": {
+                "vitality": 0,
+                "smith": 0,
+                "armory": 0,
+                "vault": 0,
+                "library": 0,
+                "garden": 0
+              },
+              "deck": [
+                "knight_strike",
+                "knight_strike",
+                "knight_strike",
+                "knight_strike",
+                "knight_strike",
+                "knight_guard",
+                "knight_guard",
+                "knight_guard",
+                "knight_guard",
+                "shield",
+                "knight_bloodied_blade"
+              ],
+              "relics": [
+                "RELIC.SPIRELEGACY-BLOODLINE_RELIC"
+              ],
+              "phase": "Play",
+              "turn": 1,
+              "combatInProgress": true,
+              "combatEnding": false,
+              "actionRunning": false,
+              "paused": false,
+              "enemies": [
+                {
+                  "id": "MONSTER.NIBBIT",
+                  "hp": 45
+                },
+                {
+                  "id": "MONSTER.NIBBIT",
+                  "hp": 42
+                }
+              ]
+            }
+          },
+          "successfullySelected": true,
+          "acquired": [
+            "knight_bloodied_blade"
+          ]
+        }
+      ],
+      "logMatches": {
+        "launch.log": {
+          "ERROR": 0,
+          "InvalidTaskId": 0,
+          "Fatal error": 0,
+          "already been freed": 0,
+          "backup": 0,
+          "particles": 0
+        },
+        "errors.log": {
+          "ERROR": 3,
+          "InvalidTaskId": 0,
+          "Fatal error": 0,
+          "already been freed": 0,
+          "backup": 3,
+          "particles": 1
+        }
+      }
+    },
+    {
+      "trial": "health-planning-balance146-health-planning-final-beta",
+      "synthetic": true,
+      "status": "passed",
+      "included": true,
+      "exclusionReason": null,
+      "receiptSha256": "815b74d605d6b10aa1730361ee2a7cc1c9d170bfcfd6f593ea61330d2aae2a1b",
+      "stages": [
+        {
+          "source": "7b36b34cc80f2399d8192808816b9ebc39cbd743",
+          "dllSha256": "75f55f4b90748675340c79db54e9916c04c2b5a00393b08f8cda3bc368c373ef",
+          "game": "v0.111.0",
+          "mod": "1.0.30",
+          "baseLib": "v3.4.7"
+        }
+      ],
+      "commands": 12,
+      "modelForms": 38,
+      "healthContexts": 148,
+      "omittedSupersededModelRows": 0,
+      "cases": [
+        {
+          "cls": "knight",
+          "kind": "models",
+          "rows": [
+            {
+              "id": "knight_blood_price",
+              "upgraded": false,
+              "hpLoss": 3,
+              "contexts": [
+                {
+                  "hp": 1,
+                  "score": -10000,
+                  "upgradeValue": 0
+                },
+                {
+                  "hp": 3,
+                  "score": -10000,
+                  "upgradeValue": 0
+                },
+                {
+                  "hp": 4,
+                  "score": -5,
+                  "upgradeValue": 4
+                },
+                {
+                  "hp": 60,
+                  "score": 0.8421052631578947,
+                  "upgradeValue": 4
+                }
+              ]
+            },
+            {
+              "id": "knight_blood_price",
+              "upgraded": true,
+              "hpLoss": 3,
+              "contexts": [
+                {
+                  "hp": 1,
+                  "score": -10000,
+                  "upgradeValue": null
+                },
+                {
+                  "hp": 3,
+                  "score": -10000,
+                  "upgradeValue": null
+                },
+                {
+                  "hp": 4,
+                  "score": -1,
+                  "upgradeValue": null
+                },
+                {
+                  "hp": 60,
+                  "score": 4.842105263157895,
+                  "upgradeValue": null
+                }
+              ]
+            },
+            {
+              "id": "knight_bloodied_blade",
+              "upgraded": false,
+              "hpLoss": 3,
+              "contexts": [
+                {
+                  "hp": 1,
+                  "score": -10000,
+                  "upgradeValue": 0
+                },
+                {
+                  "hp": 3,
+                  "score": -10000,
+                  "upgradeValue": 0
+                },
+                {
+                  "hp": 4,
+                  "score": 0,
+                  "upgradeValue": 2
+                },
+                {
+                  "hp": 60,
+                  "score": 5.842105263157895,
+                  "upgradeValue": 2
+                }
+              ]
+            },
+            {
+              "id": "knight_bloodied_blade",
+              "upgraded": true,
+              "hpLoss": 3,
+              "contexts": [
+                {
+                  "hp": 1,
+                  "score": -10000,
+                  "upgradeValue": null
+                },
+                {
+                  "hp": 3,
+                  "score": -10000,
+                  "upgradeValue": null
+                },
+                {
+                  "hp": 4,
+                  "score": 2,
+                  "upgradeValue": null
+                },
+                {
+                  "hp": 60,
+                  "score": 7.842105263157895,
+                  "upgradeValue": null
+                }
+              ]
+            },
+            {
+              "id": "knight_last_stand",
+              "upgraded": false,
+              "hpLoss": 3,
+              "contexts": [
+                {
+                  "hp": 1,
+                  "score": -10000,
+                  "upgradeValue": 0
+                },
+                {
+                  "hp": 3,
+                  "score": -10000,
+                  "upgradeValue": 0
+                },
+                {
+                  "hp": 4,
+                  "score": 3,
+                  "upgradeValue": 2
+                },
+                {
+                  "hp": 60,
+                  "score": 8.842105263157894,
+                  "upgradeValue": 2
+                }
+              ]
+            },
+            {
+              "id": "knight_last_stand",
+              "upgraded": true,
+              "hpLoss": 3,
+              "contexts": [
+                {
+                  "hp": 1,
+                  "score": -10000,
+                  "upgradeValue": null
+                },
+                {
+                  "hp": 3,
+                  "score": -10000,
+                  "upgradeValue": null
+                },
+                {
+                  "hp": 4,
+                  "score": 5,
+                  "upgradeValue": null
+                },
+                {
+                  "hp": 60,
+                  "score": 10.842105263157894,
+                  "upgradeValue": null
+                }
+              ]
+            },
+            {
+              "id": "knight_crimson_sweep",
+              "upgraded": false,
+              "hpLoss": 4,
+              "contexts": [
+                {
+                  "hp": 1,
+                  "score": -10000,
+                  "upgradeValue": 0
+                },
+                {
+                  "hp": 4,
+                  "score": -10000,
+                  "upgradeValue": 0
+                },
+                {
+                  "hp": 5,
+                  "score": -6,
+                  "upgradeValue": 1
+                },
+                {
+                  "hp": 60,
+                  "score": 1.7142857142857144,
+                  "upgradeValue": 1
+                }
+              ]
+            },
+            {
+              "id": "knight_crimson_sweep",
+              "upgraded": true,
+              "hpLoss": 4,
+              "contexts": [
+                {
+                  "hp": 1,
+                  "score": -10000,
+                  "upgradeValue": null
+                },
+                {
+                  "hp": 4,
+                  "score": -10000,
+                  "upgradeValue": null
+                },
+                {
+                  "hp": 5,
+                  "score": -5,
+                  "upgradeValue": null
+                },
+                {
+                  "hp": 60,
+                  "score": 2.7142857142857144,
+                  "upgradeValue": null
+                }
+              ]
+            },
+            {
+              "id": "knight_siege_resolve",
+              "upgraded": false,
+              "hpLoss": 3,
+              "contexts": [
+                {
+                  "hp": 1,
+                  "score": -10000,
+                  "upgradeValue": 0
+                },
+                {
+                  "hp": 3,
+                  "score": -10000,
+                  "upgradeValue": 0
+                },
+                {
+                  "hp": 4,
+                  "score": -3,
+                  "upgradeValue": 0
+                },
+                {
+                  "hp": 60,
+                  "score": 2.8421052631578947,
+                  "upgradeValue": 0
+                }
+              ]
+            },
+            {
+              "id": "knight_siege_resolve",
+              "upgraded": true,
+              "hpLoss": 3,
+              "contexts": [
+                {
+                  "hp": 1,
+                  "score": -10000,
+                  "upgradeValue": null
+                },
+                {
+                  "hp": 3,
+                  "score": -10000,
+                  "upgradeValue": null
+                },
+                {
+                  "hp": 4,
+                  "score": -3,
+                  "upgradeValue": null
+                },
+                {
+                  "hp": 60,
+                  "score": 2.8421052631578947,
+                  "upgradeValue": null
+                }
+              ]
+            },
+            {
+              "id": "knight_blood_oath",
+              "upgraded": false,
+              "hpLoss": 2,
+              "contexts": [
+                {
+                  "hp": 1,
+                  "score": -10000,
+                  "upgradeValue": 0
+                },
+                {
+                  "hp": 2,
+                  "score": -10000,
+                  "upgradeValue": 0
+                },
+                {
+                  "hp": 3,
+                  "score": -2,
+                  "upgradeValue": 0
+                },
+                {
+                  "hp": 60,
+                  "score": 1.9310344827586206,
+                  "upgradeValue": 0
+                }
+              ]
+            },
+            {
+              "id": "knight_blood_oath",
+              "upgraded": true,
+              "hpLoss": 2,
+              "contexts": [
+                {
+                  "hp": 1,
+                  "score": -10000,
+                  "upgradeValue": null
+                },
+                {
+                  "hp": 2,
+                  "score": -10000,
+                  "upgradeValue": null
+                },
+                {
+                  "hp": 3,
+                  "score": -2,
+                  "upgradeValue": null
+                },
+                {
+                  "hp": 60,
+                  "score": 1.9310344827586206,
+                  "upgradeValue": null
+                }
+              ]
+            },
+            {
+              "id": "knight_grit_teeth",
+              "upgraded": false,
+              "hpLoss": 2,
+              "contexts": [
+                {
+                  "hp": 1,
+                  "score": -10000,
+                  "upgradeValue": 0
+                },
+                {
+                  "hp": 2,
+                  "score": -10000,
+                  "upgradeValue": 0
+                },
+                {
+                  "hp": 3,
+                  "score": 1.5,
+                  "upgradeValue": 2.5
+                },
+                {
+                  "hp": 60,
+                  "score": 5.431034482758621,
+                  "upgradeValue": 2.5
+                }
+              ]
+            },
+            {
+              "id": "knight_grit_teeth",
+              "upgraded": true,
+              "hpLoss": 2,
+              "contexts": [
+                {
+                  "hp": 1,
+                  "score": -10000,
+                  "upgradeValue": null
+                },
+                {
+                  "hp": 2,
+                  "score": -10000,
+                  "upgradeValue": null
+                },
+                {
+                  "hp": 3,
+                  "score": 4,
+                  "upgradeValue": null
+                },
+                {
+                  "hp": 60,
+                  "score": 7.931034482758621,
+                  "upgradeValue": null
+                }
+              ]
+            },
+            {
+              "id": "knight_blood_temper",
+              "upgraded": false,
+              "hpLoss": 2,
+              "contexts": [
+                {
+                  "hp": 1,
+                  "score": -10000,
+                  "upgradeValue": 0
+                },
+                {
+                  "hp": 2,
+                  "score": -10000,
+                  "upgradeValue": 0
+                },
+                {
+                  "hp": 3,
+                  "score": 2,
+                  "upgradeValue": 2
+                },
+                {
+                  "hp": 60,
+                  "score": 5.931034482758621,
+                  "upgradeValue": 2
+                }
+              ]
+            },
+            {
+              "id": "knight_blood_temper",
+              "upgraded": true,
+              "hpLoss": 2,
+              "contexts": [
+                {
+                  "hp": 1,
+                  "score": -10000,
+                  "upgradeValue": null
+                },
+                {
+                  "hp": 2,
+                  "score": -10000,
+                  "upgradeValue": null
+                },
+                {
+                  "hp": 3,
+                  "score": 4,
+                  "upgradeValue": null
+                },
+                {
+                  "hp": 60,
+                  "score": 7.931034482758621,
+                  "upgradeValue": null
+                }
+              ]
+            },
+            {
+              "id": "knight_painful_lesson",
+              "upgraded": false,
+              "hpLoss": 2,
+              "contexts": [
+                {
+                  "hp": 1,
+                  "score": -10000,
+                  "upgradeValue": 0
+                },
+                {
+                  "hp": 2,
+                  "score": -10000,
+                  "upgradeValue": 0
+                },
+                {
+                  "hp": 3,
+                  "score": 3,
+                  "upgradeValue": 3
+                },
+                {
+                  "hp": 60,
+                  "score": 6.931034482758621,
+                  "upgradeValue": 3
+                }
+              ]
+            },
+            {
+              "id": "knight_painful_lesson",
+              "upgraded": true,
+              "hpLoss": 2,
+              "contexts": [
+                {
+                  "hp": 1,
+                  "score": -10000,
+                  "upgradeValue": null
+                },
+                {
+                  "hp": 2,
+                  "score": -10000,
+                  "upgradeValue": null
+                },
+                {
+                  "hp": 3,
+                  "score": 6,
+                  "upgradeValue": null
+                },
+                {
+                  "hp": 60,
+                  "score": 9.931034482758621,
+                  "upgradeValue": null
+                }
+              ]
+            },
+            {
+              "id": "knight_king_s_ransom",
+              "upgraded": false,
+              "hpLoss": 4,
+              "contexts": [
+                {
+                  "hp": 1,
+                  "score": -10000,
+                  "upgradeValue": 0
+                },
+                {
+                  "hp": 4,
+                  "score": -10000,
+                  "upgradeValue": 0
+                },
+                {
+                  "hp": 5,
+                  "score": -4,
+                  "upgradeValue": 4
+                },
+                {
+                  "hp": 60,
+                  "score": 3.7142857142857144,
+                  "upgradeValue": 4
+                }
+              ]
+            },
+            {
+              "id": "knight_king_s_ransom",
+              "upgraded": true,
+              "hpLoss": 4,
+              "contexts": [
+                {
+                  "hp": 1,
+                  "score": -10000,
+                  "upgradeValue": null
+                },
+                {
+                  "hp": 4,
+                  "score": -10000,
+                  "upgradeValue": null
+                },
+                {
+                  "hp": 5,
+                  "score": 0,
+                  "upgradeValue": null
+                },
+                {
+                  "hp": 60,
+                  "score": 7.714285714285714,
+                  "upgradeValue": null
+                }
+              ]
+            }
+          ],
+          "upgrade": {
+            "lowPicked": "knight_guard",
+            "highPicked": "knight_blood_price",
+            "lowPaid": 0,
+            "lowGuard": 3,
+            "highPaid": 4,
+            "highGuard": 3,
+            "guardUpgraded": true,
+            "paidUnchanged": true
+          }
+        },
+        {
+          "cls": "mage",
+          "kind": "models",
+          "rows": [
+            {
+              "id": "mage_mana_burn",
+              "upgraded": false,
+              "hpLoss": 3,
+              "contexts": [
+                {
+                  "hp": 1,
+                  "score": -10000,
+                  "upgradeValue": 0
+                },
+                {
+                  "hp": 3,
+                  "score": -10000,
+                  "upgradeValue": 0
+                },
+                {
+                  "hp": 4,
+                  "score": 0,
+                  "upgradeValue": 2
+                },
+                {
+                  "hp": 52,
+                  "score": 5.816326530612245,
+                  "upgradeValue": 2
+                }
+              ]
+            },
+            {
+              "id": "mage_mana_burn",
+              "upgraded": true,
+              "hpLoss": 3,
+              "contexts": [
+                {
+                  "hp": 1,
+                  "score": -10000,
+                  "upgradeValue": null
+                },
+                {
+                  "hp": 3,
+                  "score": -10000,
+                  "upgradeValue": null
+                },
+                {
+                  "hp": 4,
+                  "score": 2,
+                  "upgradeValue": null
+                },
+                {
+                  "hp": 52,
+                  "score": 7.816326530612245,
+                  "upgradeValue": null
+                }
+              ]
+            },
+            {
+              "id": "mage_overcharge",
+              "upgraded": false,
+              "hpLoss": 3,
+              "contexts": [
+                {
+                  "hp": 1,
+                  "score": -10000,
+                  "upgradeValue": 0
+                },
+                {
+                  "hp": 3,
+                  "score": -10000,
+                  "upgradeValue": 0
+                },
+                {
+                  "hp": 4,
+                  "score": -6,
+                  "upgradeValue": 3
+                },
+                {
+                  "hp": 52,
+                  "score": -0.18367346938775508,
+                  "upgradeValue": 3
+                }
+              ]
+            },
+            {
+              "id": "mage_overcharge",
+              "upgraded": true,
+              "hpLoss": 3,
+              "contexts": [
+                {
+                  "hp": 1,
+                  "score": -10000,
+                  "upgradeValue": null
+                },
+                {
+                  "hp": 3,
+                  "score": -10000,
+                  "upgradeValue": null
+                },
+                {
+                  "hp": 4,
+                  "score": -3,
+                  "upgradeValue": null
+                },
+                {
+                  "hp": 52,
+                  "score": 2.816326530612245,
+                  "upgradeValue": null
+                }
+              ]
+            },
+            {
+              "id": "mage_blood_to_mana",
+              "upgraded": false,
+              "hpLoss": 4,
+              "contexts": [
+                {
+                  "hp": 1,
+                  "score": -10000,
+                  "upgradeValue": 0
+                },
+                {
+                  "hp": 4,
+                  "score": -10000,
+                  "upgradeValue": 0
+                },
+                {
+                  "hp": 5,
+                  "score": -4,
+                  "upgradeValue": 4
+                },
+                {
+                  "hp": 52,
+                  "score": 3.666666666666667,
+                  "upgradeValue": 4
+                }
+              ]
+            },
+            {
+              "id": "mage_blood_to_mana",
+              "upgraded": true,
+              "hpLoss": 4,
+              "contexts": [
+                {
+                  "hp": 1,
+                  "score": -10000,
+                  "upgradeValue": null
+                },
+                {
+                  "hp": 4,
+                  "score": -10000,
+                  "upgradeValue": null
+                },
+                {
+                  "hp": 5,
+                  "score": 0,
+                  "upgradeValue": null
+                },
+                {
+                  "hp": 52,
+                  "score": 7.666666666666667,
+                  "upgradeValue": null
+                }
+              ]
+            }
+          ],
+          "upgrade": null
+        },
+        {
+          "cls": "ranger",
+          "kind": "models",
+          "rows": [
+            {
+              "id": "ranger_shadow_arrow",
+              "upgraded": false,
+              "hpLoss": 2,
+              "contexts": [
+                {
+                  "hp": 1,
+                  "score": -10000,
+                  "upgradeValue": 0
+                },
+                {
+                  "hp": 2,
+                  "score": -10000,
+                  "upgradeValue": 0
+                },
+                {
+                  "hp": 3,
+                  "score": 2,
+                  "upgradeValue": 2
+                },
+                {
+                  "hp": 56,
+                  "score": 5.925925925925926,
+                  "upgradeValue": 2
+                }
+              ]
+            },
+            {
+              "id": "ranger_shadow_arrow",
+              "upgraded": true,
+              "hpLoss": 2,
+              "contexts": [
+                {
+                  "hp": 1,
+                  "score": -10000,
+                  "upgradeValue": null
+                },
+                {
+                  "hp": 2,
+                  "score": -10000,
+                  "upgradeValue": null
+                },
+                {
+                  "hp": 3,
+                  "score": 4,
+                  "upgradeValue": null
+                },
+                {
+                  "hp": 56,
+                  "score": 7.925925925925926,
+                  "upgradeValue": null
+                }
+              ]
+            },
+            {
+              "id": "ranger_perfect_timing",
+              "upgraded": false,
+              "hpLoss": 3,
+              "contexts": [
+                {
+                  "hp": 1,
+                  "score": -10000,
+                  "upgradeValue": 0
+                },
+                {
+                  "hp": 3,
+                  "score": -10000,
+                  "upgradeValue": 0
+                },
+                {
+                  "hp": 4,
+                  "score": -3,
+                  "upgradeValue": 0
+                },
+                {
+                  "hp": 56,
+                  "score": 2.830188679245283,
+                  "upgradeValue": 0
+                }
+              ]
+            },
+            {
+              "id": "ranger_perfect_timing",
+              "upgraded": true,
+              "hpLoss": 3,
+              "contexts": [
+                {
+                  "hp": 1,
+                  "score": -10000,
+                  "upgradeValue": null
+                },
+                {
+                  "hp": 3,
+                  "score": -10000,
+                  "upgradeValue": null
+                },
+                {
+                  "hp": 4,
+                  "score": -3,
+                  "upgradeValue": null
+                },
+                {
+                  "hp": 56,
+                  "score": 2.830188679245283,
+                  "upgradeValue": null
+                }
+              ]
+            }
+          ],
+          "upgrade": null
+        },
+        {
+          "cls": "ironclad",
+          "kind": "models",
+          "rows": [
+            {
+              "id": "CARD.OFFERING",
+              "upgraded": false,
+              "hpLoss": 6,
+              "contexts": [
+                {
+                  "hp": 1,
+                  "score": -10000,
+                  "upgradeValue": 0
+                },
+                {
+                  "hp": 6,
+                  "score": -10000,
+                  "upgradeValue": 0
+                },
+                {
+                  "hp": 7,
+                  "score": -1,
+                  "upgradeValue": 6
+                },
+                {
+                  "hp": 80,
+                  "score": 10.513513513513512,
+                  "upgradeValue": 6
+                }
+              ]
+            },
+            {
+              "id": "CARD.OFFERING",
+              "upgraded": true,
+              "hpLoss": 6,
+              "contexts": [
+                {
+                  "hp": 1,
+                  "score": -10000,
+                  "upgradeValue": null
+                },
+                {
+                  "hp": 6,
+                  "score": -10000,
+                  "upgradeValue": null
+                },
+                {
+                  "hp": 7,
+                  "score": 5,
+                  "upgradeValue": null
+                },
+                {
+                  "hp": 80,
+                  "score": 16.513513513513512,
+                  "upgradeValue": null
+                }
+              ]
+            },
+            {
+              "id": "CARD.BLOODLETTING",
+              "upgraded": false,
+              "hpLoss": 3,
+              "contexts": [
+                {
+                  "hp": 1,
+                  "score": -10000,
+                  "upgradeValue": 0
+                },
+                {
+                  "hp": 3,
+                  "score": -10000,
+                  "upgradeValue": 0
+                },
+                {
+                  "hp": 4,
+                  "score": -1,
+                  "upgradeValue": 4
+                },
+                {
+                  "hp": 80,
+                  "score": 4.883116883116884,
+                  "upgradeValue": 4
+                }
+              ]
+            },
+            {
+              "id": "CARD.BLOODLETTING",
+              "upgraded": true,
+              "hpLoss": 3,
+              "contexts": [
+                {
+                  "hp": 1,
+                  "score": -10000,
+                  "upgradeValue": null
+                },
+                {
+                  "hp": 3,
+                  "score": -10000,
+                  "upgradeValue": null
+                },
+                {
+                  "hp": 4,
+                  "score": 3,
+                  "upgradeValue": null
+                },
+                {
+                  "hp": 80,
+                  "score": 8.883116883116884,
+                  "upgradeValue": null
+                }
+              ]
+            },
+            {
+              "id": "CARD.HEMOKINESIS",
+              "upgraded": false,
+              "hpLoss": 2,
+              "contexts": [
+                {
+                  "hp": 1,
+                  "score": -10000,
+                  "upgradeValue": 0
+                },
+                {
+                  "hp": 2,
+                  "score": -10000,
+                  "upgradeValue": 0
+                },
+                {
+                  "hp": 3,
+                  "score": 9,
+                  "upgradeValue": 5
+                },
+                {
+                  "hp": 80,
+                  "score": 12.948717948717949,
+                  "upgradeValue": 5
+                }
+              ]
+            },
+            {
+              "id": "CARD.HEMOKINESIS",
+              "upgraded": true,
+              "hpLoss": 2,
+              "contexts": [
+                {
+                  "hp": 1,
+                  "score": -10000,
+                  "upgradeValue": null
+                },
+                {
+                  "hp": 2,
+                  "score": -10000,
+                  "upgradeValue": null
+                },
+                {
+                  "hp": 3,
+                  "score": 14,
+                  "upgradeValue": null
+                },
+                {
+                  "hp": 80,
+                  "score": 17.94871794871795,
+                  "upgradeValue": null
+                }
+              ]
+            },
+            {
+              "id": "CARD.HAUNT",
+              "upgraded": false,
+              "hpLoss": 0,
+              "contexts": [
+                {
+                  "hp": 1,
+                  "score": 6,
+                  "upgradeValue": 0
+                },
+                {
+                  "hp": 80,
+                  "score": 6,
+                  "upgradeValue": 0
+                }
+              ]
+            },
+            {
+              "id": "CARD.HAUNT",
+              "upgraded": true,
+              "hpLoss": 0,
+              "contexts": [
+                {
+                  "hp": 1,
+                  "score": 6,
+                  "upgradeValue": null
+                },
+                {
+                  "hp": 80,
+                  "score": 6,
+                  "upgradeValue": null
+                }
+              ]
+            }
+          ],
+          "upgrade": null
+        },
+        {
+          "cls": "knight",
+          "kind": "reward-low",
+          "hpBefore": 3,
+          "hp": 3,
+          "turnBefore": 1,
+          "turnAfter": 1,
+          "choice": {
+            "action": "card-reward",
+            "detail": {
+              "offers": [
+                {
+                  "id": "knight_bloodied_blade",
+                  "upgraded": false,
+                  "score": -10000
+                },
+                {
+                  "id": "knight_measured_cut",
+                  "upgraded": false,
+                  "score": 5
+                }
+              ],
+              "picked": "knight_measured_cut",
+              "skip": false,
+              "rewardPolicy": "defensive",
+              "intervention": false
+            },
+            "animationSpeed": 6,
+            "state": {
+              "character": "CHARACTER.SPIRELEGACY-HEIR_CHARACTER",
+              "act": 1,
+              "floor": 2,
+              "room": "Monster",
+              "hp": 3,
+              "maxHp": 60,
+              "gold": 99,
+              "crowns": 0,
+              "lastEarned": 0,
+              "wins": 0,
+              "manor": {
+                "vitality": 0,
+                "smith": 0,
+                "armory": 0,
+                "vault": 0,
+                "library": 0,
+                "garden": 0
+              },
+              "deck": [
+                "knight_strike",
+                "knight_strike",
+                "knight_strike",
+                "knight_strike",
+                "knight_strike",
+                "knight_guard",
+                "knight_guard",
+                "knight_guard",
+                "knight_guard",
+                "shield",
+                "knight_measured_cut"
+              ],
+              "relics": [
+                "RELIC.SPIRELEGACY-BLOODLINE_RELIC"
+              ],
+              "phase": "Play",
+              "turn": 1,
+              "combatInProgress": true,
+              "combatEnding": false,
+              "actionRunning": false,
+              "paused": false,
+              "enemies": [
+                {
+                  "id": "MONSTER.NIBBIT",
+                  "hp": 43
+                },
+                {
+                  "id": "MONSTER.NIBBIT",
+                  "hp": 44
+                }
+              ]
+            }
+          },
+          "successfullySelected": true,
+          "acquired": [
+            "knight_measured_cut"
+          ]
+        },
+        {
+          "cls": "knight",
+          "kind": "reward-high",
+          "hpBefore": 60,
+          "hp": 60,
+          "turnBefore": 1,
+          "turnAfter": 1,
+          "choice": {
+            "action": "card-reward",
+            "detail": {
+              "offers": [
+                {
+                  "id": "knight_bloodied_blade",
+                  "upgraded": false,
+                  "score": 5.842105263157895
+                },
+                {
+                  "id": "knight_measured_cut",
+                  "upgraded": false,
+                  "score": 5
+                }
+              ],
+              "picked": "knight_bloodied_blade",
+              "skip": false,
+              "rewardPolicy": "defensive",
+              "intervention": false
+            },
+            "animationSpeed": 6,
+            "state": {
+              "character": "CHARACTER.SPIRELEGACY-HEIR_CHARACTER",
+              "act": 1,
+              "floor": 2,
+              "room": "Monster",
+              "hp": 60,
+              "maxHp": 60,
+              "gold": 99,
+              "crowns": 0,
+              "lastEarned": 0,
+              "wins": 0,
+              "manor": {
+                "vitality": 0,
+                "smith": 0,
+                "armory": 0,
+                "vault": 0,
+                "library": 0,
+                "garden": 0
+              },
+              "deck": [
+                "knight_strike",
+                "knight_strike",
+                "knight_strike",
+                "knight_strike",
+                "knight_strike",
+                "knight_guard",
+                "knight_guard",
+                "knight_guard",
+                "knight_guard",
+                "shield",
+                "knight_bloodied_blade"
+              ],
+              "relics": [
+                "RELIC.SPIRELEGACY-BLOODLINE_RELIC"
+              ],
+              "phase": "Play",
+              "turn": 1,
+              "combatInProgress": true,
+              "combatEnding": false,
+              "actionRunning": false,
+              "paused": false,
+              "enemies": [
+                {
+                  "id": "MONSTER.NIBBIT",
+                  "hp": 43
+                },
+                {
+                  "id": "MONSTER.NIBBIT",
+                  "hp": 44
+                }
+              ]
+            }
+          },
+          "successfullySelected": true,
+          "acquired": [
+            "knight_bloodied_blade"
+          ]
+        }
+      ],
+      "logMatches": {
+        "launch.log": {
+          "ERROR": 0,
+          "InvalidTaskId": 0,
+          "Fatal error": 0,
+          "already been freed": 0,
+          "backup": 0,
+          "particles": 0
+        },
+        "errors.log": {
+          "ERROR": 3,
+          "InvalidTaskId": 0,
+          "Fatal error": 0,
+          "already been freed": 0,
+          "backup": 3,
+          "particles": 1
+        }
+      }
+    }
+  ]
+}

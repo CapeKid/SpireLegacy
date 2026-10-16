@@ -76,5 +76,21 @@ public static class PilotRewardChecks
         check(PilotRewards.Score(Guard("g",12),attacks,true)-PilotRewards.Score(Guard("g",12),attacks)<=3,"Defensive preference is bounded");
         check(PilotRewards.Score(Guard("empty",7),[],true)==PilotRewards.Score(Guard("empty",7),[]),"Empty deck avoids unsupported coverage assumptions");
         check(PilotRewards.Score(Guard("later",0) with{NextBlock=10},attacks,true)==PilotRewards.Score(Guard("later",0) with{NextBlock=10},attacks),"Delayed protection is not immediate defensive coverage");
+        var paid=Attack("paid",9) with{HpLoss=3};
+        check(PilotRewards.Pick([paid,Attack("safe",5)],balanced,hp:3)==1,"Fatal acquisition prefers a usable alternative");
+        check(PilotRewards.Pick([paid],balanced,hp:2)==null,"Only currently fatal rewards can be skipped");
+        check(PilotRewards.Pick([paid,Attack("safe",5)],balanced,hp:80)==0,"Strong blood reward remains available with health budget");
+        check(PilotRewards.Score(paid,balanced)<PilotRewards.Score(paid with{HpLoss=0},balanced),"Unknown HP still prices explicit payment");
+        var offering=new PilotRewards.Card("offering",0,0,0,3,2,0,0,false,false,false,HpLoss:6);
+        check(PilotRewards.Pick([offering,Attack("safe",6)],balanced,hp:80)==0,"Healthy native resource payoff is not blanket rejected");
+        check(PilotRewards.Pick([offering,Attack("safe",6)],balanced,hp:6)==1,"Fatal native resource payment is not treated as free");
+        for(var loss=0;loss<=10;loss++)for(var hp=1;hp<=80;hp++){
+            var card=paid with{HpLoss=loss};var score=PilotRewards.Score(card,balanced,hp:hp);
+            check(double.IsFinite(score),"Health-aware score stays serializable");
+            check(score<=PilotRewards.Score(card with{HpLoss=0},balanced,hp:hp),"Payment never creates an acquisition bonus");
+            check(score<=PilotRewards.Score(card,balanced,hp:hp+1),"More HP never lowers identical reward value");
+        }
+        check(PilotRewards.Score(paid with{HpLoss=0},balanced,hp:1)==PilotRewards.Score(paid with{HpLoss=0},balanced,hp:80),"Zero payment ignores HP pressure");
+        check(PilotRewards.Score(paid with{Damage=12},balanced,hp:80)-PilotRewards.Score(paid,balanced,hp:80)==3,"Unchanged payment cancels from marginal upgrade benefit");
     }
 }
