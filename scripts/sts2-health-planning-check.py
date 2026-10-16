@@ -27,6 +27,7 @@ try:
             picked='knight_measured_cut' if kind=='reward-low' else 'knight_bloodied_blade'
             assert result['successfullySelected'] and result['acquired']==[picked],result
             assert result['choice']['detail']['picked']==picked,result
+            assert result['hpBefore']==result['hp']==result['choice']['state']['hp'] and result['turnBefore']==result['turnAfter'],result
         print(tag,cls,kind,'PASS',flush=True)
     report['status']='passed'
 except Exception as error:

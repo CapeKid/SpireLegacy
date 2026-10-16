@@ -31,15 +31,16 @@ public static class HealthPlanningOracle
         if(kind!="models"){
             if(cls!="knight")throw new InvalidDataException("Reward calibration requires Knight.");
             player.Creature.SetCurrentHpInternal(kind=="reward-low"?3:player.Creature.MaxHp);
+            var hpBefore=player.Creature.CurrentHp;var turnBefore=player.PlayerCombatState!.TurnNumber;
             var options=new[]{"knight_bloodied_blade","knight_measured_cut"}.Select(key=>run.CreateCard(NativeCards.Get(key),player)).ToArray();
             var reward=new CardReward(options,CardCreationSource.Encounter,player,CardCreationOptions.ForRoom(player,run.CurrentRoom!.RoomType));
             var set=new RewardsSet(player);set.Rewards.Add(reward);var offering=set.Offer();
             for(var frame=0;frame<20&&NOverlayStack.Instance?.Peek() is not NRewardsScreen;frame++)await tree.ToSignal(tree,SceneTree.SignalName.ProcessFrame);
             await CampaignOracle.Step(run,"tactical",new BorrowedSelector(),"defensive");
             var choice=JsonSerializer.SerializeToElement(await CampaignOracle.Step(run,"tactical",new BorrowedSelector(),"defensive"));
-            await CampaignOracle.Step(run,"tactical",new BorrowedSelector(),"defensive");
+            if(NOverlayStack.Instance?.Peek() is NRewardsScreen)await CampaignOracle.Step(run,"tactical",new BorrowedSelector(),"defensive");
             await offering.WaitAsync(TimeSpan.FromSeconds(10));
-            return new{cls,kind,hp=player.Creature.CurrentHp,choice,successfullySelected=reward.SuccessfullySelected,
+            return new{cls,kind,hpBefore,hp=player.Creature.CurrentHp,turnBefore,turnAfter=player.PlayerCombatState!.TurnNumber,choice,successfullySelected=reward.SuccessfullySelected,
                 acquired=player.Deck.Cards.OfType<LegacyCard>().Where(c=>c.Key is "knight_bloodied_blade" or "knight_measured_cut").Select(c=>c.Key).ToArray()};
         }
         var deck=player.Deck.Cards.Select(PilotCardInfo.Describe).ToArray();
