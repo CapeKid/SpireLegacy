@@ -192,6 +192,10 @@ class EvidenceChecks(unittest.TestCase):
         self.speed_receipt();self.campaign['animationSpeed']=0
         with self.assertRaises(AssertionError):self.run_export()
 
+    def test_removed_report_speed_rejected(self):
+        self.speed_receipt();del self.campaign['animationSpeed']
+        with self.assertRaises(AssertionError):self.run_export()
+
     def test_duplicate_command_rejected(self):
         self.campaign['evidence'].append(copy.deepcopy(self.campaign['evidence'][0]))
         with self.assertRaises(AssertionError): self.run_export()

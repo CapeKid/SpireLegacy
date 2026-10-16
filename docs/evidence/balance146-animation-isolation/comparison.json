@@ -1,0 +1,176 @@
+{
+  "comparison": "Exact ordered equality of action, full state and detail for completed non-wait campaign-step replies; request IDs, timestamps and top-level animationSpeed are excluded.",
+  "originalTrial": "balance-campaign-balance146-traits-mage-beta-challenge",
+  "originalStatus": "error",
+  "originalSpeedFromRecordedSource": 6,
+  "originalConcurrentClients": 2,
+  "originalLastObserved": {
+    "act": 2,
+    "floor": 23,
+    "hp": 3
+  },
+  "trials": [
+    {
+      "trial": "balance-campaign-balance146-mage-beta-normal",
+      "animationSpeed": 1,
+      "verifiedSingleClient": true,
+      "status": "finished",
+      "originalCompletedDecisions": 179,
+      "matchingOriginalPrefix": 179,
+      "originalPrefixFullyMatched": true,
+      "matchingNormalPrefix": 224,
+      "completedDecisions": 224,
+      "lastObserved": {
+        "act": 2,
+        "floor": 30,
+        "hp": 0,
+        "wins": 0,
+        "crowns": 113,
+        "lastEarned": 113
+      },
+      "firstDecisionAfterOriginalPrefix": {
+        "action": "combat-turn",
+        "state": {
+          "act": 2,
+          "floor": 23,
+          "hp": 5,
+          "turn": 5
+        },
+        "detail": {
+          "turn": 5,
+          "entries": {
+            "mage_crystal_seed": 1,
+            "mage_spell_notes": 1,
+            "mage_strike": 3,
+            "flame": 1,
+            "ranger_tripwire": 1,
+            "frost": 1,
+            "mage_guard": 1
+          },
+          "plays": [
+            {
+              "id": "mage_strike",
+              "upgraded": true,
+              "netEnergy": 1,
+              "netHpLost": 0,
+              "reason": "utility",
+              "score": 12,
+              "incomingBefore": 0,
+              "blockBefore": 0,
+              "targetThreat": 0,
+              "target": "MONSTER.LOUSE_PROGENITOR"
+            },
+            {
+              "id": "mage_strike",
+              "upgraded": true,
+              "netEnergy": 1,
+              "netHpLost": 0,
+              "reason": "utility",
+              "score": 11,
+              "incomingBefore": 0,
+              "blockBefore": 0,
+              "targetThreat": 0,
+              "target": "MONSTER.LOUSE_PROGENITOR"
+            },
+            {
+              "id": "frost",
+              "upgraded": false,
+              "netEnergy": 1,
+              "netHpLost": -2,
+              "reason": "estimated-lethal",
+              "score": 110,
+              "incomingBefore": 0,
+              "blockBefore": 0,
+              "targetThreat": 0,
+              "target": "MONSTER.LOUSE_PROGENITOR"
+            }
+          ],
+          "potions": [],
+          "unplayed": [],
+          "victory": true
+        }
+      }
+    },
+    {
+      "trial": "balance-campaign-balance146-mage-beta-single-fast",
+      "animationSpeed": 6,
+      "verifiedSingleClient": true,
+      "status": "finished",
+      "originalCompletedDecisions": 179,
+      "matchingOriginalPrefix": 179,
+      "originalPrefixFullyMatched": true,
+      "matchingNormalPrefix": 224,
+      "completedDecisions": 224,
+      "lastObserved": {
+        "act": 2,
+        "floor": 30,
+        "hp": 0,
+        "wins": 0,
+        "crowns": 113,
+        "lastEarned": 113
+      },
+      "firstDecisionAfterOriginalPrefix": {
+        "action": "combat-turn",
+        "state": {
+          "act": 2,
+          "floor": 23,
+          "hp": 5,
+          "turn": 5
+        },
+        "detail": {
+          "turn": 5,
+          "entries": {
+            "mage_crystal_seed": 1,
+            "mage_spell_notes": 1,
+            "mage_strike": 3,
+            "flame": 1,
+            "ranger_tripwire": 1,
+            "frost": 1,
+            "mage_guard": 1
+          },
+          "plays": [
+            {
+              "id": "mage_strike",
+              "upgraded": true,
+              "netEnergy": 1,
+              "netHpLost": 0,
+              "reason": "utility",
+              "score": 12,
+              "incomingBefore": 0,
+              "blockBefore": 0,
+              "targetThreat": 0,
+              "target": "MONSTER.LOUSE_PROGENITOR"
+            },
+            {
+              "id": "mage_strike",
+              "upgraded": true,
+              "netEnergy": 1,
+              "netHpLost": 0,
+              "reason": "utility",
+              "score": 11,
+              "incomingBefore": 0,
+              "blockBefore": 0,
+              "targetThreat": 0,
+              "target": "MONSTER.LOUSE_PROGENITOR"
+            },
+            {
+              "id": "frost",
+              "upgraded": false,
+              "netEnergy": 1,
+              "netHpLost": -2,
+              "reason": "estimated-lethal",
+              "score": 110,
+              "incomingBefore": 0,
+              "blockBefore": 0,
+              "targetThreat": 0,
+              "target": "MONSTER.LOUSE_PROGENITOR"
+            }
+          ],
+          "potions": [],
+          "unplayed": [],
+          "victory": true
+        }
+      }
+    }
+  ]
+}

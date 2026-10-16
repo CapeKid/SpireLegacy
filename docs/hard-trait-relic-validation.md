@@ -60,4 +60,6 @@ Collect this study's twelve `balance-campaign-balance146-traits-*.json` receipts
 
 ## Remaining scope
 
+The [single-client crash isolation follow-up](mage-crash-isolation.md) subsequently passed the original beta Mage failure point at both normal and sixfold animation speed, with all 179 prior completed decisions matching. Both fresh trials ended naturally at floor 30. The original native crash remains recorded and its cause is unresolved; this is not an animation fix or an additional independent-seed balance sample.
+
 Issue #146 remains open for developed-archetype decisions, recorded current-build winning campaigns and experienced-player comparison. The fixed pilot remains a heuristic with limited potion/relic support and usually chooses the first non-immediately-lethal event option. Configured shop/rest/potion support is not evidence those decisions were reached or used; actual usage must be counted from these receipts. The user's A10 full-manor Knight win on Steam Deck/public-beta remains a qualitative report with unknown seed/build/deck. Physical device coverage was waived when #110 was closed; this work does not reopen it or publish a release.

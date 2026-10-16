@@ -1,0 +1,59 @@
+[
+  {
+    "trial": "balance-campaign-balance146-mage-beta-normal",
+    "included": true,
+    "source": "6dae1a835c6040c1914adf8ce57eca18113ab826",
+    "dllSha256": "2ac5625a219265fe5be577d6f341872c2fe365f2532ea81a1d53430d00593bc1",
+    "game": "v0.111.0",
+    "cls": "mage",
+    "traits": [
+      "antique",
+      "bonusmagicstrength"
+    ],
+    "heirVerified": true,
+    "hp": 43,
+    "maxHp": 54,
+    "relics": [
+      "RELIC.SPIRELEGACY-BLOODLINE_RELIC",
+      "RELIC.GORGET"
+    ]
+  },
+  {
+    "trial": "balance-campaign-balance146-mage-beta-single-fast",
+    "included": true,
+    "source": "6dae1a835c6040c1914adf8ce57eca18113ab826",
+    "dllSha256": "2ac5625a219265fe5be577d6f341872c2fe365f2532ea81a1d53430d00593bc1",
+    "game": "v0.111.0",
+    "cls": "mage",
+    "traits": [
+      "antique",
+      "bonusmagicstrength"
+    ],
+    "heirVerified": true,
+    "hp": 43,
+    "maxHp": 54,
+    "relics": [
+      "RELIC.SPIRELEGACY-BLOODLINE_RELIC",
+      "RELIC.GORGET"
+    ]
+  },
+  {
+    "trial": "balance-campaign-balance146-traits-mage-beta-challenge",
+    "included": false,
+    "source": "01ad843bb0ae9c6b765cf75fb33945adc0a09c10",
+    "dllSha256": "871ea7a01a4fbf4b4bb16d10daab5edb3348d3a88b67299ea6d54fcb148425a0",
+    "game": "v0.111.0",
+    "cls": "mage",
+    "traits": [
+      "antique",
+      "bonusmagicstrength"
+    ],
+    "heirVerified": true,
+    "hp": 43,
+    "maxHp": 54,
+    "relics": [
+      "RELIC.SPIRELEGACY-BLOODLINE_RELIC",
+      "RELIC.GORGET"
+    ]
+  }
+]

@@ -84,8 +84,8 @@ def export(source, target, stopped_reports=()):
             key = (metadata['sourceSha'], metadata['dllSha256'])
             stages[key] = dict(source=key[0], dllSha256=key[1], game=metadata['game'], mod=metadata['mod'], baseLib=mods['BaseLib'])
             result = response.get('result') or {}
-            if 'animationSpeed' in report and request.get('command') == 'balance-campaign-step':
-                assert report['animationSpeed'] in (1, 6) and request.get('animationSpeed') == report['animationSpeed'], 'Changed campaign animation speed'
+            if request.get('command') == 'balance-campaign-step' and any('animationSpeed' in item for item in (report,request,result)):
+                assert report.get('animationSpeed') in (1, 6) and request.get('animationSpeed') == report['animationSpeed'], 'Changed campaign animation speed'
                 if response['ok'] and result.get('action') != 'wait':
                     assert result.get('animationSpeed') == report['animationSpeed'], 'Native animation speed differs from report'
             action, detail = result.get('action'), result.get('detail') or {}
