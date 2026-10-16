@@ -94,7 +94,7 @@
     "id": "playtest_crowns",
     "hook": "manor",
     "amount": 1,
-    "enabled": true,
-    "summary": "Temporary pre-release crown editor. Explicit Save validates a nonnegative whole number. Remove for the full release."
+    "enabled": false,
+    "summary": "Retired pre-release crown editor. The active StS2 Manor has no balance editor; isolated opt-in developer fixtures retain test setup support."
   }
 ]

@@ -234,11 +234,10 @@ public static class ManorUi
         }
         if(Notice is {} notice) AddText(notice,26);
         var options = new VBoxContainer(); content.AddChild(options);
-        options.AddChild(MakeButton("Name your family",() => EditValue(false)));
+        options.AddChild(MakeButton("Name your family",EditFamilyName));
         var unread=Design.Rows("family_chronicle").Count(r=>profile.chronicle.unlocked.Contains(r.Text("id"))&&!profile.chronicle.read.Contains(r.Text("id")));
         options.AddChild(MakeButton($"Family Chronicle · {unread} unread",ShowChronicle,"ManorChronicle"));
         options.AddChild(MakeButton("Change banner",() => { profile.banner = (profile.banner + 1) % 4; profile.Save(Runtime.FamilyPath); Render(); }));
-        if (Design.Get("systems","playtest_crowns").Flag("enabled")) options.AddChild(MakeButton("PLAYTEST: Set crowns",() => EditValue(true)));
         options.AddChild(MakeButton("Close",RequestClose));
         var playing=PlayerBloodlines.State(PlayerBloodlines.LocalPlayer)??profile.active;
         var ready=CoopBloodlines.Lobby is {} lobby&&CoopBloodlines.IsReady(CoopBloodlines.Local(lobby));
@@ -330,36 +329,28 @@ public static class ManorUi
         AddButton("Confirm and save",() => { if (CanConfigure() && profile.CommitPurchases(cart,Runtime.FamilyPath)) cart.Clear(); Render(); });
         AddButton("Back to selection",Render); ConfigureNavigation();
     }
-    private static void EditValue(bool crowns)
+    private static void EditFamilyName()
     {
         back=Render;
-        BeginPage(crowns ? "crowns" : "name"); AddText(crowns ? "PLAYTEST: Set crown balance" : "Name your family",32);
-        var entry = new LineEdit { Name="ManorEditor", Text = crowns ? Runtime.Profile.crowns.ToString() : Runtime.Profile.family, MaxLength = crowns ? 10 : 24, VirtualKeyboardEnabled = true, CustomMinimumSize = new(0,60) };
+        BeginPage("name"); AddText("Name your family",32);
+        var entry = new LineEdit { Name="ManorEditor", Text = Runtime.Profile.family, MaxLength = 24, VirtualKeyboardEnabled = true, CustomMinimumSize = new(0,60) };
         entry.AddThemeFontSizeOverride("font_size",28); content!.AddChild(entry);
         var error = Text(""); content.AddChild(error);
         AddButton("Save",() =>
         {
-            if (crowns)
-            {
-                if (!int.TryParse(entry.Text,out var amount) || amount < 0) { error.Text = "Enter a whole number from 0 to 2147483647."; return; }
-                Runtime.Profile.crowns = amount; cart.Clear();
-            }
-            else
-            {
-                var name = entry.Text.Trim(); if (name.Length == 0) { error.Text = "Enter a family name."; return; }
-                Runtime.Profile.family = name;
-            }
+            var name = entry.Text.Trim(); if (name.Length == 0) { error.Text = "Enter a family name."; return; }
+            Runtime.Profile.family = name;
             Runtime.Profile.Save(Runtime.FamilyPath); Render();
         });
         AddButton("Cancel",Render);
         AddText("Keyboard / Steam Deck: type normally or use these on-screen keys.");
-        foreach (var letters in crowns ? new[] {"1234567890"} : new[] {"ABCDEFGHIJKLM","NOPQRSTUVWXYZ","abcdefghijklm","nopqrstuvwxyz"})
+        foreach (var letters in new[] {"ABCDEFGHIJKLM","NOPQRSTUVWXYZ","abcdefghijklm","nopqrstuvwxyz"})
         {
             var keys = new HFlowContainer(); content.AddChild(keys);
             foreach (var letter in letters) { var captured = letter; keys.AddChild(MakeButton(letter.ToString(),() => { if (entry.Text.Length < entry.MaxLength) entry.Text += captured; })); }
         }
         AddButton("Backspace",() => { if (entry.Text.Length > 0) entry.Text = entry.Text[..^1]; });
-        if (!crowns) AddButton("Space",() => { if (entry.Text.Length < 24) entry.Text += " "; });
+        AddButton("Space",() => { if (entry.Text.Length < 24) entry.Text += " "; });
         AddButton("Clear text",() => entry.Text = ""); ConfigureNavigation(entry.Name);
     }
     private static void RequestClose()

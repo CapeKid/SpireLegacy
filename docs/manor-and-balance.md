@@ -9,7 +9,7 @@ Full trait details are available by selecting **Read full traits** on an heir of
 
 Click upgrades to stage levels. The manor shows pending levels, the total cost and crowns remaining after Save. Prerequisites can be satisfied by an earlier staged selection. **Save purchases** opens a review; only **Confirm save** spends crowns. Cancel returns to the pending cart; Clear selections removes it. Leaving with pending selections asks whether to discard them. A failed profile write cannot spend crowns or grant levels.
 
-**PLAYTEST: Set crowns** is a temporary pre-release editor. It accepts whole numbers from 0 to 2147483647 and commits only on Save. Setting crowns clears pending purchases. Disable the playtest_crowns system to remove access before the full release. Existing family balances and purchased upgrades are not automatically reset.
+The public Manor has no crown-balance editor. Existing family balances and purchased upgrades are preserved. Developers can prepare disposable balances through the opt-in isolated test fixtures; these are not player progression or earned-fund evidence.
 
 ## Crown pacing
 
@@ -43,7 +43,7 @@ Most direct damage, Block and repeated payoff amounts are reduced; upgrades no l
 
 Knight begins with 60 HP, Mage 52, Ranger 56. No class starts with bonus Strength, Dexterity or healing after fights. Counterguard adds 2 damage; Mage charges add 1 each, capped at two. Ranger retains its third-Attack rhythm. Living Quarters restores 20 HP at maximum; Blacksmith, Armory, Library and Garden supply damage, defense, draw and healing that the baseline lacks. Manor bonuses are snapshotted at run start. Version 1.0.14 retires excess Blacksmith, Armory and Garden levels with full crown refunds; unfinished runs retain their existing bonus snapshots.
 
-These are deliberate baseline deficits, not scripted losses. A skilled player can still win without the manor. Full-run win rates, pacing feel and physical Deck testing of this revision need playtesting; the crown editor supports that work. Automated tests do not establish final balance.
+These are deliberate baseline deficits, not scripted losses. A skilled player can still win without the manor. Full-run win rates, pacing feel and physical Deck testing of this revision need playtesting; isolated developer fixtures can prepare comparison profiles. Automated tests do not establish final balance.
 
 ## 1.0.13 targeted balance
 

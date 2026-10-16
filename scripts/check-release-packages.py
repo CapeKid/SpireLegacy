@@ -52,7 +52,9 @@ with tempfile.TemporaryDirectory(prefix='package62-',dir=root/'private') as dire
     except ReleaseError:pass
     else:raise AssertionError('wrong DLL accepted')
     assert tree_hash(output)==stable;passed('wrong checked-DLL hash preserves outputs')
-    cases=[('sts2/melty.json',lambda data:data['components'][0].update(fileName='old.zip')),('sts2/workshop.json',lambda data:data.update(dependencies=[1])),('sts2/workshop.json',lambda data:data.update(minBranch='unsupported')),('sts2/SpireLegacy.json',lambda data:data.update(version='../../outside'))]
+    cases=[('sts2/melty.json',lambda data:data['components'][0].update(fileName='old.zip')),('sts2/workshop.json',lambda data:data.update(dependencies=[1])),('sts2/workshop.json',lambda data:data.update(minBranch='unsupported')),('sts2/SpireLegacy.json',lambda data:data.update(version='../../outside')),
+           ('sheets/systems.json',lambda data:next(r for r in data if r['id']=='playtest_crowns').update(enabled=True)),
+           ('sheets/icon_art.json',lambda data:data[0].update(license='unreviewed'))]
     for rel,edit in cases:
         path=source/rel;original=path.read_bytes();data=json.loads(original);edit(data);path.write_text(json.dumps(data))
         try:

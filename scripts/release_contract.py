@@ -1,5 +1,6 @@
 """Closed native release inputs and archive validation, also used by install fixtures."""
 import hashlib
+import json
 import io
 import re
 import posixpath
@@ -8,6 +9,7 @@ import zipfile
 from pathlib import Path
 from PIL import Image
 from design_schema import read_json, load_sheets, validate_assets
+from release_assets import inventory
 
 APP_ID=2868840
 ITEM_ID=3816525393
@@ -74,7 +76,11 @@ def payloads(root,expected_hash,baselib=None):
     require(digest(dll)==expected_hash,'Release DLL differs from the expected checked binary')
     require(dll.startswith(b'MZ'),'Release DLL is not a PE assembly')
     tables=load_sheets(root);validate_assets(root,tables)
-    mod={'SpireLegacy.dll':dll,'SpireLegacy.json':(root/'sts2/SpireLegacy.json').read_bytes(),'LICENSE':text(root/'LICENSE'),'licenses/BaseLib-MIT.txt':text(root/'licenses/BaseLib/LICENSE.txt'),'README.md':text(root/'docs/sts2-port.md'),'release-notes.md':text(root/'docs'/f'release-{v}.md')}
+    require(next(r for r in tables['systems'] if r['id']=='playtest_crowns')['enabled'] is False,'Public release must disable the retired crown editor')
+    try:provenance=inventory(root,tables)
+    except ValueError as error:raise ReleaseError(str(error)) from error
+    mod={'SpireLegacy.dll':dll,'SpireLegacy.json':(root/'sts2/SpireLegacy.json').read_bytes(),'LICENSE':text(root/'LICENSE'),'licenses/BaseLib-MIT.txt':text(root/'licenses/BaseLib/LICENSE.txt'),'README.md':text(root/'docs/sts2-port.md'),'release-notes.md':text(root/'docs'/f'release-{v}.md'),
+         'asset-provenance.json':(json.dumps(provenance,indent=2)+'\n').encode('utf-8')}
     for name in GUIDES:mod[name+'.md']=text(root/'docs'/f'{name}.md')
     # Package every declared original asset, never an arbitrary staging directory.
     for table in ['card_art','ui_art','icon_art','character_art','relic_art','potion_art','presentation_art']:
