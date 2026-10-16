@@ -3,7 +3,7 @@ namespace SpireLegacy;
 // Fixture-only reward heuristic; inputs are descriptions, not mutable game objects.
 public static class PilotRewards
 {
-    public record Card(string Id,int Cost,double Damage,double Block,int Draw,int Energy,int Poison,int Strength,bool Power,bool Exhaust,bool Engine,int Weak=0,int Vulnerable=0,string Special="none",int SpecialAmount=0,int Hits=1,bool Attack=false,bool SelfExhaust=false,int NextEnergy=0,int NextDraw=0,double NextBlock=0);
+    public record Card(string Id,int Cost,double Damage,double Block,int Draw,int Energy,int Poison,int Strength,bool Power,bool Exhaust,bool Engine,int Weak=0,int Vulnerable=0,string Special="none",int SpecialAmount=0,int Hits=1,bool Attack=false,bool SelfExhaust=false,int NextEnergy=0,int NextDraw=0,double NextBlock=0,bool Usable=true);
     // Reward expectations, not combat damage. Partial payoffs avoid assuming every condition is active.
     private static double ConditionalValue(Card offer,IReadOnlyList<Card> deck)
     {
@@ -22,6 +22,8 @@ public static class PilotRewards
     }
     public static double Score(Card offer,IReadOnlyList<Card> deck,bool defensive=false)
     {
+        // Finite for JSON logs, but always below the reward skip threshold.
+        if(!offer.Usable)return -10000;
         var cost=Math.Max(1,offer.Cost);
         var score=(offer.Damage+offer.Block)/cost+offer.Draw*3+offer.Energy*4+offer.Poison*2+offer.Strength*4+offer.Weak*2+offer.Vulnerable*2+(offer.Power?6:0);
         score+=ConditionalValue(offer,deck)/cost;

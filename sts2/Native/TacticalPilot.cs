@@ -43,6 +43,7 @@ public static class TacticalPilot
         var energy=player.PlayerCombatState!.Energy;var need=Math.Max(0,incoming-player.Creature.Block);
         var choices=new List<Decision>();
         foreach(var card in hand.Where(c=>c.CanPlay())){
+            if(WouldExhaustLastOffense(card))continue;
             var hpLoss=PilotCardInfo.ImmediateHpLoss(card);
             if(!PilotHealth.Affordable(player.Creature.CurrentHp,hpLoss))continue;
             foreach(var target in card.TargetType==TargetType.AnyEnemy?enemies.Cast<Creature?>():new Creature?[]{null}){
@@ -243,9 +244,23 @@ public static class TacticalPilot
             throw new ArgumentException("Unknown tactical probe.");
         }
     }
+    public static bool WouldExhaustLastOffense(CardModel card)
+    {
+        if(card is not LegacyCard lc||lc.DesignCard.Row.Text("special")!="exhaust_one"||!PlayerBloodlines.Traits(card.Owner).Has("pacifist"))return false;
+        var others=PileType.Hand.GetPile(card.Owner).Cards.Where(c=>c!=card).ToArray();
+        var offense=new[]{PileType.Hand,PileType.Draw,PileType.Discard}.SelectMany(p=>p.GetPile(card.Owner).Cards).Where(PilotCardInfo.Offense).ToArray();
+        // Do not play a mandatory exhaust when its required fuel includes our last
+        // supported damage source. Native minimum selection is never bypassed.
+        return others.Length>0&&others.Length<=lc.DesignCard.SpecialAmount&&offense.Length==1&&others.Contains(offense[0]);
+    }
     private sealed class FuelSelector(bool planned=false):ICardSelector
     {
-        private double Value(CardModel card)=>card.Type is CardType.Status or CardType.Curse?-100:BalanceOracle.Score(card,planned&&card.Owner?.Creature.CombatState!=null?Math.Max(0,Incoming(card.Owner)-card.Owner.Creature.Block):0);
+        private double Value(CardModel card)
+        {
+            if(card.Type is CardType.Status or CardType.Curse||PilotCardInfo.PermanentlyBlocked(card))return -100;
+            if(planned&&PlayerBloodlines.Traits(card.Owner).Has("pacifist"))return PilotRewards.Score(PilotCardInfo.Describe(card),[])+(PilotCardInfo.Offense(card)?100:0);
+            return BalanceOracle.Score(card,planned&&card.Owner?.Creature.CombatState!=null?Math.Max(0,Incoming(card.Owner)-card.Owner.Creature.Block):0);
+        }
         public Task<IEnumerable<CardModel>> GetSelectedCards(IEnumerable<CardModel> options,int minSelect,int maxSelect)
         {
             var cards=options.ToArray();var recovery=cards.Length>0&&cards.All(c=>c.Pile?.Type is PileType.Exhaust or PileType.Discard);
