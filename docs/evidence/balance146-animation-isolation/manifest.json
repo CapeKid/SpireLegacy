@@ -1,0 +1,131 @@
+[
+  {
+    "trial": "balance-campaign-balance146-mage-beta-normal",
+    "receiptSha256": "ceb6b0f75a6d17a2e0f361c35155465385032f9857b20dc6e525da221dca1efb",
+    "status": "finished",
+    "included": true,
+    "stages": [
+      {
+        "source": "6dae1a835c6040c1914adf8ce57eca18113ab826",
+        "dllSha256": "2ac5625a219265fe5be577d6f341872c2fe365f2532ea81a1d53430d00593bc1",
+        "game": "v0.111.0",
+        "mod": "1.0.30",
+        "baseLib": "v3.4.7"
+      }
+    ],
+    "commands": 619,
+    "hasError": false,
+    "animationSpeed": 1,
+    "checkpointRecoveries": 0,
+    "batches": [],
+    "targetReturns": null,
+    "returnCap": null,
+    "stopReason": null,
+    "stopAtFullManor": null,
+    "checkpointExtraction": null,
+    "logMatches": {
+      "launch.log": {
+        "ERROR": 0,
+        "InvalidTaskId": 0,
+        "Fatal error": 0,
+        "double free": 0,
+        "particles": 0,
+        "backup": 0
+      },
+      "errors.log": {
+        "ERROR": 0,
+        "InvalidTaskId": 0,
+        "Fatal error": 0,
+        "double free": 0,
+        "particles": 3,
+        "backup": 0
+      }
+    }
+  },
+  {
+    "trial": "balance-campaign-balance146-mage-beta-single-fast",
+    "receiptSha256": "6dba51a7b5f47a0a00613f8b3bdfd59fa32198433ee21961ef7465581f6b3146",
+    "status": "finished",
+    "included": true,
+    "stages": [
+      {
+        "source": "6dae1a835c6040c1914adf8ce57eca18113ab826",
+        "dllSha256": "2ac5625a219265fe5be577d6f341872c2fe365f2532ea81a1d53430d00593bc1",
+        "game": "v0.111.0",
+        "mod": "1.0.30",
+        "baseLib": "v3.4.7"
+      }
+    ],
+    "commands": 617,
+    "hasError": false,
+    "animationSpeed": 6,
+    "checkpointRecoveries": 0,
+    "batches": [],
+    "targetReturns": null,
+    "returnCap": null,
+    "stopReason": null,
+    "stopAtFullManor": null,
+    "checkpointExtraction": null,
+    "logMatches": {
+      "launch.log": {
+        "ERROR": 0,
+        "InvalidTaskId": 0,
+        "Fatal error": 0,
+        "double free": 0,
+        "particles": 0,
+        "backup": 0
+      },
+      "errors.log": {
+        "ERROR": 0,
+        "InvalidTaskId": 0,
+        "Fatal error": 0,
+        "double free": 0,
+        "particles": 3,
+        "backup": 0
+      }
+    }
+  },
+  {
+    "trial": "balance-campaign-balance146-traits-mage-beta-challenge",
+    "receiptSha256": "3b2bf5a1dcd29f36a96303ec20814d58f2f0acb9e166675309284c4776484caa",
+    "status": "error",
+    "included": false,
+    "stages": [
+      {
+        "source": "01ad843bb0ae9c6b765cf75fb33945adc0a09c10",
+        "dllSha256": "871ea7a01a4fbf4b4bb16d10daab5edb3348d3a88b67299ea6d54fcb148425a0",
+        "game": "v0.111.0",
+        "mod": "1.0.30",
+        "baseLib": "v3.4.7"
+      }
+    ],
+    "commands": 508,
+    "hasError": true,
+    "animationSpeed": null,
+    "checkpointRecoveries": 0,
+    "batches": [],
+    "targetReturns": null,
+    "returnCap": null,
+    "stopReason": null,
+    "stopAtFullManor": null,
+    "checkpointExtraction": null,
+    "logMatches": {
+      "launch.log": {
+        "ERROR": 0,
+        "InvalidTaskId": 0,
+        "Fatal error": 0,
+        "double free": 0,
+        "particles": 0,
+        "backup": 0
+      },
+      "errors.log": {
+        "ERROR": 4,
+        "InvalidTaskId": 1,
+        "Fatal error": 1,
+        "double free": 0,
+        "particles": 3,
+        "backup": 0
+      }
+    }
+  }
+]

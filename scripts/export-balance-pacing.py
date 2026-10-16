@@ -84,6 +84,10 @@ def export(source, target, stopped_reports=()):
             key = (metadata['sourceSha'], metadata['dllSha256'])
             stages[key] = dict(source=key[0], dllSha256=key[1], game=metadata['game'], mod=metadata['mod'], baseLib=mods['BaseLib'])
             result = response.get('result') or {}
+            if request.get('command') == 'balance-campaign-step' and any('animationSpeed' in item for item in (report,request,result)):
+                assert report.get('animationSpeed') in (1, 6) and request.get('animationSpeed') == report['animationSpeed'], 'Changed campaign animation speed'
+                if response['ok'] and result.get('action') != 'wait':
+                    assert result.get('animationSpeed') == report['animationSpeed'], 'Native animation speed differs from report'
             action, detail = result.get('action'), result.get('detail') or {}
             if not included or not action or action == 'wait':
                 continue
@@ -117,7 +121,7 @@ def export(source, target, stopped_reports=()):
                                         for pattern in ('ERROR', 'InvalidTaskId', 'Fatal error', 'double free', 'particles', 'backup')}
         manifest.append(dict(trial=path.stem, receiptSha256=hashlib.sha256(path.read_bytes()).hexdigest(),
                              status='interrupted' if path.name in stopped_reports else report['status'], included=included, stages=list(stages.values()),
-                             commands=len(seen), hasError=bool(report.get('error')),
+                             commands=len(seen), hasError=bool(report.get('error')), animationSpeed=report.get('animationSpeed'),
                              checkpointRecoveries=len(report.get('continuations', [])), batches=report.get('batches',[]),
                              targetReturns=report.get('targetReturns'), returnCap=report.get('returnCap'),
                              stopReason=report.get('stopReason'), stopAtFullManor=report.get('stopAtFullManor'),
