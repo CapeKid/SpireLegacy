@@ -1,0 +1,62 @@
+[
+  {
+    "trial": "balance-campaign-balance146-final-mage-beta-F",
+    "included": true,
+    "source": "843b8e1f1ac75208611e8c00cde67a0cce0485e1",
+    "dllSha256": "9a4bdb1298951aa14dab8fe9927acd6106bbc20c2217f7501b7579b909377b73",
+    "game": "v0.111.0",
+    "cls": "mage",
+    "traits": [],
+    "heirVerified": true,
+    "hp": 57,
+    "maxHp": 72,
+    "relics": [
+      "RELIC.SPIRELEGACY-BLOODLINE_RELIC"
+    ]
+  },
+  {
+    "trial": "balance-campaign-balance146-final-mage-regular-F",
+    "included": true,
+    "source": "843b8e1f1ac75208611e8c00cde67a0cce0485e1",
+    "dllSha256": "9a4bdb1298951aa14dab8fe9927acd6106bbc20c2217f7501b7579b909377b73",
+    "game": "v0.107.1",
+    "cls": "mage",
+    "traits": [],
+    "heirVerified": true,
+    "hp": 57,
+    "maxHp": 72,
+    "relics": [
+      "RELIC.SPIRELEGACY-BLOODLINE_RELIC"
+    ]
+  },
+  {
+    "trial": "balance-campaign-balance146-final-ranger-beta-F",
+    "included": true,
+    "source": "843b8e1f1ac75208611e8c00cde67a0cce0485e1",
+    "dllSha256": "9a4bdb1298951aa14dab8fe9927acd6106bbc20c2217f7501b7579b909377b73",
+    "game": "v0.111.0",
+    "cls": "ranger",
+    "traits": [],
+    "heirVerified": true,
+    "hp": 60,
+    "maxHp": 76,
+    "relics": [
+      "RELIC.SPIRELEGACY-BLOODLINE_RELIC"
+    ]
+  },
+  {
+    "trial": "balance-campaign-balance146-final-ranger-regular-F",
+    "included": true,
+    "source": "843b8e1f1ac75208611e8c00cde67a0cce0485e1",
+    "dllSha256": "9a4bdb1298951aa14dab8fe9927acd6106bbc20c2217f7501b7579b909377b73",
+    "game": "v0.107.1",
+    "cls": "ranger",
+    "traits": [],
+    "heirVerified": true,
+    "hp": 60,
+    "maxHp": 76,
+    "relics": [
+      "RELIC.SPIRELEGACY-BLOODLINE_RELIC"
+    ]
+  }
+]

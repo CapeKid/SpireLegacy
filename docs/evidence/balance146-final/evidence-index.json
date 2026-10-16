@@ -1,0 +1,118 @@
+{
+  "aggregateSampleCount": null,
+  "reason": "Overlapping snapshots, trajectory prefixes, historical replay references and technical replicates are study-local; do not sum them as independent campaigns.",
+  "studies": [
+    {
+      "document": "balance-pacing-validation.md",
+      "evidence": "balance146",
+      "files": [
+        {
+          "path": "docs/balance-pacing-validation.md",
+          "sha256": "b85465d04e35dc1e0f0292c356e5942bfccd3265d3884c48a0a831545a291099"
+        },
+        {
+          "path": "docs/evidence/balance146/manifest.json",
+          "sha256": "7cb7c7c684aea892e07cce9ab3775cda2c73d78e011716723a35c0eb7708b971"
+        }
+      ]
+    },
+    {
+      "document": "long-term-manor-pacing.md",
+      "evidence": "balance146-long-term",
+      "files": [
+        {
+          "path": "docs/long-term-manor-pacing.md",
+          "sha256": "9346a7fd8f1dfe4160c252c49effda4f3c2a15c981b450efc45e4d8a08819d0c"
+        },
+        {
+          "path": "docs/evidence/balance146-long-term/manifest.json",
+          "sha256": "67fedab20fb7c853f439d52dd81178b96f56b3f32a061629881dd843179bf9a0"
+        }
+      ]
+    },
+    {
+      "document": "a10-mage-ranger-validation.md",
+      "evidence": "balance146-a10-mage-ranger",
+      "files": [
+        {
+          "path": "docs/a10-mage-ranger-validation.md",
+          "sha256": "357127dbc463ca3ec59eaa53d941ca4a0ce9a29d108f4df99e103047ef751f26"
+        },
+        {
+          "path": "docs/evidence/balance146-a10-mage-ranger/manifest.json",
+          "sha256": "5094900e6399df8255336badb53cb46ab33d19ad8be63b57c487715c7ce1a7d1"
+        }
+      ]
+    },
+    {
+      "document": "hard-trait-relic-validation.md",
+      "evidence": "balance146-hard-traits",
+      "files": [
+        {
+          "path": "docs/hard-trait-relic-validation.md",
+          "sha256": "b633db36df9cea54e92b46cd137c9dca500a7be800529bd4327373027bd3cc73"
+        },
+        {
+          "path": "docs/evidence/balance146-hard-traits/manifest.json",
+          "sha256": "27314ceb7dd444fd9d2ea5a16a031d093ff09532a9abf83f75d1dec524505370"
+        }
+      ]
+    },
+    {
+      "document": "pacifist-pilot-calibration.md",
+      "evidence": "balance146-pacifist-policy",
+      "files": [
+        {
+          "path": "docs/pacifist-pilot-calibration.md",
+          "sha256": "c0dc06bd5fc38ab0bc757b969ee5f5d2bf27740ebe2a14cc32b45662264316e5"
+        },
+        {
+          "path": "docs/evidence/balance146-pacifist-policy/manifest.json",
+          "sha256": "64cc91ab64492b0185833f26b465cdf3ad3b64b3b88bf02dad665e43188ae7df"
+        }
+      ]
+    },
+    {
+      "document": "mage-crash-isolation.md",
+      "evidence": "balance146-animation-isolation",
+      "files": [
+        {
+          "path": "docs/mage-crash-isolation.md",
+          "sha256": "5cf2440b6d8bfa3aeb71cd7df8b4f49d0e368ff024c76b679e61cd08e003a38e"
+        },
+        {
+          "path": "docs/evidence/balance146-animation-isolation/manifest.json",
+          "sha256": "19b52d7dcda35995c102e32af7e738742cb683fa85354ad0256a4e3f94ff42e7"
+        }
+      ]
+    },
+    {
+      "document": "a10-policy-replay.md",
+      "evidence": "balance146-a10-policy-replay",
+      "files": [
+        {
+          "path": "docs/a10-policy-replay.md",
+          "sha256": "5be54671e984edf644ce6a344e0871145791dfe6343a03a8e6dd75ec465a3d9b"
+        },
+        {
+          "path": "docs/evidence/balance146-a10-policy-replay/manifest.json",
+          "sha256": "d18202f35eb6725ce93df93c1fed7bbe19ab401b5a4c1908a4fd2b826e013acf"
+        }
+      ]
+    },
+    {
+      "document": "event-pilot-calibration.md",
+      "evidence": "balance146-event-campaign",
+      "files": [
+        {
+          "path": "docs/event-pilot-calibration.md",
+          "sha256": "033db7acf3d01c19ce8b4fb219162d67a05ec00f8263f6998f46dd8cccc6b125"
+        },
+        {
+          "path": "docs/evidence/balance146-event-campaign/manifest.json",
+          "sha256": "e9ffb5bfd07d950bd037abed88abf8bfe7efb75598ede8be940ffefe9bdd9c5c"
+        }
+      ]
+    }
+  ]
+}
