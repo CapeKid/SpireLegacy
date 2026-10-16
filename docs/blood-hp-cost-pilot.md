@@ -24,7 +24,7 @@ Final runtime source is `b3111843144785bb90b2668a04f5fea1e29ef1a2`; DLL SHA-256 
 
 One [historical A10 terminal reply](evidence/balance146-hp-costs/historical-terminal.json) shows the consequence of the old omission: full-manor Knight, regular branch, `BALANCE146-C`, floor 9. Its final Bloodied Blade play pays 3 HP, the heir ends at 0 HP and Byrdonis remains alive. The original source is `52cd89c4fe949d43d48f3cdc570dfcab39d3c7f7`; that receipt and outcome remain unchanged. This policy failure limits interpretation of that loss and does not imply the fixed pilot would win. No new natural campaign or purchase curve was collected here.
 
-Issue #146 remains open for reward/build planning, other archetype decisions and recorded current-build winning campaigns. Reward and upgrade heuristics still need their own HP-cost treatment; immediate play safety alone is not experienced blood-build play. Traits and damage-modifying relics also need separate controls before generalizing this isolated check.
+Issue #146 remains open for reward/build planning, other archetype decisions and recorded current-build winning campaigns. The subsequent [health-aware planning calibration](health-aware-planning.md) adds HP costs to reward and upgrade scoring; immediate play safety alone is not experienced blood-build play. Traits and damage-modifying relics also need separate controls before generalizing this isolated check.
 
 ## Validation method
 
