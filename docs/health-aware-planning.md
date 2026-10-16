@@ -29,6 +29,8 @@ Each final error log contains three backup-deletion error lines and renderer war
 
 No shop transaction, rest-site navigation, natural campaign, win or paid manor return was collected. Shops/bundles/removals receive the same health-aware score through the shared planner, but wiring is not evidence those paths were exercised here. Issue #146 remains open for broader archetype decisions, recorded winning campaigns and experienced-player comparison; this change supplies a calibrated health-cost input for that work.
 
+The subsequent [A10 Knight policy replay](a10-policy-replay.md) applies the merged corrections in two natural campaigns. It verifies avoidance of the historical fatal payment on regular and exposes unchanged destructive event choices on beta; neither run wins or improves its floor/crown outcome.
+
 ## Native calibration
 
 Use a committed build and a new evidence tag in an independent, provenance-verified owned lab:

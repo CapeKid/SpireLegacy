@@ -1,0 +1,62 @@
+[
+  {
+    "trial": "balance-campaign-balance146-a10-current-knight-beta-C",
+    "included": true,
+    "source": "edbd9331d97343457db0ec828c09ff8289140cdd",
+    "dllSha256": "1d16c0ba51b473a952566104386eae5e833b5308f29daf67f8aff6e3d6ea11e9",
+    "game": "v0.111.0",
+    "cls": "knight",
+    "traits": [],
+    "heirVerified": true,
+    "hp": 64,
+    "maxHp": 80,
+    "relics": [
+      "RELIC.SPIRELEGACY-BLOODLINE_RELIC"
+    ]
+  },
+  {
+    "trial": "balance-campaign-balance146-a10-current-knight-regular-C",
+    "included": true,
+    "source": "edbd9331d97343457db0ec828c09ff8289140cdd",
+    "dllSha256": "1d16c0ba51b473a952566104386eae5e833b5308f29daf67f8aff6e3d6ea11e9",
+    "game": "v0.107.1",
+    "cls": "knight",
+    "traits": [],
+    "heirVerified": true,
+    "hp": 64,
+    "maxHp": 80,
+    "relics": [
+      "RELIC.SPIRELEGACY-BLOODLINE_RELIC"
+    ]
+  },
+  {
+    "trial": "balance-campaign-balance146-a10-knight-beta-t2-C",
+    "included": true,
+    "source": "52cd89c4fe949d43d48f3cdc570dfcab39d3c7f7",
+    "dllSha256": "b13c50b1cdfa6a59e7125f39fc6798b06d2a08a0ac701705d8ad538431ae22d3",
+    "game": "v0.111.0",
+    "cls": "knight",
+    "traits": [],
+    "heirVerified": true,
+    "hp": 64,
+    "maxHp": 80,
+    "relics": [
+      "RELIC.SPIRELEGACY-BLOODLINE_RELIC"
+    ]
+  },
+  {
+    "trial": "balance-campaign-balance146-a10-knight-regular-t2-C",
+    "included": true,
+    "source": "52cd89c4fe949d43d48f3cdc570dfcab39d3c7f7",
+    "dllSha256": "b13c50b1cdfa6a59e7125f39fc6798b06d2a08a0ac701705d8ad538431ae22d3",
+    "game": "v0.107.1",
+    "cls": "knight",
+    "traits": [],
+    "heirVerified": true,
+    "hp": 64,
+    "maxHp": 80,
+    "relics": [
+      "RELIC.SPIRELEGACY-BLOODLINE_RELIC"
+    ]
+  }
+]
