@@ -50,7 +50,7 @@ def configuration(root):
     require(manifest.get('dependencies')==[dict(id='BaseLib',min_version='3.4.7')],'Unexpected BaseLib dependency')
     workshop=read_json(root/'sts2/workshop.json')
     require(isinstance(workshop,dict),'Invalid Workshop configuration')
-    require(workshop.get('visibility')=='private' and workshop.get('dependencies')==[BASELIB_ITEM],'Workshop visibility/dependency differs from existing release')
+    require(workshop.get('visibility')=='public' and workshop.get('dependencies')==[BASELIB_ITEM],'Workshop visibility/dependency differs from existing release')
     require(not workshop.get('minBranch') and not workshop.get('maxBranch'),'Workshop restricts a supported branch')
     require(workshop.get('changeNote','').startswith(v+':'),'Workshop change note version mismatch')
     melty=read_json(root/'sts2/melty.json');filename=f'SpireLegacy-StS2-{v}-melty.zip'
