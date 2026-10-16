@@ -1,0 +1,32 @@
+{
+  "issue": 146,
+  "purpose": "Final bounded class/branch campaign checkpoint and evidence assessment; no further pilot calibration in this step.",
+  "newAttemptLimit": 4,
+  "seed": "BALANCE146-F",
+  "ascension": 10,
+  "manorTier": 2,
+  "traits": [],
+  "policy": "planned",
+  "rewardPolicy": "defensive",
+  "animationSpeed": 6,
+  "forcedReward": null,
+  "interventions": 0,
+  "generation": 3,
+  "neow": true,
+  "perAttemptLimits": {
+    "minutes": 20,
+    "decisions": 1200,
+    "combatTurns": 40,
+    "playsPerCombatDecision": 50,
+    "continuousWaitSeconds": 45,
+    "commandTimeoutSeconds": 180
+  },
+  "cases": [
+    {"class": "mage", "branch": "regular", "tag": "balance146-final-mage-regular-F"},
+    {"class": "mage", "branch": "beta", "tag": "balance146-final-mage-beta-F"},
+    {"class": "ranger", "branch": "regular", "tag": "balance146-final-ranger-regular-F"},
+    {"class": "ranger", "branch": "beta", "tag": "balance146-final-ranger-beta-F"}
+  ],
+  "execution": "Sequential copied owned clients; fresh disposable profile per attempt; preserve all failures/caps without retrying mutations or substituting seeds.",
+  "interpretation": "New full-manor campaigns complement existing Knight and historical multi-seed/investment studies. They do not supply current-build no/partial-manor comparisons, expert play, human win rates, or guaranteed victories. Stop after these four attempts and publish the acceptance assessment even if every attempt loses."
+}
