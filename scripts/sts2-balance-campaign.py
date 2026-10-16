@@ -1,8 +1,9 @@
 """Bounded natural-run pilot. Launch a fresh isolated owned-game lab/profile first.
 
-Usage: sts2-balance-campaign.py PROFILE TAG CLASS TIER POLICY [SEED] [ASCENSION] [TRAIT,...]
+Usage: sts2-balance-campaign.py PROFILE TAG CLASS TIER POLICY [SEED] [ASCENSION] [TRAIT,...] [REWARDS] [FORCED_REWARD] [FORCED_FLOOR] [ANIMATION_SPEED]
 Each campaign needs its own fresh profile: inherited chronicle rewards would confound comparisons.
 Every completed oracle response is journalled immediately, including failures and unsupported decisions.
+Animation speed is 1 (normal) or 6 (the historical accelerated default); the 20-minute cap is unchanged.
 """
 import hashlib
 import json

@@ -168,6 +168,30 @@ class EvidenceChecks(unittest.TestCase):
         self.run_export()
         self.assertEqual(len((self.root/'output/trajectories.csv').read_text().splitlines()),25)
 
+    def speed_receipt(self):
+        self.campaign['animationSpeed']=1
+        record=self.campaign['evidence'][0]
+        record['request'].update(command='balance-campaign-step',animationSpeed=1)
+        record['response']['result']['animationSpeed']=1
+
+    def test_normal_speed_preserved(self):
+        self.speed_receipt();self.run_export()
+        manifest=json.loads((self.root/'output/manifest.json').read_text())
+        row=next(r for r in manifest if r['trial']=='balance-campaign-balance146-fixture')
+        self.assertEqual(row['animationSpeed'],1)
+
+    def test_changed_speed_request_rejected(self):
+        self.speed_receipt();self.campaign['evidence'][0]['request']['animationSpeed']=6
+        with self.assertRaises(AssertionError):self.run_export()
+
+    def test_changed_native_speed_rejected(self):
+        self.speed_receipt();self.campaign['evidence'][0]['response']['result']['animationSpeed']=6
+        with self.assertRaises(AssertionError):self.run_export()
+
+    def test_invalid_speed_rejected(self):
+        self.speed_receipt();self.campaign['animationSpeed']=0
+        with self.assertRaises(AssertionError):self.run_export()
+
     def test_duplicate_command_rejected(self):
         self.campaign['evidence'].append(copy.deepcopy(self.campaign['evidence'][0]))
         with self.assertRaises(AssertionError): self.run_export()
