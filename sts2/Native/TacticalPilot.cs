@@ -249,9 +249,9 @@ public static class TacticalPilot
         if(card is not LegacyCard lc||lc.DesignCard.Row.Text("special")!="exhaust_one"||!PlayerBloodlines.Traits(card.Owner).Has("pacifist"))return false;
         var others=PileType.Hand.GetPile(card.Owner).Cards.Where(c=>c!=card).ToArray();
         var offense=new[]{PileType.Hand,PileType.Draw,PileType.Discard}.SelectMany(p=>p.GetPile(card.Owner).Cards).Where(PilotCardInfo.Offense).ToArray();
-        // Do not play a mandatory exhaust when its only possible fuel is our last
+        // Do not play a mandatory exhaust when its required fuel includes our last
         // supported damage source. Native minimum selection is never bypassed.
-        return others.Length==1&&offense.Length==1&&others[0]==offense[0];
+        return others.Length>0&&others.Length<=lc.DesignCard.SpecialAmount&&offense.Length==1&&others.Contains(offense[0]);
     }
     private sealed class FuelSelector(bool planned=false):ICardSelector
     {

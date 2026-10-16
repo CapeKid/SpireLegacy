@@ -47,7 +47,15 @@ public static class PacifistPilotOracle
         await BalanceOracle.Play(starter,enemy);
         var poisonApplied=enemy.GetPowerAmount<PoisonPower>()-poison;
         if(poisonApplied!=description.Poison||poisonApplied!=(pacifist?upgraded?3:2:0))throw new InvalidDataException("Poison descriptor differs from actual native effect.");
+        var spent=energy-player.PlayerCombatState.Energy;var multiGuarded=false;
+        if(pacifist){
+            foreach(var c in hand.Cards.ToArray())await CardPileCmd.Add(c,PileType.Exhaust,skipVisuals:true);
+            await CardPileCmd.Add(starter,PileType.Hand,skipVisuals:true);
+            await Add("aim");var transmutation=await Add("mage_transmutation");
+            multiGuarded=TacticalPilot.WouldExhaustLastOffense(transmutation);
+            if(!multiGuarded)throw new InvalidDataException("Mandatory two-card exhaust would consume the last Poison source.");
+        }
         return new{key,upgraded,pacifist,poisonApplied,description.Poison,blockedUsable=blockedInfo.Usable,reward,
-            fuelExhausted,guarded,choseStarter,damage=hp-enemy.CurrentHp,energySpent=energy-player.PlayerCombatState.Energy};
+            fuelExhausted,guarded,multiGuarded,choseStarter,damage=hp-enemy.CurrentHp,energySpent=spent};
     }
 }
