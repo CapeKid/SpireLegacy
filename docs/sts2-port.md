@@ -22,7 +22,7 @@ StS2 adaptations preserve native encounters and rewards. Six exclusive Ancient c
 ## Workshop installation
 
 1. Install Slay the Spire 2.
-2. Subscribe to [BaseLib](https://steamcommunity.com/sharedfiles/filedetails/?id=3737335127) and [Spire Legacy for StS2](https://steamcommunity.com/sharedfiles/filedetails/?id=3816525393). The new item is currently private for owner testing. The original StS1 Workshop item is a different mod.
+2. Subscribe to [BaseLib](https://steamcommunity.com/sharedfiles/filedetails/?id=3737335127) and [Spire Legacy for StS2](https://steamcommunity.com/sharedfiles/filedetails/?id=3816525393). The item is public; version 1.0.32 was tested on Steam Deck by the creator before publication. The original StS1 Workshop item is a different mod.
 3. Start StS2 on your selected branch. Accept its mod notice and enable BaseLib and Spire Legacy in the mod list. Restart if requested.
 4. Select **The Heir**. **Family Manor & Heir Lab** appears beneath the character information, clear of Ascension. Press Y, or move down from the portrait and press A. Choose a family/heir and start a solo climb.
 5. After a climb, return to the manor to choose another heir. Selecting upgrades only stages them; **Review purchases, then Confirm and save** spends crowns.
@@ -51,7 +51,7 @@ If a card spends energy but never resolves, open **Family / Traits** after the f
 
 `SpireLegacy-StS2-<version>-melty.zip` includes the standalone mod and BaseLib 3.4.7. `sts2/melty.json` declares only StS2, installs the two mods and launches `SlayTheSpire2.exe`. This launcher mapping targets Windows. Melty must validate the uploaded mapping and observe a successful launch before publication. A prepared archive alone is not a verified Melty install.
 
-The Workshop package uses Mega Crit's official StS2 uploader workspace format: `content/`, `workshop.json` and a PNG preview below 1 MB. Its visibility defaults to **private**. Update the existing StS2 item **3816525393** and preserve its uploader `mod_id.txt`; the portable archive excludes that local marker. Do not create a duplicate item or supply the StS1 item's ID. BaseLib is a Required Item.
+The Workshop package uses Mega Crit's official StS2 uploader workspace format: `content/`, `workshop.json` and a PNG preview below 1 MB. Its visibility is **public**, following the owner-approved release of 1.0.32. Update the existing StS2 item **3816525393** and preserve its uploader `mod_id.txt`; the portable archive excludes that local marker. Do not create a duplicate item or supply the StS1 item's ID. BaseLib is a Required Item.
 
 ## Saves and prior progress
 
