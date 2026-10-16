@@ -68,6 +68,7 @@ public static class NativeTestBridge
                 case "balance-audit-encounter":await WaitForPlay(RunState().Players.Single());result=await BalanceOracle.Encounter(RunState(),request.GetProperty("build").GetString()!,UseTestSelector(),audit:true,item:request.GetProperty("item").GetBoolean());break;
                 case "balance-audit-reset":result=await BalanceAuditOracle.ResetLoop(RunState(),request.GetProperty("upgrade").GetBoolean(),request.GetProperty("native").GetBoolean(),UseTestSelector());break;
                 case "balance-control-probe":result=await ControlPilotOracle.Probe(RunState(),request.GetProperty("kind").GetString()!);break;
+                case "balance-pacifist-probe":result=await PacifistPilotOracle.Probe(RunState(),request.GetProperty("card").GetString()!,request.GetProperty("upgraded").GetBoolean());break;
                 case "balance-threat-probe":result=await ThreatPilotOracle.Probe(RunState(),request.GetProperty("card").GetString()!,request.GetProperty("kind").GetString()!);break;
                 case "balance-tactical-probe":await WaitForPlay(RunState().Players.Single());result=await TacticalPilot.Probe(RunState(),request.GetProperty("kind").GetString()!);break;
                 case "balance-campaign-step":

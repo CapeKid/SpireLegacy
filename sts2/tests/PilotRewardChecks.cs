@@ -12,6 +12,10 @@ public static class PilotRewardChecks
         PilotRewards.Card Attack(string id,int damage=6)=>new(id,1,damage,0,0,0,0,0,false,false,false,Attack:true);
         PilotRewards.Card Guard(string id,int block=5)=>new(id,1,0,block,0,0,0,0,false,false,false);
         var balanced=Enumerable.Range(0,6).Select(i=>Attack("a"+i)).Concat(Enumerable.Range(0,4).Select(i=>Guard("g"+i))).ToArray();
+        var blocked=Attack("blocked",1000) with{Usable=false};
+        check(PilotRewards.Pick([blocked,Guard("legal",7)],balanced)==1,"Permanent attack restriction overrides apparent reward damage");
+        check(PilotRewards.Pick([blocked],balanced)==null,"All permanently blocked rewards can be skipped");
+        check(double.IsFinite(PilotRewards.Score(blocked,balanced)),"Blocked reward score remains serializable");
         var attacks=balanced.Where(c=>c.Damage>0).ToArray();
         check(PilotRewards.Pick([Attack("hit",10),Guard("ward",6)],attacks)==1,"Reward policy fills defensive deck deficit");
         var duplicate=Attack("duplicate");var full=balanced.Concat(new[]{duplicate,duplicate}).ToArray();

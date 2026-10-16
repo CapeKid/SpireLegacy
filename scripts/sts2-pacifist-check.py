@@ -1,72 +1,49 @@
-"""Native Pacifist balance/cleanup checks in owned, isolated regular/beta labs."""
+"""Synthetic Pacifist calibration; never count injected fixture deaths as campaign outcomes."""
+import hashlib
 import json
-from oracle_protocol import call
-import sys
-import time
 from pathlib import Path
+import sys
+from oracle_protocol import call
 
 root = Path(__file__).resolve().parents[1]
-profile = (root / sys.argv[1]).resolve()
-tag = sys.argv[2]
-assert profile.is_relative_to((root / 'private').resolve())
-evidence = []
+profile, tag = Path(sys.argv[1]).resolve(), sys.argv[2]
+assert tag and all(c.isalnum() or c in '-_' for c in tag)
+output = root/'private/sts2-evidence'/f'pacifist-pilot-{tag}.json'
+assert not output.exists(), 'Never overwrite native evidence.'
+expected = hashlib.sha256((root/'sts2/bin/Release/net9.0/SpireLegacy.dll').read_bytes()).hexdigest()
+report = dict(synthetic=True, status='running', evidence=[], cases=[], violations=[])
 
+def save():
+    output.parent.mkdir(parents=True, exist_ok=True)
+    output.write_text(json.dumps(report, indent=2), encoding='utf-8')
 
 def send(command, **args):
-    record=call(profile,dict(command=command,**args),timeout=90)
-    reply=record['response']
-    assert reply['ok'],reply
-    evidence.append(dict(command=command,args=args,result=reply['result'],metadata=reply['metadata']))
+    record = call(profile, dict(command=command, **args), timeout=90, expected_hash=expected)
+    report['evidence'].append(record)
+    save()
+    reply = record['response']
+    assert reply['ok'], reply
+    assert {m['id'] for m in reply['metadata']['mods']} == {'BaseLib', 'SpireLegacy'}
     return reply['result']
 
-
-def ready():
-    for _ in range(150):
-        state = send('state')
-        if state['phase'] == 'Play':
-            return state
-        time.sleep(.1)
-    raise TimeoutError('combat')
-
-
-def poison(enemy):
-    return sum(p['amount'] for p in enemy['powers'] if 'POISON' in p['id'])
-
-
 try:
-    for cls, signature in [('knight', 'shield'), ('mage', None), ('ranger', 'aim')]:
-        send('start', **{'class': cls, 'traits': ['cantattack'], 'quick': True})
-        before = ready()
-        assert all(poison(e) == 0 for e in before['enemies']), before
-        played = send('manual', card=cls + '_strike')
-        after = played['state']
-        assert played['accepted'] and played['pile'] == 'Discard', played
-        assert not played['tableNodePresent'] and played['playPileCount'] == 0, played
-        assert after['energy'] == before['energy'] - 1 and after['block'] == before['block'], played
-        assert after['enemies'][0]['hp'] == before['enemies'][0]['hp'], played
-        assert poison(after['enemies'][0]) == 2, played
-        send('enter', room='Boss')
-        before = ready()
-        assert all(poison(e) == 0 for e in before['enemies']), before
-        # Includes Shield Bash: its original defensive portion must also be removed.
-        for key in [cls + '_strike'] + ([signature] if signature else []):
-            for upgrade in [False, True]:
-                before = send('state')
-                after = send('play', card=key, upgrade=upgrade)
-                assert after['block'] == before['block'], (key, upgrade, before, after)
-                assert after['enemies'][0]['hp'] == before['enemies'][0]['hp'], (key, after)
-                assert poison(after['enemies'][0]) - poison(before['enemies'][0]) == (3 if upgrade else 2), (key, after)
-        before = send('state')
-        guarded = send('play', card=cls + '_guard')
-        dexterity = sum(p['amount'] for p in before['powers'] if 'DEXTERITY' in p['id'])
-        assert guarded['block'] - before['block'] == 4 + dexterity, guarded
-        before = send('state')
-        blocked = send('play', card={'knight': 'knight_sweeping_edge', 'mage': 'mage_arcane_missile', 'ranger': 'double'}[cls])
-        assert blocked['enemies'] == before['enemies'] and blocked['block'] == before['block'], blocked
-        # Native upgrade vars, text and portraits, with Pacifist snapshots on all Basics.
-        cards = send('cards')
-        assert cards['count'] == 720, cards
-    send('abandon')
-    print(tag + ': all three classes pass actual one-Energy starter play/discard; zero opening Poison; base/upgraded Mercy Poison with no Block or direct damage; ordinary Guards; blocked reward Attacks; 720 native cards per class.')
+    for cls in ('knight', 'mage', 'ranger'):
+        for mode in ('normal','mercy','upgraded'):
+            send('start', **{'class':cls,'manorTier':0,'quick':False,'traits':[] if mode=='normal' else ['cantattack'],'seed':'PACIFIST146-CALIBRATION','ascension':5})
+            result=send('balance-pacifist-probe',card=f'{cls}_strike',upgraded=mode=='upgraded')
+            assert result['energySpent']==1,result
+            assert result['pacifist']==(mode!='normal'),result
+            if mode!='normal':
+                assert result['poisonApplied']==(3 if mode=='upgraded' else 2) and result['damage']==0,result
+                assert result['fuelExhausted'] and result['guarded'] and result['choseStarter'],result
+            else:assert result['poisonApplied']==0 and result['damage']>0 and result['blockedUsable'],result
+            report['cases'].append(dict(cls=cls,mode=mode,result=result))
+            save()
+            print(tag,cls,mode,'PASS',flush=True)
+    report['status'] = 'passed' if not report['violations'] else 'failed'
+except Exception as error:
+    report.update(status='error', error=str(error))
+    raise
 finally:
-    (root / 'private/sts2-evidence' / ('pacifist116-' + tag + '.json')).write_text(json.dumps(evidence, indent=2), encoding='utf-8')
+    save()
+assert not report['violations'], report['violations']
