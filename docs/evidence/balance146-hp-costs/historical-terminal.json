@@ -1,0 +1,62 @@
+{
+  "trial": "balance-campaign-balance146-a10-knight-regular-t2-C",
+  "status": "finished",
+  "receiptSha256": "d73feefa7ddc6a9b053af9e8559bd471731cf7d60933712e14d18237618ead8c",
+  "source": "52cd89c4fe949d43d48f3cdc570dfcab39d3c7f7",
+  "dllSha256": "b13c50b1cdfa6a59e7125f39fc6798b06d2a08a0ac701705d8ad538431ae22d3",
+  "game": "v0.107.1",
+  "cls": "knight",
+  "tier": 2,
+  "ascension": 10,
+  "seed": "BALANCE146-C",
+  "traits": [],
+  "detail": {
+    "turn": 4,
+    "entries": {
+      "knight_bloodied_blade": 1,
+      "knight_guard": 1,
+      "shield": 1,
+      "knight_strike": 2,
+      "study": 1
+    },
+    "plays": [
+      {
+        "id": "shield",
+        "upgraded": false,
+        "netEnergy": 1,
+        "netHpLost": 0,
+        "reason": "utility",
+        "target": "MONSTER.BYRDONIS"
+      },
+      {
+        "id": "knight_bloodied_blade",
+        "upgraded": false,
+        "netEnergy": 0,
+        "netHpLost": 3,
+        "reason": "utility",
+        "target": "MONSTER.BYRDONIS"
+      }
+    ],
+    "potions": [],
+    "unplayed": [
+      "knight_guard",
+      "knight_strike",
+      "knight_strike",
+      "study"
+    ],
+    "victory": false
+  },
+  "lastObserved": {
+    "floor": 9,
+    "hp": 0,
+    "phase": "Play",
+    "wins": 0,
+    "enemies": [
+      {
+        "id": "MONSTER.BYRDONIS",
+        "hp": 10
+      }
+    ]
+  },
+  "interpretation": "Terminal reply records a 3-HP Bloodied Blade payment followed by 0 HP, with the enemy still alive. This is a pilot-cost-safety failure, not evidence that the card pool or manor is too weak. Original outcome is retained; no counterfactual win claimed."
+}

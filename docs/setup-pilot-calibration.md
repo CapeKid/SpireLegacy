@@ -23,7 +23,7 @@ Final runtime source is `cef879515c246b010624b309b8955f0fe34b8034`; DLL SHA-256 
 
 [Calibration evidence](evidence/balance146-setup-sequencing/calibration.json) includes exact receipt/artifact hashes, case results and log-pattern counts. The initial fixture error is excluded from the 48 final cases and retained with its last observation. Regular's final error log contains 18 backup-deletion error lines; beta contains 18 plus one startup `Invalid Task ID` from Godot script registration. Neither has a fatal-error match. Renderer warnings also remain. These logs are not described as clean, and the completed assertions do not establish a cause for the native messages.
 
-This closes one specific build-sequencing gap in #146. No natural campaign, win or paid manor return was collected in this calibration. Reward/build planning, other archetype sequencing and recorded winning campaigns remain before drawing broader balance conclusions. In particular, immediate HP-cost safety for Legacy blood cards still needs calibration: the current adapter recognizes the named native self-damage cards but does not yet describe Legacy `hpLoss` payments. The new setup rule explicitly excludes those payments.
+This closes one specific build-sequencing gap in #146. No natural campaign, win or paid manor return was collected in this calibration. Reward/build planning, other archetype sequencing and recorded winning campaigns remain before drawing broader balance conclusions. This stage did not calibrate immediate HP-cost safety for Legacy blood cards; its setup rule explicitly excludes those payments. The subsequent [blood-card safety calibration](blood-hp-cost-pilot.md) addresses that adapter omission separately.
 
 ## Reproduction
 
