@@ -40,7 +40,8 @@ param(
     [switch]$StopAtFullManor,
     [string]$ForcedReward='',
     [int]$ForcedRewardFloor=0,
-    [ValidateSet('standalone','deck','defensive')][string]$Rewards='standalone'
+    [ValidateSet('standalone','deck','defensive')][string]$Rewards='standalone',
+    [ValidateSet(1,6)][int]$AnimationSpeed=6
 )
 $ErrorActionPreference='Stop'
 if(([int]$Checks.IsPresent+[int]$DelayedChecks.IsPresent+[int]$RewardChecks.IsPresent+[int]$PayoffChecks.IsPresent+[int]$ReleaseChecks.IsPresent+[int]$CandidateChecks.IsPresent+[int]$LifecycleChecks.IsPresent+[int]$LifecycleUiChecks.IsPresent+[int]$TraitAuditChecks.IsPresent+[int]$OrobasChecks.IsPresent+[int]$CardResolutionChecks.IsPresent+[int]$PowerAuditChecks.IsPresent+[int]$CrownChecks.IsPresent+[int]$PoolAuditChecks.IsPresent+[int]$ItemAuditChecks.IsPresent+[int]$AncientAuditChecks.IsPresent+[int]$ManorAuditChecks.IsPresent+[int]$PresentationAuditChecks.IsPresent+[int]$BalanceAuditChecks.IsPresent+[int]$PackageChecks.IsPresent+[int]$PacingChecks.IsPresent+[int]$SphereUiChecks.IsPresent+[int]$ThreatChecks.IsPresent+[int]$PacifistChecks.IsPresent) -gt 1){throw 'Select one fixture driver.'}
@@ -110,6 +111,7 @@ try {
     }
     elseif($ResumePacingReport){& $Python (Join-Path $PSScriptRoot $driver) $profilePath $Tag $Class --resume-report $prior --end-run $EndRun @pacingTail}
     elseif($PacingChecks){& $Python (Join-Path $PSScriptRoot $driver) $profilePath $Tag $Class --end-run $EndRun @pacingTail}
+    elseif($driver -eq 'sts2-balance-campaign.py'){& $Python (Join-Path $PSScriptRoot $driver) $profilePath $Tag $Class $Tier $Policy $Seed $Ascension $traitArgument $Rewards $rewardArgument $ForcedRewardFloor $AnimationSpeed}
     else{& $Python (Join-Path $PSScriptRoot $driver) $profilePath $Tag $Class $Tier $Policy $Seed $Ascension $traitArgument $Rewards $rewardArgument $ForcedRewardFloor}
     if ($LASTEXITCODE -ne 0) { throw "Campaign driver failed; inspect $profilePath" }
 } finally {

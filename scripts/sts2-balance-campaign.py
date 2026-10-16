@@ -24,6 +24,8 @@ reward_policy=sys.argv[9] if len(sys.argv)>9 else 'standalone'
 assert reward_policy in {'standalone','deck','defensive'}
 forced_reward=sys.argv[10] if len(sys.argv)>10 and sys.argv[10]!='-' else None
 forced_floor=int(sys.argv[11]) if len(sys.argv)>11 else 0
+animation_speed=int(sys.argv[12]) if len(sys.argv)>12 else 6
+assert animation_speed in {1,6}, 'Animation speed must be normal (1) or accelerated (6).'
 assert forced_reward is None or (reward_policy!='standalone' and forced_floor>0)
 assert tag and all(c.isalnum() or c in '-_' for c in tag)
 expected = hashlib.sha256((root/'sts2/bin/Release/net9.0/SpireLegacy.dll').read_bytes()).hexdigest()
@@ -31,7 +33,7 @@ output = root/'private/sts2-evidence'/f'balance-campaign-{tag}.json'
 assert not output.exists(), 'Choose a new tag; never overwrite campaign evidence.'
 evidence = []
 report = dict(cls=cls, tier=tier, policy=policy, rewardPolicy=reward_policy, seed=seed, ascension=ascension, traits=traits,
-              forcedReward=forced_reward,forcedRewardFloor=forced_floor,interventions=0,status='running', evidence=evidence)
+              forcedReward=forced_reward,forcedRewardFloor=forced_floor,animationSpeed=animation_speed,interventions=0,status='running', evidence=evidence)
 
 def save():
     output.parent.mkdir(parents=True, exist_ok=True)
@@ -56,7 +58,9 @@ try:
         if time.monotonic() > deadline:
             report['status'] = 'time-cap'
             break
-        result = send('balance-campaign-step', policy=policy,rewardPolicy=reward_policy,forcedReward=forced_reward,forcedRewardFloor=forced_floor)
+        result = send('balance-campaign-step', policy=policy,rewardPolicy=reward_policy,forcedReward=forced_reward,forcedRewardFloor=forced_floor,animationSpeed=animation_speed)
+        if result['action']!='wait':
+            assert result['animationSpeed']==animation_speed, 'Native campaign speed differs from requested speed.'
         if result.get('action')=='card-reward' and result.get('detail',{}).get('intervention'):
             report['interventions']+=1
             assert report['interventions']==1,'A one-off intervention applied more than once.'
