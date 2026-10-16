@@ -1,7 +1,7 @@
 """Fail closed before retired StS1 tools import dependencies or mutate files.
 
 There is deliberately no environment-variable bypass in the current checkout.
-Historical implementations remain readable for provenance and isolated fixtures.
+Obsolete implementations have been removed; the command names remain fail closed.
 Use a historical Git revision for historical reconstruction, not active sheets.
 """
 RETIRED_WRITERS = (

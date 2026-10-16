@@ -26,7 +26,7 @@ def build(root,output,expected_hash,baselib=None,hook=None):
             if value.decode('utf-8-sig').strip()!=str(ITEM_ID):raise ReleaseError('Uploader marker does not match the existing StS2 item')
             (trees[1]/'mod_id.txt').write_bytes(value)
         inspection=transaction/'inspection.json'
-        inspection.write_text(json.dumps(dict(version=v,app=APP_ID,item=ITEM_ID,packages=reports,mod_sha256=expected_hash,requires_rl2=False),indent=2)+'\n',encoding='utf-8')
+        inspection.write_text(json.dumps(dict(version=v,app=APP_ID,item=ITEM_ID,packages=reports,mod_sha256=expected_hash,standalone_assets=True),indent=2)+'\n',encoding='utf-8')
         promote(output,transaction,v,trees+archives+[inspection],hook)
         return json.loads((output/'build/sts2/package-inspection.json').read_text())
     except Exception:

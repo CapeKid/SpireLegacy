@@ -1,16 +1,12 @@
-Spire Legacy adapts the trait library from the locally installed Rogue Legacy 2 build 13303339 to turn-based card play. This is a gameplay adaptation: HP, Energy, Block, status effects and legacy crowns replace platforming and mana mechanics. The in-game tooltip describes the actual effect. Health and card information remain readable; traits that obscure the original game's display use stated combat penalties instead.
+Spire Legacy has 61 selectable inherited traits adapted to turn-based card play. HP, Energy, Block, status effects and legacy crowns define their effects. In-game tooltips describe the actual behavior; information-obscuring traits use stated combat penalties where appropriate.
 
-The audit found 85 library entries. Rogue Legacy 2's character generator includes rarity values 1â€“3; other rarity values are disabled or reserved. All 61 eligible entries have an adaptation, including Antique and the two seasonal appearances. The mod also understands the two old Healthy and Strong save IDs, but no longer generates them. Existing eight-trait save IDs are preserved. Only Heart is now named correctly; Hollow Bones is a separate trait.
+All enabled entries have implementations. Two older Healthy and Strong save IDs remain recognized but are no longer generated. Existing saved trait IDs are preserved. Only Heart and Hollow Bones are separate traits.
 
-[trait_coverage.json](../sheets/trait_coverage.json) records every library entry, its source rarity and adaptation status. [traits.json](../sheets/traits.json) contains all exact modifiers, effects and incompatibilities. Cosmetic-only entries still affect appearance. Previously inert platforming traits now have explicit card-combat adaptations, described below. Pure palette and appearance traits retain their visual effects.
-
-The audit tools require the player's installed copy, UnityPy and TypeTreeGeneratorAPI. Extracted definitions, localization text and decompiled source stay under the ignored private directory. They are never distributed. Factual names and enum identifiers are used to identify the adaptations; descriptions and implementation are original mod content.
-
-Validation checks that every eligible source entry resolves to an adaptation, every effect is implemented, selected icons exist in the installed game, and 2,000 seeded offer generations exclude disabled entries and incompatible pairs. Physical gameplay testing remains necessary for balance across all three acts.
+[traits.json](../sheets/traits.json) contains modifiers, effects and incompatibilities; [trait coverage](../sheets/trait_coverage.json) preserves compatibility metadata. Obsolete source-library analysis has been removed from the current tree. The mod loads its own packaged icons; there is no external content inspection at launch.
 
 ## 1.0.5 trait review
 
-Reviewed all 61 selectable traits against the locally installed RL2 definitions and the StS2 hooks. These descriptions are original summaries; no extracted game text is distributed.
+Reviewed all 61 selectable traits against their design definitions and the StS2 hooks. These descriptions are original summaries; no extracted game text is distributed.
 
 | Trait | Correction |
 |---|---|

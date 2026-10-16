@@ -4,32 +4,35 @@
     "path": "heir/ui/select-icon.png",
     "width": 128,
     "height": 128,
-    "prompt": "An original character selection icon for Spire Legacy. Match the playful Rogue Legacy 2 cartoon style of reference: chibi knight face and shoulders, rounded silver helmet, vivid red plume, red scarf, thick crisp dark outlines, simple hard cel shading, expressive determined eyes. Front three-quarter portrait, centered full helmet and plume, compact readable silhouette, square format. Transparent background. No sword action, text, UI, border or watermark.",
+    "artDirection": "Current art direction, not a verbatim generation record: An original character selection icon for Spire Legacy. Match the playful cartoon fantasy cartoon style of reference: chibi knight face and shoulders, rounded silver helmet, vivid red plume, red scarf, thick crisp dark outlines, simple hard cel shading, expressive determined eyes. Front three-quarter portrait, centered full helmet and plume, compact readable silhouette, square format. Transparent background. No sword action, text, UI, border or watermark.",
     "generator": "built-in imagegen",
     "sha256": "da0daf8b0bad0a587bef9b2553a82d0be3b502ef7318452dee73c48d4d37f9e1",
     "transparent": true,
-    "exportMode": "fit"
+    "exportMode": "fit",
+    "gameStyleReferenceDeclared": true
   },
   {
     "id": "select_bg",
     "path": "heir/ui/select-bg.png",
     "width": 1920,
     "height": 1200,
-    "prompt": "An original landscape character-selection background for Spire Legacy matching the reference's playful Rogue Legacy 2 cartoon style: thick crisp dark outlines, clean flat colors, minimal hard cel shading, rounded chibi proportions. A courageous silver-armored red-plumed knight, red-hatted white-bearded mage and green-cloaked archer stand together as a family of heirs in front of a sunny medieval manor with banners and a distant spire. Three heroes grouped on the RIGHT two-thirds of the canvas. LEFT third is quiet dark navy sky and soft castle silhouettes so white game UI remains legible. Wide landscape 16:10 format. Charming illustrated game art, no painterly realism or gritty texture. No text, letters, title, UI, card frames or watermark.",
+    "artDirection": "Current art direction, not a verbatim generation record: An original landscape character-selection background for Spire Legacy matching the reference's playful cartoon fantasy cartoon style: thick crisp dark outlines, clean flat colors, minimal hard cel shading, rounded chibi proportions. A courageous silver-armored red-plumed knight, red-hatted white-bearded mage and green-cloaked archer stand together as a family of heirs in front of a sunny medieval manor with banners and a distant spire. Three heroes grouped on the RIGHT two-thirds of the canvas. LEFT third is quiet dark navy sky and soft castle silhouettes so white game UI remains legible. Wide landscape 16:10 format. Charming illustrated game art, no painterly realism or gritty texture. No text, letters, title, UI, card frames or watermark.",
     "generator": "built-in imagegen",
     "sha256": "da44d784857012198c8e69765b9519827b036384c1a0d22772d56ad77f7755c4",
     "transparent": false,
-    "exportMode": "fit"
+    "exportMode": "fit",
+    "gameStyleReferenceDeclared": true
   },
   {
     "id": "heir_portrait",
     "path": "heir/ui/heir-portrait.png",
     "width": 1024,
     "height": 1536,
-    "prompt": "Use case: style-transfer. Asset type: tall Slay the Spire 2 character-selection portrait tile for the original Spire Legacy Heir. Image 1 is the edit target: redraw its silver knight helmet, small golden crown crest with emerald gem, and green scarf. Images 2 and 3 are PRIVATE GAME STYLE AND FRAMING REFERENCES ONLY: match their tall rectangular portrait composition, broad hand-painted angular shadow shapes, restrained linework, earthy colors, and simple opaque colored backdrop; do not copy their characters, masks, or artwork. Produce a NEW original portrait of the Heir in a 2:3 tall canvas (ideally 1024x1536). Extreme close-up three-quarter head portrait facing right, tightly cropped shoulders and scarf at bottom. Helmet and face occupy nearly the entire width. Small crown sits near the top edge; simplify its silhouette so it stays readable. Keep Rogue Legacy-inspired medieval character design but render with hand-painted game UI shading, fewer graphic outlines, broad readable forms, no tiny metallic detailing. Matte silver helmet with warm ivory highlights and slate shadows, gold crown, emerald scarf, subtle amber eye slit. Flat muted ochre/gold background fills every corner with a narrow understated darker ochre edge matching the reference tile framing. Fill the entire tall rectangle with art: no transparency, no square cutout, no empty margins, no floating sticker silhouette, no border outside the image, no text or watermarks. At a final on-screen size of 100x154 pixels, head must be comparable in size and visual weight to the reference character heads. Save the replacement original asset and report its local file path.",
+    "artDirection": "Current art direction, not a verbatim generation record: Use case: style-transfer. Asset type: tall Slay the Spire 2 character-selection portrait tile for the original Spire Legacy Heir. Image 1 is the edit target: redraw its silver knight helmet, small golden crown crest with emerald gem, and green scarf. Images 2 and 3 are PRIVATE GAME STYLE AND FRAMING REFERENCES ONLY: match their tall rectangular portrait composition, broad hand-painted angular shadow shapes, restrained linework, earthy colors, and simple opaque colored backdrop; do not copy their characters, masks, or artwork. Produce a NEW original portrait of the Heir in a 2:3 tall canvas (ideally 1024x1536). Extreme close-up three-quarter head portrait facing right, tightly cropped shoulders and scarf at bottom. Helmet and face occupy nearly the entire width. Small crown sits near the top edge; simplify its silhouette so it stays readable. Keep original fantasy medieval character design but render with hand-painted game UI shading, fewer graphic outlines, broad readable forms, no tiny metallic detailing. Matte silver helmet with warm ivory highlights and slate shadows, gold crown, emerald scarf, subtle amber eye slit. Flat muted ochre/gold background fills every corner with a narrow understated darker ochre edge matching the reference tile framing. Fill the entire tall rectangle with art: no transparency, no square cutout, no empty margins, no floating sticker silhouette, no border outside the image, no text or watermarks. At a final on-screen size of 100x154 pixels, head must be comparable in size and visual weight to the reference character heads. Save the replacement original asset and report its local file path.",
     "generator": "built-in imagegen",
     "sha256": "c596c37da8618c2371cf2d0a18fa37055b526c59a12a8b2595c57e116916e9b1",
     "transparent": false,
-    "exportMode": "preserve"
+    "exportMode": "preserve",
+    "gameStyleReferenceDeclared": true
   }
 ]

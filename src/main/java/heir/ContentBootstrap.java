@@ -19,7 +19,7 @@ public final class ContentBootstrap {
     }
     public static List<String> command(Path runtime,Path host,Path data,String os,Map<String,String> env)throws Exception {
         List<String> args=new ArrayList<>();
-        if(os.toLowerCase(Locale.ROOT).contains("windows"))args.add(runtime.resolve("Reader/ReadRogueLegacy.exe").toString());
+        if(os.toLowerCase(Locale.ROOT).contains("windows"))args.add(runtime.resolve("Reader/RetiredContentReader.exe").toString());
         else if(os.toLowerCase(Locale.ROOT).contains("linux")){
             Path python=runtime.resolve("ReaderLinux/bin/python3.12");
             if(Files.isRegularFile(python)&&!Files.isExecutable(python)&&!python.toFile().setExecutable(true,true))throw new IllegalStateException("Cannot make the bundled Linux content reader executable: "+python);
@@ -27,7 +27,7 @@ public final class ContentBootstrap {
         }else throw new IllegalStateException("Automatic content preparation supports Windows x64 and Linux x86_64, including Steam Deck.");
         for(String path:args)if(!Files.isRegularFile(Paths.get(path)))throw new IllegalStateException("The content reader is missing: "+path+". Reinstall or re-subscribe to Spire Legacy.");
         Collections.addAll(args,"--host",host.toString(),"--sheet",runtime.resolve("assets.json").toString(),"--cache",data.resolve("cache").toString(),"--no-dialog");
-        String game=env.get("HEIR_RL2_DIR");if(game!=null&&!game.trim().isEmpty())Collections.addAll(args,"--game",game);
+        String game=env.get("HEIR_LEGACY_CONTENT_DIR");if(game!=null&&!game.trim().isEmpty())Collections.addAll(args,"--game",game);
         return args;
     }
     public static boolean complete(Path data){
@@ -59,7 +59,7 @@ public final class ContentBootstrap {
                 logStarted=true;
                 ProcessBuilder builder=new ProcessBuilder(args).directory(runtime.toFile()).redirectErrorStream(true).redirectOutput(ProcessBuilder.Redirect.appendTo(log.toFile()));
                 builder.environment().put("PYTHONPATH",runtime.resolve("ReaderLinux/site").toString());
-                System.out.println("HEIR: preparing installed Rogue Legacy 2 content; log: "+log);
+                System.out.println("HEIR: preparing installed legacy content content; log: "+log);
                 Process child=builder.start();
                 try{
                     if(!child.waitFor(180,TimeUnit.SECONDS)){child.destroyForcibly();throw new IllegalStateException("Content preparation took too long. Check "+log+" and try again.");}

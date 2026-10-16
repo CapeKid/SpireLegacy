@@ -8,12 +8,12 @@ This is the native StS2 successor to Spire Legacy 0.5.0, created by CapeKid. It 
 
 - Knight, Mage and Ranger heirs with distinct starting decks and class mechanics.
 - 82 reward cards per class on regular (20 common / 36 uncommon / 26 rare), matching native characters. Public-beta has 85 (20 / 38 / 27), also matching native characters. Each class has three additional basics and 34 shared family cards. See [pool expansion](sts2-pool-expansion.md). All 360 historical card definitions, upgrades and original illustrations remain registered.
-- All 61 eligible inherited RL2 traits, compatible pairs, inherited starter changes, three heirs after a climb and the first family's quick start.
+- 61 inherited traits, compatible pairs, inherited starter changes, three heirs after a climb and the first family's quick start.
 - Seven original [Heir-exclusive relics](heir-relics.md), with native reward/shop eligibility and bounded per-turn/per-combat effects. Family Bloodline remains starter-only.
 - Six manor upgrades, slower crown earnings, staged purchases with an explicit confirmation, family naming, four visible banner emblems. The public Manor has no crown-balance editor.
 - Full wrapped, scrolling trait descriptions, mouse tooltips and keyboard/controller navigation with an on-screen text keyboard.
 - Family run identities, inherited card snapshots, atomic saves and backup recovery. A completed run settles crowns once.
-- Original class sprites, portraits, card illustrations and 66 original trait/class vector icons included in the download. No game assets or content readers are distributed. Rogue Legacy 2 is not required.
+- Original class sprites, portraits, card illustrations and 66 original trait/class vector icons included in the download. No game assets or content readers are distributed.
 
 The basic-card baseline remains: plain strikes deal 5 damage, guards supply 4 Block, and class HP starts at 60/52/56 before inheritance and manor bonuses. Upgraded drawing cards retain the safeguards from 0.5.0. Version 1.0.5 removes unrelated trait bonuses and overlapping starter modifiers, limits treasure income to treasure rooms, and makes Flame Barrier a defensive Skill with temporary retaliation. See [trait review](traits.md). Balance against StS2's enemies still needs full-run playtesting.
 
@@ -21,7 +21,7 @@ StS2 adaptations preserve native encounters and rewards. Six exclusive Ancient c
 
 ## Workshop installation
 
-1. Install Slay the Spire 2. Rogue Legacy 2 is not required.
+1. Install Slay the Spire 2.
 2. Subscribe to [BaseLib](https://steamcommunity.com/sharedfiles/filedetails/?id=3737335127) and [Spire Legacy for StS2](https://steamcommunity.com/sharedfiles/filedetails/?id=3816525393). The new item is currently private for owner testing. The original StS1 Workshop item is a different mod.
 3. Start StS2 on your selected branch. Accept its mod notice and enable BaseLib and Spire Legacy in the mod list. Restart if requested.
 4. Select **The Heir**. **Family Manor & Heir Lab** appears beneath the character information, clear of Ascension. Press Y, or move down from the portrait and press A. Choose a family/heir and start a solo climb.
@@ -43,7 +43,7 @@ Extract `SpireLegacy-StS2-<version>.zip` into your StS2 install folder. Its layo
 
 Use the Workshop steps in Gaming Mode. The DLL and included original artwork support the native Linux game and Proton. No Python installation is required.
 
-Version 1.0.18 loads the included original artwork directly through Godot. No RL2 path, Python runtime, content reader or extracted-content cache is required. Old `HEIR_RL2_DIR` launch options can be removed. Existing reader/cache folders from older releases are unused and do not affect saved family progress. Native Linux and Proton share the same packaged icons; physical Deck retesting of this release remains needed.
+Version 1.0.18 loads the included original artwork directly through Godot. No external content path, Python runtime, content reader or extracted-content cache is required. Obsolete content-import launch options can be removed. Existing reader/cache folders from older releases are unused and do not affect saved family progress. Native Linux and Proton share the same packaged icons; physical Deck retesting of this release remains needed.
 
 If a card spends energy but never resolves, open **Family / Traits** after the failure. Version 1.0.3 shows the mod/game versions and the full failed card-action exception, including loaded mod versions, in Family Manor. **Copy card-play diagnostic** copies it for reporting. Version 1.0.3 adapts attack, card-sourced damage, exhaust and damage-modifier APIs across both branches. Retain this diagnostic if a card still fails.
 
@@ -71,15 +71,15 @@ dotnet run --project sts2/tests/SpireLegacy.CoreChecks.csproj
 python scripts/sts2-package.py --expected-dll-sha256 <hash-from-final-release-checks>
 ```
 
-Original icons are reproducible with `python scripts/author-heir-icons.py`; hashes and provenance are recorded in `sheets/icon_art.json` and [original-icons.md](original-icons.md). `scripts/preflight.py` validates the StS2 design and original artwork without an RL2 asset index or StS1 atlas. Historical source-asset validation is available only through `--historical-sts1-assets`.
+Original icons are reproducible with `python scripts/author-heir-icons.py`; hashes and provenance are recorded in `sheets/icon_art.json` and [original-icons.md](original-icons.md). `scripts/preflight.py` validates the StS2 design and original artwork without a legacy asset index or StS1 atlas. Historical source-asset validation is available only through `--historical-sts1-assets`.
 
-`scripts/sts2-lab.py` creates a fresh independently copied owned-game oracle with separate saves and Steam Cloud writes disabled. Launch with `HEIR_TEST_MODE=1`, a dedicated lab user directory, and absolute `HEIR_TEST_ROOT`/`HEIR_DATA_DIR` paths; see [the adversarial harness procedure](adversarial-harness.md). `scripts/sts2-oracle.py` exercises the correlated opt-in test bridge. Normal launches do not expose that bridge. Private game files, logs, extracted RL2 content and saves must remain ignored and must never be uploaded.
+`scripts/sts2-lab.py` creates a fresh independently copied owned-game oracle with separate saves and Steam Cloud writes disabled. Launch with `HEIR_TEST_MODE=1`, a dedicated lab user directory, and absolute `HEIR_TEST_ROOT`/`HEIR_DATA_DIR` paths; see [the adversarial harness procedure](adversarial-harness.md). `scripts/sts2-oracle.py` exercises the correlated opt-in test bridge. Normal launches do not expose that bridge. Private game files, logs, extracted third-party content and saves must remain ignored and must never be uploaded.
 
 Historical validation included 2,434 core assertions; all 360 base cards and all 360 upgrades executed in native combat; 720 native stat/text/art checks; 549 inherited starter upgrade/save/downgrade round trips; six-choice rewards and shops for all three pools; class counters; native boss victory rewards; normal autosave/resume without duplicating Antique; staged manor purchases, family naming, banners and controller focus. Ancient compatibility adds 90 class-specific reward/serialization checks, actual upgraded reward acquisition and 36 dialogue checks. Shop and rest-site sprites were visually inspected. Full campaign balance, physical Deck play and Melty-installed launch validation remain separate release checks.
 
 ## Credits and license
 
-Original code and illustrations: CapeKid, MIT. Slay the Spire 2: Mega Crit. Rogue Legacy 2: Cellar Door Games. BaseLib: Alchyr and contributors, MIT. Original trait/class SVG art: CapeKid, MIT. No extracted game content or reader runtimes are included; historical StS1 dependencies retain their separate notices.
+Original code and illustrations: CapeKid, MIT. Slay the Spire 2: Mega Crit. BaseLib: Alchyr and contributors, MIT. Original trait/class SVG art: CapeKid, MIT. No extracted game content or reader runtimes are included; historical StS1 dependencies retain their separate notices.
 
 ## 1.0.6 startup and controller fixes
 
@@ -118,7 +118,7 @@ Mage now visibly collapses through four original death frames and holds the fina
 
 ## 1.0.18 standalone artwork and installation
 
-The mod loads all trait and class icons from its own packaged SVG files. Existing original cards, portraits and animated sprites are preserved. Stable class/trait/card IDs and family/run snapshots are unchanged. The startup extraction process, RL2 discovery, preparation failure/retry UI and bundled readers are removed. Workshop/Melty metadata requires only StS2 and BaseLib. Old cached content is ignored; no cleanup of family saves is necessary.
+The mod loads all trait and class icons from its own packaged SVG files. Existing original cards, portraits and animated sprites are preserved. Stable class/trait/card IDs and family/run snapshots are unchanged. The startup extraction process, external content discovery, preparation failure/retry UI and bundled readers are removed. Workshop/Melty metadata requires only StS2 and BaseLib. Old cached content is ignored; no cleanup of family saves is necessary.
 
 ## 1.0.19 trait appearance
 

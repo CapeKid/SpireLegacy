@@ -33,7 +33,6 @@ def ready():
 try:
     icons = send('standalone-assets')
     assert icons['count'] == 66 and not icons['readerPresent'] and not icons['cachePresent'], icons
-    assert not Path(icons['rl2Override']).exists(), icons
     old = json.loads((root / 'private' / ('sts2-regular103-profile' if tag == 'regular' else 'sts2-test-profile') / 'family.json').read_text())
     assert icons['family'] == old['family'] and icons['crowns'] == old['crowns'], icons
     loaded = json.loads((profile / 'family.json').read_text())
@@ -65,6 +64,6 @@ try:
     send('abandon')
     send('standalone-assets')
     assert not (profile / 'content-preparation.log').exists()
-    print(tag + ': 66 original SVG icons render; nonexistent RL2 path, no reader/cache; prior family/manor preserved; all classes start/play/render; native save/resume preserves Antique and run identity; 720 card checks; no preparation UI/log.')
+    print(tag + ': 66 original SVG icons render; self-contained artwork, no reader/cache; prior family/manor preserved; all classes start/play/render; native save/resume preserves Antique and run identity; 720 card checks; no preparation UI/log.')
 finally:
     (root / 'private/sts2-evidence' / ('standalone118-' + tag + '.json')).write_text(json.dumps(evidence, indent=2), encoding='utf-8')

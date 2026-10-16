@@ -8,7 +8,7 @@ def main():
     for kind,files in formats.items():
         suffix='' if kind=='standalone' else '-'+kind
         reports.append(dict(kind=kind,**validate_archive(args.output_root/'dist'/f'SpireLegacy-StS2-{v}{suffix}.zip',files)))
-    print(json.dumps(dict(version=v,requiresRL2=False,packages=reports),indent=2))
+    print(json.dumps(dict(version=v,standaloneAssets=True,packages=reports),indent=2))
 if __name__=='__main__':
     try:main()
     except (ValueError,OSError) as error:raise SystemExit(str(error))
