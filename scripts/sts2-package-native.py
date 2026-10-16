@@ -19,6 +19,7 @@ def ready():
         time.sleep(.15)
     raise TimeoutError('Package lab not playable')
 send('trait-speed',value=8)
+assert send('harness-production-gate')['productionSubscribed'] is False
 for cls in ['knight','mage','ranger']:
     for kind in ['strike','guard']:
         card=cls+'_'+kind
@@ -27,6 +28,9 @@ for cls in ['knight','mage','ranger']:
             send('start',**{'class':cls,'traits':[],'quick':True,'manorTier':0,'seed':'SPIRELEGACY-PACKAGE-62'});ready()
             if kind=='strike' and not upgraded:
                 appearance=send('trait-appearance');assert any(a['classId']==cls and a['visible'] for a in appearance),appearance
+                send('manor');manor=send('manor-state')
+                assert manor['open'] and not any('set crown' in b['text'].lower() or 'playtest' in b['text'].lower() or 'preparation' in b['text'].lower() for b in manor['buttons']),manor
+                send('close')
             result=send('expansion-play',card=card,upgrade=upgraded)
             assert result['pile']=='Discard' and not result['tableNodePresent'],result
             assert result['energyChange']==-result['cost'] and result['saveRoundTrip'],result

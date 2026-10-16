@@ -1,0 +1,1442 @@
+{
+  "issue": 162,
+  "version": "1.0.31",
+  "published": false,
+  "workshopVisibility": "private",
+  "requiresRL2": false,
+  "legalClearanceEstablished": false,
+  "coreAssertions": 166710,
+  "provenanceTests": 7,
+  "packageRegressionGroups": 13,
+  "packageRegressionReportSha256": "a13fbc9a1c72334e3de70b6ded39f8f2654ab6b2259bf87e4f02206d69b2ceea",
+  "packageRegressionChecks": [
+    "clean release formats and public pinned license",
+    "dirty staging omitted, item marker preserved, deterministic archives",
+    "wrong checked-DLL hash preserves outputs",
+    "invalid version/dependency/branch/Melty configs preserve outputs",
+    "missing current guide cannot silently retain old notes",
+    "wrong uploader marker rejected without changing outputs",
+    "promotion exception restores old outputs byte-for-byte",
+    "process interruption leaves recoverable journal and restores complete old release",
+    "unsafe recovery plan rejected before mutations",
+    "path traversal, case collisions, unknown files, modes and encryption rejected",
+    "corrupt ZIP CRC reports a release error",
+    "optimized Python cannot disable release checks",
+    "Windows/Linux/Proton fresh/update/duplicate/uninstall layouts preserve saves"
+  ],
+  "installLayouts": [
+    {
+      "platform": "windows",
+      "spacesUnicodeMovedLibrary": true,
+      "freshInstall": true,
+      "wholeDirectoryUpdate": true,
+      "duplicatesActionable": true,
+      "uninstallPreservesSaves": true,
+      "meltyDirectoryMappingFixture": true,
+      "physicalExecution": false
+    },
+    {
+      "platform": "linux",
+      "spacesUnicodeMovedLibrary": true,
+      "freshInstall": true,
+      "wholeDirectoryUpdate": true,
+      "duplicatesActionable": true,
+      "uninstallPreservesSaves": true,
+      "meltyDirectoryMappingFixture": true,
+      "physicalExecution": false
+    },
+    {
+      "platform": "proton",
+      "spacesUnicodeMovedLibrary": true,
+      "freshInstall": true,
+      "wholeDirectoryUpdate": true,
+      "duplicatesActionable": true,
+      "uninstallPreservesSaves": true,
+      "meltyDirectoryMappingFixture": true,
+      "physicalExecution": false
+    }
+  ],
+  "assetInventory": {
+    "file": "asset-provenance.json",
+    "sha256": "c5752ea699805c4003cd049b5fe8bd10856d660f3a92ad13da16084f970da482",
+    "assets": 510,
+    "byManifest": {
+      "card_art": 360,
+      "ui_art": 3,
+      "character_art": 4,
+      "icon_art": 66,
+      "relic_art": 20,
+      "potion_art": 6,
+      "presentation_art": 51
+    },
+    "styleReferenceRecords": 367,
+    "limits": [
+      "Hashes verify the declared shipped bytes, not independent authorship or ownership.",
+      "Generation records include game style/framing references; reference files are not package inputs.",
+      "Technical provenance and package checks do not establish legal clearance."
+    ]
+  },
+  "packages": [
+    {
+      "kind": "standalone",
+      "file": "SpireLegacy-StS2-1.0.31.zip",
+      "size": 39774512,
+      "sha256": "2a11c741369662c7d2b38c36ec2216a6b271a01f6239051098515d35ffb22916",
+      "files": 553,
+      "dllSha256": "ea195b075769af8476407628cd02baecd196e64d19aca79157245aae759c8619"
+    },
+    {
+      "kind": "workshop",
+      "file": "SpireLegacy-StS2-1.0.31-workshop.zip",
+      "size": 40154099,
+      "sha256": "9a404944dc9fe1713805d197912c15c690c802603ff40432c4df8996ad6bc795",
+      "files": 557,
+      "dllSha256": "ea195b075769af8476407628cd02baecd196e64d19aca79157245aae759c8619"
+    },
+    {
+      "kind": "melty",
+      "file": "SpireLegacy-StS2-1.0.31-melty.zip",
+      "size": 40240400,
+      "sha256": "14936a291c1527b87c49e7f3365d0fb5115d4bb5370ae58a8a623abd267e8f18",
+      "files": 557,
+      "dllSha256": "ea195b075769af8476407628cd02baecd196e64d19aca79157245aae759c8619"
+    }
+  ],
+  "trials": [
+    {
+      "kind": "manor",
+      "branch": "regular",
+      "trial": "manor-release162-manor-regular",
+      "receiptSha256": "eaccde281505bdd7fed92a0ee3e4be9825c3054cea3891e4ac8153e08d4f13bc",
+      "commands": 503,
+      "stages": [
+        {
+          "source": "e2af65881023590af9603e6b5f6496a68e145a9d",
+          "dllSha256": "ea195b075769af8476407628cd02baecd196e64d19aca79157245aae759c8619",
+          "game": "v0.107.1",
+          "mod": "1.0.31"
+        }
+      ],
+      "publicCrownEditorAbsent": true,
+      "readerOrCachePresent": false,
+      "logMatches": {
+        "launch.log": {
+          "ERROR": 0,
+          "InvalidTaskId": 0,
+          "Fatal error": 0,
+          "already been freed": 0,
+          "backup": 0,
+          "particles": 0,
+          "WASAPI": 0
+        },
+        "errors.log": {
+          "ERROR": 5,
+          "InvalidTaskId": 0,
+          "Fatal error": 0,
+          "already been freed": 0,
+          "backup": 3,
+          "particles": 0,
+          "WASAPI": 3
+        }
+      },
+      "details": {
+        "namingCrownsBefore": 1137,
+        "namingCrownsAfter": 1137,
+        "confirmedPurchaseCrownsAfter": 1057,
+        "screenshots": [
+          {
+            "width": 1280,
+            "height": 800,
+            "sha256": "a32c8d73a312d524e0060cfdfd6eddaca3b67188fa23016fae31e8c4748d6713"
+          },
+          {
+            "width": 1280,
+            "height": 720,
+            "sha256": "1f7582af92531de18934826e95d30bcaf077f1285b649e2f16671d47ade1be81"
+          },
+          {
+            "width": 1200,
+            "height": 900,
+            "sha256": "46c3f625f31b66bde97ad7b8e2a778734f3d39df08ddcc67129273f0a33b05b4"
+          },
+          {
+            "width": 1920,
+            "height": 1080,
+            "sha256": "705a9475adc7b3164f1eb4e19dd07486747697ccad46879da515291ad41645da"
+          }
+        ],
+        "traitFixtureOffsets": 21
+      }
+    },
+    {
+      "kind": "package",
+      "branch": "regular",
+      "trial": "package-native-release162-package-regular",
+      "receiptSha256": "e7e3ddb22e351d58b31643e325cda3ea1de43c42fd76efb719fa6032af7afcc9",
+      "commands": 93,
+      "stages": [
+        {
+          "source": "e2af65881023590af9603e6b5f6496a68e145a9d",
+          "dllSha256": "ea195b075769af8476407628cd02baecd196e64d19aca79157245aae759c8619",
+          "game": "v0.107.1",
+          "mod": "1.0.31"
+        }
+      ],
+      "publicCrownEditorAbsent": true,
+      "readerOrCachePresent": false,
+      "logMatches": {
+        "launch.log": {
+          "ERROR": 0,
+          "InvalidTaskId": 0,
+          "Fatal error": 0,
+          "already been freed": 0,
+          "backup": 0,
+          "particles": 0,
+          "WASAPI": 0
+        },
+        "errors.log": {
+          "ERROR": 13,
+          "InvalidTaskId": 0,
+          "Fatal error": 0,
+          "already been freed": 0,
+          "backup": 9,
+          "particles": 0,
+          "WASAPI": 3
+        }
+      },
+      "details": {
+        "paidCardForms": 12,
+        "classSaveResumes": 3,
+        "productionGate": {
+          "productionSubscribed": false
+        },
+        "plays": [
+          {
+            "card": "knight_strike",
+            "upgrade": false,
+            "result": {
+              "key": "knight_strike",
+              "upgrade": false,
+              "pile": "Discard",
+              "cost": 1,
+              "hpChange": 0,
+              "enemyDamage": 5,
+              "blockChange": 0,
+              "energyChange": -1,
+              "poison": 0,
+              "charges": 0,
+              "hand": [
+                "knight_guard",
+                "knight_strike",
+                "knight_strike",
+                "knight_guard",
+                "knight_strike"
+              ],
+              "costsBefore": [
+                1,
+                1,
+                1,
+                1,
+                1
+              ],
+              "costsAfter": [
+                1,
+                1,
+                1,
+                1,
+                1
+              ],
+              "powers": [
+                {
+                  "id": "POWER.SPIRELEGACY-P_CLASS",
+                  "amount": 1
+                }
+              ],
+              "fuelReturned": false,
+              "saveRoundTrip": true,
+              "tableNodePresent": false
+            }
+          },
+          {
+            "card": "knight_strike",
+            "upgrade": true,
+            "result": {
+              "key": "knight_strike",
+              "upgrade": true,
+              "pile": "Discard",
+              "cost": 1,
+              "hpChange": 0,
+              "enemyDamage": 7,
+              "blockChange": 0,
+              "energyChange": -1,
+              "poison": 0,
+              "charges": 0,
+              "hand": [
+                "knight_guard",
+                "knight_strike",
+                "knight_strike",
+                "knight_guard",
+                "knight_strike"
+              ],
+              "costsBefore": [
+                1,
+                1,
+                1,
+                1,
+                1
+              ],
+              "costsAfter": [
+                1,
+                1,
+                1,
+                1,
+                1
+              ],
+              "powers": [
+                {
+                  "id": "POWER.SPIRELEGACY-P_CLASS",
+                  "amount": 1
+                }
+              ],
+              "fuelReturned": false,
+              "saveRoundTrip": true,
+              "tableNodePresent": false
+            }
+          },
+          {
+            "card": "knight_guard",
+            "upgrade": false,
+            "result": {
+              "key": "knight_guard",
+              "upgrade": false,
+              "pile": "Discard",
+              "cost": 1,
+              "hpChange": 0,
+              "enemyDamage": 0,
+              "blockChange": 4,
+              "energyChange": -1,
+              "poison": 0,
+              "charges": 1,
+              "hand": [
+                "knight_guard",
+                "knight_strike",
+                "knight_strike",
+                "knight_guard",
+                "knight_strike"
+              ],
+              "costsBefore": [
+                1,
+                1,
+                1,
+                1,
+                1
+              ],
+              "costsAfter": [
+                1,
+                1,
+                1,
+                1,
+                1
+              ],
+              "powers": [
+                {
+                  "id": "POWER.SPIRELEGACY-P_CLASS",
+                  "amount": 1
+                }
+              ],
+              "fuelReturned": false,
+              "saveRoundTrip": true,
+              "tableNodePresent": false
+            }
+          },
+          {
+            "card": "knight_guard",
+            "upgrade": true,
+            "result": {
+              "key": "knight_guard",
+              "upgrade": true,
+              "pile": "Discard",
+              "cost": 1,
+              "hpChange": 0,
+              "enemyDamage": 0,
+              "blockChange": 6,
+              "energyChange": -1,
+              "poison": 0,
+              "charges": 1,
+              "hand": [
+                "knight_guard",
+                "knight_strike",
+                "knight_strike",
+                "knight_guard",
+                "knight_strike"
+              ],
+              "costsBefore": [
+                1,
+                1,
+                1,
+                1,
+                1
+              ],
+              "costsAfter": [
+                1,
+                1,
+                1,
+                1,
+                1
+              ],
+              "powers": [
+                {
+                  "id": "POWER.SPIRELEGACY-P_CLASS",
+                  "amount": 1
+                }
+              ],
+              "fuelReturned": false,
+              "saveRoundTrip": true,
+              "tableNodePresent": false
+            }
+          },
+          {
+            "card": "mage_strike",
+            "upgrade": false,
+            "result": {
+              "key": "mage_strike",
+              "upgrade": false,
+              "pile": "Discard",
+              "cost": 1,
+              "hpChange": 0,
+              "enemyDamage": 5,
+              "blockChange": 0,
+              "energyChange": -1,
+              "poison": 0,
+              "charges": 0,
+              "hand": [
+                "mage_guard",
+                "mage_strike",
+                "mage_strike",
+                "mage_guard",
+                "mage_strike"
+              ],
+              "costsBefore": [
+                1,
+                1,
+                1,
+                1,
+                1
+              ],
+              "costsAfter": [
+                1,
+                1,
+                1,
+                1,
+                1
+              ],
+              "powers": [
+                {
+                  "id": "POWER.SPIRELEGACY-P_CLASS",
+                  "amount": 1
+                }
+              ],
+              "fuelReturned": false,
+              "saveRoundTrip": true,
+              "tableNodePresent": false
+            }
+          },
+          {
+            "card": "mage_strike",
+            "upgrade": true,
+            "result": {
+              "key": "mage_strike",
+              "upgrade": true,
+              "pile": "Discard",
+              "cost": 1,
+              "hpChange": 0,
+              "enemyDamage": 7,
+              "blockChange": 0,
+              "energyChange": -1,
+              "poison": 0,
+              "charges": 0,
+              "hand": [
+                "mage_guard",
+                "mage_strike",
+                "mage_strike",
+                "mage_guard",
+                "mage_strike"
+              ],
+              "costsBefore": [
+                1,
+                1,
+                1,
+                1,
+                1
+              ],
+              "costsAfter": [
+                1,
+                1,
+                1,
+                1,
+                1
+              ],
+              "powers": [
+                {
+                  "id": "POWER.SPIRELEGACY-P_CLASS",
+                  "amount": 1
+                }
+              ],
+              "fuelReturned": false,
+              "saveRoundTrip": true,
+              "tableNodePresent": false
+            }
+          },
+          {
+            "card": "mage_guard",
+            "upgrade": false,
+            "result": {
+              "key": "mage_guard",
+              "upgrade": false,
+              "pile": "Discard",
+              "cost": 1,
+              "hpChange": 0,
+              "enemyDamage": 0,
+              "blockChange": 4,
+              "energyChange": -1,
+              "poison": 0,
+              "charges": 1,
+              "hand": [
+                "mage_guard",
+                "mage_strike",
+                "mage_strike",
+                "mage_guard",
+                "mage_strike"
+              ],
+              "costsBefore": [
+                1,
+                1,
+                1,
+                1,
+                1
+              ],
+              "costsAfter": [
+                1,
+                1,
+                1,
+                1,
+                1
+              ],
+              "powers": [
+                {
+                  "id": "POWER.SPIRELEGACY-P_CLASS",
+                  "amount": 1
+                }
+              ],
+              "fuelReturned": false,
+              "saveRoundTrip": true,
+              "tableNodePresent": false
+            }
+          },
+          {
+            "card": "mage_guard",
+            "upgrade": true,
+            "result": {
+              "key": "mage_guard",
+              "upgrade": true,
+              "pile": "Discard",
+              "cost": 1,
+              "hpChange": 0,
+              "enemyDamage": 0,
+              "blockChange": 6,
+              "energyChange": -1,
+              "poison": 0,
+              "charges": 1,
+              "hand": [
+                "mage_guard",
+                "mage_strike",
+                "mage_strike",
+                "mage_guard",
+                "mage_strike"
+              ],
+              "costsBefore": [
+                1,
+                1,
+                1,
+                1,
+                1
+              ],
+              "costsAfter": [
+                1,
+                1,
+                1,
+                1,
+                1
+              ],
+              "powers": [
+                {
+                  "id": "POWER.SPIRELEGACY-P_CLASS",
+                  "amount": 1
+                }
+              ],
+              "fuelReturned": false,
+              "saveRoundTrip": true,
+              "tableNodePresent": false
+            }
+          },
+          {
+            "card": "ranger_strike",
+            "upgrade": false,
+            "result": {
+              "key": "ranger_strike",
+              "upgrade": false,
+              "pile": "Discard",
+              "cost": 1,
+              "hpChange": 0,
+              "enemyDamage": 5,
+              "blockChange": 0,
+              "energyChange": -1,
+              "poison": 0,
+              "charges": 0,
+              "hand": [
+                "ranger_guard",
+                "ranger_strike",
+                "ranger_strike",
+                "ranger_guard",
+                "ranger_strike"
+              ],
+              "costsBefore": [
+                1,
+                1,
+                1,
+                1,
+                1
+              ],
+              "costsAfter": [
+                1,
+                1,
+                1,
+                1,
+                1
+              ],
+              "powers": [
+                {
+                  "id": "POWER.SPIRELEGACY-P_CLASS",
+                  "amount": 1
+                }
+              ],
+              "fuelReturned": false,
+              "saveRoundTrip": true,
+              "tableNodePresent": false
+            }
+          },
+          {
+            "card": "ranger_strike",
+            "upgrade": true,
+            "result": {
+              "key": "ranger_strike",
+              "upgrade": true,
+              "pile": "Discard",
+              "cost": 1,
+              "hpChange": 0,
+              "enemyDamage": 7,
+              "blockChange": 0,
+              "energyChange": -1,
+              "poison": 0,
+              "charges": 0,
+              "hand": [
+                "ranger_guard",
+                "ranger_strike",
+                "ranger_strike",
+                "ranger_guard",
+                "ranger_strike"
+              ],
+              "costsBefore": [
+                1,
+                1,
+                1,
+                1,
+                1
+              ],
+              "costsAfter": [
+                1,
+                1,
+                1,
+                1,
+                1
+              ],
+              "powers": [
+                {
+                  "id": "POWER.SPIRELEGACY-P_CLASS",
+                  "amount": 1
+                }
+              ],
+              "fuelReturned": false,
+              "saveRoundTrip": true,
+              "tableNodePresent": false
+            }
+          },
+          {
+            "card": "ranger_guard",
+            "upgrade": false,
+            "result": {
+              "key": "ranger_guard",
+              "upgrade": false,
+              "pile": "Discard",
+              "cost": 1,
+              "hpChange": 0,
+              "enemyDamage": 0,
+              "blockChange": 4,
+              "energyChange": -1,
+              "poison": 0,
+              "charges": 0,
+              "hand": [
+                "ranger_guard",
+                "ranger_strike",
+                "ranger_strike",
+                "ranger_guard",
+                "ranger_strike"
+              ],
+              "costsBefore": [
+                1,
+                1,
+                1,
+                1,
+                1
+              ],
+              "costsAfter": [
+                1,
+                1,
+                1,
+                1,
+                1
+              ],
+              "powers": [
+                {
+                  "id": "POWER.SPIRELEGACY-P_CLASS",
+                  "amount": 1
+                }
+              ],
+              "fuelReturned": false,
+              "saveRoundTrip": true,
+              "tableNodePresent": false
+            }
+          },
+          {
+            "card": "ranger_guard",
+            "upgrade": true,
+            "result": {
+              "key": "ranger_guard",
+              "upgrade": true,
+              "pile": "Discard",
+              "cost": 1,
+              "hpChange": 0,
+              "enemyDamage": 0,
+              "blockChange": 6,
+              "energyChange": -1,
+              "poison": 0,
+              "charges": 0,
+              "hand": [
+                "ranger_guard",
+                "ranger_strike",
+                "ranger_strike",
+                "ranger_guard",
+                "ranger_strike"
+              ],
+              "costsBefore": [
+                1,
+                1,
+                1,
+                1,
+                1
+              ],
+              "costsAfter": [
+                1,
+                1,
+                1,
+                1,
+                1
+              ],
+              "powers": [
+                {
+                  "id": "POWER.SPIRELEGACY-P_CLASS",
+                  "amount": 1
+                }
+              ],
+              "fuelReturned": false,
+              "saveRoundTrip": true,
+              "tableNodePresent": false
+            }
+          }
+        ]
+      }
+    },
+    {
+      "kind": "manor",
+      "branch": "beta",
+      "trial": "manor-release162-manor-beta",
+      "receiptSha256": "33337c5804f52fc56f393bdbf65b78bf4dfc3398e783b057c4a72f695c781c30",
+      "commands": 507,
+      "stages": [
+        {
+          "source": "e2af65881023590af9603e6b5f6496a68e145a9d",
+          "dllSha256": "ea195b075769af8476407628cd02baecd196e64d19aca79157245aae759c8619",
+          "game": "v0.111.0",
+          "mod": "1.0.31"
+        }
+      ],
+      "publicCrownEditorAbsent": true,
+      "readerOrCachePresent": false,
+      "logMatches": {
+        "launch.log": {
+          "ERROR": 0,
+          "InvalidTaskId": 0,
+          "Fatal error": 0,
+          "already been freed": 0,
+          "backup": 0,
+          "particles": 0,
+          "WASAPI": 0
+        },
+        "errors.log": {
+          "ERROR": 6,
+          "InvalidTaskId": 1,
+          "Fatal error": 0,
+          "already been freed": 0,
+          "backup": 3,
+          "particles": 0,
+          "WASAPI": 3
+        }
+      },
+      "details": {
+        "namingCrownsBefore": 1137,
+        "namingCrownsAfter": 1137,
+        "confirmedPurchaseCrownsAfter": 1057,
+        "screenshots": [
+          {
+            "width": 1280,
+            "height": 800,
+            "sha256": "bb7f8daaefc89d981ee883a1da251ccaf8a62d36424a17e8356a9644487ef509"
+          },
+          {
+            "width": 1280,
+            "height": 720,
+            "sha256": "aa5044699fb8da11cf19e4cdf2b4b184bc89fbe124aaef879db35b67cac88d3c"
+          },
+          {
+            "width": 1200,
+            "height": 900,
+            "sha256": "298b330f1ea06ac7ae7437067186d2c4230e85fde83ac740d20641ab0b6601b8"
+          },
+          {
+            "width": 1920,
+            "height": 1080,
+            "sha256": "32747f5c7660b5659e1cdb508ae8d479b07a4b77ada52193f0dc62528c0665cc"
+          }
+        ],
+        "traitFixtureOffsets": 21
+      }
+    },
+    {
+      "kind": "package",
+      "branch": "beta",
+      "trial": "package-native-release162-package-beta",
+      "receiptSha256": "9a4cff6773e0782294d5873af3363ce3de28d6a1d210089521da4db769427b75",
+      "commands": 96,
+      "stages": [
+        {
+          "source": "e2af65881023590af9603e6b5f6496a68e145a9d",
+          "dllSha256": "ea195b075769af8476407628cd02baecd196e64d19aca79157245aae759c8619",
+          "game": "v0.111.0",
+          "mod": "1.0.31"
+        }
+      ],
+      "publicCrownEditorAbsent": true,
+      "readerOrCachePresent": false,
+      "logMatches": {
+        "launch.log": {
+          "ERROR": 0,
+          "InvalidTaskId": 0,
+          "Fatal error": 0,
+          "already been freed": 0,
+          "backup": 0,
+          "particles": 0,
+          "WASAPI": 0
+        },
+        "errors.log": {
+          "ERROR": 12,
+          "InvalidTaskId": 1,
+          "Fatal error": 0,
+          "already been freed": 0,
+          "backup": 9,
+          "particles": 0,
+          "WASAPI": 3
+        }
+      },
+      "details": {
+        "paidCardForms": 12,
+        "classSaveResumes": 3,
+        "productionGate": {
+          "productionSubscribed": false
+        },
+        "plays": [
+          {
+            "card": "knight_strike",
+            "upgrade": false,
+            "result": {
+              "key": "knight_strike",
+              "upgrade": false,
+              "pile": "Discard",
+              "cost": 1,
+              "hpChange": 0,
+              "enemyDamage": 5,
+              "blockChange": 0,
+              "energyChange": -1,
+              "poison": 0,
+              "charges": 0,
+              "hand": [
+                "knight_strike",
+                "knight_strike",
+                "knight_guard",
+                "knight_strike",
+                "shield"
+              ],
+              "costsBefore": [
+                1,
+                1,
+                1,
+                1,
+                1
+              ],
+              "costsAfter": [
+                1,
+                1,
+                1,
+                1,
+                1
+              ],
+              "powers": [
+                {
+                  "id": "POWER.SPIRELEGACY-P_CLASS",
+                  "amount": 1
+                }
+              ],
+              "fuelReturned": false,
+              "saveRoundTrip": true,
+              "tableNodePresent": false
+            }
+          },
+          {
+            "card": "knight_strike",
+            "upgrade": true,
+            "result": {
+              "key": "knight_strike",
+              "upgrade": true,
+              "pile": "Discard",
+              "cost": 1,
+              "hpChange": 0,
+              "enemyDamage": 7,
+              "blockChange": 0,
+              "energyChange": -1,
+              "poison": 0,
+              "charges": 0,
+              "hand": [
+                "knight_strike",
+                "knight_strike",
+                "knight_guard",
+                "knight_strike",
+                "shield"
+              ],
+              "costsBefore": [
+                1,
+                1,
+                1,
+                1,
+                1
+              ],
+              "costsAfter": [
+                1,
+                1,
+                1,
+                1,
+                1
+              ],
+              "powers": [
+                {
+                  "id": "POWER.SPIRELEGACY-P_CLASS",
+                  "amount": 1
+                }
+              ],
+              "fuelReturned": false,
+              "saveRoundTrip": true,
+              "tableNodePresent": false
+            }
+          },
+          {
+            "card": "knight_guard",
+            "upgrade": false,
+            "result": {
+              "key": "knight_guard",
+              "upgrade": false,
+              "pile": "Discard",
+              "cost": 1,
+              "hpChange": 0,
+              "enemyDamage": 0,
+              "blockChange": 4,
+              "energyChange": -1,
+              "poison": 0,
+              "charges": 1,
+              "hand": [
+                "knight_strike",
+                "knight_strike",
+                "knight_guard",
+                "knight_strike",
+                "shield"
+              ],
+              "costsBefore": [
+                1,
+                1,
+                1,
+                1,
+                1
+              ],
+              "costsAfter": [
+                1,
+                1,
+                1,
+                1,
+                1
+              ],
+              "powers": [
+                {
+                  "id": "POWER.SPIRELEGACY-P_CLASS",
+                  "amount": 1
+                }
+              ],
+              "fuelReturned": false,
+              "saveRoundTrip": true,
+              "tableNodePresent": false
+            }
+          },
+          {
+            "card": "knight_guard",
+            "upgrade": true,
+            "result": {
+              "key": "knight_guard",
+              "upgrade": true,
+              "pile": "Discard",
+              "cost": 1,
+              "hpChange": 0,
+              "enemyDamage": 0,
+              "blockChange": 6,
+              "energyChange": -1,
+              "poison": 0,
+              "charges": 1,
+              "hand": [
+                "knight_strike",
+                "knight_strike",
+                "knight_guard",
+                "knight_strike",
+                "shield"
+              ],
+              "costsBefore": [
+                1,
+                1,
+                1,
+                1,
+                1
+              ],
+              "costsAfter": [
+                1,
+                1,
+                1,
+                1,
+                1
+              ],
+              "powers": [
+                {
+                  "id": "POWER.SPIRELEGACY-P_CLASS",
+                  "amount": 1
+                }
+              ],
+              "fuelReturned": false,
+              "saveRoundTrip": true,
+              "tableNodePresent": false
+            }
+          },
+          {
+            "card": "mage_strike",
+            "upgrade": false,
+            "result": {
+              "key": "mage_strike",
+              "upgrade": false,
+              "pile": "Discard",
+              "cost": 1,
+              "hpChange": 0,
+              "enemyDamage": 5,
+              "blockChange": 0,
+              "energyChange": -1,
+              "poison": 0,
+              "charges": 0,
+              "hand": [
+                "mage_strike",
+                "mage_strike",
+                "mage_guard",
+                "mage_strike",
+                "flame"
+              ],
+              "costsBefore": [
+                1,
+                1,
+                1,
+                1,
+                1
+              ],
+              "costsAfter": [
+                1,
+                1,
+                1,
+                1,
+                1
+              ],
+              "powers": [
+                {
+                  "id": "POWER.SPIRELEGACY-P_CLASS",
+                  "amount": 1
+                }
+              ],
+              "fuelReturned": false,
+              "saveRoundTrip": true,
+              "tableNodePresent": false
+            }
+          },
+          {
+            "card": "mage_strike",
+            "upgrade": true,
+            "result": {
+              "key": "mage_strike",
+              "upgrade": true,
+              "pile": "Discard",
+              "cost": 1,
+              "hpChange": 0,
+              "enemyDamage": 7,
+              "blockChange": 0,
+              "energyChange": -1,
+              "poison": 0,
+              "charges": 0,
+              "hand": [
+                "mage_strike",
+                "mage_strike",
+                "mage_guard",
+                "mage_strike",
+                "flame"
+              ],
+              "costsBefore": [
+                1,
+                1,
+                1,
+                1,
+                1
+              ],
+              "costsAfter": [
+                1,
+                1,
+                1,
+                1,
+                1
+              ],
+              "powers": [
+                {
+                  "id": "POWER.SPIRELEGACY-P_CLASS",
+                  "amount": 1
+                }
+              ],
+              "fuelReturned": false,
+              "saveRoundTrip": true,
+              "tableNodePresent": false
+            }
+          },
+          {
+            "card": "mage_guard",
+            "upgrade": false,
+            "result": {
+              "key": "mage_guard",
+              "upgrade": false,
+              "pile": "Discard",
+              "cost": 1,
+              "hpChange": 0,
+              "enemyDamage": 0,
+              "blockChange": 4,
+              "energyChange": -1,
+              "poison": 0,
+              "charges": 1,
+              "hand": [
+                "mage_strike",
+                "mage_strike",
+                "mage_guard",
+                "mage_strike",
+                "flame"
+              ],
+              "costsBefore": [
+                1,
+                1,
+                1,
+                1,
+                1
+              ],
+              "costsAfter": [
+                1,
+                1,
+                1,
+                1,
+                1
+              ],
+              "powers": [
+                {
+                  "id": "POWER.SPIRELEGACY-P_CLASS",
+                  "amount": 1
+                }
+              ],
+              "fuelReturned": false,
+              "saveRoundTrip": true,
+              "tableNodePresent": false
+            }
+          },
+          {
+            "card": "mage_guard",
+            "upgrade": true,
+            "result": {
+              "key": "mage_guard",
+              "upgrade": true,
+              "pile": "Discard",
+              "cost": 1,
+              "hpChange": 0,
+              "enemyDamage": 0,
+              "blockChange": 6,
+              "energyChange": -1,
+              "poison": 0,
+              "charges": 1,
+              "hand": [
+                "mage_strike",
+                "mage_strike",
+                "mage_guard",
+                "mage_strike",
+                "flame"
+              ],
+              "costsBefore": [
+                1,
+                1,
+                1,
+                1,
+                1
+              ],
+              "costsAfter": [
+                1,
+                1,
+                1,
+                1,
+                1
+              ],
+              "powers": [
+                {
+                  "id": "POWER.SPIRELEGACY-P_CLASS",
+                  "amount": 1
+                }
+              ],
+              "fuelReturned": false,
+              "saveRoundTrip": true,
+              "tableNodePresent": false
+            }
+          },
+          {
+            "card": "ranger_strike",
+            "upgrade": false,
+            "result": {
+              "key": "ranger_strike",
+              "upgrade": false,
+              "pile": "Discard",
+              "cost": 1,
+              "hpChange": 0,
+              "enemyDamage": 5,
+              "blockChange": 0,
+              "energyChange": -1,
+              "poison": 0,
+              "charges": 0,
+              "hand": [
+                "ranger_strike",
+                "ranger_strike",
+                "ranger_guard",
+                "ranger_strike",
+                "aim"
+              ],
+              "costsBefore": [
+                1,
+                1,
+                1,
+                1,
+                1
+              ],
+              "costsAfter": [
+                1,
+                1,
+                1,
+                1,
+                1
+              ],
+              "powers": [
+                {
+                  "id": "POWER.SPIRELEGACY-P_CLASS",
+                  "amount": 1
+                }
+              ],
+              "fuelReturned": false,
+              "saveRoundTrip": true,
+              "tableNodePresent": false
+            }
+          },
+          {
+            "card": "ranger_strike",
+            "upgrade": true,
+            "result": {
+              "key": "ranger_strike",
+              "upgrade": true,
+              "pile": "Discard",
+              "cost": 1,
+              "hpChange": 0,
+              "enemyDamage": 7,
+              "blockChange": 0,
+              "energyChange": -1,
+              "poison": 0,
+              "charges": 0,
+              "hand": [
+                "ranger_strike",
+                "ranger_strike",
+                "ranger_guard",
+                "ranger_strike",
+                "aim"
+              ],
+              "costsBefore": [
+                1,
+                1,
+                1,
+                1,
+                1
+              ],
+              "costsAfter": [
+                1,
+                1,
+                1,
+                1,
+                1
+              ],
+              "powers": [
+                {
+                  "id": "POWER.SPIRELEGACY-P_CLASS",
+                  "amount": 1
+                }
+              ],
+              "fuelReturned": false,
+              "saveRoundTrip": true,
+              "tableNodePresent": false
+            }
+          },
+          {
+            "card": "ranger_guard",
+            "upgrade": false,
+            "result": {
+              "key": "ranger_guard",
+              "upgrade": false,
+              "pile": "Discard",
+              "cost": 1,
+              "hpChange": 0,
+              "enemyDamage": 0,
+              "blockChange": 4,
+              "energyChange": -1,
+              "poison": 0,
+              "charges": 0,
+              "hand": [
+                "ranger_strike",
+                "ranger_strike",
+                "ranger_guard",
+                "ranger_strike",
+                "aim"
+              ],
+              "costsBefore": [
+                1,
+                1,
+                1,
+                1,
+                1
+              ],
+              "costsAfter": [
+                1,
+                1,
+                1,
+                1,
+                1
+              ],
+              "powers": [
+                {
+                  "id": "POWER.SPIRELEGACY-P_CLASS",
+                  "amount": 1
+                }
+              ],
+              "fuelReturned": false,
+              "saveRoundTrip": true,
+              "tableNodePresent": false
+            }
+          },
+          {
+            "card": "ranger_guard",
+            "upgrade": true,
+            "result": {
+              "key": "ranger_guard",
+              "upgrade": true,
+              "pile": "Discard",
+              "cost": 1,
+              "hpChange": 0,
+              "enemyDamage": 0,
+              "blockChange": 6,
+              "energyChange": -1,
+              "poison": 0,
+              "charges": 0,
+              "hand": [
+                "ranger_strike",
+                "ranger_strike",
+                "ranger_guard",
+                "ranger_strike",
+                "aim"
+              ],
+              "costsBefore": [
+                1,
+                1,
+                1,
+                1,
+                1
+              ],
+              "costsAfter": [
+                1,
+                1,
+                1,
+                1,
+                1
+              ],
+              "powers": [
+                {
+                  "id": "POWER.SPIRELEGACY-P_CLASS",
+                  "amount": 1
+                }
+              ],
+              "fuelReturned": false,
+              "saveRoundTrip": true,
+              "tableNodePresent": false
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "remaining": [
+    "Owner public-release/visibility decision and acceptance of recorded art provenance; technical checks do not provide legal clearance.",
+    "Physical Deck/Linux and full co-op device coverage remain as previously documented/waived; layout fixtures are not device execution.",
+    "Melty-installed launcher execution is not demonstrated by archive/mapping checks."
+  ],
+  "fixtureCorrections": [
+    "Asset unit tests use repository-private temporary directories after the sandbox temporary path denied writes.",
+    "Packaging source fixture now includes README provenance guide and accepts design-schema validation errors for deliberately invalid license metadata."
+  ]
+}

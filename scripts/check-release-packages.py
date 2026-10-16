@@ -29,7 +29,7 @@ with tempfile.TemporaryDirectory(prefix='package62-',dir=root/'private') as dire
         shutil.rmtree(path)
     source=base/'source é with spaces';source.mkdir()
     for folder in ['scripts','sheets','docs','licenses','src/main/resources']:shutil.copytree(root/folder,source/folder)
-    for rel in ['LICENSE','sts2/SpireLegacy.json','sts2/melty.json','sts2/workshop.json','sts2/bin/Release/net9.0/SpireLegacy.dll']:
+    for rel in ['LICENSE','README.md','sts2/SpireLegacy.json','sts2/melty.json','sts2/workshop.json','sts2/bin/Release/net9.0/SpireLegacy.dll']:
         target=source/rel;target.parent.mkdir(parents=True,exist_ok=True);shutil.copy2(root/rel,target)
     # No ignored source-license directory or installed game is available here.
     h=digest((source/'sts2/bin/Release/net9.0/SpireLegacy.dll').read_bytes());v,formats=payloads(source,h)
@@ -59,7 +59,7 @@ with tempfile.TemporaryDirectory(prefix='package62-',dir=root/'private') as dire
         path=source/rel;original=path.read_bytes();data=json.loads(original);edit(data);path.write_text(json.dumps(data))
         try:
             try:pack.build(source,output,h)
-            except ReleaseError:pass
+            except ValueError:pass
             else:raise AssertionError('bad config accepted '+rel)
             assert tree_hash(output)==stable
         finally:path.write_bytes(original)
