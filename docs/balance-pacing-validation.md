@@ -2,6 +2,8 @@
 
 This is an automated measurement checkpoint, not an experienced-player balance sign-off. Card stats, manor prices, and crown payout rules were not changed. The issue remains open for experienced archetype play, complete winning campaigns, and the full purchase curve.
 
+The later [final bounded assessment](balance146-final-assessment.md) consolidates subsequent studies, completed purchase curves and the remaining acceptance limitations. This page preserves the original checkpoint's results and scope.
+
 ## What was measured
 
 The opt-in `planned` pilot makes legal native card plays and purchases. It scores rewards against the current deck, chooses upgrades by estimated score improvement, removes low-value cards, favors recovery routes when hurt, and uses a limited set of potions. Shops enforce native prices and acquisition hooks. Lucky Fysh's gold gain during card acquisition is recorded separately from the displayed purchase price.

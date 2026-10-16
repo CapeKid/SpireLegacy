@@ -1,0 +1,52 @@
+# Final bounded balance assessment (#146)
+
+This completes the agreed two-step automated work plan: correct the known event-policy failure, then run a fixed final campaign set and assess the accumulated evidence. It does not certify experienced-player balance. Original requirements that remain unsupported are identified below rather than being converted into another open-ended pilot-calibration series.
+
+## Final campaign checkpoint
+
+The [protocol](evidence/balance146-final/protocol.json) was committed as `997827d8d90531a928bad5992e9475d6154a0449` before launch. It declares exactly four attempts: Mage/Ranger × regular/beta, seed `BALANCE146-F`, A10, full manor, no traits, planned combat and defensive rewards. Each starts in a fresh disposable family at generation 3 with Neow available and FTUE disabled. This is an injected investment state, not an earned-fund purchase trajectory or literal first-ever tutorial family. No combat resources or rewards are injected. The original 20-minute/1,200-decision, 40-turn, 50-play, 45-second-wait and 180-second-command limits remain unchanged.
+
+Clients run sequentially in provenance-verified owned copies. No personal saves, real game folders, Steam branches or release artifacts are changed. The batch stops after the four declared attempts, without substituting seeds, retrying mutations or adding pilot changes. The final source is merged main `843b8e1f1ac75208611e8c00cde67a0cce0485e1`, DLL SHA-256 `9a4bdb1298951aa14dab8fe9927acd6106bbc20c2217f7501b7579b909377b73`. Runtime code, scripts and card sheets are unchanged from the [event-policy correction](event-pilot-calibration.md); the source identity changes through its merge. All use mod 1.0.30 / BaseLib v3.4.7, with copied regular v0.107.1 or beta v0.111.0. These are pinned versions, not current live-version compatibility claims.
+
+| Class | Branch | Natural outcome | Earned crowns | Rest choices |
+| --- | --- | --- | ---: | --- |
+| Mage | Regular | Death, floor 14 | 37 | 1 upgrade, 1 heal |
+| Mage | Beta | Death, floor 14 | 34 | 1 upgrade, 1 heal |
+| Ranger | Regular | Death at Act 1 boss, floor 17 | 45 | 1 upgrade, 2 heals |
+| Ranger | Beta | Death, floor 8 | 18 | 1 heal |
+
+All four attempts finished naturally at zero HP, with no victory, cap, unsupported decision, failed native command or forced reward. They record 822 correlated commands and 324 non-wait replies, including 109 combat-turn decisions and 23 card-reward selections. Eight rests apply three actual upgrades and five heals. No shop purchase or potion use occurs in this final set; historical studies and the recent Knight replay supply that exercised coverage. The selected upgrades are Merciless for regular Mage/Ranger and Chilling Words for beta Mage. The usage records retain the acquired card IDs; their name prefixes alone do not establish how those cards entered the deck.
+
+The [manifest](evidence/balance146-final/manifest.json), [outcomes](evidence/balance146-final/campaigns.csv), [initial conditions](evidence/balance146-final/initial-conditions.json), [card exposure](evidence/balance146-final/cards.csv), [decisions](evidence/balance146-final/decisions.jsonl) and [usage](evidence/balance146-final/usage.json) retain exact artifact and receipt identities, actual choices and observations. `trajectories.csv` has no rows because no paid manor trajectory is collected here. Full-manor payout observations must not be substituted for the earlier no-manor first-upgrade curve.
+
+The batch guard stopped after the second completed run when it briefly observed that client during asynchronous termination. Subsequent verification found no client active. The original batch report is archived and hashed; only the two unstarted Ranger cases continue. Both Mage native terminal receipts remain intact. The beta Mage wrapper exit code was not durably recorded before the guard failure and stays null; it is not fabricated as zero or treated as a game crash. Native successful replies, wrapper bookkeeping and process cleanup are separate evidence. All four clients were verified stopped at the end.
+
+Build/design preflight passed with zero warnings/errors. Export checks validate the predeclared configurations, pinned source/DLL, branch versions, loaded heir class/traits, unique correlated requests and zero interventions. Every error log contains audio-device initialization errors with dummy-audio fallback and renderer warnings. Beta Mage additionally has one `InvalidTaskId` match. No matched fatal-error, double-free or already-freed message appears; log patterns are not a blanket clean-engine guarantee or a resolution of the earlier excluded native crash.
+
+One new seed and four heuristic losses do not establish class rankings, branch parity or a population win rate. Identical seed strings can yield different native maps/rewards across versions. The new full-manor results are not a controlled comparison against older no/partial-manor samples collected under different policy/source stages. No current-build winning campaign was obtained; the user's reported human Knight victory remains valid qualitative evidence without a matched decision record.
+
+## Acceptance assessment
+
+| Requirement | Evidence collected | Assessment and boundary |
+| --- | --- | --- |
+| Multiple seeds and higher Ascensions | [Initial A/B campaigns](balance-pacing-validation.md), [A10 Knight C/D](long-term-manor-pacing.md), [A10 Mage/Ranger C/D](a10-mage-ranger-validation.md), final F checkpoint | Measured with automated policies. Policy/source revisions differ; do not pool outcomes as a win-rate estimate. |
+| No, partial and full manor | Historical matched A10 class/investment matrices, plus A0/A5 coverage | All three classes have regular-branch A10 tier comparisons; Knight also has beta comparisons. Starting investment is injected in standalone trials. The final checkpoint covers full manor only, not a fresh three-tier comparison under the final pilot. |
+| Deliberate potion, shop and rest/upgrade use | [Hard-trait usage](hard-trait-relic-validation.md), [Pacifist follow-up](pacifist-pilot-calibration.md), [event replay](event-pilot-calibration.md) and final checkpoint | Actual native decisions are recorded. Limited potion/relic support, heuristic card values and incomplete shop scoring prevent calling this expert decision coverage. |
+| Hard traits and starting relics | Antique controls paired with Hero Complex, Crippling Intellect or Pacifist on both branches | Legal combinations and actual random relics verified. One principal seed, a cap and a native crash are retained; not representative of every trait/relic pairing. Later crash-isolation replicates do not erase the original failure. |
+| Complete winning campaigns as well as early deaths | Natural deaths and exclusions preserved; user reports an A10 full-manor Knight win on Steam Deck/public-beta | Recorded automated winning campaigns and per-class winning decks are not established by the prior studies. The human report is qualitative: seed/build/deck and decision records are unknown. |
+| Experienced archetype decisions | [Original fixed-deck audit](adversarial-balance.md), natural offered/picked/played records and pilot corrections | Fixed-deck/native checks and heuristic campaigns are not experienced human archetype play. Expert decisions and population win rates remain unmeasured. |
+| Earned crowns, purchase order and purchase gaps | [Paid full-manor curves](long-term-manor-pacing.md) with durable settlement/purchase receipts | Both fixed-order trajectories complete all 16 paid levels: Knight regular at return 80 and Ranger beta at return 120; each spends 2,620 crowns. These are loss-heavy, branched trajectories across source stages, not uninterrupted current-build human pacing. |
+| First 80-crown upgrade in roughly 5–7 early returns | Knight first purchase at return 5; Ranger at return 7 | Fits the stated target in two no-handicap pilot trajectories. Class and branch are confounded; no human guarantee, optimized order, win-heavy curve or population distribution is established. |
+| Meaningful survival from investment | Historical paired investment outcomes and qualitative human A10 win | Some particular trials survive longer; RNG, routes, rewards, Chronicle and policy changes prevent a general causal estimate for individual upgrades. |
+| Provenance, exclusions and separation from tuning | Per-study manifests, receipt/artifact hashes, caps, observed decisions and diagnostic counts | Evidence is auditable within the pinned copied versions. Caps/crashes are excluded from natural outcomes. No card or manor-price adjustment is justified solely by pilot losses. |
+| Physical Deck/Linux and Steam/co-op transport | #110 closed at the user's request with device coverage waived | Outside this Windows copied-lab study; no new device claim is made. |
+
+Historical counts are study-local. Several snapshots contain earlier trajectory prefixes, replay references or technical replicates. They must not be summed into an independent sample count. Each original snapshot remains unchanged; the final checkpoint contains only its four predeclared attempts. The [evidence index](evidence/balance146-final/evidence-index.json) pins the referenced documentation and manifests without redistributing private receipts, owned files or saves.
+
+## Decision
+
+The bounded investigation supplies useful technical and pacing evidence. It does **not** fulfill every original acceptance requirement: experienced archetype play, recorded per-class winning campaigns and representative human/alternative-order manor pacing remain unsupported. Another batch of the same heuristic losing runs cannot fill the expert-play gap.
+
+Recommend closing #146 as a **bounded investigation with documented limitations**, accepting that narrower scope explicitly. This is a scope recommendation, not a claim that the broad original balance-validation criteria all passed. The PR uses `Refs #146`, not automatic closure; merging the evidence alone does not silently rewrite or close the issue. If the original requirements must remain mandatory, the honest status is incomplete rather than a new sequence of calibration PRs.
+
+No card buffs, nerfs, crown changes or manor-price changes are recommended from this dataset alone. Preserve the existing prices and gameplay values pending concrete player reports or stronger comparative evidence. No additional pilot-calibration PR or follow-up issue is proposed by this assessment.

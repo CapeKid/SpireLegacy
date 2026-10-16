@@ -1,0 +1,471 @@
+{
+  "newAttempts": 4,
+  "protocolCommit": "997827d8d90531a928bad5992e9475d6154a0449",
+  "protocolSha256": "56561bf0443ec9754a3ed034bcdee5e014ce34e4ba85689593f443c035a42ab8",
+  "batchContinuation": {
+    "archivedBatchSha256": "07f695e756131f0c6e732a0db3f85129dab5ff55b41af2c6e47fa55dadc79b13",
+    "reason": "Immediate post-wrapper guard observed the beta client during asynchronous termination; batch stopped after the second completed receipt. No client remained on subsequent verification. Only the two unstarted Ranger cases continue.",
+    "secondWrapperExitCode": "Not durably recorded before guard failure; preserved as null."
+  },
+  "completed": 4,
+  "recordedWins": 0,
+  "trials": [
+    {
+      "trial": "balance-campaign-balance146-final-mage-regular-F",
+      "cls": "mage",
+      "branch": "regular",
+      "status": "finished",
+      "included": true,
+      "wrapperExitCode": 0,
+      "actions": {
+        "event": 10,
+        "map": 13,
+        "combat-turn": 23,
+        "collect-rewards": 14,
+        "card-reward": 5,
+        "reward-proceed": 5,
+        "rest": 2,
+        "proceed": 3,
+        "chest": 1,
+        "treasure-relic": 1,
+        "finished": 1
+      },
+      "potions": [],
+      "rests": [
+        {
+          "floor": 8,
+          "detail": {
+            "choice": "SmithRestSiteOption",
+            "hpBefore": 46,
+            "hpAfter": 46,
+            "upgraded": [
+              "knight_merciless"
+            ]
+          }
+        },
+        {
+          "floor": 13,
+          "detail": {
+            "choice": "HealRestSiteOption",
+            "hpBefore": 11,
+            "hpAfter": 32,
+            "upgraded": []
+          }
+        }
+      ],
+      "shops": [],
+      "lastObservedState": {
+        "character": "CHARACTER.SPIRELEGACY-HEIR_CHARACTER",
+        "act": 1,
+        "floor": 14,
+        "room": "Elite",
+        "hp": 0,
+        "maxHp": 72,
+        "gold": 224,
+        "crowns": 37,
+        "lastEarned": 37,
+        "wins": 0,
+        "manor": {
+          "vitality": 5,
+          "smith": 2,
+          "armory": 2,
+          "vault": 4,
+          "library": 1,
+          "garden": 2
+        },
+        "deck": [
+          "mage_strike",
+          "mage_strike",
+          "mage_strike",
+          "mage_strike",
+          "mage_strike",
+          "mage_guard",
+          "mage_guard",
+          "mage_guard",
+          "mage_guard",
+          "CARD.ASCENDERS_BANE",
+          "CARD.DRAMATIC_ENTRANCE",
+          "knight_merciless",
+          "CARD.SPOILS_MAP",
+          "mage_mana_shield",
+          "knight_merciless",
+          "knight_long_reach",
+          "mage_mana_shield",
+          "mage_perfect_ward"
+        ],
+        "relics": [
+          "RELIC.SPIRELEGACY-BLOODLINE_RELIC",
+          "RELIC.LEAD_PAPERWEIGHT",
+          "RELIC.PERMAFROST",
+          "RELIC.SPIRELEGACY-R_HEIRLOOM_BROOCH",
+          "RELIC.GORGET"
+        ],
+        "phase": "None",
+        "turn": 4,
+        "combatInProgress": false,
+        "combatEnding": false,
+        "actionRunning": false,
+        "paused": false,
+        "enemies": [
+          {
+            "id": "MONSTER.BYGONE_EFFIGY",
+            "hp": 20
+          }
+        ]
+      },
+      "additionalLogMatches": {
+        "launch.log": {
+          "already been freed": 0,
+          "WASAPI": 0,
+          "not yet finished": 0
+        },
+        "errors.log": {
+          "already been freed": 0,
+          "WASAPI": 3,
+          "not yet finished": 0
+        }
+      }
+    },
+    {
+      "trial": "balance-campaign-balance146-final-mage-beta-F",
+      "cls": "mage",
+      "branch": "beta",
+      "status": "finished",
+      "included": true,
+      "wrapperExitCode": null,
+      "actions": {
+        "event": 6,
+        "map": 13,
+        "combat-turn": 38,
+        "collect-rewards": 18,
+        "card-reward": 7,
+        "reward-proceed": 7,
+        "rest": 2,
+        "proceed": 3,
+        "chest": 1,
+        "treasure-relic": 1,
+        "finished": 1
+      },
+      "potions": [],
+      "rests": [
+        {
+          "floor": 7,
+          "detail": {
+            "choice": "SmithRestSiteOption",
+            "hpBefore": 46,
+            "hpAfter": 46,
+            "upgraded": [
+              "mage_chilling_words"
+            ]
+          }
+        },
+        {
+          "floor": 11,
+          "detail": {
+            "choice": "HealRestSiteOption",
+            "hpBefore": 25,
+            "hpAfter": 46,
+            "upgraded": []
+          }
+        }
+      ],
+      "shops": [],
+      "lastObservedState": {
+        "character": "CHARACTER.SPIRELEGACY-HEIR_CHARACTER",
+        "act": 1,
+        "floor": 14,
+        "room": "Monster",
+        "hp": 0,
+        "maxHp": 72,
+        "gold": 192,
+        "crowns": 34,
+        "lastEarned": 34,
+        "wins": 0,
+        "manor": {
+          "vitality": 5,
+          "smith": 2,
+          "armory": 2,
+          "vault": 4,
+          "library": 1,
+          "garden": 2
+        },
+        "deck": [
+          "mage_strike",
+          "mage_strike",
+          "mage_strike",
+          "mage_strike",
+          "mage_strike",
+          "mage_guard",
+          "mage_guard",
+          "mage_guard",
+          "mage_guard",
+          "flame",
+          "CARD.ASCENDERS_BANE",
+          "mage_venom_rune",
+          "mage_geode_ward",
+          "mage_chilling_words",
+          "knight_last_stand",
+          "knight_long_reach",
+          "mage_rune_detonation"
+        ],
+        "relics": [
+          "RELIC.SPIRELEGACY-BLOODLINE_RELIC",
+          "RELIC.WINGED_BOOTS",
+          "RELIC.WAR_PAINT",
+          "RELIC.BONE_TEA",
+          "RELIC.GORGET",
+          "RELIC.ORNAMENTAL_FAN"
+        ],
+        "phase": "None",
+        "turn": 5,
+        "combatInProgress": false,
+        "combatEnding": false,
+        "actionRunning": false,
+        "paused": false,
+        "enemies": [
+          {
+            "id": "MONSTER.BRUTE_RUBY_RAIDER",
+            "hp": 3
+          }
+        ]
+      },
+      "additionalLogMatches": {
+        "launch.log": {
+          "already been freed": 0,
+          "WASAPI": 0,
+          "not yet finished": 0
+        },
+        "errors.log": {
+          "already been freed": 0,
+          "WASAPI": 3,
+          "not yet finished": 0
+        }
+      }
+    },
+    {
+      "trial": "balance-campaign-balance146-final-ranger-regular-F",
+      "cls": "ranger",
+      "branch": "regular",
+      "status": "finished",
+      "included": true,
+      "wrapperExitCode": 0,
+      "actions": {
+        "event": 10,
+        "map": 16,
+        "combat-turn": 29,
+        "collect-rewards": 19,
+        "card-reward": 7,
+        "reward-proceed": 7,
+        "rest": 3,
+        "proceed": 4,
+        "chest": 1,
+        "treasure-relic": 1,
+        "finished": 1
+      },
+      "potions": [],
+      "rests": [
+        {
+          "floor": 8,
+          "detail": {
+            "choice": "SmithRestSiteOption",
+            "hpBefore": 50,
+            "hpAfter": 50,
+            "upgraded": [
+              "knight_merciless"
+            ]
+          }
+        },
+        {
+          "floor": 13,
+          "detail": {
+            "choice": "HealRestSiteOption",
+            "hpBefore": 4,
+            "hpAfter": 26,
+            "upgraded": []
+          }
+        },
+        {
+          "floor": 16,
+          "detail": {
+            "choice": "HealRestSiteOption",
+            "hpBefore": 21,
+            "hpAfter": 43,
+            "upgraded": []
+          }
+        }
+      ],
+      "shops": [],
+      "lastObservedState": {
+        "character": "CHARACTER.SPIRELEGACY-HEIR_CHARACTER",
+        "act": 1,
+        "floor": 17,
+        "room": "Boss",
+        "hp": 0,
+        "maxHp": 76,
+        "gold": 264,
+        "crowns": 45,
+        "lastEarned": 45,
+        "wins": 0,
+        "manor": {
+          "vitality": 5,
+          "smith": 2,
+          "armory": 2,
+          "vault": 4,
+          "library": 1,
+          "garden": 2
+        },
+        "deck": [
+          "ranger_strike",
+          "ranger_strike",
+          "ranger_strike",
+          "ranger_strike",
+          "ranger_strike",
+          "ranger_guard",
+          "ranger_guard",
+          "ranger_guard",
+          "ranger_guard",
+          "aim",
+          "CARD.ASCENDERS_BANE",
+          "CARD.DRAMATIC_ENTRANCE",
+          "knight_merciless",
+          "CARD.SPOILS_MAP",
+          "ranger_pocket_wind",
+          "knight_merciless",
+          "ranger_snap_shot",
+          "ranger_poisoned_arsenal",
+          "ranger_perch_discipline",
+          "ranger_sort_quiver"
+        ],
+        "relics": [
+          "RELIC.SPIRELEGACY-BLOODLINE_RELIC",
+          "RELIC.LEAD_PAPERWEIGHT",
+          "RELIC.PERMAFROST",
+          "RELIC.SPIRELEGACY-R_HEIRLOOM_BROOCH",
+          "RELIC.GORGET",
+          "RELIC.STRIKE_DUMMY"
+        ],
+        "phase": "None",
+        "turn": 6,
+        "combatInProgress": false,
+        "combatEnding": false,
+        "actionRunning": false,
+        "paused": false,
+        "enemies": [
+          {
+            "id": "MONSTER.VANTOM",
+            "hp": 37
+          }
+        ]
+      },
+      "additionalLogMatches": {
+        "launch.log": {
+          "already been freed": 0,
+          "WASAPI": 0,
+          "not yet finished": 0
+        },
+        "errors.log": {
+          "already been freed": 0,
+          "WASAPI": 3,
+          "not yet finished": 0
+        }
+      }
+    },
+    {
+      "trial": "balance-campaign-balance146-final-ranger-beta-F",
+      "cls": "ranger",
+      "branch": "beta",
+      "status": "finished",
+      "included": true,
+      "wrapperExitCode": 0,
+      "actions": {
+        "event": 4,
+        "map": 7,
+        "combat-turn": 19,
+        "collect-rewards": 10,
+        "card-reward": 4,
+        "reward-proceed": 4,
+        "rest": 1,
+        "proceed": 1,
+        "finished": 1
+      },
+      "potions": [],
+      "rests": [
+        {
+          "floor": 7,
+          "detail": {
+            "choice": "HealRestSiteOption",
+            "hpBefore": 25,
+            "hpAfter": 47,
+            "upgraded": []
+          }
+        }
+      ],
+      "shops": [],
+      "lastObservedState": {
+        "character": "CHARACTER.SPIRELEGACY-HEIR_CHARACTER",
+        "act": 1,
+        "floor": 8,
+        "room": "Elite",
+        "hp": 0,
+        "maxHp": 76,
+        "gold": 136,
+        "crowns": 18,
+        "lastEarned": 18,
+        "wins": 0,
+        "manor": {
+          "vitality": 5,
+          "smith": 2,
+          "armory": 2,
+          "vault": 4,
+          "library": 1,
+          "garden": 2
+        },
+        "deck": [
+          "ranger_strike",
+          "ranger_strike",
+          "ranger_strike",
+          "ranger_strike",
+          "ranger_strike",
+          "ranger_guard",
+          "ranger_guard",
+          "ranger_guard",
+          "ranger_guard",
+          "aim",
+          "CARD.ASCENDERS_BANE",
+          "retreat",
+          "ranger_razor_fletching",
+          "ranger_poison_tip",
+          "ranger_sort_quiver"
+        ],
+        "relics": [
+          "RELIC.SPIRELEGACY-BLOODLINE_RELIC",
+          "RELIC.WINGED_BOOTS"
+        ],
+        "phase": "None",
+        "turn": 5,
+        "combatInProgress": false,
+        "combatEnding": false,
+        "actionRunning": false,
+        "paused": false,
+        "enemies": [
+          {
+            "id": "MONSTER.BYRDONIS",
+            "hp": 18
+          }
+        ]
+      },
+      "additionalLogMatches": {
+        "launch.log": {
+          "already been freed": 0,
+          "WASAPI": 0,
+          "not yet finished": 0
+        },
+        "errors.log": {
+          "already been freed": 0,
+          "WASAPI": 3,
+          "not yet finished": 0
+        }
+      }
+    }
+  ]
+}
