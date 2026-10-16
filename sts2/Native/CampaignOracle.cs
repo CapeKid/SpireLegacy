@@ -68,11 +68,11 @@ public static class CampaignOracle
                 var holders=UiHelper.FindAll<NCardHolder>(cards).Where(h=>h.CardModel!=null).ToArray();
                 if(holders.Length==0)return Result("wait");
                 var deck=player.Deck.Cards.Select(PilotCardInfo.Describe).ToArray();
-                double Score(CardModel c)=>rewardPolicy!="standalone"?PilotRewards.Score(PilotCardInfo.Describe(c),deck,rewardPolicy=="defensive"):BalanceOracle.Score(c,0);
+                double Score(CardModel c)=>rewardPolicy!="standalone"?PilotRewards.Score(PilotCardInfo.Describe(c),deck,rewardPolicy=="defensive",player.Creature.CurrentHp):BalanceOracle.Score(c,0);
                 var offers=holders.Select(h=>new{id=Key(h.CardModel!),upgraded=h.CardModel!.IsUpgraded,score=Score(h.CardModel!)}).ToArray();
                 var interventionKey=$"{forcedRewardFloor}:{forcedReward}";
                 var forced=forcedReward!=null&&run.TotalFloor==forcedRewardFloor&&!appliedInterventions.GetOrCreateValue(run).Contains(interventionKey)?holders.FirstOrDefault(h=>Key(h.CardModel!)==forcedReward):null;
-                var index=forced!=null?Array.IndexOf(holders,forced):rewardPolicy!="standalone"?PilotRewards.Pick(holders.Select(h=>PilotCardInfo.Describe(h.CardModel!)).ToArray(),deck,rewardPolicy=="defensive"):0;
+                var index=forced!=null?Array.IndexOf(holders,forced):rewardPolicy!="standalone"?PilotRewards.Pick(holders.Select(h=>PilotCardInfo.Describe(h.CardModel!)).ToArray(),deck,rewardPolicy=="defensive",player.Creature.CurrentHp):0;
                 var parent=NativeTestBridge.Descendants(Tree.Root).OfType<NRewardButton>().Select(b=>b.Reward).OfType<CardReward>().FirstOrDefault(r=>r.Cards.Any(c=>c==holders[0].CardModel));
                 if(rewardPolicy!="standalone"&&index==null&&parent?.CanSkip==true){
                     // Resolve the same nullable choice consumed by native cancellation. Let CardReward close its own screen.

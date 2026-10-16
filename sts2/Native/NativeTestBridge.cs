@@ -72,6 +72,7 @@ public static class NativeTestBridge
                 case "balance-threat-probe":result=await ThreatPilotOracle.Probe(RunState(),request.GetProperty("card").GetString()!,request.GetProperty("kind").GetString()!);break;
                 case "balance-setup-probe":result=await SetupPilotOracle.Probe(RunState(),request.GetProperty("kind").GetString()!,request.GetProperty("sequence").GetBoolean());break;
                 case "balance-hp-cost-probe":result=await HpCostPilotOracle.Probe(RunState(),request.GetProperty("card").GetString()!,request.GetProperty("upgraded").GetBoolean());break;
+                case "balance-health-planning-probe":result=await HealthPlanningOracle.Probe(RunState(),request.GetProperty("kind").GetString()!);break;
                 case "balance-tactical-probe":await WaitForPlay(RunState().Players.Single());result=await TacticalPilot.Probe(RunState(),request.GetProperty("kind").GetString()!);break;
                 case "balance-campaign-step":
                     var pilotPolicy=request.GetProperty("policy").GetString()!;
