@@ -1,0 +1,86 @@
+[
+  {
+    "trial": "balance-campaign-balance146-pacifist-rerun-beta",
+    "receiptSha256": "3e938fa963a4edad54f1fce893093fa6b6466acda4cecc1c0faa4bde49af2202",
+    "status": "finished",
+    "included": true,
+    "stages": [
+      {
+        "source": "241a73f5ed3ef61c1524da1c85ee787c4a5b2445",
+        "dllSha256": "1c5f005847c97ba3b10b9f69e5117934c6aede8e94347e285cdeb6738f4dbce6",
+        "game": "v0.111.0",
+        "mod": "1.0.30",
+        "baseLib": "v3.4.7"
+      }
+    ],
+    "commands": 132,
+    "hasError": false,
+    "checkpointRecoveries": 0,
+    "batches": [],
+    "targetReturns": null,
+    "returnCap": null,
+    "stopReason": null,
+    "stopAtFullManor": null,
+    "checkpointExtraction": null,
+    "logMatches": {
+      "launch.log": {
+        "ERROR": 0,
+        "InvalidTaskId": 0,
+        "Fatal error": 0,
+        "double free": 0,
+        "particles": 0,
+        "backup": 0
+      },
+      "errors.log": {
+        "ERROR": 1,
+        "InvalidTaskId": 1,
+        "Fatal error": 0,
+        "double free": 0,
+        "particles": 1,
+        "backup": 0
+      }
+    }
+  },
+  {
+    "trial": "balance-campaign-balance146-pacifist-rerun-regular",
+    "receiptSha256": "99079475e057ec94c7412894e02f898b05878946ca89f5f3c6e734ec872f9f2c",
+    "status": "finished",
+    "included": true,
+    "stages": [
+      {
+        "source": "241a73f5ed3ef61c1524da1c85ee787c4a5b2445",
+        "dllSha256": "1c5f005847c97ba3b10b9f69e5117934c6aede8e94347e285cdeb6738f4dbce6",
+        "game": "v0.107.1",
+        "mod": "1.0.30",
+        "baseLib": "v3.4.7"
+      }
+    ],
+    "commands": 248,
+    "hasError": false,
+    "checkpointRecoveries": 0,
+    "batches": [],
+    "targetReturns": null,
+    "returnCap": null,
+    "stopReason": null,
+    "stopAtFullManor": null,
+    "checkpointExtraction": null,
+    "logMatches": {
+      "launch.log": {
+        "ERROR": 0,
+        "InvalidTaskId": 0,
+        "Fatal error": 0,
+        "double free": 0,
+        "particles": 0,
+        "backup": 0
+      },
+      "errors.log": {
+        "ERROR": 0,
+        "InvalidTaskId": 0,
+        "Fatal error": 0,
+        "double free": 0,
+        "particles": 3,
+        "backup": 0
+      }
+    }
+  }
+]

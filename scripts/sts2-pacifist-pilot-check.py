@@ -35,7 +35,7 @@ try:
             assert result['pacifist']==(mode!='normal'),result
             if mode!='normal':
                 assert result['poisonApplied']==(3 if mode=='upgraded' else 2) and result['damage']==0,result
-                assert result['fuelExhausted'] and result['guarded'] and result['choseStarter'],result
+                assert result['fuelExhausted'] and result['guarded'] and result['multiGuarded'] and result['choseStarter'],result
             else:assert result['poisonApplied']==0 and result['damage']>0 and result['blockedUsable'],result
             report['cases'].append(dict(cls=cls,mode=mode,result=result))
             save()

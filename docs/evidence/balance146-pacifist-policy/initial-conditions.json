@@ -1,0 +1,40 @@
+[
+  {
+    "trial": "balance-campaign-balance146-pacifist-rerun-beta",
+    "included": true,
+    "source": "241a73f5ed3ef61c1524da1c85ee787c4a5b2445",
+    "dllSha256": "1c5f005847c97ba3b10b9f69e5117934c6aede8e94347e285cdeb6738f4dbce6",
+    "game": "v0.111.0",
+    "cls": "ranger",
+    "traits": [
+      "antique",
+      "cantattack"
+    ],
+    "heirVerified": true,
+    "hp": 60,
+    "maxHp": 76,
+    "relics": [
+      "RELIC.SPIRELEGACY-BLOODLINE_RELIC",
+      "RELIC.GORGET"
+    ]
+  },
+  {
+    "trial": "balance-campaign-balance146-pacifist-rerun-regular",
+    "included": true,
+    "source": "241a73f5ed3ef61c1524da1c85ee787c4a5b2445",
+    "dllSha256": "1c5f005847c97ba3b10b9f69e5117934c6aede8e94347e285cdeb6738f4dbce6",
+    "game": "v0.107.1",
+    "cls": "ranger",
+    "traits": [
+      "antique",
+      "cantattack"
+    ],
+    "heirVerified": true,
+    "hp": 60,
+    "maxHp": 76,
+    "relics": [
+      "RELIC.SPIRELEGACY-BLOODLINE_RELIC",
+      "RELIC.MEAL_TICKET"
+    ]
+  }
+]

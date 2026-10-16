@@ -1,0 +1,844 @@
+[
+  {
+    "trial": "pacifist-pilot-balance146-pacifist-final-beta",
+    "receiptSha256": "23d7f001a9b521cb9f58f5f9b77c58118abd36a46921c5764706a451733d0c61",
+    "synthetic": true,
+    "status": "passed",
+    "hasFailedCommand": false,
+    "source": "b1c863742b22e296d065fd50d9eef493765eb60f",
+    "dllSha256": "b16d35b44cc8288978f95708462e11373d417214ae310b624da56e096202c14e",
+    "game": "v0.111.0",
+    "mod": "1.0.30",
+    "mods": [
+      {
+        "id": "BaseLib",
+        "version": "v3.4.7"
+      },
+      {
+        "id": "SpireLegacy",
+        "version": "1.0.30"
+      }
+    ],
+    "cases": [
+      {
+        "cls": "knight",
+        "mode": "normal",
+        "result": {
+          "key": "knight_strike",
+          "upgraded": false,
+          "pacifist": false,
+          "poisonApplied": 0,
+          "Poison": 0,
+          "blockedUsable": true,
+          "reward": 0,
+          "fuelExhausted": false,
+          "guarded": false,
+          "multiGuarded": false,
+          "choseStarter": false,
+          "damage": 5,
+          "energySpent": 1
+        }
+      },
+      {
+        "cls": "knight",
+        "mode": "mercy",
+        "result": {
+          "key": "knight_strike",
+          "upgraded": false,
+          "pacifist": true,
+          "poisonApplied": 2,
+          "Poison": 2,
+          "blockedUsable": false,
+          "reward": 1,
+          "fuelExhausted": true,
+          "guarded": true,
+          "multiGuarded": true,
+          "choseStarter": true,
+          "damage": 0,
+          "energySpent": 1
+        }
+      },
+      {
+        "cls": "knight",
+        "mode": "upgraded",
+        "result": {
+          "key": "knight_strike",
+          "upgraded": true,
+          "pacifist": true,
+          "poisonApplied": 3,
+          "Poison": 3,
+          "blockedUsable": false,
+          "reward": 1,
+          "fuelExhausted": true,
+          "guarded": true,
+          "multiGuarded": true,
+          "choseStarter": true,
+          "damage": 0,
+          "energySpent": 1
+        }
+      },
+      {
+        "cls": "mage",
+        "mode": "normal",
+        "result": {
+          "key": "mage_strike",
+          "upgraded": false,
+          "pacifist": false,
+          "poisonApplied": 0,
+          "Poison": 0,
+          "blockedUsable": true,
+          "reward": 0,
+          "fuelExhausted": false,
+          "guarded": false,
+          "multiGuarded": false,
+          "choseStarter": false,
+          "damage": 5,
+          "energySpent": 1
+        }
+      },
+      {
+        "cls": "mage",
+        "mode": "mercy",
+        "result": {
+          "key": "mage_strike",
+          "upgraded": false,
+          "pacifist": true,
+          "poisonApplied": 2,
+          "Poison": 2,
+          "blockedUsable": false,
+          "reward": 1,
+          "fuelExhausted": true,
+          "guarded": true,
+          "multiGuarded": true,
+          "choseStarter": true,
+          "damage": 0,
+          "energySpent": 1
+        }
+      },
+      {
+        "cls": "mage",
+        "mode": "upgraded",
+        "result": {
+          "key": "mage_strike",
+          "upgraded": true,
+          "pacifist": true,
+          "poisonApplied": 3,
+          "Poison": 3,
+          "blockedUsable": false,
+          "reward": 1,
+          "fuelExhausted": true,
+          "guarded": true,
+          "multiGuarded": true,
+          "choseStarter": true,
+          "damage": 0,
+          "energySpent": 1
+        }
+      },
+      {
+        "cls": "ranger",
+        "mode": "normal",
+        "result": {
+          "key": "ranger_strike",
+          "upgraded": false,
+          "pacifist": false,
+          "poisonApplied": 0,
+          "Poison": 0,
+          "blockedUsable": true,
+          "reward": 0,
+          "fuelExhausted": false,
+          "guarded": false,
+          "multiGuarded": false,
+          "choseStarter": false,
+          "damage": 5,
+          "energySpent": 1
+        }
+      },
+      {
+        "cls": "ranger",
+        "mode": "mercy",
+        "result": {
+          "key": "ranger_strike",
+          "upgraded": false,
+          "pacifist": true,
+          "poisonApplied": 2,
+          "Poison": 2,
+          "blockedUsable": false,
+          "reward": 1,
+          "fuelExhausted": true,
+          "guarded": true,
+          "multiGuarded": true,
+          "choseStarter": true,
+          "damage": 0,
+          "energySpent": 1
+        }
+      },
+      {
+        "cls": "ranger",
+        "mode": "upgraded",
+        "result": {
+          "key": "ranger_strike",
+          "upgraded": true,
+          "pacifist": true,
+          "poisonApplied": 3,
+          "Poison": 3,
+          "blockedUsable": false,
+          "reward": 1,
+          "fuelExhausted": true,
+          "guarded": true,
+          "multiGuarded": true,
+          "choseStarter": true,
+          "damage": 0,
+          "energySpent": 1
+        }
+      }
+    ]
+  },
+  {
+    "trial": "pacifist-pilot-balance146-pacifist-final-regular",
+    "receiptSha256": "907abc482428492da6f7a51807d76a04abd39249cb945be13053fde85882d80e",
+    "synthetic": true,
+    "status": "passed",
+    "hasFailedCommand": false,
+    "source": "b1c863742b22e296d065fd50d9eef493765eb60f",
+    "dllSha256": "b16d35b44cc8288978f95708462e11373d417214ae310b624da56e096202c14e",
+    "game": "v0.107.1",
+    "mod": "1.0.30",
+    "mods": [
+      {
+        "id": "BaseLib",
+        "version": "v3.4.7"
+      },
+      {
+        "id": "SpireLegacy",
+        "version": "1.0.30"
+      }
+    ],
+    "cases": [
+      {
+        "cls": "knight",
+        "mode": "normal",
+        "result": {
+          "key": "knight_strike",
+          "upgraded": false,
+          "pacifist": false,
+          "poisonApplied": 0,
+          "Poison": 0,
+          "blockedUsable": true,
+          "reward": 0,
+          "fuelExhausted": false,
+          "guarded": false,
+          "multiGuarded": false,
+          "choseStarter": false,
+          "damage": 5,
+          "energySpent": 1
+        }
+      },
+      {
+        "cls": "knight",
+        "mode": "mercy",
+        "result": {
+          "key": "knight_strike",
+          "upgraded": false,
+          "pacifist": true,
+          "poisonApplied": 2,
+          "Poison": 2,
+          "blockedUsable": false,
+          "reward": 1,
+          "fuelExhausted": true,
+          "guarded": true,
+          "multiGuarded": true,
+          "choseStarter": true,
+          "damage": 0,
+          "energySpent": 1
+        }
+      },
+      {
+        "cls": "knight",
+        "mode": "upgraded",
+        "result": {
+          "key": "knight_strike",
+          "upgraded": true,
+          "pacifist": true,
+          "poisonApplied": 3,
+          "Poison": 3,
+          "blockedUsable": false,
+          "reward": 1,
+          "fuelExhausted": true,
+          "guarded": true,
+          "multiGuarded": true,
+          "choseStarter": true,
+          "damage": 0,
+          "energySpent": 1
+        }
+      },
+      {
+        "cls": "mage",
+        "mode": "normal",
+        "result": {
+          "key": "mage_strike",
+          "upgraded": false,
+          "pacifist": false,
+          "poisonApplied": 0,
+          "Poison": 0,
+          "blockedUsable": true,
+          "reward": 0,
+          "fuelExhausted": false,
+          "guarded": false,
+          "multiGuarded": false,
+          "choseStarter": false,
+          "damage": 5,
+          "energySpent": 1
+        }
+      },
+      {
+        "cls": "mage",
+        "mode": "mercy",
+        "result": {
+          "key": "mage_strike",
+          "upgraded": false,
+          "pacifist": true,
+          "poisonApplied": 2,
+          "Poison": 2,
+          "blockedUsable": false,
+          "reward": 1,
+          "fuelExhausted": true,
+          "guarded": true,
+          "multiGuarded": true,
+          "choseStarter": true,
+          "damage": 0,
+          "energySpent": 1
+        }
+      },
+      {
+        "cls": "mage",
+        "mode": "upgraded",
+        "result": {
+          "key": "mage_strike",
+          "upgraded": true,
+          "pacifist": true,
+          "poisonApplied": 3,
+          "Poison": 3,
+          "blockedUsable": false,
+          "reward": 1,
+          "fuelExhausted": true,
+          "guarded": true,
+          "multiGuarded": true,
+          "choseStarter": true,
+          "damage": 0,
+          "energySpent": 1
+        }
+      },
+      {
+        "cls": "ranger",
+        "mode": "normal",
+        "result": {
+          "key": "ranger_strike",
+          "upgraded": false,
+          "pacifist": false,
+          "poisonApplied": 0,
+          "Poison": 0,
+          "blockedUsable": true,
+          "reward": 0,
+          "fuelExhausted": false,
+          "guarded": false,
+          "multiGuarded": false,
+          "choseStarter": false,
+          "damage": 5,
+          "energySpent": 1
+        }
+      },
+      {
+        "cls": "ranger",
+        "mode": "mercy",
+        "result": {
+          "key": "ranger_strike",
+          "upgraded": false,
+          "pacifist": true,
+          "poisonApplied": 2,
+          "Poison": 2,
+          "blockedUsable": false,
+          "reward": 1,
+          "fuelExhausted": true,
+          "guarded": true,
+          "multiGuarded": true,
+          "choseStarter": true,
+          "damage": 0,
+          "energySpent": 1
+        }
+      },
+      {
+        "cls": "ranger",
+        "mode": "upgraded",
+        "result": {
+          "key": "ranger_strike",
+          "upgraded": true,
+          "pacifist": true,
+          "poisonApplied": 3,
+          "Poison": 3,
+          "blockedUsable": false,
+          "reward": 1,
+          "fuelExhausted": true,
+          "guarded": true,
+          "multiGuarded": true,
+          "choseStarter": true,
+          "damage": 0,
+          "energySpent": 1
+        }
+      }
+    ]
+  },
+  {
+    "trial": "pacifist-pilot-balance146-pacifist-fixed-beta",
+    "receiptSha256": "73946224795216b1800a9bc379f6f93f1755472297885840daa626df63a731a6",
+    "synthetic": true,
+    "status": "passed",
+    "hasFailedCommand": false,
+    "source": "241a73f5ed3ef61c1524da1c85ee787c4a5b2445",
+    "dllSha256": "1c5f005847c97ba3b10b9f69e5117934c6aede8e94347e285cdeb6738f4dbce6",
+    "game": "v0.111.0",
+    "mod": "1.0.30",
+    "mods": [
+      {
+        "id": "BaseLib",
+        "version": "v3.4.7"
+      },
+      {
+        "id": "SpireLegacy",
+        "version": "1.0.30"
+      }
+    ],
+    "cases": [
+      {
+        "cls": "knight",
+        "mode": "normal",
+        "result": {
+          "key": "knight_strike",
+          "upgraded": false,
+          "pacifist": false,
+          "poisonApplied": 0,
+          "Poison": 0,
+          "blockedUsable": true,
+          "reward": 0,
+          "fuelExhausted": false,
+          "guarded": false,
+          "choseStarter": false,
+          "damage": 5,
+          "energySpent": 1
+        }
+      },
+      {
+        "cls": "knight",
+        "mode": "mercy",
+        "result": {
+          "key": "knight_strike",
+          "upgraded": false,
+          "pacifist": true,
+          "poisonApplied": 2,
+          "Poison": 2,
+          "blockedUsable": false,
+          "reward": 1,
+          "fuelExhausted": true,
+          "guarded": true,
+          "choseStarter": true,
+          "damage": 0,
+          "energySpent": 1
+        }
+      },
+      {
+        "cls": "knight",
+        "mode": "upgraded",
+        "result": {
+          "key": "knight_strike",
+          "upgraded": true,
+          "pacifist": true,
+          "poisonApplied": 3,
+          "Poison": 3,
+          "blockedUsable": false,
+          "reward": 1,
+          "fuelExhausted": true,
+          "guarded": true,
+          "choseStarter": true,
+          "damage": 0,
+          "energySpent": 1
+        }
+      },
+      {
+        "cls": "mage",
+        "mode": "normal",
+        "result": {
+          "key": "mage_strike",
+          "upgraded": false,
+          "pacifist": false,
+          "poisonApplied": 0,
+          "Poison": 0,
+          "blockedUsable": true,
+          "reward": 0,
+          "fuelExhausted": false,
+          "guarded": false,
+          "choseStarter": false,
+          "damage": 5,
+          "energySpent": 1
+        }
+      },
+      {
+        "cls": "mage",
+        "mode": "mercy",
+        "result": {
+          "key": "mage_strike",
+          "upgraded": false,
+          "pacifist": true,
+          "poisonApplied": 2,
+          "Poison": 2,
+          "blockedUsable": false,
+          "reward": 1,
+          "fuelExhausted": true,
+          "guarded": true,
+          "choseStarter": true,
+          "damage": 0,
+          "energySpent": 1
+        }
+      },
+      {
+        "cls": "mage",
+        "mode": "upgraded",
+        "result": {
+          "key": "mage_strike",
+          "upgraded": true,
+          "pacifist": true,
+          "poisonApplied": 3,
+          "Poison": 3,
+          "blockedUsable": false,
+          "reward": 1,
+          "fuelExhausted": true,
+          "guarded": true,
+          "choseStarter": true,
+          "damage": 0,
+          "energySpent": 1
+        }
+      },
+      {
+        "cls": "ranger",
+        "mode": "normal",
+        "result": {
+          "key": "ranger_strike",
+          "upgraded": false,
+          "pacifist": false,
+          "poisonApplied": 0,
+          "Poison": 0,
+          "blockedUsable": true,
+          "reward": 0,
+          "fuelExhausted": false,
+          "guarded": false,
+          "choseStarter": false,
+          "damage": 5,
+          "energySpent": 1
+        }
+      },
+      {
+        "cls": "ranger",
+        "mode": "mercy",
+        "result": {
+          "key": "ranger_strike",
+          "upgraded": false,
+          "pacifist": true,
+          "poisonApplied": 2,
+          "Poison": 2,
+          "blockedUsable": false,
+          "reward": 1,
+          "fuelExhausted": true,
+          "guarded": true,
+          "choseStarter": true,
+          "damage": 0,
+          "energySpent": 1
+        }
+      },
+      {
+        "cls": "ranger",
+        "mode": "upgraded",
+        "result": {
+          "key": "ranger_strike",
+          "upgraded": true,
+          "pacifist": true,
+          "poisonApplied": 3,
+          "Poison": 3,
+          "blockedUsable": false,
+          "reward": 1,
+          "fuelExhausted": true,
+          "guarded": true,
+          "choseStarter": true,
+          "damage": 0,
+          "energySpent": 1
+        }
+      }
+    ]
+  },
+  {
+    "trial": "pacifist-pilot-balance146-pacifist-fixed-regular",
+    "receiptSha256": "c32bb767cd8f50ec9e72957860588af3f322dd556e6d35cf3e687e4e67153aae",
+    "synthetic": true,
+    "status": "passed",
+    "hasFailedCommand": false,
+    "source": "241a73f5ed3ef61c1524da1c85ee787c4a5b2445",
+    "dllSha256": "1c5f005847c97ba3b10b9f69e5117934c6aede8e94347e285cdeb6738f4dbce6",
+    "game": "v0.107.1",
+    "mod": "1.0.30",
+    "mods": [
+      {
+        "id": "BaseLib",
+        "version": "v3.4.7"
+      },
+      {
+        "id": "SpireLegacy",
+        "version": "1.0.30"
+      }
+    ],
+    "cases": [
+      {
+        "cls": "knight",
+        "mode": "normal",
+        "result": {
+          "key": "knight_strike",
+          "upgraded": false,
+          "pacifist": false,
+          "poisonApplied": 0,
+          "Poison": 0,
+          "blockedUsable": true,
+          "reward": 0,
+          "fuelExhausted": false,
+          "guarded": false,
+          "choseStarter": false,
+          "damage": 5,
+          "energySpent": 1
+        }
+      },
+      {
+        "cls": "knight",
+        "mode": "mercy",
+        "result": {
+          "key": "knight_strike",
+          "upgraded": false,
+          "pacifist": true,
+          "poisonApplied": 2,
+          "Poison": 2,
+          "blockedUsable": false,
+          "reward": 1,
+          "fuelExhausted": true,
+          "guarded": true,
+          "choseStarter": true,
+          "damage": 0,
+          "energySpent": 1
+        }
+      },
+      {
+        "cls": "knight",
+        "mode": "upgraded",
+        "result": {
+          "key": "knight_strike",
+          "upgraded": true,
+          "pacifist": true,
+          "poisonApplied": 3,
+          "Poison": 3,
+          "blockedUsable": false,
+          "reward": 1,
+          "fuelExhausted": true,
+          "guarded": true,
+          "choseStarter": true,
+          "damage": 0,
+          "energySpent": 1
+        }
+      },
+      {
+        "cls": "mage",
+        "mode": "normal",
+        "result": {
+          "key": "mage_strike",
+          "upgraded": false,
+          "pacifist": false,
+          "poisonApplied": 0,
+          "Poison": 0,
+          "blockedUsable": true,
+          "reward": 0,
+          "fuelExhausted": false,
+          "guarded": false,
+          "choseStarter": false,
+          "damage": 5,
+          "energySpent": 1
+        }
+      },
+      {
+        "cls": "mage",
+        "mode": "mercy",
+        "result": {
+          "key": "mage_strike",
+          "upgraded": false,
+          "pacifist": true,
+          "poisonApplied": 2,
+          "Poison": 2,
+          "blockedUsable": false,
+          "reward": 1,
+          "fuelExhausted": true,
+          "guarded": true,
+          "choseStarter": true,
+          "damage": 0,
+          "energySpent": 1
+        }
+      },
+      {
+        "cls": "mage",
+        "mode": "upgraded",
+        "result": {
+          "key": "mage_strike",
+          "upgraded": true,
+          "pacifist": true,
+          "poisonApplied": 3,
+          "Poison": 3,
+          "blockedUsable": false,
+          "reward": 1,
+          "fuelExhausted": true,
+          "guarded": true,
+          "choseStarter": true,
+          "damage": 0,
+          "energySpent": 1
+        }
+      },
+      {
+        "cls": "ranger",
+        "mode": "normal",
+        "result": {
+          "key": "ranger_strike",
+          "upgraded": false,
+          "pacifist": false,
+          "poisonApplied": 0,
+          "Poison": 0,
+          "blockedUsable": true,
+          "reward": 0,
+          "fuelExhausted": false,
+          "guarded": false,
+          "choseStarter": false,
+          "damage": 5,
+          "energySpent": 1
+        }
+      },
+      {
+        "cls": "ranger",
+        "mode": "mercy",
+        "result": {
+          "key": "ranger_strike",
+          "upgraded": false,
+          "pacifist": true,
+          "poisonApplied": 2,
+          "Poison": 2,
+          "blockedUsable": false,
+          "reward": 1,
+          "fuelExhausted": true,
+          "guarded": true,
+          "choseStarter": true,
+          "damage": 0,
+          "energySpent": 1
+        }
+      },
+      {
+        "cls": "ranger",
+        "mode": "upgraded",
+        "result": {
+          "key": "ranger_strike",
+          "upgraded": true,
+          "pacifist": true,
+          "poisonApplied": 3,
+          "Poison": 3,
+          "blockedUsable": false,
+          "reward": 1,
+          "fuelExhausted": true,
+          "guarded": true,
+          "choseStarter": true,
+          "damage": 0,
+          "energySpent": 1
+        }
+      }
+    ]
+  },
+  {
+    "trial": "pacifist-pilot-balance146-pacifist-multi-beta",
+    "receiptSha256": "dd06b37914a264acb42c5fede0937c58bc03739b52fd718f47d59cab6bd30680",
+    "synthetic": true,
+    "status": "error",
+    "hasFailedCommand": true,
+    "source": "ec176f35c36597dc479295a7c25e8b51c0e239b2",
+    "dllSha256": "a1804ba77571f8375488fe73721295fe31db2d638b26524f912aa633bdeab53b",
+    "game": "v0.111.0",
+    "mod": "1.0.30",
+    "mods": [
+      {
+        "id": "BaseLib",
+        "version": "v3.4.7"
+      },
+      {
+        "id": "SpireLegacy",
+        "version": "1.0.30"
+      }
+    ],
+    "cases": [
+      {
+        "cls": "knight",
+        "mode": "normal",
+        "result": {
+          "key": "knight_strike",
+          "upgraded": false,
+          "pacifist": false,
+          "poisonApplied": 0,
+          "Poison": 0,
+          "blockedUsable": true,
+          "reward": 0,
+          "fuelExhausted": false,
+          "guarded": false,
+          "multiGuarded": false,
+          "choseStarter": false,
+          "damage": 5,
+          "energySpent": 1
+        }
+      }
+    ]
+  },
+  {
+    "trial": "pacifist-pilot-balance146-pacifist-multi-regular",
+    "receiptSha256": "61ff8e11c763158def5625c45724ddb1b88eb027c8237eaf9aba9a49785a1b6e",
+    "synthetic": true,
+    "status": "error",
+    "hasFailedCommand": true,
+    "source": "ec176f35c36597dc479295a7c25e8b51c0e239b2",
+    "dllSha256": "a1804ba77571f8375488fe73721295fe31db2d638b26524f912aa633bdeab53b",
+    "game": "v0.107.1",
+    "mod": "1.0.30",
+    "mods": [
+      {
+        "id": "BaseLib",
+        "version": "v3.4.7"
+      },
+      {
+        "id": "SpireLegacy",
+        "version": "1.0.30"
+      }
+    ],
+    "cases": [
+      {
+        "cls": "knight",
+        "mode": "normal",
+        "result": {
+          "key": "knight_strike",
+          "upgraded": false,
+          "pacifist": false,
+          "poisonApplied": 0,
+          "Poison": 0,
+          "blockedUsable": true,
+          "reward": 0,
+          "fuelExhausted": false,
+          "guarded": false,
+          "multiGuarded": false,
+          "choseStarter": false,
+          "damage": 5,
+          "energySpent": 1
+        }
+      }
+    ]
+  }
+]
