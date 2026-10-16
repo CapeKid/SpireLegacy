@@ -164,7 +164,7 @@ public static class NativeTestBridge
                         iconImage.SavePng(Path.Combine(iconFolder,icon.Text("id")+".png"));
                         iconChecks.Add(new{id=icon.Text("id"),path=icon.Text("path")});
                     }
-                    result=new{count=iconChecks.Count,icons=iconChecks,readerPresent=false,cachePresent=false,rl2Override=System.Environment.GetEnvironmentVariable("HEIR_RL2_DIR"),Runtime.Profile.family,Runtime.Profile.crowns};break;
+                    result=new{count=iconChecks.Count,icons=iconChecks,readerPresent=false,cachePresent=false,Runtime.Profile.family,Runtime.Profile.crowns};break;
                 case "inspect":
                     result = new { userData = OS.GetUserDataDir(), character = ModelDb.Character<HeirCharacter>().Id.ToString(), cards = Design.Rows("cards").Select(r => NativeCards.Get(r.Text("id")).Id.ToString()).ToArray(), pools = new[] { ModelDb.CardPool<KnightCardPool>().AllCards.Count(), ModelDb.CardPool<MageCardPool>().AllCards.Count(), ModelDb.CardPool<RangerCardPool>().AllCards.Count() }, labels = Descendants(Tree.Root).OfType<Label>().Where(n=>n.IsVisibleInTree()).Select(n=>n.Text).ToArray() };
                     break;

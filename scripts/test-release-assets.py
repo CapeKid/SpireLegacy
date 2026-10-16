@@ -27,8 +27,15 @@ class InventoryChecks(unittest.TestCase):
         self.row['path']='heir/ExtractedGameSprite.png'
         with self.assertRaisesRegex(ValueError,'extracted'):inventory(self.root,self.tables)
     def test_style_references_disclosed(self):
-        self.row['provenance']='Generated with Rogue Legacy style reference'
+        self.row['provenance']='Generated with private game-style reference'
         self.assertTrue(inventory(self.root,self.tables)['assets'][0]['gameStyleReferenceDeclared'])
+    def test_current_direction_is_not_claimed_as_original_prompt(self):
+        self.row.update(artDirection='Current fantasy illustration direction',gameStyleReferenceDeclared=True)
+        record=inventory(self.root,self.tables)['assets'][0]
+        self.assertEqual(record['recordPurpose'],'current art direction')
+        self.assertEqual(record['recordSha256'],hashlib.sha256(self.row['artDirection'].encode()).hexdigest())
+        self.assertTrue(record['gameStyleReferenceDeclared'])
+        self.assertFalse(any('originalGeneration' in key for key in record))
     def test_nested_death_and_outline_covered(self):
         for key in ('death','outline'):
             p=self.path.with_name(key+'.svg');p.write_bytes(key.encode())

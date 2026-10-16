@@ -52,8 +52,8 @@
     "id": "source",
     "hook": "launch",
     "amount": 1,
-    "enabled": true,
-    "summary": "Require Rogue Legacy 2; read genuine class and trait sprites into a local cache at launch."
+    "enabled": false,
+    "summary": "Retired content-import compatibility entry. Active releases load original packaged artwork directly."
   },
   {
     "id": "persistence",
@@ -72,7 +72,7 @@
   {
     "hook": "card_constructor",
     "enabled": true,
-    "summary": "Each card loads its own effect-based original illustration from the card_art sheet and packaged resources; retain Rogue Legacy 2 class/trait content on the character, HUD and heir offers.",
+    "summary": "Each card loads its own effect-based original illustration from the card_art sheet and packaged resources; character, HUD and heir offers use original mod artwork.",
     "id": "card_illustrations",
     "amount": 37
   },

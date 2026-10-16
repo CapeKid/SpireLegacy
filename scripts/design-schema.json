@@ -59,7 +59,7 @@
   },
   "card_art": {
     "types": ["dict"],
-    "required": ["cardId", "generator", "height", "id", "name", "path", "prompt", "sha256", "width"],
+    "required": ["cardId", "generator", "height", "id", "name", "path", "artDirection", "sha256", "width", "gameStyleReferenceDeclared"],
     "fields": {
       "cardId": {"types": ["str"]},
       "generator": {"types": ["str"]},
@@ -67,7 +67,8 @@
       "id": {"types": ["str"], "pattern": "[A-Za-z][A-Za-z0-9_-]*"},
       "name": {"types": ["str"]},
       "path": {"types": ["str"]},
-      "prompt": {"types": ["str"]},
+      "artDirection": {"types": ["str"]},
+      "gameStyleReferenceDeclared": {"types": ["bool"]},
       "sha256": {"types": ["str"], "pattern": "[a-f0-9]{64}"},
       "width": {"types": ["int"], "min": 1, "max": 10000}
     }
@@ -431,13 +432,14 @@
   },
   "ui_art": {
     "types": ["dict"],
-    "required": ["generator", "height", "id", "path", "prompt", "sha256", "transparent", "width", "exportMode"],
+    "required": ["generator", "height", "id", "path", "artDirection", "sha256", "transparent", "width", "exportMode", "gameStyleReferenceDeclared"],
     "fields": {
       "generator": {"types": ["str"]},
       "height": {"types": ["int"], "min": 1, "max": 10000},
       "id": {"types": ["str"], "pattern": "[A-Za-z][A-Za-z0-9_-]*"},
       "path": {"types": ["str"]},
-      "prompt": {"types": ["str"]},
+      "artDirection": {"types": ["str"]},
+      "gameStyleReferenceDeclared": {"types": ["bool"]},
       "sha256": {"types": ["str"], "pattern": "[a-f0-9]{64}"},
       "transparent": {"types": ["bool"]},
       "width": {"types": ["int"], "min": 1, "max": 10000},

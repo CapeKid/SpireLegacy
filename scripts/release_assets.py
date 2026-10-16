@@ -24,15 +24,16 @@ def inventory(root,tables):
                     if PurePosixPath(path).name.casefold() in retired:raise ValueError('Retired extracted asset in native release: '+path)
                     digest=hashlib.sha256((root/'src/main/resources'/path).read_bytes()).hexdigest()
                     if digest!=part[hashfield]:raise ValueError('Asset hash mismatch: '+path)
-                    record=row.get('prompt') or row.get('provenance') or (root/guide).read_text(encoding='utf-8')
+                    record=row.get('artDirection') or row.get('provenance') or (root/guide).read_text(encoding='utf-8')
                     rows.append(dict(path=path,sha256=digest,table=table,subject=subject,record='sheets/'+table+'.json',
                         author=row.get('author','CapeKid (repository declaration)'),license=row.get('license','MIT (repository LICENSE)'),
                         method=row.get('generator') or row.get('provenance') or 'Generation and atlas assembly documented in '+guide,
                         repositoryGuide=guide,recordSha256=hashlib.sha256(record.encode('utf-8')).hexdigest(),
-                        gameStyleReferenceDeclared=any(name in record.lower() for name in ('rogue legacy','game style','private game'))))
+                        recordPurpose='current art direction' if 'artDirection' in row else 'authoring provenance',
+                        gameStyleReferenceDeclared=row.get('gameStyleReferenceDeclared',any(name in record.lower() for name in ('game style','game-style','private game')))))
     if len(rows)!=len({r['path'].casefold() for r in rows}):raise ValueError('Duplicate provenance asset path')
     return dict(scope='Declared native mod assets only; excludes historical source and private reference files.',
         assetCount=len(rows),assets=rows,aiArtworkDisclosed=True,
         limits=['Hashes verify the declared shipped bytes, not independent authorship or ownership.',
-                'Generation records include game style/framing references; reference files are not package inputs.',
+                'Some illustrations used private game style/framing references; reference files are not package inputs.',
                 'Technical provenance and package checks do not establish legal clearance.'])

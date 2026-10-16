@@ -4,7 +4,7 @@ Public-release preparation for #162, based on merged main through PR #175. Requi
 
 - Removes the crown-balance editor from the Manor, including its save handler. Family naming, controller keyboard, existing crowns and confirmed upgrade purchases are preserved. Developers retain the opt-in isolated test fixtures.
 - Disables the historical playtest-crown system flag and rejects release packages that re-enable it.
-- Ships a hash-pinned `asset-provenance.json` for the declared mod artwork and sounds. Packages contain no RL2 reader, extracted content, game assemblies, private references or save files.
+- Ships a hash-pinned `asset-provenance.json` for the declared mod artwork and sounds. Packages contain no legacy content reader, extracted content, game assemblies, private references or save files.
 - Restores the portrait manifest's generation record from the existing authoring guide. Original AI-generated illustration/style-reference records and MIT notices remain disclosed; technical checks do not constitute legal clearance.
 - Includes the merged balance-pilot corrections and final bounded #146 assessment. Experienced human playtesting is separately tracked in #176/#177; no gameplay values or manor prices change in this preparation.
 

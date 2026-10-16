@@ -21,7 +21,7 @@ Base/upgraded values exclude traits and combat powers. The no-manor starter base
 
 Standalone: `SpireLegacy-StS2-1.0.28.zip`. Workshop uploader workspace: `SpireLegacy-StS2-1.0.28-workshop.zip`. Melty bundle, including BaseLib: `SpireLegacy-StS2-1.0.28-melty.zip`.
 
-The Workshop item remains private and keeps BaseLib as a required item. Update existing StS2 item **3816525393**, preserving the local uploader's `mod_id.txt`; that marker is intentionally excluded from the portable archive. Preparing the package does not upload it. The Melty bundle's launcher mapping targets Windows; a new Melty-installed launch is not verified by archive inspection. No Rogue Legacy 2 installation, extraction runtime or game assets are required or distributed.
+The Workshop item remains private and keeps BaseLib as a required item. Update existing StS2 item **3816525393**, preserving the local uploader's `mod_id.txt`; that marker is intentionally excluded from the portable archive. Preparing the package does not upload it. The Melty bundle's launcher mapping targets Windows; a new Melty-installed launch is not verified by archive inspection. No external game installation, extraction runtime or third-party game assets are required or distributed.
 
 See [installation and Deck controls](https://github.com/CapeKid/SpireLegacy/blob/main/docs/sts2-port.md), [targeted finisher evidence](https://github.com/CapeKid/SpireLegacy/blob/main/docs/balance-targeted-finishers.md), and [defensive pilot comparisons](https://github.com/CapeKid/SpireLegacy/blob/main/docs/balance-defensive-policy.md). Native branch regressions cover the release DLL; physical Steam Deck testing and human full-campaign balance feedback remain separate checks.
 

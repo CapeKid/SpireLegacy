@@ -96,7 +96,6 @@
   },
   "archiveInspection": {
     "version": "1.0.30",
-    "requiresRL2": false,
     "packages": [
       {
         "kind": "standalone",

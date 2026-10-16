@@ -23,7 +23,7 @@ for path in sorted(files):
         category='retired launcher; early refusal'
     elif path.startswith('scripts/') and not name.startswith('sts2-'):
         if name in RETIRED_WRITERS:category='retired writer/tool; execution and import refusal'
-        elif name in RETIRED_CLI:category='retired CLI; synthetic helper imports retained'
+        elif name in RETIRED_CLI:category='retired CLI; execution and import refusal'
         elif name in RETIRED_POWERSHELL:category='retired PowerShell; early refusal'
         elif name.endswith('.java') or name in {'LinuxLauncherChecks.py','ReaderDiscoveryChecks.py'}:
             category='historical disposable fixture; no active release invocation'
@@ -36,7 +36,7 @@ for path in sorted(files):
     rows.append(dict(path=path,classification=category,sha256LF=hashlib.sha256((ROOT/path).read_bytes().replace(b'\r\n',b'\n')).hexdigest()))
 assert sum(r['path'].startswith('src/main/java/') for r in rows)==389
 assert sum(r['path'].startswith('src/main/java/heir/cards/') for r in rows)==360
-output=ROOT/'docs/historical-sts1-coverage.csv'
+output=ROOT/'private/historical-sts1-coverage.csv'
 with output.open('w',encoding='utf-8',newline='') as stream:
     writer=csv.DictWriter(stream,fieldnames=['path','classification','sha256LF']);writer.writeheader();writer.writerows(rows)
 print(f'{len(rows)} source/config/tool records classified; 389 Java files, including 360 card identities')

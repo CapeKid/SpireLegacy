@@ -259,7 +259,7 @@ def validate(historical_assets=False):
                 if wav.getparams()[:3]!=(1,2,22050) or not 4000<=wav.getnframes()<=16000:errors.append('Wrong presentation PCM format '+art['id'])
     # Historical StS1 asset inspection is optional and never needed for the StS2 build.
     index=ROOT/'private'/'rl_asset_index.json'
-    if historical_assets and not index.exists(): errors.append('Historical Rogue Legacy 2 inspection missing')
+    if historical_assets and not index.exists(): errors.append('Historical source-asset inspection missing')
     elif historical_assets:
         found={(r['file'],r['type'],r['name']) for r in json.loads(index.read_text())}
         for row in sheets['assets']:

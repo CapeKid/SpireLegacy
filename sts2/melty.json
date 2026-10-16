@@ -10,7 +10,7 @@
   "components": [
     {
       "id": "main",
-      "fileName": "SpireLegacy-StS2-1.0.31-melty.zip",
+      "fileName": "SpireLegacy-StS2-1.0.32-melty.zip",
       "label": "Spire Legacy for Slay the Spire 2 with BaseLib",
       "kind": "main",
       "required": true
@@ -38,7 +38,7 @@
     "{localappdata}/SpireLegacy2"
   ],
   "notes": {
-    "beforeInstall": "Requires Slay the Spire 2 regular v0.107.1 or compatible public-beta. Includes BaseLib 3.4.7 and original mod artwork. Rogue Legacy 2 is not required. This Melty launcher mapping targets Windows; the Workshop package also supports native Linux and Steam Deck.",
+    "beforeInstall": "Requires Slay the Spire 2 regular v0.107.1 or compatible public-beta. Includes BaseLib 3.4.7 and original mod artwork. This Melty launcher mapping targets Windows; the Workshop package also supports native Linux and Steam Deck.",
     "firstLaunch": "Accept the game's mod notice and enable BaseLib and Spire Legacy. Choose The Heir; Family Manor & Heir Lab appears under the character information; press Y to open it. The first family run jumps into a fight. All later runs use normal maps and events."
   }
 }
