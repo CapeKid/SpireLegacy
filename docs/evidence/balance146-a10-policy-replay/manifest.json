@@ -1,0 +1,174 @@
+[
+  {
+    "trial": "balance-campaign-balance146-a10-current-knight-beta-C",
+    "receiptSha256": "58814a3ecbed0dce69b5efe52fd5152b80430990519e295499181dcf148bd691",
+    "status": "finished",
+    "included": true,
+    "stages": [
+      {
+        "source": "edbd9331d97343457db0ec828c09ff8289140cdd",
+        "dllSha256": "1d16c0ba51b473a952566104386eae5e833b5308f29daf67f8aff6e3d6ea11e9",
+        "game": "v0.111.0",
+        "mod": "1.0.30",
+        "baseLib": "v3.4.7"
+      }
+    ],
+    "commands": 271,
+    "hasError": false,
+    "animationSpeed": 6,
+    "checkpointRecoveries": 0,
+    "batches": [],
+    "targetReturns": null,
+    "returnCap": null,
+    "stopReason": null,
+    "stopAtFullManor": null,
+    "checkpointExtraction": null,
+    "logMatches": {
+      "launch.log": {
+        "ERROR": 0,
+        "InvalidTaskId": 0,
+        "Fatal error": 0,
+        "double free": 0,
+        "particles": 0,
+        "backup": 0
+      },
+      "errors.log": {
+        "ERROR": 0,
+        "InvalidTaskId": 0,
+        "Fatal error": 0,
+        "double free": 0,
+        "particles": 1,
+        "backup": 0
+      }
+    }
+  },
+  {
+    "trial": "balance-campaign-balance146-a10-current-knight-regular-C",
+    "receiptSha256": "3deaf68772319226cccbbc15b9913a79093eb7408b685d035bedeee809b52f63",
+    "status": "finished",
+    "included": true,
+    "stages": [
+      {
+        "source": "edbd9331d97343457db0ec828c09ff8289140cdd",
+        "dllSha256": "1d16c0ba51b473a952566104386eae5e833b5308f29daf67f8aff6e3d6ea11e9",
+        "game": "v0.107.1",
+        "mod": "1.0.30",
+        "baseLib": "v3.4.7"
+      }
+    ],
+    "commands": 179,
+    "hasError": false,
+    "animationSpeed": 6,
+    "checkpointRecoveries": 0,
+    "batches": [],
+    "targetReturns": null,
+    "returnCap": null,
+    "stopReason": null,
+    "stopAtFullManor": null,
+    "checkpointExtraction": null,
+    "logMatches": {
+      "launch.log": {
+        "ERROR": 0,
+        "InvalidTaskId": 0,
+        "Fatal error": 0,
+        "double free": 0,
+        "particles": 0,
+        "backup": 0
+      },
+      "errors.log": {
+        "ERROR": 0,
+        "InvalidTaskId": 0,
+        "Fatal error": 0,
+        "double free": 0,
+        "particles": 2,
+        "backup": 0
+      }
+    }
+  },
+  {
+    "trial": "balance-campaign-balance146-a10-knight-beta-t2-C",
+    "receiptSha256": "c3af39bfb06bb658b77e2aea20a045dfe5b5b43d989d865c93840c1b2bcbc82a",
+    "status": "finished",
+    "included": true,
+    "stages": [
+      {
+        "source": "52cd89c4fe949d43d48f3cdc570dfcab39d3c7f7",
+        "dllSha256": "b13c50b1cdfa6a59e7125f39fc6798b06d2a08a0ac701705d8ad538431ae22d3",
+        "game": "v0.111.0",
+        "mod": "1.0.30",
+        "baseLib": "v3.4.7"
+      }
+    ],
+    "commands": 265,
+    "hasError": false,
+    "animationSpeed": null,
+    "checkpointRecoveries": 0,
+    "batches": [],
+    "targetReturns": null,
+    "returnCap": null,
+    "stopReason": null,
+    "stopAtFullManor": null,
+    "checkpointExtraction": null,
+    "logMatches": {
+      "launch.log": {
+        "ERROR": 0,
+        "InvalidTaskId": 0,
+        "Fatal error": 0,
+        "double free": 0,
+        "particles": 0,
+        "backup": 0
+      },
+      "errors.log": {
+        "ERROR": 0,
+        "InvalidTaskId": 0,
+        "Fatal error": 0,
+        "double free": 0,
+        "particles": 1,
+        "backup": 0
+      }
+    }
+  },
+  {
+    "trial": "balance-campaign-balance146-a10-knight-regular-t2-C",
+    "receiptSha256": "d73feefa7ddc6a9b053af9e8559bd471731cf7d60933712e14d18237618ead8c",
+    "status": "finished",
+    "included": true,
+    "stages": [
+      {
+        "source": "52cd89c4fe949d43d48f3cdc570dfcab39d3c7f7",
+        "dllSha256": "b13c50b1cdfa6a59e7125f39fc6798b06d2a08a0ac701705d8ad538431ae22d3",
+        "game": "v0.107.1",
+        "mod": "1.0.30",
+        "baseLib": "v3.4.7"
+      }
+    ],
+    "commands": 177,
+    "hasError": false,
+    "animationSpeed": null,
+    "checkpointRecoveries": 0,
+    "batches": [],
+    "targetReturns": null,
+    "returnCap": null,
+    "stopReason": null,
+    "stopAtFullManor": null,
+    "checkpointExtraction": null,
+    "logMatches": {
+      "launch.log": {
+        "ERROR": 0,
+        "InvalidTaskId": 0,
+        "Fatal error": 0,
+        "double free": 0,
+        "particles": 0,
+        "backup": 0
+      },
+      "errors.log": {
+        "ERROR": 0,
+        "InvalidTaskId": 0,
+        "Fatal error": 0,
+        "double free": 0,
+        "particles": 2,
+        "backup": 0
+      }
+    }
+  }
+]

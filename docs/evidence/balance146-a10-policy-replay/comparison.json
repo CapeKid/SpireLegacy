@@ -1,0 +1,1116 @@
+{
+  "newNaturalCampaigns": 2,
+  "historicalReferences": 2,
+  "changedCoreNativeFiles": [
+    "sts2/Core/PilotRewards.cs",
+    "sts2/Native/CampaignOracle.cs",
+    "sts2/Native/CampaignPlanning.cs",
+    "sts2/Native/HealthPlanningOracle.cs",
+    "sts2/Native/HpCostPilotOracle.cs",
+    "sts2/Native/NativeTestBridge.cs",
+    "sts2/Native/PacifistPilotOracle.cs",
+    "sts2/Native/PilotCardInfo.cs",
+    "sts2/Native/SetupPilotOracle.cs",
+    "sts2/Native/TacticalPilot.cs",
+    "sts2/Native/ThreatPilotOracle.cs"
+  ],
+  "pairs": [
+    {
+      "branch": "regular",
+      "config": {
+        "cls": "knight",
+        "tier": 2,
+        "policy": "planned",
+        "rewardPolicy": "defensive",
+        "seed": "BALANCE146-C",
+        "ascension": 10,
+        "traits": [],
+        "forcedReward": null,
+        "forcedRewardFloor": 0,
+        "interventions": 0
+      },
+      "equalProjectedPrefix": 51,
+      "projectionFields": "action, floor, end HP; picked/skip/row/col/type/kind/choice; play id/upgraded/target/netEnergy/netHpLost. Excludes other detail and state fields.",
+      "firstProjectedDifference": {
+        "historical": {
+          "action": "combat-turn",
+          "floor": 8,
+          "hp": 36,
+          "choices": {},
+          "plays": [
+            {
+              "id": "shield",
+              "upgraded": false,
+              "target": "MONSTER.CROSSBOW_RUBY_RAIDER",
+              "netEnergy": 1,
+              "netHpLost": 0
+            },
+            {
+              "id": "knight_bloodied_blade",
+              "upgraded": false,
+              "target": "MONSTER.AXE_RUBY_RAIDER",
+              "netEnergy": 0,
+              "netHpLost": 3
+            },
+            {
+              "id": "knight_guard",
+              "upgraded": true,
+              "target": null,
+              "netEnergy": 1,
+              "netHpLost": 0
+            },
+            {
+              "id": "knight_battle_meditation",
+              "upgraded": false,
+              "target": null,
+              "netEnergy": 1,
+              "netHpLost": 0
+            }
+          ]
+        },
+        "current": {
+          "action": "combat-turn",
+          "floor": 8,
+          "hp": 36,
+          "choices": {},
+          "plays": [
+            {
+              "id": "shield",
+              "upgraded": false,
+              "target": "MONSTER.CROSSBOW_RUBY_RAIDER",
+              "netEnergy": 1,
+              "netHpLost": 0
+            },
+            {
+              "id": "knight_guard",
+              "upgraded": true,
+              "target": null,
+              "netEnergy": 1,
+              "netHpLost": 0
+            },
+            {
+              "id": "knight_battle_meditation",
+              "upgraded": false,
+              "target": null,
+              "netEnergy": 1,
+              "netHpLost": 0
+            },
+            {
+              "id": "knight_bloodied_blade",
+              "upgraded": false,
+              "target": "MONSTER.AXE_RUBY_RAIDER",
+              "netEnergy": 0,
+              "netHpLost": 3
+            }
+          ]
+        }
+      },
+      "trials": [
+        {
+          "role": "historical",
+          "trial": "balance-campaign-balance146-a10-knight-regular-t2-C",
+          "actions": {
+            "event": 4,
+            "map": 8,
+            "combat-turn": 24,
+            "collect-rewards": 14,
+            "card-reward": 6,
+            "reward-proceed": 6,
+            "finished": 1
+          },
+          "eventHealth": [
+            {
+              "floor": 1,
+              "hp": 64,
+              "maxHp": 80,
+              "detail": {
+                "choice": "Precise Scissors"
+              }
+            },
+            {
+              "floor": 1,
+              "hp": 64,
+              "maxHp": 80,
+              "detail": {
+                "choice": "Proceed"
+              }
+            },
+            {
+              "floor": 4,
+              "hp": 59,
+              "maxHp": 80,
+              "detail": {
+                "choice": "Consume"
+              }
+            },
+            {
+              "floor": 4,
+              "hp": 59,
+              "maxHp": 80,
+              "detail": {
+                "choice": "Proceed"
+              }
+            }
+          ],
+          "alreadyFreedLogMatches": {
+            "launch.log": 0,
+            "errors.log": 0
+          },
+          "potions": [],
+          "setupPlays": [],
+          "terminalTurn": {
+            "action": "combat-turn",
+            "detail": {
+              "turn": 4,
+              "entries": {
+                "knight_bloodied_blade": 1,
+                "knight_guard": 1,
+                "shield": 1,
+                "knight_strike": 2,
+                "study": 1
+              },
+              "plays": [
+                {
+                  "id": "shield",
+                  "upgraded": false,
+                  "netEnergy": 1,
+                  "netHpLost": 0,
+                  "reason": "utility",
+                  "target": "MONSTER.BYRDONIS"
+                },
+                {
+                  "id": "knight_bloodied_blade",
+                  "upgraded": false,
+                  "netEnergy": 0,
+                  "netHpLost": 3,
+                  "reason": "utility",
+                  "target": "MONSTER.BYRDONIS"
+                }
+              ],
+              "potions": [],
+              "unplayed": [
+                "knight_guard",
+                "knight_strike",
+                "knight_strike",
+                "study"
+              ],
+              "victory": false
+            },
+            "state": {
+              "character": "CHARACTER.SPIRELEGACY-HEIR_CHARACTER",
+              "act": 1,
+              "floor": 9,
+              "room": "Elite",
+              "hp": 0,
+              "maxHp": 80,
+              "gold": 169,
+              "crowns": 21,
+              "lastEarned": 21,
+              "wins": 0,
+              "manor": {
+                "vitality": 5,
+                "smith": 2,
+                "armory": 2,
+                "vault": 4,
+                "library": 1,
+                "garden": 2
+              },
+              "deck": [
+                "knight_strike",
+                "knight_strike",
+                "knight_strike",
+                "knight_strike",
+                "knight_strike",
+                "knight_guard",
+                "knight_guard",
+                "knight_guard",
+                "shield",
+                "CARD.ASCENDERS_BANE",
+                "knight_banner_charge",
+                "riposte",
+                "study",
+                "knight_battle_meditation",
+                "knight_bloodied_blade",
+                "mage_woven_incantation"
+              ],
+              "relics": [
+                "RELIC.SPIRELEGACY-BLOODLINE_RELIC",
+                "RELIC.PRECISE_SCISSORS"
+              ],
+              "phase": "Play",
+              "turn": 4,
+              "combatInProgress": false,
+              "combatEnding": false,
+              "actionRunning": false,
+              "paused": false,
+              "enemies": [
+                {
+                  "id": "MONSTER.BYRDONIS",
+                  "hp": 10
+                }
+              ]
+            }
+          },
+          "lastState": {
+            "character": "CHARACTER.SPIRELEGACY-HEIR_CHARACTER",
+            "act": 1,
+            "floor": 9,
+            "room": "Elite",
+            "hp": 0,
+            "maxHp": 80,
+            "gold": 169,
+            "crowns": 21,
+            "lastEarned": 21,
+            "wins": 0,
+            "manor": {
+              "vitality": 5,
+              "smith": 2,
+              "armory": 2,
+              "vault": 4,
+              "library": 1,
+              "garden": 2
+            },
+            "deck": [
+              "knight_strike",
+              "knight_strike",
+              "knight_strike",
+              "knight_strike",
+              "knight_strike",
+              "knight_guard",
+              "knight_guard",
+              "knight_guard",
+              "shield",
+              "CARD.ASCENDERS_BANE",
+              "knight_banner_charge",
+              "riposte",
+              "study",
+              "knight_battle_meditation",
+              "knight_bloodied_blade",
+              "mage_woven_incantation"
+            ],
+            "relics": [
+              "RELIC.SPIRELEGACY-BLOODLINE_RELIC",
+              "RELIC.PRECISE_SCISSORS"
+            ],
+            "phase": "Play",
+            "turn": 4,
+            "combatInProgress": false,
+            "combatEnding": false,
+            "actionRunning": false,
+            "paused": false,
+            "enemies": [
+              {
+                "id": "MONSTER.BYRDONIS",
+                "hp": 10
+              }
+            ]
+          }
+        },
+        {
+          "role": "current",
+          "trial": "balance-campaign-balance146-a10-current-knight-regular-C",
+          "actions": {
+            "event": 4,
+            "map": 8,
+            "combat-turn": 24,
+            "collect-rewards": 14,
+            "card-reward": 6,
+            "reward-proceed": 6,
+            "finished": 1
+          },
+          "eventHealth": [
+            {
+              "floor": 1,
+              "hp": 64,
+              "maxHp": 80,
+              "detail": {
+                "choice": "Precise Scissors"
+              }
+            },
+            {
+              "floor": 1,
+              "hp": 64,
+              "maxHp": 80,
+              "detail": {
+                "choice": "Proceed"
+              }
+            },
+            {
+              "floor": 4,
+              "hp": 59,
+              "maxHp": 80,
+              "detail": {
+                "choice": "Consume"
+              }
+            },
+            {
+              "floor": 4,
+              "hp": 59,
+              "maxHp": 80,
+              "detail": {
+                "choice": "Proceed"
+              }
+            }
+          ],
+          "alreadyFreedLogMatches": {
+            "launch.log": 0,
+            "errors.log": 0
+          },
+          "potions": [],
+          "setupPlays": [],
+          "terminalTurn": {
+            "action": "combat-turn",
+            "detail": {
+              "turn": 4,
+              "entries": {
+                "knight_bloodied_blade": 1,
+                "knight_guard": 1,
+                "shield": 1,
+                "knight_strike": 2,
+                "study": 1
+              },
+              "plays": [
+                {
+                  "id": "shield",
+                  "upgraded": false,
+                  "netEnergy": 1,
+                  "netHpLost": 0,
+                  "reason": "utility",
+                  "score": 18,
+                  "incomingBefore": 21,
+                  "blockBefore": 0,
+                  "targetThreat": 21,
+                  "target": "MONSTER.BYRDONIS"
+                },
+                {
+                  "id": "knight_strike",
+                  "upgraded": false,
+                  "netEnergy": 1,
+                  "netHpLost": 0,
+                  "reason": "utility",
+                  "score": 11.2,
+                  "incomingBefore": 21,
+                  "blockBefore": 5,
+                  "targetThreat": 21,
+                  "target": "MONSTER.BYRDONIS"
+                },
+                {
+                  "id": "knight_strike",
+                  "upgraded": false,
+                  "netEnergy": 1,
+                  "netHpLost": 0,
+                  "reason": "utility",
+                  "score": 11.2,
+                  "incomingBefore": 21,
+                  "blockBefore": 5,
+                  "targetThreat": 21,
+                  "target": "MONSTER.BYRDONIS"
+                }
+              ],
+              "potions": [],
+              "unplayed": [
+                "knight_bloodied_blade",
+                "knight_guard",
+                "study"
+              ],
+              "victory": false
+            },
+            "animationSpeed": 6,
+            "state": {
+              "character": "CHARACTER.SPIRELEGACY-HEIR_CHARACTER",
+              "act": 1,
+              "floor": 9,
+              "room": "Elite",
+              "hp": 0,
+              "maxHp": 80,
+              "gold": 169,
+              "crowns": 21,
+              "lastEarned": 21,
+              "wins": 0,
+              "manor": {
+                "vitality": 5,
+                "smith": 2,
+                "armory": 2,
+                "vault": 4,
+                "library": 1,
+                "garden": 2
+              },
+              "deck": [
+                "knight_strike",
+                "knight_strike",
+                "knight_strike",
+                "knight_strike",
+                "knight_strike",
+                "knight_guard",
+                "knight_guard",
+                "knight_guard",
+                "shield",
+                "CARD.ASCENDERS_BANE",
+                "knight_banner_charge",
+                "riposte",
+                "study",
+                "knight_battle_meditation",
+                "knight_bloodied_blade",
+                "mage_woven_incantation"
+              ],
+              "relics": [
+                "RELIC.SPIRELEGACY-BLOODLINE_RELIC",
+                "RELIC.PRECISE_SCISSORS"
+              ],
+              "phase": "None",
+              "turn": 4,
+              "combatInProgress": false,
+              "combatEnding": false,
+              "actionRunning": false,
+              "paused": false,
+              "enemies": [
+                {
+                  "id": "MONSTER.BYRDONIS",
+                  "hp": 6
+                }
+              ]
+            }
+          },
+          "lastState": {
+            "character": "CHARACTER.SPIRELEGACY-HEIR_CHARACTER",
+            "act": 1,
+            "floor": 9,
+            "room": "Elite",
+            "hp": 0,
+            "maxHp": 80,
+            "gold": 169,
+            "crowns": 21,
+            "lastEarned": 21,
+            "wins": 0,
+            "manor": {
+              "vitality": 5,
+              "smith": 2,
+              "armory": 2,
+              "vault": 4,
+              "library": 1,
+              "garden": 2
+            },
+            "deck": [
+              "knight_strike",
+              "knight_strike",
+              "knight_strike",
+              "knight_strike",
+              "knight_strike",
+              "knight_guard",
+              "knight_guard",
+              "knight_guard",
+              "shield",
+              "CARD.ASCENDERS_BANE",
+              "knight_banner_charge",
+              "riposte",
+              "study",
+              "knight_battle_meditation",
+              "knight_bloodied_blade",
+              "mage_woven_incantation"
+            ],
+            "relics": [
+              "RELIC.SPIRELEGACY-BLOODLINE_RELIC",
+              "RELIC.PRECISE_SCISSORS"
+            ],
+            "phase": "None",
+            "turn": 4,
+            "combatInProgress": false,
+            "combatEnding": false,
+            "actionRunning": false,
+            "paused": false,
+            "enemies": [
+              {
+                "id": "MONSTER.BYRDONIS",
+                "hp": 6
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "branch": "beta",
+      "config": {
+        "cls": "knight",
+        "tier": 2,
+        "policy": "planned",
+        "rewardPolicy": "defensive",
+        "seed": "BALANCE146-C",
+        "ascension": 10,
+        "traits": [],
+        "forcedReward": null,
+        "forcedRewardFloor": 0,
+        "interventions": 0
+      },
+      "equalProjectedPrefix": 94,
+      "projectionFields": "action, floor, end HP; picked/skip/row/col/type/kind/choice; play id/upgraded/target/netEnergy/netHpLost. Excludes other detail and state fields.",
+      "firstProjectedDifference": {
+        "historical": null,
+        "current": null
+      },
+      "trials": [
+        {
+          "role": "historical",
+          "trial": "balance-campaign-balance146-a10-knight-beta-t2-C",
+          "actions": {
+            "event": 10,
+            "map": 12,
+            "combat-turn": 35,
+            "collect-rewards": 17,
+            "card-reward": 7,
+            "reward-proceed": 7,
+            "rest": 1,
+            "proceed": 2,
+            "chest": 1,
+            "treasure-relic": 1,
+            "finished": 1
+          },
+          "eventHealth": [
+            {
+              "floor": 1,
+              "hp": 64,
+              "maxHp": 80,
+              "detail": {
+                "choice": "Pomander"
+              }
+            },
+            {
+              "floor": 1,
+              "hp": 64,
+              "maxHp": 80,
+              "detail": {
+                "choice": "Proceed"
+              }
+            },
+            {
+              "floor": 4,
+              "hp": 62,
+              "maxHp": 80,
+              "detail": {
+                "choice": "Consume"
+              }
+            },
+            {
+              "floor": 4,
+              "hp": 62,
+              "maxHp": 80,
+              "detail": {
+                "choice": "Proceed"
+              }
+            },
+            {
+              "floor": 11,
+              "hp": 44,
+              "maxHp": 77,
+              "detail": {
+                "choice": "Decipher"
+              }
+            },
+            {
+              "floor": 11,
+              "hp": 44,
+              "maxHp": 71,
+              "detail": {
+                "choice": "Continue Deciphering"
+              }
+            },
+            {
+              "floor": 11,
+              "hp": 44,
+              "maxHp": 59,
+              "detail": {
+                "choice": "Keep Deciphering"
+              }
+            },
+            {
+              "floor": 11,
+              "hp": 35,
+              "maxHp": 59,
+              "detail": {
+                "choice": "KEEP DECIPHERING"
+              }
+            },
+            {
+              "floor": 11,
+              "hp": 1,
+              "maxHp": 35,
+              "detail": {
+                "choice": "Lose Everything"
+              }
+            },
+            {
+              "floor": 11,
+              "hp": 1,
+              "maxHp": 1,
+              "detail": {
+                "choice": "Proceed"
+              }
+            }
+          ],
+          "alreadyFreedLogMatches": {
+            "launch.log": 0,
+            "errors.log": 0
+          },
+          "potions": [
+            {
+              "Id": "POTION.BLOCK_POTION",
+              "Incoming": 20,
+              "Hp": 1,
+              "PreviousBlock": 8,
+              "GainedBlock": 12
+            }
+          ],
+          "setupPlays": [],
+          "terminalTurn": {
+            "action": "combat-turn",
+            "detail": {
+              "turn": 3,
+              "entries": {
+                "knight_strike": 3,
+                "fortify": 1,
+                "CARD.ASCENDERS_BANE": 1,
+                "CARD.WOUND": 1
+              },
+              "plays": [
+                {
+                  "id": "knight_strike",
+                  "upgraded": true,
+                  "netEnergy": 1,
+                  "netHpLost": 0,
+                  "reason": "estimated-lethal",
+                  "target": "MONSTER.NIBBIT"
+                },
+                {
+                  "id": "fortify",
+                  "upgraded": true,
+                  "netEnergy": 1,
+                  "netHpLost": 0,
+                  "reason": "utility",
+                  "target": null
+                },
+                {
+                  "id": "knight_strike",
+                  "upgraded": true,
+                  "netEnergy": 1,
+                  "netHpLost": 0,
+                  "reason": "utility",
+                  "target": "MONSTER.NIBBIT"
+                }
+              ],
+              "potions": [],
+              "unplayed": [
+                "CARD.ASCENDERS_BANE",
+                "CARD.WOUND",
+                "knight_strike"
+              ],
+              "victory": false
+            },
+            "state": {
+              "character": "CHARACTER.SPIRELEGACY-HEIR_CHARACTER",
+              "act": 1,
+              "floor": 13,
+              "room": "Monster",
+              "hp": 0,
+              "maxHp": 1,
+              "gold": 236,
+              "crowns": 34,
+              "lastEarned": 34,
+              "wins": 0,
+              "manor": {
+                "vitality": 5,
+                "smith": 2,
+                "armory": 2,
+                "vault": 4,
+                "library": 1,
+                "garden": 2
+              },
+              "deck": [
+                "knight_strike",
+                "knight_strike",
+                "knight_strike",
+                "knight_strike",
+                "knight_strike",
+                "knight_guard",
+                "knight_guard",
+                "knight_guard",
+                "knight_guard",
+                "shield",
+                "CARD.ASCENDERS_BANE",
+                "knight_reforge",
+                "knight_pommel_knock",
+                "knight_reinforce",
+                "knight_brave_advance",
+                "fortify",
+                "knight_heavy_harness",
+                "knight_banner_charge"
+              ],
+              "relics": [
+                "RELIC.SPIRELEGACY-BLOODLINE_RELIC",
+                "RELIC.POMANDER",
+                "RELIC.BELLOWS",
+                "RELIC.GORGET"
+              ],
+              "phase": "None",
+              "turn": 3,
+              "combatInProgress": false,
+              "combatEnding": false,
+              "actionRunning": false,
+              "paused": false,
+              "enemies": [
+                {
+                  "id": "MONSTER.NIBBIT",
+                  "hp": 36
+                }
+              ]
+            }
+          },
+          "lastState": {
+            "character": "CHARACTER.SPIRELEGACY-HEIR_CHARACTER",
+            "act": 1,
+            "floor": 13,
+            "room": "Monster",
+            "hp": 0,
+            "maxHp": 1,
+            "gold": 236,
+            "crowns": 34,
+            "lastEarned": 34,
+            "wins": 0,
+            "manor": {
+              "vitality": 5,
+              "smith": 2,
+              "armory": 2,
+              "vault": 4,
+              "library": 1,
+              "garden": 2
+            },
+            "deck": [
+              "knight_strike",
+              "knight_strike",
+              "knight_strike",
+              "knight_strike",
+              "knight_strike",
+              "knight_guard",
+              "knight_guard",
+              "knight_guard",
+              "knight_guard",
+              "shield",
+              "CARD.ASCENDERS_BANE",
+              "knight_reforge",
+              "knight_pommel_knock",
+              "knight_reinforce",
+              "knight_brave_advance",
+              "fortify",
+              "knight_heavy_harness",
+              "knight_banner_charge"
+            ],
+            "relics": [
+              "RELIC.SPIRELEGACY-BLOODLINE_RELIC",
+              "RELIC.POMANDER",
+              "RELIC.BELLOWS",
+              "RELIC.GORGET"
+            ],
+            "phase": "None",
+            "turn": 3,
+            "combatInProgress": false,
+            "combatEnding": false,
+            "actionRunning": false,
+            "paused": false,
+            "enemies": [
+              {
+                "id": "MONSTER.NIBBIT",
+                "hp": 36
+              }
+            ]
+          }
+        },
+        {
+          "role": "current",
+          "trial": "balance-campaign-balance146-a10-current-knight-beta-C",
+          "actions": {
+            "event": 10,
+            "map": 12,
+            "combat-turn": 35,
+            "collect-rewards": 17,
+            "card-reward": 7,
+            "reward-proceed": 7,
+            "rest": 1,
+            "proceed": 2,
+            "chest": 1,
+            "treasure-relic": 1,
+            "finished": 1
+          },
+          "eventHealth": [
+            {
+              "floor": 1,
+              "hp": 64,
+              "maxHp": 80,
+              "detail": {
+                "choice": "Pomander"
+              }
+            },
+            {
+              "floor": 1,
+              "hp": 64,
+              "maxHp": 80,
+              "detail": {
+                "choice": "Proceed"
+              }
+            },
+            {
+              "floor": 4,
+              "hp": 62,
+              "maxHp": 80,
+              "detail": {
+                "choice": "Consume"
+              }
+            },
+            {
+              "floor": 4,
+              "hp": 62,
+              "maxHp": 80,
+              "detail": {
+                "choice": "Proceed"
+              }
+            },
+            {
+              "floor": 11,
+              "hp": 44,
+              "maxHp": 77,
+              "detail": {
+                "choice": "Decipher"
+              }
+            },
+            {
+              "floor": 11,
+              "hp": 44,
+              "maxHp": 71,
+              "detail": {
+                "choice": "Continue Deciphering"
+              }
+            },
+            {
+              "floor": 11,
+              "hp": 44,
+              "maxHp": 59,
+              "detail": {
+                "choice": "Keep Deciphering"
+              }
+            },
+            {
+              "floor": 11,
+              "hp": 35,
+              "maxHp": 59,
+              "detail": {
+                "choice": "KEEP DECIPHERING"
+              }
+            },
+            {
+              "floor": 11,
+              "hp": 1,
+              "maxHp": 35,
+              "detail": {
+                "choice": "Lose Everything"
+              }
+            },
+            {
+              "floor": 11,
+              "hp": 1,
+              "maxHp": 1,
+              "detail": {
+                "choice": "Proceed"
+              }
+            }
+          ],
+          "alreadyFreedLogMatches": {
+            "launch.log": 0,
+            "errors.log": 0
+          },
+          "potions": [
+            {
+              "Id": "POTION.BLOCK_POTION",
+              "Incoming": 20,
+              "Hp": 1,
+              "PreviousBlock": 8,
+              "GainedBlock": 12
+            }
+          ],
+          "setupPlays": [],
+          "terminalTurn": {
+            "action": "combat-turn",
+            "detail": {
+              "turn": 3,
+              "entries": {
+                "knight_strike": 3,
+                "fortify": 1,
+                "CARD.ASCENDERS_BANE": 1,
+                "CARD.WOUND": 1
+              },
+              "plays": [
+                {
+                  "id": "knight_strike",
+                  "upgraded": true,
+                  "netEnergy": 1,
+                  "netHpLost": 0,
+                  "reason": "estimated-lethal",
+                  "score": 131.2,
+                  "incomingBefore": 26,
+                  "blockBefore": 0,
+                  "targetThreat": 10,
+                  "target": "MONSTER.NIBBIT"
+                },
+                {
+                  "id": "fortify",
+                  "upgraded": true,
+                  "netEnergy": 1,
+                  "netHpLost": 0,
+                  "reason": "utility",
+                  "score": 17.6,
+                  "incomingBefore": 16,
+                  "blockBefore": 0,
+                  "targetThreat": 0,
+                  "target": null
+                },
+                {
+                  "id": "knight_strike",
+                  "upgraded": true,
+                  "netEnergy": 1,
+                  "netHpLost": 0,
+                  "reason": "utility",
+                  "score": 15.2,
+                  "incomingBefore": 16,
+                  "blockBefore": 11,
+                  "targetThreat": 16,
+                  "target": "MONSTER.NIBBIT"
+                }
+              ],
+              "potions": [],
+              "unplayed": [
+                "CARD.ASCENDERS_BANE",
+                "CARD.WOUND",
+                "knight_strike"
+              ],
+              "victory": false
+            },
+            "animationSpeed": 6,
+            "state": {
+              "character": "CHARACTER.SPIRELEGACY-HEIR_CHARACTER",
+              "act": 1,
+              "floor": 13,
+              "room": "Monster",
+              "hp": 0,
+              "maxHp": 1,
+              "gold": 236,
+              "crowns": 34,
+              "lastEarned": 34,
+              "wins": 0,
+              "manor": {
+                "vitality": 5,
+                "smith": 2,
+                "armory": 2,
+                "vault": 4,
+                "library": 1,
+                "garden": 2
+              },
+              "deck": [
+                "knight_strike",
+                "knight_strike",
+                "knight_strike",
+                "knight_strike",
+                "knight_strike",
+                "knight_guard",
+                "knight_guard",
+                "knight_guard",
+                "knight_guard",
+                "shield",
+                "CARD.ASCENDERS_BANE",
+                "knight_reforge",
+                "knight_pommel_knock",
+                "knight_reinforce",
+                "knight_brave_advance",
+                "fortify",
+                "knight_heavy_harness",
+                "knight_banner_charge"
+              ],
+              "relics": [
+                "RELIC.SPIRELEGACY-BLOODLINE_RELIC",
+                "RELIC.POMANDER",
+                "RELIC.BELLOWS",
+                "RELIC.GORGET"
+              ],
+              "phase": "None",
+              "turn": 3,
+              "combatInProgress": false,
+              "combatEnding": false,
+              "actionRunning": false,
+              "paused": false,
+              "enemies": [
+                {
+                  "id": "MONSTER.NIBBIT",
+                  "hp": 36
+                }
+              ]
+            }
+          },
+          "lastState": {
+            "character": "CHARACTER.SPIRELEGACY-HEIR_CHARACTER",
+            "act": 1,
+            "floor": 13,
+            "room": "Monster",
+            "hp": 0,
+            "maxHp": 1,
+            "gold": 236,
+            "crowns": 34,
+            "lastEarned": 34,
+            "wins": 0,
+            "manor": {
+              "vitality": 5,
+              "smith": 2,
+              "armory": 2,
+              "vault": 4,
+              "library": 1,
+              "garden": 2
+            },
+            "deck": [
+              "knight_strike",
+              "knight_strike",
+              "knight_strike",
+              "knight_strike",
+              "knight_strike",
+              "knight_guard",
+              "knight_guard",
+              "knight_guard",
+              "knight_guard",
+              "shield",
+              "CARD.ASCENDERS_BANE",
+              "knight_reforge",
+              "knight_pommel_knock",
+              "knight_reinforce",
+              "knight_brave_advance",
+              "fortify",
+              "knight_heavy_harness",
+              "knight_banner_charge"
+            ],
+            "relics": [
+              "RELIC.SPIRELEGACY-BLOODLINE_RELIC",
+              "RELIC.POMANDER",
+              "RELIC.BELLOWS",
+              "RELIC.GORGET"
+            ],
+            "phase": "None",
+            "turn": 3,
+            "combatInProgress": false,
+            "combatEnding": false,
+            "actionRunning": false,
+            "paused": false,
+            "enemies": [
+              {
+                "id": "MONSTER.NIBBIT",
+                "hp": 36
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}
