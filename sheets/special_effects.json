@@ -1,5 +1,9 @@
 [
   {
+    "id": "poison_twice",
+    "summary": "Apply {n} Poison twice."
+  },
+  {
     "id": "block_damage",
     "summary": "Deal damage equal to your current Block."
   },

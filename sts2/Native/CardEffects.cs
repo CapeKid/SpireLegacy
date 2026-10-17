@@ -82,6 +82,10 @@ public static class CardEffects
    case "charge_gain":if(creature.GetPower<P_class>() is {} cls && PlayerBloodlines.Heir(player).classId=="mage")cls.Charges=Math.Min(2,cls.Charges+amount);break;
    case "discount_hand":var eligible=hand.Cards.Where(c=>!c.EnergyCost.CostsX&&c.EnergyCost.GetWithModifiers(CostModifiers.All)>0).ToList();for(var i=0;i<amount&&eligible.Count>0;i++){var index=player.RunState.Rng.CombatCardSelection.NextInt(eligible.Count);var discounted=eligible[index];eligible.RemoveAt(index);discounted.EnergyCost.AddThisTurn(-1);}break;
    case "free_hand":foreach(var held in hand.Cards.Where(c=>!c.EnergyCost.CostsX))held.SetToFreeThisTurn();await Apply(context,"no_draw",creature,1,creature,card);break;
+   case "poison_twice":
+    foreach(var enemy in enemies.Where(e=>e.IsAlive))
+     for(var dose=0;dose<2&&enemy.IsAlive;dose++)await Apply(context,"poison",enemy,amount,creature,card);
+    break;
    case "double_poison":foreach(var enemy in enemies.Where(e=>e.IsAlive))await Apply(context,"poison",enemy,enemy.GetPowerAmount<PoisonPower>(),creature,card);break;
    default:throw new InvalidDataException("Unmapped StS2 card effect: "+row.Text("special"));
   }

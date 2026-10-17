@@ -236,7 +236,7 @@ Each class has 82 rewards on regular (20 common, 36 uncommon, 26 rare), or 85 on
 | Ricochet | Uncommon | Attack | 1 | Class unique; 3 damage ×3; Hits target random enemies. |
 | Reposition | Uncommon | Skill | 1 | Class unique; 5 Block; 2 draw; 1 discard |
 | Scouting | Uncommon | Skill | 1 | Class unique; Public-beta only; 1 draw; Scry 3. |
-| Double Dose | Uncommon | Skill | 1 | Class unique; Double Poison on the target.; Exhaust |
+| Double Dose | Uncommon | Skill | 1 | Class unique; Apply 3 Poison twice. |
 | Escape Route | Uncommon | Skill | 0 | Class unique; 2 discard; 1 Energy |
 | Pocket Arsenal | Uncommon | Skill | 1 | Class unique; Public-beta only; 1 draw; Reduce the cost of 1 random card(s) in your hand by 1 this turn.; Exhaust |
 | Patient Hunter | Uncommon | Skill | 1 | Class unique; 3 next Attack damage; 2 draw next turn |

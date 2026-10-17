@@ -238,7 +238,7 @@ public static class BalanceOracle
         if(needBlock>0&&d.Block>0)return 80+Math.Min(needBlock,d.Block);
         if(d.Amount("energy")>0)return 70;
         if(d.Amount("draw")>0)return 60;
-        if(d.Amount("poison")>0||d.Row.Text("special")=="double_poison")return 50;
+        if(d.Amount("poison")>0||d.Row.Text("special") is "double_poison" or "poison_twice")return 50;
         if(card.Type==CardType.Attack)return 30+(double)card.DynamicVars.Damage.BaseValue*d.Row.Number("hits")/Math.Max(1,d.Cost);
         return 10;
     }

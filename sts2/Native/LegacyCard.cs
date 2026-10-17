@@ -31,7 +31,7 @@ public abstract class LegacyCard : CustomCardModel
     {
         var row = Design.Get("cards", key);
         if (row.Flag("aoe") || row.Text("special") == "random_attack") return TargetType.AllEnemies;
-        return row.Text("type") == "ATTACK" || row.Number("poison") + row.Number("weak") + row.Number("vulnerable") > 0 || row.Text("special") == "double_poison" ? TargetType.AnyEnemy : TargetType.Self;
+        return row.Text("type") == "ATTACK" || row.Number("poison") + row.Number("weak") + row.Number("vulnerable") > 0 || row.Text("special") is "double_poison" or "poison_twice" ? TargetType.AnyEnemy : TargetType.Self;
     }
     public override CardPoolModel Pool => IsMutable && Owner?.Character is HeirCharacter heir ? heir.CardPool : ModelDb.Character<HeirCharacter>().CardPool;
     public override CardType Type => DesignCard.Mercy ? CardType.Skill : base.Type;

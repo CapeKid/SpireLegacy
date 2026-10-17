@@ -388,6 +388,12 @@ foreach(var up in new[]{false,true}) {
     Check(meditation.Cost==1&&meditation.Amount("draw")==3+(up?1:0)&&meditation.Amount("discard")==1,"Battle Meditation matches the paid native dig budget without a free upgrade");
     Check(meditation.Amount("draw")-meditation.Amount("discard")==study.Amount("draw"),"Meditation preserves Study hand advantage while digging one card deeper");
 }
+foreach(var up in new[]{false,true}) {
+    var dose=new CardDesign("ranger_double_dose",up);var reserve=new CardDesign("ranger_venom_reserve",up);
+    Check(dose.Cost==1&&!dose.Row.Flag("exhaust")&&!dose.Row.Flag("retain"),"Double Dose is a paid repeatable poison starter");
+    Check(dose.Row.Text("special")=="poison_twice"&&dose.SpecialAmount==(up?4:3)&&dose.Rules()==$"Apply {(up?4:3)} Poison twice.","Double Dose has two fixed doses and an amount upgrade");
+    Check(reserve.Row.Text("special")=="double_poison"&&reserve.Row.Flag("retain")&&reserve.Row.Flag("exhaust")&&reserve.Cost==(up?0:1),"Venom Reserve remains the retained one-use multiplier");
+}
 PersistenceChecks.Run(Check,directory);
 Console.WriteLine(JsonSerializer.Serialize(new { result = "passed", assertions = count, cards = 360, inheritedTraits = traitIds.Length, familyFixture = directory }));
 
