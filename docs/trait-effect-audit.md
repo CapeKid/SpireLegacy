@@ -32,7 +32,7 @@ Synesthesia remains cosmetic and has no crown bonus. This audit does not change 
 | Strong (`strength`) | Historical only | More Strength, but less Dexterity. | Inheritance stats / BloodlineRelic / HeirCharacter |
 | Crippling Intellect (`bonusmagicstrength`) | Selectable | Draw 1 extra card each turn; lose 18 maximum HP. | Inheritance stats / BloodlineRelic / HeirCharacter |
 | FMF Fan (`fmffan`) | Selectable | The first Skill played each turn grants 2 Block. | Native/BloodlineRelic.cs: AfterCardPlayed |
-| Unempathetic (`noenemyhealthbar`) | Selectable | Each enemy starts with 4 Block; enemy HP remains visible. | Native/BloodlineRelic.cs: BeforeCombatStart |
+| Unempathetic (`noenemyhealthbar`) | Selectable | Each enemy starts with 4 Block. | Native/BloodlineRelic.cs: BeforeCombatStart |
 | Overcompensation (`manacostanddamageup`) | Selectable | Attacks deal 50% more damage and cost 1 extra Energy when drawn. | Native/BloodlineRelic.cs: AfterCardDrawn / InheritedDamageMultiplicative |
 | Spelunker (`revealallchests`) | Selectable | Lose 6 maximum HP. Gain 10 gold when entering a treasure room. | Inheritance stats / BloodlineRelic / HeirCharacter; Native/BloodlineRelic.cs: AfterRoomEntered |
 | Clownanthropy (`bounceterrain`) | Selectable | Lose 12 maximum HP. The first Attack played each turn grants 2 Block. | Inheritance stats / BloodlineRelic / HeirCharacter; Native/BloodlineRelic.cs: AfterCardPlayed |

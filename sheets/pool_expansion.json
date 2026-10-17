@@ -141,7 +141,7 @@
     "classId": "ranger",
     "availability": "all",
     "build": "poison seed and multiplier",
-    "reference": "Existing Double Dose: paid small Poison seed followed by doubling, once; upgrade improves only the seed."
+    "reference": "Venom Reserve is a retained multiplier; Serpent Oil adds a small Poison seed before doubling, once. Its upgrade improves only the seed."
   },
   {
     "id": "ranger_second_quiver",

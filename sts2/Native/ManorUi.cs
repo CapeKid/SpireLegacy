@@ -227,11 +227,6 @@ public static class ManorUi
         var heading = Text($"{profile.family} Family Manor — generation {profile.generation + 1}",32); heading.Modulate = BannerColor; content!.AddChild(heading);
         AddText($"Crowns: {profile.crowns} · Banner: {BannerNames[profile.banner]} · Last heir earned {profile.lastEarned}");
         AddText($"Spire Legacy {CardPlayDiagnostics.Version} · StS2 {MegaCrit.Sts2.Core.Debug.ReleaseInfoManager.Instance.ReleaseInfo?.Version}",20);
-        if(CardPlayDiagnostics.LastFailure is {} cardFailure) {
-            AddText("Card play failed. Full diagnostic:",28);
-            AddText(cardFailure,20);
-            AddButton("Copy card-play diagnostic",()=>DisplayServer.ClipboardSet(cardFailure));
-        }
         if(Notice is {} notice) AddText(notice,26);
         var options = new VBoxContainer(); content.AddChild(options);
         options.AddChild(MakeButton("Name your family",EditFamilyName));

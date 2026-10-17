@@ -45,7 +45,7 @@ Use the Workshop steps in Gaming Mode. The DLL and included original artwork sup
 
 Version 1.0.18 loads the included original artwork directly through Godot. No external content path, Python runtime, content reader or extracted-content cache is required. Obsolete content-import launch options can be removed. Existing reader/cache folders from older releases are unused and do not affect saved family progress. Native Linux and Proton share the same packaged icons; physical Deck retesting of this release remains needed.
 
-If a card spends energy but never resolves, open **Family / Traits** after the failure. Version 1.0.3 shows the mod/game versions and the full failed card-action exception, including loaded mod versions, in Family Manor. **Copy card-play diagnostic** copies it for reporting. Version 1.0.3 adapts attack, card-sourced damage, exhaust and damage-modifier APIs across both branches. Retain this diagnostic if a card still fails.
+If a card spends energy but never resolves, retain the game log for reporting. Card-play failures are logged with the mod/game versions, loaded mods and full exception. The public Family Manor does not display exception text or a diagnostic clipboard control.
 
 ## Melty
 

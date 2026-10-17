@@ -15,6 +15,7 @@ public static class PilotCardInfo
     public static int Amount(CardModel card,string effect)
     {
         if(card is LegacyCard mercy&&mercy.DesignCard.Mercy&&effect=="poison")return mercy.DesignCard.MercyPoison;
+        if(card is LegacyCard doses&&doses.DesignCard.Row.Text("special")=="poison_twice"&&effect=="poison")return doses.DesignCard.SpecialAmount*2;
         if(card is LegacyCard lc)return lc.DesignCard.Row.Text("power")==effect?Math.Max(lc.DesignCard.Amount(effect),lc.DesignCard.Magic):lc.DesignCard.Amount(effect);
         var name=effect switch{"draw"=>"Cards","energy"=>"Energy","weak"=>"WeakPower","vulnerable"=>"VulnerablePower","poison"=>"PoisonPower","strength"=>"StrengthPower",_=>effect};
         return card.DynamicVars.TryGetValue(name,out var value)?Math.Max(0,(int)value.BaseValue):0;

@@ -14274,7 +14274,7 @@
   },
   {
     "id": "ranger_double_dose",
-    "reference": "Native attack/defense cost and upgrade budgets; class passive included separately",
+    "reference": "Venom Reserve retains the one-use multiplier; Double Dose supplies fixed Poison without setup.",
     "before": {
       "cost": 1,
       "damage": 0,
@@ -14331,17 +14331,17 @@
       "nextBlock": 0,
       "power": "none",
       "magic": 0,
-      "special": "double_poison",
-      "specialAmount": 0,
-      "exhaust": true,
+      "special": "poison_twice",
+      "specialAmount": 3,
+      "exhaust": false,
       "upgradeDamage": 0,
       "upgradeBlock": 0,
       "upgradeMagic": 0,
-      "upgradeSpecial": 0,
-      "upgradeCost": true,
+      "upgradeSpecial": 1,
+      "upgradeCost": false,
       "upgradeDiscard": 0
     },
-    "reason": "Weaker no-manor baseline; avoid compounded effects/upgrades and free positive-draw cycles."
+    "reason": "Distinct repeatable poison starter: two applications of 3 Poison (4 upgraded) at 1 Energy; no Retain or Exhaust."
   },
   {
     "id": "ranger_escape_route",

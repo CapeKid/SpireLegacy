@@ -466,7 +466,7 @@
     "draw": 0,
     "goldBonus": 25,
     "scale": 1.0,
-    "summary": "Each enemy starts with 4 Block; enemy HP remains visible.",
+    "summary": "Each enemy starts with 4 Block.",
     "heal": 0,
     "source": "NoEnemyHealthBar",
     "enabled": true,
