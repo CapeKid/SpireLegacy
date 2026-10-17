@@ -299,6 +299,14 @@ public static class NativeTestBridge
                 case "potion-controller-use":await WaitForPlay(RunState().Players.Single());result=await HeirPotionOracle.Use(RunState(),request.GetProperty("potion").GetString()!,true);break;
                 case "potion-focus":result=await HeirPotionOracle.Focus(request.GetProperty("potion").GetString()!);break;
                 case "potion-clear":foreach(var potion in RunState().Players.Single().Potions.ToArray())await MegaCrit.Sts2.Core.Commands.PotionCmd.Discard(potion);result=new{cleared=true};break;
+                case "revival-potion-prepare":
+                    var revivalPlayer=RunState().Players.Single();
+                    foreach(var potion in revivalPlayer.Potions.ToArray())await PotionCmd.Discard(potion);
+                    await PotionCmd.TryToProcure<MegaCrit.Sts2.Core.Models.Potions.FairyInABottle>(revivalPlayer);
+                    if(!revivalPlayer.Potions.OfType<MegaCrit.Sts2.Core.Models.Potions.FairyInABottle>().Any())throw new InvalidDataException("Fairy in a Bottle was not procured.");
+                    revivalPlayer.Creature.LoseBlockInternal(revivalPlayer.Creature.Block);
+                    revivalPlayer.Creature.SetCurrentHpInternal(1);
+                    result=new{hp=revivalPlayer.Creature.CurrentHp,maxHp=revivalPlayer.Creature.MaxHp};break;
                 case "potion-slots":result=RunState().Players.Single().PotionSlots.Select(p=>p?.Id.ToString()).ToArray();break;
                 case "vigor-room":
                     await WaitForPlay(RunState().Players.Single());

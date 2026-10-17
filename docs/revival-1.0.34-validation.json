@@ -1,0 +1,78 @@
+{
+  "version": "1.0.34",
+  "dllSha256": "d15c6d3faaa96543f06e3636439e5386e4d10f3885d5c2d2e804f94ed4f642c4",
+  "baselineReproducedClasses": [
+    "ranger",
+    "knight",
+    "mage"
+  ],
+  "checks": [
+    {
+      "branch": "regular",
+      "game": "v0.107.1",
+      "classId": "ranger",
+      "revivedHp": 16,
+      "pose": "idle",
+      "normalScale": true,
+      "normalFootAlignment": true,
+      "attackAfterRevival": true,
+      "actualDeathHeld": true
+    },
+    {
+      "branch": "regular",
+      "game": "v0.107.1",
+      "classId": "knight",
+      "revivedHp": 18,
+      "pose": "idle",
+      "normalScale": true,
+      "normalFootAlignment": true,
+      "attackAfterRevival": true,
+      "actualDeathHeld": true
+    },
+    {
+      "branch": "regular",
+      "game": "v0.107.1",
+      "classId": "mage",
+      "revivedHp": 15,
+      "pose": "idle",
+      "normalScale": true,
+      "normalFootAlignment": true,
+      "attackAfterRevival": true,
+      "actualDeathHeld": true
+    },
+    {
+      "branch": "beta",
+      "game": "v0.111.0",
+      "classId": "ranger",
+      "revivedHp": 16,
+      "pose": "idle",
+      "normalScale": true,
+      "normalFootAlignment": true,
+      "attackAfterRevival": true,
+      "actualDeathHeld": true
+    },
+    {
+      "branch": "beta",
+      "game": "v0.111.0",
+      "classId": "knight",
+      "revivedHp": 18,
+      "pose": "idle",
+      "normalScale": true,
+      "normalFootAlignment": true,
+      "attackAfterRevival": true,
+      "actualDeathHeld": true
+    },
+    {
+      "branch": "beta",
+      "game": "v0.111.0",
+      "classId": "mage",
+      "revivedHp": 15,
+      "pose": "idle",
+      "normalScale": true,
+      "normalFootAlignment": true,
+      "attackAfterRevival": true,
+      "actualDeathHeld": true
+    }
+  ],
+  "scope": "Real automatic Fairy in a Bottle; lethal fixture damage in disposable Windows game copies. No personal saves or full campaign testing."
+}
