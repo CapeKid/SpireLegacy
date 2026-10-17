@@ -61,7 +61,7 @@ public static class HeirVisuals
         owner=a.creature.Entity.Player!.NetId,bannerIndex=Banner(a.creature.Entity.Player!),motto=Motto(a.creature.Entity.Player!),
         classId = a.sprite.ClassId, pose = a.sprite.Animation.ToString(), frame = a.sprite.Frame,
         frames = a.sprite.SpriteFrames.GetFrameCount(a.sprite.Animation), deathFrames = a.sprite.DeathFrames.ToArray(), visible = a.sprite.IsVisibleInTree(), tint = a.sprite.Modulate.ToString(), events = a.sprite.Events.ToArray(),
-        position = a.sprite.GlobalPosition.ToString(), scale = a.sprite.Scale.ToString(), hp = a.creature.Entity.CurrentHp,
+        position = a.sprite.GlobalPosition.ToString(), scale = a.sprite.Scale.ToString(), offset = a.sprite.Offset.ToString(), hp = a.creature.Entity.CurrentHp,
         bannerVisible = a.banner.IsVisibleInTree(), bannerZ = a.banner.ZIndex
     }).ToArray();
     private static void Update()
@@ -76,6 +76,9 @@ public static class HeirVisuals
             // Mirror our sibling sprite without mirroring badges or readable text.
             actor.sprite.SetFacingLeft(actor.creature.Body.Scale.X<0);
             if (actor.creature.Entity.IsDead) actor.sprite.PlayPose("dead");
+            // Automatic death prevention can heal without sending a Revive trigger.
+            // Reconcile only the stale death pose so other living animations finish.
+            else if (actor.sprite.Animation == "dead") actor.sprite.PlayPose("idle");
             actor.banner.Color = ManorUi.BannerColorFor(Banner(player));
             actor.symbol.Text=Symbols[Banner(player)];
             actor.banner.GetNode<Label>("FamilyMotto").Text=Motto(player);
