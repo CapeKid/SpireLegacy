@@ -59,7 +59,7 @@ public static class PowerAuditOracle
         Require(card.TryManualPlay(card.TargetType==TargetType.AnyEnemy?target:null),"Power probe paid play refused: "+card.Id);
         await Wait(()=>card.Pile?.Type is not (PileType.Hand or PileType.Play)&&NCard.FindOnTable(card)==null&&!RunManager.Instance.ActionExecutor.IsRunning);
         Require(CardPlayDiagnostics.LastFailure==failure,"Power action diagnostic changed.");
-        Require(card.Owner.PlayerCombatState.Energy==energy-cost+energyGain,"Power fixture payment differs.");
+        Require(card.Owner.PlayerCombatState.Energy==energy-cost+energyGain,$"Power fixture payment differs for {card.Id}: {card.Owner.PlayerCombatState.Energy}, expected {energy-cost+energyGain}.");
     }
     public static async Task<object> Class(RunState run,string mode,bool up,IDisposable selector)
     {
@@ -178,8 +178,9 @@ public static class PowerAuditOracle
                 Require(PilotCardInfo.Amount(card,"energy")==refund,"Pilot charge refund prediction.");
                 var before=hand.Cards.Count;await Play(card,enemies[0],refund);
                 var draw=hand.Cards.Count-before+1;Require(draw==(refund>0?2:cls=="mage"&&mode=="one"?1:0),"Rune Detonation charge draw.");
-                await Skill();await Skill();await Play(await Add(player,NativeCards.Get(key),up),enemies[0]);
-                return new{key,up,mode,cls,refund,draw,repeatedRefund=0,saveRoundTrip=true};
+                var nextRefund=cls=="mage"&&charges==0?1:0;
+                await Skill();await Skill();await Play(await Add(player,NativeCards.Get(key),up),enemies[0],nextRefund);
+                return new{key,up,mode,cls,refund,draw,nextRefund,saveRoundTrip=true};
             }
             if(key=="mage_spell_notes"){
                 var top=PileType.Draw.GetPile(player).Cards.Take(4).ToArray();
