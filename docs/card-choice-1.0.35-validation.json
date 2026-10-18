@@ -1,0 +1,106 @@
+{
+  "version": "1.0.35",
+  "dllSha256": "9dd30de248226412e3d3dc4186ed6a6485a830f1ed86953c847a7d70481bce93",
+  "baselineDllSha256": "d78ce6d9d5038f02d4b9de0cb4e63c678a50e04ad4457105cce9fee43f61222f",
+  "baselineExactStackReproducedForms": 2,
+  "checks": [
+    {
+      "branch": "regular",
+      "game": "v0.107.1",
+      "paidRealUiForms": 2,
+      "followingCardsResolved": true,
+      "lifecycleCases": [
+        {
+          "upgraded": false,
+          "mode": "changed-sync",
+          "error": "OperationCanceledException",
+          "cancelled": true,
+          "diagnosticChanged": false,
+          "unscopedRejected": true
+        },
+        {
+          "upgraded": true,
+          "mode": "changed-sync",
+          "error": "OperationCanceledException",
+          "cancelled": true,
+          "diagnosticChanged": false,
+          "unscopedRejected": true
+        }
+      ]
+    },
+    {
+      "branch": "beta",
+      "game": "v0.111.0",
+      "paidRealUiForms": 2,
+      "followingCardsResolved": true,
+      "lifecycleCases": [
+        {
+          "upgraded": false,
+          "mode": "valid",
+          "error": null,
+          "cancelled": false,
+          "diagnosticChanged": false,
+          "unscopedRejected": true
+        },
+        {
+          "upgraded": false,
+          "mode": "changed-sync",
+          "error": "OperationCanceledException",
+          "cancelled": true,
+          "diagnosticChanged": false,
+          "unscopedRejected": true
+        },
+        {
+          "upgraded": false,
+          "mode": "ended-run",
+          "error": "OperationCanceledException",
+          "cancelled": true,
+          "diagnosticChanged": false,
+          "unscopedRejected": true
+        },
+        {
+          "upgraded": false,
+          "mode": "active-sync-error",
+          "error": "ArgumentOutOfRangeException",
+          "cancelled": false,
+          "diagnosticChanged": true,
+          "unscopedRejected": true
+        },
+        {
+          "upgraded": true,
+          "mode": "valid",
+          "error": null,
+          "cancelled": false,
+          "diagnosticChanged": false,
+          "unscopedRejected": true
+        },
+        {
+          "upgraded": true,
+          "mode": "changed-sync",
+          "error": "OperationCanceledException",
+          "cancelled": true,
+          "diagnosticChanged": false,
+          "unscopedRejected": true
+        },
+        {
+          "upgraded": true,
+          "mode": "ended-run",
+          "error": "OperationCanceledException",
+          "cancelled": true,
+          "diagnosticChanged": false,
+          "unscopedRejected": true
+        },
+        {
+          "upgraded": true,
+          "mode": "active-sync-error",
+          "error": "ArgumentOutOfRangeException",
+          "cancelled": false,
+          "diagnosticChanged": false,
+          "unscopedRejected": true
+        }
+      ]
+    }
+  ],
+  "physicalSteamDeckTest": false,
+  "scope": "Owned disposable Windows game copies; late run context is deliberate fault injection, not a reproduction of the original Deck timing."
+}

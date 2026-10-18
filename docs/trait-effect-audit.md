@@ -20,7 +20,7 @@ Synesthesia remains cosmetic and has no crown bonus. This audit does not change 
 | Muscle Weakness (`enemyknockedlow`) | Selectable | Lose 1 Strength; gain extra legacy crowns. | Inheritance stats / BloodlineRelic / HeirCharacter |
 | Breaker (`breakpropsformana`) | Selectable | The first Skill played each turn draws 1 card. | Native/BloodlineRelic.cs: AfterCardPlayed |
 | Fragile (`onehitdeath`) | Selectable | Maximum HP is 1, overriding all other HP bonuses. | Core/Inheritance.cs: MaxHp |
-| Pacifist (`cantattack`) | Selectable | Your Basic Attack cards become Skills that apply 2 Poison (3 upgraded), with no damage or Block. Other Attacks cannot be played. No free Poison at combat start. | Native/BloodlineRelic.cs: ShouldPlay / Core.CardDesign.Mercy |
+| Pacifist (`cantattack`) | Selectable | Your Basic Attack cards become Skills that apply 2 Poison (3 upgraded), with no damage or Block. Other Attacks cannot be played. | Native/BloodlineRelic.cs: ShouldPlay / Core.CardDesign.Mercy |
 | Superfluid (`omnidash`) | Selectable | Gain 2 Block at the start of each turn. | Native/BloodlineRelic.cs: AfterPlayerTurnStart |
 | High Jumper (`highjump`) | Selectable | Gain 2 Dexterity, but lose 8 maximum HP. | Inheritance stats / BloodlineRelic / HeirCharacter |
 | Aerodynamic (`gaindownstrike`) | Selectable | The first Attack played each turn deals 1 additional damage per hit. | Native/BloodlineRelic.cs: InheritedDamageAdditive |
