@@ -24,7 +24,7 @@ CARD_OVERRIDES = {
     'mage_ash_reading': dict(cost=0, hpLoss=0, draw=1, upgradeMagic=1, exhaust=True, upgradeCost=False),
     'mage_geode_ward': dict(block=10, upgradeBlock=3),
     'knight_battle_meditation': dict(draw=3, upgradeDiscard=0),
-    'mage_grand_thesis': dict(cost=1, upgradeSpecial=0),
+    'mage_grand_thesis': dict(cost=1, draw=2, nextEnergy=1, upgradeMagic=1, upgradeDraw=-1, upgradeSpecial=0),
     'mage_perfect_ward': dict(block=3, upgradeBlock=2, magic=1, upgradeMagic=1),
     'ranger_perfect_timing': dict(cost=3, magic=1, upgradeMagic=0, upgradeCost=True),
     'ranger_tripwire': dict(upgradeMagic=0),
@@ -33,7 +33,11 @@ CARD_OVERRIDES = {
     'mage_blood_to_mana': dict(upgradeMagic=1),
     'ranger_escape_route': dict(upgradeMagic=1),
     'mage_kindle': dict(block=2, upgradeBlock=2, upgradeSpecial=0),
-    'mage_overcharge': dict(draw=1, upgradeMagic=1, upgradeSpecial=0, exhaust=True),
+    'mage_overcharge': dict(draw=0, nextEnergy=2, upgradeMagic=1, upgradeSpecial=0, exhaust=True),
+    'mage_ember_dart': dict(retain=True),
+    'mage_spell_notes': dict(draw=1, discard=0, special='scry', specialAmount=3, upgradeMagic=0, upgradeSpecial=1),
+    'mage_rune_detonation': dict(damage=6, upgradeDamage=3, special='charged_energy', specialAmount=1, upgradeSpecial=0),
+    'mage_moonstone_lance': dict(cost=1, damage=5, upgradeDamage=2, specialAmount=2, upgradeSpecial=1),
 }
 
 def balance_card(row):

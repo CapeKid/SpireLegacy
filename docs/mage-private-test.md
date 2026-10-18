@@ -1,13 +1,13 @@
 # Private Mage test for issue #185
 
-The local Git branch is `codex/185-mage-arcane-flow`. It has not been pushed. This repository is public, so a pushed branch or GitHub release would also be public. Version 1.0.36 is an unpublished test build; the public Workshop item stays on 1.0.35.
+The local Git branch is `codex/185-mage-arcane-flow`. It has not been pushed. This repository is public, so a pushed branch or GitHub release would also be public. Version 1.0.37 is the current unpublished test build, including the Mage pool changes; the public Workshop item stays on 1.0.35.
 
 ## Steam Deck installation
 
-1. Close StS2. Transfer `SpireLegacy-StS2-1.0.36.zip` from the local test output to the Deck, using your usual file transfer method.
+1. Close StS2. Transfer `SpireLegacy-StS2-1.0.37.zip` from the local test output to the Deck, using your usual file transfer method.
 2. In Desktop Mode, open Steam → StS2 → Properties → Installed Files → Browse. Extract the ZIP into that game directory. The result must be `mods/SpireLegacy/SpireLegacy.json`, `SpireLegacy.dll`, and `heir/` directly underneath the game directory. If a local `mods/SpireLegacy` already exists, move it outside the game directory first so you can restore it.
 3. Keep BaseLib subscribed and enabled. You can keep the public Spire Legacy subscription: the native mod loader prefers the local mod with the same ID and disables the duplicate Workshop copy. Do not copy test files into `steamapps/workshop/content`.
-4. Start normally in Gaming Mode. Confirm the enabled mod is **Spire Legacy 1.0.36**. Pick a Mage heir in Family Manor before starting a new climb. The class power should be **Arcane Flow** and describe card draw.
+4. Start normally in Gaming Mode. Confirm the enabled mod is **Spire Legacy 1.0.37**. Pick a Mage heir in Family Manor before starting a new climb. The class power should be **Arcane Flow** and describe card draw.
 5. To return to public 1.0.35, close the game and move the entire local `mods/SpireLegacy` folder outside the game directory. Restore any previous local folder if you had one. Steam's subscribed copy becomes active again. Confirm the loaded version after restarting.
 
 Your regular/public-beta **game** setting can stay as it is; it is separate from this local mod test. Local installation does not upload anything. Native checks cover Windows regular v0.107.1 and public-beta v0.111.0; this exact build still needs physical Steam Deck confirmation. Family progress uses the same folder as the public build, so back up the family files described in [the installation guide](sts2-port.md) before test runs if you want to preserve a starting snapshot.

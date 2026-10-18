@@ -52,14 +52,14 @@ public static class PowerAuditOracle
     private static Task Apply(Player player,string key,int amount)=>CardEffects.Apply(Context,key,player.Creature,amount,player.Creature,null);
     private static async Task<CardModel> Add(Player player,CardModel canonical,bool up=false,PileType pile=PileType.Hand)
     {var card=player.Creature.CombatState!.CreateCard(canonical,player);if(up)CardCmd.Upgrade(card);await CardPileCmd.Add(card,pile,skipVisuals:true);return card;}
-    private static async Task Play(CardModel card,Creature? target=null)
+    private static async Task Play(CardModel card,Creature? target=null,int energyGain=0)
     {
         var failure=CardPlayDiagnostics.LastFailure;
         var energy=card.Owner.PlayerCombatState!.Energy;var cost=card.EnergyCost.GetWithModifiers(CostModifiers.All);
         Require(card.TryManualPlay(card.TargetType==TargetType.AnyEnemy?target:null),"Power probe paid play refused: "+card.Id);
         await Wait(()=>card.Pile?.Type is not (PileType.Hand or PileType.Play)&&NCard.FindOnTable(card)==null&&!RunManager.Instance.ActionExecutor.IsRunning);
         Require(CardPlayDiagnostics.LastFailure==failure,"Power action diagnostic changed.");
-        Require(card.Owner.PlayerCombatState.Energy==energy-cost,"Power fixture payment differs.");
+        Require(card.Owner.PlayerCombatState.Energy==energy-cost+energyGain,"Power fixture payment differs.");
     }
     public static async Task<object> Class(RunState run,string mode,bool up,IDisposable selector)
     {
@@ -159,6 +159,56 @@ public static class PowerAuditOracle
         foreach(var held in hand.Cards.ToArray())await CardPileCmd.Add(held,PileType.Discard,skipVisuals:true);
         await Attack(1);
         return new{chargeCount,up,mode,draws,damage,serialized=true,cloneIndependent=true,realTurnReset=true,bankedCharge=true};
+    }
+    public static async Task<object> MagePool(RunState run,string key,bool up,string mode,IDisposable selector)
+    {
+        using(selector){
+            var player=run.Players.Single();var enemies=await Setup(player);var counter=player.Creature.GetPower<P_class>()!;
+            var hand=PileType.Hand.GetPile(player);var cls=PlayerBloodlines.Heir(player).classId;
+            var card=(LegacyCard)await Add(player,NativeCards.Get(key),up);
+            var restored=(LegacyCard)run.LoadCard(card.ToSerializable(),player);
+            Require(restored.DesignCard.Rules()==card.DesignCard.Rules()&&restored.IsUpgraded==up,"Mage pool saved card changed.");run.RemoveCard(restored);
+            async Task Skill()=>await Play(await Add(player,ModelDb.Card<DefendIronclad>()));
+            if(key=="mage_rune_detonation"){
+                var charges=mode=="one"?1:mode=="zero"?0:2;
+                for(var i=0;i<charges;i++)await Skill();
+                if(mode=="used") {await Play(await Add(player,ModelDb.Card<StrikeIronclad>()),enemies[0]);await Skill();await Skill();}
+                if(mode=="replay")await Apply(player,"double_tap",1);
+                var refund=cls=="mage"&&charges==2&&mode!="used"?1:0;
+                Require(PilotCardInfo.Amount(card,"energy")==refund,"Pilot charge refund prediction.");
+                var before=hand.Cards.Count;await Play(card,enemies[0],refund);
+                var draw=hand.Cards.Count-before+1;Require(draw==(refund>0?2:cls=="mage"&&mode=="one"?1:0),"Rune Detonation charge draw.");
+                await Skill();await Skill();await Play(await Add(player,NativeCards.Get(key),up),enemies[0]);
+                return new{key,up,mode,cls,refund,draw,repeatedRefund=0,saveRoundTrip=true};
+            }
+            if(key=="mage_spell_notes"){
+                var top=PileType.Draw.GetPile(player).Cards.Take(4).ToArray();
+                var before=hand.Cards.Count;await Play(card);
+                Require(hand.Cards.Count==before&&top[0].Pile?.Type==PileType.Discard&&hand.Cards.Contains(top[1]),"Spell Notes Scry then draw ordering.");
+                Require(counter.Charges==1,"Spell Notes passive charge.");await Skill();
+                await Play(await Add(player,NativeCards.Get("mage_ember_dart")),enemies[0]);
+                Require(hand.Cards.Contains(top[2])&&hand.Cards.Contains(top[3]),"Prepared top cards did not reach Arcane Flow.");
+                return new{key,up,mode,scry=card.DesignCard.SpecialAmount,printedDraw=1,flowDraw=2,saveRoundTrip=true};
+            }
+            if(key is "mage_ember_dart" or "mage_moonstone_lance"){
+                Require(card.ShouldRetainThisTurn,"Cash-out Attack must Retain.");
+                await BalanceOracle.End(player,true);Require(hand.Cards.Contains(card),"Cash-out Attack was not retained.");
+                var growth=key=="mage_moonstone_lance"?(up?3:2):0;
+                Require(card.DynamicVars.Damage.BaseValue==card.DesignCard.Damage+growth,"Retained cash-out growth.");
+                await Skill();await Skill();var before=hand.Cards.Count;var hp=enemies[0].CurrentHp;
+                await Play(card,enemies[0]);Require(hand.Cards.Count-before+1==2&&hp-enemies[0].CurrentHp==card.DesignCard.Damage+growth,"Retained cash-out damage/draw.");
+                return new{key,up,mode,growth,flowDraw=2,cost=card.DesignCard.Cost,saveRoundTrip=true};
+            }
+            var hpBefore=player.Creature.CurrentHp;var held=hand.Cards.Count;
+            await Play(card);var drawn=hand.Cards.Count-held+1;
+            Require(counter.Charges==2&&drawn==card.DesignCard.Amount("draw"),"Delayed setup draw/charges.");
+            var loss=hpBefore-player.Creature.CurrentHp;Require(loss==card.DesignCard.Amount("hpLoss"),"Overcharge HP payment.");
+            await BalanceOracle.End(player,true);
+            Require(player.PlayerCombatState!.Energy==3+card.DesignCard.Amount("nextEnergy")&&counter.Charges==2&&!counter.ArcaneDrawUsed,"Delayed setup Energy and banked charges.");
+            var count=hand.Cards.Count;await Play(await Add(player,NativeCards.Get("mage_ember_dart")),enemies[0]);
+            Require(hand.Cards.Count-count==2,"Delayed setup Arcane Flow draw.");
+            return new{key,up,mode,drawn,hpLoss=loss,nextEnergy=card.DesignCard.Amount("nextEnergy"),flowDraw=2,saveRoundTrip=true};
+        }
     }
     public static async Task<object> DamageControl(RunState run,string power,bool up)
     {

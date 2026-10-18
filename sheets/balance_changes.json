@@ -7167,9 +7167,10 @@
       "upgradeMagic": 0,
       "upgradeSpecial": 0,
       "upgradeCost": false,
-      "upgradeDiscard": 0
+      "upgradeDiscard": 0,
+      "retain": true
     },
-    "reason": "Weaker no-manor baseline; avoid compounded effects/upgrades and free positive-draw cycles."
+    "reason": "Retain gives Arcane Flow a zero-Energy Attack to hold until Skills have filled charges. Printed damage is unchanged."
   },
   {
     "id": "mage_ice_shard",
@@ -7851,8 +7852,8 @@
       "damage": 0,
       "block": 0,
       "hits": 1,
-      "draw": 2,
-      "discard": 1,
+      "draw": 1,
+      "discard": 0,
       "energy": 0,
       "strength": 0,
       "dexterity": 0,
@@ -7869,17 +7870,17 @@
       "nextBlock": 0,
       "power": "none",
       "magic": 0,
-      "special": "none",
-      "specialAmount": 0,
+      "special": "scry",
+      "specialAmount": 3,
       "exhaust": false,
       "upgradeDamage": 0,
       "upgradeBlock": 0,
-      "upgradeMagic": 1,
-      "upgradeSpecial": 0,
+      "upgradeMagic": 0,
+      "upgradeSpecial": 1,
       "upgradeCost": false,
       "upgradeDiscard": 0
     },
-    "reason": "Weaker no-manor baseline; avoid compounded effects/upgrades and free positive-draw cycles."
+    "reason": "Retained paid Scry prepares the cards reached by Arcane Flow; fixed one-card draw replaces the old draw/discard exchange. Upgrade improves Scry only."
   },
   {
     "id": "mage_crystal_guard",
@@ -9197,7 +9198,7 @@
     },
     "after": {
       "cost": 1,
-      "damage": 9,
+      "damage": 6,
       "block": 0,
       "hits": 1,
       "draw": 0,
@@ -9218,17 +9219,17 @@
       "nextBlock": 0,
       "power": "none",
       "magic": 0,
-      "special": "none",
-      "specialAmount": 0,
+      "special": "charged_energy",
+      "specialAmount": 1,
       "exhaust": false,
-      "upgradeDamage": 2,
+      "upgradeDamage": 3,
       "upgradeBlock": 0,
       "upgradeMagic": 0,
       "upgradeSpecial": 0,
       "upgradeCost": false,
       "upgradeDiscard": 0
     },
-    "reason": "Weaker no-manor baseline; avoid compounded effects/upgrades and free positive-draw cycles."
+    "reason": "Lower printed damage buys a conditional one-Energy refund: only a Mage with two charges and an unused Arcane Flow draw. Replays/later Attacks cannot repeat the refund that turn."
   },
   {
     "id": "mage_toxic_cloud",
@@ -9484,7 +9485,7 @@
       "damage": 0,
       "block": 0,
       "hits": 1,
-      "draw": 1,
+      "draw": 0,
       "discard": 0,
       "energy": 0,
       "strength": 0,
@@ -9497,7 +9498,7 @@
       "vigor": 0,
       "thorns": 0,
       "plated": 0,
-      "nextEnergy": 0,
+      "nextEnergy": 2,
       "nextDraw": 0,
       "nextBlock": 0,
       "power": "none",
@@ -9512,7 +9513,7 @@
       "upgradeCost": false,
       "upgradeDiscard": 0
     },
-    "reason": "1.0.14: bounded recurring effects, smaller multi-hit upgrades, and meaningful upgrade choices."
+    "reason": "One-use HP payment banks Energy for the next turn and fills charges; replaces immediate draw, avoiding a redundant charge cantrip. Upgrade improves delayed Energy."
   },
   {
     "id": "mage_rekindle",
@@ -11118,7 +11119,7 @@
       "damage": 0,
       "block": 0,
       "hits": 1,
-      "draw": 3,
+      "draw": 2,
       "discard": 0,
       "energy": 0,
       "strength": 0,
@@ -11131,7 +11132,7 @@
       "vigor": 0,
       "thorns": 0,
       "plated": 0,
-      "nextEnergy": 0,
+      "nextEnergy": 1,
       "nextDraw": 0,
       "nextBlock": 0,
       "power": "none",
@@ -11144,9 +11145,10 @@
       "upgradeMagic": 1,
       "upgradeSpecial": 0,
       "upgradeCost": false,
-      "upgradeDiscard": 0
+      "upgradeDiscard": 0,
+      "upgradeDraw": -1
     },
-    "reason": "Targeted under-tuning correction: useful setup/recovery and paid draw without reusable free positive-draw loops."
+    "reason": "One-use draw/charge setup banks next-turn Energy to play Arcane Flow draws; one fewer immediate card, upgrade adds one card and one delayed Energy."
   },
   {
     "id": "mage_hourglass",
@@ -21270,8 +21272,8 @@
       "upgradeDiscard": 0
     },
     "after": {
-      "cost": 2,
-      "damage": 6,
+      "cost": 1,
+      "damage": 5,
       "block": 0,
       "hits": 1,
       "draw": 0,
@@ -21293,7 +21295,7 @@
       "power": "none",
       "magic": 0,
       "special": "retain_damage",
-      "specialAmount": 4,
+      "specialAmount": 2,
       "exhaust": false,
       "upgradeDamage": 2,
       "upgradeBlock": 0,
@@ -21302,7 +21304,7 @@
       "upgradeCost": false,
       "upgradeDiscard": 0
     },
-    "reason": "Weaker no-manor baseline; avoid compounded effects/upgrades and free positive-draw cycles."
+    "reason": "Affordable retained cash-out Attack; smaller retained growth trades late damage for room to play Skills before attacking."
   },
   {
     "id": "mage_geode_ward",
