@@ -13,7 +13,7 @@ namespace SpireLegacy;
 public static class CardPlayDiagnostics
 {
     public static string? LastFailure { get; private set; }
-    public static string Version {get {using var manifest=JsonDocument.Parse(File.ReadAllText(Path.Combine(Runtime.ModDirectory,"SpireLegacy.json")));return manifest.RootElement.GetProperty("version").GetString()!;}}
+    public static string Version {get {using var manifest=JsonDocument.Parse(File.ReadAllText(Path.ChangeExtension(typeof(Runtime).Assembly.Location,".json")));return manifest.RootElement.GetProperty("version").GetString()!;}}
     public static void Postfix(PlayCardAction __instance, ref Task __result)
     {
         if(__instance.Player.Character is HeirCharacter)__result=Observe(__result,__instance.CardModelId.ToString(),__instance.Player);
