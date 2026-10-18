@@ -80,6 +80,7 @@ public static class CardEffects
      candidate=>candidate is not LegacyCard legacy||(pile==PileType.Exhaust?legacy.DesignCard.RecoverableFromExhaust:legacy.DesignCard.RecoverableFromDiscard)));
     foreach(var retrieved in selected)await CardPileCmd.Add(retrieved,PileType.Hand);break;
    case "charge_gain":if(creature.GetPower<P_class>() is {} cls && PlayerBloodlines.Heir(player).classId=="mage")cls.Charges=Math.Min(2,cls.Charges+amount);break;
+   case "charged_energy":if(PlayerBloodlines.Heir(player).classId=="mage"&&creature.GetPower<P_class>() is {Charges:>=2,ArcaneDrawUsed:false})await PlayerCmd.GainEnergy(amount,player);break;
    case "discount_hand":var eligible=hand.Cards.Where(c=>!c.EnergyCost.CostsX&&c.EnergyCost.GetWithModifiers(CostModifiers.All)>0).ToList();for(var i=0;i<amount&&eligible.Count>0;i++){var index=player.RunState.Rng.CombatCardSelection.NextInt(eligible.Count);var discounted=eligible[index];eligible.RemoveAt(index);discounted.EnergyCost.AddThisTurn(-1);}break;
    case "free_hand":foreach(var held in hand.Cards.Where(c=>!c.EnergyCost.CostsX))held.SetToFreeThisTurn();await Apply(context,"no_draw",creature,1,creature,card);break;
    case "poison_twice":

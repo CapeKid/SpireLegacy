@@ -18,11 +18,12 @@ for cls in read('classes'):
         if row['id'] in beta:effects.append('Public-beta only')
         if row['damage']:effects.append(str(row['damage'])+' damage'+(' ×'+str(row['hits']) if row['hits']>1 else '')+(' to all enemies' if row['aoe'] else ''))
         for key,label in [('block','Block'),('draw','draw'),('discard','discard'),('energy','Energy'),('strength','Strength'),('dexterity','Dexterity'),('weak','Weak'),('vulnerable','Vulnerable'),('poison','Poison'),('vigor','next Attack damage'),('thorns','Thorns'),('plated','Plated Armor'),('heal','healing'),('hpLoss','HP cost'),('nextDraw','draw next turn'),('nextEnergy','Energy next turn'),('nextBlock','Block next turn')]:
+            if key=='draw' and row['special']=='scry':effects.append(special['scry'].replace('{n}',str(row['specialAmount'])))
             if row[key]:effects.append(str(row[key])+' '+label+(' to all enemies' if row['aoe'] and key in ('weak','vulnerable','poison') else ''))
         if row['power'] in powers:effects.append(powers[row['power']].replace('!M!',str(row['magic'])))
         if row['power']=='reservoir':effects.append('Each Arcane Charge adds '+str(row['magic'])+' extra damage to every hit of your next Attack.')
         if row['power']=='quiver':effects.append('Hunter Rhythm draws '+str(row['magic'])+' extra card(s).')
-        if row['special']!='none':
+        if row['special'] not in ('none','scry'):
             text=special[row['special']].replace('{n}',str(row['specialAmount']))
             if row['special'] in ('block_damage','chain_damage'):
                 text=text.rstrip('.')+(' to all enemies' if row['aoe'] else '')+(' '+str(row['hits'])+' times' if row['hits']>1 else '')+'.'

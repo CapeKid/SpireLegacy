@@ -99,7 +99,7 @@ Each class has 82 rewards on regular (20 common, 36 uncommon, 26 rare), or 85 on
 
 | Card | Rarity | Type | Energy | Effects |
 | --- | --- | --- | ---: | --- |
-| Spark | Basic | Attack | 1 | Class unique; 5 damage |
+| Spark Strike | Basic | Attack | 1 | Class unique; 5 damage |
 | Ward | Basic | Skill | 1 | Class unique; 4 Block |
 | Challenge | Uncommon | Attack | 2 | Shared family card; 6 damage; 2 Vulnerable |
 | Family Oath | Rare | Attack | 2 | Shared family card; 6 damage ×2; 1 Strength; Exhaust |
@@ -122,22 +122,22 @@ Each class has 82 rewards on regular (20 common, 36 uncommon, 26 rare), or 85 on
 | Arms Vault | Uncommon | Skill | 1 | Shared family card; 1 draw; Return a card from your Exhaust pile to your hand. Cannot return Spire Legacy cards with this effect.; Exhaust |
 | Burnished Legacy | Uncommon | Power | 1 | Shared family card; Whenever you Exhaust a card, gain 2 Block. |
 | Guardian Angel | Rare | Skill | 2 | Shared family card; Prevent the next 1 time(s) you would lose HP.; Exhaust |
-| Ember Dart | Common | Attack | 0 | Class unique; 3 damage |
+| Ember Dart | Common | Attack | 0 | Class unique; 3 damage; Retain |
 | Arcane Missile | Common | Attack | 1 | Class unique; 2 damage ×3; Hits target random enemies. |
 | Witchfire | Common | Attack | 1 | Class unique; 3 damage; 1 Poison |
 | Frost Ring | Common | Attack | 1 | Class unique; 3 damage to all enemies; 1 Weak to all enemies |
 | Mana Shield | Common | Skill | 1 | Class unique; 4 Block; 1 Energy next turn |
 | Cold Read | Common | Skill | 0 | Shared family card; 1 draw; 1 discard |
-| Spell Notes | Common | Skill | 1 | Class unique; 2 draw; 1 discard; Retain |
+| Spell Notes | Common | Skill | 1 | Class unique; Scry 3.; 1 draw; Retain |
 | Kindle | Common | Skill | 0 | Class unique; 2 Block; Gain 1 Arcane Charge(s), up to the normal charge cap.; Exhaust |
 | Thunderchain | Uncommon | Attack | 1 | Class unique; 2 damage ×4; Hits target random enemies. |
 | Inferno Wave | Uncommon | Attack | 2 | Class unique; 10 damage to all enemies |
 | Frozen Spear | Uncommon | Attack | 2 | Class unique; Public-beta only; 8 damage; 1 Weak; 1 Vulnerable |
 | Venom Rune | Uncommon | Attack | 1 | Class unique; 4 damage; 3 Poison |
 | Mana Burn | Uncommon | Attack | 0 | Class unique; 9 damage; 3 HP cost |
-| Rune Detonation | Uncommon | Attack | 1 | Class unique; 9 damage; Retain |
+| Rune Detonation | Uncommon | Attack | 1 | Class unique; 6 damage; If you have 2 Arcane Charges and Arcane Flow is ready, gain 1 Energy.; Retain |
 | Toxic Cloud | Uncommon | Skill | 2 | Class unique; 4 Poison to all enemies |
-| Overcharge | Uncommon | Skill | 0 | Class unique; 1 draw; 3 HP cost; Gain 2 Arcane Charge(s), up to the normal charge cap.; Exhaust |
+| Overcharge | Uncommon | Skill | 0 | Class unique; 3 HP cost; 2 Energy next turn; Gain 2 Arcane Charge(s), up to the normal charge cap.; Exhaust |
 | Rewrite | Uncommon | Skill | 1 | Class unique; 2 draw; Exhaust 1 card(s) from your hand. |
 | Memory Prism | Uncommon | Skill | 1 | Shared family card; Return 1 card(s) from your discard pile to your hand. Cannot return other Spire Legacy recovery cards.; Retain |
 | Cleanse Sigil | Uncommon | Skill | 1 | Class unique; Public-beta only; 3 Block; Remove all debuffs from yourself.; Exhaust |
@@ -154,7 +154,7 @@ Each class has 82 rewards on regular (20 common, 36 uncommon, 26 rare), or 85 on
 | Soulfire | Rare | Attack | 2 | Class unique; 13 damage; 6 Poison |
 | Perfect Ward | Rare | Skill | 2 | Class unique; 3 Block; Prevent the next 1 time(s) you would lose HP.; Exhaust |
 | Mana Fountain | Rare | Skill | 0 | Class unique; 2 Energy; Exhaust |
-| Grand Thesis | Rare | Skill | 1 | Class unique; 3 draw; Gain 1 Arcane Charge(s), up to the normal charge cap.; Exhaust |
+| Grand Thesis | Rare | Skill | 1 | Class unique; 2 draw; 1 Energy next turn; Gain 1 Arcane Charge(s), up to the normal charge cap.; Exhaust |
 | Hourglass | Rare | Skill | 1 | Class unique; Reduce the cost of 2 random card(s) in your hand by 1 this turn.; Exhaust |
 | Transmutation | Rare | Skill | 1 | Class unique; 2 draw; 2 Energy; Exhaust 2 card(s) from your hand.; Exhaust |
 | Infinite Script | Rare | Power | 2 | Class unique; 1 draw next turn; At the start of your turn, lose 1 HP and draw 1 card(s). |
@@ -173,7 +173,7 @@ Each class has 82 rewards on regular (20 common, 36 uncommon, 26 rare), or 85 on
 | Woven Incantation | Uncommon | Power | 1 | Shared family card; Every third Skill you play each turn grants 3 Block. |
 | Arcane Meter | Uncommon | Power | 1 | Class unique; Every third Skill you play each turn grants 1 Energy NEXT turn. |
 | Tower Library | Uncommon | Power | 2 | Class unique; Whenever a card is Retained, reduce its cost by 1 this combat. |
-| Moonstone Lance | Uncommon | Attack | 2 | Class unique; 6 damage; Whenever this is Retained, gain 4 damage this combat.; Retain |
+| Moonstone Lance | Uncommon | Attack | 1 | Class unique; 5 damage; Whenever this is Retained, gain 2 damage this combat.; Retain |
 | Geode Ward | Uncommon | Skill | 2 | Class unique; 10 Block; Whenever this is Retained, gain 3 Block this combat.; Retain |
 | Hex Rain | Uncommon | Attack | 2 | Class unique; 4 damage to all enemies; 2 Weak to all enemies |
 | Alchemist's Patience | Uncommon | Power | 1 | Shared family card; At the start of your turn, apply 2 Poison to ALL enemies. |
@@ -192,7 +192,7 @@ Each class has 82 rewards on regular (20 common, 36 uncommon, 26 rare), or 85 on
 
 | Card | Rarity | Type | Energy | Effects |
 | --- | --- | --- | ---: | --- |
-| Arrow | Basic | Attack | 1 | Class unique; 5 damage |
+| Arrow Strike | Basic | Attack | 1 | Class unique; 5 damage |
 | Sidestep | Basic | Skill | 1 | Class unique; 4 Block |
 | Challenge | Uncommon | Attack | 2 | Shared family card; 6 damage; 2 Vulnerable |
 | Family Oath | Rare | Attack | 2 | Shared family card; 6 damage ×2; 1 Strength; Exhaust |
@@ -235,7 +235,7 @@ Each class has 82 rewards on regular (20 common, 36 uncommon, 26 rare), or 85 on
 | Hooked Arrow | Uncommon | Attack | 1 | Class unique; 6 damage; Return 1 card(s) from your discard pile to your hand. Cannot return other Spire Legacy recovery cards. |
 | Ricochet | Uncommon | Attack | 1 | Class unique; 3 damage ×3; Hits target random enemies. |
 | Reposition | Uncommon | Skill | 1 | Class unique; 5 Block; 2 draw; 1 discard |
-| Scouting | Uncommon | Skill | 1 | Class unique; Public-beta only; 1 draw; Scry 3. |
+| Scouting | Uncommon | Skill | 1 | Class unique; Public-beta only; Scry 3.; 1 draw |
 | Double Dose | Uncommon | Skill | 1 | Class unique; Apply 3 Poison twice. |
 | Escape Route | Uncommon | Skill | 0 | Class unique; 2 discard; 1 Energy |
 | Pocket Arsenal | Uncommon | Skill | 1 | Class unique; Public-beta only; 1 draw; Reduce the cost of 1 random card(s) in your hand by 1 this turn.; Exhaust |

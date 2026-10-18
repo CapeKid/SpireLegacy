@@ -1,0 +1,345 @@
+{
+  "item": 3822395190,
+  "title": "Spire Legacy \u2014 Beta",
+  "visibility": "private",
+  "ownerVerified": true,
+  "publicListingUnchanged": true,
+  "downloadedFiles": 539,
+  "downloadMatches": true,
+  "modId": "SpireLegacyBeta",
+  "dllSha256": "6ece85b007232e5b5d900f2936dd087c4d2e624198e4edc998a801c56a891a7f",
+  "verifiedUtc": "2026-10-18T23:16:48.6999627Z",
+  "issue": 186,
+  "version": "1.0.38",
+  "publicGitHubBranchPushed": false,
+  "renaming": {
+    "changes": [
+      {
+        "id": "mage_strike",
+        "before": "Spark",
+        "after": "Spark Strike"
+      },
+      {
+        "id": "ranger_strike",
+        "before": "Arrow",
+        "after": "Arrow Strike"
+      }
+    ],
+    "stableCards": 360,
+    "allGameplayFieldsUnchanged": true
+  },
+  "nativeChecks": [
+    {
+      "branch": "regular",
+      "game": "v0.107.1",
+      "passedCases": 6,
+      "betaOnlyLoaded": true,
+      "temporaryBetaRemoved": true,
+      "cases": [
+        {
+          "key": "knight_strike",
+          "title": "Sword Strike",
+          "modelId": "CARD.SPIRELEGACY-C_KNIGHT_STRIKE",
+          "tags": [
+            "Strike"
+          ],
+          "upgraded": false,
+          "mode": "normal",
+          "cost": 1,
+          "pile": "Discard",
+          "energyDelta": -1,
+          "hpDelta": 0,
+          "blockDelta": 0,
+          "damage": [
+            5
+          ],
+          "hand": 3,
+          "cardCount": 26,
+          "generated": 0,
+          "conserved": true,
+          "saveRoundTrip": true,
+          "tableNodePresent": false
+        },
+        {
+          "key": "knight_strike",
+          "title": "Sword Strike+",
+          "modelId": "CARD.SPIRELEGACY-C_KNIGHT_STRIKE",
+          "tags": [
+            "Strike"
+          ],
+          "upgraded": true,
+          "mode": "normal",
+          "cost": 1,
+          "pile": "Discard",
+          "energyDelta": -1,
+          "hpDelta": 0,
+          "blockDelta": 0,
+          "damage": [
+            7
+          ],
+          "hand": 3,
+          "cardCount": 26,
+          "generated": 0,
+          "conserved": true,
+          "saveRoundTrip": true,
+          "tableNodePresent": false
+        },
+        {
+          "key": "mage_strike",
+          "title": "Spark Strike",
+          "modelId": "CARD.SPIRELEGACY-C_MAGE_STRIKE",
+          "tags": [
+            "Strike"
+          ],
+          "upgraded": false,
+          "mode": "normal",
+          "cost": 1,
+          "pile": "Discard",
+          "energyDelta": -1,
+          "hpDelta": 0,
+          "blockDelta": 0,
+          "damage": [
+            5
+          ],
+          "hand": 3,
+          "cardCount": 26,
+          "generated": 0,
+          "conserved": true,
+          "saveRoundTrip": true,
+          "tableNodePresent": false
+        },
+        {
+          "key": "mage_strike",
+          "title": "Spark Strike+",
+          "modelId": "CARD.SPIRELEGACY-C_MAGE_STRIKE",
+          "tags": [
+            "Strike"
+          ],
+          "upgraded": true,
+          "mode": "normal",
+          "cost": 1,
+          "pile": "Discard",
+          "energyDelta": -1,
+          "hpDelta": 0,
+          "blockDelta": 0,
+          "damage": [
+            7
+          ],
+          "hand": 3,
+          "cardCount": 26,
+          "generated": 0,
+          "conserved": true,
+          "saveRoundTrip": true,
+          "tableNodePresent": false
+        },
+        {
+          "key": "ranger_strike",
+          "title": "Arrow Strike",
+          "modelId": "CARD.SPIRELEGACY-C_RANGER_STRIKE",
+          "tags": [
+            "Strike"
+          ],
+          "upgraded": false,
+          "mode": "normal",
+          "cost": 1,
+          "pile": "Discard",
+          "energyDelta": -1,
+          "hpDelta": 0,
+          "blockDelta": 0,
+          "damage": [
+            5
+          ],
+          "hand": 3,
+          "cardCount": 26,
+          "generated": 0,
+          "conserved": true,
+          "saveRoundTrip": true,
+          "tableNodePresent": false
+        },
+        {
+          "key": "ranger_strike",
+          "title": "Arrow Strike+",
+          "modelId": "CARD.SPIRELEGACY-C_RANGER_STRIKE",
+          "tags": [
+            "Strike"
+          ],
+          "upgraded": true,
+          "mode": "normal",
+          "cost": 1,
+          "pile": "Discard",
+          "energyDelta": -1,
+          "hpDelta": 0,
+          "blockDelta": 0,
+          "damage": [
+            7
+          ],
+          "hand": 3,
+          "cardCount": 26,
+          "generated": 0,
+          "conserved": true,
+          "saveRoundTrip": true,
+          "tableNodePresent": false
+        }
+      ]
+    },
+    {
+      "branch": "beta",
+      "game": "v0.111.0",
+      "passedCases": 6,
+      "betaOnlyLoaded": true,
+      "temporaryBetaRemoved": true,
+      "cases": [
+        {
+          "key": "knight_strike",
+          "title": "Sword Strike",
+          "modelId": "CARD.SPIRELEGACY-C_KNIGHT_STRIKE",
+          "tags": [
+            "Strike"
+          ],
+          "upgraded": false,
+          "mode": "normal",
+          "cost": 1,
+          "pile": "Discard",
+          "energyDelta": -1,
+          "hpDelta": 0,
+          "blockDelta": 0,
+          "damage": [
+            5
+          ],
+          "hand": 3,
+          "cardCount": 26,
+          "generated": 0,
+          "conserved": true,
+          "saveRoundTrip": true,
+          "tableNodePresent": false
+        },
+        {
+          "key": "knight_strike",
+          "title": "Sword Strike+",
+          "modelId": "CARD.SPIRELEGACY-C_KNIGHT_STRIKE",
+          "tags": [
+            "Strike"
+          ],
+          "upgraded": true,
+          "mode": "normal",
+          "cost": 1,
+          "pile": "Discard",
+          "energyDelta": -1,
+          "hpDelta": 0,
+          "blockDelta": 0,
+          "damage": [
+            7
+          ],
+          "hand": 3,
+          "cardCount": 26,
+          "generated": 0,
+          "conserved": true,
+          "saveRoundTrip": true,
+          "tableNodePresent": false
+        },
+        {
+          "key": "mage_strike",
+          "title": "Spark Strike",
+          "modelId": "CARD.SPIRELEGACY-C_MAGE_STRIKE",
+          "tags": [
+            "Strike"
+          ],
+          "upgraded": false,
+          "mode": "normal",
+          "cost": 1,
+          "pile": "Discard",
+          "energyDelta": -1,
+          "hpDelta": 0,
+          "blockDelta": 0,
+          "damage": [
+            5
+          ],
+          "hand": 3,
+          "cardCount": 26,
+          "generated": 0,
+          "conserved": true,
+          "saveRoundTrip": true,
+          "tableNodePresent": false
+        },
+        {
+          "key": "mage_strike",
+          "title": "Spark Strike+",
+          "modelId": "CARD.SPIRELEGACY-C_MAGE_STRIKE",
+          "tags": [
+            "Strike"
+          ],
+          "upgraded": true,
+          "mode": "normal",
+          "cost": 1,
+          "pile": "Discard",
+          "energyDelta": -1,
+          "hpDelta": 0,
+          "blockDelta": 0,
+          "damage": [
+            7
+          ],
+          "hand": 3,
+          "cardCount": 26,
+          "generated": 0,
+          "conserved": true,
+          "saveRoundTrip": true,
+          "tableNodePresent": false
+        },
+        {
+          "key": "ranger_strike",
+          "title": "Arrow Strike",
+          "modelId": "CARD.SPIRELEGACY-C_RANGER_STRIKE",
+          "tags": [
+            "Strike"
+          ],
+          "upgraded": false,
+          "mode": "normal",
+          "cost": 1,
+          "pile": "Discard",
+          "energyDelta": -1,
+          "hpDelta": 0,
+          "blockDelta": 0,
+          "damage": [
+            5
+          ],
+          "hand": 3,
+          "cardCount": 26,
+          "generated": 0,
+          "conserved": true,
+          "saveRoundTrip": true,
+          "tableNodePresent": false
+        },
+        {
+          "key": "ranger_strike",
+          "title": "Arrow Strike+",
+          "modelId": "CARD.SPIRELEGACY-C_RANGER_STRIKE",
+          "tags": [
+            "Strike"
+          ],
+          "upgraded": true,
+          "mode": "normal",
+          "cost": 1,
+          "pile": "Discard",
+          "energyDelta": -1,
+          "hpDelta": 0,
+          "blockDelta": 0,
+          "damage": [
+            7
+          ],
+          "hand": 3,
+          "cardCount": 26,
+          "generated": 0,
+          "conserved": true,
+          "saveRoundTrip": true,
+          "tableNodePresent": false
+        }
+      ]
+    }
+  ],
+  "sourceCommit": "219d13e451bdda5ebdfac0c74cbfe7de7fc0d228",
+  "archiveSha256": "5e7665dea355b2bfe86489dfad11d9cb3ad00de6c984ad78c098ac3637bffe79",
+  "limits": [
+    "Windows owned-game checks; physical Steam Deck display remains for user testing.",
+    "The existing native Strike tag was verified; no Strike relic mechanics changed."
+  ]
+}

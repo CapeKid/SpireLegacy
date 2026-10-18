@@ -111,7 +111,7 @@ public static class CardResolutionOracle
                 Require(savedLegacy.DynamicVars.Damage.BaseValue==legacy.DynamicVars.Damage.BaseValue&&savedLegacy.DynamicVars.Block.BaseValue==legacy.DynamicVars.Block.BaseValue,"Saved base card stats differ.");
             }else if(!card.IsDupe)Require(restored.GetDescriptionForPile(PileType.Deck)==card.GetDescriptionForPile(PileType.Deck),"Native saved card text differs.");
             run.RemoveCard(restored);
-            return new {key,upgraded,mode,cost,pile=expectedPile.ToString(),energyDelta=player.PlayerCombatState.Energy-energy,hpDelta=creature.CurrentHp-hp,blockDelta=creature.Block-block,
+            return new {key,title=card.Title,modelId=card.Id.ToString(),tags=card.Tags.Select(t=>t.ToString()).ToArray(),upgraded,mode,cost,pile=expectedPile.ToString(),energyDelta=player.PlayerCombatState.Energy-energy,hpDelta=creature.CurrentHp-hp,blockDelta=creature.Block-block,
                 damage=enemies.Select((e,i)=>enemyHp[i]-e.CurrentHp).ToArray(),hand=player.PlayerCombatState.Hand.Cards.Count,cardCount=actual.Length,generated,conserved=true,saveRoundTrip=true,tableNodePresent=false};
         }
     }

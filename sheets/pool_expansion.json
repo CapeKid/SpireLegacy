@@ -92,8 +92,8 @@
     "cardId": "mage_grand_thesis",
     "classId": "mage",
     "availability": "all",
-    "build": "draw and Arcane Charge",
-    "reference": "Skim: one-Energy, one-use draw; also grants one bounded Arcane Charge."
+    "build": "Arcane Flow setup",
+    "reference": "One-use draw/charge setup banks next-turn Energy to play Arcane Flow draws; one fewer immediate card, upgrade adds one card and one delayed Energy."
   },
   {
     "id": "mage_hourglass",

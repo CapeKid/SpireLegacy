@@ -1,0 +1,160 @@
+{
+  "item": 3822395190,
+  "title": "Spire Legacy \u2014 Beta",
+  "visibility": "private",
+  "ownerVerified": true,
+  "publicListingUnchanged": true,
+  "downloadedFiles": 541,
+  "downloadMatches": true,
+  "modId": "SpireLegacyBeta",
+  "dllSha256": "d1d5e1b5d87f3c961f0fc0381758e0ec27969ff08d176f181e7408959ac7261c",
+  "verifiedUtc": "2026-10-18T16:26:35.8207431Z",
+  "version": "1.0.37",
+  "nativeChecks": [
+    {
+      "branch": "regular",
+      "game": "v0.107.1",
+      "publicCopyInstalled": true,
+      "publicCopyDisabled": true,
+      "betaLoaded": true,
+      "passedCases": 6,
+      "temporaryBetaRemoved": true,
+      "cases": [
+        {
+          "key": "mage_spell_notes",
+          "up": false,
+          "mode": "normal",
+          "scry": 3,
+          "printedDraw": 1,
+          "flowDraw": 2,
+          "saveRoundTrip": true
+        },
+        {
+          "key": "mage_rune_detonation",
+          "up": false,
+          "mode": "full",
+          "cls": "mage",
+          "refund": 1,
+          "draw": 2,
+          "nextRefund": 0,
+          "saveRoundTrip": true
+        },
+        {
+          "key": "mage_rune_detonation",
+          "up": false,
+          "mode": "replay",
+          "cls": "mage",
+          "refund": 1,
+          "draw": 2,
+          "nextRefund": 0,
+          "saveRoundTrip": true
+        },
+        {
+          "key": "mage_spell_notes",
+          "up": true,
+          "mode": "normal",
+          "scry": 4,
+          "printedDraw": 1,
+          "flowDraw": 2,
+          "saveRoundTrip": true
+        },
+        {
+          "key": "mage_rune_detonation",
+          "up": true,
+          "mode": "full",
+          "cls": "mage",
+          "refund": 1,
+          "draw": 2,
+          "nextRefund": 0,
+          "saveRoundTrip": true
+        },
+        {
+          "key": "mage_rune_detonation",
+          "up": true,
+          "mode": "replay",
+          "cls": "mage",
+          "refund": 1,
+          "draw": 2,
+          "nextRefund": 0,
+          "saveRoundTrip": true
+        }
+      ]
+    },
+    {
+      "branch": "beta",
+      "game": "v0.111.0",
+      "publicCopyInstalled": true,
+      "publicCopyDisabled": true,
+      "betaLoaded": true,
+      "passedCases": 6,
+      "temporaryBetaRemoved": true,
+      "cases": [
+        {
+          "key": "mage_spell_notes",
+          "up": false,
+          "mode": "normal",
+          "scry": 3,
+          "printedDraw": 1,
+          "flowDraw": 2,
+          "saveRoundTrip": true
+        },
+        {
+          "key": "mage_rune_detonation",
+          "up": false,
+          "mode": "full",
+          "cls": "mage",
+          "refund": 1,
+          "draw": 2,
+          "nextRefund": 0,
+          "saveRoundTrip": true
+        },
+        {
+          "key": "mage_rune_detonation",
+          "up": false,
+          "mode": "replay",
+          "cls": "mage",
+          "refund": 1,
+          "draw": 2,
+          "nextRefund": 0,
+          "saveRoundTrip": true
+        },
+        {
+          "key": "mage_spell_notes",
+          "up": true,
+          "mode": "normal",
+          "scry": 4,
+          "printedDraw": 1,
+          "flowDraw": 2,
+          "saveRoundTrip": true
+        },
+        {
+          "key": "mage_rune_detonation",
+          "up": true,
+          "mode": "full",
+          "cls": "mage",
+          "refund": 1,
+          "draw": 2,
+          "nextRefund": 0,
+          "saveRoundTrip": true
+        },
+        {
+          "key": "mage_rune_detonation",
+          "up": true,
+          "mode": "replay",
+          "cls": "mage",
+          "refund": 1,
+          "draw": 2,
+          "nextRefund": 0,
+          "saveRoundTrip": true
+        }
+      ]
+    }
+  ],
+  "archiveSha256": "b832b9772c3de6c92d5696bfb2d50c695b369ee4b19bee637149ae930e4c4042",
+  "sourceCommit": "c4bb4a3f21b0f2e36256ae90e3c65e1c0079e649",
+  "limitations": [
+    "Keep only one channel enabled; simultaneous gameplay use is not supported.",
+    "Windows native launch and paid-play tests; physical Steam Deck confirmation remains needed.",
+    "Both channels share family progress; finish a climb before switching."
+  ]
+}

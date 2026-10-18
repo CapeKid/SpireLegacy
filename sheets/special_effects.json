@@ -114,5 +114,9 @@
   {
     "id": "upgrade_attacks",
     "summary": "Upgrade all Attacks in your hand for this combat."
+  },
+  {
+    "id": "charged_energy",
+    "summary": "If you have 2 Arcane Charges and Arcane Flow is ready, gain {n} Energy."
   }
 ]
