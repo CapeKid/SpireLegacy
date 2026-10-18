@@ -120,6 +120,7 @@ public abstract class LegacyCard : CustomCardModel
             "block_damage" => Owner.Creature.Block - basis,
             "chain_damage" => (Owner.Creature.GetPower<P_class>()?.AttacksThisTurn ?? 0) * n - basis,
             "exhaust_damage" => Math.Min(10, PileType.Exhaust.GetPile(Owner).Cards.Count) * n,
+            "arcane_aftershock" when PlayerBloodlines.Heir(Owner).classId=="mage" && Owner.Creature.GetPower<P_class>() is {ArcaneDrawUsed:true} => n,
             "guard_bonus" when Owner.Creature.Block > 0 => n,
             "execute" when target is not null && target.CurrentHp * 2 <= target.MaxHp => basis * (n - 1),
             "marked_bonus" when target is not null && (target.GetPowerAmount<VulnerablePower>() > 0 || target.GetPowerAmount<PoisonPower>() > 0) => n,

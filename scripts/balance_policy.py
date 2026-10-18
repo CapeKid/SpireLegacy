@@ -1,5 +1,6 @@
 """Targeted balance overrides shared by authoring regeneration and release updates."""
 CARD_OVERRIDES = {
+    'mage_mana_burn': dict(damage=5, upgradeDamage=2, hpLoss=0, exhaust=True, special='arcane_aftershock', specialAmount=5, upgradeSpecial=0),
     'ranger_double_dose': dict(special='poison_twice', specialAmount=3, upgradeSpecial=1, exhaust=False, upgradeCost=False),
     'ranger_trail_reset': dict(exhaust=True),
     'mage_slow_incantation': dict(upgradeCost=False, upgradeBlock=2),
