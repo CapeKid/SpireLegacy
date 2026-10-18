@@ -52,4 +52,4 @@ def class_rules(row):
     if row['id'] == 'knight':
         row['summary'] = 'Playing a Skill primes your next Attack for +2 damage on every hit. Attacking consumes the counter.'
     if row['id'] == 'mage':
-        row['summary'] = 'Each Skill grants one charge, up to two. Your next Attack gains +1 damage per charge on every hit and consumes them.'
+        row['summary'] = 'Each Skill grants 1 Arcane Charge (max 2). Your next Attack consumes all charges to draw that many cards, once per turn.'

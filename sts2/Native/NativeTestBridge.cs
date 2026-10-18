@@ -91,6 +91,7 @@ public static class NativeTestBridge
                 case "crown-play":await WaitForPlay(RunState().Players.Single());result=await CrownOracle.Play(RunState(),request.GetProperty("upgrade").GetBoolean(),request.GetProperty("win").GetBoolean());break;
                 case "crown-gold":result=await CrownOracle.Gold(RunState(),request.GetProperty("gained").GetInt32(),request.GetProperty("spent").GetInt32(),request.GetProperty("lost").GetInt32(),request.GetProperty("stolen").GetInt32(),request.GetProperty("returned").GetInt32());break;
                 case "power-class":await WaitForPlay(RunState().Players.Single());result=await PowerAuditOracle.Class(RunState(),request.GetProperty("mode").GetString()!,request.GetProperty("upgrade").GetBoolean(),UseTestSelector());break;
+                case "mage-flow":await WaitForPlay(RunState().Players.Single());result=await PowerAuditOracle.MageFlow(RunState(),request.GetProperty("charges").GetInt32(),request.GetProperty("upgrade").GetBoolean(),request.GetProperty("mode").GetString()!);break;
                 case "power-damage-control":result=await PowerAuditOracle.DamageControl(RunState(),request.GetProperty("power").GetString()!,request.GetProperty("upgrade").GetBoolean());break;
                 case "power-multihit-coop-prepare":result=await PowerAuditOracle.MultihitCoopPrepare(RunState(),request.GetProperty("upgrade").GetBoolean());break;
                 case "power-multihit-coop-play":result=await PowerAuditOracle.MultihitCoopPlay(RunState(),request.GetProperty("upgrade").GetBoolean());break;

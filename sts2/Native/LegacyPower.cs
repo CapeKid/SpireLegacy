@@ -37,11 +37,12 @@ public abstract class LegacyPower:CustomPowerModel
  private int charges,attacks;
  [SavedProperty] public int Charges {get=>charges;set{charges=value;if(IsMutable)InvokeDisplayAmountChanged();}}
  [SavedProperty] public int AttacksThisTurn {get=>attacks;set{attacks=value;if(IsMutable)InvokeDisplayAmountChanged();}}
+ [SavedProperty] public bool ArcaneDrawUsed {get;set;}
  public override int DisplayAmount=>Key=="class"?(PlayerBloodlines.Heir(Owner.Player).classId=="ranger"?AttacksThisTurn%3:Charges):Amount;
  public override LocString Description {get{var text=base.Description;text.Add("Amount",Amount);text.Add("ClassRules",Design.Get("classes",PlayerBloodlines.Heir(Owner.Player).classId).Text("summary"));text.Add("Counter",DisplayAmount);return text;}}
  public override async Task AfterPlayerTurnStart(PlayerChoiceContext context,Player player)
  {
-  if(player!=Owner.Player!)return;plays=0;discardPaid=false;AttacksThisTurn=0;
+  if(player!=Owner.Player!)return;plays=0;discardPaid=false;AttacksThisTurn=0;ArcaneDrawUsed=false;
   switch(Key){
    case "brutality":await CreatureCmd.Damage(context,Owner,Amount,ValueProp.Unblockable|ValueProp.Unpowered,Owner);await CardPileCmd.Draw(context,Amount,player);break;
    case "berserk":await PlayerCmd.GainEnergy(Amount,player);break;
@@ -59,7 +60,10 @@ public abstract class LegacyPower:CustomPowerModel
   var card=play.Card;if(card.Owner.Creature!=Owner)return;
   if(Key=="class"){
    if(card.Type==CardType.Skill){if(PlayerBloodlines.Heir(Owner.Player).classId=="knight")Charges=1;if(PlayerBloodlines.Heir(Owner.Player).classId=="mage")Charges=Math.Min(2,Charges+1);}
-   if(card.Type==CardType.Attack){AttacksThisTurn++;if(PlayerBloodlines.Heir(Owner.Player).classId is "knight" or "mage")Charges=0;
+   if(card.Type==CardType.Attack){AttacksThisTurn++;
+    var spent=Charges;if(PlayerBloodlines.Heir(Owner.Player).classId is "knight" or "mage")Charges=0;
+    // Claim before awaiting: replays and further Attacks cannot draw again this turn.
+    if(PlayerBloodlines.Heir(Owner.Player).classId=="mage"&&spent>0&&!ArcaneDrawUsed){ArcaneDrawUsed=true;await CardPileCmd.Draw(context,spent,Owner.Player!);}
     if(PlayerBloodlines.Heir(Owner.Player).classId=="ranger"&&AttacksThisTurn%3==0){
      await CardPileCmd.Draw(context,1+FindAmount("quiver"),Owner.Player!);
      var opponents=Owner.CombatState!.GetOpponentsOf(Owner).Where(e=>e.IsAlive).ToArray();
@@ -78,7 +82,7 @@ public abstract class LegacyPower:CustomPowerModel
   // Like native additive attack bonuses, apply to every powered hit. Charges
   // remain available for the whole card and are consumed in AfterCardPlayed.
   if(Key!="class"||dealer!=Owner||card?.Type!=CardType.Attack||!props.IsPoweredAttack()||target is null)return 0;
-  return PlayerBloodlines.Heir(Owner.Player).classId switch{"knight"=>Charges>0?2:0,"mage"=>Charges*(1+FindAmount("reservoir")),_=>0};
+  return PlayerBloodlines.Heir(Owner.Player).classId switch{"knight"=>Charges>0?2:0,"mage"=>Charges*FindAmount("reservoir"),_=>0};
  }
  private int FindAmount(string key)=>Owner.Powers.OfType<LegacyPower>().Where(p=>p.Key==key).Sum(p=>p.Amount);
  public override async Task AfterCardDiscarded(PlayerChoiceContext context,CardModel card)

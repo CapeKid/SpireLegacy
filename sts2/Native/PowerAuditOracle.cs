@@ -84,7 +84,7 @@ public static class PowerAuditOracle
             var saved=SavedProperties.From(counter)??new SavedProperties();
             var json=JsonSerializer.Serialize(saved,new JsonSerializerOptions{IncludeFields=true});
             var loaded=(P_class)ModelDb.Power<P_class>().ToMutable();JsonSerializer.Deserialize<SavedProperties>(json,new JsonSerializerOptions{IncludeFields=true})!.Fill(loaded);
-            Require(loaded.Charges==counter.Charges&&loaded.AttacksThisTurn==counter.AttacksThisTurn,"Saved class properties differ.");
+            Require(loaded.Charges==counter.Charges&&loaded.AttacksThisTurn==counter.AttacksThisTurn&&loaded.ArcaneDrawUsed==counter.ArcaneDrawUsed,"Saved class properties differ.");
             var clone=(P_class)counter.MutableClone();clone.Charges=0;
             Require(counter.Charges==charges.Last(),"Power clone shares counters.");
             await SaveManager.Instance.SaveRun(null);
@@ -106,7 +106,7 @@ public static class PowerAuditOracle
             if(mode is "lethal" or "lethal-chain")enemies[0].SetCurrentHpInternal(1);
             var primed=counter.Charges;var baseDamage=card.DynamicVars.Damage.BaseValue;
             observed=card;hits.Clear();await Play(card,enemies[0]);
-            var bonus=cls=="knight"&&primed>0?2:cls=="mage"?primed*(1+(mode=="reservoir"?2:0)):0;
+            var bonus=cls=="knight"&&primed>0?2:cls=="mage"?primed*(mode=="reservoir"?2:0):0;
             var seen=new HashSet<Creature>();
             for(var i=0;i<hits.Count;i++){var hit=hits[i];var fresh=seen.Add(hit.target);var extra=firstHitBaseline?(fresh?bonus:0):mode=="replay"&&i>=2?0:bonus;var expected=mode is "lethal" or "lethal-chain"?1:baseDamage+extra;Require(hit.damage==expected,$"Class attack damage {cls}/{mode}: {hit.damage}, expected {expected}");}
             Require(hits.Count>0,"No observed powered hits.");
@@ -115,6 +115,50 @@ public static class PowerAuditOracle
             if(mode=="lethal-chain")Require(hits.Count==1&&enemies.Skip(1).All(e=>e.IsAlive),"Dead target continued receiving chain hits.");
             return new{cls,mode,up,charges,primed,bonus,hits=hits.Select(h=>h.damage).ToArray(),distinctTargets=seen.Count,attacks=counter.AttacksThisTurn,counter.Charges,cloneIndependent=true,savedProperties=true,pile=card.Pile?.Type.ToString()};
         }finally{observed=null;NativeStartup.Remove(patch);}
+    }
+    public static async Task<object> MageFlow(RunState run,int chargeCount,bool up,string mode)
+    {
+        var player=run.Players.Single();Require(PlayerBloodlines.Heir(player).classId=="mage","Mage fixture required.");
+        var enemies=await Setup(player);var counter=player.Creature.GetPower<P_class>()!;
+        var hand=PileType.Hand.GetPile(player);var draws=new List<int>();var damage=new List<int>();
+        if(mode=="reservoir")await Apply(player,"reservoir",2);
+        async Task Skill()=>await Play(await Add(player,ModelDb.Card<DefendIronclad>(),up));
+        async Task Attack(int expectedDraw){
+            var card=await Add(player,ModelDb.Card<TwinStrike>(),up);var before=hand.Cards.Count;
+            var hp=enemies[0].CurrentHp;var spent=counter.Charges;
+            var repeats=player.Creature.Powers.OfType<LegacyPower>().Any(p=>p.Key=="double_tap")?2:1;
+            await Play(card,enemies[0]);var drawn=hand.Cards.Count-before+1;draws.Add(drawn);
+            var lost=hp-enemies[0].CurrentHp;damage.Add(lost);
+            Require(lost==2*(up?7:5)*repeats+(mode=="reservoir"?4*spent:0),"Mage native HP damage differs.");
+            Require(drawn==expectedDraw,"Arcane Flow drew "+drawn+", expected "+expectedDraw);
+            Require(counter.Charges==0,"Arcane Flow did not consume charges.");
+        }
+        for(var i=0;i<chargeCount;i++)await Skill();
+        Require(counter.Charges==Math.Min(2,chargeCount),"Arcane Flow charge cap.");
+        if(mode=="replay")await Apply(player,"double_tap",1);
+        if(mode=="blocked")await Apply(player,"no_draw",1);
+        if(mode=="full")while(hand.Cards.Count<9)await Add(player,ModelDb.Card<DefendIronclad>(),up);
+        var expected=mode is "blocked" or "full"?0:Math.Min(2,chargeCount);
+        // Full hand is inspected separately: an Attack in Play may leave a slot.
+        if(mode=="full")expected=1;
+        await Attack(expected);
+        Require(counter.ArcaneDrawUsed==(chargeCount>0),"Uncharged Attack used the draw allowance.");
+        BaseLib.Utils.BetaMainCompatibility.CacheSavedProperties(typeof(P_class));
+        var saved=SavedProperties.From(counter)??new SavedProperties();
+        var loaded=(P_class)ModelDb.Power<P_class>().ToMutable();saved.Fill(loaded);
+        Require(loaded.ArcaneDrawUsed==counter.ArcaneDrawUsed,"Arcane Flow allowance serialization.");
+        var clone=(P_class)counter.MutableClone();clone.ArcaneDrawUsed=!counter.ArcaneDrawUsed;
+        Require(clone.ArcaneDrawUsed!=counter.ArcaneDrawUsed,"Arcane Flow clone shares allowance.");
+        foreach(var held in hand.Cards.ToArray())await CardPileCmd.Add(held,PileType.Discard,skipVisuals:true);
+        if(mode=="blocked")await PowerCmd.Remove(player.Creature.Powers.OfType<NoDrawPower>().Single());
+        await Skill();await Skill();await Attack(chargeCount==0?2:0);
+        // Unspent charges survive the turn; the once-per-turn draw allowance resets.
+        await Skill();Require(counter.Charges==1,"Missing banked Arcane Charge.");
+        await BalanceOracle.End(player,true);
+        Require(!counter.ArcaneDrawUsed&&counter.Charges==1,"Arcane Flow turn reset/carry.");
+        foreach(var held in hand.Cards.ToArray())await CardPileCmd.Add(held,PileType.Discard,skipVisuals:true);
+        await Attack(1);
+        return new{chargeCount,up,mode,draws,damage,serialized=true,cloneIndependent=true,realTurnReset=true,bankedCharge=true};
     }
     public static async Task<object> DamageControl(RunState run,string power,bool up)
     {
@@ -149,7 +193,7 @@ public static class PowerAuditOracle
             foreach(var card in player.PlayerCombatState.Hand.Cards.OfType<TwinStrike>().ToArray()){
                 observed=card;hits.Clear();await Play(card,target);measured.Add(hits.Select(h=>h.damage).ToArray());Require(counter.Charges==0,"Co-op charge consumption.");
             }
-            var damage=up?7:5;Require(measured.Count==2&&measured[0].SequenceEqual(new[]{damage+2,damage+2})&&measured[1].SequenceEqual(new[]{damage,damage}),"Co-op multi-hit class effect.");
+            var damage=up?7:5;Require(measured.Count==2&&measured[0].SequenceEqual(new[]{damage+(PlayerBloodlines.Heir(player).classId=="knight"?2:0),damage+(PlayerBloodlines.Heir(player).classId=="knight"?2:0)})&&measured[1].SequenceEqual(new[]{damage,damage}),"Co-op multi-hit class effect.");
             Require(others.All(o=>o.p.Creature.GetPower<P_class>()!.Charges==o.charges&&o.p.PlayerCombatState!.Hand.Cards.Count==o.hand&&o.p.PlayerCombatState.Energy==o.energy),"Multi-hit class effect leaked owners.");
             return new{owner=player.NetId,cls=PlayerBloodlines.Heir(player).classId,up,primed,hits=measured,counter.Charges,ownerOnly=true,checksumNext=checkpoint+4};
         }finally{observed=null;NativeStartup.Remove(patch);}

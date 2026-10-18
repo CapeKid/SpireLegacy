@@ -19,7 +19,7 @@
     "dexterity": 0,
     "heal": 0,
     "signature": "flame",
-    "summary": "Each Skill grants one charge, up to two. Your next Attack gains +1 damage per charge on every hit and consumes them."
+    "summary": "Each Skill grants 1 Arcane Charge (max 2). Your next Attack consumes all charges to draw that many cards, once per turn."
   },
   {
     "id": "ranger",
