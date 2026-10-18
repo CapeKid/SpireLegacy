@@ -118,5 +118,9 @@
   {
     "id": "charged_energy",
     "summary": "If you have 2 Arcane Charges and Arcane Flow is ready, gain {n} Energy."
+  },
+  {
+    "id": "arcane_aftershock",
+    "summary": "If Arcane Flow has triggered this turn, deal {n} additional damage."
   }
 ]

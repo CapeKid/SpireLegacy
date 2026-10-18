@@ -134,7 +134,7 @@ Each class has 82 rewards on regular (20 common, 36 uncommon, 26 rare), or 85 on
 | Inferno Wave | Uncommon | Attack | 2 | Class unique; 10 damage to all enemies |
 | Frozen Spear | Uncommon | Attack | 2 | Class unique; Public-beta only; 8 damage; 1 Weak; 1 Vulnerable |
 | Venom Rune | Uncommon | Attack | 1 | Class unique; 4 damage; 3 Poison |
-| Mana Burn | Uncommon | Attack | 0 | Class unique; 9 damage; 3 HP cost |
+| Mana Burn | Uncommon | Attack | 0 | Class unique; 5 damage; If Arcane Flow has triggered this turn, deal 5 additional damage.; Exhaust |
 | Rune Detonation | Uncommon | Attack | 1 | Class unique; 6 damage; If you have 2 Arcane Charges and Arcane Flow is ready, gain 1 Energy.; Retain |
 | Toxic Cloud | Uncommon | Skill | 2 | Class unique; 4 Poison to all enemies |
 | Overcharge | Uncommon | Skill | 0 | Class unique; 3 HP cost; 2 Energy next turn; Gain 2 Arcane Charge(s), up to the normal charge cap.; Exhaust |

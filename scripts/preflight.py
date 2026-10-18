@@ -112,7 +112,7 @@ def validate(historical_assets=False):
         for key in shared:
             if key not in cards:continue
             card=next(r for r in sheets['cards'] if r['id']==key)
-            if card['rarity']=='BASIC' or card['power'] in ('reservoir','quiver') or card['special'] in ('charge_gain','charged_energy'):errors.append('Class-specific mechanic in shared core '+key)
+            if card['rarity']=='BASIC' or card['power'] in ('reservoir','quiver') or card['special'] in ('charge_gain','charged_energy','arcane_aftershock'):errors.append('Class-specific mechanic in shared core '+key)
     if any(shared!=shared_sets[0] for shared in shared_sets):errors.append('Shared core differs by class')
     if len(active)!=187:errors.append('Expected 187 regular active cards across all classes')
     for row in sheets.get('branch_cards',[]):

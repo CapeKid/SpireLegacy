@@ -211,6 +211,31 @@ public static class PowerAuditOracle
             return new{key,up,mode,drawn,hpLoss=loss,nextEnergy=card.DesignCard.Amount("nextEnergy"),flowDraw=2,saveRoundTrip=true};
         }
     }
+    public static async Task<object> ManaBurn(RunState run,bool up,string mode)
+    {
+        var player=run.Players.Single();var enemies=await Setup(player);var counter=player.Creature.GetPower<P_class>()!;
+        var hand=PileType.Hand.GetPile(player);var cls=PlayerBloodlines.Heir(player).classId;
+        async Task Skill()=>await Play(await Add(player,ModelDb.Card<DefendIronclad>()));
+        if(mode=="blocked")await Apply(player,"no_draw",1);
+        if(mode is "charged" or "flow" or "reset" or "blocked" or "replay" or "replay-charge"){await Skill();await Skill();}
+        if(mode=="one")await Skill();
+        if(mode is "flow" or "one" or "reset" or "blocked" or "replay" or "uncharged-attack")await Play(await Add(player,ModelDb.Card<StrikeIronclad>()),enemies[0]);
+        if(mode=="reset")await BalanceOracle.End(player,true);
+        if(mode is "replay" or "replay-charge")await Apply(player,"double_tap",1);
+        var used=counter.ArcaneDrawUsed;var primed=counter.Charges;
+        var card=(LegacyCard)await Add(player,NativeCards.Get("mage_mana_burn"),up);
+        var restored=(LegacyCard)run.LoadCard(card.ToSerializable(),player);
+        Require(restored.Id==card.Id&&restored.DesignCard.Rules()==card.DesignCard.Rules()&&restored.IsUpgraded==up,"Mana Burn saved identity/rules.");run.RemoveCard(restored);
+        var hp=player.Creature.CurrentHp;var enemyHp=enemies[0].CurrentHp;var beforeHand=hand.Cards.Count;
+        await Play(card,enemies[0]);
+        var plays=mode is "replay" or "replay-charge"?2:1;
+        var bonus=cls=="mage"&&used?5:0;var expected=(up?7:5)*plays+bonus*plays+(mode=="replay-charge"?5:0);
+        var damage=enemyHp-enemies[0].CurrentHp;var hpLoss=hp-player.Creature.CurrentHp;var drawn=hand.Cards.Count-beforeHand+1;
+        Require(damage==expected,$"Mana Burn damage {mode}: {damage}, expected {expected}.");
+        Require(hpLoss==0&&card.Pile?.Type==PileType.Exhaust,"Mana Burn must cost no HP and Exhaust.");
+        Require(drawn==(mode is "charged" or "replay-charge"?2:0),"Mana Burn passive draw sequencing.");
+        return new{mode,up,cls,usedBefore=used,primed,damage,hpLoss,drawn,plays,pile=card.Pile?.Type.ToString(),cost=card.DesignCard.Cost,modelId=card.Id.ToString(),saveRoundTrip=true};
+    }
     public static async Task<object> DamageControl(RunState run,string power,bool up)
     {
         const string patch="CapeKid.SpireLegacy2.PowerAuditControl";var harmony=new Harmony(patch);var player=run.Players.Single();

@@ -367,7 +367,7 @@
     "types": ["dict"],
     "required": ["id", "summary"],
     "fields": {
-      "id": {"types": ["str"], "pattern": "[a-z][a-z0-9_]*", "enum": ["block_damage", "chain_damage", "charge_gain", "charged_energy", "cleanse", "discard_block", "discard_draw", "discard_energy", "discount_hand", "double_block", "double_poison", "poison_twice", "execute", "exhaust_block", "exhaust_damage", "exhaust_nonattacks", "exhaust_one", "exhume", "free_hand", "guard_bonus", "guarded_strength", "marked_bonus", "random_attack", "refill_hand", "retain_block", "retain_damage", "retrieve", "scry", "upgrade_attacks", "wounds"]},
+      "id": {"types": ["str"], "pattern": "[a-z][a-z0-9_]*", "enum": ["arcane_aftershock", "block_damage", "chain_damage", "charge_gain", "charged_energy", "cleanse", "discard_block", "discard_draw", "discard_energy", "discount_hand", "double_block", "double_poison", "poison_twice", "execute", "exhaust_block", "exhaust_damage", "exhaust_nonattacks", "exhaust_one", "exhume", "free_hand", "guard_bonus", "guarded_strength", "marked_bonus", "random_attack", "refill_hand", "retain_block", "retain_damage", "retrieve", "scry", "upgrade_attacks", "wounds"]},
       "summary": {"types": ["str"]}
     }
   },

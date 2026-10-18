@@ -8843,7 +8843,7 @@
     },
     "after": {
       "cost": 0,
-      "damage": 9,
+      "damage": 5,
       "block": 0,
       "hits": 1,
       "draw": 0,
@@ -8855,7 +8855,7 @@
       "vulnerable": 0,
       "poison": 0,
       "heal": 0,
-      "hpLoss": 3,
+      "hpLoss": 0,
       "vigor": 0,
       "thorns": 0,
       "plated": 0,
@@ -8864,9 +8864,9 @@
       "nextBlock": 0,
       "power": "none",
       "magic": 0,
-      "special": "none",
-      "specialAmount": 0,
-      "exhaust": false,
+      "special": "arcane_aftershock",
+      "specialAmount": 5,
+      "exhaust": true,
       "upgradeDamage": 2,
       "upgradeBlock": 0,
       "upgradeMagic": 0,
@@ -8874,7 +8874,7 @@
       "upgradeCost": false,
       "upgradeDiscard": 0
     },
-    "reason": "Weaker no-manor baseline; avoid compounded effects/upgrades and free positive-draw cycles."
+    "reason": "Mage Arcane Flow payoff: HP-free single-use Attack gains 5 damage after the owner has triggered Arcane Flow this turn. Unlike Knight Bloodied Blade, it rewards sequencing and Exhausts. Upgrade improves only printed damage."
   },
   {
     "id": "mage_meteor_fragment",

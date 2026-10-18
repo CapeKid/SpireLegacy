@@ -58,7 +58,7 @@ public static class CardEffects
   switch(row.Text("special")){
    case "guarded_strength":if(creature.Block>0)await Apply(context,"strength",creature,amount,creature,card);return;
    case "upgrade_attacks":foreach(var held in hand.Cards.Where(c=>c.Type==CardType.Attack&&c.IsUpgradable).ToArray())CardCmd.Upgrade(held);return;
-   case "none":case "block_damage":case "chain_damage":case "random_attack":case "execute":case "guard_bonus":case "marked_bonus":case "scry":case "exhaust_damage":case "retain_damage":case "retain_block":case "discard_draw":case "discard_energy":case "discard_block":return;
+   case "none":case "arcane_aftershock":case "block_damage":case "chain_damage":case "random_attack":case "execute":case "guard_bonus":case "marked_bonus":case "scry":case "exhaust_damage":case "retain_damage":case "retain_block":case "discard_draw":case "discard_energy":case "discard_block":return;
    case "wounds":for(var i=0;i<amount;i++)await CardPileCmd.AddGeneratedCardToCombat(card.CombatState!.CreateCard(ModelDb.Card<MegaCrit.Sts2.Core.Models.Cards.Wound>(),player),PileType.Draw,player,CardPilePosition.Random);break;
    // The native combined command defers Sly autoplay until the exchange draw
    // finishes. Separate Discard/Draw calls let Reflex redraw the discarded fuel.
