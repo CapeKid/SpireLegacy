@@ -202,6 +202,7 @@ foreach (var upgraded in new[] { false, true })
     Check(prophecy.Cost == vault.Cost && prophecy.SpecialAmount == vault.SpecialAmount && prophecy.Amount("draw") > vault.Amount("draw"), "Rare recovery offers extra draw over uncommon recovery");
     var thesis = new CardDesign("mage_grand_thesis", upgraded);
     Check(thesis.Cost == 1 && thesis.Row.Flag("exhaust") && thesis.SpecialAmount == 1, "Grand Thesis has affordable draw without a wasted charge upgrade");
+    Check(new CardDesign("mage_spell_notes",upgraded).Rules().StartsWith($"Scry {(upgraded?4:3)}.\nDraw 1 card(s)."),"Spell Notes text matches native Scry-before-draw execution");
 }
 var baseMeditation = new CardDesign("knight_battle_meditation");
 var upgradedMeditation = new CardDesign("knight_battle_meditation", true);

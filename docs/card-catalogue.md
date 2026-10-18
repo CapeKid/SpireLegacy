@@ -128,7 +128,7 @@ Each class has 82 rewards on regular (20 common, 36 uncommon, 26 rare), or 85 on
 | Frost Ring | Common | Attack | 1 | Class unique; 3 damage to all enemies; 1 Weak to all enemies |
 | Mana Shield | Common | Skill | 1 | Class unique; 4 Block; 1 Energy next turn |
 | Cold Read | Common | Skill | 0 | Shared family card; 1 draw; 1 discard |
-| Spell Notes | Common | Skill | 1 | Class unique; 1 draw; Scry 3.; Retain |
+| Spell Notes | Common | Skill | 1 | Class unique; Scry 3.; 1 draw; Retain |
 | Kindle | Common | Skill | 0 | Class unique; 2 Block; Gain 1 Arcane Charge(s), up to the normal charge cap.; Exhaust |
 | Thunderchain | Uncommon | Attack | 1 | Class unique; 2 damage ×4; Hits target random enemies. |
 | Inferno Wave | Uncommon | Attack | 2 | Class unique; 10 damage to all enemies |
@@ -235,7 +235,7 @@ Each class has 82 rewards on regular (20 common, 36 uncommon, 26 rare), or 85 on
 | Hooked Arrow | Uncommon | Attack | 1 | Class unique; 6 damage; Return 1 card(s) from your discard pile to your hand. Cannot return other Spire Legacy recovery cards. |
 | Ricochet | Uncommon | Attack | 1 | Class unique; 3 damage ×3; Hits target random enemies. |
 | Reposition | Uncommon | Skill | 1 | Class unique; 5 Block; 2 draw; 1 discard |
-| Scouting | Uncommon | Skill | 1 | Class unique; Public-beta only; 1 draw; Scry 3. |
+| Scouting | Uncommon | Skill | 1 | Class unique; Public-beta only; Scry 3.; 1 draw |
 | Double Dose | Uncommon | Skill | 1 | Class unique; Apply 3 Poison twice. |
 | Escape Route | Uncommon | Skill | 0 | Class unique; 2 discard; 1 Energy |
 | Pocket Arsenal | Uncommon | Skill | 1 | Class unique; Public-beta only; 1 draw; Reduce the cost of 1 random card(s) in your hand by 1 this turn.; Exhaust |

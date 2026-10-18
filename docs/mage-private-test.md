@@ -19,6 +19,8 @@ Your regular/public-beta **game** setting can stay as it is; it is separate from
 - Leave a charge unspent at turn end: it should remain for your next turn.
 - Try a multi-hit Attack or a replay: draw once for the card, rather than once per hit/play.
 - Arcane Reservoir should still add its printed damage per charge to every hit, including charged Attacks after the draw allowance is used. Without Reservoir, Mage charges supply card draw rather than bonus damage.
+- In 1.0.37, hold Ember Dart or Moonstone Lance for your charged turn; use Spell Notes to prepare the next draws. Try Rune Detonation with zero, one and two charges: only a full charge with the draw allowance ready refunds one Energy. Charge a second Rune Detonation afterward and confirm it pays its normal cost.
+- Overcharge and Grand Thesis should bank Energy for the next turn. Use that Energy to play cards drawn by Arcane Flow; Overcharge pays 3 HP and both cards Exhaust.
 - Judge whether one- and two-charge sequences are enjoyable across a full climb. Automated checks establish the mechanics, not final balance.
 
 ## Optional Workshop distribution

@@ -18,7 +18,7 @@ def start(cls):
     raise TimeoutError('combat')
 send('trait-speed',value=8)
 for up in [False,True]:
-    for key in ['mage_ember_dart','mage_spell_notes','mage_moonstone_lance','mage_overcharge','mage_grand_thesis','mage_rune_detonation']:
+    for key in (['mage_spell_notes'] if '--scry-smoke' in sys.argv else ['mage_ember_dart','mage_spell_notes','mage_moonstone_lance','mage_overcharge','mage_grand_thesis','mage_rune_detonation']):
         for mode in (['zero','one','full','used','replay','foreign'] if key=='mage_rune_detonation' else ['normal']):
             start('knight' if mode=='foreign' else 'mage')
             result=send('mage-pool',card=key,upgrade=up,mode=mode)
