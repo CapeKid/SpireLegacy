@@ -25,4 +25,4 @@ Your regular/public-beta **game** setting can stay as it is; it is separate from
 
 ## Optional Workshop distribution
 
-A separate **private** Workshop item can make Deck updates automatic for the owner. It must have a separate item ID and private visibility from its first upload. Do not reuse or change the visibility of public item 3816525393. Steam's [game-branch version ranges](https://partner.steamgames.com/doc/features/workshop/itemversioning) control compatibility with the game's branches; they do not make a Git branch private. No separate item has been created for this test.
+A separate [private beta Workshop item](https://steamcommunity.com/sharedfiles/filedetails/?id=3822395190) is now available with mod ID **SpireLegacyBeta**, allowing both subscriptions to remain installed. Enable only one build at a time and restart; follow the [beta channel instructions](beta-workshop.md). The public item 3816525393 is unchanged. Steam's [game-branch version ranges](https://partner.steamgames.com/doc/features/workshop/itemversioning) control compatibility with the game's branches; they do not make a Git branch private.

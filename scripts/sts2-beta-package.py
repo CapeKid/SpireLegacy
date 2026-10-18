@@ -9,6 +9,9 @@ def build(output,expected_hash):
     if output.exists():raise ReleaseError('Use a fresh beta output directory; preserve existing uploader mod_id.txt for updates.')
     config=json.loads((repo/'sts2/workshop-beta.json').read_text(encoding='utf-8'))
     if config.get('visibility')!='private':raise ReleaseError('Beta Workshop visibility must be private.')
+    channel=json.loads((repo/'sts2/beta-channel.json').read_text(encoding='utf-8'))
+    item=channel.get('workshopItemId')
+    if channel.get('modId')!='SpireLegacyBeta' or channel.get('visibility')!='private' or type(item) is not int or item<=0 or item in (ITEM_ID,3816067184):raise ReleaseError('Invalid private beta channel target.')
     v,formats=payloads(repo,expected_hash)
     files={}
     for name,data in formats['standalone'].items():
@@ -26,8 +29,9 @@ def build(output,expected_hash):
     (workspace/'workshop.json').write_text(json.dumps(config,ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
     (workspace/'image.png').write_bytes(formats['workshop']['image.png'])
     (workspace/'README.md').write_bytes((repo/'docs/beta-workshop.md').read_bytes())
+    (workspace/'mod_id.txt').write_text(str(item)+'\n',encoding='utf-8')
     archive=output/f'SpireLegacyBeta-StS2-{v}.zip';write_archive(archive,{'mods/SpireLegacyBeta/'+n:d for n,d in files.items()})
-    receipt=dict(version=v,modId='SpireLegacyBeta',visibility='private',dllSha256=expected_hash,archive=archive.name,archiveSha256=digest(archive.read_bytes()),files=len(files),publicItemNeverTarget=ITEM_ID,workshopItemId=None,uploaded=False)
+    receipt=dict(version=v,modId='SpireLegacyBeta',visibility='private',dllSha256=expected_hash,archive=archive.name,archiveSha256=digest(archive.read_bytes()),files=len(files),publicItemNeverTarget=ITEM_ID,workshopItemId=item,uploaded=False)
     (output/'inspection.json').write_text(json.dumps(receipt,indent=2)+'\n')
     return receipt
 if __name__=='__main__':
