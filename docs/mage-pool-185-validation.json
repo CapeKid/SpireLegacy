@@ -1,0 +1,542 @@
+{
+  "issue": 185,
+  "version": "1.0.37",
+  "finalSourceCommit": "d44ac3f6fc27e8b817a5959b660d95503f40dffb",
+  "finalDllSha256": "b67bead6dac2a1ab0c4f827460d1110fe9a5cf03bd144895a5de4d1b2d1293a6",
+  "publicUploaded": false,
+  "branchPushed": false,
+  "coreAssertions": 166718,
+  "poolRegeneration": "passed",
+  "unchangedMechanics": {
+    "sts2/Native/CardEffects.cs": "90725fa8e7c2bd3f43faba04647bc3a5c11370256c67bd6790782d8b96c51758",
+    "sts2/Native/LegacyPower.cs": "f2759e60da5600c4c0f65db8151eeace1d1cc704af5ac13f7fc3ec223ebc60ea",
+    "sts2/Native/LegacyCard.cs": "f888222f21b7725afae1827c1be5c19a50d3d86afc48d482e49949d1a0cde2b6",
+    "sts2/Native/PilotCardInfo.cs": "c4a72fbaabd9fe09f990ca27a71065122f588cdf6c800bd415878e1e2fd0ce2f",
+    "sheets/cards.json": "076741457bd515b2d09468bc5b6020aff326bf76b8d95d815028c9bdc6344463",
+    "sheets/special_effects.json": "66074a36c67bd35ff7ed328c7dfeb21294f3bfa7409a138ba25678882d880657",
+    "sheets/classes.json": "381d3c6bf72b26609a63e59f6154682fcd75b6c1bdaf4ca9c0e3528c098f8534",
+    "sheets/class_mechanics.json": "2d6591596c52f238bdd6fcd90d8b442c9fa4a7cc2a705412efa89fe841d0bb59"
+  },
+  "runs": [
+    {
+      "branch": "regular",
+      "game": "v0.107.1",
+      "kind": "full gameplay",
+      "sourceCommit": "d1f372a003536ba97c0904e09f78d8aeb017f1e5",
+      "dllSha256": "e475b9af38e935f5f4748dfb57ab2d1e7dba626e50844af6684bb82afd5195a0",
+      "passedCases": 22,
+      "labRestored": true,
+      "cases": [
+        {
+          "key": "mage_ember_dart",
+          "up": false,
+          "mode": "normal",
+          "growth": 0,
+          "flowDraw": 2,
+          "cost": 0,
+          "saveRoundTrip": true
+        },
+        {
+          "key": "mage_spell_notes",
+          "up": false,
+          "mode": "normal",
+          "scry": 3,
+          "printedDraw": 1,
+          "flowDraw": 2,
+          "saveRoundTrip": true
+        },
+        {
+          "key": "mage_moonstone_lance",
+          "up": false,
+          "mode": "normal",
+          "growth": 2,
+          "flowDraw": 2,
+          "cost": 1,
+          "saveRoundTrip": true
+        },
+        {
+          "key": "mage_overcharge",
+          "up": false,
+          "mode": "normal",
+          "drawn": 0,
+          "hpLoss": 3,
+          "nextEnergy": 2,
+          "flowDraw": 2,
+          "saveRoundTrip": true
+        },
+        {
+          "key": "mage_grand_thesis",
+          "up": false,
+          "mode": "normal",
+          "drawn": 2,
+          "hpLoss": 0,
+          "nextEnergy": 1,
+          "flowDraw": 2,
+          "saveRoundTrip": true
+        },
+        {
+          "key": "mage_rune_detonation",
+          "up": false,
+          "mode": "zero",
+          "cls": "mage",
+          "refund": 0,
+          "draw": 0,
+          "nextRefund": 1,
+          "saveRoundTrip": true
+        },
+        {
+          "key": "mage_rune_detonation",
+          "up": false,
+          "mode": "one",
+          "cls": "mage",
+          "refund": 0,
+          "draw": 1,
+          "nextRefund": 0,
+          "saveRoundTrip": true
+        },
+        {
+          "key": "mage_rune_detonation",
+          "up": false,
+          "mode": "full",
+          "cls": "mage",
+          "refund": 1,
+          "draw": 2,
+          "nextRefund": 0,
+          "saveRoundTrip": true
+        },
+        {
+          "key": "mage_rune_detonation",
+          "up": false,
+          "mode": "used",
+          "cls": "mage",
+          "refund": 0,
+          "draw": 0,
+          "nextRefund": 0,
+          "saveRoundTrip": true
+        },
+        {
+          "key": "mage_rune_detonation",
+          "up": false,
+          "mode": "replay",
+          "cls": "mage",
+          "refund": 1,
+          "draw": 2,
+          "nextRefund": 0,
+          "saveRoundTrip": true
+        },
+        {
+          "key": "mage_rune_detonation",
+          "up": false,
+          "mode": "foreign",
+          "cls": "knight",
+          "refund": 0,
+          "draw": 0,
+          "nextRefund": 0,
+          "saveRoundTrip": true
+        },
+        {
+          "key": "mage_ember_dart",
+          "up": true,
+          "mode": "normal",
+          "growth": 0,
+          "flowDraw": 2,
+          "cost": 0,
+          "saveRoundTrip": true
+        },
+        {
+          "key": "mage_spell_notes",
+          "up": true,
+          "mode": "normal",
+          "scry": 4,
+          "printedDraw": 1,
+          "flowDraw": 2,
+          "saveRoundTrip": true
+        },
+        {
+          "key": "mage_moonstone_lance",
+          "up": true,
+          "mode": "normal",
+          "growth": 3,
+          "flowDraw": 2,
+          "cost": 1,
+          "saveRoundTrip": true
+        },
+        {
+          "key": "mage_overcharge",
+          "up": true,
+          "mode": "normal",
+          "drawn": 0,
+          "hpLoss": 3,
+          "nextEnergy": 3,
+          "flowDraw": 2,
+          "saveRoundTrip": true
+        },
+        {
+          "key": "mage_grand_thesis",
+          "up": true,
+          "mode": "normal",
+          "drawn": 3,
+          "hpLoss": 0,
+          "nextEnergy": 2,
+          "flowDraw": 2,
+          "saveRoundTrip": true
+        },
+        {
+          "key": "mage_rune_detonation",
+          "up": true,
+          "mode": "zero",
+          "cls": "mage",
+          "refund": 0,
+          "draw": 0,
+          "nextRefund": 1,
+          "saveRoundTrip": true
+        },
+        {
+          "key": "mage_rune_detonation",
+          "up": true,
+          "mode": "one",
+          "cls": "mage",
+          "refund": 0,
+          "draw": 1,
+          "nextRefund": 0,
+          "saveRoundTrip": true
+        },
+        {
+          "key": "mage_rune_detonation",
+          "up": true,
+          "mode": "full",
+          "cls": "mage",
+          "refund": 1,
+          "draw": 2,
+          "nextRefund": 0,
+          "saveRoundTrip": true
+        },
+        {
+          "key": "mage_rune_detonation",
+          "up": true,
+          "mode": "used",
+          "cls": "mage",
+          "refund": 0,
+          "draw": 0,
+          "nextRefund": 0,
+          "saveRoundTrip": true
+        },
+        {
+          "key": "mage_rune_detonation",
+          "up": true,
+          "mode": "replay",
+          "cls": "mage",
+          "refund": 1,
+          "draw": 2,
+          "nextRefund": 0,
+          "saveRoundTrip": true
+        },
+        {
+          "key": "mage_rune_detonation",
+          "up": true,
+          "mode": "foreign",
+          "cls": "knight",
+          "refund": 0,
+          "draw": 0,
+          "nextRefund": 0,
+          "saveRoundTrip": true
+        }
+      ]
+    },
+    {
+      "branch": "beta",
+      "game": "v0.111.0",
+      "kind": "full gameplay",
+      "sourceCommit": "d1f372a003536ba97c0904e09f78d8aeb017f1e5",
+      "dllSha256": "e475b9af38e935f5f4748dfb57ab2d1e7dba626e50844af6684bb82afd5195a0",
+      "passedCases": 22,
+      "labRestored": true,
+      "cases": [
+        {
+          "key": "mage_ember_dart",
+          "up": false,
+          "mode": "normal",
+          "growth": 0,
+          "flowDraw": 2,
+          "cost": 0,
+          "saveRoundTrip": true
+        },
+        {
+          "key": "mage_spell_notes",
+          "up": false,
+          "mode": "normal",
+          "scry": 3,
+          "printedDraw": 1,
+          "flowDraw": 2,
+          "saveRoundTrip": true
+        },
+        {
+          "key": "mage_moonstone_lance",
+          "up": false,
+          "mode": "normal",
+          "growth": 2,
+          "flowDraw": 2,
+          "cost": 1,
+          "saveRoundTrip": true
+        },
+        {
+          "key": "mage_overcharge",
+          "up": false,
+          "mode": "normal",
+          "drawn": 0,
+          "hpLoss": 3,
+          "nextEnergy": 2,
+          "flowDraw": 2,
+          "saveRoundTrip": true
+        },
+        {
+          "key": "mage_grand_thesis",
+          "up": false,
+          "mode": "normal",
+          "drawn": 2,
+          "hpLoss": 0,
+          "nextEnergy": 1,
+          "flowDraw": 2,
+          "saveRoundTrip": true
+        },
+        {
+          "key": "mage_rune_detonation",
+          "up": false,
+          "mode": "zero",
+          "cls": "mage",
+          "refund": 0,
+          "draw": 0,
+          "nextRefund": 1,
+          "saveRoundTrip": true
+        },
+        {
+          "key": "mage_rune_detonation",
+          "up": false,
+          "mode": "one",
+          "cls": "mage",
+          "refund": 0,
+          "draw": 1,
+          "nextRefund": 0,
+          "saveRoundTrip": true
+        },
+        {
+          "key": "mage_rune_detonation",
+          "up": false,
+          "mode": "full",
+          "cls": "mage",
+          "refund": 1,
+          "draw": 2,
+          "nextRefund": 0,
+          "saveRoundTrip": true
+        },
+        {
+          "key": "mage_rune_detonation",
+          "up": false,
+          "mode": "used",
+          "cls": "mage",
+          "refund": 0,
+          "draw": 0,
+          "nextRefund": 0,
+          "saveRoundTrip": true
+        },
+        {
+          "key": "mage_rune_detonation",
+          "up": false,
+          "mode": "replay",
+          "cls": "mage",
+          "refund": 1,
+          "draw": 2,
+          "nextRefund": 0,
+          "saveRoundTrip": true
+        },
+        {
+          "key": "mage_rune_detonation",
+          "up": false,
+          "mode": "foreign",
+          "cls": "knight",
+          "refund": 0,
+          "draw": 0,
+          "nextRefund": 0,
+          "saveRoundTrip": true
+        },
+        {
+          "key": "mage_ember_dart",
+          "up": true,
+          "mode": "normal",
+          "growth": 0,
+          "flowDraw": 2,
+          "cost": 0,
+          "saveRoundTrip": true
+        },
+        {
+          "key": "mage_spell_notes",
+          "up": true,
+          "mode": "normal",
+          "scry": 4,
+          "printedDraw": 1,
+          "flowDraw": 2,
+          "saveRoundTrip": true
+        },
+        {
+          "key": "mage_moonstone_lance",
+          "up": true,
+          "mode": "normal",
+          "growth": 3,
+          "flowDraw": 2,
+          "cost": 1,
+          "saveRoundTrip": true
+        },
+        {
+          "key": "mage_overcharge",
+          "up": true,
+          "mode": "normal",
+          "drawn": 0,
+          "hpLoss": 3,
+          "nextEnergy": 3,
+          "flowDraw": 2,
+          "saveRoundTrip": true
+        },
+        {
+          "key": "mage_grand_thesis",
+          "up": true,
+          "mode": "normal",
+          "drawn": 3,
+          "hpLoss": 0,
+          "nextEnergy": 2,
+          "flowDraw": 2,
+          "saveRoundTrip": true
+        },
+        {
+          "key": "mage_rune_detonation",
+          "up": true,
+          "mode": "zero",
+          "cls": "mage",
+          "refund": 0,
+          "draw": 0,
+          "nextRefund": 1,
+          "saveRoundTrip": true
+        },
+        {
+          "key": "mage_rune_detonation",
+          "up": true,
+          "mode": "one",
+          "cls": "mage",
+          "refund": 0,
+          "draw": 1,
+          "nextRefund": 0,
+          "saveRoundTrip": true
+        },
+        {
+          "key": "mage_rune_detonation",
+          "up": true,
+          "mode": "full",
+          "cls": "mage",
+          "refund": 1,
+          "draw": 2,
+          "nextRefund": 0,
+          "saveRoundTrip": true
+        },
+        {
+          "key": "mage_rune_detonation",
+          "up": true,
+          "mode": "used",
+          "cls": "mage",
+          "refund": 0,
+          "draw": 0,
+          "nextRefund": 0,
+          "saveRoundTrip": true
+        },
+        {
+          "key": "mage_rune_detonation",
+          "up": true,
+          "mode": "replay",
+          "cls": "mage",
+          "refund": 1,
+          "draw": 2,
+          "nextRefund": 0,
+          "saveRoundTrip": true
+        },
+        {
+          "key": "mage_rune_detonation",
+          "up": true,
+          "mode": "foreign",
+          "cls": "knight",
+          "refund": 0,
+          "draw": 0,
+          "nextRefund": 0,
+          "saveRoundTrip": true
+        }
+      ]
+    },
+    {
+      "branch": "regular",
+      "game": "v0.107.1",
+      "kind": "final text build Scry smoke",
+      "sourceCommit": "d44ac3f6fc27e8b817a5959b660d95503f40dffb",
+      "dllSha256": "b67bead6dac2a1ab0c4f827460d1110fe9a5cf03bd144895a5de4d1b2d1293a6",
+      "passedCases": 2,
+      "labRestored": true,
+      "cases": [
+        {
+          "key": "mage_spell_notes",
+          "up": false,
+          "mode": "normal",
+          "scry": 3,
+          "printedDraw": 1,
+          "flowDraw": 2,
+          "saveRoundTrip": true
+        },
+        {
+          "key": "mage_spell_notes",
+          "up": true,
+          "mode": "normal",
+          "scry": 4,
+          "printedDraw": 1,
+          "flowDraw": 2,
+          "saveRoundTrip": true
+        }
+      ]
+    },
+    {
+      "branch": "beta",
+      "game": "v0.111.0",
+      "kind": "final text build Scry smoke",
+      "sourceCommit": "d44ac3f6fc27e8b817a5959b660d95503f40dffb",
+      "dllSha256": "b67bead6dac2a1ab0c4f827460d1110fe9a5cf03bd144895a5de4d1b2d1293a6",
+      "passedCases": 2,
+      "labRestored": true,
+      "cases": [
+        {
+          "key": "mage_spell_notes",
+          "up": false,
+          "mode": "normal",
+          "scry": 3,
+          "printedDraw": 1,
+          "flowDraw": 2,
+          "saveRoundTrip": true
+        },
+        {
+          "key": "mage_spell_notes",
+          "up": true,
+          "mode": "normal",
+          "scry": 4,
+          "printedDraw": 1,
+          "flowDraw": 2,
+          "saveRoundTrip": true
+        }
+      ]
+    }
+  ],
+  "limits": [
+    "Owned Windows solo fixtures, not physical Steam Deck or full-climb balance validation.",
+    "Scry choices use the opt-in deterministic selector rather than physical controller input.",
+    "No new co-op gameplay check; borrowed-card ownership was checked with Knight in solo."
+  ],
+  "archive": {
+    "archiveSha256": "8b17660e3b3646fb6642ffd9ce8a07b0f61084f79930ef74f4e5653c0c557175",
+    "dllSha256": "b67bead6dac2a1ab0c4f827460d1110fe9a5cf03bd144895a5de4d1b2d1293a6",
+    "files": 541,
+    "bytes": 39745243,
+    "filename": "SpireLegacy-StS2-1.0.37.zip"
+  }
+}
