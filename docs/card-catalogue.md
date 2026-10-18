@@ -99,7 +99,7 @@ Each class has 82 rewards on regular (20 common, 36 uncommon, 26 rare), or 85 on
 
 | Card | Rarity | Type | Energy | Effects |
 | --- | --- | --- | ---: | --- |
-| Spark | Basic | Attack | 1 | Class unique; 5 damage |
+| Spark Strike | Basic | Attack | 1 | Class unique; 5 damage |
 | Ward | Basic | Skill | 1 | Class unique; 4 Block |
 | Challenge | Uncommon | Attack | 2 | Shared family card; 6 damage; 2 Vulnerable |
 | Family Oath | Rare | Attack | 2 | Shared family card; 6 damage ×2; 1 Strength; Exhaust |
@@ -192,7 +192,7 @@ Each class has 82 rewards on regular (20 common, 36 uncommon, 26 rare), or 85 on
 
 | Card | Rarity | Type | Energy | Effects |
 | --- | --- | --- | ---: | --- |
-| Arrow | Basic | Attack | 1 | Class unique; 5 damage |
+| Arrow Strike | Basic | Attack | 1 | Class unique; 5 damage |
 | Sidestep | Basic | Skill | 1 | Class unique; 4 Block |
 | Challenge | Uncommon | Attack | 2 | Shared family card; 6 damage; 2 Vulnerable |
 | Family Oath | Rare | Attack | 2 | Shared family card; 6 damage ×2; 1 Strength; Exhaust |

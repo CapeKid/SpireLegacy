@@ -26,7 +26,7 @@
   {
     "id": "mage_strike",
     "cardId": "mage_strike",
-    "name": "Spark",
+    "name": "Spark Strike",
     "path": "heir/cards/mage_strike.png",
     "width": 250,
     "height": 190,
@@ -50,7 +50,7 @@
   {
     "id": "ranger_strike",
     "cardId": "ranger_strike",
-    "name": "Arrow",
+    "name": "Arrow Strike",
     "path": "heir/cards/ranger_strike.png",
     "width": 250,
     "height": 190,

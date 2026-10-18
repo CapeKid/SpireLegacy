@@ -91,7 +91,7 @@
   },
   {
     "id": "mage_strike",
-    "name": "Spark",
+    "name": "Spark Strike",
     "classId": "mage",
     "type": "ATTACK",
     "cost": 1,
@@ -181,7 +181,7 @@
   },
   {
     "id": "ranger_strike",
-    "name": "Arrow",
+    "name": "Arrow Strike",
     "classId": "ranger",
     "type": "ATTACK",
     "cost": 1,

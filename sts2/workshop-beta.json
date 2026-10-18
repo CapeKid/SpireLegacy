@@ -2,8 +2,12 @@
   "title": "Spire Legacy — Beta",
   "description": "Private beta builds of Spire Legacy for the creator's Steam Deck testing. Requires BaseLib. You may subscribe to both this item and the public Spire Legacy item. In StS2's mod menu, enable ONLY Spire Legacy — Beta OR Spire Legacy, then restart. They contain the same character and cards and must not run together. Finish a climb before switching builds. Family manor progress is shared. This item does not update the public Workshop listing.",
   "visibility": "private",
-  "changeNote": "1.0.37: Private Mage Arcane Flow and six-card pool test. Separate SpireLegacyBeta mod ID; keep the public build disabled while testing.",
-  "tags": ["Characters"],
-  "dependencies": [3737335127],
+  "changeNote": "1.0.38: Name Mage and Ranger basic attacks Spark Strike and Arrow Strike, matching Knight's Sword Strike and their existing Strike relic tags. Beta-only delivery; public release unchanged.",
+  "tags": [
+    "Characters"
+  ],
+  "dependencies": [
+    3737335127
+  ],
   "contentDescriptors": []
 }
