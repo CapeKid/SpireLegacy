@@ -35,7 +35,7 @@ public static class CardEffects
   }
   if(row.Text("special")=="scry")await Scry(card,context,d.SpecialAmount);
   if(d.Amount("draw")>0)await CardPileCmd.Draw(context,d.Amount("draw"),player);
-  if(d.Amount("discard")>0)await CardCmd.Discard(context,await CardSelectCmd.FromHandForDiscard(context,player,new CardSelectorPrefs(CardSelectorPrefs.DiscardSelectionPrompt,d.Amount("discard")),null,card));
+  if(d.Amount("discard")>0)await CardCmd.Discard(context,await CardChoiceLifetime.Run(player,()=>CardSelectCmd.FromHandForDiscard(context,player,new CardSelectorPrefs(CardSelectorPrefs.DiscardSelectionPrompt,d.Amount("discard")),null,card)));
   if(d.Amount("energy")>0)await PlayerCmd.GainEnergy(d.Amount("energy"),player);
   await Apply(context,"strength",creature,d.Amount("strength"),creature,card);await Apply(context,"dexterity",creature,d.Amount("dexterity"),creature,card);
   foreach(var enemy in enemies.Where(e=>e.IsAlive)){
@@ -49,7 +49,7 @@ public static class CardEffects
  public static async Task Scry(Player player,PlayerChoiceContext context,int amount)
  {
   var top=PileType.Draw.GetPile(player).Cards.Take(amount).ToArray();
-  if(top.Length>0){var chosen=await CardSelectCmd.FromSimpleGrid(context,top,player,new CardSelectorPrefs(CardSelectorPrefs.DiscardSelectionPrompt,0,top.Length));foreach(var selected in chosen)await CardPileCmd.Add(selected,PileType.Discard);}
+  if(top.Length>0){var chosen=await CardChoiceLifetime.Run(player,()=>CardSelectCmd.FromSimpleGrid(context,top,player,new CardSelectorPrefs(CardSelectorPrefs.DiscardSelectionPrompt,0,top.Length)));foreach(var selected in chosen)await CardPileCmd.Add(selected,PileType.Discard);}
   foreach(var engine in player.Creature.Powers.OfType<LegacyPower>().Where(p=>p.Key=="scry_block"))await CreatureCmd.GainBlock(player.Creature,engine.Amount,ValueProp.Unpowered,null);
  }
  private static async Task Special(LegacyCard card,PlayerChoiceContext context,CardPlay play,IEnumerable<Creature> enemies)
@@ -73,11 +73,11 @@ public static class CardEffects
    case "exhaust_nonattacks":foreach(var fuel in hand.Cards.Where(c=>c.Type!=CardType.Attack).ToArray()){await BranchCommands.Exhaust(context,fuel);await CreatureCmd.GainBlock(creature,card.SpecialBlock,play);}break;
    case "double_block":await CreatureCmd.GainBlock(creature,creature.Block,ValueProp.Unpowered,play);break;
    case "cleanse":foreach(var power in creature.Powers.Where(p=>p.Type==PowerType.Debuff).ToArray())await PowerCmd.Remove(power);break;
-   case "exhaust_one":foreach(var fuel in await CardSelectCmd.FromHand(context,player,new CardSelectorPrefs(CardSelectorPrefs.ExhaustSelectionPrompt,amount),null,card))await BranchCommands.Exhaust(context,fuel);break;
+   case "exhaust_one":foreach(var fuel in await CardChoiceLifetime.Run(player,()=>CardSelectCmd.FromHand(context,player,new CardSelectorPrefs(CardSelectorPrefs.ExhaustSelectionPrompt,amount),null,card)))await BranchCommands.Exhaust(context,fuel);break;
    case "retrieve":case "exhume":
     var pile=row.Text("special")=="retrieve"?PileType.Discard:PileType.Exhaust;
-    var selected=await CardSelectCmd.FromCombatPile(context,pile.GetPile(player),player,new CardSelectorPrefs(new MegaCrit.Sts2.Core.Localization.LocString("cards",card.Id.Entry+".returnPrompt"),amount),
-     candidate=>candidate is not LegacyCard legacy||(pile==PileType.Exhaust?legacy.DesignCard.RecoverableFromExhaust:legacy.DesignCard.RecoverableFromDiscard));
+    var selected=await CardChoiceLifetime.Run(player,()=>CardSelectCmd.FromCombatPile(context,pile.GetPile(player),player,new CardSelectorPrefs(new MegaCrit.Sts2.Core.Localization.LocString("cards",card.Id.Entry+".returnPrompt"),amount),
+     candidate=>candidate is not LegacyCard legacy||(pile==PileType.Exhaust?legacy.DesignCard.RecoverableFromExhaust:legacy.DesignCard.RecoverableFromDiscard)));
     foreach(var retrieved in selected)await CardPileCmd.Add(retrieved,PileType.Hand);break;
    case "charge_gain":if(creature.GetPower<P_class>() is {} cls && PlayerBloodlines.Heir(player).classId=="mage")cls.Charges=Math.Min(2,cls.Charges+amount);break;
    case "discount_hand":var eligible=hand.Cards.Where(c=>!c.EnergyCost.CostsX&&c.EnergyCost.GetWithModifiers(CostModifiers.All)>0).ToList();for(var i=0;i<amount&&eligible.Count>0;i++){var index=player.RunState.Rng.CombatCardSelection.NextInt(eligible.Count);var discounted=eligible[index];eligible.RemoveAt(index);discounted.EnergyCost.AddThisTurn(-1);}break;

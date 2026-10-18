@@ -325,6 +325,9 @@ public static class NativeTestBridge
                 case "card-choice-boundary":
                     await WaitForPlay(RunState().Players.Single());
                     result=await CardChoiceBoundaryOracle.Check(RunState(),request.GetProperty("card").GetString()!,request.GetProperty("upgrade").GetBoolean(),request.TryGetProperty("decline",out var declineChoice)&&declineChoice.GetBoolean());break;
+                case "card-choice-lifetime":
+                    await WaitForPlay(RunState().Players.Single());
+                    result=await CardChoiceLifetimeOracle.Check(RunState(),request.GetProperty("upgrade").GetBoolean(),request.GetProperty("mode").GetString()!);break;
                 case "card-deck-identity":result=RunState().Players.Single().Deck.Cards.Select(c=>c.Id.ToString()+":"+c.CurrentUpgradeLevel).ToArray();break;
                 case "card-flush":await WaitForPlay(RunState().Players.Single());result=await CardFlushOracle.Check(RunState(),request.GetProperty("card").GetString()!,request.GetProperty("upgrade").GetBoolean());break;
                 case "card-flush-next":await WaitForPlay(RunState().Players.Single());result=CardFlushOracle.NextCombat(RunState(),request.GetProperty("card").GetString()!);break;
@@ -646,7 +649,8 @@ public static class NativeTestBridge
                     // Drive the same native selection/release callbacks instead.
                     var selectingHand=MegaCrit.Sts2.Core.Nodes.Combat.NPlayerHand.Instance!;
                     var selections=(List<CardModel>)AccessTools.Field(selectingHand.GetType(),"_selectedCards").GetValue(selectingHand)!;
-                    if(selections.Count==0)AccessTools.Method(selectingHand.GetType(),"SelectCardInSimpleMode").Invoke(selectingHand,[Descendants(selectingHand).OfType<MegaCrit.Sts2.Core.Nodes.Cards.Holders.NHandCardHolder>().First(h=>h.IsVisibleInTree())]);
+                    var selectionCount=request.TryGetProperty("count",out var countToSelect)?countToSelect.GetInt32():1;
+                    while(selections.Count<selectionCount)AccessTools.Method(selectingHand.GetType(),"SelectCardInSimpleMode").Invoke(selectingHand,[Descendants(selectingHand).OfType<MegaCrit.Sts2.Core.Nodes.Cards.Holders.NHandCardHolder>().First(h=>h.IsVisibleInTree()&&h.CardNode?.Model is {} selectableModel&&!selections.Contains(selectableModel))]);
                     var confirming=(MegaCrit.Sts2.Core.Nodes.CommonUi.NConfirmButton)AccessTools.Field(selectingHand.GetType(),"_selectModeConfirmButton").GetValue(selectingHand)!;
                     confirming.EmitSignal(MegaCrit.Sts2.Core.Nodes.GodotExtensions.NClickableControl.SignalName.Released,confirming);
                     result=new{confirmed=true};break;

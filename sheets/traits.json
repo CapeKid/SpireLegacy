@@ -240,7 +240,7 @@
     "draw": 0,
     "goldBonus": 150,
     "scale": 1.0,
-    "summary": "Your Basic Attack cards become Skills that apply 2 Poison (3 upgraded), with no damage or Block. Other Attacks cannot be played. No free Poison at combat start.",
+    "summary": "Your Basic Attack cards become Skills that apply 2 Poison (3 upgraded), with no damage or Block. Other Attacks cannot be played.",
     "heal": 0,
     "source": "CantAttack",
     "enabled": true,
