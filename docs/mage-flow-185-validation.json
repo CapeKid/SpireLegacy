@@ -1,0 +1,646 @@
+{
+  "issue": 185,
+  "version": "1.0.36",
+  "implementationCommit": "e506b5ca253c99d1ecce6a366d649e2b044cb075",
+  "dllSha256": "f62c2a571d357de56f518c1c6a274a58f348e5bf9b79931694da950d52392501",
+  "publicUploaded": false,
+  "branchPushed": false,
+  "coreAssertions": 166716,
+  "branches": [
+    {
+      "branch": "regular",
+      "game": "v0.107.1",
+      "passedCases": 16,
+      "labRestored": true,
+      "cases": [
+        {
+          "chargeCount": 0,
+          "up": false,
+          "mode": "normal",
+          "draws": [
+            0,
+            2,
+            1
+          ],
+          "damage": [
+            10,
+            10,
+            10
+          ],
+          "serialized": true,
+          "cloneIndependent": true,
+          "realTurnReset": true,
+          "bankedCharge": true
+        },
+        {
+          "chargeCount": 1,
+          "up": false,
+          "mode": "normal",
+          "draws": [
+            1,
+            0,
+            1
+          ],
+          "damage": [
+            10,
+            10,
+            10
+          ],
+          "serialized": true,
+          "cloneIndependent": true,
+          "realTurnReset": true,
+          "bankedCharge": true
+        },
+        {
+          "chargeCount": 2,
+          "up": false,
+          "mode": "normal",
+          "draws": [
+            2,
+            0,
+            1
+          ],
+          "damage": [
+            10,
+            10,
+            10
+          ],
+          "serialized": true,
+          "cloneIndependent": true,
+          "realTurnReset": true,
+          "bankedCharge": true
+        },
+        {
+          "chargeCount": 4,
+          "up": false,
+          "mode": "normal",
+          "draws": [
+            2,
+            0,
+            1
+          ],
+          "damage": [
+            10,
+            10,
+            10
+          ],
+          "serialized": true,
+          "cloneIndependent": true,
+          "realTurnReset": true,
+          "bankedCharge": true
+        },
+        {
+          "chargeCount": 2,
+          "up": false,
+          "mode": "replay",
+          "draws": [
+            2,
+            0,
+            1
+          ],
+          "damage": [
+            20,
+            10,
+            10
+          ],
+          "serialized": true,
+          "cloneIndependent": true,
+          "realTurnReset": true,
+          "bankedCharge": true
+        },
+        {
+          "chargeCount": 2,
+          "up": false,
+          "mode": "blocked",
+          "draws": [
+            0,
+            0,
+            1
+          ],
+          "damage": [
+            10,
+            10,
+            10
+          ],
+          "serialized": true,
+          "cloneIndependent": true,
+          "realTurnReset": true,
+          "bankedCharge": true
+        },
+        {
+          "chargeCount": 2,
+          "up": false,
+          "mode": "full",
+          "draws": [
+            1,
+            0,
+            1
+          ],
+          "damage": [
+            10,
+            10,
+            10
+          ],
+          "serialized": true,
+          "cloneIndependent": true,
+          "realTurnReset": true,
+          "bankedCharge": true
+        },
+        {
+          "chargeCount": 2,
+          "up": false,
+          "mode": "reservoir",
+          "draws": [
+            2,
+            0,
+            1
+          ],
+          "damage": [
+            18,
+            18,
+            14
+          ],
+          "serialized": true,
+          "cloneIndependent": true,
+          "realTurnReset": true,
+          "bankedCharge": true
+        },
+        {
+          "chargeCount": 0,
+          "up": true,
+          "mode": "normal",
+          "draws": [
+            0,
+            2,
+            1
+          ],
+          "damage": [
+            14,
+            14,
+            14
+          ],
+          "serialized": true,
+          "cloneIndependent": true,
+          "realTurnReset": true,
+          "bankedCharge": true
+        },
+        {
+          "chargeCount": 1,
+          "up": true,
+          "mode": "normal",
+          "draws": [
+            1,
+            0,
+            1
+          ],
+          "damage": [
+            14,
+            14,
+            14
+          ],
+          "serialized": true,
+          "cloneIndependent": true,
+          "realTurnReset": true,
+          "bankedCharge": true
+        },
+        {
+          "chargeCount": 2,
+          "up": true,
+          "mode": "normal",
+          "draws": [
+            2,
+            0,
+            1
+          ],
+          "damage": [
+            14,
+            14,
+            14
+          ],
+          "serialized": true,
+          "cloneIndependent": true,
+          "realTurnReset": true,
+          "bankedCharge": true
+        },
+        {
+          "chargeCount": 4,
+          "up": true,
+          "mode": "normal",
+          "draws": [
+            2,
+            0,
+            1
+          ],
+          "damage": [
+            14,
+            14,
+            14
+          ],
+          "serialized": true,
+          "cloneIndependent": true,
+          "realTurnReset": true,
+          "bankedCharge": true
+        },
+        {
+          "chargeCount": 2,
+          "up": true,
+          "mode": "replay",
+          "draws": [
+            2,
+            0,
+            1
+          ],
+          "damage": [
+            28,
+            14,
+            14
+          ],
+          "serialized": true,
+          "cloneIndependent": true,
+          "realTurnReset": true,
+          "bankedCharge": true
+        },
+        {
+          "chargeCount": 2,
+          "up": true,
+          "mode": "blocked",
+          "draws": [
+            0,
+            0,
+            1
+          ],
+          "damage": [
+            14,
+            14,
+            14
+          ],
+          "serialized": true,
+          "cloneIndependent": true,
+          "realTurnReset": true,
+          "bankedCharge": true
+        },
+        {
+          "chargeCount": 2,
+          "up": true,
+          "mode": "full",
+          "draws": [
+            1,
+            0,
+            1
+          ],
+          "damage": [
+            14,
+            14,
+            14
+          ],
+          "serialized": true,
+          "cloneIndependent": true,
+          "realTurnReset": true,
+          "bankedCharge": true
+        },
+        {
+          "chargeCount": 2,
+          "up": true,
+          "mode": "reservoir",
+          "draws": [
+            2,
+            0,
+            1
+          ],
+          "damage": [
+            22,
+            22,
+            18
+          ],
+          "serialized": true,
+          "cloneIndependent": true,
+          "realTurnReset": true,
+          "bankedCharge": true
+        }
+      ]
+    },
+    {
+      "branch": "public-beta",
+      "game": "v0.111.0",
+      "passedCases": 16,
+      "labRestored": true,
+      "cases": [
+        {
+          "chargeCount": 0,
+          "up": false,
+          "mode": "normal",
+          "draws": [
+            0,
+            2,
+            1
+          ],
+          "damage": [
+            10,
+            10,
+            10
+          ],
+          "serialized": true,
+          "cloneIndependent": true,
+          "realTurnReset": true,
+          "bankedCharge": true
+        },
+        {
+          "chargeCount": 1,
+          "up": false,
+          "mode": "normal",
+          "draws": [
+            1,
+            0,
+            1
+          ],
+          "damage": [
+            10,
+            10,
+            10
+          ],
+          "serialized": true,
+          "cloneIndependent": true,
+          "realTurnReset": true,
+          "bankedCharge": true
+        },
+        {
+          "chargeCount": 2,
+          "up": false,
+          "mode": "normal",
+          "draws": [
+            2,
+            0,
+            1
+          ],
+          "damage": [
+            10,
+            10,
+            10
+          ],
+          "serialized": true,
+          "cloneIndependent": true,
+          "realTurnReset": true,
+          "bankedCharge": true
+        },
+        {
+          "chargeCount": 4,
+          "up": false,
+          "mode": "normal",
+          "draws": [
+            2,
+            0,
+            1
+          ],
+          "damage": [
+            10,
+            10,
+            10
+          ],
+          "serialized": true,
+          "cloneIndependent": true,
+          "realTurnReset": true,
+          "bankedCharge": true
+        },
+        {
+          "chargeCount": 2,
+          "up": false,
+          "mode": "replay",
+          "draws": [
+            2,
+            0,
+            1
+          ],
+          "damage": [
+            20,
+            10,
+            10
+          ],
+          "serialized": true,
+          "cloneIndependent": true,
+          "realTurnReset": true,
+          "bankedCharge": true
+        },
+        {
+          "chargeCount": 2,
+          "up": false,
+          "mode": "blocked",
+          "draws": [
+            0,
+            0,
+            1
+          ],
+          "damage": [
+            10,
+            10,
+            10
+          ],
+          "serialized": true,
+          "cloneIndependent": true,
+          "realTurnReset": true,
+          "bankedCharge": true
+        },
+        {
+          "chargeCount": 2,
+          "up": false,
+          "mode": "full",
+          "draws": [
+            1,
+            0,
+            1
+          ],
+          "damage": [
+            10,
+            10,
+            10
+          ],
+          "serialized": true,
+          "cloneIndependent": true,
+          "realTurnReset": true,
+          "bankedCharge": true
+        },
+        {
+          "chargeCount": 2,
+          "up": false,
+          "mode": "reservoir",
+          "draws": [
+            2,
+            0,
+            1
+          ],
+          "damage": [
+            18,
+            18,
+            14
+          ],
+          "serialized": true,
+          "cloneIndependent": true,
+          "realTurnReset": true,
+          "bankedCharge": true
+        },
+        {
+          "chargeCount": 0,
+          "up": true,
+          "mode": "normal",
+          "draws": [
+            0,
+            2,
+            1
+          ],
+          "damage": [
+            14,
+            14,
+            14
+          ],
+          "serialized": true,
+          "cloneIndependent": true,
+          "realTurnReset": true,
+          "bankedCharge": true
+        },
+        {
+          "chargeCount": 1,
+          "up": true,
+          "mode": "normal",
+          "draws": [
+            1,
+            0,
+            1
+          ],
+          "damage": [
+            14,
+            14,
+            14
+          ],
+          "serialized": true,
+          "cloneIndependent": true,
+          "realTurnReset": true,
+          "bankedCharge": true
+        },
+        {
+          "chargeCount": 2,
+          "up": true,
+          "mode": "normal",
+          "draws": [
+            2,
+            0,
+            1
+          ],
+          "damage": [
+            14,
+            14,
+            14
+          ],
+          "serialized": true,
+          "cloneIndependent": true,
+          "realTurnReset": true,
+          "bankedCharge": true
+        },
+        {
+          "chargeCount": 4,
+          "up": true,
+          "mode": "normal",
+          "draws": [
+            2,
+            0,
+            1
+          ],
+          "damage": [
+            14,
+            14,
+            14
+          ],
+          "serialized": true,
+          "cloneIndependent": true,
+          "realTurnReset": true,
+          "bankedCharge": true
+        },
+        {
+          "chargeCount": 2,
+          "up": true,
+          "mode": "replay",
+          "draws": [
+            2,
+            0,
+            1
+          ],
+          "damage": [
+            28,
+            14,
+            14
+          ],
+          "serialized": true,
+          "cloneIndependent": true,
+          "realTurnReset": true,
+          "bankedCharge": true
+        },
+        {
+          "chargeCount": 2,
+          "up": true,
+          "mode": "blocked",
+          "draws": [
+            0,
+            0,
+            1
+          ],
+          "damage": [
+            14,
+            14,
+            14
+          ],
+          "serialized": true,
+          "cloneIndependent": true,
+          "realTurnReset": true,
+          "bankedCharge": true
+        },
+        {
+          "chargeCount": 2,
+          "up": true,
+          "mode": "full",
+          "draws": [
+            1,
+            0,
+            1
+          ],
+          "damage": [
+            14,
+            14,
+            14
+          ],
+          "serialized": true,
+          "cloneIndependent": true,
+          "realTurnReset": true,
+          "bankedCharge": true
+        },
+        {
+          "chargeCount": 2,
+          "up": true,
+          "mode": "reservoir",
+          "draws": [
+            2,
+            0,
+            1
+          ],
+          "damage": [
+            22,
+            22,
+            18
+          ],
+          "serialized": true,
+          "cloneIndependent": true,
+          "realTurnReset": true,
+          "bankedCharge": true
+        }
+      ]
+    }
+  ],
+  "limits": [
+    "Windows owned-game solo fixtures; physical Steam Deck and full campaign balance still need playtesting.",
+    "New co-op gameplay was not exercised in this change.",
+    "Saved-properties codec and clone independence were checked; these are not full mid-combat save/resume checks."
+  ],
+  "testArchive": {
+    "filename": "SpireLegacy-StS2-1.0.36.zip",
+    "sha256": "c087b4d922da84f8c060e2c773127c97fde4276c8672ab4ce9f0f847ac03cd24",
+    "files": 540,
+    "bytes": 39729877
+  }
+}
