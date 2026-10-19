@@ -1,0 +1,15 @@
+{
+  "version": "1.0.39",
+  "item": 3816525393,
+  "app": 2868840,
+  "visibility": "public",
+  "regularAllowed": true,
+  "betaAllowed": true,
+  "downloadedFiles": 539,
+  "allFilesMatch": true,
+  "dllSha256": "c3676a26fe54d9cbf30cd26319d3964786f67098a46f5abbe056a0b9e7f0ef72",
+  "matchesTestedBeta": true,
+  "verifiedUtc": "2026-10-19T00:29:38.505513+00:00",
+  "meltyPublished": false,
+  "privateBetaItem": 3822395190
+}
