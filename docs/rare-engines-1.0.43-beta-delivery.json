@@ -1,0 +1,894 @@
+{
+  "item": 3822395190,
+  "title": "Spire Legacy \u2014 Beta",
+  "visibility": "private",
+  "ownerVerified": true,
+  "publicListingUnchanged": true,
+  "downloadedFiles": 539,
+  "downloadMatches": true,
+  "modId": "SpireLegacyBeta",
+  "dllSha256": "f2dbaacbb587d1353147ff23baee2b7580080c0f5275e7005caeaa9dde4afab0",
+  "verifiedUtc": "2026-10-21T22:38:27.7891218Z",
+  "version": "1.0.43",
+  "coreAssertions": 166720,
+  "poolRegeneration": "passed",
+  "publicVersionUnchanged": "1.0.39",
+  "nativeChecks": [
+    {
+      "branch": "regular",
+      "game": "v0.107.1",
+      "passedCases": 44,
+      "betaOnlyLoaded": true,
+      "temporaryBetaRemoved": true,
+      "cases": [
+        {
+          "key": "mage_eternal_bookmark",
+          "up": false,
+          "mode": "retained",
+          "retained": 1,
+          "firstHand": 8,
+          "bonusDrawRequested": 2,
+          "turnBoundary": true,
+          "saveRoundTrip": true
+        },
+        {
+          "key": "mage_eternal_bookmark",
+          "up": true,
+          "mode": "retained",
+          "retained": 1,
+          "firstHand": 8,
+          "bonusDrawRequested": 2,
+          "turnBoundary": true,
+          "saveRoundTrip": true
+        },
+        {
+          "key": "mage_eternal_bookmark",
+          "up": false,
+          "mode": "empty",
+          "retained": 0,
+          "firstHand": 5,
+          "bonusDrawRequested": 0,
+          "turnBoundary": true,
+          "saveRoundTrip": true
+        },
+        {
+          "key": "mage_eternal_bookmark",
+          "up": false,
+          "mode": "retained",
+          "retained": 1,
+          "firstHand": 8,
+          "bonusDrawRequested": 2,
+          "turnBoundary": true,
+          "saveRoundTrip": true
+        },
+        {
+          "key": "mage_eternal_bookmark",
+          "up": false,
+          "mode": "measured",
+          "retained": 1,
+          "firstHand": 8,
+          "bonusDrawRequested": 2,
+          "turnBoundary": true,
+          "saveRoundTrip": true
+        },
+        {
+          "key": "mage_eternal_bookmark",
+          "up": false,
+          "mode": "stacked",
+          "retained": 1,
+          "firstHand": 10,
+          "bonusDrawRequested": 4,
+          "turnBoundary": true,
+          "saveRoundTrip": true
+        },
+        {
+          "key": "mage_eternal_bookmark",
+          "up": false,
+          "mode": "hand-cap",
+          "retained": 10,
+          "firstHand": 10,
+          "bonusDrawRequested": 2,
+          "turnBoundary": true,
+          "saveRoundTrip": true
+        },
+        {
+          "key": "mage_eternal_bookmark",
+          "up": false,
+          "mode": "no-draw",
+          "drawn": 0,
+          "noCatchUp": true,
+          "saveRoundTrip": true
+        },
+        {
+          "key": "mage_archmage_thesis",
+          "up": false,
+          "mode": "full",
+          "attackPlays": 2,
+          "hits": 4,
+          "oncePerTurn": true,
+          "flowDraw": 2,
+          "saveRoundTrip": true
+        },
+        {
+          "key": "mage_archmage_thesis",
+          "up": false,
+          "mode": "woven",
+          "attackPlays": 2,
+          "hits": 4,
+          "oncePerTurn": true,
+          "flowDraw": 2,
+          "saveRoundTrip": true
+        },
+        {
+          "key": "mage_archmage_thesis",
+          "up": false,
+          "mode": "burst-skills",
+          "attackPlays": 2,
+          "hits": 4,
+          "oncePerTurn": true,
+          "flowDraw": 2,
+          "saveRoundTrip": true
+        },
+        {
+          "key": "mage_archmage_thesis",
+          "up": false,
+          "mode": "double-tap",
+          "attackPlays": 3,
+          "hits": 6,
+          "oncePerTurn": true,
+          "flowDraw": 2,
+          "saveRoundTrip": true
+        },
+        {
+          "key": "mage_archmage_thesis",
+          "up": false,
+          "mode": "expire",
+          "attackPlays": 2,
+          "hits": 4,
+          "oncePerTurn": true,
+          "flowDraw": 2,
+          "saveRoundTrip": true
+        },
+        {
+          "key": "mage_archmage_thesis",
+          "up": false,
+          "mode": "next-turn",
+          "attackPlays": 2,
+          "hits": 4,
+          "oncePerTurn": true,
+          "flowDraw": 2,
+          "saveRoundTrip": true
+        },
+        {
+          "key": "mage_archmage_thesis",
+          "up": false,
+          "mode": "stacked",
+          "attackPlays": 3,
+          "hits": 6,
+          "oncePerTurn": true,
+          "flowDraw": 2,
+          "saveRoundTrip": true
+        },
+        {
+          "key": "mage_eternal_bookmark",
+          "up": true,
+          "mode": "empty",
+          "retained": 0,
+          "firstHand": 5,
+          "bonusDrawRequested": 0,
+          "turnBoundary": true,
+          "saveRoundTrip": true
+        },
+        {
+          "key": "mage_eternal_bookmark",
+          "up": true,
+          "mode": "retained",
+          "retained": 1,
+          "firstHand": 8,
+          "bonusDrawRequested": 2,
+          "turnBoundary": true,
+          "saveRoundTrip": true
+        },
+        {
+          "key": "mage_eternal_bookmark",
+          "up": true,
+          "mode": "measured",
+          "retained": 2,
+          "firstHand": 9,
+          "bonusDrawRequested": 2,
+          "turnBoundary": true,
+          "saveRoundTrip": true
+        },
+        {
+          "key": "mage_eternal_bookmark",
+          "up": true,
+          "mode": "stacked",
+          "retained": 1,
+          "firstHand": 10,
+          "bonusDrawRequested": 4,
+          "turnBoundary": true,
+          "saveRoundTrip": true
+        },
+        {
+          "key": "mage_eternal_bookmark",
+          "up": true,
+          "mode": "hand-cap",
+          "retained": 10,
+          "firstHand": 10,
+          "bonusDrawRequested": 2,
+          "turnBoundary": true,
+          "saveRoundTrip": true
+        },
+        {
+          "key": "mage_eternal_bookmark",
+          "up": true,
+          "mode": "no-draw",
+          "drawn": 0,
+          "noCatchUp": true,
+          "saveRoundTrip": true
+        },
+        {
+          "key": "mage_archmage_thesis",
+          "up": true,
+          "mode": "full",
+          "attackPlays": 2,
+          "hits": 4,
+          "oncePerTurn": true,
+          "flowDraw": 2,
+          "saveRoundTrip": true
+        },
+        {
+          "key": "mage_archmage_thesis",
+          "up": true,
+          "mode": "woven",
+          "attackPlays": 2,
+          "hits": 4,
+          "oncePerTurn": true,
+          "flowDraw": 2,
+          "saveRoundTrip": true
+        },
+        {
+          "key": "mage_archmage_thesis",
+          "up": true,
+          "mode": "burst-skills",
+          "attackPlays": 2,
+          "hits": 4,
+          "oncePerTurn": true,
+          "flowDraw": 2,
+          "saveRoundTrip": true
+        },
+        {
+          "key": "mage_archmage_thesis",
+          "up": true,
+          "mode": "double-tap",
+          "attackPlays": 3,
+          "hits": 6,
+          "oncePerTurn": true,
+          "flowDraw": 2,
+          "saveRoundTrip": true
+        },
+        {
+          "key": "mage_archmage_thesis",
+          "up": true,
+          "mode": "expire",
+          "attackPlays": 2,
+          "hits": 4,
+          "oncePerTurn": true,
+          "flowDraw": 2,
+          "saveRoundTrip": true
+        },
+        {
+          "key": "mage_archmage_thesis",
+          "up": true,
+          "mode": "next-turn",
+          "attackPlays": 2,
+          "hits": 4,
+          "oncePerTurn": true,
+          "flowDraw": 2,
+          "saveRoundTrip": true
+        },
+        {
+          "key": "mage_archmage_thesis",
+          "up": true,
+          "mode": "stacked",
+          "attackPlays": 3,
+          "hits": 6,
+          "oncePerTurn": true,
+          "flowDraw": 2,
+          "saveRoundTrip": true
+        },
+        {
+          "key": "ranger_hunt_without_end",
+          "up": false,
+          "mode": "zero",
+          "counted": 0,
+          "vigor": 0,
+          "turnBoundary": true,
+          "saveRoundTrip": true
+        },
+        {
+          "key": "ranger_hunt_without_end",
+          "up": false,
+          "mode": "one",
+          "counted": 1,
+          "vigor": 2,
+          "turnBoundary": true,
+          "saveRoundTrip": true
+        },
+        {
+          "key": "ranger_hunt_without_end",
+          "up": false,
+          "mode": "full",
+          "counted": 3,
+          "vigor": 6,
+          "turnBoundary": true,
+          "saveRoundTrip": true
+        },
+        {
+          "key": "ranger_hunt_without_end",
+          "up": false,
+          "mode": "cap",
+          "counted": 3,
+          "vigor": 6,
+          "turnBoundary": true,
+          "saveRoundTrip": true
+        },
+        {
+          "key": "ranger_hunt_without_end",
+          "up": false,
+          "mode": "replay",
+          "counted": 2,
+          "vigor": 4,
+          "turnBoundary": true,
+          "saveRoundTrip": true
+        },
+        {
+          "key": "ranger_hunt_without_end",
+          "up": false,
+          "mode": "tracking",
+          "counted": 3,
+          "vigor": 8,
+          "turnBoundary": true,
+          "saveRoundTrip": true
+        },
+        {
+          "key": "ranger_hunt_without_end",
+          "up": false,
+          "mode": "stacked",
+          "counted": 3,
+          "vigor": 12,
+          "turnBoundary": true,
+          "saveRoundTrip": true
+        },
+        {
+          "key": "ranger_hunt_without_end",
+          "up": false,
+          "mode": "late-setup",
+          "counted": 3,
+          "vigor": 6,
+          "turnBoundary": true,
+          "saveRoundTrip": true
+        },
+        {
+          "key": "ranger_hunt_without_end",
+          "up": true,
+          "mode": "zero",
+          "counted": 0,
+          "vigor": 0,
+          "turnBoundary": true,
+          "saveRoundTrip": true
+        },
+        {
+          "key": "ranger_hunt_without_end",
+          "up": true,
+          "mode": "one",
+          "counted": 1,
+          "vigor": 3,
+          "turnBoundary": true,
+          "saveRoundTrip": true
+        },
+        {
+          "key": "ranger_hunt_without_end",
+          "up": true,
+          "mode": "full",
+          "counted": 3,
+          "vigor": 9,
+          "turnBoundary": true,
+          "saveRoundTrip": true
+        },
+        {
+          "key": "ranger_hunt_without_end",
+          "up": true,
+          "mode": "cap",
+          "counted": 3,
+          "vigor": 9,
+          "turnBoundary": true,
+          "saveRoundTrip": true
+        },
+        {
+          "key": "ranger_hunt_without_end",
+          "up": true,
+          "mode": "replay",
+          "counted": 2,
+          "vigor": 6,
+          "turnBoundary": true,
+          "saveRoundTrip": true
+        },
+        {
+          "key": "ranger_hunt_without_end",
+          "up": true,
+          "mode": "tracking",
+          "counted": 3,
+          "vigor": 12,
+          "turnBoundary": true,
+          "saveRoundTrip": true
+        },
+        {
+          "key": "ranger_hunt_without_end",
+          "up": true,
+          "mode": "stacked",
+          "counted": 3,
+          "vigor": 18,
+          "turnBoundary": true,
+          "saveRoundTrip": true
+        },
+        {
+          "key": "ranger_hunt_without_end",
+          "up": true,
+          "mode": "late-setup",
+          "counted": 3,
+          "vigor": 9,
+          "turnBoundary": true,
+          "saveRoundTrip": true
+        }
+      ]
+    },
+    {
+      "branch": "beta",
+      "game": "v0.111.0",
+      "passedCases": 44,
+      "betaOnlyLoaded": true,
+      "temporaryBetaRemoved": true,
+      "cases": [
+        {
+          "key": "mage_eternal_bookmark",
+          "up": false,
+          "mode": "retained",
+          "retained": 1,
+          "firstHand": 8,
+          "bonusDrawRequested": 2,
+          "turnBoundary": true,
+          "saveRoundTrip": true
+        },
+        {
+          "key": "mage_eternal_bookmark",
+          "up": true,
+          "mode": "retained",
+          "retained": 1,
+          "firstHand": 8,
+          "bonusDrawRequested": 2,
+          "turnBoundary": true,
+          "saveRoundTrip": true
+        },
+        {
+          "key": "mage_eternal_bookmark",
+          "up": false,
+          "mode": "empty",
+          "retained": 0,
+          "firstHand": 5,
+          "bonusDrawRequested": 0,
+          "turnBoundary": true,
+          "saveRoundTrip": true
+        },
+        {
+          "key": "mage_eternal_bookmark",
+          "up": false,
+          "mode": "retained",
+          "retained": 1,
+          "firstHand": 8,
+          "bonusDrawRequested": 2,
+          "turnBoundary": true,
+          "saveRoundTrip": true
+        },
+        {
+          "key": "mage_eternal_bookmark",
+          "up": false,
+          "mode": "measured",
+          "retained": 1,
+          "firstHand": 8,
+          "bonusDrawRequested": 2,
+          "turnBoundary": true,
+          "saveRoundTrip": true
+        },
+        {
+          "key": "mage_eternal_bookmark",
+          "up": false,
+          "mode": "stacked",
+          "retained": 1,
+          "firstHand": 10,
+          "bonusDrawRequested": 4,
+          "turnBoundary": true,
+          "saveRoundTrip": true
+        },
+        {
+          "key": "mage_eternal_bookmark",
+          "up": false,
+          "mode": "hand-cap",
+          "retained": 10,
+          "firstHand": 10,
+          "bonusDrawRequested": 2,
+          "turnBoundary": true,
+          "saveRoundTrip": true
+        },
+        {
+          "key": "mage_eternal_bookmark",
+          "up": false,
+          "mode": "no-draw",
+          "drawn": 0,
+          "noCatchUp": true,
+          "saveRoundTrip": true
+        },
+        {
+          "key": "mage_archmage_thesis",
+          "up": false,
+          "mode": "full",
+          "attackPlays": 2,
+          "hits": 4,
+          "oncePerTurn": true,
+          "flowDraw": 2,
+          "saveRoundTrip": true
+        },
+        {
+          "key": "mage_archmage_thesis",
+          "up": false,
+          "mode": "woven",
+          "attackPlays": 2,
+          "hits": 4,
+          "oncePerTurn": true,
+          "flowDraw": 2,
+          "saveRoundTrip": true
+        },
+        {
+          "key": "mage_archmage_thesis",
+          "up": false,
+          "mode": "burst-skills",
+          "attackPlays": 2,
+          "hits": 4,
+          "oncePerTurn": true,
+          "flowDraw": 2,
+          "saveRoundTrip": true
+        },
+        {
+          "key": "mage_archmage_thesis",
+          "up": false,
+          "mode": "double-tap",
+          "attackPlays": 3,
+          "hits": 6,
+          "oncePerTurn": true,
+          "flowDraw": 2,
+          "saveRoundTrip": true
+        },
+        {
+          "key": "mage_archmage_thesis",
+          "up": false,
+          "mode": "expire",
+          "attackPlays": 2,
+          "hits": 4,
+          "oncePerTurn": true,
+          "flowDraw": 2,
+          "saveRoundTrip": true
+        },
+        {
+          "key": "mage_archmage_thesis",
+          "up": false,
+          "mode": "next-turn",
+          "attackPlays": 2,
+          "hits": 4,
+          "oncePerTurn": true,
+          "flowDraw": 2,
+          "saveRoundTrip": true
+        },
+        {
+          "key": "mage_archmage_thesis",
+          "up": false,
+          "mode": "stacked",
+          "attackPlays": 3,
+          "hits": 6,
+          "oncePerTurn": true,
+          "flowDraw": 2,
+          "saveRoundTrip": true
+        },
+        {
+          "key": "mage_eternal_bookmark",
+          "up": true,
+          "mode": "empty",
+          "retained": 0,
+          "firstHand": 5,
+          "bonusDrawRequested": 0,
+          "turnBoundary": true,
+          "saveRoundTrip": true
+        },
+        {
+          "key": "mage_eternal_bookmark",
+          "up": true,
+          "mode": "retained",
+          "retained": 1,
+          "firstHand": 8,
+          "bonusDrawRequested": 2,
+          "turnBoundary": true,
+          "saveRoundTrip": true
+        },
+        {
+          "key": "mage_eternal_bookmark",
+          "up": true,
+          "mode": "measured",
+          "retained": 2,
+          "firstHand": 9,
+          "bonusDrawRequested": 2,
+          "turnBoundary": true,
+          "saveRoundTrip": true
+        },
+        {
+          "key": "mage_eternal_bookmark",
+          "up": true,
+          "mode": "stacked",
+          "retained": 1,
+          "firstHand": 10,
+          "bonusDrawRequested": 4,
+          "turnBoundary": true,
+          "saveRoundTrip": true
+        },
+        {
+          "key": "mage_eternal_bookmark",
+          "up": true,
+          "mode": "hand-cap",
+          "retained": 10,
+          "firstHand": 10,
+          "bonusDrawRequested": 2,
+          "turnBoundary": true,
+          "saveRoundTrip": true
+        },
+        {
+          "key": "mage_eternal_bookmark",
+          "up": true,
+          "mode": "no-draw",
+          "drawn": 0,
+          "noCatchUp": true,
+          "saveRoundTrip": true
+        },
+        {
+          "key": "mage_archmage_thesis",
+          "up": true,
+          "mode": "full",
+          "attackPlays": 2,
+          "hits": 4,
+          "oncePerTurn": true,
+          "flowDraw": 2,
+          "saveRoundTrip": true
+        },
+        {
+          "key": "mage_archmage_thesis",
+          "up": true,
+          "mode": "woven",
+          "attackPlays": 2,
+          "hits": 4,
+          "oncePerTurn": true,
+          "flowDraw": 2,
+          "saveRoundTrip": true
+        },
+        {
+          "key": "mage_archmage_thesis",
+          "up": true,
+          "mode": "burst-skills",
+          "attackPlays": 2,
+          "hits": 4,
+          "oncePerTurn": true,
+          "flowDraw": 2,
+          "saveRoundTrip": true
+        },
+        {
+          "key": "mage_archmage_thesis",
+          "up": true,
+          "mode": "double-tap",
+          "attackPlays": 3,
+          "hits": 6,
+          "oncePerTurn": true,
+          "flowDraw": 2,
+          "saveRoundTrip": true
+        },
+        {
+          "key": "mage_archmage_thesis",
+          "up": true,
+          "mode": "expire",
+          "attackPlays": 2,
+          "hits": 4,
+          "oncePerTurn": true,
+          "flowDraw": 2,
+          "saveRoundTrip": true
+        },
+        {
+          "key": "mage_archmage_thesis",
+          "up": true,
+          "mode": "next-turn",
+          "attackPlays": 2,
+          "hits": 4,
+          "oncePerTurn": true,
+          "flowDraw": 2,
+          "saveRoundTrip": true
+        },
+        {
+          "key": "mage_archmage_thesis",
+          "up": true,
+          "mode": "stacked",
+          "attackPlays": 3,
+          "hits": 6,
+          "oncePerTurn": true,
+          "flowDraw": 2,
+          "saveRoundTrip": true
+        },
+        {
+          "key": "ranger_hunt_without_end",
+          "up": false,
+          "mode": "zero",
+          "counted": 0,
+          "vigor": 0,
+          "turnBoundary": true,
+          "saveRoundTrip": true
+        },
+        {
+          "key": "ranger_hunt_without_end",
+          "up": false,
+          "mode": "one",
+          "counted": 1,
+          "vigor": 2,
+          "turnBoundary": true,
+          "saveRoundTrip": true
+        },
+        {
+          "key": "ranger_hunt_without_end",
+          "up": false,
+          "mode": "full",
+          "counted": 3,
+          "vigor": 6,
+          "turnBoundary": true,
+          "saveRoundTrip": true
+        },
+        {
+          "key": "ranger_hunt_without_end",
+          "up": false,
+          "mode": "cap",
+          "counted": 3,
+          "vigor": 6,
+          "turnBoundary": true,
+          "saveRoundTrip": true
+        },
+        {
+          "key": "ranger_hunt_without_end",
+          "up": false,
+          "mode": "replay",
+          "counted": 2,
+          "vigor": 4,
+          "turnBoundary": true,
+          "saveRoundTrip": true
+        },
+        {
+          "key": "ranger_hunt_without_end",
+          "up": false,
+          "mode": "tracking",
+          "counted": 3,
+          "vigor": 8,
+          "turnBoundary": true,
+          "saveRoundTrip": true
+        },
+        {
+          "key": "ranger_hunt_without_end",
+          "up": false,
+          "mode": "stacked",
+          "counted": 3,
+          "vigor": 12,
+          "turnBoundary": true,
+          "saveRoundTrip": true
+        },
+        {
+          "key": "ranger_hunt_without_end",
+          "up": false,
+          "mode": "late-setup",
+          "counted": 3,
+          "vigor": 6,
+          "turnBoundary": true,
+          "saveRoundTrip": true
+        },
+        {
+          "key": "ranger_hunt_without_end",
+          "up": true,
+          "mode": "zero",
+          "counted": 0,
+          "vigor": 0,
+          "turnBoundary": true,
+          "saveRoundTrip": true
+        },
+        {
+          "key": "ranger_hunt_without_end",
+          "up": true,
+          "mode": "one",
+          "counted": 1,
+          "vigor": 3,
+          "turnBoundary": true,
+          "saveRoundTrip": true
+        },
+        {
+          "key": "ranger_hunt_without_end",
+          "up": true,
+          "mode": "full",
+          "counted": 3,
+          "vigor": 9,
+          "turnBoundary": true,
+          "saveRoundTrip": true
+        },
+        {
+          "key": "ranger_hunt_without_end",
+          "up": true,
+          "mode": "cap",
+          "counted": 3,
+          "vigor": 9,
+          "turnBoundary": true,
+          "saveRoundTrip": true
+        },
+        {
+          "key": "ranger_hunt_without_end",
+          "up": true,
+          "mode": "replay",
+          "counted": 2,
+          "vigor": 6,
+          "turnBoundary": true,
+          "saveRoundTrip": true
+        },
+        {
+          "key": "ranger_hunt_without_end",
+          "up": true,
+          "mode": "tracking",
+          "counted": 3,
+          "vigor": 12,
+          "turnBoundary": true,
+          "saveRoundTrip": true
+        },
+        {
+          "key": "ranger_hunt_without_end",
+          "up": true,
+          "mode": "stacked",
+          "counted": 3,
+          "vigor": 18,
+          "turnBoundary": true,
+          "saveRoundTrip": true
+        },
+        {
+          "key": "ranger_hunt_without_end",
+          "up": true,
+          "mode": "late-setup",
+          "counted": 3,
+          "vigor": 9,
+          "turnBoundary": true,
+          "saveRoundTrip": true
+        }
+      ]
+    }
+  ],
+  "sourceCommit": "5d42d361b51e1b0025a06d788aed4104ba9b3cf0",
+  "archiveSha256": "c3bb48efcc265131f915102e908d22ba382809164e82b36e63dd4a49cecaec42",
+  "changedCardsSince1042": [
+    "mage_archmage_thesis",
+    "mage_eternal_bookmark",
+    "ranger_hunt_without_end"
+  ],
+  "uncommonCounterpartsUnchanged": [
+    "ranger_measured_breath",
+    "mage_woven_incantation",
+    "ranger_tracking_rhythm"
+  ],
+  "earlierNineRedesignsUnchanged": true,
+  "limitations": [
+    "Owned Windows solo fixtures; deterministic selectors supply choices, not physical Steam Deck input.",
+    "No Draw and no-catch-up boundaries also invoke normal power hooks directly; ordinary retention and momentum use actual turn transitions.",
+    "No new co-op gameplay or full-climb balance claim."
+  ]
+}
