@@ -192,7 +192,8 @@ foreach (var upgraded in new[] { false, true })
 {
     var quiver = new CardDesign("ranger_second_quiver", upgraded);
     var meditate = new CardDesign("meditate", upgraded);
-    Check(quiver.Cost == meditate.Cost && quiver.Amount("draw") >= meditate.Amount("draw") && quiver.Amount("energy") >= meditate.Amount("energy") && quiver.Amount("hpLoss") == 0, "Second Quiver avoids a strictly worse shared resource card");
+    Check(meditate.Cost==0&&meditate.Amount("draw")== (upgraded?2:1)&&meditate.Amount("energy")== (upgraded?2:1),"Meditate retains its shared immediate resource burst");
+    Check(quiver.Cost==1&&quiver.Amount("draw")==0&&quiver.Amount("energy")==0&&quiver.Row.Text("special")=="reload_attacks"&&quiver.SpecialAmount==(upgraded?3:2),"Second Quiver is paid selective Attack recovery, distinct from Meditate");
     var reading = new CardDesign("mage_ash_reading", upgraded);
     Check(reading.Cost == 0 && reading.Amount("hpLoss") == 0 && reading.Row.Flag("exhaust") && reading.SpecialAmount == 1, "Free positive-draw Ash Reading is single use and exhausts fuel");
     var meditation = new CardDesign("knight_battle_meditation", upgraded);
@@ -361,7 +362,7 @@ foreach(var upgraded in new[]{false,true}){
     Check(slow.Cost==1&&slow.Amount("nextEnergy")==1&&slow.Amount("nextDraw")==1&&slow.Amount("nextBlock")==3,"Slow Incantation stays paid with unchanged delayed payout");
     Check(slow.Block==(upgraded?2:0)&&!slow.Row.Flag("exhaust"),"Slow Incantation upgrades protection without free cycling");
     var quiver=new CardDesign("ranger_second_quiver",upgraded);
-    Check(quiver.Amount("draw")==2&&quiver.Amount("energy")==1+(upgraded?1:0)&&quiver.Row.Flag("exhaust"),"Second Quiver matches native Adrenaline draw/Energy rather than upgrading both");
+    Check(quiver.Row.Flag("exhaust")&&quiver.Cost==1&&quiver.Amount("hpLoss")==0,"Second Quiver keeps paid single-use recovery in both forms");
     Check(new CardDesign("mage_mana_fountain",upgraded).Amount("energy")==2+(upgraded?1:0),"Mana Fountain has a bounded single-use Energy burst");
     var bookmark=new CardDesign("mage_eternal_bookmark",upgraded);
     Check(bookmark.Cost==1&&bookmark.Magic==2+(upgraded?1:0),"Rare Bookmark improves retention rather than repairing a costly setup");

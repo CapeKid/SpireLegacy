@@ -74,6 +74,10 @@ public static class CardEffects
    case "double_block":await CreatureCmd.GainBlock(creature,creature.Block,ValueProp.Unpowered,play);break;
    case "cleanse":foreach(var power in creature.Powers.Where(p=>p.Type==PowerType.Debuff).ToArray())await PowerCmd.Remove(power);break;
    case "exhaust_one":foreach(var fuel in await CardChoiceLifetime.Run(player,()=>CardSelectCmd.FromHand(context,player,new CardSelectorPrefs(CardSelectorPrefs.ExhaustSelectionPrompt,amount),null,card)))await BranchCommands.Exhaust(context,fuel);break;
+   case "reload_attacks":
+    var reloaded=await CardChoiceLifetime.Run(player,()=>CardSelectCmd.FromCombatPile(context,PileType.Discard.GetPile(player),player,new CardSelectorPrefs(new MegaCrit.Sts2.Core.Localization.LocString("cards",card.Id.Entry+".attackReturnPrompt"),0,amount),
+     candidate=>candidate.Type==CardType.Attack&&(candidate is not LegacyCard legacyAttack||legacyAttack.DesignCard.RecoverableFromDiscard)));
+    foreach(var attack in reloaded)await CardPileCmd.Add(attack,PileType.Hand);break;
    case "retrieve":case "exhume":
     var pile=row.Text("special")=="retrieve"?PileType.Discard:PileType.Exhaust;
     var selected=await CardChoiceLifetime.Run(player,()=>CardSelectCmd.FromCombatPile(context,pile.GetPile(player),player,new CardSelectorPrefs(new MegaCrit.Sts2.Core.Localization.LocString("cards",card.Id.Entry+".returnPrompt"),amount),

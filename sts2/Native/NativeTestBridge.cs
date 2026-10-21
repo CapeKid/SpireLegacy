@@ -94,6 +94,7 @@ public static class NativeTestBridge
                 case "mage-flow":await WaitForPlay(RunState().Players.Single());result=await PowerAuditOracle.MageFlow(RunState(),request.GetProperty("charges").GetInt32(),request.GetProperty("upgrade").GetBoolean(),request.GetProperty("mode").GetString()!);break;
                 case "mage-pool":await WaitForPlay(RunState().Players.Single());result=await PowerAuditOracle.MagePool(RunState(),request.GetProperty("card").GetString()!,request.GetProperty("upgrade").GetBoolean(),request.GetProperty("mode").GetString()!,UseTestSelector());break;
                 case "mana-burn":await WaitForPlay(RunState().Players.Single());result=await PowerAuditOracle.ManaBurn(RunState(),request.GetProperty("upgrade").GetBoolean(),request.GetProperty("mode").GetString()!);break;
+                case "second-quiver":await WaitForPlay(RunState().Players.Single());result=await PowerAuditOracle.SecondQuiver(RunState(),request.GetProperty("upgrade").GetBoolean(),request.GetProperty("mode").GetString()!,UseTestSelector(request.GetProperty("mode").GetString()=="cancel"?0:int.MaxValue));break;
                 case "power-damage-control":result=await PowerAuditOracle.DamageControl(RunState(),request.GetProperty("power").GetString()!,request.GetProperty("upgrade").GetBoolean());break;
                 case "power-multihit-coop-prepare":result=await PowerAuditOracle.MultihitCoopPrepare(RunState(),request.GetProperty("upgrade").GetBoolean());break;
                 case "power-multihit-coop-play":result=await PowerAuditOracle.MultihitCoopPlay(RunState(),request.GetProperty("upgrade").GetBoolean());break;
@@ -704,16 +705,16 @@ public static class NativeTestBridge
         return new { floor=run.TotalFloor,room=run.CurrentRoom?.GetType().Name,heir=new {Runtime.Heir.name,Runtime.Heir.classId,Runtime.Heir.traits}, hp=player.Creature.CurrentHp,maxHp=player.Creature.MaxHp,block=player.Creature.Block,gold=player.Gold,energy=player.PlayerCombatState?.Energy,turn=player.PlayerCombatState?.TurnNumber,phase=player.PlayerCombatState?.Phase.ToString(),relics=player.Relics.Select(r=>new{id=r.Id.ToString(),title=r.Title.GetFormattedText()}).ToArray(),hand=player.PlayerCombatState?.Hand.Cards.Select(c=>c.Id.ToString()).ToArray(),powers=player.Creature.Powers.Select(p=>new {id=p.Id.ToString(),amount=p.Amount,display=p.DisplayAmount,title=p.Title.GetFormattedText()}).ToArray(),enemies=player.Creature.CombatState?.GetOpponentsOf(player.Creature).Select(e=>new {hp=e.CurrentHp,block=e.Block,powers=e.Powers.Select(p=>new{id=p.Id.ToString(),amount=p.Amount}).ToArray()}).ToArray() };
     }
     // Test-only selector scope acquired across the regular/beta API signatures.
-    private static IDisposable UseTestSelector()
+    private static IDisposable UseTestSelector(int selectionLimit=1)
     {
-        var selector = new FirstChoiceSelector();
+        var selector = new FirstChoiceSelector(selectionLimit);
         var method = AccessTools.Method(typeof(CardSelectCmd), "UseSelector", [typeof(ICardSelector), typeof(bool)])
             ?? AccessTools.Method(typeof(CardSelectCmd), "UseSelector", [typeof(ICardSelector)]);
         return (IDisposable)method.Invoke(null, method.GetParameters().Length == 2 ? [selector, false] : [selector])!;
     }
-    private sealed class FirstChoiceSelector : ICardSelector
+    private sealed class FirstChoiceSelector(int selectionLimit) : ICardSelector
     {
-        public Task<IEnumerable<CardModel>> GetSelectedCards(IEnumerable<CardModel> options,int minSelect,int maxSelect) => Task.FromResult(options.Take(Math.Max(0,Math.Max(minSelect,Math.Min(1,maxSelect)))));
+        public Task<IEnumerable<CardModel>> GetSelectedCards(IEnumerable<CardModel> options,int minSelect,int maxSelect) => Task.FromResult(options.Take(Math.Max(0,Math.Max(minSelect,Math.Min(selectionLimit,maxSelect)))));
         public CardRewardSelection GetSelectedCardReward(IReadOnlyList<CardCreationResult> options,IReadOnlyList<CardRewardAlternative> alternatives) => new() { card=options.FirstOrDefault()?.Card };
     }
 }
