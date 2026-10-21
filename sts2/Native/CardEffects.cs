@@ -46,7 +46,7 @@ public static class CardEffects
   await Special(card,context,play,enemies);
  }
  public static Task Scry(CardModel card,PlayerChoiceContext context,int amount)=>Scry(card.Owner,context,amount);
- public static async Task<bool> RecoverFromExhaust(Player player,PlayerChoiceContext context,AbstractModel source,bool attacksOnly,int discount=0)
+ public static async Task<bool> RecoverFromExhaust(Player player,PlayerChoiceContext context,bool attacksOnly,int discount=0)
  {
   var prompt=new MegaCrit.Sts2.Core.Localization.LocString("cards",ModelDb.Card<C_knight_arms_vault>().Id.Entry+".returnPrompt");
   if(attacksOnly)prompt=new MegaCrit.Sts2.Core.Localization.LocString("cards",ModelDb.Card<C_ranger_second_quiver>().Id.Entry+".attackReturnPrompt");
@@ -88,7 +88,7 @@ public static class CardEffects
     foreach(var debuff in creature.Powers.Where(p=>p.Type==PowerType.Debuff).ToArray())await PowerCmd.Remove(debuff);
     if(PlayerBloodlines.Heir(player).classId=="mage"&&creature.GetPower<P_class>() is {} cleansedCharge)cleansedCharge.Charges=Math.Min(2,cleansedCharge.Charges+amount);break;
    case "exhume_next_turn":await Apply(context,"prophecy_return",creature,amount,creature,card);break;
-   case "exhume_attack":if(await RecoverFromExhaust(player,context,card,attacksOnly:true))await Apply(context,"vigor",creature,amount,creature,card);break;
+   case "exhume_attack":if(await RecoverFromExhaust(player,context,attacksOnly:true))await Apply(context,"vigor",creature,amount,creature,card);break;
    case "exhaust_one":foreach(var fuel in await CardChoiceLifetime.Run(player,()=>CardSelectCmd.FromHand(context,player,new CardSelectorPrefs(CardSelectorPrefs.ExhaustSelectionPrompt,amount),null,card)))await BranchCommands.Exhaust(context,fuel);break;
    case "reload_attacks":
     var reloaded=await CardChoiceLifetime.Run(player,()=>CardSelectCmd.FromCombatPile(context,PileType.Discard.GetPile(player),player,new CardSelectorPrefs(new MegaCrit.Sts2.Core.Localization.LocString("cards",card.Id.Entry+".attackReturnPrompt"),0,amount),

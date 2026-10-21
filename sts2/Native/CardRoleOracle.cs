@@ -58,7 +58,14 @@ public static partial class PowerAuditOracle
             if(key is "nova" or "mage_moonstone_lance"){
                 var count=mode=="zero"?0:mode=="one"?1:mode is "cap" or "reset"?5:2;
                 for(var i=0;i<count;i++)await Play(await Add(player,ModelDb.Card<DefendIronclad>()));
-                if(mode=="reset"){Codec(counter);await BalanceOracle.End(player,true);Require(counter.SkillsThisTurn==0,"Skill count did not reset.");await CardPileCmd.Add(card,PileType.Hand);await PlayerCmd.GainEnergy(30,player);}
+                if(mode=="reset"){
+                    Codec(counter);await BalanceOracle.End(player,true);Require(counter.SkillsThisTurn==0,"Skill count did not reset.");
+                    // The intervening real monster turn can apply Shrink or gain
+                    // Block. Isolate the counter reset from those damage modifiers.
+                    foreach(var power in owner.Powers.Where(p=>p!=counter).ToArray())await PowerCmd.Remove(power);
+                    foreach(var enemy in enemies){foreach(var power in enemy.Powers.ToArray())await PowerCmd.Remove(power);enemy.LoseBlockInternal(enemy.Block);}
+                    await CardPileCmd.Add(card,PileType.Hand);await PlayerCmd.GainEnergy(30,player);
+                }
                 if(mode=="reservoir")await Apply(player,"reservoir",2);
                 if(mode=="replay")await Apply(player,"double_tap",1);
                 var charges=counter.Charges;var skills=counter.SkillsThisTurn;var hp=enemies.Select(e=>e.CurrentHp).ToArray();
@@ -89,7 +96,7 @@ public static partial class PowerAuditOracle
                     if(mode=="hand-cap"){
                         while(hand.Cards.Count<CardPile.MaxCardsInHand)await Add(player,ModelDb.Card<DefendIronclad>());
                         await pending.AfterPlayerTurnStart(Context,player);
-                        Require(eligible?.Pile?.Type==PileType.Exhaust,"Prophecy exceeded hand cap.");
+                        Require(eligible?.Pile?.Type==PileType.Discard&&hand.Cards.Count==CardPile.MaxCardsInHand,"Prophecy must use native full-hand overflow to discard, without a discount.");
                     }else await BalanceOracle.End(player,true);
                     var returned=eligible?.Pile?.Type==PileType.Hand;
                     Require(returned==(mode is not ("empty" or "cancel" or "hand-cap"))&&owner.GetPower<P_prophecy_return>()==null,"Delayed recovery selection/lifetime differs.");

@@ -41,7 +41,7 @@
   },
   {
     "id": "exhume",
-    "summary": "Return a card from your Exhaust pile to your hand. Cannot return Spire Legacy cards with this effect."
+    "summary": "Return a card from your Exhaust pile to your hand. Cannot return Spire Legacy Exhaust-recovery cards."
   },
   {
     "id": "charge_gain",

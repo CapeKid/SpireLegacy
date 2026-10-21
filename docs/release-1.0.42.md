@@ -16,7 +16,7 @@ Nine approved redesigns separate cards that previously repeated each other. Save
 
 Nova uses normal Arcane Flow charge consumption and once-per-turn draw; a replay has no charges unless separately replenished. Moonstone Lance counts resolved Skills, including replays, with a three-Skill cap and owner-turn reset. Existing saved retained growth no longer contributes to this card.
 
-Prophecy chooses from the Exhaust pile at next turn start, after removing the pending recovery power; replays stack the discount rather than creating repeated recovery actions. The discount lasts only that turn and skips X-cost cards. Empty/declined/full-hand recovery consumes the pending effect. Prophecy and Salvage cannot recover any Spire Legacy Exhaust-recovery card; discard recovery also excludes them. Native ownership, hand limits and run-bound choice lifetimes apply.
+Prophecy chooses from the Exhaust pile at next turn start, after removing the pending recovery power; replays stack the discount rather than creating repeated recovery actions. The discount lasts only that turn and skips X-cost cards. Empty/declined/full-hand recovery consumes the pending effect. Native full-hand overflow sends the selected card to discard without a discount or Vigor reward. Prophecy and Salvage cannot recover any Spire Legacy Exhaust-recovery card; discard recovery also excludes them. Native ownership, hand limits and run-bound choice lifetimes apply.
 
 Delivery target: private beta Workshop item **3822395190**, mod ID **SpireLegacyBeta**. Public Workshop item **3816525393** remains on **1.0.39**. No public upload or PR merge is authorized by this change.
 

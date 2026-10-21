@@ -53,7 +53,7 @@ public abstract class LegacyPower:CustomPowerModel
     // Claim before the asynchronous choice. Replays stack the discount, not
     // additional recovery actions, and no live card references survive a run.
     var discount=Amount;await PowerCmd.Remove(this);
-    await CardEffects.RecoverFromExhaust(player,context,this,attacksOnly:false,discount:discount);break;
+    await CardEffects.RecoverFromExhaust(player,context,attacksOnly:false,discount:discount);break;
   }
  }
  public override async Task BeforeSideTurnEnd(PlayerChoiceContext context,CombatSide side,IEnumerable<Creature> participants)

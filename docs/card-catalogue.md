@@ -39,7 +39,7 @@ Each class has 82 rewards on regular (20 common, 36 uncommon, 26 rare), or 85 on
 | Double Guard | Uncommon | Skill | 1 | Class unique; Double your current Block.; Exhaust |
 | Clean Armor | Uncommon | Skill | 1 | Shared family card; 4 Block; Remove all debuffs from yourself.; Exhaust |
 | Last Stand | Uncommon | Skill | 0 | Shared family card; 9 Block; 3 HP cost; Exhaust |
-| Arms Vault | Uncommon | Skill | 1 | Shared family card; 1 draw; Return a card from your Exhaust pile to your hand. Cannot return Spire Legacy cards with this effect.; Exhaust |
+| Arms Vault | Uncommon | Skill | 1 | Shared family card; 1 draw; Return a card from your Exhaust pile to your hand. Cannot return Spire Legacy Exhaust-recovery cards.; Exhaust |
 | Bulwark | Uncommon | Power | 1 | Class unique; At the end of your turn, gain 2 Block. |
 | Battle Rhythm | Uncommon | Power | 1 | Class unique; Whenever you gain Block, deal 2 damage to a random enemy. |
 | Forged in Pain | Uncommon | Power | 1 | Class unique; Whenever you lose HP from a card, gain 1 Strength. |
@@ -119,7 +119,7 @@ Each class has 82 rewards on regular (20 common, 36 uncommon, 26 rare), or 85 on
 | Battle Meditation | Uncommon | Skill | 1 | Shared family card; 3 draw; 1 discard |
 | Clean Armor | Uncommon | Skill | 1 | Shared family card; 4 Block; Remove all debuffs from yourself.; Exhaust |
 | Last Stand | Uncommon | Skill | 0 | Shared family card; 9 Block; 3 HP cost; Exhaust |
-| Arms Vault | Uncommon | Skill | 1 | Shared family card; 1 draw; Return a card from your Exhaust pile to your hand. Cannot return Spire Legacy cards with this effect.; Exhaust |
+| Arms Vault | Uncommon | Skill | 1 | Shared family card; 1 draw; Return a card from your Exhaust pile to your hand. Cannot return Spire Legacy Exhaust-recovery cards.; Exhaust |
 | Burnished Legacy | Uncommon | Power | 1 | Shared family card; Whenever you Exhaust a card, gain 2 Block. |
 | Guardian Angel | Rare | Skill | 2 | Shared family card; Prevent the next 1 time(s) you would lose HP.; Exhaust |
 | Ember Dart | Common | Attack | 0 | Class unique; 3 damage; Retain |
@@ -212,7 +212,7 @@ Each class has 82 rewards on regular (20 common, 36 uncommon, 26 rare), or 85 on
 | Battle Meditation | Uncommon | Skill | 1 | Shared family card; 3 draw; 1 discard |
 | Clean Armor | Uncommon | Skill | 1 | Shared family card; 4 Block; Remove all debuffs from yourself.; Exhaust |
 | Last Stand | Uncommon | Skill | 0 | Shared family card; 9 Block; 3 HP cost; Exhaust |
-| Arms Vault | Uncommon | Skill | 1 | Shared family card; 1 draw; Return a card from your Exhaust pile to your hand. Cannot return Spire Legacy cards with this effect.; Exhaust |
+| Arms Vault | Uncommon | Skill | 1 | Shared family card; 1 draw; Return a card from your Exhaust pile to your hand. Cannot return Spire Legacy Exhaust-recovery cards.; Exhaust |
 | Burnished Legacy | Uncommon | Power | 1 | Shared family card; Whenever you Exhaust a card, gain 2 Block. |
 | Guardian Angel | Rare | Skill | 2 | Shared family card; Prevent the next 1 time(s) you would lose HP.; Exhaust |
 | Cold Read | Common | Skill | 0 | Shared family card; 1 draw; 1 discard |
