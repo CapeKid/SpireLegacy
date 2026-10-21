@@ -146,5 +146,25 @@
   {
     "id": "arcane_echo",
     "summary": "The first Skill you play each turn draws !M! card(s) and grants 1 Arcane Charge (up to 2)."
+  },
+  {
+    "id": "exhaust_vigor",
+    "summary": "Whenever you Exhaust a card, gain !M! Vigor for your next Attack."
+  },
+  {
+    "id": "discard_next_block",
+    "summary": "Whenever you discard a card during your turn, gain !M! Block NEXT turn."
+  },
+  {
+    "id": "exhaust_burst",
+    "summary": "The third card you Exhaust during your turn deals !M! damage to ALL enemies. Triggers once each turn."
+  },
+  {
+    "id": "status_furnace",
+    "summary": "Whenever you draw a Status, Exhaust it and gain !M! Block."
+  },
+  {
+    "id": "prophecy_return",
+    "summary": "At the start of your next turn, you may return a card from your Exhaust pile to your hand. It costs !M! less this turn. Cannot return Spire Legacy Exhaust-recovery cards."
   }
 ]

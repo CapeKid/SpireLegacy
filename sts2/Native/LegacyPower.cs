@@ -38,15 +38,22 @@ public abstract class LegacyPower:CustomPowerModel
  [SavedProperty] public int Charges {get=>charges;set{charges=value;if(IsMutable)InvokeDisplayAmountChanged();}}
  [SavedProperty] public int AttacksThisTurn {get=>attacks;set{attacks=value;if(IsMutable)InvokeDisplayAmountChanged();}}
  [SavedProperty] public bool ArcaneDrawUsed {get;set;}
+ [SavedProperty] public int SkillsThisTurn {get;set;}
+ [SavedProperty] public int ExhaustsThisTurn {get;set;}
  public override int DisplayAmount=>Key=="class"?(PlayerBloodlines.Heir(Owner.Player).classId=="ranger"?AttacksThisTurn%3:Charges):Amount;
  public override LocString Description {get{var text=base.Description;text.Add("Amount",Amount);text.Add("ClassRules",Design.Get("classes",PlayerBloodlines.Heir(Owner.Player).classId).Text("summary"));text.Add("Counter",DisplayAmount);return text;}}
  public override async Task AfterPlayerTurnStart(PlayerChoiceContext context,Player player)
  {
-  if(player!=Owner.Player!)return;plays=0;discardPaid=false;AttacksThisTurn=0;ArcaneDrawUsed=false;
+  if(player!=Owner.Player!)return;plays=0;discardPaid=false;AttacksThisTurn=0;ArcaneDrawUsed=false;SkillsThisTurn=0;ExhaustsThisTurn=0;
   switch(Key){
    case "brutality":await CreatureCmd.Damage(context,Owner,Amount,ValueProp.Unblockable|ValueProp.Unpowered,Owner);await CardPileCmd.Draw(context,Amount,player);break;
    case "berserk":await PlayerCmd.GainEnergy(Amount,player);break;
    case "foresight":await CardEffects.Scry(player,context,Amount);break;
+   case "prophecy_return":
+    // Claim before the asynchronous choice. Replays stack the discount, not
+    // additional recovery actions, and no live card references survive a run.
+    var discount=Amount;await PowerCmd.Remove(this);
+    await CardEffects.RecoverFromExhaust(player,context,this,attacksOnly:false,discount:discount);break;
   }
  }
  public override async Task BeforeSideTurnEnd(PlayerChoiceContext context,CombatSide side,IEnumerable<Creature> participants)
@@ -59,7 +66,7 @@ public abstract class LegacyPower:CustomPowerModel
  {
   var card=play.Card;if(card.Owner.Creature!=Owner)return;
   if(Key=="class"){
-   if(card.Type==CardType.Skill){if(PlayerBloodlines.Heir(Owner.Player).classId=="knight")Charges=1;if(PlayerBloodlines.Heir(Owner.Player).classId=="mage")Charges=Math.Min(2,Charges+1);}
+   if(card.Type==CardType.Skill){SkillsThisTurn=Math.Min(3,SkillsThisTurn+1);if(PlayerBloodlines.Heir(Owner.Player).classId=="knight")Charges=1;if(PlayerBloodlines.Heir(Owner.Player).classId=="mage")Charges=Math.Min(2,Charges+1);}
    if(card.Type==CardType.Attack){AttacksThisTurn++;
     var spent=Charges;if(PlayerBloodlines.Heir(Owner.Player).classId is "knight" or "mage")Charges=0;
     // Claim before awaiting: replays and further Attacks cannot draw again this turn.
@@ -89,14 +96,24 @@ public abstract class LegacyPower:CustomPowerModel
  {
   if(card.Owner.Creature!=Owner||Owner.Player?.PlayerCombatState?.Phase==PlayerTurnPhase.End || Owner.CombatState?.CurrentSide!=Owner.Side)return;
   if(Key=="discard_block")await CreatureCmd.GainBlock(Owner,Amount,ValueProp.Unpowered,null);
+  if(Key=="discard_next_block")await CardEffects.Apply(context,"nextBlock",Owner,Amount,Owner,null);
   if(Key=="discard_energy"&&!discardPaid){discardPaid=true;await PlayerCmd.GainEnergy(Amount,Owner.Player!);}
  }
- public override async Task AfterCardExhausted(PlayerChoiceContext context,CardModel card,bool causedByEthereal){if(card.Owner.Creature==Owner&&Key=="exhaust_damage")await DamageAll(context,Amount);}
+ public override async Task AfterCardExhausted(PlayerChoiceContext context,CardModel card,bool causedByEthereal){
+  if(card.Owner.Creature!=Owner)return;
+  if(Key=="exhaust_damage")await DamageAll(context,Amount);
+  if(Key=="exhaust_vigor")await CardEffects.Apply(context,"vigor",Owner,Amount,Owner,null);
+  if(Key=="exhaust_burst"&&Owner.CombatState?.CurrentSide==Owner.Side&&ExhaustsThisTurn<3){ExhaustsThisTurn++;if(ExhaustsThisTurn==3)await DamageAll(context,Amount);}
+ }
  public override async Task AfterCardDrawn(PlayerChoiceContext context,CardModel card,bool fromHandDraw)
  {
   if(card.Owner.Creature!=Owner)return;
   if(Key=="evolve"&&card.Type==CardType.Status)await CardPileCmd.Draw(context,Amount,Owner.Player!);
   if(Key=="fire_breathing"&&card.Type is CardType.Status or CardType.Curse)await DamageAll(context,Amount);
+  if(Key=="status_furnace"&&card.Type==CardType.Status&&card.Pile?.Type==PileType.Hand){
+   await BranchCommands.Exhaust(context,card);
+   await CreatureCmd.GainBlock(Owner,Amount,ValueProp.Unpowered,null);
+  }
  }
  public override async Task AfterFlush(PlayerChoiceContext context,Player player,IReadOnlyCollection<CardModel> flushed,IReadOnlyCollection<CardModel> retained)
  {

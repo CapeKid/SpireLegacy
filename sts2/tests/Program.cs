@@ -185,7 +185,7 @@ foreach (var upgraded in new[] { false, true })
 }
 Check(Design.Rows("cards").Where(c => c.Number("hits") > 1).All(c => c.Number("upgradeDamage") <= 1), "Multi-hit upgrade budget");
 // Recovery text must correspond to a non-empty native selection at both levels.
-foreach (var row in Design.Rows("cards").Where(r => r.Text("special") is "exhume" or "retrieve"))
+foreach (var row in Design.Rows("cards").Where(r => r.Text("special") is "exhume" or "retrieve" or "exhume_next_turn" or "exhume_attack"))
 foreach (var upgraded in new[] { false, true })
     Check(new CardDesign(row.Text("id"), upgraded).SpecialAmount > 0, row.Text("id") + " recovery selects at least one card");
 foreach (var upgraded in new[] { false, true })
@@ -200,7 +200,7 @@ foreach (var upgraded in new[] { false, true })
     Check(meditation.Cost > 0 && meditation.Amount("discard") == 1, "Paid Battle Meditation keeps a fixed discard price");
     var prophecy = new CardDesign("mage_returned_prophecy", upgraded);
     var vault = new CardDesign("knight_arms_vault", upgraded);
-    Check(prophecy.Cost == vault.Cost && prophecy.SpecialAmount == vault.SpecialAmount && prophecy.Amount("draw") > vault.Amount("draw"), "Rare recovery offers extra draw over uncommon recovery");
+    Check(prophecy.Cost==vault.Cost&&prophecy.Amount("draw")==0&&prophecy.Row.Text("special")=="exhume_next_turn"&&prophecy.SpecialAmount==(upgraded?2:1),"Prophecy delays recovery with a temporary discount instead of duplicating Arms Vault draw");
     var thesis = new CardDesign("mage_grand_thesis", upgraded);
     Check(thesis.Cost == 1 && thesis.Row.Flag("exhaust") && thesis.SpecialAmount == 1, "Grand Thesis has affordable draw without a wasted charge upgrade");
     Check(new CardDesign("mage_spell_notes",upgraded).Rules().StartsWith($"Scry {(upgraded?4:3)}.\nDraw 1 card(s)."),"Spell Notes text matches native Scry-before-draw execution");
@@ -208,10 +208,10 @@ foreach (var upgraded in new[] { false, true })
 var baseMeditation = new CardDesign("knight_battle_meditation");
 var upgradedMeditation = new CardDesign("knight_battle_meditation", true);
 Check(upgradedMeditation.Amount("draw") - upgradedMeditation.Amount("discard") > baseMeditation.Amount("draw") - baseMeditation.Amount("discard"), "Battle Meditation upgrade improves net hand size");
-foreach (var row in Design.Rows("cards").Where(r => r.Text("special") == "exhume"))
+foreach (var row in Design.Rows("cards").Where(r => r.Text("special") is "exhume" or "exhume_next_turn" or "exhume_attack"))
     Check(!new CardDesign(row.Text("id")).RecoverableFromExhaust, row.Text("id") + " cannot participate in discounted recovery cycles");
 Check(new CardDesign("mage_guard").RecoverableFromExhaust && new CardDesign("mage_memory_prism").RecoverableFromExhaust, "Recovery restriction preserves ordinary cards and discard recovery");
-foreach(var row in Design.Rows("cards").Where(r=>r.Text("special") is "exhume" or "retrieve"))
+foreach(var row in Design.Rows("cards").Where(r=>r.Text("special") is "exhume" or "retrieve" or "exhume_next_turn" or "exhume_attack"))
     Check(!new CardDesign(row.Text("id")).RecoverableFromDiscard,row.Text("id")+" cannot cycle through discounted discard recovery");
 Check(new CardDesign("ranger_rapid_fire").RecoverableFromDiscard,"Discard recovery still returns ordinary Attacks");
 foreach (var upgraded in new[] {false,true})

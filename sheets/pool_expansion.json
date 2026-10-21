@@ -13,7 +13,7 @@
     "classId": "shared",
     "availability": "all",
     "build": "exhaust recovery",
-    "reference": "Recover one exhausted card for 2 Energy with modest Block, then Exhaust; cannot recover itself."
+    "reference": "Attack-only Exhaust recovery with Vigor on successful return; shared Arms Vault remains general immediate recovery."
   },
   {
     "id": "mage_eternal_bookmark",
@@ -69,7 +69,7 @@
     "classId": "knight",
     "availability": "all",
     "build": "exhaust draw engine",
-    "reference": "Dark Embrace: paid one-card-per-Exhaust engine with four initial Block."
+    "reference": "Offensive exhaust engine: gain Vigor when exhausting, distinct from shared Secret Thesis draw."
   },
   {
     "id": "knight_king_s_ransom",
@@ -125,7 +125,7 @@
     "classId": "mage",
     "availability": "all",
     "build": "exhaust recovery and draw",
-    "reference": "One-Energy rare draw and Exhaust recovery, once; cannot recover cards with Exhaust-recovery effects."
+    "reference": "Delay Exhaust recovery until next turn, with a one-turn discount; no immediate draw. Recovery-loop exclusions apply."
   },
   {
     "id": "ranger_heartseeker",
@@ -165,7 +165,7 @@
     "classId": "ranger",
     "availability": "all",
     "build": "discard defense engine",
-    "reference": "Afterimage/Light Pack: paid two-Block discard engine with small initial defense."
+    "reference": "Discard banks stronger Block for next turn rather than duplicating Light Pack immediate Block."
   },
   {
     "id": "ranger_hunt_without_end",
@@ -213,7 +213,7 @@
     "classId": "mage",
     "availability": "public-beta",
     "build": "cleanse defense",
-    "reference": "Paid one-use cleanse with modest Block; no healing or Energy refund."
+    "reference": "Cleanse and fill Arcane Charges instead of duplicating shared Clean Armor; upgrade reduces cost without a wasted charge increment."
   },
   {
     "id": "mage_book_of_embers",
