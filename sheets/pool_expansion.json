@@ -149,7 +149,7 @@
     "classId": "ranger",
     "availability": "all",
     "build": "Attack reload",
-    "reference": "One Energy to select up to two discarded Attacks (three upgraded), then Exhaust. Selective recovery instead of Meditate-style draw and Energy."
+    "reference": "Zero Energy to select up to two discarded Attacks (three upgraded), then Exhaust. Selective recovery instead of Meditate-style draw and Energy."
   },
   {
     "id": "ranger_empty_quiver",

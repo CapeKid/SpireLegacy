@@ -15589,7 +15589,7 @@
       "upgradeDiscard": 0
     },
     "after": {
-      "cost": 1,
+      "cost": 0,
       "damage": 0,
       "block": 0,
       "hits": 1,
@@ -15622,7 +15622,7 @@
       "upgradeDiscard": 0,
       "upgradeDraw": -1
     },
-    "reason": "Differentiate from shared Meditate: one-Energy, one-use selection of up to two discarded Attacks (three upgraded), with no draw or Energy gain. Attack-only recovery supports Ranger sequencing without retrieving recovery Skills."
+    "reason": "Differentiate from shared Meditate: zero-Energy, one-use selection of up to two discarded Attacks (three upgraded), with no draw or Energy gain. Attack-only recovery supports Ranger sequencing without retrieving recovery Skills."
   },
   {
     "id": "ranger_forest_remedy",

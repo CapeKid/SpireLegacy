@@ -9859,7 +9859,7 @@
     "name": "Second Quiver",
     "classId": "ranger",
     "type": "SKILL",
-    "cost": 1,
+    "cost": 0,
     "rarity": "RARE",
     "damage": 0,
     "block": 0,

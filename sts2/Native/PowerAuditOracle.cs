@@ -266,7 +266,7 @@ public static class PowerAuditOracle
             var expected=mode is "cancel" or "pacifist"?0:mode=="hand-cap"?1:mode=="replay"?4:Math.Min(up?3:2,attackCount);
             Require(returned.Length==expected,$"Reload count {mode}: {returned.Length}, expected {expected}.");
             Require(returned.All(c=>c.Owner==player&&c.Type==CardType.Attack)&&excluded.All(c=>c.Pile?.Type==PileType.Discard),"Reload selected a Skill/Power or changed ownership.");
-            Require(drawPile.Cards.Count==drawBefore&&player.PlayerCombatState.Energy==beforeEnergy-1&&player.Creature.CurrentHp==hp,"Reload must only spend one Energy, with no draw, Energy or HP gain/loss.");
+            Require(drawPile.Cards.Count==drawBefore&&player.PlayerCombatState.Energy==beforeEnergy&&player.Creature.CurrentHp==hp,"Reload must preserve Energy and HP, with no draw or Energy gain.");
             Require(card.Pile?.Type==PileType.Exhaust&&hand.Cards.Count<=CardPile.MaxCardsInHand,"Reload Exhaust/hand limit.");
             Require(attacks.Select((c,i)=>c.IsUpgraded==(i%2==1)).All(x=>x),"Reload changed Attack upgrades.");
             var rhythmDraw=0;
@@ -276,7 +276,7 @@ public static class PowerAuditOracle
                 rhythmDraw=drawBefore-drawPile.Cards.Count;
                 Require(rhythmDraw==1&&player.Creature.GetPower<P_class>()!.AttacksThisTurn==3&&enemies[0].GetPowerAmount<VulnerablePower>()==1,"Reloaded Attacks did not support Hunter Rhythm.");
             }
-            return new{mode,up,key,returned=returned.Length,expected,drawn=0,energyGained=0,cost=1,exhausted=true,rhythmDraw,saveRoundTrip=true,upgradeFlagsPreserved=true,excludedTypesStayedDiscarded=true};
+            return new{mode,up,key,returned=returned.Length,expected,drawn=0,energyGained=0,cost=0,exhausted=true,rhythmDraw,saveRoundTrip=true,upgradeFlagsPreserved=true,excludedTypesStayedDiscarded=true};
         }
     }
     public static async Task<object> DamageControl(RunState run,string power,bool up)

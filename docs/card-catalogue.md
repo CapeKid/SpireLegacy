@@ -248,7 +248,7 @@ Each class has 82 rewards on regular (20 common, 36 uncommon, 26 rare), or 85 on
 | Black Arrow | Rare | Attack | 2 | Class unique; 13 damage; 6 Poison |
 | Master Plan | Rare | Skill | 3 | Shared family card; Cards currently in your hand cost 0 this turn. You cannot draw additional cards this turn.; Exhaust |
 | Serpent Oil | Rare | Skill | 2 | Class unique; 2 Poison; Double Poison on the target.; Exhaust |
-| Second Quiver | Rare | Skill | 1 | Class unique; Return up to 2 Attacks from your discard pile to your hand.; Exhaust |
+| Second Quiver | Rare | Skill | 0 | Class unique; Return up to 2 Attacks from your discard pile to your hand.; Exhaust |
 | Forest Remedy | Rare | Skill | 2 | Shared family card; 4 healing; Remove all debuffs from yourself.; Exhaust |
 | Poisoned Arsenal | Rare | Power | 2 | Class unique; Whenever an Attack deals unblocked damage, apply 1 Poison. |
 | Unseen Hunter | Rare | Power | 2 | Class unique; Public-beta only; 4 Block; Whenever you play a card, gain 1 Block. |
