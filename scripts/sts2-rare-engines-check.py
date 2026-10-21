@@ -21,7 +21,7 @@ cases = {
         'mage_eternal_bookmark': ['empty', 'retained', 'measured', 'stacked', 'hand-cap', 'no-draw'],
         'mage_archmage_thesis': ['full', 'woven', 'burst-skills', 'double-tap', 'expire', 'next-turn', 'stacked'],
     },
-    'ranger': {'ranger_hunt_without_end': ['zero', 'one', 'full', 'cap', 'replay', 'tracking', 'stacked']},
+    'ranger': {'ranger_hunt_without_end': ['zero', 'one', 'full', 'cap', 'replay', 'tracking', 'stacked', 'late-setup']},
 }
 send('trait-speed', value=8)
 for cls, cards in cases.items():

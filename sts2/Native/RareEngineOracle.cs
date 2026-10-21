@@ -20,6 +20,7 @@ public static partial class PowerAuditOracle
             var card=(LegacyCard)await Add(player,NativeCards.Get(key),up);var d=card.DesignCard;
             var restored=(LegacyCard)run.LoadCard(card.ToSerializable(),player);
             Require(restored.IsUpgraded==up&&restored.Id==card.Id&&restored.DesignCard.Rules()==d.Rules(),"Rare engine card round trip.");run.RemoveCard(restored);
+            if(mode=="late-setup")for(var i=0;i<3;i++)await Play(await Add(player,ModelDb.Card<StrikeIronclad>()),enemies[0]);
             await Play(card);if(mode=="stacked")await Play(await Add(player,NativeCards.Get(key),up));
             var power=owner.Powers.OfType<LegacyPower>().Single(p=>p.Key==d.Row.Text("power"));
             void Codec(){
@@ -67,7 +68,7 @@ public static partial class PowerAuditOracle
                     await CardPileCmd.Add(hand.Cards.Where(c=>c.Keywords.Contains(CardKeyword.Retain)).ToArray(),PileType.Discard,skipVisuals:true);
                     await BalanceOracle.End(player,true);Require(hand.Cards.Count==5,"Bookmark paid again without retention.");
                 }
-                return new{key,up,mode,retained,firstHand=expected,drawn=retained>0?power.Amount:0,turnBoundary=true,saveRoundTrip=true};
+                return new{key,up,mode,retained,firstHand=expected,bonusDrawRequested=retained>0?power.Amount:0,turnBoundary=true,saveRoundTrip=true};
             }
             if(key=="mage_archmage_thesis"){
                 Require(owner.Block==0,"Thesis must not grant initial Block.");
@@ -101,10 +102,10 @@ public static partial class PowerAuditOracle
             if(key=="ranger_hunt_without_end"){
                 Require(owner.GetPowerAmount<VigorPower>()==0,"Hunt must not grant initial Vigor.");
                 if(mode=="tracking")await Play(await Add(player,NativeCards.Get("ranger_tracking_rhythm"),up));
-                var count=mode=="zero"?0:mode=="one"?1:mode=="cap"?5:mode=="replay"?1:3;
+                var count=mode is "zero" or "late-setup"?0:mode=="one"?1:mode=="cap"?5:mode=="replay"?1:3;
                 if(mode=="replay")await Apply(player,"double_tap",1);
                 for(var i=0;i<count;i++)await Play(await Add(player,ModelDb.Card<StrikeIronclad>()),enemies[0]);
-                var counted=Math.Min(3,mode=="replay"?2:count);
+                var counted=Math.Min(3,mode=="late-setup"?3:mode=="replay"?2:count);
                 Require(power.MomentumAttacks==counted,"Hunt counted cards instead of resolved Attack plays, or exceeded its cap.");Codec();
                 var existing=owner.GetPowerAmount<VigorPower>();Require(existing==(mode=="tracking"?(up?3:2):0),"Tracking Rhythm immediate Vigor changed.");
                 await BalanceOracle.End(player,true);var vigor=owner.GetPowerAmount<VigorPower>();

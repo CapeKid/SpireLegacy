@@ -45,6 +45,13 @@ public abstract class LegacyPower:CustomPowerModel
  [SavedProperty] public int MomentumAttacks {get;set;}
  public override int DisplayAmount=>Key=="class"?(PlayerBloodlines.Heir(Owner.Player).classId=="ranger"?AttacksThisTurn%3:Charges):Amount;
  public override LocString Description {get{var text=base.Description;text.Add("Amount",Amount);text.Add("ClassRules",Design.Get("classes",PlayerBloodlines.Heir(Owner.Player).classId).Text("summary"));text.Add("Counter",DisplayAmount);return text;}}
+ public override Task AfterApplied(Creature? applier,CardModel? cardSource)
+ {
+  // Hunt asks about last turn's Attacks, including those played before this
+  // Power in its setup turn. Later plays are tracked by the power itself.
+  if(Key=="hunt_momentum"&&Owner.CombatState?.CurrentSide==Owner.Side)MomentumAttacks=Math.Clamp(Owner.GetPower<P_class>()?.AttacksThisTurn??0,0,3);
+  return Task.CompletedTask;
+ }
  public override async Task AfterPlayerTurnStart(PlayerChoiceContext context,Player player)
  {
   if(player!=Owner.Player!)return;plays=0;discardPaid=false;AttacksThisTurn=0;ArcaneDrawUsed=false;SkillsThisTurn=0;ExhaustsThisTurn=0;EchoTriggered=false;

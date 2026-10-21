@@ -12,7 +12,7 @@ Bookmark no longer grants Retain. Actual end-turn retention, whether intrinsic, 
 
 Thesis no longer grants Block. It counts resolved Skills while active; replayed Skills count as plays. The ready effect adds one complete Attack play per stacked copy, claims readiness before resolution, and expires at owner turn end. Three additional Skills cannot retrigger it that turn. Arcane Flow retains its normal once-per-turn draw limit. Thesis's visible counter and triggered flag are saved independently of the class counter.
 
-Hunt no longer grants initial Vigor or Vigor every third Attack. It counts resolved Attacks while active, including replays, caps the count at three, and clears that count before granting next-turn Vigor. An attack-free turn creates no new payout. Existing unspent Vigor follows native lifetime rules.
+Hunt no longer grants initial Vigor or Vigor every third Attack. It counts resolved Attacks, including replays and Attacks played before the Power in its setup turn, caps the count at three, and clears that count before granting next-turn Vigor. An attack-free turn creates no new payout. Existing unspent Vigor follows native lifetime rules.
 
 All counters and payout flags are owner-scoped and support saved-property serialization and independent clones. The existing bounded Measured Breath, Woven Incantation Block and Tracking Rhythm Vigor effects remain intact.
 
