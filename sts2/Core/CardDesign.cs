@@ -45,6 +45,7 @@ public sealed class CardDesign(string id, bool upgraded = false, IEnumerable<str
         if (Mercy) lines.Add($"Apply {MercyPoison} Poison. This inherited starter is a Skill.");
         if (Row.Text("power") == "reservoir") lines.Add($"Each Arcane Charge adds {Magic} extra damage to every hit of your next Attack.");
         else if (Row.Text("power") == "quiver") lines.Add($"Hunter Rhythm draws {Magic} additional card(s).");
+        else if (Row.Text("power") == "skill_echo") lines.Add("After you play 3 Skills in a turn, your next Attack that turn is played twice. Triggers once per turn.");
         else if (Row.Text("power") != "none") lines.Add(Design.Get("power_effects", Row.Text("power")).Text("summary").Replace("!M!", Magic.ToString()));
         if (Row.Text("special") is not ("none" or "scry")) lines.Add(Design.Get("special_effects", Row.Text("special")).Text("summary").Replace("{n}", specialBlock ?? SpecialAmount.ToString()));
         return string.Join("\n", lines);

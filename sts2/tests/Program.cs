@@ -365,7 +365,7 @@ foreach(var upgraded in new[]{false,true}){
     Check(quiver.Row.Flag("exhaust")&&quiver.Cost==0&&quiver.Amount("hpLoss")==0,"Second Quiver keeps free single-use recovery in both forms");
     Check(new CardDesign("mage_mana_fountain",upgraded).Amount("energy")==2+(upgraded?1:0),"Mana Fountain has a bounded single-use Energy burst");
     var bookmark=new CardDesign("mage_eternal_bookmark",upgraded);
-    Check(bookmark.Cost==1&&bookmark.Magic==2+(upgraded?1:0),"Rare Bookmark improves retention rather than repairing a costly setup");
+    Check(bookmark.Cost==(upgraded?1:2)&&bookmark.Magic==2&&bookmark.Row.Text("power")=="retained_draw","Rare Bookmark rewards retention with draw; upgrade reduces setup cost");
     var recovery=new CardDesign("knight_battlefield_recovery",upgraded);
     Check(recovery.Cost==1&&recovery.Amount("draw")==2+(upgraded?1:0)&&recovery.Amount("heal")==4+(upgraded?1:0)&&recovery.Row.Flag("exhaust"),"Battlefield Recovery leaves Energy to use drawn cards without increasing healing");
     var avalanche=new CardDesign("knight_iron_avalanche",upgraded);

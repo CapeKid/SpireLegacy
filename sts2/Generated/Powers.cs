@@ -42,6 +42,10 @@ public sealed class P_discard_next_block : LegacyPower { }
 public sealed class P_exhaust_burst : LegacyPower { }
 public sealed class P_status_furnace : LegacyPower { }
 public sealed class P_prophecy_return : LegacyPower { }
+public sealed class P_retained_draw : LegacyPower { }
+public sealed class P_skill_echo : LegacyPower { }
+public sealed class P_thesis_ready : LegacyPower { }
+public sealed class P_hunt_momentum : LegacyPower { }
 public sealed class P_plated : LegacyPower { }
 public sealed class P_reservoir : LegacyPower { }
 public sealed class P_quiver : LegacyPower { }

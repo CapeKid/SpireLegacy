@@ -332,7 +332,7 @@
     "types": ["dict"],
     "required": ["id", "summary"],
     "fields": {
-      "id": {"types": ["str"], "pattern": "[a-z][a-z0-9_]*", "enum": ["exhaust_vigor", "discard_next_block", "exhaust_burst", "status_furnace", "prophecy_return", "after_image", "arcane_echo", "attack_vigor", "barricade", "berserk", "brutality", "buffer", "burst", "combust", "dark_embrace", "demon_form", "discard_block", "discard_energy", "double_tap", "envenom", "equilibrium", "establishment", "evolve", "exhaust_damage", "feel_no_pain", "fire_breathing", "flame_barrier", "foresight", "juggernaut", "metallicize", "noxious", "panache", "power_draw", "rupture", "sadistic", "scry_block", "skill_block", "skill_energy", "thorns", "thousand_cuts", "tools", "well_laid"]},
+      "id": {"types": ["str"], "pattern": "[a-z][a-z0-9_]*", "enum": ["retained_draw", "skill_echo", "thesis_ready", "hunt_momentum", "exhaust_vigor", "discard_next_block", "exhaust_burst", "status_furnace", "prophecy_return", "after_image", "arcane_echo", "attack_vigor", "barricade", "berserk", "brutality", "buffer", "burst", "combust", "dark_embrace", "demon_form", "discard_block", "discard_energy", "double_tap", "envenom", "equilibrium", "establishment", "evolve", "exhaust_damage", "feel_no_pain", "fire_breathing", "flame_barrier", "foresight", "juggernaut", "metallicize", "noxious", "panache", "power_draw", "rupture", "sadistic", "scry_block", "skill_block", "skill_energy", "thorns", "thousand_cuts", "tools", "well_laid"]},
       "summary": {"types": ["str"]}
     }
   },

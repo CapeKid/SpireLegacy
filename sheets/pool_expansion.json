@@ -21,7 +21,7 @@
     "classId": "shared",
     "availability": "all",
     "build": "retention",
-    "reference": "Well-Laid Plans: pay 2 Energy to retain two cards; upgrade lowers setup cost."
+    "reference": "Reward retained cards with two next-turn draws instead of duplicating Measured Breath retention; upgrade lowers setup cost."
   },
   {
     "id": "ranger_forest_remedy",
@@ -117,7 +117,7 @@
     "classId": "mage",
     "availability": "all",
     "build": "three-Skill defense engine",
-    "reference": "Afterimage: triggers only every third Skill; paid setup includes modest initial Block."
+    "reference": "Third Skill readies one Attack replay that turn, once per turn; removes Block and preserves Woven Incantation defense role."
   },
   {
     "id": "mage_returned_prophecy",
@@ -173,7 +173,7 @@
     "classId": "ranger",
     "availability": "all",
     "build": "three-Attack Vigor engine",
-    "reference": "Tracking Rhythm: slower setup with initial Vigor; subsequent Vigor only every third Attack."
+    "reference": "Bank momentum into next-turn Vigor per Attack played, capped at three; removes initial Vigor and the repeated third-Attack trigger."
   },
   {
     "id": "knight_serrated_spear",

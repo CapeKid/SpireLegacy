@@ -2,7 +2,7 @@
   "title": "Spire Legacy \u2014 Beta",
   "description": "Private beta builds of Spire Legacy for the creator's Steam Deck testing. Requires BaseLib. You may subscribe to both this item and the public Spire Legacy item. In StS2's mod menu, enable ONLY Spire Legacy \u2014 Beta OR Spire Legacy, then restart. They contain the same character and cards and must not run together. Finish a climb before switching builds. Family manor progress is shared. This item does not update the public Workshop listing.",
   "visibility": "private",
-  "changeNote": "1.0.42: Nine card redesigns distinguish exhaust, discard, recovery and Mage sequencing roles. Private beta only.",
+  "changeNote": "1.0.43: Eternal Bookmark rewards Retain with draw; Archmage Thesis readies one Attack replay after 3 Skills; Hunt Without End banks Attack momentum into next-turn Vigor. Private beta only.",
   "tags": [
     "Characters"
   ],

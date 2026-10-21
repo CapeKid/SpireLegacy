@@ -166,5 +166,21 @@
   {
     "id": "prophecy_return",
     "summary": "At the start of your next turn, you may return a card from your Exhaust pile to your hand. It costs !M! less this turn. Cannot return Spire Legacy Exhaust-recovery cards."
+  },
+  {
+    "id": "retained_draw",
+    "summary": "At the start of your turn, if you Retained any cards last turn, draw !M! cards."
+  },
+  {
+    "id": "skill_echo",
+    "summary": "After you play 3 Skills in a turn, your next Attack that turn is played !M! additional time(s). Triggers once per turn."
+  },
+  {
+    "id": "thesis_ready",
+    "summary": "Your next Attack this turn is played !M! additional time(s)."
+  },
+  {
+    "id": "hunt_momentum",
+    "summary": "At the start of your turn, gain !M! Vigor for each Attack you played last turn, counting up to 3 Attacks."
   }
 ]

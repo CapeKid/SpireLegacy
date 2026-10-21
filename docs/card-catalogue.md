@@ -92,7 +92,7 @@ Each class has 82 rewards on regular (20 common, 36 uncommon, 26 rare), or 85 on
 | Alchemist's Patience | Uncommon | Power | 1 | Shared family card; At the start of your turn, apply 2 Poison to ALL enemies. |
 | Mirror Manuscript | Rare | Skill | 1 | Shared family card; Your next 1 Skill(s) this turn are played twice.; Retain; Exhaust |
 | Comet Calendar | Rare | Skill | 2 | Shared family card; 4 draw next turn; 3 Energy next turn; Exhaust |
-| Eternal Bookmark | Rare | Power | 1 | Shared family card; At the end of your turn, Retain up to 2 card(s). |
+| Eternal Bookmark | Rare | Power | 2 | Shared family card; At the start of your turn, if you Retained any cards last turn, draw 2 cards. |
 | Tracking Rhythm | Uncommon | Power | 1 | Shared family card; Every third Attack you play each turn grants 2 Vigor for your NEXT Attack. |
 
 ## Mage
@@ -178,12 +178,12 @@ Each class has 82 rewards on regular (20 common, 36 uncommon, 26 rare), or 85 on
 | Hex Rain | Uncommon | Attack | 2 | Class unique; 4 damage to all enemies; 2 Weak to all enemies |
 | Alchemist's Patience | Uncommon | Power | 1 | Shared family card; At the start of your turn, apply 2 Poison to ALL enemies. |
 | Rune Familiar | Uncommon | Power | 1 | Class unique; Whenever you play a Power, draw 1 card(s). |
-| Archmage Thesis | Rare | Power | 2 | Class unique; 6 Block; Every third Skill you play each turn grants 4 Block. |
+| Archmage Thesis | Rare | Power | 2 | Class unique; After you play 3 Skills in a turn, your next Attack that turn is played twice. Triggers once per turn. |
 | Mirror Manuscript | Rare | Skill | 1 | Shared family card; Your next 1 Skill(s) this turn are played twice.; Retain; Exhaust |
 | Comet Calendar | Rare | Skill | 2 | Shared family card; 4 draw next turn; 3 Energy next turn; Exhaust |
 | Book of Embers | Rare | Power | 2 | Class unique; Public-beta only; Whenever you Exhaust a card, deal 3 damage to ALL enemies. |
 | Returned Prophecy | Rare | Skill | 1 | Class unique; At the start of your next turn, you may return a card from your Exhaust pile to your hand. It costs 1 less that turn. Cannot return Spire Legacy Exhaust-recovery cards.; Exhaust |
-| Eternal Bookmark | Rare | Power | 1 | Shared family card; At the end of your turn, Retain up to 2 card(s). |
+| Eternal Bookmark | Rare | Power | 2 | Shared family card; At the start of your turn, if you Retained any cards last turn, draw 2 cards. |
 | Sun in a Bottle | Rare | Attack | 3 | Class unique; 13 damage to all enemies; Whenever this is Retained, gain 6 damage this combat.; Retain |
 | Grand Incantation | Rare | Attack | 3 | Class unique; 3 damage ×8; Hits target random enemies.; Exhaust |
 | Tracking Rhythm | Uncommon | Power | 1 | Shared family card; Every third Attack you play each turn grants 2 Vigor for your NEXT Attack. |
@@ -260,7 +260,7 @@ Each class has 82 rewards on regular (20 common, 36 uncommon, 26 rare), or 85 on
 | Alchemist's Patience | Uncommon | Power | 1 | Shared family card; At the start of your turn, apply 2 Poison to ALL enemies. |
 | Mirror Manuscript | Rare | Skill | 1 | Shared family card; Your next 1 Skill(s) this turn are played twice.; Retain; Exhaust |
 | Comet Calendar | Rare | Skill | 2 | Shared family card; 4 draw next turn; 3 Energy next turn; Exhaust |
-| Eternal Bookmark | Rare | Power | 1 | Shared family card; At the end of your turn, Retain up to 2 card(s). |
+| Eternal Bookmark | Rare | Power | 2 | Shared family card; At the start of your turn, if you Retained any cards last turn, draw 2 cards. |
 | Loose Fletching | Common | Attack | 1 | Class unique; 4 damage; When discarded during your turn, draw 1 card(s). Triggers at most once per copy each turn. |
 | Pocket Wind | Common | Skill | 1 | Class unique; 3 Block; When discarded during your turn, gain 1 Energy. Triggers at most once per copy each turn. |
 | Sort Quiver | Common | Skill | 1 | Class unique; 3 draw; 2 discard |
@@ -278,5 +278,5 @@ Each class has 82 rewards on regular (20 common, 36 uncommon, 26 rare), or 85 on
 | Venom Eclipse | Rare | Skill | 2 | Class unique; 7 Poison to all enemies; Exhaust |
 | Long Vigil | Rare | Attack | 2 | Class unique; 15 damage; Whenever this is Retained, gain 6 damage this combat.; Retain |
 | Arrow Cascade | Rare | Attack | 2 | Class unique; Deal 4 damage for each OTHER Attack played this turn to all enemies.; Exhaust |
-| Hunt Without End | Rare | Power | 2 | Class unique; 3 next Attack damage; Every third Attack you play each turn grants 3 Vigor for your NEXT Attack. |
+| Hunt Without End | Rare | Power | 2 | Class unique; At the start of your turn, gain 2 Vigor for each Attack you played last turn, counting up to 3 Attacks. |
 | Forest Oracle | Rare | Power | 2 | Class unique; Whenever you Scry, gain 4 Block. |

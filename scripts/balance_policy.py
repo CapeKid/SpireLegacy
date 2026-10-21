@@ -5,7 +5,7 @@ CARD_OVERRIDES = {
     'ranger_trail_reset': dict(exhaust=True),
     'mage_slow_incantation': dict(upgradeCost=False, upgradeBlock=2),
     'mage_mana_fountain': dict(energy=2, upgradeMagic=1),
-    'mage_eternal_bookmark': dict(cost=1, upgradeCost=False, upgradeMagic=1),
+    'mage_eternal_bookmark': dict(cost=2, upgradeCost=True, upgradeMagic=0, power='retained_draw', magic=2),
     'knight_battlefield_recovery': dict(cost=1),
     'knight_iron_avalanche': dict(cost=2),
     'mage_spellweave': dict(upgradeCost=False, upgradeBlock=2),
@@ -46,6 +46,8 @@ CARD_OVERRIDES = {
     'knight_ancestral_salvage': dict(special='exhume_attack', specialAmount=4, upgradeSpecial=2),
     'knight_phoenix_forge': dict(power='exhaust_burst', magic=14, upgradeMagic=4),
     'knight_iron_furnace': dict(power='status_furnace', magic=5, upgradeMagic=2),
+    'mage_archmage_thesis': dict(cost=2, block=0, upgradeBlock=0, power='skill_echo', magic=1, upgradeMagic=0, upgradeCost=True),
+    'ranger_hunt_without_end': dict(cost=2, vigor=0, power='hunt_momentum', magic=2, upgradeMagic=1, upgradeCost=False),
 }
 
 def balance_card(row):

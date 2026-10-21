@@ -407,7 +407,11 @@
     "discard_next_block",
     "exhaust_burst",
     "status_furnace",
-    "prophecy_return"
+    "prophecy_return",
+    "retained_draw",
+    "skill_echo",
+    "thesis_ready",
+    "hunt_momentum"
   ],
   "classes": [
     "knight",
