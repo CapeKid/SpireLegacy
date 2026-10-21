@@ -18,6 +18,8 @@ Nova uses normal Arcane Flow charge consumption and once-per-turn draw; a replay
 
 Prophecy chooses from the Exhaust pile at next turn start, after removing the pending recovery power; replays stack the discount rather than creating repeated recovery actions. The discount lasts only that turn and skips X-cost cards. Empty/declined/full-hand recovery consumes the pending effect. Native full-hand overflow sends the selected card to discard without a discount or Vigor reward. Prophecy and Salvage cannot recover any Spire Legacy Exhaust-recovery card; discard recovery also excludes them. Native ownership, hand limits and run-bound choice lifetimes apply.
 
-Delivery target: private beta Workshop item **3822395190**, mod ID **SpireLegacyBeta**. Public Workshop item **3816525393** remains on **1.0.39**. No public upload or PR merge is authorized by this change.
+Published to private beta Workshop item **3822395190**, mod ID **SpireLegacyBeta**. Public Workshop item **3816525393** remains on **1.0.39**. No public upload or PR merge is authorized by this change.
 
 Owned Windows native fixtures cover both card levels and both supported game versions. Physical Steam Deck input, new co-op gameplay and full-climb balance are not established by these checks.
+
+Validation passed: design preflight, generation, authoring regeneration, 166,720 core assertions and 96 final native cases (48 per supported branch). Steam confirms private visibility and all 539 downloaded files match the tested payload. Public listing timestamp and description are unchanged. See [delivery receipt](card-roles-1.0.42-beta-delivery.json).

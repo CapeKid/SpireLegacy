@@ -1,0 +1,994 @@
+{
+  "item": 3822395190,
+  "title": "Spire Legacy \u2014 Beta",
+  "visibility": "private",
+  "ownerVerified": true,
+  "publicListingUnchanged": true,
+  "downloadedFiles": 539,
+  "downloadMatches": true,
+  "modId": "SpireLegacyBeta",
+  "dllSha256": "d12a02eda018fa23fee8618c7c3c89ae4906202025af4b9e4ba12160a256055f",
+  "verifiedUtc": "2026-10-21T22:05:58.2562398Z",
+  "version": "1.0.42",
+  "coreAssertions": 166720,
+  "poolRegeneration": "passed",
+  "publicVersionUnchanged": "1.0.39",
+  "nativeChecks": [
+    {
+      "branch": "regular",
+      "game": "v0.107.1",
+      "passedCases": 48,
+      "betaOnlyLoaded": true,
+      "temporaryBetaRemoved": true,
+      "cases": [
+        {
+          "key": "knight_forge_memory",
+          "up": false,
+          "mode": "full",
+          "vigor": 6,
+          "damage": 18,
+          "saveRoundTrip": true
+        },
+        {
+          "key": "knight_phoenix_forge",
+          "up": false,
+          "mode": "full",
+          "burst": 14,
+          "oncePerTurn": true,
+          "turnBoundary": true,
+          "saveRoundTrip": true
+        },
+        {
+          "key": "knight_iron_furnace",
+          "up": false,
+          "mode": "full",
+          "block": 5,
+          "statusExhausted": true,
+          "curseUnchanged": true,
+          "saveRoundTrip": true
+        },
+        {
+          "key": "knight_iron_furnace",
+          "up": false,
+          "mode": "combined",
+          "block": 5,
+          "statusExhausted": true,
+          "curseUnchanged": true,
+          "saveRoundTrip": true
+        },
+        {
+          "key": "knight_ancestral_salvage",
+          "up": false,
+          "mode": "full",
+          "discount": 0,
+          "vigor": 4,
+          "recoveryExclusions": true,
+          "saveRoundTrip": true
+        },
+        {
+          "key": "knight_ancestral_salvage",
+          "up": false,
+          "mode": "cancel",
+          "discount": 0,
+          "vigor": 0,
+          "recoveryExclusions": true,
+          "saveRoundTrip": true
+        },
+        {
+          "key": "knight_ancestral_salvage",
+          "up": false,
+          "mode": "skills",
+          "discount": 0,
+          "vigor": 0,
+          "recoveryExclusions": true,
+          "saveRoundTrip": true
+        },
+        {
+          "key": "knight_forge_memory",
+          "up": true,
+          "mode": "full",
+          "vigor": 8,
+          "damage": 22,
+          "saveRoundTrip": true
+        },
+        {
+          "key": "knight_phoenix_forge",
+          "up": true,
+          "mode": "full",
+          "burst": 18,
+          "oncePerTurn": true,
+          "turnBoundary": true,
+          "saveRoundTrip": true
+        },
+        {
+          "key": "knight_iron_furnace",
+          "up": true,
+          "mode": "full",
+          "block": 7,
+          "statusExhausted": true,
+          "curseUnchanged": true,
+          "saveRoundTrip": true
+        },
+        {
+          "key": "knight_iron_furnace",
+          "up": true,
+          "mode": "combined",
+          "block": 7,
+          "statusExhausted": true,
+          "curseUnchanged": true,
+          "saveRoundTrip": true
+        },
+        {
+          "key": "knight_ancestral_salvage",
+          "up": true,
+          "mode": "full",
+          "discount": 0,
+          "vigor": 6,
+          "recoveryExclusions": true,
+          "saveRoundTrip": true
+        },
+        {
+          "key": "knight_ancestral_salvage",
+          "up": true,
+          "mode": "cancel",
+          "discount": 0,
+          "vigor": 0,
+          "recoveryExclusions": true,
+          "saveRoundTrip": true
+        },
+        {
+          "key": "knight_ancestral_salvage",
+          "up": true,
+          "mode": "skills",
+          "discount": 0,
+          "vigor": 0,
+          "recoveryExclusions": true,
+          "saveRoundTrip": true
+        },
+        {
+          "key": "mage_cleanse_sigil",
+          "up": false,
+          "mode": "full",
+          "cost": 1,
+          "charges": 2,
+          "saveRoundTrip": true
+        },
+        {
+          "key": "nova",
+          "up": false,
+          "mode": "zero",
+          "charges": 0,
+          "skills": 0,
+          "damage": 12,
+          "targets": 1,
+          "flowDraw": 0,
+          "saveRoundTrip": true
+        },
+        {
+          "key": "nova",
+          "up": false,
+          "mode": "one",
+          "charges": 1,
+          "skills": 1,
+          "damage": 18,
+          "targets": 1,
+          "flowDraw": 1,
+          "saveRoundTrip": true
+        },
+        {
+          "key": "nova",
+          "up": false,
+          "mode": "full",
+          "charges": 2,
+          "skills": 2,
+          "damage": 24,
+          "targets": 1,
+          "flowDraw": 2,
+          "saveRoundTrip": true
+        },
+        {
+          "key": "nova",
+          "up": false,
+          "mode": "reservoir",
+          "charges": 2,
+          "skills": 2,
+          "damage": 28,
+          "targets": 1,
+          "flowDraw": 2,
+          "saveRoundTrip": true
+        },
+        {
+          "key": "nova",
+          "up": false,
+          "mode": "replay",
+          "charges": 2,
+          "skills": 2,
+          "damage": 36,
+          "targets": 1,
+          "flowDraw": 2,
+          "saveRoundTrip": true
+        },
+        {
+          "key": "mage_moonstone_lance",
+          "up": false,
+          "mode": "zero",
+          "charges": 0,
+          "skills": 0,
+          "damage": 5,
+          "targets": 1,
+          "flowDraw": 0,
+          "saveRoundTrip": true
+        },
+        {
+          "key": "mage_moonstone_lance",
+          "up": false,
+          "mode": "one",
+          "charges": 1,
+          "skills": 1,
+          "damage": 7,
+          "targets": 1,
+          "flowDraw": 1,
+          "saveRoundTrip": true
+        },
+        {
+          "key": "mage_moonstone_lance",
+          "up": false,
+          "mode": "full",
+          "charges": 2,
+          "skills": 2,
+          "damage": 9,
+          "targets": 1,
+          "flowDraw": 2,
+          "saveRoundTrip": true
+        },
+        {
+          "key": "mage_moonstone_lance",
+          "up": false,
+          "mode": "cap",
+          "charges": 2,
+          "skills": 3,
+          "damage": 11,
+          "targets": 1,
+          "flowDraw": 2,
+          "saveRoundTrip": true
+        },
+        {
+          "key": "mage_moonstone_lance",
+          "up": false,
+          "mode": "reset",
+          "charges": 2,
+          "skills": 0,
+          "damage": 5,
+          "targets": 1,
+          "flowDraw": 2,
+          "saveRoundTrip": true
+        },
+        {
+          "key": "mage_returned_prophecy",
+          "up": false,
+          "mode": "full",
+          "discount": 1,
+          "vigor": 0,
+          "recoveryExclusions": true,
+          "saveRoundTrip": true
+        },
+        {
+          "key": "mage_returned_prophecy",
+          "up": false,
+          "mode": "empty",
+          "discount": 1,
+          "vigor": 0,
+          "recoveryExclusions": true,
+          "saveRoundTrip": true
+        },
+        {
+          "key": "mage_returned_prophecy",
+          "up": false,
+          "mode": "cancel",
+          "discount": 1,
+          "vigor": 0,
+          "recoveryExclusions": true,
+          "saveRoundTrip": true
+        },
+        {
+          "key": "mage_returned_prophecy",
+          "up": false,
+          "mode": "hand-cap",
+          "discount": 1,
+          "vigor": 0,
+          "recoveryExclusions": true,
+          "saveRoundTrip": true
+        },
+        {
+          "key": "mage_returned_prophecy",
+          "up": false,
+          "mode": "replay",
+          "discount": 1,
+          "vigor": 0,
+          "recoveryExclusions": true,
+          "saveRoundTrip": true
+        },
+        {
+          "key": "mage_cleanse_sigil",
+          "up": true,
+          "mode": "full",
+          "cost": 0,
+          "charges": 2,
+          "saveRoundTrip": true
+        },
+        {
+          "key": "nova",
+          "up": true,
+          "mode": "zero",
+          "charges": 0,
+          "skills": 0,
+          "damage": 16,
+          "targets": 1,
+          "flowDraw": 0,
+          "saveRoundTrip": true
+        },
+        {
+          "key": "nova",
+          "up": true,
+          "mode": "one",
+          "charges": 1,
+          "skills": 1,
+          "damage": 24,
+          "targets": 1,
+          "flowDraw": 1,
+          "saveRoundTrip": true
+        },
+        {
+          "key": "nova",
+          "up": true,
+          "mode": "full",
+          "charges": 2,
+          "skills": 2,
+          "damage": 32,
+          "targets": 1,
+          "flowDraw": 2,
+          "saveRoundTrip": true
+        },
+        {
+          "key": "nova",
+          "up": true,
+          "mode": "reservoir",
+          "charges": 2,
+          "skills": 2,
+          "damage": 36,
+          "targets": 1,
+          "flowDraw": 2,
+          "saveRoundTrip": true
+        },
+        {
+          "key": "nova",
+          "up": true,
+          "mode": "replay",
+          "charges": 2,
+          "skills": 2,
+          "damage": 48,
+          "targets": 1,
+          "flowDraw": 2,
+          "saveRoundTrip": true
+        },
+        {
+          "key": "mage_moonstone_lance",
+          "up": true,
+          "mode": "zero",
+          "charges": 0,
+          "skills": 0,
+          "damage": 7,
+          "targets": 1,
+          "flowDraw": 0,
+          "saveRoundTrip": true
+        },
+        {
+          "key": "mage_moonstone_lance",
+          "up": true,
+          "mode": "one",
+          "charges": 1,
+          "skills": 1,
+          "damage": 10,
+          "targets": 1,
+          "flowDraw": 1,
+          "saveRoundTrip": true
+        },
+        {
+          "key": "mage_moonstone_lance",
+          "up": true,
+          "mode": "full",
+          "charges": 2,
+          "skills": 2,
+          "damage": 13,
+          "targets": 1,
+          "flowDraw": 2,
+          "saveRoundTrip": true
+        },
+        {
+          "key": "mage_moonstone_lance",
+          "up": true,
+          "mode": "cap",
+          "charges": 2,
+          "skills": 3,
+          "damage": 16,
+          "targets": 1,
+          "flowDraw": 2,
+          "saveRoundTrip": true
+        },
+        {
+          "key": "mage_moonstone_lance",
+          "up": true,
+          "mode": "reset",
+          "charges": 2,
+          "skills": 0,
+          "damage": 7,
+          "targets": 1,
+          "flowDraw": 2,
+          "saveRoundTrip": true
+        },
+        {
+          "key": "mage_returned_prophecy",
+          "up": true,
+          "mode": "full",
+          "discount": 2,
+          "vigor": 0,
+          "recoveryExclusions": true,
+          "saveRoundTrip": true
+        },
+        {
+          "key": "mage_returned_prophecy",
+          "up": true,
+          "mode": "empty",
+          "discount": 2,
+          "vigor": 0,
+          "recoveryExclusions": true,
+          "saveRoundTrip": true
+        },
+        {
+          "key": "mage_returned_prophecy",
+          "up": true,
+          "mode": "cancel",
+          "discount": 2,
+          "vigor": 0,
+          "recoveryExclusions": true,
+          "saveRoundTrip": true
+        },
+        {
+          "key": "mage_returned_prophecy",
+          "up": true,
+          "mode": "hand-cap",
+          "discount": 2,
+          "vigor": 0,
+          "recoveryExclusions": true,
+          "saveRoundTrip": true
+        },
+        {
+          "key": "mage_returned_prophecy",
+          "up": true,
+          "mode": "replay",
+          "discount": 2,
+          "vigor": 0,
+          "recoveryExclusions": true,
+          "saveRoundTrip": true
+        },
+        {
+          "key": "ranger_ghost_luggage",
+          "up": false,
+          "mode": "full",
+          "nextBlock": 6,
+          "turnBoundary": true,
+          "saveRoundTrip": true
+        },
+        {
+          "key": "ranger_ghost_luggage",
+          "up": true,
+          "mode": "full",
+          "nextBlock": 8,
+          "turnBoundary": true,
+          "saveRoundTrip": true
+        }
+      ]
+    },
+    {
+      "branch": "beta",
+      "game": "v0.111.0",
+      "passedCases": 48,
+      "betaOnlyLoaded": true,
+      "temporaryBetaRemoved": true,
+      "cases": [
+        {
+          "key": "knight_forge_memory",
+          "up": false,
+          "mode": "full",
+          "vigor": 6,
+          "damage": 18,
+          "saveRoundTrip": true
+        },
+        {
+          "key": "knight_phoenix_forge",
+          "up": false,
+          "mode": "full",
+          "burst": 14,
+          "oncePerTurn": true,
+          "turnBoundary": true,
+          "saveRoundTrip": true
+        },
+        {
+          "key": "knight_iron_furnace",
+          "up": false,
+          "mode": "full",
+          "block": 5,
+          "statusExhausted": true,
+          "curseUnchanged": true,
+          "saveRoundTrip": true
+        },
+        {
+          "key": "knight_iron_furnace",
+          "up": false,
+          "mode": "combined",
+          "block": 5,
+          "statusExhausted": true,
+          "curseUnchanged": true,
+          "saveRoundTrip": true
+        },
+        {
+          "key": "knight_ancestral_salvage",
+          "up": false,
+          "mode": "full",
+          "discount": 0,
+          "vigor": 4,
+          "recoveryExclusions": true,
+          "saveRoundTrip": true
+        },
+        {
+          "key": "knight_ancestral_salvage",
+          "up": false,
+          "mode": "cancel",
+          "discount": 0,
+          "vigor": 0,
+          "recoveryExclusions": true,
+          "saveRoundTrip": true
+        },
+        {
+          "key": "knight_ancestral_salvage",
+          "up": false,
+          "mode": "skills",
+          "discount": 0,
+          "vigor": 0,
+          "recoveryExclusions": true,
+          "saveRoundTrip": true
+        },
+        {
+          "key": "knight_forge_memory",
+          "up": true,
+          "mode": "full",
+          "vigor": 8,
+          "damage": 22,
+          "saveRoundTrip": true
+        },
+        {
+          "key": "knight_phoenix_forge",
+          "up": true,
+          "mode": "full",
+          "burst": 18,
+          "oncePerTurn": true,
+          "turnBoundary": true,
+          "saveRoundTrip": true
+        },
+        {
+          "key": "knight_iron_furnace",
+          "up": true,
+          "mode": "full",
+          "block": 7,
+          "statusExhausted": true,
+          "curseUnchanged": true,
+          "saveRoundTrip": true
+        },
+        {
+          "key": "knight_iron_furnace",
+          "up": true,
+          "mode": "combined",
+          "block": 7,
+          "statusExhausted": true,
+          "curseUnchanged": true,
+          "saveRoundTrip": true
+        },
+        {
+          "key": "knight_ancestral_salvage",
+          "up": true,
+          "mode": "full",
+          "discount": 0,
+          "vigor": 6,
+          "recoveryExclusions": true,
+          "saveRoundTrip": true
+        },
+        {
+          "key": "knight_ancestral_salvage",
+          "up": true,
+          "mode": "cancel",
+          "discount": 0,
+          "vigor": 0,
+          "recoveryExclusions": true,
+          "saveRoundTrip": true
+        },
+        {
+          "key": "knight_ancestral_salvage",
+          "up": true,
+          "mode": "skills",
+          "discount": 0,
+          "vigor": 0,
+          "recoveryExclusions": true,
+          "saveRoundTrip": true
+        },
+        {
+          "key": "mage_cleanse_sigil",
+          "up": false,
+          "mode": "full",
+          "cost": 1,
+          "charges": 2,
+          "saveRoundTrip": true
+        },
+        {
+          "key": "nova",
+          "up": false,
+          "mode": "zero",
+          "charges": 0,
+          "skills": 0,
+          "damage": 12,
+          "targets": 3,
+          "flowDraw": 0,
+          "saveRoundTrip": true
+        },
+        {
+          "key": "nova",
+          "up": false,
+          "mode": "one",
+          "charges": 1,
+          "skills": 1,
+          "damage": 18,
+          "targets": 3,
+          "flowDraw": 1,
+          "saveRoundTrip": true
+        },
+        {
+          "key": "nova",
+          "up": false,
+          "mode": "full",
+          "charges": 2,
+          "skills": 2,
+          "damage": 24,
+          "targets": 3,
+          "flowDraw": 2,
+          "saveRoundTrip": true
+        },
+        {
+          "key": "nova",
+          "up": false,
+          "mode": "reservoir",
+          "charges": 2,
+          "skills": 2,
+          "damage": 28,
+          "targets": 3,
+          "flowDraw": 2,
+          "saveRoundTrip": true
+        },
+        {
+          "key": "nova",
+          "up": false,
+          "mode": "replay",
+          "charges": 2,
+          "skills": 2,
+          "damage": 36,
+          "targets": 3,
+          "flowDraw": 2,
+          "saveRoundTrip": true
+        },
+        {
+          "key": "mage_moonstone_lance",
+          "up": false,
+          "mode": "zero",
+          "charges": 0,
+          "skills": 0,
+          "damage": 5,
+          "targets": 1,
+          "flowDraw": 0,
+          "saveRoundTrip": true
+        },
+        {
+          "key": "mage_moonstone_lance",
+          "up": false,
+          "mode": "one",
+          "charges": 1,
+          "skills": 1,
+          "damage": 7,
+          "targets": 1,
+          "flowDraw": 1,
+          "saveRoundTrip": true
+        },
+        {
+          "key": "mage_moonstone_lance",
+          "up": false,
+          "mode": "full",
+          "charges": 2,
+          "skills": 2,
+          "damage": 9,
+          "targets": 1,
+          "flowDraw": 2,
+          "saveRoundTrip": true
+        },
+        {
+          "key": "mage_moonstone_lance",
+          "up": false,
+          "mode": "cap",
+          "charges": 2,
+          "skills": 3,
+          "damage": 11,
+          "targets": 1,
+          "flowDraw": 2,
+          "saveRoundTrip": true
+        },
+        {
+          "key": "mage_moonstone_lance",
+          "up": false,
+          "mode": "reset",
+          "charges": 2,
+          "skills": 0,
+          "damage": 5,
+          "targets": 1,
+          "flowDraw": 2,
+          "saveRoundTrip": true
+        },
+        {
+          "key": "mage_returned_prophecy",
+          "up": false,
+          "mode": "full",
+          "discount": 1,
+          "vigor": 0,
+          "recoveryExclusions": true,
+          "saveRoundTrip": true
+        },
+        {
+          "key": "mage_returned_prophecy",
+          "up": false,
+          "mode": "empty",
+          "discount": 1,
+          "vigor": 0,
+          "recoveryExclusions": true,
+          "saveRoundTrip": true
+        },
+        {
+          "key": "mage_returned_prophecy",
+          "up": false,
+          "mode": "cancel",
+          "discount": 1,
+          "vigor": 0,
+          "recoveryExclusions": true,
+          "saveRoundTrip": true
+        },
+        {
+          "key": "mage_returned_prophecy",
+          "up": false,
+          "mode": "hand-cap",
+          "discount": 1,
+          "vigor": 0,
+          "recoveryExclusions": true,
+          "saveRoundTrip": true
+        },
+        {
+          "key": "mage_returned_prophecy",
+          "up": false,
+          "mode": "replay",
+          "discount": 1,
+          "vigor": 0,
+          "recoveryExclusions": true,
+          "saveRoundTrip": true
+        },
+        {
+          "key": "mage_cleanse_sigil",
+          "up": true,
+          "mode": "full",
+          "cost": 0,
+          "charges": 2,
+          "saveRoundTrip": true
+        },
+        {
+          "key": "nova",
+          "up": true,
+          "mode": "zero",
+          "charges": 0,
+          "skills": 0,
+          "damage": 16,
+          "targets": 3,
+          "flowDraw": 0,
+          "saveRoundTrip": true
+        },
+        {
+          "key": "nova",
+          "up": true,
+          "mode": "one",
+          "charges": 1,
+          "skills": 1,
+          "damage": 24,
+          "targets": 3,
+          "flowDraw": 1,
+          "saveRoundTrip": true
+        },
+        {
+          "key": "nova",
+          "up": true,
+          "mode": "full",
+          "charges": 2,
+          "skills": 2,
+          "damage": 32,
+          "targets": 3,
+          "flowDraw": 2,
+          "saveRoundTrip": true
+        },
+        {
+          "key": "nova",
+          "up": true,
+          "mode": "reservoir",
+          "charges": 2,
+          "skills": 2,
+          "damage": 36,
+          "targets": 3,
+          "flowDraw": 2,
+          "saveRoundTrip": true
+        },
+        {
+          "key": "nova",
+          "up": true,
+          "mode": "replay",
+          "charges": 2,
+          "skills": 2,
+          "damage": 48,
+          "targets": 3,
+          "flowDraw": 2,
+          "saveRoundTrip": true
+        },
+        {
+          "key": "mage_moonstone_lance",
+          "up": true,
+          "mode": "zero",
+          "charges": 0,
+          "skills": 0,
+          "damage": 7,
+          "targets": 1,
+          "flowDraw": 0,
+          "saveRoundTrip": true
+        },
+        {
+          "key": "mage_moonstone_lance",
+          "up": true,
+          "mode": "one",
+          "charges": 1,
+          "skills": 1,
+          "damage": 10,
+          "targets": 1,
+          "flowDraw": 1,
+          "saveRoundTrip": true
+        },
+        {
+          "key": "mage_moonstone_lance",
+          "up": true,
+          "mode": "full",
+          "charges": 2,
+          "skills": 2,
+          "damage": 13,
+          "targets": 1,
+          "flowDraw": 2,
+          "saveRoundTrip": true
+        },
+        {
+          "key": "mage_moonstone_lance",
+          "up": true,
+          "mode": "cap",
+          "charges": 2,
+          "skills": 3,
+          "damage": 16,
+          "targets": 1,
+          "flowDraw": 2,
+          "saveRoundTrip": true
+        },
+        {
+          "key": "mage_moonstone_lance",
+          "up": true,
+          "mode": "reset",
+          "charges": 2,
+          "skills": 0,
+          "damage": 7,
+          "targets": 1,
+          "flowDraw": 2,
+          "saveRoundTrip": true
+        },
+        {
+          "key": "mage_returned_prophecy",
+          "up": true,
+          "mode": "full",
+          "discount": 2,
+          "vigor": 0,
+          "recoveryExclusions": true,
+          "saveRoundTrip": true
+        },
+        {
+          "key": "mage_returned_prophecy",
+          "up": true,
+          "mode": "empty",
+          "discount": 2,
+          "vigor": 0,
+          "recoveryExclusions": true,
+          "saveRoundTrip": true
+        },
+        {
+          "key": "mage_returned_prophecy",
+          "up": true,
+          "mode": "cancel",
+          "discount": 2,
+          "vigor": 0,
+          "recoveryExclusions": true,
+          "saveRoundTrip": true
+        },
+        {
+          "key": "mage_returned_prophecy",
+          "up": true,
+          "mode": "hand-cap",
+          "discount": 2,
+          "vigor": 0,
+          "recoveryExclusions": true,
+          "saveRoundTrip": true
+        },
+        {
+          "key": "mage_returned_prophecy",
+          "up": true,
+          "mode": "replay",
+          "discount": 2,
+          "vigor": 0,
+          "recoveryExclusions": true,
+          "saveRoundTrip": true
+        },
+        {
+          "key": "ranger_ghost_luggage",
+          "up": false,
+          "mode": "full",
+          "nextBlock": 6,
+          "turnBoundary": true,
+          "saveRoundTrip": true
+        },
+        {
+          "key": "ranger_ghost_luggage",
+          "up": true,
+          "mode": "full",
+          "nextBlock": 8,
+          "turnBoundary": true,
+          "saveRoundTrip": true
+        }
+      ]
+    }
+  ],
+  "sourceCommit": "1bb0aa2495b4e138a51dc5a016e91ea7d140ed97",
+  "archiveSha256": "23660f0c5fa6706c37737d424a737f08a89d07af6c67ada1f8638bccef8d6b03",
+  "changedCards": [
+    "nova",
+    "knight_forge_memory",
+    "mage_cleanse_sigil",
+    "knight_phoenix_forge",
+    "knight_ancestral_salvage",
+    "knight_iron_furnace",
+    "mage_moonstone_lance",
+    "mage_returned_prophecy",
+    "ranger_ghost_luggage"
+  ],
+  "additionalPairsUnchanged": [
+    "ranger_measured_breath",
+    "mage_eternal_bookmark",
+    "mage_woven_incantation",
+    "mage_archmage_thesis",
+    "ranger_tracking_rhythm",
+    "ranger_hunt_without_end"
+  ],
+  "limitations": [
+    "Owned Windows solo fixtures; deterministic selectors supply choices, not physical Steam Deck input.",
+    "Full-hand boundary invokes the native start-turn hook directly; ordinary delayed recovery uses actual turn transitions.",
+    "No new co-op gameplay or full-climb balance claim."
+  ]
+}
