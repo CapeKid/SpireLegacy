@@ -58,8 +58,8 @@ try:
             elif card == 'knight_battle_meditation':
                 assert len(played['hand']) == hand_before + 1 + int(upgrade), played
             elif card == 'ranger_second_quiver':
-                assert played['energyChange'] == 1 + int(upgrade), played
-                assert len(played['hand']) == hand_before + 2 + int(upgrade), played
+                assert played['cost'] == 0 and played['energyChange'] == 0, played
+                assert len(played['hand']) == hand_before, played # Only a Skill is supplied in discard here.
             elif card == 'volley':
                 after = send('state')
                 blocked = state['enemies'][0]['block'] - after['enemies'][0]['block']

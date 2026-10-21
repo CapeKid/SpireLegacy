@@ -19,7 +19,7 @@ CARD_OVERRIDES = {
     'mage_toxic_cloud': dict(poison=4, upgradeMagic=2),
     'mage_rekindle': dict(specialAmount=1),
     'knight_arms_vault': dict(specialAmount=1),
-    'ranger_second_quiver': dict(hpLoss=0, draw=2, upgradeDraw=0),
+    'ranger_second_quiver': dict(cost=0, hpLoss=0, draw=0, energy=0, special='reload_attacks', specialAmount=2, upgradeSpecial=1, upgradeMagic=0, upgradeDraw=-1, exhaust=True),
     'volley': dict(damage=5, upgradeDamage=1),
     'mage_returned_prophecy': dict(cost=1, draw=2, upgradeMagic=1),
     'mage_ash_reading': dict(cost=0, hpLoss=0, draw=1, upgradeMagic=1, exhaust=True, upgradeCost=False),

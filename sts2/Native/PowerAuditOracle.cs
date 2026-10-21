@@ -236,6 +236,49 @@ public static class PowerAuditOracle
         Require(drawn==(mode is "charged" or "replay-charge"?2:0),"Mana Burn passive draw sequencing.");
         return new{mode,up,cls,usedBefore=used,primed,damage,hpLoss,drawn,plays,pile=card.Pile?.Type.ToString(),cost=card.DesignCard.Cost,modelId=card.Id.ToString(),saveRoundTrip=true};
     }
+    public static async Task<object> SecondQuiver(RunState run,bool up,string mode,IDisposable selector)
+    {
+        using(selector){
+            var player=run.Players.Single();var enemies=await Setup(player);var hand=PileType.Hand.GetPile(player);
+            var drawPile=PileType.Draw.GetPile(player);var drawBefore=drawPile.Cards.Count;
+            var key=mode=="meditate"?"meditate":"ranger_second_quiver";
+            var card=(LegacyCard)await Add(player,NativeCards.Get(key),up);
+            var loaded=(LegacyCard)run.LoadCard(card.ToSerializable(),player);
+            Require(loaded.Id==card.Id&&loaded.IsUpgraded==up&&loaded.DesignCard.Rules()==card.DesignCard.Rules(),"Reload card save round-trip.");run.RemoveCard(loaded);
+            if(mode=="meditate"){
+                var before=hand.Cards.Count;await Play(card,energyGain:up?2:1);
+                Require(hand.Cards.Count-before+1==(up?2:1)&&card.Pile?.Type==PileType.Exhaust,"Meditate resource burst changed.");
+                return new{mode,up,key,drawn=up?2:1,energyGained=up?2:1,cost=0,saveRoundTrip=true};
+            }
+            var attackCount=mode is "empty" or "skills"?0:mode=="partial"?1:4;
+            var attacks=new List<CardModel>();
+            for(var i=0;i<attackCount;i++)attacks.Add(await Add(player,NativeCards.Get("ranger_strike"),i%2==1,PileType.Discard));
+            var excluded=new List<CardModel>();
+            if(mode!="empty"){
+                excluded.Add(await Add(player,ModelDb.Card<DefendIronclad>(),pile:PileType.Discard));
+                excluded.Add(await Add(player,ModelDb.Card<Inflame>(),pile:PileType.Discard));
+            }
+            if(mode=="hand-cap")while(hand.Cards.Count<CardPile.MaxCardsInHand)await Add(player,ModelDb.Card<DefendIronclad>());
+            if(mode=="replay")await Apply(player,"burst",1);
+            var beforeEnergy=player.PlayerCombatState!.Energy;var hp=player.Creature.CurrentHp;
+            await Play(card);
+            var returned=attacks.Where(c=>c.Pile?.Type==PileType.Hand).ToArray();
+            var expected=mode is "cancel" or "pacifist"?0:mode=="hand-cap"?1:mode=="replay"?4:Math.Min(up?3:2,attackCount);
+            Require(returned.Length==expected,$"Reload count {mode}: {returned.Length}, expected {expected}.");
+            Require(returned.All(c=>c.Owner==player&&c.Type==CardType.Attack)&&excluded.All(c=>c.Pile?.Type==PileType.Discard),"Reload selected a Skill/Power or changed ownership.");
+            Require(drawPile.Cards.Count==drawBefore&&player.PlayerCombatState.Energy==beforeEnergy&&player.Creature.CurrentHp==hp,"Reload must preserve Energy and HP, with no draw or Energy gain.");
+            Require(card.Pile?.Type==PileType.Exhaust&&hand.Cards.Count<=CardPile.MaxCardsInHand,"Reload Exhaust/hand limit.");
+            Require(attacks.Select((c,i)=>c.IsUpgraded==(i%2==1)).All(x=>x),"Reload changed Attack upgrades.");
+            var rhythmDraw=0;
+            if(mode=="rhythm"){
+                var sequence=returned.Take(3).ToList();while(sequence.Count<3)sequence.Add(await Add(player,NativeCards.Get("ranger_strike")));
+                foreach(var attack in sequence)await Play(attack,enemies[0]);
+                rhythmDraw=drawBefore-drawPile.Cards.Count;
+                Require(rhythmDraw==1&&player.Creature.GetPower<P_class>()!.AttacksThisTurn==3&&enemies[0].GetPowerAmount<VulnerablePower>()==1,"Reloaded Attacks did not support Hunter Rhythm.");
+            }
+            return new{mode,up,key,returned=returned.Length,expected,drawn=0,energyGained=0,cost=0,exhausted=true,rhythmDraw,saveRoundTrip=true,upgradeFlagsPreserved=true,excludedTypesStayedDiscarded=true};
+        }
+    }
     public static async Task<object> DamageControl(RunState run,string power,bool up)
     {
         const string patch="CapeKid.SpireLegacy2.PowerAuditControl";var harmony=new Harmony(patch);var player=run.Players.Single();

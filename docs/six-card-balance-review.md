@@ -1,5 +1,7 @@
 # Six card candidates: resource limits and setup costs
 
+Historical 1.0.28 measurements below are preserved. Second Quiver is redesigned as selective Attack recovery in [the 1.0.40 beta](release-1.0.40.md); its older draw/Energy behavior is no longer current.
+
 This review follows the Spellweave correction and covers the six specific candidates raised by the user. The decisions use the current effects, intended archetypes and privately inspected owned regular-game benchmarks. They are bounded tuning judgments, not campaign win-rate findings or an exhaustive balance verdict for every card.
 
 Values separated by a slash mean base/upgraded, before traits, manor and combat powers.

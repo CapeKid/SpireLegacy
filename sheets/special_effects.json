@@ -122,5 +122,9 @@
   {
     "id": "arcane_aftershock",
     "summary": "If Arcane Flow has triggered this turn, deal {n} additional damage."
+  },
+  {
+    "id": "reload_attacks",
+    "summary": "Return up to {n} Attacks from your discard pile to your hand."
   }
 ]

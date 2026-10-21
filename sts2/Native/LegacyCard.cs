@@ -45,7 +45,7 @@ public abstract class LegacyCard : CustomCardModel
     public override string PortraitPath => MissingPortraitPath;
     public override string BetaPortraitPath => MissingPortraitPath;
     public override IEnumerable<string> AllPortraitPaths => [];
-    public override List<(string, string)> Localization => [("title", Row.Text("name")), ("description", "{Rules}"),("returnPrompt","Choose cards to return to your hand.")];
+    public override List<(string, string)> Localization => [("title", Row.Text("name")), ("description", "{Rules}"),("returnPrompt","Choose cards to return to your hand."),("attackReturnPrompt","Choose Attacks to return to your hand.")];
     protected override void AddExtraArgsToDescription(LocString description) => description.Add("Rules", DesignCard.Rules(
         Row.Number("nextBlock") > 0 ? NextBlock.ToHighlightedString(false) : null,
         HasSpecialBlock ? SpecialBlock.ToHighlightedString(false) : null).Replace("{Damage}", DynamicVars.Damage.ToHighlightedString(false)).Replace("{Block}", DynamicVars.Block.ToHighlightedString(false)));

@@ -30,7 +30,7 @@ for tier in [0,2]:
                     assert r['queuedEnergy']==r['queuedDraw']==1 and r['queuedBlock']==3+dex,r
                     assert r['firstEnergy']==r['secondEnergy']==4 and r['firstHand']==r['secondHand']==6+library,r
                     assert r['firstBlock']==r['secondBlock']==3+dex and r['replaySpent']==1 and r['pile']=='Discard',r
-                elif key=='ranger_second_quiver':assert r['drawn']==2 and r['energyDelta']==1+int(upgraded) and r['pile']=='Exhaust',r
+                elif key=='ranger_second_quiver':assert r['drawn']==0 and r['energyDelta']==0 and r['pile']=='Exhaust',r # No discarded Attacks in this fixture; the dedicated reload driver checks recovery.
                 elif key=='mage_mana_fountain':assert r['energyDelta']==2+int(upgraded) and r['drawn']==0 and r['pile']=='Exhaust' and r['healing']==0,r
                 elif key=='mage_eternal_bookmark':assert r['energyDelta']==-1 and r['amount']==r['retained']==2+int(upgraded) and r['automaticRetained'],r
                 elif key=='knight_battlefield_recovery':assert r['energyDelta']==-1 and r['drawn']==2+int(upgraded) and r['healing']==4+int(upgraded) and r['pile']=='Exhaust',r

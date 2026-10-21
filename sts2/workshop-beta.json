@@ -2,7 +2,7 @@
   "title": "Spire Legacy — Beta",
   "description": "Private beta builds of Spire Legacy for the creator's Steam Deck testing. Requires BaseLib. You may subscribe to both this item and the public Spire Legacy item. In StS2's mod menu, enable ONLY Spire Legacy — Beta OR Spire Legacy, then restart. They contain the same character and cards and must not run together. Finish a climb before switching builds. Family manor progress is shared. This item does not update the public Workshop listing.",
   "visibility": "private",
-  "changeNote": "1.0.39: Mana Burn is now an HP-free, single-use Mage finisher: 5 damage (7 upgraded), plus 5 after Arcane Flow triggers this turn. Private beta update only.",
+  "changeNote": "1.0.41: Second Quiver now costs 0 Energy, returning up to 2 discarded Attacks (3 upgraded), then Exhausting. Meditate is unchanged. Private beta update only.",
   "tags": [
     "Characters"
   ],

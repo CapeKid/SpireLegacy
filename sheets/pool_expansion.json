@@ -148,8 +148,8 @@
     "cardId": "ranger_second_quiver",
     "classId": "ranger",
     "availability": "all",
-    "build": "draw and Energy",
-    "reference": "Adrenaline: one-use draw and Energy burst without an HP cost."
+    "build": "Attack reload",
+    "reference": "Zero Energy to select up to two discarded Attacks (three upgraded), then Exhaust. Selective recovery instead of Meditate-style draw and Energy."
   },
   {
     "id": "ranger_empty_quiver",
