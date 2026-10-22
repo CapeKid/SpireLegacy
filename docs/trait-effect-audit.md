@@ -43,7 +43,7 @@ Synesthesia remains cosmetic and has no crown bonus. This audit does not change 
 | Associative Agnosia (`enemiesblackfill`) | Selectable | Enemies start with 1 Strength, representing harder-to-read opponents. | Native/BloodlineRelic.cs: BeforeCombatStart |
 | Hollow Bones (`lowergravity`) | Selectable | Lose 12 maximum HP; gain 2 Dexterity and a lighter appearance. | Inheritance stats / BloodlineRelic / HeirCharacter; HeirVisuals.Attach / AttachRoomPortrait |
 | Stressed (`bluronhit`) | Selectable | After losing HP to an enemy attack, gain 1 Weak. | Native/BloodlineRelic.cs: AfterDamageReceived |
-| Synesthesia (`colortrails`) | Selectable | Rainbow motes orbit your heir above a shifting colorful ring, including at rest sites and shops. Visible alongside other palette traits. Cosmetic only; no crown bonus. | Native/TraitAppearance.cs: Attach / Refresh |
+| Synesthesia (`colortrails`) | Selectable | Rainbow motes orbit your heir above a shifting colorful ring, including at rest sites and shops. Visible alongside other palette traits. | Native/TraitAppearance.cs: Attach / Refresh |
 | Vegan (`nomeat`) | Selectable | All healing is halved, rounded down. | Core/Inheritance.cs: Healing |
 | Only Heart (`smallhitbox`) | Selectable | Excellent Dexterity, but fragile. | Inheritance stats / BloodlineRelic / HeirCharacter; HeirVisuals.Attach / AttachRoomPortrait |
 | Diva (`cheeronkills`) | Selectable | Gain 2 gold after each enemy you defeat; start combat Vulnerable for 1 turn. | Native/BloodlineRelic.cs: BeforeCombatStart / AfterDeath |

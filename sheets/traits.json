@@ -673,7 +673,7 @@
     "draw": 0,
     "goldBonus": 0,
     "scale": 1.0,
-    "summary": "Rainbow motes orbit your heir above a shifting colorful ring, including at rest sites and shops. Visible alongside other palette traits. Cosmetic only; no crown bonus.",
+    "summary": "Rainbow motes orbit your heir above a shifting colorful ring, including at rest sites and shops. Visible alongside other palette traits.",
     "heal": 0,
     "source": "ColorTrails",
     "enabled": true,
