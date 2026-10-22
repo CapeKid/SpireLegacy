@@ -7,7 +7,7 @@ Each class has 82 rewards on regular (20 common, 36 uncommon, 26 rare), or 85 on
 | Card | Rarity | Type | Energy | Effects |
 | --- | --- | --- | ---: | --- |
 | Sword Strike | Basic | Attack | 1 | Class unique; 5 damage |
-| Guard | Basic | Skill | 1 | Class unique; 4 Block |
+| Guard Defend | Basic | Skill | 1 | Class unique; 4 Block |
 | Shield Bash | Basic | Attack | 1 | Class unique; 5 damage; 3 Block |
 | Fortify | Common | Skill | 1 | Class unique; 7 Block |
 | Riposte | Common | Attack | 1 | Class unique; 6 damage; 3 Block |
@@ -100,7 +100,7 @@ Each class has 82 rewards on regular (20 common, 36 uncommon, 26 rare), or 85 on
 | Card | Rarity | Type | Energy | Effects |
 | --- | --- | --- | ---: | --- |
 | Spark Strike | Basic | Attack | 1 | Class unique; 5 damage |
-| Ward | Basic | Skill | 1 | Class unique; 4 Block |
+| Ward Defend | Basic | Skill | 1 | Class unique; 4 Block |
 | Challenge | Uncommon | Attack | 2 | Shared family card; 6 damage; 2 Vulnerable |
 | Family Oath | Rare | Attack | 2 | Shared family card; 6 damage ×2; 1 Strength; Exhaust |
 | Flame Barrier | Basic | Skill | 1 | Class unique; 5 Block; When attacked this turn, deal 2 damage back. |
@@ -193,7 +193,7 @@ Each class has 82 rewards on regular (20 common, 36 uncommon, 26 rare), or 85 on
 | Card | Rarity | Type | Energy | Effects |
 | --- | --- | --- | ---: | --- |
 | Arrow Strike | Basic | Attack | 1 | Class unique; 5 damage |
-| Sidestep | Basic | Skill | 1 | Class unique; 4 Block |
+| Sidestep Defend | Basic | Skill | 1 | Class unique; 4 Block |
 | Challenge | Uncommon | Attack | 2 | Shared family card; 6 damage; 2 Vulnerable |
 | Family Oath | Rare | Attack | 2 | Shared family card; 6 damage ×2; 1 Strength; Exhaust |
 | Study | Common | Skill | 1 | Shared family card; 2 draw |
