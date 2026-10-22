@@ -53,8 +53,8 @@ try:
                 assert played['fuelReturned'] and played['cost'] == 1, played
                 assert len(played['hand']) == hand_before + 2, played
             elif card == 'mage_returned_prophecy':
-                assert played['fuelReturned'] and played['cost'] == 1, played
-                assert len(played['hand']) == hand_before + 3 + int(upgrade), played
+                assert not played['fuelReturned'] and played['cost'] == 1, played
+                assert len(played['hand']) == hand_before - 1, played # Delayed recovery has a dedicated turn-boundary fixture.
             elif card == 'knight_battle_meditation':
                 assert len(played['hand']) == hand_before + 1 + int(upgrade), played
             elif card == 'ranger_second_quiver':

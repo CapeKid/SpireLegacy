@@ -332,7 +332,7 @@
     "types": ["dict"],
     "required": ["id", "summary"],
     "fields": {
-      "id": {"types": ["str"], "pattern": "[a-z][a-z0-9_]*", "enum": ["after_image", "arcane_echo", "attack_vigor", "barricade", "berserk", "brutality", "buffer", "burst", "combust", "dark_embrace", "demon_form", "discard_block", "discard_energy", "double_tap", "envenom", "equilibrium", "establishment", "evolve", "exhaust_damage", "feel_no_pain", "fire_breathing", "flame_barrier", "foresight", "juggernaut", "metallicize", "noxious", "panache", "power_draw", "rupture", "sadistic", "scry_block", "skill_block", "skill_energy", "thorns", "thousand_cuts", "tools", "well_laid"]},
+      "id": {"types": ["str"], "pattern": "[a-z][a-z0-9_]*", "enum": ["retained_draw", "skill_echo", "thesis_ready", "hunt_momentum", "exhaust_vigor", "discard_next_block", "exhaust_burst", "status_furnace", "prophecy_return", "after_image", "arcane_echo", "attack_vigor", "barricade", "berserk", "brutality", "buffer", "burst", "combust", "dark_embrace", "demon_form", "discard_block", "discard_energy", "double_tap", "envenom", "equilibrium", "establishment", "evolve", "exhaust_damage", "feel_no_pain", "fire_breathing", "flame_barrier", "foresight", "juggernaut", "metallicize", "noxious", "panache", "power_draw", "rupture", "sadistic", "scry_block", "skill_block", "skill_energy", "thorns", "thousand_cuts", "tools", "well_laid"]},
       "summary": {"types": ["str"]}
     }
   },
@@ -367,7 +367,7 @@
     "types": ["dict"],
     "required": ["id", "summary"],
     "fields": {
-      "id": {"types": ["str"], "pattern": "[a-z][a-z0-9_]*", "enum": ["arcane_aftershock", "block_damage", "chain_damage", "charge_gain", "charged_energy", "cleanse", "discard_block", "discard_draw", "discard_energy", "discount_hand", "double_block", "double_poison", "poison_twice", "execute", "exhaust_block", "exhaust_damage", "exhaust_nonattacks", "exhaust_one", "exhume", "free_hand", "guard_bonus", "guarded_strength", "marked_bonus", "random_attack", "refill_hand", "reload_attacks", "retain_block", "retain_damage", "retrieve", "scry", "upgrade_attacks", "wounds"]},
+      "id": {"types": ["str"], "pattern": "[a-z][a-z0-9_]*", "enum": ["cleanse_charge", "charge_burst", "skill_damage", "exhume_next_turn", "exhume_attack", "arcane_aftershock", "block_damage", "chain_damage", "charge_gain", "charged_energy", "cleanse", "discard_block", "discard_draw", "discard_energy", "discount_hand", "double_block", "double_poison", "poison_twice", "execute", "exhaust_block", "exhaust_damage", "exhaust_nonattacks", "exhaust_one", "exhume", "free_hand", "guard_bonus", "guarded_strength", "marked_bonus", "random_attack", "refill_hand", "reload_attacks", "retain_block", "retain_damage", "retrieve", "scry", "upgrade_attacks", "wounds"]},
       "summary": {"types": ["str"]}
     }
   },

@@ -46,6 +46,17 @@ public static class CardEffects
   await Special(card,context,play,enemies);
  }
  public static Task Scry(CardModel card,PlayerChoiceContext context,int amount)=>Scry(card.Owner,context,amount);
+ public static async Task<bool> RecoverFromExhaust(Player player,PlayerChoiceContext context,bool attacksOnly,int discount=0)
+ {
+  var prompt=new MegaCrit.Sts2.Core.Localization.LocString("cards",ModelDb.Card<C_knight_arms_vault>().Id.Entry+".returnPrompt");
+  if(attacksOnly)prompt=new MegaCrit.Sts2.Core.Localization.LocString("cards",ModelDb.Card<C_ranger_second_quiver>().Id.Entry+".attackReturnPrompt");
+  var chosen=await CardChoiceLifetime.Run(player,()=>CardSelectCmd.FromCombatPile(context,PileType.Exhaust.GetPile(player),player,new CardSelectorPrefs(prompt,0,1),
+   candidate=>(!attacksOnly||candidate.Type==CardType.Attack)&&(candidate is not LegacyCard legacy||legacy.DesignCard.RecoverableFromExhaust)));
+  var returned=false;
+  foreach(var card in chosen){await CardPileCmd.Add(card,PileType.Hand);if(card.Pile?.Type!=PileType.Hand)continue;returned=true;
+   if(discount>0&&!card.EnergyCost.CostsX){var reduction=Math.Min(discount,Math.Max(0,card.EnergyCost.GetWithModifiers(CostModifiers.All)));if(reduction>0)card.EnergyCost.AddThisTurn(-reduction);}}
+  return returned;
+ }
  public static async Task Scry(Player player,PlayerChoiceContext context,int amount)
  {
   var top=PileType.Draw.GetPile(player).Cards.Take(amount).ToArray();
@@ -58,7 +69,7 @@ public static class CardEffects
   switch(row.Text("special")){
    case "guarded_strength":if(creature.Block>0)await Apply(context,"strength",creature,amount,creature,card);return;
    case "upgrade_attacks":foreach(var held in hand.Cards.Where(c=>c.Type==CardType.Attack&&c.IsUpgradable).ToArray())CardCmd.Upgrade(held);return;
-   case "none":case "arcane_aftershock":case "block_damage":case "chain_damage":case "random_attack":case "execute":case "guard_bonus":case "marked_bonus":case "scry":case "exhaust_damage":case "retain_damage":case "retain_block":case "discard_draw":case "discard_energy":case "discard_block":return;
+   case "none":case "arcane_aftershock":case "charge_burst":case "skill_damage":case "block_damage":case "chain_damage":case "random_attack":case "execute":case "guard_bonus":case "marked_bonus":case "scry":case "exhaust_damage":case "retain_damage":case "retain_block":case "discard_draw":case "discard_energy":case "discard_block":return;
    case "wounds":for(var i=0;i<amount;i++)await CardPileCmd.AddGeneratedCardToCombat(card.CombatState!.CreateCard(ModelDb.Card<MegaCrit.Sts2.Core.Models.Cards.Wound>(),player),PileType.Draw,player,CardPilePosition.Random);break;
    // The native combined command defers Sly autoplay until the exchange draw
    // finishes. Separate Discard/Draw calls let Reflex redraw the discarded fuel.
@@ -73,6 +84,11 @@ public static class CardEffects
    case "exhaust_nonattacks":foreach(var fuel in hand.Cards.Where(c=>c.Type!=CardType.Attack).ToArray()){await BranchCommands.Exhaust(context,fuel);await CreatureCmd.GainBlock(creature,card.SpecialBlock,play);}break;
    case "double_block":await CreatureCmd.GainBlock(creature,creature.Block,ValueProp.Unpowered,play);break;
    case "cleanse":foreach(var power in creature.Powers.Where(p=>p.Type==PowerType.Debuff).ToArray())await PowerCmd.Remove(power);break;
+   case "cleanse_charge":
+    foreach(var debuff in creature.Powers.Where(p=>p.Type==PowerType.Debuff).ToArray())await PowerCmd.Remove(debuff);
+    if(PlayerBloodlines.Heir(player).classId=="mage"&&creature.GetPower<P_class>() is {} cleansedCharge)cleansedCharge.Charges=Math.Min(2,cleansedCharge.Charges+amount);break;
+   case "exhume_next_turn":await Apply(context,"prophecy_return",creature,amount,creature,card);break;
+   case "exhume_attack":if(await RecoverFromExhaust(player,context,attacksOnly:true))await Apply(context,"vigor",creature,amount,creature,card);break;
    case "exhaust_one":foreach(var fuel in await CardChoiceLifetime.Run(player,()=>CardSelectCmd.FromHand(context,player,new CardSelectorPrefs(CardSelectorPrefs.ExhaustSelectionPrompt,amount),null,card)))await BranchCommands.Exhaust(context,fuel);break;
    case "reload_attacks":
     var reloaded=await CardChoiceLifetime.Run(player,()=>CardSelectCmd.FromCombatPile(context,PileType.Discard.GetPile(player),player,new CardSelectorPrefs(new MegaCrit.Sts2.Core.Localization.LocString("cards",card.Id.Entry+".attackReturnPrompt"),0,amount),

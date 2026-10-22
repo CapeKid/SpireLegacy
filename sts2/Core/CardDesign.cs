@@ -11,8 +11,8 @@ public sealed class CardDesign(string id, bool upgraded = false, IEnumerable<str
     public int Cost => Row.Number("cost") - (upgraded && Row.Flag("upgradeCost") ? 1 : 0);
     public int SpecialAmount => Row.Number("specialAmount") + (upgraded ? Row.Number("upgradeSpecial") : 0);
     // Recovery cards cannot retrieve one another after being discounted to zero.
-    public bool RecoverableFromExhaust => Row.Text("special") != "exhume";
-    public bool RecoverableFromDiscard => Row.Text("special") is not ("exhume" or "retrieve");
+    public bool RecoverableFromExhaust => Row.Text("special") is not ("exhume" or "exhume_attack" or "exhume_next_turn");
+    public bool RecoverableFromDiscard => RecoverableFromExhaust && Row.Text("special") != "retrieve";
     private IEnumerable<Design.Row> Genes => Row.Text("rarity") == "BASIC" ? Design.Rows("starter_genes").Where(r => inherited?.Contains(r.Text("id")) == true) : [];
     public bool Mercy => Row.Text("type") == "ATTACK" && Genes.Any(r => r.Flag("mercy"));
     public int Gene(string key) => Genes.Where(r => Row.Text("type") == "ATTACK" ? key is "damage" or "heal" or "poison" || key == "block" && r.Flag("mercy") : key is "block" or "draw").Sum(r => r.Number(key));
@@ -45,6 +45,7 @@ public sealed class CardDesign(string id, bool upgraded = false, IEnumerable<str
         if (Mercy) lines.Add($"Apply {MercyPoison} Poison. This inherited starter is a Skill.");
         if (Row.Text("power") == "reservoir") lines.Add($"Each Arcane Charge adds {Magic} extra damage to every hit of your next Attack.");
         else if (Row.Text("power") == "quiver") lines.Add($"Hunter Rhythm draws {Magic} additional card(s).");
+        else if (Row.Text("power") == "skill_echo") lines.Add("After you play 3 Skills in a turn, your next Attack that turn is played twice. Triggers once per turn.");
         else if (Row.Text("power") != "none") lines.Add(Design.Get("power_effects", Row.Text("power")).Text("summary").Replace("!M!", Magic.ToString()));
         if (Row.Text("special") is not ("none" or "scry")) lines.Add(Design.Get("special_effects", Row.Text("special")).Text("summary").Replace("{n}", specialBlock ?? SpecialAmount.ToString()));
         return string.Join("\n", lines);

@@ -24,7 +24,7 @@ using MegaCrit.Sts2.Core.ValueProps;
 namespace SpireLegacy;
 
 // Opt-in disposable native fixture. Observe real hooks and paid plays, not inferred previews.
-public static class PowerAuditOracle
+public static partial class PowerAuditOracle
 {
     private static readonly PlayerChoiceContext Context=new BlockingPlayerChoiceContext();
     private static CardModel? observed;
@@ -191,10 +191,16 @@ public static class PowerAuditOracle
                 Require(hand.Cards.Contains(top[2])&&hand.Cards.Contains(top[3]),"Prepared top cards did not reach Arcane Flow.");
                 return new{key,up,mode,scry=card.DesignCard.SpecialAmount,printedDraw=1,flowDraw=2,saveRoundTrip=true};
             }
-            if(key is "mage_ember_dart" or "mage_moonstone_lance"){
+            if(key=="mage_moonstone_lance"){
+                Require(!card.ShouldRetainThisTurn,"Moonstone Lance no longer duplicates retained growth.");
+                await Skill();await Skill();var hp=enemies[0].CurrentHp;
+                await Play(card,enemies[0]);Require(hp-enemies[0].CurrentHp==card.DesignCard.Damage+2*card.DesignCard.SpecialAmount,"Skill sequence Lance damage.");
+                return new{key,up,mode,skills=2,flowDraw=2,cost=card.DesignCard.Cost,saveRoundTrip=true};
+            }
+            if(key=="mage_ember_dart"){
                 Require(card.ShouldRetainThisTurn,"Cash-out Attack must Retain.");
                 await BalanceOracle.End(player,true);Require(hand.Cards.Contains(card),"Cash-out Attack was not retained.");
-                var growth=key=="mage_moonstone_lance"?(up?3:2):0;
+                var growth=0;
                 Require(card.DynamicVars.Damage.BaseValue==card.DesignCard.Damage+growth,"Retained cash-out growth.");
                 await Skill();await Skill();var before=hand.Cards.Count;var hp=enemies[0].CurrentHp;
                 await Play(card,enemies[0]);Require(hand.Cards.Count-before+1==2&&hp-enemies[0].CurrentHp==card.DesignCard.Damage+growth,"Retained cash-out damage/draw.");

@@ -402,7 +402,16 @@
     "plated",
     "reservoir",
     "quiver",
-    "class"
+    "class",
+    "exhaust_vigor",
+    "discard_next_block",
+    "exhaust_burst",
+    "status_furnace",
+    "prophecy_return",
+    "retained_draw",
+    "skill_echo",
+    "thesis_ready",
+    "hunt_momentum"
   ],
   "classes": [
     "knight",

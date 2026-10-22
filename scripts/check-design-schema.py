@@ -120,7 +120,7 @@ with tempfile.TemporaryDirectory(prefix='design61-',dir=root/'private') as direc
     path=lab/'sts2/Generated/Cards.cs';path.write_text(path.read_text()+'// stale\n');assert run(lab,'sts2-generate.py','--check',ok=False).returncode
     run(lab,'sts2-generate.py')
     path=lab/'sts2/Generated/Orphan.cs';path.write_text('orphan');assert run(lab,'sts2-generate.py','--check',ok=False).returncode;path.unlink()
-    report['generated']=dict(cards=360,powers=41,hashes=generated,invalidInputPreservesOutputs=True,staleRejected=True,orphanRejected=True)
+    report['generated']=dict(cards=360,powers=50,hashes=generated,invalidInputPreservesOutputs=True,staleRejected=True,orphanRejected=True)
     # Even deliberately regenerated output cannot silently drop the saved registry.
     path=lab/'scripts/saved-model-ids.json';saved=path.read_bytes();registry=json.loads(saved);registry['cards'].append('retired_saved_identity');path.write_text(json.dumps(registry))
     failed=run(lab,'sts2-generate.py',ok=False);assert failed.returncode and 'removed saved model IDs' in failed.stdout+failed.stderr;path.write_bytes(saved)

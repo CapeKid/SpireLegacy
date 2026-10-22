@@ -40,10 +40,10 @@ try:
         assert len(info['own'])==11 and sum(r['rarity']=='Starter' for r in info['own'])==1
         assert all(not any('SPIRELEGACY-R_' in r['id'] for r in c['relics']) for c in info['native'])
         if cls not in completed:
-            a=fresh('heirloom_brooch',True);b=play('knight_forge_memory');assert b['block']-a['block']==9
-            a=b;b=play('knight_forge_memory');assert b['block']-a['block']==4
-            send('relic-roundtrip');a=b;b=play('knight_forge_memory');assert b['block']-a['block']==4
-            send('enter',room='Boss');ready();b=play('knight_forge_memory');assert b['block']==9
+            a=fresh('heirloom_brooch',True);b=play('knight_forge_memory');assert b['block']-a['block']==5
+            a=b;b=play('knight_forge_memory');assert b['block']-a['block']==0
+            send('relic-roundtrip');a=b;b=play('knight_forge_memory');assert b['block']-a['block']==0
+            send('enter',room='Boss');ready();b=play('knight_forge_memory');assert b['block']==5
             fresh('training_dummy');play(cls+'_guard');b=play(cls+'_strike');assert power(b,'VIGOR_POWER')==1,b
             send('relic-roundtrip');b=play(cls+'_strike');assert power(b,'VIGOR_POWER')==0,b
             b=next_turn(2);play(cls+'_guard');b=play(cls+'_strike');assert power(b,'VIGOR_POWER')==1,b

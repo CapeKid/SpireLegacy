@@ -20,7 +20,8 @@ for cls in read('classes'):
         for key,label in [('block','Block'),('draw','draw'),('discard','discard'),('energy','Energy'),('strength','Strength'),('dexterity','Dexterity'),('weak','Weak'),('vulnerable','Vulnerable'),('poison','Poison'),('vigor','next Attack damage'),('thorns','Thorns'),('plated','Plated Armor'),('heal','healing'),('hpLoss','HP cost'),('nextDraw','draw next turn'),('nextEnergy','Energy next turn'),('nextBlock','Block next turn')]:
             if key=='draw' and row['special']=='scry':effects.append(special['scry'].replace('{n}',str(row['specialAmount'])))
             if row[key]:effects.append(str(row[key])+' '+label+(' to all enemies' if row['aoe'] and key in ('weak','vulnerable','poison') else ''))
-        if row['power'] in powers:effects.append(powers[row['power']].replace('!M!',str(row['magic'])))
+        if row['power']=='skill_echo':effects.append('After you play 3 Skills in a turn, your next Attack that turn is played twice. Triggers once per turn.')
+        elif row['power'] in powers:effects.append(powers[row['power']].replace('!M!',str(row['magic'])))
         if row['power']=='reservoir':effects.append('Each Arcane Charge adds '+str(row['magic'])+' extra damage to every hit of your next Attack.')
         if row['power']=='quiver':effects.append('Hunter Rhythm draws '+str(row['magic'])+' extra card(s).')
         if row['special'] not in ('none','scry'):

@@ -41,7 +41,7 @@
   },
   {
     "id": "exhume",
-    "summary": "Return a card from your Exhaust pile to your hand. Cannot return Spire Legacy cards with this effect."
+    "summary": "Return a card from your Exhaust pile to your hand. Cannot return Spire Legacy Exhaust-recovery cards."
   },
   {
     "id": "charge_gain",
@@ -126,5 +126,25 @@
   {
     "id": "reload_attacks",
     "summary": "Return up to {n} Attacks from your discard pile to your hand."
+  },
+  {
+    "id": "cleanse_charge",
+    "summary": "Remove all debuffs from yourself. Gain {n} Arcane Charges, up to the normal charge cap."
+  },
+  {
+    "id": "charge_burst",
+    "summary": "Deal {n} additional damage per Arcane Charge. Your Attack consumes the charges normally."
+  },
+  {
+    "id": "skill_damage",
+    "summary": "Deal {n} additional damage for each Skill played this turn (up to 3 Skills)."
+  },
+  {
+    "id": "exhume_next_turn",
+    "summary": "At the start of your next turn, you may return a card from your Exhaust pile to your hand. It costs {n} less that turn. Cannot return Spire Legacy Exhaust-recovery cards."
+  },
+  {
+    "id": "exhume_attack",
+    "summary": "You may return an Attack from your Exhaust pile to your hand. If it enters your hand, gain {n} Vigor. Cannot return Spire Legacy Exhaust-recovery cards."
   }
 ]

@@ -90,9 +90,9 @@ public static class BalanceOracle
                 if(key=="mage_eternal_bookmark"){
                     var fuel=new List<LegacyCard>();for(var i=0;i<4;i++)fuel.Add(await Add(player,"mage_guard"));
                     var automatic=await Add(player,"mage_crystal_guard");
-                    var amount=player.Creature.Powers.OfType<LegacyPower>().Single(p=>p.Key=="well_laid").Amount;
+                    var amount=player.Creature.Powers.OfType<LegacyPower>().Single(p=>p.Key=="retained_draw").Amount;
                     await CompleteProtectedTurn(player);
-                    return new{key,upgraded,energyDelta,amount,retained=fuel.Count(c=>hand.Cards.Contains(c)),automaticRetained=hand.Cards.Contains(automatic),roundTrip,pile};
+                    return new{key,upgraded,energyDelta,amount,retained=fuel.Count(c=>hand.Cards.Contains(c)),automaticRetained=hand.Cards.Contains(automatic),handAfterTurn=hand.Cards.Count,roundTrip,pile};
                 }
                 return new{key,upgraded,supported,energyDelta,blockDelta,healing,drawn,damage,setupSpent,roundTrip,pile};
             }
