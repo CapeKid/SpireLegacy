@@ -1,0 +1,20 @@
+{
+  "version": "1.0.43",
+  "item": 3816525393,
+  "app": 2868840,
+  "visibility": "public",
+  "ownerVerified": true,
+  "regularAllowed": true,
+  "betaAllowed": true,
+  "downloadedFiles": 539,
+  "allFilesMatch": true,
+  "dllSha256": "f2dbaacbb587d1353147ff23baee2b7580080c0f5275e7005caeaa9dde4afab0",
+  "matchesTestedBeta": true,
+  "modId": "SpireLegacy",
+  "sourceCommit": "5d42d361b51e1b0025a06d788aed4104ba9b3cf0",
+  "coreAssertions": 166720,
+  "nativeRareEngineCases": 88,
+  "verifiedUtc": "2026-10-22T01:06:26.588448Z",
+  "meltyPublished": false,
+  "privateBetaItem": 3822395190
+}
