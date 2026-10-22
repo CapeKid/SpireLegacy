@@ -1,0 +1,53 @@
+{
+  "version": "1.0.45",
+  "channels": [
+    {
+      "version": "1.0.45",
+      "item": 3816525393,
+      "channel": "public",
+      "visibility": "public",
+      "modId": "SpireLegacy",
+      "ownerVerified": true,
+      "regularAllowed": true,
+      "betaAllowed": true,
+      "downloadedFiles": 539,
+      "allFilesMatch": true,
+      "dllSha256": "15654584497700b007646771bedc13dd0bbb2af8f182be08d8039afc2783ec56",
+      "embeddedCardNames": {
+        "knight_guard": "Guard Defend",
+        "mage_guard": "Ward Defend",
+        "ranger_guard": "Sidestep Defend"
+      },
+      "verifiedUtc": "2026-10-22T21:05:48.5141468Z"
+    },
+    {
+      "version": "1.0.45",
+      "item": 3822395190,
+      "channel": "private",
+      "visibility": "private",
+      "modId": "SpireLegacyBeta",
+      "ownerVerified": true,
+      "regularAllowed": true,
+      "betaAllowed": true,
+      "downloadedFiles": 539,
+      "allFilesMatch": true,
+      "dllSha256": "15654584497700b007646771bedc13dd0bbb2af8f182be08d8039afc2783ec56",
+      "embeddedCardNames": {
+        "knight_guard": "Guard Defend",
+        "mage_guard": "Ward Defend",
+        "ranger_guard": "Sidestep Defend"
+      },
+      "verifiedUtc": "2026-10-22T21:05:55.0835073Z"
+    }
+  ],
+  "sourceCommit": "c904560e043cb49460bdf1ece72c2abbe38e2041",
+  "validation": {
+    "releaseBuild": true,
+    "designPreflight": true,
+    "stableCardIdentities": 360,
+    "stablePowerIdentities": 50,
+    "releaseArchivesValidated": true,
+    "onlyThreeCardNamesChanged": true,
+    "fastenDefendTagSourceVerified": true
+  }
+}
