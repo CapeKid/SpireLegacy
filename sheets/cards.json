@@ -46,7 +46,7 @@
   },
   {
     "id": "knight_guard",
-    "name": "Guard",
+    "name": "Guard Defend",
     "classId": "knight",
     "type": "SKILL",
     "cost": 1,
@@ -136,7 +136,7 @@
   },
   {
     "id": "mage_guard",
-    "name": "Ward",
+    "name": "Ward Defend",
     "classId": "mage",
     "type": "SKILL",
     "cost": 1,
@@ -226,7 +226,7 @@
   },
   {
     "id": "ranger_guard",
-    "name": "Sidestep",
+    "name": "Sidestep Defend",
     "classId": "ranger",
     "type": "SKILL",
     "cost": 1,
