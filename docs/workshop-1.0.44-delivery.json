@@ -1,0 +1,47 @@
+{
+  "version": "1.0.44",
+  "issue": 190,
+  "channels": [
+    {
+      "version": "1.0.44",
+      "item": 3816525393,
+      "channel": "public",
+      "visibility": "public",
+      "modId": "SpireLegacy",
+      "ownerVerified": true,
+      "regularAllowed": true,
+      "betaAllowed": true,
+      "downloadedFiles": 539,
+      "allFilesMatch": true,
+      "dllSha256": "4a37575ef205a8bca6686e4ff57284f5ea8ddeba4d42a66c1e5f4d1a9a6d30f0",
+      "embeddedTraitSummary": "Rainbow motes orbit your heir above a shifting colorful ring, including at rest sites and shops. Visible alongside other palette traits.",
+      "traitMechanicsUnchanged": true,
+      "verifiedUtc": "2026-10-22T10:37:45.4967146Z"
+    },
+    {
+      "version": "1.0.44",
+      "item": 3822395190,
+      "channel": "private",
+      "visibility": "private",
+      "modId": "SpireLegacyBeta",
+      "ownerVerified": true,
+      "regularAllowed": true,
+      "betaAllowed": true,
+      "downloadedFiles": 539,
+      "allFilesMatch": true,
+      "dllSha256": "4a37575ef205a8bca6686e4ff57284f5ea8ddeba4d42a66c1e5f4d1a9a6d30f0",
+      "embeddedTraitSummary": "Rainbow motes orbit your heir above a shifting colorful ring, including at rest sites and shops. Visible alongside other palette traits.",
+      "traitMechanicsUnchanged": true,
+      "verifiedUtc": "2026-10-22T10:37:49.9679803Z"
+    }
+  ],
+  "sourceCommit": "ffd5f6476c7843c4cc738a272044b0afa5b11796",
+  "validation": {
+    "designPreflight": "passed",
+    "releaseBuild": "passed",
+    "publicArchiveValidation": "passed",
+    "sourceTraitAudit": "Only colortrails.summary changed; all other trait fields and rows are identical.",
+    "downloadedEmbeddedSummary": "verified in both channel DLLs"
+  },
+  "meltyPublished": false
+}
