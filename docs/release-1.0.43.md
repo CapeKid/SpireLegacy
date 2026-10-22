@@ -1,6 +1,6 @@
-# 1.0.43 — rare engine differentiation (private beta)
+# 1.0.43 — card role differentiation
 
-The three approved rare-card replacements keep their saved IDs, rarity, illustrations and reward pools. Their uncommon counterparts are unchanged, as are the nine 1.0.42 redesigns.
+This public release includes the Second Quiver redesign from 1.0.40/1.0.41 and the nine distinct card roles from 1.0.42. The three approved rare-card replacements keep their saved IDs, rarity, illustrations and reward pools. Their uncommon counterparts are unchanged, as are the nine 1.0.42 redesigns.
 
 | Card | Energy / upgraded | Full rules text |
 | --- | --- | --- |
@@ -16,8 +16,10 @@ Hunt no longer grants initial Vigor or Vigor every third Attack. It counts resol
 
 All counters and payout flags are owner-scoped and support saved-property serialization and independent clones. The existing bounded Measured Breath, Woven Incantation Block and Tracking Rhythm Vigor effects remain intact.
 
-Published to private beta Workshop item **3822395190**, mod ID **SpireLegacyBeta**. Public Workshop item **3816525393** remains on **1.0.39**. No public upload or main merge is authorized.
+Initially validated on private beta Workshop item **3822395190** (`SpireLegacyBeta`). The owner subsequently approved promotion of this exact tested DLL to public Workshop item **3816525393**, using the normal **SpireLegacy** mod ID. GitHub main is not merged by this promotion.
 
 Native fixtures use owned Windows copies and deterministic selectors. Physical Steam Deck input, new co-op gameplay and full-climb balance remain playtesting tasks.
 
-Validation passed: build, design preflight, generation, authoring regeneration, 166,720 core assertions and 88 final native cases (44 per supported game branch). Steam download matches all 539 staged files; private title/visibility and owner are verified, and the public timestamp and description remain unchanged. See [delivery receipt](rare-engines-1.0.43-beta-delivery.json).
+Validation passed: build, design preflight, generation, authoring regeneration, 166,720 core assertions and 88 final native cases (44 per supported game branch). Steam download matches all 539 staged files; private title/visibility and owner are verified, and the public timestamp and description remain unchanged. The beta delivery receipt is recorded in the repository.
+
+Public promotion verified: all 539 downloaded files match the staged public package, with normal mod ID SpireLegacy and the same DLL SHA-256 as the tested private beta. The listing remains public and accepts regular and public-beta game branches. Publication details are recorded in workshop-1.0.43-delivery.json.
