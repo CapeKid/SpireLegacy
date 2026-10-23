@@ -9,7 +9,7 @@ Synesthesia remains cosmetic and has no crown bonus. This audit does not change 
 | Trait | Status | Observable effect | Runtime consumer |
 |---|---|---|---|
 | Colorblind (`nocolor`) | Selectable | Your heir is rendered in gray. | Native/TraitAppearance.cs: Refresh |
-| C.I.P (`nohealthbar`) | Selectable | Reduced maximum HP; health remains visible for accessible card play. | Inheritance stats / BloodlineRelic / HeirCharacter |
+| C.I.P (`nohealthbar`) | Selectable | Your health is hidden. | Native/HiddenHeirHealth.cs; normal maximum HP |
 | Clumsy (`easybreakables`) | Selectable | After your first Attack each turn, lose 2 Block (minimum 0). | Native/BloodlineRelic.cs: AfterCardPlayed |
 | Dwarfism (`small`) | Selectable | Less health, but more Dexterity. | Inheritance stats / BloodlineRelic / HeirCharacter; HeirVisuals.Attach / AttachRoomPortrait |
 | Endomorph (`playerknockedlow`) | Selectable | Gain 1 Dexterity for steadier defense. | Inheritance stats / BloodlineRelic / HeirCharacter |
@@ -17,7 +17,7 @@ Synesthesia remains cosmetic and has no crown bonus. This audit does not change 
 | Nature (`disposition`) | Selectable | Your heir wears a green family accent. | Native/TraitAppearance.cs: Attach / Refresh |
 | Gigantism (`large`) | Selectable | More health, but less Dexterity. | Inheritance stats / BloodlineRelic / HeirCharacter; HeirVisuals.Attach / AttachRoomPortrait |
 | IBS (`fart`) | Selectable | Start each combat with 1 Weak. | Native/BloodlineRelic.cs: BeforeCombatStart |
-| Muscle Weakness (`enemyknockedlow`) | Selectable | Lose 1 Strength; gain extra legacy crowns. | Inheritance stats / BloodlineRelic / HeirCharacter |
+| Muscle Weakness (`enemyknockedlow`) | Selectable | Lose 1 Strength. | Inheritance stats / BloodlineRelic / HeirCharacter |
 | Breaker (`breakpropsformana`) | Selectable | The first Skill played each turn draws 1 card. | Native/BloodlineRelic.cs: AfterCardPlayed |
 | Fragile (`onehitdeath`) | Selectable | Maximum HP is 1, overriding all other HP bonuses. | Core/Inheritance.cs: MaxHp |
 | Pacifist (`cantattack`) | Selectable | Your Basic Attack cards become Skills that apply 2 Poison (3 upgraded), with no damage or Block. Other Attacks cannot be played. | Native/BloodlineRelic.cs: ShouldPlay / Core.CardDesign.Mercy |
