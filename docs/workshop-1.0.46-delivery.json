@@ -1,0 +1,51 @@
+{
+  "version": "1.0.46",
+  "channels": [
+    {
+      "version": "1.0.46",
+      "item": 3816525393,
+      "channel": "public",
+      "visibility": "public",
+      "modId": "SpireLegacy",
+      "ownerVerified": true,
+      "regularAllowed": true,
+      "betaAllowed": true,
+      "downloadedFiles": 539,
+      "allFilesMatch": true,
+      "dllSha256": "d8f117dad6b047fb40602aed85d76e2d3828714c02b3f330ec6369ab5db4805e",
+      "embeddedCipVerified": true,
+      "embeddedMuscleWeaknessVerified": true,
+      "verifiedUtc": "2026-10-23T20:03:29.4611092Z"
+    },
+    {
+      "version": "1.0.46",
+      "item": 3822395190,
+      "channel": "private",
+      "visibility": "private",
+      "modId": "SpireLegacyBeta",
+      "ownerVerified": true,
+      "regularAllowed": true,
+      "betaAllowed": true,
+      "downloadedFiles": 539,
+      "allFilesMatch": true,
+      "dllSha256": "d8f117dad6b047fb40602aed85d76e2d3828714c02b3f330ec6369ab5db4805e",
+      "embeddedCipVerified": true,
+      "embeddedMuscleWeaknessVerified": true,
+      "verifiedUtc": "2026-10-23T20:03:35.1510499Z"
+    }
+  ],
+  "sourceCommit": "88823a400a66bb908d8a59637bb1583aa1765933",
+  "validation": {
+    "coreAssertions": 166720,
+    "releaseBuild": true,
+    "designPreflight": true,
+    "releaseArchivesValidated": true,
+    "nativeEvidence": "docs/cip-1.0.46-checks.json",
+    "nativeGameVersions": [
+      "0.107.1",
+      "0.111.0"
+    ],
+    "nativeHealthWidgetInspections": 108,
+    "vanillaControls": 2
+  }
+}
