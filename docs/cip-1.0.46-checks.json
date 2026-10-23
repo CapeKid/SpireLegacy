@@ -1,0 +1,60 @@
+{
+  "release": "1.0.46",
+  "coreAssertions": 166720,
+  "nativeBranches": [
+    {
+      "branch": "regular",
+      "game": "v0.107.1",
+      "mod": "1.0.46",
+      "dllSha256": "d8f117dad6b047fb40602aed85d76e2d3828714c02b3f330ec6369ab5db4805e",
+      "heirScenarios": 6,
+      "healthWidgetInspections": 54,
+      "classes": [
+        "knight",
+        "mage",
+        "ranger"
+      ],
+      "traitAndNormalControls": true,
+      "vanillaControl": true,
+      "damageHealing": true,
+      "paidDefendPlay": true,
+      "blockAndEnemyHealthVisible": true,
+      "saveResume": true,
+      "roomTransitions": [
+        "RestSite",
+        "Shop",
+        "Monster"
+      ],
+      "rawReceiptSha256": "90f45fb769ba17267dae5730d13d6ca2f40a25eceef5d0c794820386afdd04dc",
+      "vanillaReceiptSha256": "b99935f6df69a7ad79d3a4e73e6b414eed82fe949b787880d815b072ed6ca245"
+    },
+    {
+      "branch": "beta",
+      "game": "v0.111.0",
+      "mod": "1.0.46",
+      "dllSha256": "d8f117dad6b047fb40602aed85d76e2d3828714c02b3f330ec6369ab5db4805e",
+      "heirScenarios": 6,
+      "healthWidgetInspections": 54,
+      "classes": [
+        "knight",
+        "mage",
+        "ranger"
+      ],
+      "traitAndNormalControls": true,
+      "vanillaControl": true,
+      "damageHealing": true,
+      "paidDefendPlay": true,
+      "blockAndEnemyHealthVisible": true,
+      "saveResume": true,
+      "roomTransitions": [
+        "RestSite",
+        "Shop",
+        "Monster"
+      ],
+      "rawReceiptSha256": "2f3b4232370faf38e0fb7e527c1d3fbf6373373f6d8f999e775c1f4f4536da06",
+      "vanillaReceiptSha256": "a3b15eeb43d6c25fc54d7ab8d51755e664adf36caed5ae923459bdd1d09cb810"
+    }
+  ],
+  "nativeScope": "Solo owned-game labs; owner-scoped patches cover shared native health widgets, without claiming a live multiplayer session test.",
+  "testSetupNote": "The original vanilla controls waited at Neow rather than entering combat. Setup corrected and both vanilla controls rerun independently; all six Heir scenarios had already passed on each branch."
+}

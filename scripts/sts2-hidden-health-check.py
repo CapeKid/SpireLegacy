@@ -30,6 +30,8 @@ def ready():
 
 
 classes = json.loads((root / 'sheets/classes.json').read_text(encoding='utf-8'))
+if '--vanilla-only' in sys.argv[2:]:
+    classes = []
 for cls in classes:
     for hidden in [True, False]:
         send('start', **{'class': cls['id'], 'traits': ['nohealthbar'] if hidden else [],
@@ -67,7 +69,8 @@ for cls in classes:
         print(cls['id'], 'C.I.P.' if hidden else 'normal', 'HP, Block, paid card, damage/healing, save/resume and rooms passed', flush=True)
 
 send('start', **{'class': 'ironclad', 'traits': [], 'quick': True, 'manorTier': 0, 'ascension': 0})
+send('enter', room='Monster')
 ready()
 assert not send('hidden-health')['hidden']
 send('abandon')
-print('All three classes and vanilla control passed.')
+print('Vanilla control passed.' if '--vanilla-only' in sys.argv[2:] else 'All three classes and vanilla control passed.')
