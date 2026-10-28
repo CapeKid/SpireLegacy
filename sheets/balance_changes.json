@@ -24986,19 +24986,19 @@
       "nextEnergy": 0,
       "nextDraw": 0,
       "nextBlock": 0,
-      "power": "discard_next_block",
-      "magic": 3,
+      "power": "discard_return",
+      "magic": 1,
       "special": "none",
       "specialAmount": 0,
       "exhaust": false,
       "upgradeDamage": 0,
       "upgradeBlock": 0,
-      "upgradeMagic": 1,
+      "upgradeMagic": 0,
       "upgradeSpecial": 0,
-      "upgradeCost": false,
+      "upgradeCost": true,
       "upgradeDiscard": 0
     },
-    "reason": "Discard banks stronger Block for next turn rather than duplicating Light Pack immediate Block."
+    "reason": "Recurring recovery of an Attack discarded last turn, with a temporary discount; distinct from Light Pack immediate Block."
   },
   {
     "id": "ranger_falcon_courier",

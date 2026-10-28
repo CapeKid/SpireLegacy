@@ -182,5 +182,9 @@
   {
     "id": "hunt_momentum",
     "summary": "At the start of your turn, gain !M! Vigor for each Attack you played last turn, counting up to 3 Attacks."
+  },
+  {
+    "id": "discard_return",
+    "summary": "At the start of your turn, choose an Attack you discarded during your previous turn. Return it to your hand. It costs 1 less this turn."
   }
 ]

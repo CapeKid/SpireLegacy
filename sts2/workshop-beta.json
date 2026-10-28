@@ -2,7 +2,7 @@
   "title": "Spire Legacy \u2014 Beta",
   "description": "Private beta builds of Spire Legacy for the creator's Steam Deck testing. Requires BaseLib. You may subscribe to both this item and the public Spire Legacy item. In StS2's mod menu, enable ONLY Spire Legacy \u2014 Beta OR Spire Legacy, then restart. They contain the same character and cards and must not run together. Finish a climb before switching builds. Family manor progress is shared. This item does not update the public Workshop listing.",
   "visibility": "private",
-  "changeNote": "1.0.46: C.I.P. now hides your health instead of reducing maximum HP. Block and enemy health remain visible. Shortened the Muscle Weakness description; crown bonuses are unchanged.",
+  "changeNote": "1.0.47: Redesigned Ghost Luggage: at turn start, recover an Attack discarded during your previous turn and reduce its cost by 1 for that turn. Costs 2 Energy, or 1 upgraded. Light Pack is unchanged.",
   "tags": [
     "Characters"
   ],

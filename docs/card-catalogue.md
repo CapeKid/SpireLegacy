@@ -273,7 +273,7 @@ Each class has 82 rewards on regular (20 common, 36 uncommon, 26 rare), or 85 on
 | Tracking Rhythm | Uncommon | Power | 1 | Shared family card; Every third Attack you play each turn grants 2 Vigor for your NEXT Attack. |
 | Owl Watch | Uncommon | Power | 1 | Class unique; At the start of your turn, Scry 2. |
 | Empty Quiver | Rare | Skill | 1 | Class unique; 4 Block; Discard your hand, then draw that many cards. |
-| Ghost Luggage | Rare | Power | 2 | Class unique; Whenever you discard a card during your turn, gain 3 Block NEXT turn. |
+| Ghost Luggage | Rare | Power | 2 | Class unique; At the start of your turn, choose an Attack you discarded during your previous turn. Return it to your hand. It costs 1 less this turn. |
 | Falcon Courier | Rare | Attack | 2 | Class unique; 10 damage; When discarded during your turn, gain 3 Energy. Triggers at most once per copy each turn.; Exhaust |
 | Venom Eclipse | Rare | Skill | 2 | Class unique; 7 Poison to all enemies; Exhaust |
 | Long Vigil | Rare | Attack | 2 | Class unique; 15 damage; Whenever this is Retained, gain 6 damage this combat.; Retain |

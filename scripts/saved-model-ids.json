@@ -411,7 +411,8 @@
     "retained_draw",
     "skill_echo",
     "thesis_ready",
-    "hunt_momentum"
+    "hunt_momentum",
+    "discard_return"
   ],
   "classes": [
     "knight",
