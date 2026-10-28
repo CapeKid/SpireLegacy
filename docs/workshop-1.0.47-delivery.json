@@ -1,0 +1,51 @@
+{
+  "version": "1.0.47",
+  "channels": [
+    {
+      "version": "1.0.47",
+      "item": 3816525393,
+      "channel": "public",
+      "visibility": "public",
+      "modId": "SpireLegacy",
+      "ownerVerified": true,
+      "regularAllowed": true,
+      "betaAllowed": true,
+      "downloadedFiles": 539,
+      "allFilesMatch": true,
+      "dllSha256": "9ab1d2e11dcfe0170a7186170b198b78a815f919a81fe2e809ae4efb1dd266d0",
+      "embeddedGhostLuggageVerified": true,
+      "rules": "At the start of your turn, choose an Attack you discarded during your previous turn. Return it to your hand. It costs 1 less this turn.",
+      "verifiedUtc": "2026-10-28T13:58:51.1153234Z"
+    },
+    {
+      "version": "1.0.47",
+      "item": 3822395190,
+      "channel": "private",
+      "visibility": "private",
+      "modId": "SpireLegacyBeta",
+      "ownerVerified": true,
+      "regularAllowed": true,
+      "betaAllowed": true,
+      "downloadedFiles": 539,
+      "allFilesMatch": true,
+      "dllSha256": "9ab1d2e11dcfe0170a7186170b198b78a815f919a81fe2e809ae4efb1dd266d0",
+      "embeddedGhostLuggageVerified": true,
+      "rules": "At the start of your turn, choose an Attack you discarded during your previous turn. Return it to your hand. It costs 1 less this turn.",
+      "verifiedUtc": "2026-10-28T13:58:54.1373221Z"
+    }
+  ],
+  "sourceCommit": "86f5e4ea6d536a402dcca2052dbf508d32309ff3",
+  "validation": {
+    "coreAssertions": 166720,
+    "releaseBuild": true,
+    "designPreflight": true,
+    "balanceRegeneration": true,
+    "releaseArchivesValidated": true,
+    "nativeScenarios": 44,
+    "nativeGameVersions": [
+      "0.107.1",
+      "0.111.0"
+    ],
+    "nativeEvidence": "docs/ghost-luggage-1.0.47-checks.json"
+  }
+}
