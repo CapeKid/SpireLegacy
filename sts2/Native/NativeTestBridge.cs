@@ -279,6 +279,7 @@ public static class NativeTestBridge
                     var purchased=Runtime.Profile.CommitPurchases([purchaseId],Runtime.FamilyPath);
                     result=new{purchased,upgrade=purchaseId,crownsBefore=purchaseBefore,crownsAfter=Runtime.Profile.crowns,level=Runtime.Profile.Level(purchaseId)};break;
                 case "state": result = StateSummary(); break;
+                case "ghost-luggage":result=await PowerAuditOracle.Luggage(RunState(),request.GetProperty("upgrade").GetBoolean(),request.GetProperty("mode").GetString()!,request.GetProperty("mode").GetString()=="cancel"?UseTestSelector(0):BalanceOracle.MaxChoices());break;
                 case "hidden-health": result = await HiddenHealthOracle.Inspect(RunState(),request.TryGetProperty("changeHp",out var healthChange)&&healthChange.GetBoolean()); break;
                 case "item-clones":result=ItemAuditOracle.Clones();break;
                 case "item-relic-edges":result=await ItemAuditOracle.RelicEdges(RunState());break;

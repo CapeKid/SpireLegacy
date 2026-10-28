@@ -1,0 +1,465 @@
+{
+  "version": "1.0.47",
+  "coreAssertions": 166720,
+  "balanceRegeneration": true,
+  "branches": [
+    {
+      "game": "v0.107.1",
+      "dllSha256": "9ab1d2e11dcfe0170a7186170b198b78a815f919a81fe2e809ae4efb1dd266d0",
+      "mod": "1.0.47",
+      "scenarios": [
+        {
+          "up": false,
+          "mode": "full",
+          "firstReturned": true,
+          "cost": 2,
+          "discountExpires": true,
+          "repeatGuard": true,
+          "recurs": true,
+          "propertyCodec": true
+        },
+        {
+          "up": false,
+          "mode": "cancel",
+          "firstReturned": false,
+          "cost": 2,
+          "discountExpires": true,
+          "repeatGuard": true,
+          "recurs": true,
+          "propertyCodec": true
+        },
+        {
+          "up": false,
+          "mode": "hand-cap",
+          "firstReturned": false,
+          "cost": 2,
+          "discountExpires": true,
+          "repeatGuard": true,
+          "recurs": true,
+          "propertyCodec": true
+        },
+        {
+          "up": false,
+          "mode": "zero-cost",
+          "firstReturned": true,
+          "cost": 2,
+          "discountExpires": true,
+          "repeatGuard": true,
+          "recurs": true,
+          "propertyCodec": true
+        },
+        {
+          "up": false,
+          "mode": "x-cost",
+          "firstReturned": true,
+          "cost": 2,
+          "discountExpires": true,
+          "repeatGuard": true,
+          "recurs": true,
+          "propertyCodec": true
+        },
+        {
+          "up": false,
+          "mode": "played",
+          "firstReturned": false,
+          "cost": 2,
+          "discountExpires": true,
+          "repeatGuard": true,
+          "recurs": true,
+          "propertyCodec": true
+        },
+        {
+          "up": false,
+          "mode": "flush-only",
+          "firstReturned": false,
+          "cost": 2,
+          "discountExpires": true,
+          "repeatGuard": true,
+          "recurs": true,
+          "propertyCodec": true
+        },
+        {
+          "up": false,
+          "mode": "exhausted",
+          "firstReturned": false,
+          "cost": 2,
+          "discountExpires": true,
+          "repeatGuard": true,
+          "recurs": true,
+          "propertyCodec": true
+        },
+        {
+          "up": false,
+          "mode": "wrong-copy",
+          "firstReturned": false,
+          "cost": 2,
+          "discountExpires": true,
+          "repeatGuard": true,
+          "recurs": true,
+          "propertyCodec": true
+        },
+        {
+          "up": false,
+          "mode": "stale",
+          "firstReturned": false,
+          "cost": 2,
+          "discountExpires": true,
+          "repeatGuard": true,
+          "recurs": true,
+          "propertyCodec": true
+        },
+        {
+          "up": false,
+          "mode": "stacked",
+          "firstReturned": true,
+          "cost": 2,
+          "discountExpires": true,
+          "repeatGuard": true,
+          "recurs": true,
+          "propertyCodec": true
+        },
+        {
+          "up": true,
+          "mode": "full",
+          "firstReturned": true,
+          "cost": 1,
+          "discountExpires": true,
+          "repeatGuard": true,
+          "recurs": true,
+          "propertyCodec": true
+        },
+        {
+          "up": true,
+          "mode": "cancel",
+          "firstReturned": false,
+          "cost": 1,
+          "discountExpires": true,
+          "repeatGuard": true,
+          "recurs": true,
+          "propertyCodec": true
+        },
+        {
+          "up": true,
+          "mode": "hand-cap",
+          "firstReturned": false,
+          "cost": 1,
+          "discountExpires": true,
+          "repeatGuard": true,
+          "recurs": true,
+          "propertyCodec": true
+        },
+        {
+          "up": true,
+          "mode": "zero-cost",
+          "firstReturned": true,
+          "cost": 1,
+          "discountExpires": true,
+          "repeatGuard": true,
+          "recurs": true,
+          "propertyCodec": true
+        },
+        {
+          "up": true,
+          "mode": "x-cost",
+          "firstReturned": true,
+          "cost": 1,
+          "discountExpires": true,
+          "repeatGuard": true,
+          "recurs": true,
+          "propertyCodec": true
+        },
+        {
+          "up": true,
+          "mode": "played",
+          "firstReturned": false,
+          "cost": 1,
+          "discountExpires": true,
+          "repeatGuard": true,
+          "recurs": true,
+          "propertyCodec": true
+        },
+        {
+          "up": true,
+          "mode": "flush-only",
+          "firstReturned": false,
+          "cost": 1,
+          "discountExpires": true,
+          "repeatGuard": true,
+          "recurs": true,
+          "propertyCodec": true
+        },
+        {
+          "up": true,
+          "mode": "exhausted",
+          "firstReturned": false,
+          "cost": 1,
+          "discountExpires": true,
+          "repeatGuard": true,
+          "recurs": true,
+          "propertyCodec": true
+        },
+        {
+          "up": true,
+          "mode": "wrong-copy",
+          "firstReturned": false,
+          "cost": 1,
+          "discountExpires": true,
+          "repeatGuard": true,
+          "recurs": true,
+          "propertyCodec": true
+        },
+        {
+          "up": true,
+          "mode": "stale",
+          "firstReturned": false,
+          "cost": 1,
+          "discountExpires": true,
+          "repeatGuard": true,
+          "recurs": true,
+          "propertyCodec": true
+        },
+        {
+          "up": true,
+          "mode": "stacked",
+          "firstReturned": true,
+          "cost": 1,
+          "discountExpires": true,
+          "repeatGuard": true,
+          "recurs": true,
+          "propertyCodec": true
+        }
+      ],
+      "rawReceiptSha256": "ac7fac4d92ebff099c2f127f2bef850ddd9d74b81bca85a687bf4385c6b0e886"
+    },
+    {
+      "game": "v0.111.0",
+      "dllSha256": "9ab1d2e11dcfe0170a7186170b198b78a815f919a81fe2e809ae4efb1dd266d0",
+      "mod": "1.0.47",
+      "scenarios": [
+        {
+          "up": false,
+          "mode": "full",
+          "firstReturned": true,
+          "cost": 2,
+          "discountExpires": true,
+          "repeatGuard": true,
+          "recurs": true,
+          "propertyCodec": true
+        },
+        {
+          "up": false,
+          "mode": "cancel",
+          "firstReturned": false,
+          "cost": 2,
+          "discountExpires": true,
+          "repeatGuard": true,
+          "recurs": true,
+          "propertyCodec": true
+        },
+        {
+          "up": false,
+          "mode": "hand-cap",
+          "firstReturned": false,
+          "cost": 2,
+          "discountExpires": true,
+          "repeatGuard": true,
+          "recurs": true,
+          "propertyCodec": true
+        },
+        {
+          "up": false,
+          "mode": "zero-cost",
+          "firstReturned": true,
+          "cost": 2,
+          "discountExpires": true,
+          "repeatGuard": true,
+          "recurs": true,
+          "propertyCodec": true
+        },
+        {
+          "up": false,
+          "mode": "x-cost",
+          "firstReturned": true,
+          "cost": 2,
+          "discountExpires": true,
+          "repeatGuard": true,
+          "recurs": true,
+          "propertyCodec": true
+        },
+        {
+          "up": false,
+          "mode": "played",
+          "firstReturned": false,
+          "cost": 2,
+          "discountExpires": true,
+          "repeatGuard": true,
+          "recurs": true,
+          "propertyCodec": true
+        },
+        {
+          "up": false,
+          "mode": "flush-only",
+          "firstReturned": false,
+          "cost": 2,
+          "discountExpires": true,
+          "repeatGuard": true,
+          "recurs": true,
+          "propertyCodec": true
+        },
+        {
+          "up": false,
+          "mode": "exhausted",
+          "firstReturned": false,
+          "cost": 2,
+          "discountExpires": true,
+          "repeatGuard": true,
+          "recurs": true,
+          "propertyCodec": true
+        },
+        {
+          "up": false,
+          "mode": "wrong-copy",
+          "firstReturned": false,
+          "cost": 2,
+          "discountExpires": true,
+          "repeatGuard": true,
+          "recurs": true,
+          "propertyCodec": true
+        },
+        {
+          "up": false,
+          "mode": "stale",
+          "firstReturned": false,
+          "cost": 2,
+          "discountExpires": true,
+          "repeatGuard": true,
+          "recurs": true,
+          "propertyCodec": true
+        },
+        {
+          "up": false,
+          "mode": "stacked",
+          "firstReturned": true,
+          "cost": 2,
+          "discountExpires": true,
+          "repeatGuard": true,
+          "recurs": true,
+          "propertyCodec": true
+        },
+        {
+          "up": true,
+          "mode": "full",
+          "firstReturned": true,
+          "cost": 1,
+          "discountExpires": true,
+          "repeatGuard": true,
+          "recurs": true,
+          "propertyCodec": true
+        },
+        {
+          "up": true,
+          "mode": "cancel",
+          "firstReturned": false,
+          "cost": 1,
+          "discountExpires": true,
+          "repeatGuard": true,
+          "recurs": true,
+          "propertyCodec": true
+        },
+        {
+          "up": true,
+          "mode": "hand-cap",
+          "firstReturned": false,
+          "cost": 1,
+          "discountExpires": true,
+          "repeatGuard": true,
+          "recurs": true,
+          "propertyCodec": true
+        },
+        {
+          "up": true,
+          "mode": "zero-cost",
+          "firstReturned": true,
+          "cost": 1,
+          "discountExpires": true,
+          "repeatGuard": true,
+          "recurs": true,
+          "propertyCodec": true
+        },
+        {
+          "up": true,
+          "mode": "x-cost",
+          "firstReturned": true,
+          "cost": 1,
+          "discountExpires": true,
+          "repeatGuard": true,
+          "recurs": true,
+          "propertyCodec": true
+        },
+        {
+          "up": true,
+          "mode": "played",
+          "firstReturned": false,
+          "cost": 1,
+          "discountExpires": true,
+          "repeatGuard": true,
+          "recurs": true,
+          "propertyCodec": true
+        },
+        {
+          "up": true,
+          "mode": "flush-only",
+          "firstReturned": false,
+          "cost": 1,
+          "discountExpires": true,
+          "repeatGuard": true,
+          "recurs": true,
+          "propertyCodec": true
+        },
+        {
+          "up": true,
+          "mode": "exhausted",
+          "firstReturned": false,
+          "cost": 1,
+          "discountExpires": true,
+          "repeatGuard": true,
+          "recurs": true,
+          "propertyCodec": true
+        },
+        {
+          "up": true,
+          "mode": "wrong-copy",
+          "firstReturned": false,
+          "cost": 1,
+          "discountExpires": true,
+          "repeatGuard": true,
+          "recurs": true,
+          "propertyCodec": true
+        },
+        {
+          "up": true,
+          "mode": "stale",
+          "firstReturned": false,
+          "cost": 1,
+          "discountExpires": true,
+          "repeatGuard": true,
+          "recurs": true,
+          "propertyCodec": true
+        },
+        {
+          "up": true,
+          "mode": "stacked",
+          "firstReturned": true,
+          "cost": 1,
+          "discountExpires": true,
+          "repeatGuard": true,
+          "recurs": true,
+          "propertyCodec": true
+        }
+      ],
+      "rawReceiptSha256": "acfdebf53d915b67fee0d275a2908b466b50d28f33dd91d8c161aa807eb3e577"
+    }
+  ],
+  "scope": "Isolated solo native turn-boundary tests with controlled selectors; no live multiplayer session claimed.",
+  "testSetupNote": "Initial cancellation fixture selected one card by default. Corrected the fixture to select zero; all 44 scenarios passed on the rebuilt DLL."
+}

@@ -40,7 +40,7 @@ CARD_OVERRIDES = {
     'mage_rune_detonation': dict(damage=6, upgradeDamage=3, special='charged_energy', specialAmount=1, upgradeSpecial=0),
     'mage_moonstone_lance': dict(cost=1, damage=5, upgradeDamage=2, specialAmount=2, upgradeSpecial=1, retain=False, special='skill_damage'),
     'knight_forge_memory': dict(cost=1, block=0, power='exhaust_vigor', magic=3, upgradeMagic=1, upgradeCost=False),
-    'ranger_ghost_luggage': dict(cost=2, block=0, power='discard_next_block', magic=3, upgradeMagic=1),
+    'ranger_ghost_luggage': dict(cost=2, block=0, power='discard_return', magic=1, upgradeMagic=0, upgradeCost=True),
     'mage_cleanse_sigil': dict(block=0, upgradeBlock=0, special='cleanse_charge', specialAmount=2, upgradeSpecial=0, upgradeCost=True),
     'nova': dict(damage=12, upgradeDamage=4, aoe=True, special='charge_burst', specialAmount=6, upgradeSpecial=2),
     'knight_ancestral_salvage': dict(special='exhume_attack', specialAmount=4, upgradeSpecial=2),
