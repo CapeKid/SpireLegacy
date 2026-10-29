@@ -1,0 +1,53 @@
+{
+  "version": "1.0.48",
+  "channels": [
+    {
+      "version": "1.0.48",
+      "item": 3816525393,
+      "channel": "public",
+      "visibility": "public",
+      "modId": "SpireLegacy",
+      "ownerVerified": true,
+      "regularAllowed": true,
+      "betaAllowed": true,
+      "downloadedFiles": 539,
+      "allFilesMatch": true,
+      "dllSha256": "5a6b27a1de5135a8960c97e06f28cafea11ccf0b99043c920d1d0c52140e4469",
+      "embeddedPhoenixRulesVerified": true,
+      "castleHeartStatsVerified": true,
+      "rules": "Whenever you Exhaust 3 cards, deal !M! damage to ALL enemies.",
+      "verifiedUtc": "2026-10-29T15:09:01.8068119Z"
+    },
+    {
+      "version": "1.0.48",
+      "item": 3822395190,
+      "channel": "private",
+      "visibility": "private",
+      "modId": "SpireLegacyBeta",
+      "ownerVerified": true,
+      "regularAllowed": true,
+      "betaAllowed": true,
+      "downloadedFiles": 539,
+      "allFilesMatch": true,
+      "dllSha256": "5a6b27a1de5135a8960c97e06f28cafea11ccf0b99043c920d1d0c52140e4469",
+      "embeddedPhoenixRulesVerified": true,
+      "castleHeartStatsVerified": true,
+      "rules": "Whenever you Exhaust 3 cards, deal !M! damage to ALL enemies.",
+      "verifiedUtc": "2026-10-29T15:09:05.4410965Z"
+    }
+  ],
+  "sourceCommit": "b1ce11d820c6f52dfec7782c9df1732000fafcdb",
+  "validation": {
+    "coreAssertions": 166720,
+    "releaseBuild": true,
+    "designPreflight": true,
+    "releaseArchivesValidated": true,
+    "nativeScenarios": 20,
+    "upgradePreviewChecks": 720,
+    "nativeGameVersions": [
+      "0.107.1",
+      "0.111.0"
+    ],
+    "nativeEvidence": "docs/phoenix-castle-1.0.48-checks.json"
+  }
+}

@@ -28,24 +28,26 @@ public abstract class LegacyPower:CustomPowerModel
  public string Key=>GetType().Name[2..];
  public override PowerType Type=>PowerType.Buff;
  public override PowerStackType StackType=>PowerStackType.Counter;
- public override string CustomPackedIconPath=>ModelDb.Power<StrengthPower>().PackedIconPath;
- public override string CustomBigIconPath=>ModelDb.Power<StrengthPower>().ResolvedBigIconPath;
+ public override string CustomPackedIconPath=>Key=="metallicize"?ModelDb.Power<PlatingPower>().PackedIconPath:ModelDb.Power<StrengthPower>().PackedIconPath;
+ public override string CustomBigIconPath=>Key=="metallicize"?ModelDb.Power<PlatingPower>().ResolvedBigIconPath:ModelDb.Power<StrengthPower>().ResolvedBigIconPath;
  public override List<(string,string)> Localization=>[("title",Key=="class"?"{ClassTitle}":Key=="well_laid"?"Measured Breath":Key=="discard_return"?"Ghost Luggage":System.Globalization.CultureInfo.InvariantCulture.TextInfo.ToTitleCase(Key.Replace('_',' '))),("description",DescriptionText),("selectionScreenPrompt","Choose up to {Amount} card(s) to Retain this turn.")];
  public override LocString Title {get {var title=base.Title;if(Key=="class")title.Add("ClassTitle",Design.Get("class_mechanics",PlayerBloodlines.Heir(Owner.Player).classId).Text("name"));return title;}}
- private string DescriptionText=>Key switch{"class"=>"{ClassRules} Current: {Counter}.","plated"=>"At turn end, gain {Amount} Block. Lose a stack when attacked for HP damage.","reservoir"=>"Each Arcane Charge adds {Amount} extra damage to every hit of your next Attack.","quiver"=>"Hunter Rhythm draws {Amount} additional cards.",_=>Design.Get("power_effects",Key).Text("summary").Replace("!M!","{Amount}")};
+ private string DescriptionText=>Key switch{"class"=>"{ClassRules} Current: {Counter}.","plated"=>"At turn end, gain {Amount} Block. Lose a stack when attacked for HP damage.","reservoir"=>"Each Arcane Charge adds {Amount} extra damage to every hit of your next Attack.","quiver"=>"Hunter Rhythm draws {Amount} additional cards.","exhaust_burst"=>"Whenever you Exhaust 3 cards, deal {Amount} damage to ALL enemies. Progress: {Counter}/3.",_=>Design.Get("power_effects",Key).Text("summary").Replace("!M!","{Amount}")};
  private int plays;private bool discardPaid;private bool cyclingDamage;
  private int charges,attacks;
  [SavedProperty] public int Charges {get=>charges;set{charges=value;if(IsMutable)InvokeDisplayAmountChanged();}}
  [SavedProperty] public int AttacksThisTurn {get=>attacks;set{attacks=value;if(IsMutable)InvokeDisplayAmountChanged();}}
  [SavedProperty] public bool ArcaneDrawUsed {get;set;}
  [SavedProperty] public int SkillsThisTurn {get;set;}
+ // Retain the saved field name for compatibility; Phoenix now carries 0–2
+ // Exhausts across turns. Legacy capped values are normalized on the next event.
  [SavedProperty] public int ExhaustsThisTurn {get;set;}
  [SavedProperty] public bool RetainedLastTurn {get;set;}
  [SavedProperty] public bool EchoTriggered {get;set;}
  [SavedProperty] public int MomentumAttacks {get;set;}
  [SavedProperty] public int GhostRecoveryTurn {get;set;} = -1;
  public override int DisplayAmount=>Key=="class"?(PlayerBloodlines.Heir(Owner.Player).classId=="ranger"?AttacksThisTurn%3:Charges):Amount;
- public override LocString Description {get{var text=base.Description;text.Add("Amount",Amount);text.Add("ClassRules",Design.Get("classes",PlayerBloodlines.Heir(Owner.Player).classId).Text("summary"));text.Add("Counter",DisplayAmount);return text;}}
+ public override LocString Description {get{var text=base.Description;text.Add("Amount",Amount);text.Add("ClassRules",Design.Get("classes",PlayerBloodlines.Heir(Owner.Player).classId).Text("summary"));text.Add("Counter",Key=="exhaust_burst"?Math.Max(0,ExhaustsThisTurn)%3:DisplayAmount);return text;}}
  public override Task AfterApplied(Creature? applier,CardModel? cardSource)
  {
   // Hunt asks about last turn's Attacks, including those played before this
@@ -55,7 +57,7 @@ public abstract class LegacyPower:CustomPowerModel
  }
  public override async Task AfterPlayerTurnStart(PlayerChoiceContext context,Player player)
  {
-  if(player!=Owner.Player!)return;plays=0;discardPaid=false;AttacksThisTurn=0;ArcaneDrawUsed=false;SkillsThisTurn=0;ExhaustsThisTurn=0;EchoTriggered=false;
+  if(player!=Owner.Player!)return;plays=0;discardPaid=false;AttacksThisTurn=0;ArcaneDrawUsed=false;SkillsThisTurn=0;EchoTriggered=false;
   switch(Key){
    case "discard_return":await GhostLuggage.Recover(this,context,player);break;
    case "retained_draw":var retained=RetainedLastTurn;RetainedLastTurn=false;if(retained)await CardPileCmd.Draw(context,Amount,player);break;
@@ -124,7 +126,10 @@ public abstract class LegacyPower:CustomPowerModel
   if(card.Owner.Creature!=Owner)return;
   if(Key=="exhaust_damage")await DamageAll(context,Amount);
   if(Key=="exhaust_vigor")await CardEffects.Apply(context,"vigor",Owner,Amount,Owner,null);
-  if(Key=="exhaust_burst"&&Owner.CombatState?.CurrentSide==Owner.Side&&ExhaustsThisTurn<3){ExhaustsThisTurn++;if(ExhaustsThisTurn==3)await DamageAll(context,Amount);}
+  if(Key=="exhaust_burst"){
+   ExhaustsThisTurn=Math.Max(0,ExhaustsThisTurn)%3+1;
+   if(ExhaustsThisTurn==3){ExhaustsThisTurn=0;await DamageAll(context,Amount);}
+  }
  }
  public override async Task AfterCardDrawn(PlayerChoiceContext context,CardModel card,bool fromHandDraw)
  {

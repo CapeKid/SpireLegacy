@@ -157,7 +157,7 @@
   },
   {
     "id": "exhaust_burst",
-    "summary": "The third card you Exhaust during your turn deals !M! damage to ALL enemies. Triggers once each turn."
+    "summary": "Whenever you Exhaust 3 cards, deal !M! damage to ALL enemies."
   },
   {
     "id": "status_furnace",
