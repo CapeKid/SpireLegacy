@@ -106,10 +106,12 @@ public abstract class LegacyCard : CustomCardModel
     }
     protected override void OnUpgrade()
     {
-        if (!DesignCard.Mercy) DynamicVars.Damage.UpgradeValueBy(Row.Number("upgradeDamage"));
-        if (!DesignCard.Mercy) DynamicVars.Block.UpgradeValueBy(Row.Number("upgradeBlock"));
-        if (Row.Number("nextBlock") > 0) NextBlock.UpgradeValueBy(Row.Number("upgradeMagic"));
-        if (HasSpecialBlock) SpecialBlock.UpgradeValueBy(Row.Number("upgradeSpecial"));
+        // Native UpgradeValueBy(0) still marks a variable as upgraded, which
+        // falsely colors unchanged stats green in cost-only upgrade previews.
+        if (!DesignCard.Mercy && Row.Number("upgradeDamage") != 0) DynamicVars.Damage.UpgradeValueBy(Row.Number("upgradeDamage"));
+        if (!DesignCard.Mercy && Row.Number("upgradeBlock") != 0) DynamicVars.Block.UpgradeValueBy(Row.Number("upgradeBlock"));
+        if (Row.Number("nextBlock") > 0 && Row.Number("upgradeMagic") != 0) NextBlock.UpgradeValueBy(Row.Number("upgradeMagic"));
+        if (HasSpecialBlock && Row.Number("upgradeSpecial") != 0) SpecialBlock.UpgradeValueBy(Row.Number("upgradeSpecial"));
         if (Row.Flag("upgradeCost")) EnergyCost.UpgradeBy(-1);
     }
     public decimal InheritedDamageAdditive(Creature? target, decimal amount, ValueProp props, Creature? dealer, CardModel? source)

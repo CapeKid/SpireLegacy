@@ -1,0 +1,224 @@
+{
+  "version": "1.0.48",
+  "coreAssertions": 166720,
+  "branches": [
+    {
+      "game": "v0.107.1",
+      "mod": "1.0.48",
+      "dllSha256": "5a6b27a1de5135a8960c97e06f28cafea11ccf0b99043c920d1d0c52140e4469",
+      "scenarios": [
+        {
+          "key": "knight_phoenix_forge",
+          "up": false,
+          "mode": "full",
+          "burst": 14,
+          "bursts": 4,
+          "repeatedPerTurn": true,
+          "turnBoundary": true,
+          "saveRoundTrip": true
+        },
+        {
+          "key": "knight_phoenix_forge",
+          "up": false,
+          "mode": "stacked",
+          "burst": 28,
+          "bursts": 4,
+          "repeatedPerTurn": true,
+          "turnBoundary": true,
+          "saveRoundTrip": true
+        },
+        {
+          "key": "knight_phoenix_forge",
+          "up": false,
+          "mode": "ethereal",
+          "burst": 14,
+          "bursts": 5,
+          "repeatedPerTurn": true,
+          "turnBoundary": true,
+          "saveRoundTrip": true
+        },
+        {
+          "key": "knight_phoenix_forge",
+          "up": false,
+          "mode": "legacy-capped",
+          "burst": 14,
+          "bursts": 4,
+          "repeatedPerTurn": true,
+          "turnBoundary": true,
+          "saveRoundTrip": true
+        },
+        {
+          "key": "knight_castle_heart",
+          "up": false,
+          "mode": "full",
+          "packedIcon": "res://images/atlases/power_atlas.sprites/plating_power.tres",
+          "bigIcon": "res://images/powers/plating_power.png",
+          "block": 9,
+          "armor": 4,
+          "previewChecks": 360
+        },
+        {
+          "key": "knight_phoenix_forge",
+          "up": true,
+          "mode": "full",
+          "burst": 18,
+          "bursts": 4,
+          "repeatedPerTurn": true,
+          "turnBoundary": true,
+          "saveRoundTrip": true
+        },
+        {
+          "key": "knight_phoenix_forge",
+          "up": true,
+          "mode": "stacked",
+          "burst": 36,
+          "bursts": 4,
+          "repeatedPerTurn": true,
+          "turnBoundary": true,
+          "saveRoundTrip": true
+        },
+        {
+          "key": "knight_phoenix_forge",
+          "up": true,
+          "mode": "ethereal",
+          "burst": 18,
+          "bursts": 5,
+          "repeatedPerTurn": true,
+          "turnBoundary": true,
+          "saveRoundTrip": true
+        },
+        {
+          "key": "knight_phoenix_forge",
+          "up": true,
+          "mode": "legacy-capped",
+          "burst": 18,
+          "bursts": 4,
+          "repeatedPerTurn": true,
+          "turnBoundary": true,
+          "saveRoundTrip": true
+        },
+        {
+          "key": "knight_castle_heart",
+          "up": true,
+          "mode": "full",
+          "packedIcon": "res://images/atlases/power_atlas.sprites/plating_power.tres",
+          "bigIcon": "res://images/powers/plating_power.png",
+          "block": 9,
+          "armor": 4,
+          "previewChecks": 0
+        }
+      ],
+      "rawReceiptSha256": "b8f64554066aa089dd2466ce0280a5baa362d61b11e552e60ee8677815844158"
+    },
+    {
+      "game": "v0.111.0",
+      "mod": "1.0.48",
+      "dllSha256": "5a6b27a1de5135a8960c97e06f28cafea11ccf0b99043c920d1d0c52140e4469",
+      "scenarios": [
+        {
+          "key": "knight_phoenix_forge",
+          "up": false,
+          "mode": "full",
+          "burst": 14,
+          "bursts": 4,
+          "repeatedPerTurn": true,
+          "turnBoundary": true,
+          "saveRoundTrip": true
+        },
+        {
+          "key": "knight_phoenix_forge",
+          "up": false,
+          "mode": "stacked",
+          "burst": 28,
+          "bursts": 4,
+          "repeatedPerTurn": true,
+          "turnBoundary": true,
+          "saveRoundTrip": true
+        },
+        {
+          "key": "knight_phoenix_forge",
+          "up": false,
+          "mode": "ethereal",
+          "burst": 14,
+          "bursts": 5,
+          "repeatedPerTurn": true,
+          "turnBoundary": true,
+          "saveRoundTrip": true
+        },
+        {
+          "key": "knight_phoenix_forge",
+          "up": false,
+          "mode": "legacy-capped",
+          "burst": 14,
+          "bursts": 4,
+          "repeatedPerTurn": true,
+          "turnBoundary": true,
+          "saveRoundTrip": true
+        },
+        {
+          "key": "knight_castle_heart",
+          "up": false,
+          "mode": "full",
+          "packedIcon": "res://images/atlases/power_atlas.sprites/plating_power.tres",
+          "bigIcon": "res://images/powers/plating_power.png",
+          "block": 9,
+          "armor": 4,
+          "previewChecks": 360
+        },
+        {
+          "key": "knight_phoenix_forge",
+          "up": true,
+          "mode": "full",
+          "burst": 18,
+          "bursts": 4,
+          "repeatedPerTurn": true,
+          "turnBoundary": true,
+          "saveRoundTrip": true
+        },
+        {
+          "key": "knight_phoenix_forge",
+          "up": true,
+          "mode": "stacked",
+          "burst": 36,
+          "bursts": 4,
+          "repeatedPerTurn": true,
+          "turnBoundary": true,
+          "saveRoundTrip": true
+        },
+        {
+          "key": "knight_phoenix_forge",
+          "up": true,
+          "mode": "ethereal",
+          "burst": 18,
+          "bursts": 5,
+          "repeatedPerTurn": true,
+          "turnBoundary": true,
+          "saveRoundTrip": true
+        },
+        {
+          "key": "knight_phoenix_forge",
+          "up": true,
+          "mode": "legacy-capped",
+          "burst": 18,
+          "bursts": 4,
+          "repeatedPerTurn": true,
+          "turnBoundary": true,
+          "saveRoundTrip": true
+        },
+        {
+          "key": "knight_castle_heart",
+          "up": true,
+          "mode": "full",
+          "packedIcon": "res://images/atlases/power_atlas.sprites/plating_power.tres",
+          "bigIcon": "res://images/powers/plating_power.png",
+          "block": 9,
+          "armor": 4,
+          "previewChecks": 0
+        }
+      ],
+      "rawReceiptSha256": "5bf2f38e4f336373dee90e7b8945e44240a6eda82b7a0154468236ec7bd23c51"
+    }
+  ],
+  "scope": "Isolated solo native paid plays, real turn boundaries, Ethereal flushing, saved counter codec, native icon loads and all 360 card upgrade flags per branch. No live multiplayer session claimed.",
+  "testSetupNote": "Initial burst fixture compared HP loss against raw damage despite enemies gaining Block. Corrected the fixture to clear enemy Block before controlled Exhaust groups; product damage still respects native Block."
+}

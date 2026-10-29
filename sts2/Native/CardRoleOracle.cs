@@ -110,12 +110,55 @@ public static partial class PowerAuditOracle
                 return new{key,up,mode,discount=key=="mage_returned_prophecy"?d.SpecialAmount:0,vigor=key=="knight_ancestral_salvage"?owner.GetPowerAmount<VigorPower>():0,recoveryExclusions=true,saveRoundTrip=true};
             }
             if(key=="knight_phoenix_forge"){
-                await Play(card);var hp=enemies[0].CurrentHp;
-                await Fuel(2);Require(enemies[0].CurrentHp==hp,"Phoenix burst fired before third Exhaust.");Codec(owner.GetPower<P_exhaust_burst>()!);
-                await Fuel(1);Require(hp-enemies[0].CurrentHp==d.Magic,"Third Exhaust did not trigger burst.");
-                await Fuel(3);Require(hp-enemies[0].CurrentHp==d.Magic,"Phoenix burst repeated in same turn.");
-                await BalanceOracle.End(player,true);var nextHp=enemies[0].CurrentHp;await Fuel(3);Require(nextHp-enemies[0].CurrentHp==d.Magic,"Phoenix burst did not reset next turn.");
-                return new{key,up,mode,burst=d.Magic,oncePerTurn=true,turnBoundary=true,saveRoundTrip=true};
+                await Play(card);var power=owner.GetPower<P_exhaust_burst>()!;
+                var hp=enemies.Select(e=>e.CurrentHp).ToArray();
+                async Task PhoenixFuel(int count){foreach(var enemy in enemies)enemy.LoseBlockInternal(enemy.Block);await Fuel(count);}
+                void Damage(int bursts){for(var i=0;i<enemies.Length;i++)Require(hp[i]-enemies[i].CurrentHp==power.Amount*bursts,"Phoenix AoE burst total differs.");}
+                if(mode=="legacy-capped")power.ExhaustsThisTurn=3;
+                await PhoenixFuel(2);Damage(0);Require(power.ExhaustsThisTurn==2,"Phoenix partial counter differs.");Codec(power);
+                if(mode=="stacked"){
+                    await Play(await Add(player,NativeCards.Get(key),up));
+                    Require(power.Amount==d.Magic*2&&power.ExhaustsThisTurn==2,"Stacking reset Phoenix progress or damage.");
+                }
+                var bursts=0;
+                if(mode=="ethereal"){
+                    var ethereal=await Add(player,ModelDb.Card<Dazed>());
+                    await BalanceOracle.End(player,true);bursts=1;Damage(bursts);
+                    Require(ethereal.Pile?.Type==PileType.Exhaust&&power.ExhaustsThisTurn==0,"Ethereal Exhaust failed to complete a group.");
+                    await PhoenixFuel(2);
+                }
+                await BalanceOracle.End(player,true);Damage(bursts);
+                Require(power.ExhaustsThisTurn==2,"Phoenix progress was lost at a turn boundary.");Codec(power);
+                await PhoenixFuel(1);Damage(++bursts);Require(power.ExhaustsThisTurn==0,"Phoenix did not reset after a burst.");
+                await PhoenixFuel(6);bursts+=2;Damage(bursts);
+                await PhoenixFuel(1);Require(power.ExhaustsThisTurn==1,"Remainder was lost after multiple bursts.");Codec(power);
+                await BalanceOracle.End(player,true);Require(power.ExhaustsThisTurn==1,"One-card remainder did not survive next turn.");
+                await PhoenixFuel(2);Damage(++bursts);
+                Require(power.ExhaustsThisTurn==0,"Final burst left an invalid remainder.");
+                return new{key,up,mode,burst=power.Amount,bursts,repeatedPerTurn=true,turnBoundary=true,saveRoundTrip=true};
+            }
+            if(key=="knight_castle_heart"){
+                var previewChecks=0;
+                if(!up)foreach(var row in Design.Rows("cards")) {
+                    var preview=(LegacyCard)player.Creature.CombatState!.CreateCard(NativeCards.Get(row.Text("id")),player);
+                    var blockBefore=preview.DynamicVars.Block.BaseValue;
+                    preview.UpgradeInternal();
+                    Require(preview.DynamicVars.Block.WasJustUpgraded==(row.Number("upgradeBlock")!=0),"Block upgrade highlight differs: "+preview.Key);
+                    Require(preview.DynamicVars.Damage.WasJustUpgraded==(row.Number("upgradeDamage")!=0),"Damage upgrade highlight differs: "+preview.Key);
+                    if(preview.Key=="knight_castle_heart") {
+                        Require(preview.DynamicVars.Block.BaseValue==blockBefore&&preview.DynamicVars.Block.ToHighlightedString(false)==blockBefore.ToString(),"Castle Heart still highlights unchanged Block.");
+                        Require(preview.EnergyCost.GetWithModifiers(CostModifiers.All)==1,"Castle Heart cost-only preview differs.");
+                    }
+                    player.Creature.CombatState.RemoveCard(preview);previewChecks++;
+                }
+                await Play(card);var power=owner.GetPower<P_metallicize>()!;
+                var native=ModelDb.Power<PlatingPower>();
+                Require(power.PackedIconPath==native.PackedIconPath&&power.ResolvedBigIconPath==native.ResolvedBigIconPath,"Castle Heart is not using native armor icons.");
+                Require(MegaCrit.Sts2.Core.Assets.PreloadManager.Cache.GetTexture2D(power.PackedIconPath).GetWidth()>0,"Armor icon did not load.");
+                Require(owner.Block==d.Block&&power.Amount==d.Magic,"Castle Heart base Block/armor changed.");
+                await power.BeforeSideTurnEnd(Context,owner.Side,[owner]);
+                Require(owner.Block==d.Block+d.Magic,"Castle Heart armor no longer grants its original Block.");
+                return new{key,up,mode,packedIcon=power.PackedIconPath,bigIcon=power.ResolvedBigIconPath,block=owner.Block,armor=power.Amount,previewChecks};
             }
             if(key=="knight_iron_furnace"){
                 await Play(card);if(mode=="combined"){await Play(await Add(player,NativeCards.Get("knight_forge_memory")));await Play(await Add(player,NativeCards.Get("knight_furnace_breath")));}

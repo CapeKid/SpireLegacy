@@ -78,7 +78,7 @@ Each class has 82 rewards on regular (20 common, 36 uncommon, 26 rare), or 85 on
 | Patient Riposte | Uncommon | Attack | 2 | Class unique; 9 damage; Whenever this is Retained, gain 3 damage this combat.; Retain |
 | Castle Heart | Rare | Power | 2 | Class unique; Public-beta only; 5 Block; At the end of your turn, gain 4 Block. |
 | Iron Avalanche | Rare | Attack | 2 | Class unique; 6 damage to all enemies; Deal 18 additional damage if you have Block.; Exhaust |
-| Phoenix Forge | Rare | Power | 2 | Class unique; The third card you Exhaust during your turn deals 14 damage to ALL enemies. Triggers once each turn. |
+| Phoenix Forge | Rare | Power | 2 | Class unique; Whenever you Exhaust 3 cards, deal 14 damage to ALL enemies. |
 | Ancestral Salvage | Rare | Skill | 2 | Shared family card; 6 Block; You may return an Attack from your Exhaust pile to your hand. If it enters your hand, gain 4 Vigor. Cannot return Spire Legacy Exhaust-recovery cards.; Exhaust |
 | King's Ransom | Rare | Skill | 0 | Class unique; 2 Energy; 4 HP cost; Exhaust |
 | Bloodfire Mantle | Rare | Power | 1 | Class unique; At the end of your turn, lose 1 HP and deal 5 damage to ALL enemies. |

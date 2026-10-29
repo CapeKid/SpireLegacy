@@ -18676,7 +18676,7 @@
       "upgradeCost": false,
       "upgradeDiscard": 0
     },
-    "reason": "Once per turn burst on third Exhaust, distinct from Forge Sparks per-card damage."
+    "reason": "Recurring burst every three Exhausts, with progress carried across turns; distinct from Forge Sparks per-card damage."
   },
   {
     "id": "knight_ancestral_salvage",
