@@ -57,7 +57,7 @@ Perfect Ward remains a 2-Energy Exhaust Skill, but prevents 1 HP-loss event (2 u
 - Astral Mantle always grants 1 Block per card played; its upgrade lowers setup cost from 2 to 1.
 - Blood to Mana upgrades Energy 2 to 3; Mana Fountain 3 to 4; Escape Route 1 to 2. Kindle gains 2/4 Block alongside its charge gain. Overcharge retains the normal charge cap, draws 1/2 cards, loses 3 HP, and now Exhausts.
 - Time Pocket retains the hand for the promised 1/2 turns: its power decrements each owner-side turn end rather than disappearing immediately.
-- Cosmetic crown bonuses and FMF Fan's free crown bonus are removed. Bookish offers +1 draw for -10 HP without crowns; Crippling Intellect offers +1 draw for -18 HP and +50% crowns, giving a distinct progression tradeoff.
+- Cosmetic crown bonuses and Methodical's free crown bonus are removed. Bookish offers +1 draw for -10 HP without crowns; Crippling Intellect offers +1 draw for -18 HP and +50% crowns, giving a distinct progression tradeoff.
 - Treasury multiplies the trait-capped payout, so it works for Hero Complex, Fragile and Pacifist. Rounding occurs once at settlement; normal trait-only payouts remain unchanged.
 - Blacksmith, Armory and Garden cap at two levels; Living Quarters and Library retain their bonuses. Vampirism heals 3 instead of 4. Full Garden with Vampirism/Super Healer heals 10 instead of 16. Retired purchased levels are refunded at their old purchase prices once, with atomic persistence and no changes to an active run snapshot.
 
