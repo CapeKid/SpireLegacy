@@ -41,7 +41,7 @@ Synesthesia remains cosmetic and has no crown bonus. This audit does not change 
 | Nostalgic (`oldyellowtint`) | Selectable | Your heir is rendered in a nostalgic sepia palette. | Native/TraitAppearance.cs: Refresh |
 | Puritan (`enemiescensored`) | Selectable | Enemies start with 5 Block, representing difficulty reading opponents. | Native/BloodlineRelic.cs: BeforeCombatStart |
 | Associative Agnosia (`enemiesblackfill`) | Selectable | Enemies start with 1 Strength, representing harder-to-read opponents. | Native/BloodlineRelic.cs: BeforeCombatStart |
-| Hollow Bones (`lowergravity`) | Selectable | Lose 12 maximum HP; gain 2 Dexterity and a lighter appearance. | Inheritance stats / BloodlineRelic / HeirCharacter; HeirVisuals.Attach / AttachRoomPortrait |
+| Hollow Bones (`lowergravity`) | Selectable | Lose 12 maximum HP; gain 2 Dexterity and a translucent appearance. | Inheritance stats / BloodlineRelic / HeirCharacter; HeirVisuals.Attach / AttachRoomPortrait |
 | Stressed (`bluronhit`) | Selectable | After losing HP to an enemy attack, gain 1 Weak. | Native/BloodlineRelic.cs: AfterDamageReceived |
 | Synesthesia (`colortrails`) | Selectable | Rainbow motes orbit your heir above a shifting colorful ring, including at rest sites and shops. Visible alongside other palette traits. | Native/TraitAppearance.cs: Attach / Refresh |
 | Vegan (`nomeat`) | Selectable | All healing is halved, rounded down. | Core/Inheritance.cs: Healing |

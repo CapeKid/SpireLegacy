@@ -62,7 +62,8 @@ public static class HeirVisuals
         classId = a.sprite.ClassId, pose = a.sprite.Animation.ToString(), frame = a.sprite.Frame,
         frames = a.sprite.SpriteFrames.GetFrameCount(a.sprite.Animation), deathFrames = a.sprite.DeathFrames.ToArray(), visible = a.sprite.IsVisibleInTree(), tint = a.sprite.Modulate.ToString(), events = a.sprite.Events.ToArray(),
         position = a.sprite.GlobalPosition.ToString(), scale = a.sprite.Scale.ToString(), offset = a.sprite.Offset.ToString(), hp = a.creature.Entity.CurrentHp,
-        bannerVisible = a.banner.IsVisibleInTree(), bannerZ = a.banner.ZIndex
+        bannerVisible = a.banner.IsVisibleInTree(), bannerZ = a.banner.ZIndex,
+        bannerOpacity = a.banner.Modulate.A, symbolOpacity = a.symbol.Modulate.A
     }).ToArray();
     private static void Update()
     {
