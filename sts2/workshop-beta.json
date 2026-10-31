@@ -2,7 +2,7 @@
   "title": "Spire Legacy \u2014 Beta",
   "description": "Private beta builds of Spire Legacy for the creator's Steam Deck testing. Requires BaseLib. You may subscribe to both this item and the public Spire Legacy item. In StS2's mod menu, enable ONLY Spire Legacy \u2014 Beta OR Spire Legacy, then restart. They contain the same character and cards and must not run together. Finish a climb before switching builds. Family manor progress is shared. This item does not update the public Workshop listing.",
   "visibility": "private",
-  "changeNote": "1.0.48: Phoenix Forge now deals 14 damage to all enemies (18 upgraded) for every 3 cards Exhausted. Progress carries between turns and it can trigger repeatedly in the same turn. Energy cost is unchanged. Castle Heart armor now uses the native armor icon instead of a sword. Castle Heart\u2019s cost-only upgrade no longer highlights unchanged Block green.",
+  "changeNote": "1.0.49: Renamed the FMF Fan trait to Methodical, removing the Rogue Legacy creator reference. Its first-Skill Block effect and save identity are unchanged.",
   "tags": [
     "Characters"
   ],
