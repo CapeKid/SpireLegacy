@@ -49,7 +49,7 @@ def validate(historical_assets=False):
     for row in sheets['classes']: ref('classes',row,'asset',assets); ref('classes',row,'signature',cards)
     traits={r['id'] for r in sheets['traits']}
     effects={'none','gray','skill_block','nature','poison','skill_draw','fragile','pacifist','turn_block','first_attack_block','weak','enemy_guard','costly','gold','shop','histrionic','sepia','enemy_strength','hurt_weak','rainbow','vegan','diva','algesia','energy','no_heal','coin_loss','hurt_energy','super_heal','relics','thorns','blue','perfectionist','shock','chest','explosions','medium','festive','kit','piercing','exhausted'}
-    effects.update({'hidden_health','treasure_gold','first_attack_damage','overcharge','first_attack_block_loss','first_attack_shred','first_attack_weak','opening_draw_energy','opening_weak','first_skill_block','first_hurt_block'})
+    effects.update({'translucent','hidden_health','treasure_gold','first_attack_damage','overcharge','first_attack_block_loss','first_attack_shred','first_attack_weak','opening_draw_energy','opening_weak','first_skill_block','first_hurt_block'})
     for row in sheets['traits']:
         if re.search(r'<[^>]+>|\{\d+\}',row['name']):errors.append('Unresolved trait name formatting '+row['id'])
         ref('traits',row,'asset',assets)

@@ -2,7 +2,7 @@
   "title": "Spire Legacy \u2014 Beta",
   "description": "Private beta builds of Spire Legacy for the creator's Steam Deck testing. Requires BaseLib. You may subscribe to both this item and the public Spire Legacy item. In StS2's mod menu, enable ONLY Spire Legacy \u2014 Beta OR Spire Legacy, then restart. They contain the same character and cards and must not run together. Finish a climb before switching builds. Family manor progress is shared. This item does not update the public Workshop listing.",
   "visibility": "private",
-  "changeNote": "1.0.49: Renamed the FMF Fan trait to Methodical, removing the Rogue Legacy creator reference. Its first-Skill Block effect and save identity are unchanged.",
+  "changeNote": "1.0.50: Hollow Bones now renders the character at 75% opacity instead of making it smaller. Its maximum HP and Dexterity effects are unchanged. Includes the Methodical trait rename prepared in 1.0.49.",
   "tags": [
     "Characters"
   ],

@@ -1,0 +1,55 @@
+{
+  "version": "1.0.50",
+  "coreAssertions": 166720,
+  "branches": [
+    {
+      "game": "v0.107.1",
+      "mod": "1.0.50",
+      "dllSha256": "8508df6bffabd4034c79a068396df40226959b57c13000fa3ad7c3f01d9c5d3a",
+      "appearanceInspections": 47,
+      "classes": [
+        "knight",
+        "mage",
+        "ranger"
+      ],
+      "rooms": [
+        "Combat",
+        "RestSite",
+        "Shop"
+      ],
+      "normalSizeRestored": true,
+      "hpAndDexterityPreserved": true,
+      "bannersOpaque": true,
+      "pairedPalettes": 7,
+      "sizeTraitPairs": 2,
+      "damageFlash": true,
+      "nativeSaveResume": true,
+      "rawReceiptSha256": "b99daab3799b283acc76c7ade10287266d29dfadbb0e5a36c9dee9ff85885e69"
+    },
+    {
+      "game": "v0.111.0",
+      "mod": "1.0.50",
+      "dllSha256": "8508df6bffabd4034c79a068396df40226959b57c13000fa3ad7c3f01d9c5d3a",
+      "appearanceInspections": 47,
+      "classes": [
+        "knight",
+        "mage",
+        "ranger"
+      ],
+      "rooms": [
+        "Combat",
+        "RestSite",
+        "Shop"
+      ],
+      "normalSizeRestored": true,
+      "hpAndDexterityPreserved": true,
+      "bannersOpaque": true,
+      "pairedPalettes": 7,
+      "sizeTraitPairs": 2,
+      "damageFlash": true,
+      "nativeSaveResume": true,
+      "rawReceiptSha256": "ba203a983ee026abafdc29778b078a4a108aceac210ab612a79503790c8b09d6"
+    }
+  ],
+  "scope": "Isolated solo native rendering and save/resume tests; no live co-op session is claimed."
+}

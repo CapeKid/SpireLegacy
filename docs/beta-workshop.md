@@ -6,7 +6,7 @@ On Steam Deck, use the same Steam account as the item's owner. In StS2's mod men
 
 Enable only one Spire Legacy build at a time. They intentionally share their assembly, card/model identities, character, patches, and family progression; a separate subscription ID is not a second independent character mod. Finish or abandon a climb before switching: native run saves record their loaded mod set. Back up family files if you want a fixed pre-test snapshot; see the installation guide shipped with the regular mod.
 
-The tested beta changes through 1.0.49 have been promoted to the public listing with the owner's explicit approval. This separate private channel remains available for future tests. Regular and public-beta game branches are separate from these mod channels.
+The tested beta changes through 1.0.50 have been promoted to the public listing with the owner's explicit approval. This separate private channel remains available for future tests. Regular and public-beta game branches are separate from these mod channels.
 
 ## Maintainer workflow
 

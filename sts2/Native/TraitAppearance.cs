@@ -51,7 +51,8 @@ public partial class TraitAppearance : Node2D
     public void DamageFlash() { if(effects.Contains("histrionic")) flash=.8f; }
     public object Diagnostic() => new { classId=sprite.ClassId,room=sprite.Name=="SpireLegacyRoomHeir",
         rainbow=Rainbow,motes=motes.Count,arcs=arcs.Count,accents=accents.ToArray(),gray=effects.Contains("gray"),
-        sepia=effects.Contains("sepia"),flash,clock,tint=sprite.Modulate.ToString(),visible=IsVisibleInTree(),
+        sepia=effects.Contains("sepia"),flash,clock,tint=sprite.Modulate.ToString(),opacity=sprite.Modulate.A,
+        spriteScale=sprite.Scale.ToString(),visible=IsVisibleInTree(),
         motePositions=motes.Select(m=>m.Position.ToString()).ToArray() };
     // External mod nodes do not have Godot-generated virtual dispatch. Use the existing
     // SceneTree frame callback, which also covers rest/shop nodes and prunes freed rooms.
@@ -70,6 +71,9 @@ public partial class TraitAppearance : Node2D
         // Every selected palette also has its own accent, even when another palette wins the body tint.
         if(accents.Count>0 && !effects.Contains("sepia"))color=AccentColors[accents[0]];
         if(Rainbow && accents.Count==0 && !effects.Contains("sepia"))color=Color.FromHsv(clock/6%1,.35f,1);
+        // Tint only the character sprite. Banners, health/status UI and the
+        // independent cosmetic accents remain fully opaque.
+        color.A=effects.Contains("translucent")?.75f:1f;
         sprite.SetGray(effects.Contains("gray")); sprite.SetDamageFlash(flash/.8f);
         sprite.Modulate=color;
         for(var i=0;i<motes.Count;i++)
