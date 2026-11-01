@@ -1,0 +1,50 @@
+{
+  "version": "1.0.50",
+  "channels": [
+    {
+      "version": "1.0.50",
+      "item": 3816525393,
+      "channel": "public",
+      "visibility": "public",
+      "modId": "SpireLegacy",
+      "ownerVerified": true,
+      "regularAllowed": true,
+      "betaAllowed": true,
+      "downloadedFiles": 539,
+      "allFilesMatch": true,
+      "dllSha256": "8508df6bffabd4034c79a068396df40226959b57c13000fa3ad7c3f01d9c5d3a",
+      "embeddedHollowBonesVerified": true,
+      "methodicalRenameVerified": true,
+      "verifiedUtc": "2026-11-01T13:48:49.0757856Z"
+    },
+    {
+      "version": "1.0.50",
+      "item": 3822395190,
+      "channel": "private",
+      "visibility": "private",
+      "modId": "SpireLegacyBeta",
+      "ownerVerified": true,
+      "regularAllowed": true,
+      "betaAllowed": true,
+      "downloadedFiles": 539,
+      "allFilesMatch": true,
+      "dllSha256": "8508df6bffabd4034c79a068396df40226959b57c13000fa3ad7c3f01d9c5d3a",
+      "embeddedHollowBonesVerified": true,
+      "methodicalRenameVerified": true,
+      "verifiedUtc": "2026-11-01T13:48:52.1572723Z"
+    }
+  ],
+  "sourceCommit": "21da5c652161eb24b1966b716e616b8f615bee91",
+  "validation": {
+    "coreAssertions": 166720,
+    "releaseBuild": true,
+    "designPreflight": true,
+    "releaseArchivesValidated": true,
+    "appearanceInspections": 94,
+    "nativeGameVersions": [
+      "0.107.1",
+      "0.111.0"
+    ],
+    "nativeEvidence": "docs/hollow-bones-1.0.50-checks.json"
+  }
+}
