@@ -60,7 +60,7 @@ public static class LifecycleChecks
                 check(State(f)==State(FamilyProfile.Load(file)),"Live/disk agreement at "+transition+" "+step);
                 check((State(f)!=old)==committed,"Only durable commit changes "+transition+" "+step);
                 if(transition=="settle"&&committed) {
-                    check(f.generation==1&&f.crowns==1036&&f.chronicle.classes["knight"].wins==1,"Complete settlement record at durable boundary");
+                    check(f.generation==1&&f.crowns==1061&&f.chronicle.classes["knight"].wins==1,"Complete settlement record at durable boundary");
                     check(f.CommitSettlement(snapshot,0,50,999,true,file)==0&&State(f)==State(FamilyProfile.Load(file)),"Retry after committed response cannot repeat payout");
                 }
             }
@@ -83,7 +83,7 @@ public static class LifecycleChecks
                         activeId=next.id;activeTreasury=levels.GetValueOrDefault("vault")*5;oldRuns.Add(next);break;
                     case 1 when activeId!=null:
                         var current=f.active!;var floors=rng.Next(51);var gold=rng.Next(401);var victory=rng.Next(4)==0;
-                        var amount=(floors*2+gold/25+(victory?20:0))*(100+activeTreasury)/100;
+                        var amount=(floors*2+gold/25+(victory?45:0))*(100+activeTreasury)/100;
                         check(f.CommitSettlement(current,current.ownerNetId,floors,gold,victory,file)==amount,"Model crown formula");
                         bank+=amount;generation++;settled.Add(activeId);activeId=null;
                         returns[current.heir.classId]=returns.GetValueOrDefault(current.heir.classId)+1;
@@ -97,7 +97,7 @@ public static class LifecycleChecks
                         check(State(f)==beforeState&&beforeBytes.SequenceEqual(File.ReadAllBytes(file)),"Invalid callback never writes or changes family");break;
                     case 3:
                         var row=Design.Rows("manor")[rng.Next(6)];var id=row.Text("id");var level=levels.GetValueOrDefault(id);
-                        var price=row.Number("baseCost")+level*row.Number("costStep");var prerequisite=row.Text("requires");
+                        var price=level==0?row.Number("firstCost"):row.Number("baseCost")+level*row.Number("costStep");var prerequisite=row.Text("requires");
                         var allowed=activeId==null&&level<row.Number("maxLevel")&&bank>=price&&(prerequisite=="none"||levels.GetValueOrDefault(prerequisite)>0);
                         check(f.CommitPurchases([id],file)==allowed,"Reference purchase prerequisite/cap/bank decision");
                         if(allowed){bank-=price;levels[id]=level+1;}
@@ -138,11 +138,11 @@ public static class LifecycleChecks
         }
         var max=Fresh();max.crowns=max.generation=int.MaxValue;var maxRun=max.Begin(49);path=PathFor();max.Save(path);
         check(max.CommitSettlement(maxRun,0,int.MaxValue,int.MaxValue,true,path)>0&&max.crowns==int.MaxValue&&max.generation==int.MaxValue,"Extreme settlement saturates bank/generation");
-        p=Fresh();p.crowns=200;path=PathFor();p.Save(path);
+        p=Fresh();p.crowns=85;path=PathFor();p.Save(path);
         check(p.PreviewPurchases(["vitality","smith"])?.crowns==0,"Prerequisites may be purchased in order in a single queue");
         check(p.PreviewPurchases(["smith","vitality"])==null,"Wrong prerequisite order rejects entire queue");
-        p.crowns=199;p.Save(path);check(!p.CommitPurchases(["vitality","smith"],path)&&p.Level("vitality")==0,"Confirmation rechecks changed crown balance atomically");
-        p.crowns=200;p.Save(path);check(p.CommitPurchases(["vitality","smith"],path)&&p.crowns==0,"Exact-cost queue leaves zero crowns");
+        p.crowns=84;p.Save(path);check(!p.CommitPurchases(["vitality","smith"],path)&&p.Level("vitality")==0,"Confirmation rechecks changed crown balance atomically");
+        p.crowns=85;p.Save(path);check(p.CommitPurchases(["vitality","smith"],path)&&p.crowns==0,"Exact-cost queue leaves zero crowns");
         p=Fresh();p.crowns=int.MaxValue;path=PathFor();p.Save(path);
         check(!p.CommitPurchases(Enumerable.Repeat("vitality",6).ToArray(),path)&&p.Level("vitality")==0,"Repeated IDs cannot exceed cap or partially spend");
         check(p.CommitPurchases(Enumerable.Repeat("vitality",5).ToArray(),path)&&p.Level("vitality")==5,"Repeated IDs within cap are valid staged levels");
@@ -162,10 +162,10 @@ public static class LifecycleChecks
             PersistenceChecks.AwaitFile(marker,child);
             if(!string.Equals(child.MainModule!.FileName,Environment.ProcessPath,OperatingSystem.IsWindows()?StringComparison.OrdinalIgnoreCase:StringComparison.Ordinal))throw new Exception("Unexpected lifecycle fixture child image");
             child.Kill();child.WaitForExit();f=FamilyProfile.Load(file);
-            check(f.crowns==(step=="after-commit"?1036:1000)&&f.generation==(step=="after-commit"?1:0),"Killed settlement process leaves complete old/new bank and generation");
+            check(f.crowns==(step=="after-commit"?1061:1000)&&f.generation==(step=="after-commit"?1:0),"Killed settlement process leaves complete old/new bank and generation");
             check(f.chronicle.settledRuns.Contains(snapshot.id)==(step=="after-commit"),"Crash cannot separate receipt from payout");
             f.CommitSettlement(snapshot,0,6,100,true,file);f=FamilyProfile.Load(file);
-            check(f.crowns==1036&&f.generation==1&&f.chronicle.classes["knight"].returns==1&&f.chronicle.classes["knight"].wins==1,"Restart/replay after killed process pays exactly once");
+            check(f.crowns==1061&&f.generation==1&&f.chronicle.classes["knight"].returns==1&&f.chronicle.classes["knight"].wins==1,"Restart/replay after killed process pays exactly once");
         }
         // Formula bounds across every allowed trait pair and no/full Treasury.
         var payoutCount=0;var largestEarly=0;var largestWin=0;
@@ -175,7 +175,7 @@ public static class LifecycleChecks
             foreach(var victory in new[]{false,true}) {
                 var f=Fresh();f.manor["vault"]=treasury;f.selected!.traits=[first.Text("id"),second.Text("id")];var snapshot=f.Begin(49);
                 var amount=f.Settle(snapshot.id,victory?50:1,victory?200:0,victory);
-                var expected=(victory?128:2)*bonus*(100+treasury*5)/10000;
+                var expected=(victory?153:2)*bonus*(100+treasury*5)/10000;
                 check(amount==expected,"Crown formula across compatible traits and Treasury");
                 if(victory)largestWin=Math.Max(largestWin,amount);else largestEarly=Math.Max(largestEarly,amount);payoutCount++;
             }

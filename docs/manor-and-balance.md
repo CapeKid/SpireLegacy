@@ -13,15 +13,26 @@ The public Manor has no crown-balance editor. Existing family balances and purch
 
 ## Crown pacing
 
-After qualifying combat progress, earn 2 crowns per completed non-Ancient map point, 1 crown per 25 earned, unspent gold, and 20 extra for victory. Starting gold is excluded. A non-abandoned combat death after a manual play earns one participation point. Apply trait bonuses after that calculation, capped at +100%. Treasury multiplies the capped payout by +5% per level. Settlement remains once per run; see [earned-crowns.md](earned-crowns.md).
+After qualifying combat progress, earn 2 crowns per completed non-Ancient map point, 1 crown per 25 earned, unspent gold, and 45 extra for victory. Starting gold is excluded. A non-abandoned combat death after a manual play earns one participation point. Apply trait bonuses after that calculation, capped at +100%. Treasury multiplies the capped payout by +5% per level. Settlement remains once per run; see [earned-crowns.md](earned-crowns.md).
 
 | Example without bonuses | Crowns |
 | --- | ---: |
-| Death after 8 floors, 80 gold | 19 |
-| Death after 17 floors, 100 gold | 38 |
-| Victory after 50 floors, 200 gold | 128 |
+| Death with 8 qualifying points and 80 earned gold | 19 |
+| Death with 17 qualifying points and 100 earned gold | 38 |
+| Victory with 50 qualifying points and 200 earned gold | 153 |
 
-Living Quarters starts at 80 crowns, Blacksmith and Armory at 120, Treasury and Healing Garden at 100, and Library at 350. Costs rise with levels. The 128-crown example buys one entry level, with insufficient crowns left for another. Buying every current level costs 2620 crowns before considering rewards earned along the way. Trait bonuses cap at twice the base; maximum Treasury then multiplies that by 1.2, for an overall maximum of 2.4 before final rounding.
+| First upgrade | Previous cost | Current cost |
+| --- | ---: | ---: |
+| Living Quarters | 80 | 30 |
+| Healing Garden | 100 | 35 |
+| Treasury | 100 | 40 |
+| Blacksmith | 120 | 55 |
+| Armory | 120 | 55 |
+| Library | 350 | 275 |
+
+A 38-crown loss can fund Living Quarters or Healing Garden. The 153-crown victory example can fund Living Quarters, Blacksmith and Healing Garden with 33 crowns left. Blacksmith and Armory require Living Quarters, and Library requires Armory. Levels two and above keep their previous prices. The total cost falls from 2,620 to 2,240 crowns.
+
+Repricing the [two recorded loss-heavy trajectories](long-term-manor-pacing.md) with their original earnings, purchase order and one-purchase-per-return limit moves the first upgrade from return 5 to 2 for Knight and from 7 to 3 for Ranger. Library moves from return 34 to 22 and from 48 to 32. This is a replay of recorded earnings. A new campaign can earn different amounts as bonuses come online earlier.
 
 ## Card and class balance
 

@@ -33,7 +33,7 @@ public static class LifecycleOracle
         var oldNative=JsonSerializer.Serialize(save.SaveData!,JsonSerializationUtility.GetTypeInfo<SerializableRun>());
         var percent=Math.Clamp(100+run.heir.traits.Sum(t=>Design.Get("traits",t).Number("goldBonus")),0,200);
         var earned=CrownAccounting.Earned(state,player);
-        var expected=(int)(((long)earned.floors*2+earned.gold/25+(victory?20:0))*percent*(100+run.bonuses.GetValueOrDefault("gold"))/10000);
+        var expected=(int)(((long)earned.floors*2+earned.gold/25+(victory?45:0))*percent*(100+run.bonuses.GetValueOrDefault("gold"))/10000);
         if(fault!="none") {
             FamilyStore.Fault.Value=s=>{if(s==fault)throw new IOException("Native lifecycle interruption: "+s);};
             try {RunManager.Instance.OnEnded(victory);throw new InvalidDataException("Native fault was not reached.");}

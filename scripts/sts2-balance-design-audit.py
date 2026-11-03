@@ -24,8 +24,8 @@ for row in cards:
             assert draw<=discard or row['hpLoss']>0,case
         if row['special'] in ('retrieve','exhume','refill_hand','discount_hand','free_hand','discard_draw','discard_energy') or row['power'] in ('dark_embrace','power_draw','establishment','thousand_cuts','discard_block','discard_energy','evolve'):
             risky.append(dict(id=row['id'],active=row['id'] in active,upgraded=up,cost=cost,exhaust=row['exhaust'],power=row['power'],special=row['special']))
-manor=read('manor');costs={r['id']:sum(r['baseCost']+i*r['costStep'] for i in range(r['maxLevel'])) for r in manor}
-assert sum(costs.values())==2620
+manor=read('manor');costs={r['id']:r['firstCost']+sum(r['baseCost']+i*r['costStep'] for i in range(1,r['maxLevel'])) for r in manor}
+assert sum(costs.values())==2240
 proof=dict(issue=60,sourceSha=subprocess.check_output(['git','rev-parse','HEAD'],cwd=root,text=True).strip(),cards=360,forms=720,activeRegistered=len(active),freeReusableLiteralDraw=free_draw,riskForms=risky,manorTotal=sum(costs.values()),manorCosts=costs,sheetHashes={n:hashlib.sha256((root/'sheets'/f'{n}.json').read_bytes()).hexdigest() for n in ['cards','card_builds','balance_changes','class_mechanics','traits','manor','systems']},limits=['Literal row checks do not prove engine loops impossible. Discard triggers, card copies, native enablers and discounted cards require native tests.','Active membership is the union across classes and both branches; this count is not cards available to one class.','No scalar damage-per-Energy score is used to flatten conditional, multi-hit, Poison, retained or delayed payoffs.'])
 path=root/'docs/adversarial-balance-design.json'
 path.write_text(json.dumps({k:v for k,v in proof.items() if k!='riskForms'},indent=2)[:-2]+',\n  "riskForms": [\n'+',\n'.join('    '+json.dumps(r) for r in risky)+'\n  ]\n}\n')

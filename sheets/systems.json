@@ -30,9 +30,9 @@
   {
     "id": "victory",
     "hook": "run_end",
-    "amount": 20,
+    "amount": 45,
     "enabled": true,
-    "summary": "Victory adds 20 crowns. Each run settles at most once."
+    "summary": "Victory adds 45 crowns. Each run settles at most once."
   },
   {
     "id": "quickstart",
