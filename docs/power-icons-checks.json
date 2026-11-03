@@ -1,0 +1,738 @@
+{
+  "releaseBuild": true,
+  "designPreflight": true,
+  "branches": [
+    {
+      "game": "v0.107.1",
+      "dllSha256": "448da6745d4132020249210f430f58540aaaf49b7364543005af4373b85e76a7",
+      "verifiedUtc": "2026-11-03T13:49:17.4335290Z",
+      "powersChecked": 51,
+      "iconPathsLoaded": 102,
+      "icons": [
+        {
+          "key": "after_image",
+          "packedIcon": "res://images/atlases/power_atlas.sprites/afterimage_power.tres",
+          "bigIcon": "res://images/powers/afterimage_power.png",
+          "packedWidth": 64,
+          "bigWidth": 256
+        },
+        {
+          "key": "arcane_echo",
+          "packedIcon": "res://images/atlases/power_atlas.sprites/draw_cards_next_turn_power.tres",
+          "bigIcon": "res://images/powers/draw_cards_next_turn_power.png",
+          "packedWidth": 64,
+          "bigWidth": 256
+        },
+        {
+          "key": "attack_vigor",
+          "packedIcon": "res://images/atlases/power_atlas.sprites/vigor_power.tres",
+          "bigIcon": "res://images/powers/vigor_power.png",
+          "packedWidth": 64,
+          "bigWidth": 256
+        },
+        {
+          "key": "barricade",
+          "packedIcon": "res://images/atlases/power_atlas.sprites/barricade_power.tres",
+          "bigIcon": "res://images/powers/barricade_power.png",
+          "packedWidth": 64,
+          "bigWidth": 256
+        },
+        {
+          "key": "berserk",
+          "packedIcon": "res://images/atlases/power_atlas.sprites/energy_next_turn_power.tres",
+          "bigIcon": "res://images/powers/energy_next_turn_power.png",
+          "packedWidth": 64,
+          "bigWidth": 256
+        },
+        {
+          "key": "brutality",
+          "packedIcon": "res://images/atlases/power_atlas.sprites/draw_cards_next_turn_power.tres",
+          "bigIcon": "res://images/powers/draw_cards_next_turn_power.png",
+          "packedWidth": 64,
+          "bigWidth": 256
+        },
+        {
+          "key": "buffer",
+          "packedIcon": "res://images/atlases/power_atlas.sprites/buffer_power.tres",
+          "bigIcon": "res://images/powers/buffer_power.png",
+          "packedWidth": 64,
+          "bigWidth": 256
+        },
+        {
+          "key": "burst",
+          "packedIcon": "res://images/atlases/power_atlas.sprites/burst_power.tres",
+          "bigIcon": "res://images/powers/burst_power.png",
+          "packedWidth": 64,
+          "bigWidth": 256
+        },
+        {
+          "key": "class",
+          "packedIcon": "res://images/atlases/power_atlas.sprites/focus_power.tres",
+          "bigIcon": "res://images/powers/focus_power.png",
+          "packedWidth": 64,
+          "bigWidth": 256
+        },
+        {
+          "key": "combust",
+          "packedIcon": "res://images/atlases/power_atlas.sprites/inferno_power.tres",
+          "bigIcon": "res://images/powers/inferno_power.png",
+          "packedWidth": 64,
+          "bigWidth": 256
+        },
+        {
+          "key": "dark_embrace",
+          "packedIcon": "res://images/atlases/power_atlas.sprites/dark_embrace_power.tres",
+          "bigIcon": "res://images/powers/dark_embrace_power.png",
+          "packedWidth": 64,
+          "bigWidth": 256
+        },
+        {
+          "key": "demon_form",
+          "packedIcon": "res://images/atlases/power_atlas.sprites/demon_form_power.tres",
+          "bigIcon": "res://images/powers/demon_form_power.png",
+          "packedWidth": 64,
+          "bigWidth": 256
+        },
+        {
+          "key": "discard_block",
+          "packedIcon": "res://images/atlases/power_atlas.sprites/plating_power.tres",
+          "bigIcon": "res://images/powers/plating_power.png",
+          "packedWidth": 64,
+          "bigWidth": 256
+        },
+        {
+          "key": "discard_energy",
+          "packedIcon": "res://images/atlases/power_atlas.sprites/energy_next_turn_power.tres",
+          "bigIcon": "res://images/powers/energy_next_turn_power.png",
+          "packedWidth": 64,
+          "bigWidth": 256
+        },
+        {
+          "key": "discard_next_block",
+          "packedIcon": "res://images/atlases/power_atlas.sprites/block_next_turn_power.tres",
+          "bigIcon": "res://images/powers/block_next_turn_power.png",
+          "packedWidth": 64,
+          "bigWidth": 256
+        },
+        {
+          "key": "discard_return",
+          "packedIcon": "res://images/atlases/power_atlas.sprites/rebound_power.tres",
+          "bigIcon": "res://images/powers/rebound_power.png",
+          "packedWidth": 64,
+          "bigWidth": 256
+        },
+        {
+          "key": "double_tap",
+          "packedIcon": "res://images/atlases/power_atlas.sprites/echo_form_power.tres",
+          "bigIcon": "res://images/powers/echo_form_power.png",
+          "packedWidth": 64,
+          "bigWidth": 256
+        },
+        {
+          "key": "envenom",
+          "packedIcon": "res://images/atlases/power_atlas.sprites/envenom_power.tres",
+          "bigIcon": "res://images/powers/envenom_power.png",
+          "packedWidth": 64,
+          "bigWidth": 256
+        },
+        {
+          "key": "equilibrium",
+          "packedIcon": "res://images/atlases/power_atlas.sprites/retain_hand_power.tres",
+          "bigIcon": "res://images/powers/retain_hand_power.png",
+          "packedWidth": 64,
+          "bigWidth": 256
+        },
+        {
+          "key": "establishment",
+          "packedIcon": "res://images/atlases/power_atlas.sprites/well_laid_plans_power.tres",
+          "bigIcon": "res://images/powers/well_laid_plans_power.png",
+          "packedWidth": 64,
+          "bigWidth": 256
+        },
+        {
+          "key": "evolve",
+          "packedIcon": "res://images/atlases/power_atlas.sprites/draw_cards_next_turn_power.tres",
+          "bigIcon": "res://images/powers/draw_cards_next_turn_power.png",
+          "packedWidth": 64,
+          "bigWidth": 256
+        },
+        {
+          "key": "exhaust_burst",
+          "packedIcon": "res://images/atlases/power_atlas.sprites/inferno_power.tres",
+          "bigIcon": "res://images/powers/inferno_power.png",
+          "packedWidth": 64,
+          "bigWidth": 256
+        },
+        {
+          "key": "exhaust_damage",
+          "packedIcon": "res://images/atlases/power_atlas.sprites/inferno_power.tres",
+          "bigIcon": "res://images/powers/inferno_power.png",
+          "packedWidth": 64,
+          "bigWidth": 256
+        },
+        {
+          "key": "exhaust_vigor",
+          "packedIcon": "res://images/atlases/power_atlas.sprites/vigor_power.tres",
+          "bigIcon": "res://images/powers/vigor_power.png",
+          "packedWidth": 64,
+          "bigWidth": 256
+        },
+        {
+          "key": "feel_no_pain",
+          "packedIcon": "res://images/atlases/power_atlas.sprites/feel_no_pain_power.tres",
+          "bigIcon": "res://images/powers/feel_no_pain_power.png",
+          "packedWidth": 64,
+          "bigWidth": 256
+        },
+        {
+          "key": "fire_breathing",
+          "packedIcon": "res://images/atlases/power_atlas.sprites/inferno_power.tres",
+          "bigIcon": "res://images/powers/inferno_power.png",
+          "packedWidth": 64,
+          "bigWidth": 256
+        },
+        {
+          "key": "flame_barrier",
+          "packedIcon": "res://images/atlases/power_atlas.sprites/flame_barrier_power.tres",
+          "bigIcon": "res://images/powers/flame_barrier_power.png",
+          "packedWidth": 64,
+          "bigWidth": 256
+        },
+        {
+          "key": "foresight",
+          "packedIcon": "res://images/atlases/power_atlas.sprites/well_laid_plans_power.tres",
+          "bigIcon": "res://images/powers/well_laid_plans_power.png",
+          "packedWidth": 64,
+          "bigWidth": 256
+        },
+        {
+          "key": "hunt_momentum",
+          "packedIcon": "res://images/atlases/power_atlas.sprites/vigor_power.tres",
+          "bigIcon": "res://images/powers/vigor_power.png",
+          "packedWidth": 64,
+          "bigWidth": 256
+        },
+        {
+          "key": "juggernaut",
+          "packedIcon": "res://images/atlases/power_atlas.sprites/juggernaut_power.tres",
+          "bigIcon": "res://images/powers/juggernaut_power.png",
+          "packedWidth": 64,
+          "bigWidth": 256
+        },
+        {
+          "key": "metallicize",
+          "packedIcon": "res://images/atlases/power_atlas.sprites/plating_power.tres",
+          "bigIcon": "res://images/powers/plating_power.png",
+          "packedWidth": 64,
+          "bigWidth": 256
+        },
+        {
+          "key": "noxious",
+          "packedIcon": "res://images/atlases/power_atlas.sprites/noxious_fumes_power.tres",
+          "bigIcon": "res://images/powers/noxious_fumes_power.png",
+          "packedWidth": 64,
+          "bigWidth": 256
+        },
+        {
+          "key": "panache",
+          "packedIcon": "res://images/atlases/power_atlas.sprites/panache_power.tres",
+          "bigIcon": "res://images/powers/panache_power.png",
+          "packedWidth": 64,
+          "bigWidth": 256
+        },
+        {
+          "key": "plated",
+          "packedIcon": "res://images/atlases/power_atlas.sprites/plating_power.tres",
+          "bigIcon": "res://images/powers/plating_power.png",
+          "packedWidth": 64,
+          "bigWidth": 256
+        },
+        {
+          "key": "power_draw",
+          "packedIcon": "res://images/atlases/power_atlas.sprites/draw_cards_next_turn_power.tres",
+          "bigIcon": "res://images/powers/draw_cards_next_turn_power.png",
+          "packedWidth": 64,
+          "bigWidth": 256
+        },
+        {
+          "key": "prophecy_return",
+          "packedIcon": "res://images/atlases/power_atlas.sprites/rebound_power.tres",
+          "bigIcon": "res://images/powers/rebound_power.png",
+          "packedWidth": 64,
+          "bigWidth": 256
+        },
+        {
+          "key": "quiver",
+          "packedIcon": "res://images/atlases/power_atlas.sprites/draw_cards_next_turn_power.tres",
+          "bigIcon": "res://images/powers/draw_cards_next_turn_power.png",
+          "packedWidth": 64,
+          "bigWidth": 256
+        },
+        {
+          "key": "reservoir",
+          "packedIcon": "res://images/atlases/power_atlas.sprites/focus_power.tres",
+          "bigIcon": "res://images/powers/focus_power.png",
+          "packedWidth": 64,
+          "bigWidth": 256
+        },
+        {
+          "key": "retained_draw",
+          "packedIcon": "res://images/atlases/power_atlas.sprites/draw_cards_next_turn_power.tres",
+          "bigIcon": "res://images/powers/draw_cards_next_turn_power.png",
+          "packedWidth": 64,
+          "bigWidth": 256
+        },
+        {
+          "key": "rupture",
+          "packedIcon": "res://images/atlases/power_atlas.sprites/rupture_power.tres",
+          "bigIcon": "res://images/powers/rupture_power.png",
+          "packedWidth": 64,
+          "bigWidth": 256
+        },
+        {
+          "key": "sadistic",
+          "packedIcon": "res://images/atlases/power_atlas.sprites/inferno_power.tres",
+          "bigIcon": "res://images/powers/inferno_power.png",
+          "packedWidth": 64,
+          "bigWidth": 256
+        },
+        {
+          "key": "scry_block",
+          "packedIcon": "res://images/atlases/power_atlas.sprites/plating_power.tres",
+          "bigIcon": "res://images/powers/plating_power.png",
+          "packedWidth": 64,
+          "bigWidth": 256
+        },
+        {
+          "key": "skill_block",
+          "packedIcon": "res://images/atlases/power_atlas.sprites/plating_power.tres",
+          "bigIcon": "res://images/powers/plating_power.png",
+          "packedWidth": 64,
+          "bigWidth": 256
+        },
+        {
+          "key": "skill_echo",
+          "packedIcon": "res://images/atlases/power_atlas.sprites/echo_form_power.tres",
+          "bigIcon": "res://images/powers/echo_form_power.png",
+          "packedWidth": 64,
+          "bigWidth": 256
+        },
+        {
+          "key": "skill_energy",
+          "packedIcon": "res://images/atlases/power_atlas.sprites/energy_next_turn_power.tres",
+          "bigIcon": "res://images/powers/energy_next_turn_power.png",
+          "packedWidth": 64,
+          "bigWidth": 256
+        },
+        {
+          "key": "status_furnace",
+          "packedIcon": "res://images/atlases/power_atlas.sprites/plating_power.tres",
+          "bigIcon": "res://images/powers/plating_power.png",
+          "packedWidth": 64,
+          "bigWidth": 256
+        },
+        {
+          "key": "thesis_ready",
+          "packedIcon": "res://images/atlases/power_atlas.sprites/echo_form_power.tres",
+          "bigIcon": "res://images/powers/echo_form_power.png",
+          "packedWidth": 64,
+          "bigWidth": 256
+        },
+        {
+          "key": "thorns",
+          "packedIcon": "res://images/atlases/power_atlas.sprites/thorns_power.tres",
+          "bigIcon": "res://images/powers/thorns_power.png",
+          "packedWidth": 64,
+          "bigWidth": 256
+        },
+        {
+          "key": "thousand_cuts",
+          "packedIcon": "res://images/atlases/power_atlas.sprites/inferno_power.tres",
+          "bigIcon": "res://images/powers/inferno_power.png",
+          "packedWidth": 64,
+          "bigWidth": 256
+        },
+        {
+          "key": "tools",
+          "packedIcon": "res://images/atlases/power_atlas.sprites/tools_of_the_trade_power.tres",
+          "bigIcon": "res://images/powers/tools_of_the_trade_power.png",
+          "packedWidth": 64,
+          "bigWidth": 256
+        },
+        {
+          "key": "well_laid",
+          "packedIcon": "res://images/atlases/power_atlas.sprites/well_laid_plans_power.tres",
+          "bigIcon": "res://images/powers/well_laid_plans_power.png",
+          "packedWidth": 64,
+          "bigWidth": 256
+        }
+      ]
+    },
+    {
+      "game": "v0.111.0",
+      "dllSha256": "448da6745d4132020249210f430f58540aaaf49b7364543005af4373b85e76a7",
+      "verifiedUtc": "2026-11-03T13:49:37.6714392Z",
+      "powersChecked": 51,
+      "iconPathsLoaded": 102,
+      "icons": [
+        {
+          "key": "after_image",
+          "packedIcon": "res://images/atlases/power_atlas.sprites/afterimage_power.tres",
+          "bigIcon": "res://images/powers/afterimage_power.png",
+          "packedWidth": 64,
+          "bigWidth": 256
+        },
+        {
+          "key": "arcane_echo",
+          "packedIcon": "res://images/atlases/power_atlas.sprites/draw_cards_next_turn_power.tres",
+          "bigIcon": "res://images/powers/draw_cards_next_turn_power.png",
+          "packedWidth": 64,
+          "bigWidth": 256
+        },
+        {
+          "key": "attack_vigor",
+          "packedIcon": "res://images/atlases/power_atlas.sprites/vigor_power.tres",
+          "bigIcon": "res://images/powers/vigor_power.png",
+          "packedWidth": 64,
+          "bigWidth": 256
+        },
+        {
+          "key": "barricade",
+          "packedIcon": "res://images/atlases/power_atlas.sprites/barricade_power.tres",
+          "bigIcon": "res://images/powers/barricade_power.png",
+          "packedWidth": 64,
+          "bigWidth": 256
+        },
+        {
+          "key": "berserk",
+          "packedIcon": "res://images/atlases/power_atlas.sprites/energy_next_turn_power.tres",
+          "bigIcon": "res://images/powers/energy_next_turn_power.png",
+          "packedWidth": 64,
+          "bigWidth": 256
+        },
+        {
+          "key": "brutality",
+          "packedIcon": "res://images/atlases/power_atlas.sprites/draw_cards_next_turn_power.tres",
+          "bigIcon": "res://images/powers/draw_cards_next_turn_power.png",
+          "packedWidth": 64,
+          "bigWidth": 256
+        },
+        {
+          "key": "buffer",
+          "packedIcon": "res://images/atlases/power_atlas.sprites/buffer_power.tres",
+          "bigIcon": "res://images/powers/buffer_power.png",
+          "packedWidth": 64,
+          "bigWidth": 256
+        },
+        {
+          "key": "burst",
+          "packedIcon": "res://images/atlases/power_atlas.sprites/burst_power.tres",
+          "bigIcon": "res://images/powers/burst_power.png",
+          "packedWidth": 64,
+          "bigWidth": 256
+        },
+        {
+          "key": "class",
+          "packedIcon": "res://images/atlases/power_atlas.sprites/focus_power.tres",
+          "bigIcon": "res://images/powers/focus_power.png",
+          "packedWidth": 64,
+          "bigWidth": 256
+        },
+        {
+          "key": "combust",
+          "packedIcon": "res://images/atlases/power_atlas.sprites/inferno_power.tres",
+          "bigIcon": "res://images/powers/inferno_power.png",
+          "packedWidth": 64,
+          "bigWidth": 256
+        },
+        {
+          "key": "dark_embrace",
+          "packedIcon": "res://images/atlases/power_atlas.sprites/dark_embrace_power.tres",
+          "bigIcon": "res://images/powers/dark_embrace_power.png",
+          "packedWidth": 64,
+          "bigWidth": 256
+        },
+        {
+          "key": "demon_form",
+          "packedIcon": "res://images/atlases/power_atlas.sprites/demon_form_power.tres",
+          "bigIcon": "res://images/powers/demon_form_power.png",
+          "packedWidth": 64,
+          "bigWidth": 256
+        },
+        {
+          "key": "discard_block",
+          "packedIcon": "res://images/atlases/power_atlas.sprites/plating_power.tres",
+          "bigIcon": "res://images/powers/plating_power.png",
+          "packedWidth": 64,
+          "bigWidth": 256
+        },
+        {
+          "key": "discard_energy",
+          "packedIcon": "res://images/atlases/power_atlas.sprites/energy_next_turn_power.tres",
+          "bigIcon": "res://images/powers/energy_next_turn_power.png",
+          "packedWidth": 64,
+          "bigWidth": 256
+        },
+        {
+          "key": "discard_next_block",
+          "packedIcon": "res://images/atlases/power_atlas.sprites/block_next_turn_power.tres",
+          "bigIcon": "res://images/powers/block_next_turn_power.png",
+          "packedWidth": 64,
+          "bigWidth": 256
+        },
+        {
+          "key": "discard_return",
+          "packedIcon": "res://images/atlases/power_atlas.sprites/rebound_power.tres",
+          "bigIcon": "res://images/powers/rebound_power.png",
+          "packedWidth": 64,
+          "bigWidth": 256
+        },
+        {
+          "key": "double_tap",
+          "packedIcon": "res://images/atlases/power_atlas.sprites/echo_form_power.tres",
+          "bigIcon": "res://images/powers/echo_form_power.png",
+          "packedWidth": 64,
+          "bigWidth": 256
+        },
+        {
+          "key": "envenom",
+          "packedIcon": "res://images/atlases/power_atlas.sprites/envenom_power.tres",
+          "bigIcon": "res://images/powers/envenom_power.png",
+          "packedWidth": 64,
+          "bigWidth": 256
+        },
+        {
+          "key": "equilibrium",
+          "packedIcon": "res://images/atlases/power_atlas.sprites/retain_hand_power.tres",
+          "bigIcon": "res://images/powers/retain_hand_power.png",
+          "packedWidth": 64,
+          "bigWidth": 256
+        },
+        {
+          "key": "establishment",
+          "packedIcon": "res://images/atlases/power_atlas.sprites/well_laid_plans_power.tres",
+          "bigIcon": "res://images/powers/well_laid_plans_power.png",
+          "packedWidth": 64,
+          "bigWidth": 256
+        },
+        {
+          "key": "evolve",
+          "packedIcon": "res://images/atlases/power_atlas.sprites/draw_cards_next_turn_power.tres",
+          "bigIcon": "res://images/powers/draw_cards_next_turn_power.png",
+          "packedWidth": 64,
+          "bigWidth": 256
+        },
+        {
+          "key": "exhaust_burst",
+          "packedIcon": "res://images/atlases/power_atlas.sprites/inferno_power.tres",
+          "bigIcon": "res://images/powers/inferno_power.png",
+          "packedWidth": 64,
+          "bigWidth": 256
+        },
+        {
+          "key": "exhaust_damage",
+          "packedIcon": "res://images/atlases/power_atlas.sprites/inferno_power.tres",
+          "bigIcon": "res://images/powers/inferno_power.png",
+          "packedWidth": 64,
+          "bigWidth": 256
+        },
+        {
+          "key": "exhaust_vigor",
+          "packedIcon": "res://images/atlases/power_atlas.sprites/vigor_power.tres",
+          "bigIcon": "res://images/powers/vigor_power.png",
+          "packedWidth": 64,
+          "bigWidth": 256
+        },
+        {
+          "key": "feel_no_pain",
+          "packedIcon": "res://images/atlases/power_atlas.sprites/feel_no_pain_power.tres",
+          "bigIcon": "res://images/powers/feel_no_pain_power.png",
+          "packedWidth": 64,
+          "bigWidth": 256
+        },
+        {
+          "key": "fire_breathing",
+          "packedIcon": "res://images/atlases/power_atlas.sprites/inferno_power.tres",
+          "bigIcon": "res://images/powers/inferno_power.png",
+          "packedWidth": 64,
+          "bigWidth": 256
+        },
+        {
+          "key": "flame_barrier",
+          "packedIcon": "res://images/atlases/power_atlas.sprites/flame_barrier_power.tres",
+          "bigIcon": "res://images/powers/flame_barrier_power.png",
+          "packedWidth": 64,
+          "bigWidth": 256
+        },
+        {
+          "key": "foresight",
+          "packedIcon": "res://images/atlases/power_atlas.sprites/well_laid_plans_power.tres",
+          "bigIcon": "res://images/powers/well_laid_plans_power.png",
+          "packedWidth": 64,
+          "bigWidth": 256
+        },
+        {
+          "key": "hunt_momentum",
+          "packedIcon": "res://images/atlases/power_atlas.sprites/vigor_power.tres",
+          "bigIcon": "res://images/powers/vigor_power.png",
+          "packedWidth": 64,
+          "bigWidth": 256
+        },
+        {
+          "key": "juggernaut",
+          "packedIcon": "res://images/atlases/power_atlas.sprites/juggernaut_power.tres",
+          "bigIcon": "res://images/powers/juggernaut_power.png",
+          "packedWidth": 64,
+          "bigWidth": 256
+        },
+        {
+          "key": "metallicize",
+          "packedIcon": "res://images/atlases/power_atlas.sprites/plating_power.tres",
+          "bigIcon": "res://images/powers/plating_power.png",
+          "packedWidth": 64,
+          "bigWidth": 256
+        },
+        {
+          "key": "noxious",
+          "packedIcon": "res://images/atlases/power_atlas.sprites/noxious_fumes_power.tres",
+          "bigIcon": "res://images/powers/noxious_fumes_power.png",
+          "packedWidth": 64,
+          "bigWidth": 256
+        },
+        {
+          "key": "panache",
+          "packedIcon": "res://images/atlases/power_atlas.sprites/panache_power.tres",
+          "bigIcon": "res://images/powers/panache_power.png",
+          "packedWidth": 64,
+          "bigWidth": 256
+        },
+        {
+          "key": "plated",
+          "packedIcon": "res://images/atlases/power_atlas.sprites/plating_power.tres",
+          "bigIcon": "res://images/powers/plating_power.png",
+          "packedWidth": 64,
+          "bigWidth": 256
+        },
+        {
+          "key": "power_draw",
+          "packedIcon": "res://images/atlases/power_atlas.sprites/draw_cards_next_turn_power.tres",
+          "bigIcon": "res://images/powers/draw_cards_next_turn_power.png",
+          "packedWidth": 64,
+          "bigWidth": 256
+        },
+        {
+          "key": "prophecy_return",
+          "packedIcon": "res://images/atlases/power_atlas.sprites/rebound_power.tres",
+          "bigIcon": "res://images/powers/rebound_power.png",
+          "packedWidth": 64,
+          "bigWidth": 256
+        },
+        {
+          "key": "quiver",
+          "packedIcon": "res://images/atlases/power_atlas.sprites/draw_cards_next_turn_power.tres",
+          "bigIcon": "res://images/powers/draw_cards_next_turn_power.png",
+          "packedWidth": 64,
+          "bigWidth": 256
+        },
+        {
+          "key": "reservoir",
+          "packedIcon": "res://images/atlases/power_atlas.sprites/focus_power.tres",
+          "bigIcon": "res://images/powers/focus_power.png",
+          "packedWidth": 64,
+          "bigWidth": 256
+        },
+        {
+          "key": "retained_draw",
+          "packedIcon": "res://images/atlases/power_atlas.sprites/draw_cards_next_turn_power.tres",
+          "bigIcon": "res://images/powers/draw_cards_next_turn_power.png",
+          "packedWidth": 64,
+          "bigWidth": 256
+        },
+        {
+          "key": "rupture",
+          "packedIcon": "res://images/atlases/power_atlas.sprites/rupture_power.tres",
+          "bigIcon": "res://images/powers/rupture_power.png",
+          "packedWidth": 64,
+          "bigWidth": 256
+        },
+        {
+          "key": "sadistic",
+          "packedIcon": "res://images/atlases/power_atlas.sprites/inferno_power.tres",
+          "bigIcon": "res://images/powers/inferno_power.png",
+          "packedWidth": 64,
+          "bigWidth": 256
+        },
+        {
+          "key": "scry_block",
+          "packedIcon": "res://images/atlases/power_atlas.sprites/plating_power.tres",
+          "bigIcon": "res://images/powers/plating_power.png",
+          "packedWidth": 64,
+          "bigWidth": 256
+        },
+        {
+          "key": "skill_block",
+          "packedIcon": "res://images/atlases/power_atlas.sprites/plating_power.tres",
+          "bigIcon": "res://images/powers/plating_power.png",
+          "packedWidth": 64,
+          "bigWidth": 256
+        },
+        {
+          "key": "skill_echo",
+          "packedIcon": "res://images/atlases/power_atlas.sprites/echo_form_power.tres",
+          "bigIcon": "res://images/powers/echo_form_power.png",
+          "packedWidth": 64,
+          "bigWidth": 256
+        },
+        {
+          "key": "skill_energy",
+          "packedIcon": "res://images/atlases/power_atlas.sprites/energy_next_turn_power.tres",
+          "bigIcon": "res://images/powers/energy_next_turn_power.png",
+          "packedWidth": 64,
+          "bigWidth": 256
+        },
+        {
+          "key": "status_furnace",
+          "packedIcon": "res://images/atlases/power_atlas.sprites/plating_power.tres",
+          "bigIcon": "res://images/powers/plating_power.png",
+          "packedWidth": 64,
+          "bigWidth": 256
+        },
+        {
+          "key": "thesis_ready",
+          "packedIcon": "res://images/atlases/power_atlas.sprites/echo_form_power.tres",
+          "bigIcon": "res://images/powers/echo_form_power.png",
+          "packedWidth": 64,
+          "bigWidth": 256
+        },
+        {
+          "key": "thorns",
+          "packedIcon": "res://images/atlases/power_atlas.sprites/thorns_power.tres",
+          "bigIcon": "res://images/powers/thorns_power.png",
+          "packedWidth": 64,
+          "bigWidth": 256
+        },
+        {
+          "key": "thousand_cuts",
+          "packedIcon": "res://images/atlases/power_atlas.sprites/inferno_power.tres",
+          "bigIcon": "res://images/powers/inferno_power.png",
+          "packedWidth": 64,
+          "bigWidth": 256
+        },
+        {
+          "key": "tools",
+          "packedIcon": "res://images/atlases/power_atlas.sprites/tools_of_the_trade_power.tres",
+          "bigIcon": "res://images/powers/tools_of_the_trade_power.png",
+          "packedWidth": 64,
+          "bigWidth": 256
+        },
+        {
+          "key": "well_laid",
+          "packedIcon": "res://images/atlases/power_atlas.sprites/well_laid_plans_power.tres",
+          "bigIcon": "res://images/powers/well_laid_plans_power.png",
+          "packedWidth": 64,
+          "bigWidth": 256
+        }
+      ]
+    }
+  ]
+}

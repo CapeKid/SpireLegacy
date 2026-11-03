@@ -22,14 +22,32 @@ public static class LegacyPowers
  private static readonly Dictionary<string,Type> CustomTypes=typeof(LegacyPower).Assembly.GetTypes().Where(t=>!t.IsAbstract&&typeof(LegacyPower).IsAssignableFrom(t)).ToDictionary(t=>t.Name[2..]);
  static LegacyPowers() { NativeNames["flame_barrier"] = "FlameBarrierPower"; }
  public static PowerModel Get(string key){var type=NativeNames.TryGetValue(key,out var name)?typeof(PowerModel).Assembly.GetType("MegaCrit.Sts2.Core.Models.Powers."+name,true)!:CustomTypes[key];return ModelDb.GetById<PowerModel>(ModelDb.GetId(type));}
+ public static PowerModel? NativeIconSource(string key)=>NativeNames.ContainsKey(key)?Get(key):null;
 }
 public abstract class LegacyPower:CustomPowerModel
 {
  public string Key=>GetType().Name[2..];
  public override PowerType Type=>PowerType.Buff;
  public override PowerStackType StackType=>PowerStackType.Counter;
- public override string CustomPackedIconPath=>Key=="metallicize"?ModelDb.Power<PlatingPower>().PackedIconPath:ModelDb.Power<StrengthPower>().PackedIconPath;
- public override string CustomBigIconPath=>Key=="metallicize"?ModelDb.Power<PlatingPower>().ResolvedBigIconPath:ModelDb.Power<StrengthPower>().ResolvedBigIconPath;
+ // Choose the same source for the status-bar and tooltip icons. Never silently
+ // turn a new draw/defense/utility power into the Strength sword again.
+ private PowerModel IconSource=>LegacyPowers.NativeIconSource(Key)??Key switch {
+  "metallicize" or "plated"=>ModelDb.Power<PlatingPower>(),
+  "skill_block" or "discard_block" or "scry_block" or "status_furnace"=>ModelDb.Power<PlatingPower>(),
+  "discard_next_block"=>ModelDb.Power<BlockNextTurnPower>(),
+  "berserk" or "skill_energy" or "discard_energy"=>ModelDb.Power<EnergyNextTurnPower>(),
+  "brutality" or "power_draw" or "evolve" or "arcane_echo" or "retained_draw" or "quiver"=>ModelDb.Power<DrawCardsNextTurnPower>(),
+  "well_laid" or "foresight" or "establishment"=>ModelDb.Power<WellLaidPlansPower>(),
+  "equilibrium"=>ModelDb.Power<RetainHandPower>(),
+  "prophecy_return" or "discard_return"=>ModelDb.Power<ReboundPower>(),
+  "attack_vigor" or "exhaust_vigor" or "hunt_momentum"=>ModelDb.Power<VigorPower>(),
+  "double_tap" or "skill_echo" or "thesis_ready"=>ModelDb.Power<EchoFormPower>(),
+  "thousand_cuts" or "sadistic" or "exhaust_damage" or "fire_breathing" or "combust" or "exhaust_burst"=>ModelDb.Power<InfernoPower>(),
+  "reservoir" or "class"=>ModelDb.Power<FocusPower>(),
+  _=>throw new InvalidOperationException($"No power icon assigned for {Key}.")
+ };
+ public override string CustomPackedIconPath=>IconSource.PackedIconPath;
+ public override string CustomBigIconPath=>IconSource.ResolvedBigIconPath;
  public override List<(string,string)> Localization=>[("title",Key=="class"?"{ClassTitle}":Key=="well_laid"?"Measured Breath":Key=="discard_return"?"Ghost Luggage":System.Globalization.CultureInfo.InvariantCulture.TextInfo.ToTitleCase(Key.Replace('_',' '))),("description",DescriptionText),("selectionScreenPrompt","Choose up to {Amount} card(s) to Retain this turn.")];
  public override LocString Title {get {var title=base.Title;if(Key=="class")title.Add("ClassTitle",Design.Get("class_mechanics",PlayerBloodlines.Heir(Owner.Player).classId).Text("name"));return title;}}
  private string DescriptionText=>Key switch{"class"=>"{ClassRules} Current: {Counter}.","plated"=>"At turn end, gain {Amount} Block. Lose a stack when attacked for HP damage.","reservoir"=>"Each Arcane Charge adds {Amount} extra damage to every hit of your next Attack.","quiver"=>"Hunter Rhythm draws {Amount} additional cards.","exhaust_burst"=>"Whenever you Exhaust 3 cards, deal {Amount} damage to ALL enemies. Progress: {Counter}/3.",_=>Design.Get("power_effects",Key).Text("summary").Replace("!M!","{Amount}")};
