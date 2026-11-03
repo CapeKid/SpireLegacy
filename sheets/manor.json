@@ -8,7 +8,8 @@
     "baseCost": 80,
     "costStep": 35,
     "requires": "none",
-    "summary": "+4 maximum health per level."
+    "summary": "+4 maximum health per level.",
+    "firstCost": 30
   },
   {
     "id": "smith",
@@ -19,7 +20,8 @@
     "baseCost": 120,
     "costStep": 80,
     "requires": "vitality",
-    "summary": "+1 Strength per level."
+    "summary": "+1 Strength per level.",
+    "firstCost": 55
   },
   {
     "id": "armory",
@@ -30,7 +32,8 @@
     "baseCost": 120,
     "costStep": 80,
     "requires": "vitality",
-    "summary": "+1 Dexterity per level."
+    "summary": "+1 Dexterity per level.",
+    "firstCost": 55
   },
   {
     "id": "vault",
@@ -41,7 +44,8 @@
     "baseCost": 100,
     "costStep": 40,
     "requires": "none",
-    "summary": "+5% legacy earnings per level, applied after the trait bonus cap."
+    "summary": "+5% legacy earnings per level, applied after the trait bonus cap.",
+    "firstCost": 40
   },
   {
     "id": "library",
@@ -52,7 +56,8 @@
     "baseCost": 350,
     "costStep": 0,
     "requires": "armory",
-    "summary": "+1 card drawn each turn."
+    "summary": "+1 card drawn each turn.",
+    "firstCost": 275
   },
   {
     "id": "garden",
@@ -63,6 +68,7 @@
     "baseCost": 100,
     "costStep": 40,
     "requires": "none",
-    "summary": "+1 healing after combat per level."
+    "summary": "+1 healing after combat per level.",
+    "firstCost": 35
   }
 ]

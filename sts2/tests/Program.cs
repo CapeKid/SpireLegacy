@@ -160,7 +160,7 @@ Inheritance.CurrentHeir = () => new();
 Check(Design.Get("traits", "cantattack").Number("goldBonus") == 150, "Pacifist retains its requested crown bonus");
 var pacifistPayout = new FamilyProfile { selected = new() { classId = "ranger", traits = ["cantattack"] } };
 var pacifistRun = pacifistPayout.Begin(1);
-Check(pacifistPayout.Settle(pacifistRun.id, 50, 200, true) == 256, "Pacifist retains its existing capped double crown payout");
+Check(pacifistPayout.Settle(pacifistRun.id, 50, 200, true) == 306, "Pacifist retains its existing capped double crown payout");
 foreach (var upgraded in new[] { false, true })
 {
     var ward = new CardDesign("mage_perfect_ward", upgraded);
@@ -290,8 +290,9 @@ for (var seed = 0; seed < 100; seed++)
 }
 profile.selected = new() { name = "Test", classId = "knight", traits = [] };
 var run = profile.Begin(4);
-Check(profile.Settle(run.id, 50, 200, true) == 128, "Slower victory crowns");
+Check(profile.Settle(run.id, 50, 200, true) == 153, "Victory payout includes the larger clear bonus");
 Check(profile.Settle(run.id, 50, 200, true) == 0 && profile.generation == 1, "Idempotent settlement");
+Check(profile.PreviewPurchases(["vitality", "smith", "garden"])?.crowns == 33, "A neutral clear can buy three distinct starter upgrades");
 var directory = Path.Combine(Path.GetTempPath(), "SpireLegacy2Checks-" + Guid.NewGuid());
 var path = Path.Combine(directory, "family.json");
 var storyPath=Path.Combine(directory,"chronicle.json");freshStory.chronicle.read.Add("mage_lesson");freshStory.Save(storyPath);

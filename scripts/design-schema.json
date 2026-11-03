@@ -276,8 +276,9 @@
   },
   "manor": {
     "types": ["dict"],
-    "required": ["baseCost", "costStep", "effect", "id", "maxLevel", "name", "perLevel", "requires", "summary"],
+    "required": ["baseCost", "costStep", "firstCost", "effect", "id", "maxLevel", "name", "perLevel", "requires", "summary"],
     "fields": {
+      "firstCost": {"types": ["int"], "min": 1, "max": 10000},
       "baseCost": {"types": ["int"], "min": 1, "max": 10000},
       "costStep": {"types": ["int"], "min": 0, "max": 10000},
       "effect": {"types": ["str"], "enum": ["dexterity", "draw", "gold", "heal", "hp", "strength"]},

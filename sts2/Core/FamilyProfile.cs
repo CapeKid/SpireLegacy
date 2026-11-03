@@ -82,7 +82,11 @@ public sealed class FamilyProfile
         return earned;
     }
     private static int StableHash(string text) { var result = 0; foreach (var c in text) result = unchecked(result * 31 + c); return result; }
-    public int Cost(Design.Row row) => row.Number("baseCost") + Level(row.Text("id")) * row.Number("costStep");
+    public int Cost(Design.Row row)
+    {
+        var level = Level(row.Text("id"));
+        return level == 0 ? row.Number("firstCost") : row.Number("baseCost") + level * row.Number("costStep");
+    }
     private bool Purchase(string id)
     {
         var row = Design.Rows("manor").SingleOrDefault(r=>r.Text("id")==id);
