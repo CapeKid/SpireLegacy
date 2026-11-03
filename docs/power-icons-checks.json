@@ -1,11 +1,13 @@
 {
+  "version": "1.0.51",
   "releaseBuild": true,
   "designPreflight": true,
   "branches": [
     {
       "game": "v0.107.1",
-      "dllSha256": "448da6745d4132020249210f430f58540aaaf49b7364543005af4373b85e76a7",
-      "verifiedUtc": "2026-11-03T13:49:17.4335290Z",
+      "mod": "1.0.51",
+      "dllSha256": "208bbb78047ebb0ee0cb57262d06bb5abc30137e512bfc72bae76446b44ffebc",
+      "verifiedUtc": "2026-11-03T14:09:57.4871614Z",
       "powersChecked": 51,
       "iconPathsLoaded": 102,
       "icons": [
@@ -370,8 +372,9 @@
     },
     {
       "game": "v0.111.0",
-      "dllSha256": "448da6745d4132020249210f430f58540aaaf49b7364543005af4373b85e76a7",
-      "verifiedUtc": "2026-11-03T13:49:37.6714392Z",
+      "mod": "1.0.51",
+      "dllSha256": "208bbb78047ebb0ee0cb57262d06bb5abc30137e512bfc72bae76446b44ffebc",
+      "verifiedUtc": "2026-11-03T14:10:18.0942862Z",
       "powersChecked": 51,
       "iconPathsLoaded": 102,
       "icons": [
