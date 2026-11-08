@@ -72,13 +72,16 @@ public static partial class PowerAuditOracle
             }
             if(key=="mage_archmage_thesis"){
                 Require(owner.Block==0,"Thesis must not grant initial Block.");
+                RequireCountdown(power,3);
                 if(mode=="woven")await Play(await Add(player,NativeCards.Get("mage_woven_incantation"),up));
                 if(mode=="burst-skills"){
-                    await Apply(player,"burst",1);await Skill();Require(power.SkillsThisTurn==2&&owner.GetPower<P_thesis_ready>()==null,"Replayed Skills count as two plays.");await Skill();
+                    await Apply(player,"burst",1);await Skill();Require(power.SkillsThisTurn==2&&owner.GetPower<P_thesis_ready>()==null,"Replayed Skills count as two plays.");RequireCountdown(power,1);await Skill();
                 }else{
-                    await Skill();await Skill();Require(owner.GetPower<P_thesis_ready>()==null,"Thesis triggered before third Skill.");await Skill();
+                    await Skill();RequireCountdown(power,2);await Skill();RequireCountdown(power,1);
+                    Require(owner.GetPower<P_thesis_ready>()==null,"Thesis triggered before third Skill.");await Skill();
                 }
                 Require(power.EchoTriggered&&power.SkillsThisTurn==3&&owner.GetPower<P_thesis_ready>()?.Amount==power.Amount,"Thesis third-Skill readiness/stack differs.");Codec();
+                RequireCountdown(power,0);
                 if(mode=="woven")Require(owner.Block==15+(up?4:3),"Woven Incantation defense changed.");
                 if(mode=="expire"){
                     await BalanceOracle.End(player,true);Require(owner.GetPower<P_thesis_ready>()==null&&!power.EchoTriggered&&power.SkillsThisTurn==0,"Unspent replay did not expire/reset.");
@@ -90,11 +93,13 @@ public static partial class PowerAuditOracle
                 var plays=1+power.Amount+(mode=="double-tap"?1:0);await Play(attack,enemies[0]);
                 Require(hp-enemies[0].CurrentHp==attack.DynamicVars.Damage.BaseValue*2*plays&&cls.AttacksThisTurn-beforeAttacks==plays,"Thesis replay must cover the complete multi-hit Attack.");
                 Require(hand.Cards.Count-beforeHand+1==2&&owner.GetPower<P_thesis_ready>()==null,"Thesis duplicated Arcane Flow or failed to consume readiness.");
+                RequireCountdown(power,0);
                 for(var i=0;i<3;i++)await Skill();Require(owner.GetPower<P_thesis_ready>()==null,"Thesis retriggered in same turn.");
                 beforeAttacks=cls.AttacksThisTurn;await Play(await Add(player,ModelDb.Card<StrikeIronclad>()),enemies[0]);Require(cls.AttacksThisTurn==beforeAttacks+1,"Later Attack received another replay.");
                 if(mode=="next-turn"){
                     await BalanceOracle.End(player,true);await PlayerCmd.GainEnergy(30,player);
                     Require(!power.EchoTriggered&&power.SkillsThisTurn==0,"Used Thesis did not reset next turn.");
+                    RequireCountdown(power,3);
                     await Skill();await Skill();await Skill();Require(owner.GetPower<P_thesis_ready>()?.Amount==power.Amount,"Thesis could not ready next turn.");
                 }
                 return new{key,up,mode,attackPlays=plays,hits=2*plays,oncePerTurn=true,flowDraw=2,saveRoundTrip=true};

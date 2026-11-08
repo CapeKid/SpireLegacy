@@ -13,6 +13,7 @@ using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Models.Cards;
 using MegaCrit.Sts2.Core.Models.Powers;
 using MegaCrit.Sts2.Core.Nodes.Cards;
+using MegaCrit.Sts2.Core.Nodes.Combat;
 using MegaCrit.Sts2.Core.Runs;
 using MegaCrit.Sts2.Core.Saves.Runs;
 using MegaCrit.Sts2.Core.Saves;
@@ -31,6 +32,15 @@ public static partial class PowerAuditOracle
     private static readonly List<(Creature target,int damage)> hits=[];
     private static readonly PileType[] Piles=[PileType.Draw,PileType.Hand,PileType.Discard,PileType.Exhaust,PileType.Play];
     private static void Require(bool value,string message){if(!value)throw new InvalidDataException(message);}
+    private static void RequireCountdown(LegacyPower power,int expected)
+    {
+        var tree=(SceneTree)Engine.GetMainLoop();
+        var icon=NativeTestBridge.Descendants(tree.Root).OfType<NPower>()
+            .Single(node=>node.Model==power);
+        var label=icon.GetNode<Control>("%AmountLabel").Get("text").AsString();
+        Require(power.DisplayAmount==expected&&label==expected.ToString(),
+            $"{power.Key} countdown expected {expected}, got model {power.DisplayAmount} and HUD '{label}'.");
+    }
     private static async Task Wait(Func<bool> done)
     {var tree=(SceneTree)Engine.GetMainLoop();var until=Time.GetTicksMsec()+20000;while(!done()){if(Time.GetTicksMsec()>until)throw new TimeoutException("Power audit native action.");await tree.ToSignal(tree,SceneTree.SignalName.ProcessFrame);}}
     public static void Observe(object[] __args)
@@ -333,13 +343,15 @@ public static partial class PowerAuditOracle
                 var card=await Add(player,canonical,up);var before=player.PlayerCombatState!.Hand.Cards.Count;
                 if(mode=="area")printedMarks+=(int)card.DynamicVars.Vulnerable.BaseValue;
                 await Play(card,enemies[0]);var drawn=player.PlayerCombatState.Hand.Cards.Count-before+1;
-                Require(counter.AttacksThisTurn==i&&counter.DisplayAmount==i%3&&drawn==(i%3==0?3:0),"Hunter Rhythm per-card/draw cap mismatch.");
+                Require(counter.AttacksThisTurn==i&&drawn==(i%3==0?3:0),"Hunter Rhythm per-card/draw cap mismatch.");
+                RequireCountdown(counter,3-i%3);
                 counts.Add(counter.DisplayAmount);draws.Add(drawn);
             }
             var marks=enemies.Select(e=>e.GetPowerAmount<VulnerablePower>()).ToArray();
             Require(marks.Sum()==(mode=="area"?enemies.Length*(2+printedMarks):2),"Hunter Rhythm target selection mismatch: "+string.Join(",",marks));
             await BalanceOracle.End(player,true);await Wait(()=>player.PlayerCombatState!.Phase==PlayerTurnPhase.Play);
-            Require(counter.AttacksThisTurn==0&&counter.DisplayAmount==0,"Hunter Rhythm did not reset next turn.");
+            Require(counter.AttacksThisTurn==0,"Hunter Rhythm did not reset next turn.");
+            RequireCountdown(counter,3);
             return new{mode,up,counts,draws,marks,printedMarks,nextTurnReset=true};
         }
     }
@@ -366,16 +378,22 @@ public static partial class PowerAuditOracle
             if(mode=="third") {
                 await Apply(player,"skill_block",2);await Apply(player,"skill_block",1);
                 await Apply(player,"skill_energy",2);await Apply(player,"attack_vigor",4);await Apply(player,"arcane_echo",2);
+                var skillBlock=creature.GetPower<P_skill_block>()!;
+                var skillEnergy=creature.GetPower<P_skill_energy>()!;
+                var attackVigor=creature.GetPower<P_attack_vigor>()!;
+                RequireCountdown(skillBlock,3);RequireCountdown(skillEnergy,3);RequireCountdown(attackVigor,3);
                 var block=creature.Block;var hand=player.PlayerCombatState!.Hand.Cards.Count;
                 for(var i=1;i<=3;i++) {
                     var card=await Add(player,ModelDb.Card<DefendIronclad>(),up);await Play(card);
                     Require(creature.Block-block==i*(up?8:5)+(i==3?3:0),"Third Skill Block/stacking mismatch.");
                     Require(creature.GetPowerAmount<EnergyNextTurnPower>()==(i==3?2:0),"Third Skill next-Energy mismatch.");
                     Require(player.PlayerCombatState.Hand.Cards.Count-hand==2,"Arcane Echo repeated within a turn.");
+                    RequireCountdown(skillBlock,3-i%3);RequireCountdown(skillEnergy,3-i%3);
                 }
-                for(var i=1;i<=3;i++){await Play(await Add(player,ModelDb.Card<StrikeIronclad>(),up),enemies[0]);Require(creature.GetPowerAmount<VigorPower>()==(i==3?4:0),"Third Attack Vigor mismatch.");}
+                for(var i=1;i<=3;i++){await Play(await Add(player,ModelDb.Card<StrikeIronclad>(),up),enemies[0]);Require(creature.GetPowerAmount<VigorPower>()==(i==3?4:0),"Third Attack Vigor mismatch.");RequireCountdown(attackVigor,3-i%3);}
                 await Play(await Add(player,ModelDb.Card<TwinStrike>(),up),enemies[0]);Require(creature.GetPowerAmount<VigorPower>()==0,"Generated Vigor was not consumed by next Attack.");
                 await BalanceOracle.End(player,true);await Wait(()=>player.PlayerCombatState.Phase==PlayerTurnPhase.Play);
+                RequireCountdown(attackVigor,3);
                 Require(player.PlayerCombatState.Energy==5&&creature.GetPower<EnergyNextTurnPower>()==null,"Next Energy not delivered once.");
                 var nextHand=player.PlayerCombatState.Hand.Cards.Count;
                 await Play(await Add(player,ModelDb.Card<DefendIronclad>(),up));
@@ -544,7 +562,7 @@ public static partial class PowerAuditOracle
             var before=counter.AttacksThisTurn;var target=player.Creature.CombatState!.GetOpponentsOf(player.Creature).First(e=>e.IsAlive);
             var attacks=player.PlayerCombatState.Hand.Cards.OfType<TwinStrike>().Where(c=>c.IsUpgraded==up).TakeLast(3).ToArray();Require(attacks.Length==3,"Missing prepared co-op Attack fuel.");
             foreach(var card in attacks)await Play(card,target);
-            attackPlays=3;Require(counter.AttacksThisTurn==before+3&&counter.DisplayAmount==0,"Co-op Hunter Rhythm counted hits instead of cards.");
+            attackPlays=3;Require(counter.AttacksThisTurn==before+3&&counter.DisplayAmount==3-(before+3)%3,"Co-op Hunter Rhythm counted hits instead of cards.");
         }
         Require(others.All(o=>o.p.PlayerCombatState!.Energy==o.energy&&o.p.Creature.Block==o.block&&o.p.PlayerCombatState.Hand.Cards.Count==o.hand&&o.p.Creature.GetPower<P_class>()!.Charges==o.charges),"Power hook leaked to another owner.");
         Require(RunManager.Instance.ChecksumTracker.IsEnabled,"Co-op checksums must remain enabled.");
