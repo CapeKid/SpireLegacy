@@ -445,6 +445,8 @@ public static class NativeTestBridge
                 case "ancient-audit-ending-win":result=await AncientAuditOracle.EndingWin(RunState());break;
                 case "ancient-audit-owners":result=await AncientAuditOracle.Owners(RunState());break;
                 case "ancient-state":result=AncientDialogueOracle.State(false);break;
+                case "neow-leafy-eligible":
+                    result=ModelDb.Relic<MegaCrit.Sts2.Core.Models.Relics.LeafyPoultice>().IsAllowedAtNeow(RunState().Players.Single());break;
                 case "neow-energy":result=await HeirPresentationOracle.NeowEnergy(RunState());break;
                 case "ancient-next":result=AncientDialogueOracle.State(true);break;
                 case "ancient-enter":

@@ -2,7 +2,7 @@
   "title": "Spire Legacy \u2014 Beta",
   "description": "Private beta builds of Spire Legacy for the creator's Steam Deck testing. Requires BaseLib. You may subscribe to both this item and the public Spire Legacy item. In StS2's mod menu, enable ONLY Spire Legacy \u2014 Beta OR Spire Legacy, then restart. They contain the same character and cards and must not run together. Finish a climb before switching builds. Family manor progress is shared. This item does not update the public Workshop listing.",
   "visibility": "private",
-  "changeNote": "1.0.53: Archmage Thesis, Woven Incantation, Arcane Meter, Tracking Rhythm and Hunter Rhythm now show the number of qualifying plays left before their effects trigger.",
+  "changeNote": "1.0.54: Fragile heirs now start alive at Neow on Ascension 2 and above. Neow also skips Leafy Poultice for heirs who cannot survive its max HP cost.",
   "tags": [
     "Characters"
   ],
