@@ -37,7 +37,7 @@ Synesthesia remains cosmetic and has no crown bonus. This audit does not change 
 | Spelunker (`revealallchests`) | Selectable | Lose 6 maximum HP. Gain 10 gold when entering a treasure room. | Inheritance stats / BloodlineRelic / HeirCharacter; Native/BloodlineRelic.cs: AfterRoomEntered |
 | Clownanthropy (`bounceterrain`) | Selectable | Lose 12 maximum HP. The first Attack played each turn grants 2 Block. | Inheritance stats / BloodlineRelic / HeirCharacter; Native/BloodlineRelic.cs: AfterCardPlayed |
 | Charismatic (`lowerstoreprice`) | Selectable | Shop cards, relics, and potions cost 20% less. | Native/BloodlineRelic.cs: ModifyMerchantPrice |
-| Histrionic (`fakeselfdamage`) | Selectable | Your heir flashes red after taking damage; HP reports stay accurate. | Native/TraitAppearance.cs: DamageFlash / Refresh |
+| Histrionic (`fakeselfdamage`) | Selectable | Your heir flashes red after taking damage. | Native/TraitAppearance.cs: DamageFlash / Refresh |
 | Nostalgic (`oldyellowtint`) | Selectable | Your heir is rendered in a nostalgic sepia palette. | Native/TraitAppearance.cs: Refresh |
 | Puritan (`enemiescensored`) | Selectable | Enemies start with 5 Block, representing difficulty reading opponents. | Native/BloodlineRelic.cs: BeforeCombatStart |
 | Associative Agnosia (`enemiesblackfill`) | Selectable | Enemies start with 1 Strength, representing harder-to-read opponents. | Native/BloodlineRelic.cs: BeforeCombatStart |

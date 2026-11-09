@@ -556,7 +556,7 @@
     "draw": 0,
     "goldBonus": 0,
     "scale": 1.0,
-    "summary": "Your heir flashes red after taking damage; HP reports stay accurate.",
+    "summary": "Your heir flashes red after taking damage.",
     "heal": 0,
     "source": "FakeSelfDamage",
     "enabled": true,
