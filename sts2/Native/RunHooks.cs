@@ -28,7 +28,16 @@ public static class InheritedHealing
     internal static readonly AsyncLocal<Creature?> StartingHp = new();
     public static void Prefix(Creature creature, ref decimal amount)
     {
-        if (creature.Player?.Character is HeirCharacter && StartingHp.Value != creature) amount = PlayerBloodlines.Traits(creature.Player).Healing(amount);
+        if (creature.Player?.Character is not HeirCharacter) return;
+        if (StartingHp.Value == creature)
+        {
+            // Weary Traveler gives Neow 0.8 HP to restore on a Fragile start.
+            // Native healing truncates fractional HP, so restore at least one.
+            if (creature.IsDead && creature.MaxHp == 1)
+                amount = Math.Max(1m, amount);
+            return;
+        }
+        amount = PlayerBloodlines.Traits(creature.Player).Healing(amount);
     }
 }
 
@@ -45,6 +54,19 @@ public static class HeirStartingHp
             InheritedHealing.StartingHp.Value = __instance.Owner.Creature;
     }
     public static void Finalizer(Creature? __state) => InheritedHealing.StartingHp.Value = __state;
+}
+
+// Neow and Neow's Bones both use this eligibility check before offering a relic.
+[HarmonyPatch(typeof(RelicModel), nameof(RelicModel.IsAllowedAtNeow))]
+public static class HeirNeowHealthCosts
+{
+    public static void Postfix(RelicModel __instance, Player player, ref bool __result)
+    {
+        if (__instance is MegaCrit.Sts2.Core.Models.Relics.LeafyPoultice &&
+            player.Character is HeirCharacter &&
+            player.Creature.MaxHp <= __instance.DynamicVars.MaxHp.BaseValue)
+            __result = false;
+    }
 }
 
 // Native co-op revives defeated players to one HP before tearing down combat.
