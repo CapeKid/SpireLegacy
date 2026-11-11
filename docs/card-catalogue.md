@@ -11,7 +11,7 @@ Each class has 82 rewards on regular (20 common, 36 uncommon, 26 rare), or 85 on
 | Shield Bash | Basic | Attack | 1 | Class unique; 5 damage; 3 Block |
 | Fortify | Common | Skill | 1 | Class unique; 7 Block |
 | Riposte | Common | Attack | 1 | Class unique; 6 damage; 3 Block |
-| Challenge | Uncommon | Attack | 2 | Shared family card; 6 damage; 2 Vulnerable |
+| Challenge | Uncommon | Attack | 2 | Shared family card; 8 damage; 2 Vulnerable |
 | Bastion | Rare | Power | 1 | Class unique; 2 Dexterity |
 | Family Oath | Rare | Attack | 2 | Shared family card; 6 damage ×2; 1 Strength; Exhaust |
 | Study | Common | Skill | 1 | Shared family card; 2 draw |
@@ -24,7 +24,7 @@ Each class has 82 rewards on regular (20 common, 36 uncommon, 26 rare), or 85 on
 | Blood Price | Common | Skill | 0 | Class unique; 1 Energy; 3 HP cost |
 | Brave Advance | Common | Attack | 1 | Shared family card; 5 damage; 1 Energy next turn |
 | Long Reach | Common | Attack | 1 | Shared family card; 4 damage; 1 draw |
-| Reforge | Common | Skill | 1 | Shared family card; 3 Block; 1 draw; Exhaust 1 card(s) from your hand. |
+| Reforge | Uncommon | Skill | 1 | Shared family card; 3 Block; 1 draw; Exhaust 1 card(s) from your hand. |
 | Shield Slam | Uncommon | Attack | 1 | Class unique; Deal damage equal to your current Block. |
 | Executioner Axe | Uncommon | Attack | 2 | Class unique; 9 damage; Deal 2 times damage if the target is at or below half HP. |
 | Counter Lunge | Uncommon | Attack | 1 | Class unique; 6 damage; Deal 4 additional damage if you have Block. |
@@ -37,7 +37,7 @@ Each class has 82 rewards on regular (20 common, 36 uncommon, 26 rare), or 85 on
 | Battle Meditation | Uncommon | Skill | 1 | Shared family card; 3 draw; 1 discard |
 | Reinforce | Uncommon | Skill | 1 | Class unique; 5 Block; 5 Block next turn |
 | Double Guard | Uncommon | Skill | 1 | Class unique; Double your current Block.; Exhaust |
-| Clean Armor | Uncommon | Skill | 1 | Shared family card; 4 Block; Remove all debuffs from yourself.; Exhaust |
+| Clean Armor | Common | Skill | 1 | Shared family card; 4 Block; Remove all debuffs from yourself.; Exhaust |
 | Last Stand | Uncommon | Skill | 0 | Shared family card; 9 Block; 3 HP cost; Exhaust |
 | Arms Vault | Uncommon | Skill | 1 | Shared family card; 1 draw; Return a card from your Exhaust pile to your hand. Cannot return Spire Legacy Exhaust-recovery cards.; Exhaust |
 | Bulwark | Uncommon | Power | 1 | Class unique; At the end of your turn, gain 2 Block. |
@@ -56,14 +56,14 @@ Each class has 82 rewards on regular (20 common, 36 uncommon, 26 rare), or 85 on
 | Forge Memory | Rare | Power | 1 | Class unique; Whenever you Exhaust a card, gain 3 Vigor for your next Attack. |
 | Cold Read | Common | Skill | 0 | Shared family card; 1 draw; 1 discard |
 | Memory Prism | Uncommon | Skill | 1 | Shared family card; Return 1 card(s) from your discard pile to your hand. Cannot return other Spire Legacy recovery cards.; Retain |
-| Spellweave | Uncommon | Skill | 1 | Shared family card; 2 draw next turn; 1 Energy next turn |
+| Spellweave | Uncommon | Skill | 1 | Shared family card; 1 draw next turn; 1 Energy next turn |
 | Time Pocket | Uncommon | Skill | 1 | Shared family card; 1 draw; Retain your hand for 1 turn(s). |
 | Enchanted Ink | Uncommon | Skill | 0 | Shared family card; Reduce the cost of 1 random card(s) in your hand by 1 this turn.; Exhaust |
 | Secret Thesis | Uncommon | Power | 2 | Shared family card; Whenever you Exhaust a card, draw 1 card(s). |
-| Tripwire | Common | Skill | 1 | Shared family card; 3 Block; 1 Weak |
+| Tripwire | Common | Skill | 1 | Shared family card; 4 Block; 1 Weak |
 | Measured Breath | Uncommon | Power | 1 | Shared family card; At the end of your turn, Retain up to 1 card(s). |
 | Master Plan | Rare | Skill | 3 | Shared family card; Cards currently in your hand cost 0 this turn. You cannot draw additional cards this turn.; Exhaust |
-| Forest Remedy | Rare | Skill | 2 | Shared family card; 4 healing; Remove all debuffs from yourself.; Exhaust |
+| Forest Remedy | Rare | Skill | 2 | Shared family card; 6 Block; 4 healing; Remove all debuffs from yourself.; Exhaust |
 | Perfect Timing | Rare | Power | 3 | Shared family card; 3 HP cost; At the start of your turn, gain 1 Energy. |
 | Shield Drill | Common | Skill | 0 | Class unique; 2 Block; Exhaust 1 card(s) from your hand. |
 | Grit Teeth | Common | Skill | 0 | Class unique; 5 Block; 2 HP cost |
@@ -75,14 +75,14 @@ Each class has 82 rewards on regular (20 common, 36 uncommon, 26 rare), or 85 on
 | Salvage Guard | Uncommon | Skill | 1 | Class unique; 2 Block; Gain 1 Block per card in your Exhaust pile (up to 10 cards). |
 | Scar Tissue | Uncommon | Power | 1 | Class unique; Whenever you draw a Status, draw 1 card(s). |
 | Furnace Breath | Uncommon | Power | 1 | Class unique; Whenever you draw a Status or Curse, deal 3 damage to ALL enemies. |
-| Patient Riposte | Uncommon | Attack | 2 | Class unique; 9 damage; Whenever this is Retained, gain 3 damage this combat.; Retain |
+| Patient Riposte | Uncommon | Attack | 2 | Class unique; 12 damage; Whenever this is Retained, gain 3 damage this combat.; Retain |
 | Castle Heart | Rare | Power | 2 | Class unique; Public-beta only; 5 Block; At the end of your turn, gain 4 Block. |
 | Iron Avalanche | Rare | Attack | 2 | Class unique; 6 damage to all enemies; Deal 18 additional damage if you have Block.; Exhaust |
 | Phoenix Forge | Rare | Power | 2 | Class unique; Whenever you Exhaust 3 cards, deal 14 damage to ALL enemies. |
 | Ancestral Salvage | Rare | Skill | 2 | Shared family card; 6 Block; You may return an Attack from your Exhaust pile to your hand. If it enters your hand, gain 4 Vigor. Cannot return Spire Legacy Exhaust-recovery cards.; Exhaust |
 | King's Ransom | Rare | Skill | 0 | Class unique; 2 Energy; 4 HP cost; Exhaust |
 | Bloodfire Mantle | Rare | Power | 1 | Class unique; At the end of your turn, lose 1 HP and deal 5 damage to ALL enemies. |
-| Grand Melee | Rare | Attack | 3 | Class unique; 2 damage ×7 to all enemies |
+| Grand Melee | Rare | Attack | 3 | Class unique; 3 damage ×5 to all enemies |
 | Warlord's Command | Rare | Skill | 2 | Class unique; 1 Strength; Your next 2 Attack(s) this turn are played twice.; Exhaust |
 | Iron Furnace | Rare | Power | 2 | Class unique; Whenever you draw a Status, Exhaust it and gain 5 Block. |
 | Siege Tomorrow | Rare | Skill | 2 | Class unique; 3 Energy next turn; 15 Block next turn; Exhaust |
@@ -101,7 +101,7 @@ Each class has 82 rewards on regular (20 common, 36 uncommon, 26 rare), or 85 on
 | --- | --- | --- | ---: | --- |
 | Spark Strike | Basic | Attack | 1 | Class unique; 5 damage |
 | Ward Defend | Basic | Skill | 1 | Class unique; 4 Block |
-| Challenge | Uncommon | Attack | 2 | Shared family card; 6 damage; 2 Vulnerable |
+| Challenge | Uncommon | Attack | 2 | Shared family card; 8 damage; 2 Vulnerable |
 | Family Oath | Rare | Attack | 2 | Shared family card; 6 damage ×2; 1 Strength; Exhaust |
 | Flame Barrier | Basic | Skill | 1 | Class unique; 5 Block; When attacked this turn, deal 2 damage back. |
 | Fireball | Common | Attack | 2 | Class unique; 15 damage |
@@ -114,10 +114,10 @@ Each class has 82 rewards on regular (20 common, 36 uncommon, 26 rare), or 85 on
 | Arcane Reservoir | Uncommon | Power | 1 | Class unique; Each Arcane Charge adds 1 extra damage to every hit of your next Attack. |
 | Brave Advance | Common | Attack | 1 | Shared family card; 5 damage; 1 Energy next turn |
 | Long Reach | Common | Attack | 1 | Shared family card; 4 damage; 1 draw |
-| Reforge | Common | Skill | 1 | Shared family card; 3 Block; 1 draw; Exhaust 1 card(s) from your hand. |
+| Reforge | Uncommon | Skill | 1 | Shared family card; 3 Block; 1 draw; Exhaust 1 card(s) from your hand. |
 | Merciless | Uncommon | Attack | 1 | Shared family card; 6 damage; 2 Weak; 2 Vulnerable; Exhaust |
 | Battle Meditation | Uncommon | Skill | 1 | Shared family card; 3 draw; 1 discard |
-| Clean Armor | Uncommon | Skill | 1 | Shared family card; 4 Block; Remove all debuffs from yourself.; Exhaust |
+| Clean Armor | Common | Skill | 1 | Shared family card; 4 Block; Remove all debuffs from yourself.; Exhaust |
 | Last Stand | Uncommon | Skill | 0 | Shared family card; 9 Block; 3 HP cost; Exhaust |
 | Arms Vault | Uncommon | Skill | 1 | Shared family card; 1 draw; Return a card from your Exhaust pile to your hand. Cannot return Spire Legacy Exhaust-recovery cards.; Exhaust |
 | Burnished Legacy | Uncommon | Power | 1 | Shared family card; Whenever you Exhaust a card, gain 2 Block. |
@@ -132,7 +132,7 @@ Each class has 82 rewards on regular (20 common, 36 uncommon, 26 rare), or 85 on
 | Kindle | Common | Skill | 0 | Class unique; 2 Block; Gain 1 Arcane Charge(s), up to the normal charge cap.; Exhaust |
 | Thunderchain | Uncommon | Attack | 1 | Class unique; 2 damage ×4; Hits target random enemies. |
 | Inferno Wave | Uncommon | Attack | 2 | Class unique; 10 damage to all enemies |
-| Frozen Spear | Uncommon | Attack | 2 | Class unique; Public-beta only; 8 damage; 1 Weak; 1 Vulnerable |
+| Frozen Spear | Uncommon | Attack | 2 | Class unique; Public-beta only; 10 damage; 2 Weak; 1 Vulnerable |
 | Venom Rune | Uncommon | Attack | 1 | Class unique; 4 damage; 3 Poison |
 | Mana Burn | Uncommon | Attack | 0 | Class unique; 5 damage; If Arcane Flow has triggered this turn, deal 5 additional damage.; Exhaust |
 | Rune Detonation | Uncommon | Attack | 1 | Class unique; 6 damage; If you have 2 Arcane Charges and Arcane Flow is ready, gain 1 Energy.; Retain |
@@ -141,7 +141,7 @@ Each class has 82 rewards on regular (20 common, 36 uncommon, 26 rare), or 85 on
 | Rewrite | Uncommon | Skill | 1 | Class unique; 2 draw; Exhaust 1 card(s) from your hand. |
 | Memory Prism | Uncommon | Skill | 1 | Shared family card; Return 1 card(s) from your discard pile to your hand. Cannot return other Spire Legacy recovery cards.; Retain |
 | Cleanse Sigil | Uncommon | Skill | 1 | Class unique; Public-beta only; Remove all debuffs from yourself. Gain 2 Arcane Charges, up to the normal charge cap.; Exhaust |
-| Spellweave | Uncommon | Skill | 1 | Shared family card; 2 draw next turn; 1 Energy next turn |
+| Spellweave | Uncommon | Skill | 1 | Shared family card; 1 draw next turn; 1 Energy next turn |
 | Time Pocket | Uncommon | Skill | 1 | Shared family card; 1 draw; Retain your hand for 1 turn(s). |
 | Blood to Mana | Uncommon | Skill | 0 | Class unique; 2 Energy; 4 HP cost; Exhaust |
 | Enchanted Ink | Uncommon | Skill | 0 | Shared family card; Reduce the cost of 1 random card(s) in your hand by 1 this turn.; Exhaust |
@@ -151,25 +151,25 @@ Each class has 82 rewards on regular (20 common, 36 uncommon, 26 rare), or 85 on
 | Toxic Theory | Uncommon | Power | 1 | Class unique; Whenever you apply a debuff to an enemy, deal 2 damage to it. |
 | Celestial Spear | Rare | Attack | 3 | Class unique; 26 damage |
 | Starfall | Rare | Attack | 3 | Class unique; 6 damage ×3 to all enemies |
-| Soulfire | Rare | Attack | 2 | Class unique; 13 damage; 6 Poison |
+| Soulfire | Rare | Attack | 2 | Class unique; 13 damage; 3 Poison; If you start this Attack with 2 Arcane Charges and Arcane Flow ready, apply that Poison again. |
 | Perfect Ward | Rare | Skill | 2 | Class unique; 3 Block; Prevent the next 1 time(s) you would lose HP.; Exhaust |
 | Mana Fountain | Rare | Skill | 0 | Class unique; 2 Energy; Exhaust |
 | Grand Thesis | Rare | Skill | 1 | Class unique; 2 draw; 1 Energy next turn; Gain 1 Arcane Charge(s), up to the normal charge cap.; Exhaust |
-| Hourglass | Rare | Skill | 1 | Class unique; Reduce the cost of 2 random card(s) in your hand by 1 this turn.; Exhaust |
+| Hourglass | Rare | Skill | 1 | Class unique; Choose a card in your hand. Reduce its cost by 2 this turn.; Exhaust |
 | Transmutation | Rare | Skill | 1 | Class unique; 2 draw; 2 Energy; Exhaust 2 card(s) from your hand.; Exhaust |
 | Infinite Script | Rare | Power | 2 | Class unique; 1 draw next turn; At the start of your turn, lose 1 HP and draw 1 card(s). |
 | Astral Mantle | Rare | Power | 2 | Class unique; Whenever you play a card, gain 1 Block. |
-| Tripwire | Common | Skill | 1 | Shared family card; 3 Block; 1 Weak |
+| Tripwire | Common | Skill | 1 | Shared family card; 4 Block; 1 Weak |
 | Measured Breath | Uncommon | Power | 1 | Shared family card; At the end of your turn, Retain up to 1 card(s). |
 | Master Plan | Rare | Skill | 3 | Shared family card; Cards currently in your hand cost 0 this turn. You cannot draw additional cards this turn.; Exhaust |
-| Forest Remedy | Rare | Skill | 2 | Shared family card; 4 healing; Remove all debuffs from yourself.; Exhaust |
+| Forest Remedy | Rare | Skill | 2 | Shared family card; 6 Block; 4 healing; Remove all debuffs from yourself.; Exhaust |
 | Perfect Timing | Rare | Power | 3 | Shared family card; 3 HP cost; At the start of your turn, gain 1 Energy. |
 | Ancestral Salvage | Rare | Skill | 2 | Shared family card; 6 Block; You may return an Attack from your Exhaust pile to your hand. If it enters your hand, gain 4 Vigor. Cannot return Spire Legacy Exhaust-recovery cards.; Exhaust |
 | Warding Verse | Common | Skill | 0 | Class unique; 2 Block; Retain |
 | Ash Reading | Common | Skill | 0 | Class unique; 1 draw; Exhaust 1 card(s) from your hand.; Exhaust |
 | Stored Ember | Common | Attack | 1 | Shared family card; 3 damage; Whenever this is Retained, gain 2 damage this combat.; Retain |
 | Crystal Seed | Common | Skill | 1 | Shared family card; 3 Block; Whenever this is Retained, gain 2 Block this combat.; Retain |
-| Chilling Words | Common | Skill | 1 | Class unique; 3 Block; 2 Weak |
+| Chilling Words | Common | Skill | 1 | Class unique; 2 Block; Scry 2.; 1 Weak |
 | Woven Incantation | Uncommon | Power | 1 | Shared family card; Every third Skill you play each turn grants 3 Block. |
 | Arcane Meter | Uncommon | Power | 1 | Class unique; Every third Skill you play each turn grants 1 Energy NEXT turn. |
 | Tower Library | Uncommon | Power | 2 | Class unique; Whenever a card is Retained, reduce its cost by 1 this combat. |
@@ -194,7 +194,7 @@ Each class has 82 rewards on regular (20 common, 36 uncommon, 26 rare), or 85 on
 | --- | --- | --- | ---: | --- |
 | Arrow Strike | Basic | Attack | 1 | Class unique; 5 damage |
 | Sidestep Defend | Basic | Skill | 1 | Class unique; 4 Block |
-| Challenge | Uncommon | Attack | 2 | Shared family card; 6 damage; 2 Vulnerable |
+| Challenge | Uncommon | Attack | 2 | Shared family card; 8 damage; 2 Vulnerable |
 | Family Oath | Rare | Attack | 2 | Shared family card; 6 damage ×2; 1 Strength; Exhaust |
 | Study | Common | Skill | 1 | Shared family card; 2 draw |
 | Steady Aim | Basic | Attack | 1 | Class unique; 6 damage; 1 draw |
@@ -202,22 +202,22 @@ Each class has 82 rewards on regular (20 common, 36 uncommon, 26 rare), or 85 on
 | Retreat | Common | Skill | 1 | Class unique; 6 Block; 1 draw |
 | Volley | Common | Attack | 2 | Class unique; 5 damage ×3 |
 | Mark Prey | Uncommon | Attack | 0 | Class unique; 2 damage; 1 Vulnerable |
-| Snipe | Rare | Attack | 2 | Class unique; 19 damage; Exhaust |
+| Snipe | Rare | Attack | 2 | Class unique; 19 damage; Deal 6 additional damage if the target is at full HP.; Exhaust |
 | Meditate | Rare | Skill | 0 | Shared family card; 1 draw; 1 Energy; Exhaust |
 | Endless Quiver | Uncommon | Power | 1 | Class unique; Hunter Rhythm draws 1 extra card(s). |
 | Brave Advance | Common | Attack | 1 | Shared family card; 5 damage; 1 Energy next turn |
 | Long Reach | Common | Attack | 1 | Shared family card; 4 damage; 1 draw |
-| Reforge | Common | Skill | 1 | Shared family card; 3 Block; 1 draw; Exhaust 1 card(s) from your hand. |
+| Reforge | Uncommon | Skill | 1 | Shared family card; 3 Block; 1 draw; Exhaust 1 card(s) from your hand. |
 | Merciless | Uncommon | Attack | 1 | Shared family card; 6 damage; 2 Weak; 2 Vulnerable; Exhaust |
 | Battle Meditation | Uncommon | Skill | 1 | Shared family card; 3 draw; 1 discard |
-| Clean Armor | Uncommon | Skill | 1 | Shared family card; 4 Block; Remove all debuffs from yourself.; Exhaust |
+| Clean Armor | Common | Skill | 1 | Shared family card; 4 Block; Remove all debuffs from yourself.; Exhaust |
 | Last Stand | Uncommon | Skill | 0 | Shared family card; 9 Block; 3 HP cost; Exhaust |
 | Arms Vault | Uncommon | Skill | 1 | Shared family card; 1 draw; Return a card from your Exhaust pile to your hand. Cannot return Spire Legacy Exhaust-recovery cards.; Exhaust |
 | Burnished Legacy | Uncommon | Power | 1 | Shared family card; Whenever you Exhaust a card, gain 2 Block. |
 | Guardian Angel | Rare | Skill | 2 | Shared family card; Prevent the next 1 time(s) you would lose HP.; Exhaust |
 | Cold Read | Common | Skill | 0 | Shared family card; 1 draw; 1 discard |
 | Memory Prism | Uncommon | Skill | 1 | Shared family card; Return 1 card(s) from your discard pile to your hand. Cannot return other Spire Legacy recovery cards.; Retain |
-| Spellweave | Uncommon | Skill | 1 | Shared family card; 2 draw next turn; 1 Energy next turn |
+| Spellweave | Uncommon | Skill | 1 | Shared family card; 1 draw next turn; 1 Energy next turn |
 | Time Pocket | Uncommon | Skill | 1 | Shared family card; 1 draw; Retain your hand for 1 turn(s). |
 | Enchanted Ink | Uncommon | Skill | 0 | Shared family card; Reduce the cost of 1 random card(s) in your hand by 1 this turn.; Exhaust |
 | Secret Thesis | Uncommon | Power | 2 | Shared family card; Whenever you Exhaust a card, draw 1 card(s). |
@@ -227,7 +227,7 @@ Each class has 82 rewards on regular (20 common, 36 uncommon, 26 rare), or 85 on
 | Snap Shot | Common | Attack | 0 | Class unique; 5 damage; 1 discard |
 | Poison Tip | Common | Skill | 1 | Class unique; 4 Poison |
 | Watch the Wind | Common | Skill | 1 | Class unique; 3 Block; Scry 3. |
-| Tripwire | Common | Skill | 1 | Shared family card; 3 Block; 1 Weak |
+| Tripwire | Common | Skill | 1 | Shared family card; 4 Block; 1 Weak |
 | Ambush | Uncommon | Attack | 1 | Class unique; 6 damage; Deal 5 additional damage if the target is Vulnerable or Poisoned.; Retain |
 | Rapid Fire | Uncommon | Attack | 1 | Class unique; 2 damage ×4 |
 | Razor Fletching | Uncommon | Attack | 1 | Class unique; 5 damage; 3 Poison |
@@ -235,7 +235,7 @@ Each class has 82 rewards on regular (20 common, 36 uncommon, 26 rare), or 85 on
 | Hooked Arrow | Uncommon | Attack | 1 | Class unique; 6 damage; Return 1 card(s) from your discard pile to your hand. Cannot return other Spire Legacy recovery cards. |
 | Ricochet | Uncommon | Attack | 1 | Class unique; 3 damage ×3; Hits target random enemies. |
 | Reposition | Uncommon | Skill | 1 | Class unique; 5 Block; 2 draw; 1 discard |
-| Scouting | Uncommon | Skill | 1 | Class unique; Public-beta only; Scry 3.; 1 draw |
+| Scouting | Uncommon | Skill | 1 | Class unique; Public-beta only; Scry 2.; 2 draw; 1 discard |
 | Double Dose | Uncommon | Skill | 1 | Class unique; Apply 3 Poison twice. |
 | Escape Route | Uncommon | Skill | 0 | Class unique; 2 discard; 1 Energy |
 | Pocket Arsenal | Uncommon | Skill | 1 | Class unique; Public-beta only; 1 draw; Reduce the cost of 1 random card(s) in your hand by 1 this turn.; Exhaust |
@@ -247,9 +247,9 @@ Each class has 82 rewards on regular (20 common, 36 uncommon, 26 rare), or 85 on
 | Heartseeker | Rare | Attack | 2 | Class unique; 5 damage ×3; Retain |
 | Black Arrow | Rare | Attack | 2 | Class unique; 13 damage; 6 Poison |
 | Master Plan | Rare | Skill | 3 | Shared family card; Cards currently in your hand cost 0 this turn. You cannot draw additional cards this turn.; Exhaust |
-| Serpent Oil | Rare | Skill | 2 | Class unique; 2 Poison; Double Poison on the target.; Exhaust |
+| Serpent Oil | Rare | Skill | 2 | Class unique; 4 Poison; Double Poison on the target.; Exhaust |
 | Second Quiver | Rare | Skill | 0 | Class unique; Return up to 2 Attacks from your discard pile to your hand.; Exhaust |
-| Forest Remedy | Rare | Skill | 2 | Shared family card; 4 healing; Remove all debuffs from yourself.; Exhaust |
+| Forest Remedy | Rare | Skill | 2 | Shared family card; 6 Block; 4 healing; Remove all debuffs from yourself.; Exhaust |
 | Poisoned Arsenal | Rare | Power | 2 | Class unique; Whenever an Attack deals unblocked damage, apply 1 Poison. |
 | Unseen Hunter | Rare | Power | 2 | Class unique; Public-beta only; 4 Block; Whenever you play a card, gain 1 Block. |
 | Perfect Timing | Rare | Power | 3 | Shared family card; 3 HP cost; At the start of your turn, gain 1 Energy. |

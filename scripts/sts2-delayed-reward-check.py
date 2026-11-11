@@ -37,7 +37,7 @@ for effect in ['energy','draw','block','spellweave']:
         assert r['immediateEnergy']==2,r
         if effect=='spellweave':
             assert r['immediateBlock']==(2 if upgraded else 0),r
-            assert r['firstEnergy']==r['secondEnergy']==4 and r['firstHand']==r['secondHand']==7,r
+            assert r['firstEnergy']==r['secondEnergy']==4 and r['firstHand']==r['secondHand']==6,r
             assert r['replaySpent']==1 and r['queuedEnergy']==r['queuedDraw']==0 and r['roundTrip'] and r['pile']=='Discard',r
             print(tag,r,flush=True)
             continue

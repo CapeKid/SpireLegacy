@@ -51,9 +51,9 @@ try:
         assert turn3['energy'] == 4, turn3
         before = start('ranger')
         tripwire = send('play', card='ranger_tripwire', upgrade=upgrade)
-        assert tripwire['block']-before['block'] == (5 if upgrade else 3), tripwire
+        assert tripwire['block']-before['block'] == (7 if upgrade else 4), tripwire
         assert amount(tripwire['enemies'][0]['powers'], 'weak') == 1, tripwire
     send('abandon')
-    print(tag + ': base/upgraded Ward consumes exactly 1/2 prevented hits; Timing grants only +1 Energy on consecutive turns; Tripwire gives 3/5 Block and exactly 1 Weak.')
+    print(tag + ': base/upgraded Ward consumes exactly 1/2 prevented hits; Timing grants only +1 Energy on consecutive turns; Tripwire gives 4/7 Block and exactly 1 Weak.')
 finally:
     (root / 'private/sts2-evidence' / f'balance113-{tag}.json').write_text(json.dumps(evidence, indent=2), encoding='utf-8')

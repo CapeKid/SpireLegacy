@@ -29,6 +29,13 @@ public static class PoolExpansionOracle
             if(upgrade)CardCmd.Upgrade(card);
             await CardPileCmd.Add(card,PileType.Hand,skipVisuals:true);
             var hand=PileType.Hand.GetPile(player);
+            if (key == "ranger_forest_remedy")
+                await PowerCmd.Apply<WeakPower>(new BlockingPlayerChoiceContext(), player.Creature, 2, enemy, null);
+            if (key == "mage_hourglass")
+            {
+                var payoff = combat.CreateCard(NativeCards.Get("mage_celestial_spear"), player);
+                await CardPileCmd.Add(payoff, PileType.Hand, CardPilePosition.Top, skipVisuals: true);
+            }
             var costs=hand.Cards.Where(c=>c!=card&&!c.EnergyCost.CostsX).Select(c=>c.EnergyCost.GetWithModifiers(CostModifiers.All)).ToArray();
             var hp=player.Creature.CurrentHp;var enemyHp=enemy.CurrentHp;var block=player.Creature.Block;var energy=player.PlayerCombatState!.Energy;
             var target=card.TargetType==TargetType.AnyEnemy?enemy:null;
@@ -42,6 +49,17 @@ public static class PoolExpansionOracle
             if(NCard.FindOnTable(card)!=null)throw new InvalidDataException("Card remains hovering: "+key);
             var saved=card.ToSerializable();var restored=(LegacyCard)run.LoadCard(saved,player);
             if(restored.Key!=key||restored.IsUpgraded!=upgrade||restored.DesignCard.Rules()!=card.DesignCard.Rules())throw new InvalidDataException("New pool card save mismatch: "+key);
+            if (key == "mage_hourglass")
+            {
+                if (card.Keywords.Contains(CardKeyword.Retain) != upgrade || restored.Keywords.Contains(CardKeyword.Retain) != upgrade)
+                    throw new InvalidDataException("Hourglass Retain did not match its upgrade or survive loading.");
+                if (upgrade)
+                {
+                    CardCmd.Downgrade(restored);
+                    if (restored.Keywords.Contains(CardKeyword.Retain))
+                        throw new InvalidDataException("Downgraded Hourglass kept Retain.");
+                }
+            }
             run.RemoveCard(restored);
             return new{key,upgrade,pile=card.Pile?.Type.ToString(),cost,hpChange=player.Creature.CurrentHp-hp,enemyDamage=enemyHp-enemy.CurrentHp,blockChange=player.Creature.Block-block,energyChange=player.PlayerCombatState.Energy-energy,
                 poison=enemy.GetPowerAmount<PoisonPower>(),charges=player.Creature.GetPower<P_class>()?.Charges,

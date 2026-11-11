@@ -9,9 +9,14 @@ using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Models.Powers;
 using MegaCrit.Sts2.Core.ValueProps;
 using MegaCrit.Sts2.Core.Hooks;
+using MegaCrit.Sts2.Core.Localization;
 namespace SpireLegacy;
 public static class CardEffects
 {
+ internal static bool FullArcaneFlowReady(Player player) =>
+    PlayerBloodlines.Heir(player).classId == "mage" &&
+    player.Creature.GetPower<P_class>() is { Charges: >= 2, ArcaneDrawUsed: false };
+
  public static async Task Apply(PlayerChoiceContext context,string key,Creature target,int amount,Creature source,CardModel? card)
  {
   if(amount==0)return;
@@ -19,7 +24,7 @@ public static class CardEffects
   if(power is null)await PowerCmd.Apply(context,canonical.ToMutable(),target,amount,source,card);
   else await PowerCmd.ModifyAmount(context,power,amount,source,card);
  }
- public static async Task Execute(LegacyCard card,PlayerChoiceContext context,CardPlay play)
+ public static async Task Execute(LegacyCard card,PlayerChoiceContext context,CardPlay play,bool repeatPoison=false)
  {
   var d=card.DesignCard;var row=d.Row;var player=card.Owner;var creature=player.Creature;
   IEnumerable<Creature> enemies=row.Flag("aoe")?card.CombatState!.GetOpponentsOf(creature):play.Target is {} target?new[]{target}:[];
@@ -40,6 +45,7 @@ public static class CardEffects
   await Apply(context,"strength",creature,d.Amount("strength"),creature,card);await Apply(context,"dexterity",creature,d.Amount("dexterity"),creature,card);
   foreach(var enemy in enemies.Where(e=>e.IsAlive)){
    foreach(var key in new[]{"poison","weak","vulnerable"})await Apply(context,key,enemy,d.Amount(key),creature,card);
+   if(repeatPoison&&enemy.IsAlive)await Apply(context,"poison",enemy,d.Amount("poison"),creature,card);
    if(d.Mercy)await Apply(context,"poison",enemy,d.MercyPoison,creature,card);
   }
   if(row.Text("power")!="none")await Apply(context,row.Text("power"),creature,d.Magic,creature,card);
@@ -69,7 +75,7 @@ public static class CardEffects
   switch(row.Text("special")){
    case "guarded_strength":if(creature.Block>0)await Apply(context,"strength",creature,amount,creature,card);return;
    case "upgrade_attacks":foreach(var held in hand.Cards.Where(c=>c.Type==CardType.Attack&&c.IsUpgradable).ToArray())CardCmd.Upgrade(held);return;
-   case "none":case "arcane_aftershock":case "charge_burst":case "skill_damage":case "block_damage":case "chain_damage":case "random_attack":case "execute":case "guard_bonus":case "marked_bonus":case "scry":case "exhaust_damage":case "retain_damage":case "retain_block":case "discard_draw":case "discard_energy":case "discard_block":return;
+   case "none":case "arcane_aftershock":case "arcane_poison":case "charge_burst":case "skill_damage":case "block_damage":case "chain_damage":case "random_attack":case "execute":case "full_hp_bonus":case "guard_bonus":case "marked_bonus":case "scry":case "exhaust_damage":case "retain_damage":case "retain_block":case "discard_draw":case "discard_energy":case "discard_block":return;
    case "wounds":for(var i=0;i<amount;i++)await CardPileCmd.AddGeneratedCardToCombat(card.CombatState!.CreateCard(ModelDb.Card<MegaCrit.Sts2.Core.Models.Cards.Wound>(),player),PileType.Draw,player,CardPilePosition.Random);break;
    // The native combined command defers Sly autoplay until the exchange draw
    // finishes. Separate Discard/Draw calls let Reflex redraw the discarded fuel.
@@ -100,8 +106,18 @@ public static class CardEffects
      candidate=>candidate is not LegacyCard legacy||(pile==PileType.Exhaust?legacy.DesignCard.RecoverableFromExhaust:legacy.DesignCard.RecoverableFromDiscard)));
     foreach(var retrieved in selected)await CardPileCmd.Add(retrieved,PileType.Hand);break;
    case "charge_gain":if(creature.GetPower<P_class>() is {} cls && PlayerBloodlines.Heir(player).classId=="mage")cls.Charges=Math.Min(2,cls.Charges+amount);break;
-   case "charged_energy":if(PlayerBloodlines.Heir(player).classId=="mage"&&creature.GetPower<P_class>() is {Charges:>=2,ArcaneDrawUsed:false})await PlayerCmd.GainEnergy(amount,player);break;
+   case "charged_energy":if(FullArcaneFlowReady(player))await PlayerCmd.GainEnergy(amount,player);break;
    case "discount_hand":var eligible=hand.Cards.Where(c=>!c.EnergyCost.CostsX&&c.EnergyCost.GetWithModifiers(CostModifiers.All)>0).ToList();for(var i=0;i<amount&&eligible.Count>0;i++){var index=player.RunState.Rng.CombatCardSelection.NextInt(eligible.Count);var discounted=eligible[index];eligible.RemoveAt(index);discounted.EnergyCost.AddThisTurn(-1);}break;
+   case "discount_card":
+   {
+    var prompt = new LocString("cards", card.Id.Entry + ".discountPrompt");
+    var prefs = new CardSelectorPrefs(prompt, 1);
+    var chosen = await CardChoiceLifetime.Run(player, () => CardSelectCmd.FromHand(context, player, prefs,
+        candidate => candidate != card && !candidate.EnergyCost.CostsX && candidate.EnergyCost.GetWithModifiers(CostModifiers.All) > 0, card));
+    foreach (var discounted in chosen)
+        discounted.EnergyCost.AddThisTurn(-Math.Min(amount, discounted.EnergyCost.GetWithModifiers(CostModifiers.All)));
+    break;
+   }
    case "free_hand":foreach(var held in hand.Cards.Where(c=>!c.EnergyCost.CostsX))held.SetToFreeThisTurn();await Apply(context,"no_draw",creature,1,creature,card);break;
    case "poison_twice":
     foreach(var enemy in enemies.Where(e=>e.IsAlive))
