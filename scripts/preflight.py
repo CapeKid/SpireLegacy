@@ -15,7 +15,8 @@ def validate(historical_assets=False):
     errors=[]; cells=0
     for name,rows in sheets.items():
         if not rows: errors.append(f'{name}: empty sheet'); continue
-        columns=set(rows[0]); ids=set()
+        optional = {'upgradeRetain'} if name == 'cards' else set()
+        columns=set(rows[0])-optional; ids=set()
         for row in rows:
             id=row.get('id','?')
             if id in ids: errors.append(f'{name}: duplicate {id}')
@@ -23,7 +24,7 @@ def validate(historical_assets=False):
             for col in columns|set(row):
                 cells+=1
                 if col not in row or row[col] is None or row[col]=='': errors.append(f'{name}.{id}.{col}: unfilled')
-            if set(row)!=columns: errors.append(f'{name}.{id}: inconsistent columns')
+            if set(row)-optional!=columns: errors.append(f'{name}.{id}: inconsistent columns')
     classes={r['id'] for r in sheets['classes']}; assets={r['id'] for r in sheets['assets']}; cards={r['id'] for r in sheets['cards']}; manor={r['id'] for r in sheets['manor']}; systems={r['id'] for r in sheets['systems']}
     def ref(name,row,col,ids):
         if row[col] not in ids: errors.append(f'{name}.{row["id"]}.{col}: unresolved {row[col]}')
@@ -112,7 +113,7 @@ def validate(historical_assets=False):
         for key in shared:
             if key not in cards:continue
             card=next(r for r in sheets['cards'] if r['id']==key)
-            if card['rarity']=='BASIC' or card['power'] in ('reservoir','quiver') or card['special'] in ('charge_gain','charged_energy','arcane_aftershock','charge_burst','cleanse_charge','skill_damage'):errors.append('Class-specific mechanic in shared core '+key)
+            if card['rarity']=='BASIC' or card['power'] in ('reservoir','quiver') or card['special'] in ('charge_gain','charged_energy','arcane_aftershock','arcane_poison','charge_burst','cleanse_charge','skill_damage'):errors.append('Class-specific mechanic in shared core '+key)
     if any(shared!=shared_sets[0] for shared in shared_sets):errors.append('Shared core differs by class')
     if len(active)!=187:errors.append('Expected 187 regular active cards across all classes')
     for row in sheets.get('branch_cards',[]):

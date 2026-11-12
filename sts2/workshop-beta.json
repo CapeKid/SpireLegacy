@@ -2,7 +2,7 @@
   "title": "Spire Legacy \u2014 Beta",
   "description": "Private beta builds of Spire Legacy for the creator's Steam Deck testing. Requires BaseLib. You may subscribe to both this item and the public Spire Legacy item. In StS2's mod menu, enable ONLY Spire Legacy \u2014 Beta OR Spire Legacy, then restart. They contain the same character and cards and must not run together. Finish a climb before switching builds. Family manor progress is shared. This item does not update the public Workshop listing.",
   "visibility": "private",
-  "changeNote": "1.0.55: Histrionic now describes its red damage flash without the extra note about HP.",
+  "changeNote": "1.0.56: Rebalanced Weak, adjusted several attacks and defensive cards, and gave Hourglass, Scouting, and Soulfire new roles.",
   "tags": [
     "Characters"
   ],

@@ -4,12 +4,20 @@
     "summary": "Apply {n} Poison twice."
   },
   {
+    "id": "arcane_poison",
+    "summary": "If you start this Attack with 2 Arcane Charges and Arcane Flow ready, apply that Poison again."
+  },
+  {
     "id": "block_damage",
     "summary": "Deal damage equal to your current Block."
   },
   {
     "id": "execute",
     "summary": "Deal {n} times damage if the target is at or below half HP."
+  },
+  {
+    "id": "full_hp_bonus",
+    "summary": "Deal {n} additional damage if the target is at full HP."
   },
   {
     "id": "guard_bonus",
@@ -50,6 +58,10 @@
   {
     "id": "discount_hand",
     "summary": "Reduce the cost of {n} random card(s) in your hand by 1 this turn."
+  },
+  {
+    "id": "discount_card",
+    "summary": "Choose a card in your hand. Reduce its cost by {n} this turn."
   },
   {
     "id": "free_hand",

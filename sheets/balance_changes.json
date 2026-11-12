@@ -747,7 +747,7 @@
     },
     "after": {
       "cost": 2,
-      "damage": 6,
+      "damage": 8,
       "block": 0,
       "hits": 1,
       "draw": 0,
@@ -778,7 +778,7 @@
       "upgradeCost": false,
       "upgradeDiscard": 0
     },
-    "reason": "Weaker no-manor baseline; avoid compounded effects/upgrades and free positive-draw cycles."
+    "reason": "Improve immediate damage on the reusable two-Energy Vulnerable attack."
   },
   {
     "id": "valor",
@@ -2117,8 +2117,8 @@
       "nextBlock": 0,
       "power": "none",
       "magic": 0,
-      "special": "none",
-      "specialAmount": 0,
+      "special": "full_hp_bonus",
+      "specialAmount": 6,
       "exhaust": true,
       "upgradeDamage": 5,
       "upgradeBlock": 0,
@@ -2127,7 +2127,7 @@
       "upgradeCost": false,
       "upgradeDiscard": 0
     },
-    "reason": "Weaker no-manor baseline; avoid compounded effects/upgrades and free positive-draw cycles."
+    "reason": "Give the single-hit Exhaust attack an opening-shot payoff against full-health targets."
   },
   {
     "id": "shieldwall",
@@ -3755,12 +3755,12 @@
       "exhaust": false,
       "upgradeDamage": 0,
       "upgradeBlock": 2,
-      "upgradeMagic": 1,
+      "upgradeMagic": 0,
       "upgradeSpecial": 0,
       "upgradeCost": false,
       "upgradeDiscard": 0
     },
-    "reason": "Weaker no-manor baseline; avoid compounded effects/upgrades and free positive-draw cycles."
+    "reason": "Keep Reforge at one draw on both versions and move it to Uncommon."
   },
   {
     "id": "knight_armored_feint",
@@ -4321,14 +4321,14 @@
       "special": "none",
       "specialAmount": 0,
       "exhaust": true,
-      "upgradeDamage": 2,
+      "upgradeDamage": 3,
       "upgradeBlock": 0,
-      "upgradeMagic": 1,
+      "upgradeMagic": 0,
       "upgradeSpecial": 0,
       "upgradeCost": false,
       "upgradeDiscard": 0
     },
-    "reason": "Weaker no-manor baseline; avoid compounded effects/upgrades and free positive-draw cycles."
+    "reason": "Keep both debuffs at two and improve damage on upgrade."
   },
   {
     "id": "knight_crushing_grip",
@@ -7518,14 +7518,14 @@
       "special": "none",
       "specialAmount": 0,
       "exhaust": false,
-      "upgradeDamage": 2,
+      "upgradeDamage": 3,
       "upgradeBlock": 0,
-      "upgradeMagic": 1,
+      "upgradeMagic": 0,
       "upgradeSpecial": 0,
       "upgradeCost": false,
       "upgradeDiscard": 0
     },
-    "reason": "Weaker no-manor baseline; avoid compounded effects/upgrades and free positive-draw cycles."
+    "reason": "Keep Weak at one per enemy and improve damage on upgrade."
   },
   {
     "id": "mage_rune_bolt",
@@ -8488,7 +8488,7 @@
     },
     "after": {
       "cost": 2,
-      "damage": 8,
+      "damage": 10,
       "block": 0,
       "hits": 1,
       "draw": 0,
@@ -8496,7 +8496,7 @@
       "energy": 0,
       "strength": 0,
       "dexterity": 0,
-      "weak": 1,
+      "weak": 2,
       "vulnerable": 1,
       "poison": 0,
       "heal": 0,
@@ -8512,14 +8512,14 @@
       "special": "none",
       "specialAmount": 0,
       "exhaust": false,
-      "upgradeDamage": 3,
+      "upgradeDamage": 4,
       "upgradeBlock": 0,
       "upgradeMagic": 0,
       "upgradeSpecial": 0,
       "upgradeCost": false,
       "upgradeDiscard": 0
     },
-    "reason": "Weaker no-manor baseline; avoid compounded effects/upgrades and free positive-draw cycles."
+    "reason": "Improve damage and Weak to justify two Energy while keeping Vulnerable at one."
   },
   {
     "id": "mage_prismatic_ray",
@@ -9854,7 +9854,7 @@
       "thorns": 0,
       "plated": 0,
       "nextEnergy": 1,
-      "nextDraw": 2,
+      "nextDraw": 1,
       "nextBlock": 0,
       "power": "none",
       "magic": 0,
@@ -9868,7 +9868,7 @@
       "upgradeCost": false,
       "upgradeDiscard": 0
     },
-    "reason": "Keep Spellweave paid and reusable; upgrade adds 2 immediate Block instead of free Energy/draw setup."
+    "reason": "Reduce delayed draw to one card while preserving the delayed Energy and the upgrade’s 2 immediate Block."
   },
   {
     "id": "mage_time_pocket",
@@ -10841,7 +10841,7 @@
       "dexterity": 0,
       "weak": 0,
       "vulnerable": 0,
-      "poison": 6,
+      "poison": 3,
       "heal": 0,
       "hpLoss": 0,
       "vigor": 0,
@@ -10852,7 +10852,7 @@
       "nextBlock": 0,
       "power": "none",
       "magic": 0,
-      "special": "none",
+      "special": "arcane_poison",
       "specialAmount": 0,
       "exhaust": false,
       "upgradeDamage": 2,
@@ -10862,7 +10862,7 @@
       "upgradeCost": false,
       "upgradeDiscard": 0
     },
-    "reason": "Weaker no-manor baseline; avoid compounded effects/upgrades and free positive-draw cycles."
+    "reason": "Tie the second Poison application to two starting Arcane Charges and an available Arcane Flow trigger."
   },
   {
     "id": "mage_spell_cascade",
@@ -11209,17 +11209,18 @@
       "nextBlock": 0,
       "power": "none",
       "magic": 0,
-      "special": "discount_hand",
+      "special": "discount_card",
       "specialAmount": 2,
       "exhaust": true,
       "upgradeDamage": 0,
       "upgradeBlock": 0,
       "upgradeMagic": 0,
-      "upgradeSpecial": 1,
+      "upgradeSpecial": 0,
       "upgradeCost": false,
-      "upgradeDiscard": 0
+      "upgradeDiscard": 0,
+      "upgradeRetain": true
     },
-    "reason": "Weaker no-manor baseline; avoid compounded effects/upgrades and free positive-draw cycles."
+    "reason": "Discount one chosen card by two. Retain on upgrade lets the Mage hold it for a payoff."
   },
   {
     "id": "mage_transmutation",
@@ -12751,7 +12752,7 @@
     "after": {
       "cost": 1,
       "damage": 0,
-      "block": 3,
+      "block": 4,
       "hits": 1,
       "draw": 0,
       "discard": 0,
@@ -12775,13 +12776,13 @@
       "specialAmount": 0,
       "exhaust": false,
       "upgradeDamage": 0,
-      "upgradeBlock": 2,
+      "upgradeBlock": 3,
       "upgradeMagic": 0,
       "upgradeSpecial": 0,
       "upgradeCost": false,
       "upgradeDiscard": 0
     },
-    "reason": "1.0.13: lower hit prevention; fixed recurring Energy with a cost upgrade; Tripwire upgrades Block only."
+    "reason": "Make the shared Common a stronger immediate Block option while keeping Weak at one."
   },
   {
     "id": "ranger_ambush",
@@ -14031,8 +14032,8 @@
       "damage": 0,
       "block": 0,
       "hits": 1,
-      "draw": 1,
-      "discard": 0,
+      "draw": 2,
+      "discard": 1,
       "energy": 0,
       "strength": 0,
       "dexterity": 0,
@@ -14050,7 +14051,7 @@
       "power": "none",
       "magic": 0,
       "special": "scry",
-      "specialAmount": 3,
+      "specialAmount": 2,
       "exhaust": false,
       "upgradeDamage": 0,
       "upgradeBlock": 0,
@@ -14059,7 +14060,7 @@
       "upgradeCost": false,
       "upgradeDiscard": 0
     },
-    "reason": "Weaker no-manor baseline; avoid compounded effects/upgrades and free positive-draw cycles."
+    "reason": "Trade one Scry for an extra draw and discard to support Ranger discard decks."
   },
   {
     "id": "ranger_reclaim_arrows",
@@ -15529,7 +15530,7 @@
       "dexterity": 0,
       "weak": 0,
       "vulnerable": 0,
-      "poison": 2,
+      "poison": 4,
       "heal": 0,
       "hpLoss": 0,
       "vigor": 0,
@@ -15550,7 +15551,7 @@
       "upgradeCost": false,
       "upgradeDiscard": 0
     },
-    "reason": "Weaker no-manor baseline; avoid compounded effects/upgrades and free positive-draw cycles."
+    "reason": "Increase the initial Poison application so the Rare can start a stack before doubling it."
   },
   {
     "id": "ranger_second_quiver",
@@ -15663,7 +15664,7 @@
     "after": {
       "cost": 2,
       "damage": 0,
-      "block": 0,
+      "block": 6,
       "hits": 1,
       "draw": 0,
       "discard": 0,
@@ -15693,7 +15694,7 @@
       "upgradeCost": true,
       "upgradeDiscard": 0
     },
-    "reason": "Weaker no-manor baseline; avoid compounded effects/upgrades and free positive-draw cycles."
+    "reason": "Add immediate Block so healing and cleansing are viable on a threatened turn."
   },
   {
     "id": "ranger_poisoned_arsenal",
@@ -18431,7 +18432,7 @@
     },
     "after": {
       "cost": 2,
-      "damage": 9,
+      "damage": 12,
       "block": 0,
       "hits": 1,
       "draw": 0,
@@ -18462,7 +18463,7 @@
       "upgradeCost": false,
       "upgradeDiscard": 0
     },
-    "reason": "Weaker no-manor baseline; avoid compounded effects/upgrades and free positive-draw cycles."
+    "reason": "Improve starting damage without increasing combat-only growth from Retain."
   },
   {
     "id": "knight_castle_heart",
@@ -18929,9 +18930,9 @@
     },
     "after": {
       "cost": 3,
-      "damage": 2,
+      "damage": 3,
       "block": 0,
-      "hits": 7,
+      "hits": 5,
       "draw": 0,
       "discard": 0,
       "energy": 0,
@@ -18960,7 +18961,7 @@
       "upgradeCost": false,
       "upgradeDiscard": 0
     },
-    "reason": "1.0.14: bounded recurring effects, smaller multi-hit upgrades, and meaningful upgrade choices."
+    "reason": "Shift damage into fewer hits to moderate scaling from the Knight passive and Strength."
   },
   {
     "id": "knight_warlord_s_command",
@@ -20138,14 +20139,14 @@
     "after": {
       "cost": 1,
       "damage": 0,
-      "block": 3,
+      "block": 2,
       "hits": 1,
       "draw": 0,
       "discard": 0,
       "energy": 0,
       "strength": 0,
       "dexterity": 0,
-      "weak": 2,
+      "weak": 1,
       "vulnerable": 0,
       "poison": 0,
       "heal": 0,
@@ -20158,8 +20159,8 @@
       "nextBlock": 0,
       "power": "none",
       "magic": 0,
-      "special": "none",
-      "specialAmount": 0,
+      "special": "scry",
+      "specialAmount": 2,
       "exhaust": false,
       "upgradeDamage": 0,
       "upgradeBlock": 2,
@@ -20168,7 +20169,7 @@
       "upgradeCost": false,
       "upgradeDiscard": 0
     },
-    "reason": "Weaker no-manor baseline; avoid compounded effects/upgrades and free positive-draw cycles."
+    "reason": "Add Scry to give the Mage Common a deck-filtering role, with lower immediate Block than Tripwire."
   },
   {
     "id": "mage_rune_scatter",
@@ -21440,14 +21441,14 @@
       "special": "none",
       "specialAmount": 0,
       "exhaust": false,
-      "upgradeDamage": 2,
+      "upgradeDamage": 3,
       "upgradeBlock": 0,
-      "upgradeMagic": 1,
+      "upgradeMagic": 0,
       "upgradeSpecial": 0,
       "upgradeCost": false,
       "upgradeDiscard": 0
     },
-    "reason": "Weaker no-manor baseline; avoid compounded effects/upgrades and free positive-draw cycles."
+    "reason": "Keep Weak at two per enemy and improve damage on upgrade."
   },
   {
     "id": "mage_viper_script",

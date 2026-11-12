@@ -169,12 +169,12 @@ foreach (var upgraded in new[] { false, true })
     Check(timing.Cost == (upgraded ? 2 : 3) && timing.Magic == 1 && timing.Amount("hpLoss") == 3, "Timing upgrade lowers setup cost without doubling recurring energy");
     Check(timing.Rules().Contains("gain 1 Energy") && timing.Rules().Contains("Lose 3 HP"), "Timing text matches its recurring energy and HP price");
     var tripwire = new CardDesign("ranger_tripwire", upgraded);
-    Check(tripwire.Block == (upgraded ? 5 : 3) && tripwire.Amount("weak") == 1, "Tripwire upgrades defense without extending Weak");
+    Check(tripwire.Block == (upgraded ? 7 : 4) && tripwire.Amount("weak") == 1, "Tripwire upgrades defense without extending Weak");
 }
 foreach (var cardId in Design.Rows("card_pools").Select(r => r.Text("cardId")).Distinct())
 {
     var normal = new CardDesign(cardId); var upgraded = new CardDesign(cardId, true);
-    Check(normal.Cost != upgraded.Cost || normal.Damage != upgraded.Damage || normal.Block != upgraded.Block || normal.Rules() != upgraded.Rules(), cardId + " has an effective upgrade");
+    Check(normal.Cost != upgraded.Cost || normal.Damage != upgraded.Damage || normal.Block != upgraded.Block || normal.Retain != upgraded.Retain || normal.Rules() != upgraded.Rules(), cardId + " has an effective upgrade");
 }
 foreach (var upgraded in new[] { false, true })
 {
@@ -378,7 +378,7 @@ foreach(var card in Design.Rows("cards").Where(c=>c.Text("id")!="ranger_second_q
 foreach(var upgraded in new[]{false,true}){
     var spellweave=new CardDesign("mage_spellweave",upgraded);
     Check(spellweave.Cost==1,"Spellweave always pays Energy, including after upgrade");
-    Check(spellweave.Amount("nextEnergy")==1&&spellweave.Amount("nextDraw")==2,"Spellweave upgrade cannot increase delayed resource payout");
+    Check(spellweave.Amount("nextEnergy")==1&&spellweave.Amount("nextDraw")==1,"Spellweave grants one delayed card and one delayed Energy at either upgrade level");
     Check(spellweave.Block==(upgraded?2:0)&&!spellweave.Row.Flag("exhaust"),"Spellweave upgrades modest immediate protection while remaining reusable");
 }
 LifecycleChecks.Run(Check,directory);

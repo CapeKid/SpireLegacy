@@ -33,7 +33,7 @@ public static class CardResolutionOracle
             Require(enemies.Length>0,"Fixture needs a live native enemy.");
             foreach(var enemy in enemies) {
                 foreach(var power in enemy.Powers.ToArray())await PowerCmd.Remove(power);
-                enemy.SetMaxHpInternal(10000);enemy.SetCurrentHpInternal(mode is "lethal" or "replay-lethal"?1:mode=="auto-empty"?0:10000);
+                enemy.SetMaxHpInternal(10000);enemy.SetCurrentHpInternal(mode is "lethal" or "replay-lethal"?1:mode=="auto-empty"?0:mode=="injured"?9999:10000);
                 enemy.LoseBlockInternal(enemy.Block);
             }
             creature.SetCurrentHpInternal(mode=="self-death"?1:creature.MaxHp-20);

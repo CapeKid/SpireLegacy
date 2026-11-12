@@ -45,7 +45,15 @@ public abstract class LegacyCard : CustomCardModel
     public override string PortraitPath => MissingPortraitPath;
     public override string BetaPortraitPath => MissingPortraitPath;
     public override IEnumerable<string> AllPortraitPaths => [];
-    public override List<(string, string)> Localization => [("title", Row.Text("name")), ("description", "{Rules}"),("returnPrompt","Choose cards to return to your hand."),("attackReturnPrompt","Choose Attacks to return to your hand.")];
+    public override List<(string, string)> Localization
+    {
+        get
+        {
+            List<(string, string)> entries = [("title", Row.Text("name")), ("description", "{Rules}"), ("returnPrompt", "Choose cards to return to your hand."), ("attackReturnPrompt", "Choose Attacks to return to your hand.")];
+            if (Row.Text("special") == "discount_card") entries.Add(("discountPrompt", "Choose a card to discount this turn."));
+            return entries;
+        }
+    }
     protected override void AddExtraArgsToDescription(LocString description) => description.Add("Rules", DesignCard.Rules(
         Row.Number("nextBlock") > 0 ? NextBlock.ToHighlightedString(false) : null,
         HasSpecialBlock ? SpecialBlock.ToHighlightedString(false) : null).Replace("{Damage}", DynamicVars.Damage.ToHighlightedString(false)).Replace("{Block}", DynamicVars.Block.ToHighlightedString(false)));
@@ -91,6 +99,7 @@ public abstract class LegacyCard : CustomCardModel
     protected override async Task OnPlay(PlayerChoiceContext context, CardPlay play)
     {
         var design = DesignCard;
+        var repeatPoison = Row.Text("special") == "arcane_poison" && CardEffects.FullArcaneFlowReady(Owner);
         if (!design.Mercy && (DynamicVars.Damage.BaseValue > 0 || Row.Text("special") is "block_damage" or "chain_damage"))
             {
                 // Native Vigor and other attack-scoped effects last for the complete
@@ -102,7 +111,7 @@ public abstract class LegacyCard : CustomCardModel
                 await attack.Execute(context);
             }
         if (DynamicVars.Block.BaseValue > 0) await CreatureCmd.GainBlock(Owner.Creature, DynamicVars.Block, play);
-        await CardEffects.Execute(this, context, play);
+        await CardEffects.Execute(this, context, play, repeatPoison);
     }
     protected override void OnUpgrade()
     {
@@ -113,6 +122,7 @@ public abstract class LegacyCard : CustomCardModel
         if (Row.Number("nextBlock") > 0 && Row.Number("upgradeMagic") != 0) NextBlock.UpgradeValueBy(Row.Number("upgradeMagic"));
         if (HasSpecialBlock && Row.Number("upgradeSpecial") != 0) SpecialBlock.UpgradeValueBy(Row.Number("upgradeSpecial"));
         if (Row.Flag("upgradeCost")) EnergyCost.UpgradeBy(-1);
+        if (!Row.Flag("retain") && DesignCard.Retain) AddKeyword(CardKeyword.Retain);
     }
     public decimal InheritedDamageAdditive(Creature? target, decimal amount, ValueProp props, Creature? dealer, CardModel? source)
     {
@@ -127,6 +137,7 @@ public abstract class LegacyCard : CustomCardModel
             "skill_damage" => Math.Min(3,Owner.Creature.GetPower<P_class>()?.SkillsThisTurn ?? 0)*n,
             "guard_bonus" when Owner.Creature.Block > 0 => n,
             "execute" when target is not null && target.CurrentHp * 2 <= target.MaxHp => basis * (n - 1),
+            "full_hp_bonus" when target is not null && target.CurrentHp == target.MaxHp => n,
             "marked_bonus" when target is not null && (target.GetPowerAmount<VulnerablePower>() > 0 || target.GetPowerAmount<PoisonPower>() > 0) => n,
             _ => 0 };
     }

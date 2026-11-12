@@ -22,7 +22,7 @@ for row in cards:
             case=dict(id=row['id'],active=row['id'] in active,upgraded=up,draw=draw,discard=discard,hpCost=row['hpLoss'])
             free_draw.append(case)
             assert draw<=discard or row['hpLoss']>0,case
-        if row['special'] in ('retrieve','exhume','refill_hand','discount_hand','free_hand','discard_draw','discard_energy') or row['power'] in ('dark_embrace','power_draw','establishment','thousand_cuts','discard_block','discard_energy','evolve'):
+        if row['special'] in ('retrieve','exhume','refill_hand','discount_card','discount_hand','free_hand','discard_draw','discard_energy') or row['power'] in ('dark_embrace','power_draw','establishment','thousand_cuts','discard_block','discard_energy','evolve'):
             risky.append(dict(id=row['id'],active=row['id'] in active,upgraded=up,cost=cost,exhaust=row['exhaust'],power=row['power'],special=row['special']))
 manor=read('manor');costs={r['id']:r['firstCost']+sum(r['baseCost']+i*r['costStep'] for i in range(1,r['maxLevel'])) for r in manor}
 assert sum(costs.values())==2240

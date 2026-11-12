@@ -9,6 +9,7 @@ public sealed class CardDesign(string id, bool upgraded = false, IEnumerable<str
     public int Block => Mercy ? Gene("block") : Math.Max(0, Gene("block") + Row.Number("block") + (upgraded ? Row.Number("upgradeBlock") : 0));
     public int MercyPoison => Mercy ? Gene("poison") + (upgraded ? 1 : 0) : 0;
     public int Cost => Row.Number("cost") - (upgraded && Row.Flag("upgradeCost") ? 1 : 0);
+    public bool Retain => Row.Flag("retain") || (upgraded && Row.Json.TryGetProperty("upgradeRetain", out var retain) && retain.GetBoolean());
     public int SpecialAmount => Row.Number("specialAmount") + (upgraded ? Row.Number("upgradeSpecial") : 0);
     // Recovery cards cannot retrieve one another after being discounted to zero.
     public bool RecoverableFromExhaust => Row.Text("special") is not ("exhume" or "exhume_attack" or "exhume_next_turn");
