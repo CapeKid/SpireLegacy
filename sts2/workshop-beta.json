@@ -2,7 +2,7 @@
   "title": "Spire Legacy \u2014 Beta",
   "description": "Private beta builds of Spire Legacy for the creator's Steam Deck testing. Requires BaseLib. You may subscribe to both this item and the public Spire Legacy item. In StS2's mod menu, enable ONLY Spire Legacy \u2014 Beta OR Spire Legacy, then restart. They contain the same character and cards and must not run together. Finish a climb before switching builds. Family manor progress is shared. This item does not update the public Workshop listing.",
   "visibility": "private",
-  "changeNote": "1.0.57: Transmutation converts up to two cards into Energy and grants an Arcane Charge when you Exhaust at least one.",
+  "changeNote": "1.0.58: Perch Discipline grants Energy next turn when you Retain an Attack. Includes the Transmutation rework from 1.0.57.",
   "tags": [
     "Characters"
   ],

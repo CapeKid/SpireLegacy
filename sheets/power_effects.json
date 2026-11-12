@@ -186,5 +186,9 @@
   {
     "id": "discard_return",
     "summary": "At the start of your turn, choose an Attack you discarded during your previous turn. Return it to your hand. It costs 1 less this turn."
+  },
+  {
+    "id": "retained_attack_energy",
+    "summary": "If you Retain any Attacks at the end of your turn, gain !M! Energy next turn."
   }
 ]

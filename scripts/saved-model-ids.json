@@ -412,7 +412,8 @@
     "skill_echo",
     "thesis_ready",
     "hunt_momentum",
-    "discard_return"
+    "discard_return",
+    "retained_attack_energy"
   ],
   "classes": [
     "knight",

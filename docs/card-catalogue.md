@@ -268,7 +268,7 @@ Each class has 82 rewards on regular (20 common, 36 uncommon, 26 rare), or 85 on
 | Tailwind | Uncommon | Power | 1 | Class unique; The first time you discard a card each turn, gain 1 Energy. |
 | Spring Nock | Uncommon | Attack | 1 | Class unique; 6 damage; When discarded during your turn, draw 2 card(s). Triggers at most once per copy each turn. |
 | Venom Reserve | Uncommon | Skill | 1 | Class unique; Double Poison on the target.; Retain; Exhaust |
-| Perch Discipline | Uncommon | Power | 2 | Class unique; Whenever a card is Retained, reduce its cost by 1 this combat. |
+| Perch Discipline | Uncommon | Power | 2 | Class unique; If you Retain any Attacks at the end of your turn, gain 1 Energy next turn. |
 | Pursuit Volley | Uncommon | Attack | 1 | Class unique; 1 damage ×2; Deal 3 additional damage if the target is Vulnerable or Poisoned. |
 | Tracking Rhythm | Uncommon | Power | 1 | Shared family card; Every third Attack you play each turn grants 2 Vigor for your NEXT Attack. |
 | Owl Watch | Uncommon | Power | 1 | Class unique; At the start of your turn, Scry 2. |

@@ -459,6 +459,27 @@ public static partial class PowerAuditOracle
                 Require(player.Deck.Cards.Count==0&&creature.Block==3,"Empty-deck Foresight did not complete Scry.");
                 return new{mode,up,deck=0,block=3,nextTurn=true};
             }
+            if(mode=="perch") {
+                var energyBefore=player.PlayerCombatState!.Energy;
+                await Play(await Add(player,NativeCards.Get("ranger_perch_discipline"),up));
+                Require(energyBefore-player.PlayerCombatState.Energy==(up?1:2),"Perch Discipline paid the wrong cost.");
+
+                var skill=await Add(player,NativeCards.Get("mage_crystal_seed"));
+                await BalanceOracle.End(player,true);
+                Require(skill.Pile?.Type==PileType.Hand&&player.PlayerCombatState.Energy==3,"A retained Skill triggered Perch Discipline.");
+
+                var first=await Add(player,NativeCards.Get("ranger_long_vigil"));
+                var second=await Add(player,NativeCards.Get("ranger_heartseeker"));
+                await BalanceOracle.End(player,true);
+                Require(first.Pile?.Type==PileType.Hand&&second.Pile?.Type==PileType.Hand,"The Attack fixtures were not retained.");
+                Require(player.PlayerCombatState.Energy==4&&creature.GetPower<EnergyNextTurnPower>()==null,"Perch Discipline did not pay exactly 1 Energy next turn.");
+                Require(first.EnergyCost.GetWithModifiers(CostModifiers.Local)==2&&second.EnergyCost.GetWithModifiers(CostModifiers.Local)==2,"Perch Discipline still discounted Attacks.");
+
+                await CardPileCmd.RemoveFromCombat([first,second],skipVisuals:true);
+                await BalanceOracle.End(player,true);
+                Require(player.PlayerCombatState.Energy==3,"Perch Discipline repeated its payout without a retained Attack.");
+                return new{mode,up,cost=up?1:2,skillEnergy=3,attackEnergy=4,followingEnergy=3};
+            }
             if(mode=="misc") {
                 await Apply(player,"power_draw",2);await Apply(player,"thousand_cuts",3);
                 await Apply(player,"foresight",2);await Apply(player,"scry_block",3);await Apply(player,"establishment",1);

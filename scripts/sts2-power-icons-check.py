@@ -9,6 +9,6 @@ record = call(profile, {'command': 'power-icons'}, timeout=120,
 (profile / 'power-icons-receipt.json').write_text(json.dumps(record, indent=2), encoding='utf-8')
 assert record['response']['ok'], record
 icons = record['response']['result']
-assert len(icons) == 51 and len({p['key'] for p in icons}) == 51, icons
+assert len(icons) == 52 and len({p['key'] for p in icons}) == 52, icons
 assert all(p['packedWidth'] > 0 and p['bigWidth'] > 0 for p in icons), icons
-print('All 51 powers load both icon sizes; Eternal Bookmark uses native draw icons.', flush=True)
+print('All 52 powers load both icon sizes; Eternal Bookmark uses native draw icons.', flush=True)

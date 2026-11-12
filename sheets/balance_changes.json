@@ -24277,7 +24277,7 @@
       "nextEnergy": 0,
       "nextDraw": 0,
       "nextBlock": 0,
-      "power": "establishment",
+      "power": "retained_attack_energy",
       "magic": 1,
       "special": "none",
       "specialAmount": 0,
@@ -24289,7 +24289,7 @@
       "upgradeCost": true,
       "upgradeDiscard": 0
     },
-    "reason": "Weaker no-manor baseline; avoid compounded effects/upgrades and free positive-draw cycles."
+    "reason": "Give the Ranger a next-turn Energy payoff for retaining Attacks while Tower Library discounts retained cards."
   },
   {
     "id": "ranger_eagle_focus",

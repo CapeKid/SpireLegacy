@@ -35,7 +35,7 @@ public abstract class LegacyPower:CustomPowerModel
   "metallicize" or "plated"=>ModelDb.Power<PlatingPower>(),
   "skill_block" or "discard_block" or "scry_block" or "status_furnace"=>ModelDb.Power<PlatingPower>(),
   "discard_next_block"=>ModelDb.Power<BlockNextTurnPower>(),
-  "berserk" or "skill_energy" or "discard_energy"=>ModelDb.Power<EnergyNextTurnPower>(),
+  "berserk" or "skill_energy" or "discard_energy" or "retained_attack_energy"=>ModelDb.Power<EnergyNextTurnPower>(),
   "brutality" or "power_draw" or "evolve" or "arcane_echo" or "retained_draw" or "quiver"=>ModelDb.Power<DrawCardsNextTurnPower>(),
   "well_laid" or "foresight" or "establishment"=>ModelDb.Power<WellLaidPlansPower>(),
   "equilibrium"=>ModelDb.Power<RetainHandPower>(),
@@ -48,7 +48,13 @@ public abstract class LegacyPower:CustomPowerModel
  };
  public override string CustomPackedIconPath=>IconSource.PackedIconPath;
  public override string CustomBigIconPath=>IconSource.ResolvedBigIconPath;
- public override List<(string,string)> Localization=>[("title",Key=="class"?"{ClassTitle}":Key=="well_laid"?"Measured Breath":Key=="discard_return"?"Ghost Luggage":System.Globalization.CultureInfo.InvariantCulture.TextInfo.ToTitleCase(Key.Replace('_',' '))),("description",DescriptionText),("selectionScreenPrompt","Choose up to {Amount} card(s) to Retain this turn.")];
+ public override List<(string,string)> Localization=>[("title",Key switch {
+  "class"=>"{ClassTitle}",
+  "well_laid"=>"Measured Breath",
+  "discard_return"=>"Ghost Luggage",
+  "retained_attack_energy"=>"Perch Discipline",
+  _=>System.Globalization.CultureInfo.InvariantCulture.TextInfo.ToTitleCase(Key.Replace('_',' '))
+ }),("description",DescriptionText),("selectionScreenPrompt","Choose up to {Amount} card(s) to Retain this turn.")];
  public override LocString Title {get {var title=base.Title;if(Key=="class")title.Add("ClassTitle",Design.Get("class_mechanics",PlayerBloodlines.Heir(Owner.Player).classId).Text("name"));return title;}}
  private string DescriptionText=>Key switch {
   "class"=>"{ClassRules} {CounterLabel}: {Counter}.",
@@ -208,6 +214,8 @@ public abstract class LegacyPower:CustomPowerModel
   if(player!=Owner.Player!)return;
   if(Key=="retained_draw")RetainedLastTurn=retained.Count>0;
   if(Key=="establishment")foreach(var card in retained)if(!card.EnergyCost.CostsX)card.EnergyCost.SetThisCombat(Math.Max(0,card.EnergyCost.GetWithModifiers(CostModifiers.Local)-Amount));
+  if(Key=="retained_attack_energy"&&retained.Any(card=>card.Type==CardType.Attack))
+   await CardEffects.Apply(context,"nextEnergy",Owner,Amount,Owner,null);
  }
  public override async Task BeforeFlushLate(PlayerChoiceContext context,Player player)
  {

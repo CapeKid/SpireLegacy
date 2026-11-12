@@ -15367,7 +15367,7 @@
     "upgradeMagic": 0,
     "asset": "Icons_Classes_BowClass",
     "art": "ranger_perch_discipline",
-    "power": "establishment",
+    "power": "retained_attack_energy",
     "magic": 1,
     "discard": 0,
     "aoe": false,
