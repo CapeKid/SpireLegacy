@@ -156,7 +156,7 @@ Each class has 82 rewards on regular (20 common, 36 uncommon, 26 rare), or 85 on
 | Mana Fountain | Rare | Skill | 0 | Class unique; 2 Energy; Exhaust |
 | Grand Thesis | Rare | Skill | 1 | Class unique; 2 draw; 1 Energy next turn; Gain 1 Arcane Charge(s), up to the normal charge cap.; Exhaust |
 | Hourglass | Rare | Skill | 1 | Class unique; Choose a card in your hand. Reduce its cost by 2 this turn.; Exhaust |
-| Transmutation | Rare | Skill | 1 | Class unique; 2 draw; 2 Energy; Exhaust 2 card(s) from your hand.; Exhaust |
+| Transmutation | Rare | Skill | 1 | Class unique; Exhaust up to 2 cards from your hand. Gain 1 Energy per card Exhausted this way. If you Exhaust any, gain 1 Arcane Charge.; Exhaust |
 | Infinite Script | Rare | Power | 2 | Class unique; 1 draw next turn; At the start of your turn, lose 1 HP and draw 1 card(s). |
 | Astral Mantle | Rare | Power | 2 | Class unique; Whenever you play a card, gain 1 Block. |
 | Tripwire | Common | Skill | 1 | Shared family card; 4 Block; 1 Weak |

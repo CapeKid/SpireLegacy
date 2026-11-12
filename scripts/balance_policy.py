@@ -1,5 +1,6 @@
 """Targeted balance overrides shared by authoring regeneration and release updates."""
 CARD_OVERRIDES = {
+    'mage_transmutation': dict(draw=0, energy=0, special='exhaust_mana'),
     'snipe': dict(special='full_hp_bonus', specialAmount=6),
     'knight_patient_riposte': dict(damage=12),
     'mage_soulfire': dict(poison=3, special='arcane_poison'),

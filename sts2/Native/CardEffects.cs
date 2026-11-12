@@ -96,6 +96,22 @@ public static class CardEffects
    case "exhume_next_turn":await Apply(context,"prophecy_return",creature,amount,creature,card);break;
    case "exhume_attack":if(await RecoverFromExhaust(player,context,attacksOnly:true))await Apply(context,"vigor",creature,amount,creature,card);break;
    case "exhaust_one":foreach(var fuel in await CardChoiceLifetime.Run(player,()=>CardSelectCmd.FromHand(context,player,new CardSelectorPrefs(CardSelectorPrefs.ExhaustSelectionPrompt,amount),null,card)))await BranchCommands.Exhaust(context,fuel);break;
+   case "exhaust_mana":
+   {
+    var prefs = new CardSelectorPrefs(CardSelectorPrefs.ExhaustSelectionPrompt, 0, amount);
+    var chosen = await CardChoiceLifetime.Run(player, () => CardSelectCmd.FromHand(context, player, prefs, candidate => candidate != card, card));
+    var converted = 0;
+    foreach (var fuel in chosen.Where(fuel => fuel.Pile?.Type == PileType.Hand))
+    {
+        await BranchCommands.Exhaust(context, fuel);
+        if (fuel.Pile?.Type == PileType.Exhaust) converted++;
+    }
+    if (converted == 0) break;
+    await PlayerCmd.GainEnergy(converted, player);
+    if (PlayerBloodlines.Heir(player).classId == "mage" && creature.GetPower<P_class>() is {} counter)
+        counter.Charges = Math.Min(2, counter.Charges + 1);
+    break;
+   }
    case "reload_attacks":
     var reloaded=await CardChoiceLifetime.Run(player,()=>CardSelectCmd.FromCombatPile(context,PileType.Discard.GetPile(player),player,new CardSelectorPrefs(new MegaCrit.Sts2.Core.Localization.LocString("cards",card.Id.Entry+".attackReturnPrompt"),0,amount),
      candidate=>candidate.Type==CardType.Attack&&(candidate is not LegacyCard legacyAttack||legacyAttack.DesignCard.RecoverableFromDiscard)));

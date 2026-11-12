@@ -47,15 +47,17 @@ public static class PacifistPilotOracle
         await BalanceOracle.Play(starter,enemy);
         var poisonApplied=enemy.GetPowerAmount<PoisonPower>()-poison;
         if(poisonApplied!=description.Poison||poisonApplied!=(pacifist?upgraded?3:2:0))throw new InvalidDataException("Poison descriptor differs from actual native effect.");
-        var spent=energy-player.PlayerCombatState.Energy;var multiGuarded=false;
+        var spent=energy-player.PlayerCombatState.Energy;var optionalFuelSafe=false;
         if(pacifist){
             foreach(var c in hand.Cards.ToArray())await CardPileCmd.Add(c,PileType.Exhaust,skipVisuals:true);
             await CardPileCmd.Add(starter,PileType.Hand,skipVisuals:true);
-            await Add("ranger_guard");var transmutation=await Add("mage_transmutation");
-            multiGuarded=TacticalPilot.WouldExhaustLastOffense(transmutation);
-            if(!multiGuarded)throw new InvalidDataException("Mandatory two-card exhaust would consume the last Poison source.");
+            var guard=await Add("ranger_guard");var transmutation=await Add("mage_transmutation");
+            if(TacticalPilot.WouldExhaustLastOffense(transmutation))throw new InvalidDataException("Optional Transmutation was treated as mandatory Exhaust.");
+            using(TacticalPilot.Selector(true))await BalanceOracle.Play(transmutation);
+            optionalFuelSafe=guard.Pile?.Type==PileType.Exhaust&&starter.Pile?.Type==PileType.Hand;
+            if(!optionalFuelSafe)throw new InvalidDataException("Transmutation did not preserve the last Poison source.");
         }
         return new{key,upgraded,pacifist,poisonApplied,description.Poison,blockedUsable=blockedInfo.Usable,reward,
-            fuelExhausted,guarded,multiGuarded,choseStarter,damage=hp-enemy.CurrentHp,energySpent=spent};
+            fuelExhausted,guarded,optionalFuelSafe,choseStarter,damage=hp-enemy.CurrentHp,energySpent=spent};
     }
 }

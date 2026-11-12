@@ -66,6 +66,7 @@ public static class CardResolutionOracle
             await CardPileCmd.Add(card,PileType.Hand,skipVisuals:true);
             await PlayerCmd.GainEnergy(20,player);
             var countBefore=CardPile.GetCards(player,Piles).Count();
+            var manaFuel=row?.Text("special")=="exhaust_mana"?PileType.Hand.GetPile(player).Cards.Where(held=>held!=card).ToArray():[];
             var hp=creature.CurrentHp;var block=creature.Block;var energy=player.PlayerCombatState!.Energy;
             var enemyHp=enemies.Select(e=>e.CurrentHp).ToArray();
             var cost=card.EnergyCost.GetWithModifiers(CostModifiers.All);var failure=CardPlayDiagnostics.LastFailure;
@@ -100,7 +101,8 @@ public static class CardResolutionOracle
             var design=(card as LegacyCard)?.DesignCard;
             var generated=row?.Text("special")=="wounds"?design!.SpecialAmount*plays:0;
             Require(actual.Length==countBefore+generated-(expectedPile==PileType.None?1:0),"Native card count was not conserved: "+key);
-            Require(player.PlayerCombatState.Energy-energy==-cost+(design?.Amount("energy")??0)*plays,"Paid energy mismatch: "+key);
+            var fuelExhausted=manaFuel.Count(fuel=>fuel.Pile?.Type==PileType.Exhaust);
+            Require(player.PlayerCombatState.Energy-energy==-cost+(design?.Amount("energy")??0)*plays+fuelExhausted,"Paid energy mismatch: "+key);
             var saved=card.ToSerializable();var restored=run.LoadCard(saved,player);
             Require(restored.Id==card.Id&&restored.IsUpgraded==upgraded,"Resolved card identity did not round-trip.");
             // Native SerializableCard excludes transient dupe/keyword overrides.

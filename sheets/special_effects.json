@@ -36,6 +36,10 @@
     "summary": "Exhaust {n} card(s) from your hand."
   },
   {
+    "id": "exhaust_mana",
+    "summary": "Exhaust up to {n} cards from your hand. Gain 1 Energy per card Exhausted this way. If you Exhaust any, gain 1 Arcane Charge."
+  },
+  {
     "id": "double_block",
     "summary": "Double your current Block."
   },

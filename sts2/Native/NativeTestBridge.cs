@@ -330,7 +330,7 @@ public static class NativeTestBridge
                     result=await PoolExpansionOracle.Play(RunState(),request.GetProperty("card").GetString()!,request.GetProperty("upgrade").GetBoolean(),UseTestSelector());break;
                 case "card-resolution":
                     await WaitForPlay(RunState().Players.Single());
-                    result=await CardResolutionOracle.Play(RunState(),request.GetProperty("card").GetString()!,request.GetProperty("upgrade").GetBoolean(),request.TryGetProperty("mode",out var resolutionMode)?resolutionMode.GetString()!:"normal",UseTestSelector());break;
+                    result=await CardResolutionOracle.Play(RunState(),request.GetProperty("card").GetString()!,request.GetProperty("upgrade").GetBoolean(),request.TryGetProperty("mode",out var resolutionMode)?resolutionMode.GetString()!:"normal",UseTestSelector(request.TryGetProperty("selectionLimit",out var resolutionLimit)?resolutionLimit.GetInt32():1));break;
                 case "card-choice-boundary":
                     await WaitForPlay(RunState().Players.Single());
                     result=await CardChoiceBoundaryOracle.Check(RunState(),request.GetProperty("card").GetString()!,request.GetProperty("upgrade").GetBoolean(),request.TryGetProperty("decline",out var declineChoice)&&declineChoice.GetBoolean());break;
