@@ -6,9 +6,38 @@ using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Models;
+using MegaCrit.Sts2.Core.Runs;
 using MegaCrit.Sts2.Core.ValueProps;
 
 namespace SpireLegacy;
+
+[HarmonyPatch]
+public static class FamilyRelicEligibilityHook
+{
+    public static MethodBase TargetMethod() =>
+        ApiContract.Require(typeof(RelicModel), nameof(RelicModel.IsAllowed), typeof(bool), [typeof(IRunState)]);
+
+    public static void Postfix(RelicModel __instance, IRunState __0, ref bool __result)
+    {
+        if (__result && __instance is FamilyDropRelic relic)
+            __result = relic.IsAllowedForFamily(__0);
+    }
+}
+
+[HarmonyPatch]
+public static class BloodlineDeathHook
+{
+    public static MethodBase TargetMethod() =>
+        ApiContract.Require(typeof(AbstractModel), nameof(AbstractModel.AfterDeath), typeof(Task),
+            [typeof(PlayerChoiceContext), typeof(Creature), typeof(CardModel), typeof(bool), typeof(float)],
+            [typeof(PlayerChoiceContext), typeof(Creature), typeof(bool), typeof(float)]);
+
+    public static void Postfix(AbstractModel __instance, object[] __args, ref Task __result)
+    {
+        if (__instance is BloodlineRelic relic)
+            __result = relic.AfterEnemyDeath((PlayerChoiceContext)__args[0], (Creature)__args[1], (bool)__args[^2]);
+    }
+}
 
 public static class BranchCommands
 {

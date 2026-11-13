@@ -81,7 +81,7 @@ public static class NativeTestBridge
                     // Native first-turn autoplay (e.g. Whispering Earring) owns
                     // its selector until the normal Play phase. Observe first;
                     // never install a competing selector during that phase.
-                    if(CardSelectCmd.Selector!=null){result=CampaignOracle.WaitingForNativeTurn(pilotRun,"native-selector");break;}
+                    if(CurrentSelector!=null){result=CampaignOracle.WaitingForNativeTurn(pilotRun,"native-selector");break;}
                     if(MegaCrit.Sts2.Core.Combat.CombatManager.Instance.IsInProgress&&pilotRun.Players.Single().PlayerCombatState?.Phase!=MegaCrit.Sts2.Core.Combat.PlayerTurnPhase.Play){result=CampaignOracle.WaitingForNativeTurn(pilotRun);break;}
                     result=await CampaignOracle.Step(pilotRun,pilotPolicy,pilotPolicy is "tactical" or "planned"?TacticalPilot.Selector(pilotPolicy=="planned"):UseTestSelector(),request.TryGetProperty("rewardPolicy",out var rewardsPolicy)?rewardsPolicy.GetString()!:"standalone",request.TryGetProperty("forcedReward",out var forcedReward)?forcedReward.GetString():null,request.TryGetProperty("forcedRewardFloor",out var forcedFloor)?forcedFloor.GetInt32():0,request.TryGetProperty("animationSpeed",out var animationSpeed)?animationSpeed.GetInt32():6);break;
                 case "balance-probe":await WaitForPlay(RunState().Players.Single());var probeKey=request.GetProperty("card").GetString()!;result=await BalanceOracle.Probe(RunState(),probeKey,request.GetProperty("upgrade").GetBoolean(),probeKey=="mage_eternal_bookmark"?BalanceOracle.MaxChoices():UseTestSelector(),request.TryGetProperty("supported",out var supported)&&supported.GetBoolean());break;
@@ -189,7 +189,7 @@ public static class NativeTestBridge
                             var reference=(TextureRect)AccessTools.Field(portraitButton.GetType(),"_icon").GetValue(portraitButton)!;
                             reference.Texture.GetImage().SavePng(Path.Combine(Runtime.DataDirectory,"portrait-reference-"+portraitButton.Character.Id.Entry+".png"));
                         }
-                    screen.SelectCharacter(button,button.Character);
+                    ManorCharacterMenu.Select(screen,button);
                     button.GrabFocus();
                     if(request.TryGetProperty("previewAscension",out var previewAscension)) {
                         var panel=(NAscensionPanel)AccessTools.Field(screen.GetType(),"_ascensionPanel").GetValue(screen)!;
@@ -271,7 +271,7 @@ public static class NativeTestBridge
                     }
                     Runtime.Profile.selected = cls=="ironclad"?null:new FamilyProfile.Heir { name="PortTester",classId=cls,traits=request.TryGetProperty("traits",out var traits) ? traits.EnumerateArray().Select(t=>t.GetString()!).ToList() : [] };
                     if(request.TryGetProperty("quick",out var quick) && Runtime.Profile.active==null)Runtime.Profile.generation=quick.GetBoolean()?0:3;
-                    await NGame.Instance.StartNewSingleplayerRun(cls=="ironclad"?ModelDb.Character<MegaCrit.Sts2.Core.Models.Characters.Ironclad>():ModelDb.Character<HeirCharacter>(),true,ModelDb.ActsByIndex.Select(a=>a.First()).ToArray(),[],request.TryGetProperty("seed",out var balanceSeed)?balanceSeed.GetString()!:"SPIRELEGACY-PORT-TEST",GameMode.Standard,request.TryGetProperty("ascension",out var ascension)?ascension.GetInt32():0);
+                    await StartSingleplayer(cls=="ironclad"?ModelDb.Character<MegaCrit.Sts2.Core.Models.Characters.Ironclad>():ModelDb.Character<HeirCharacter>(),request.TryGetProperty("seed",out var balanceSeed)?balanceSeed.GetString()!:"SPIRELEGACY-PORT-TEST",request.TryGetProperty("ascension",out var ascension)?ascension.GetInt32():0);
                     result = StateSummary(); break;
                 case "campaign-purchase":
                     if(Runtime.Profile.active!=null||PlayerBloodlines.LocalPlayer!=null)throw new InvalidOperationException("Return the completed lab run to the menu before purchasing.");
@@ -588,7 +588,7 @@ public static class NativeTestBridge
                     var rewardPlayer=RunState().Players.Single(); var allowed=NativePoolParity.Rows(Runtime.Heir.classId).Select(r=>r.Text("id")).ToHashSet(); var rewardChecks=0; var shopChecks=0;var seenRewards=new HashSet<string>();var seenShops=new HashSet<string>();
                     foreach(var room in new[]{MegaCrit.Sts2.Core.Rooms.RoomType.Monster,MegaCrit.Sts2.Core.Rooms.RoomType.Elite,MegaCrit.Sts2.Core.Rooms.RoomType.Boss})
                         for(var roll=0;roll<(room==MegaCrit.Sts2.Core.Rooms.RoomType.Boss?80:20);roll++) {
-                            var reward=new MegaCrit.Sts2.Core.Rewards.CardReward(CardCreationOptions.ForRoom(rewardPlayer,room),6,rewardPlayer); reward.Populate();
+                            var reward=CreateCardReward(CardCreationOptions.ForRoom(rewardPlayer,room),6,rewardPlayer); reward.Populate();
                             var offered=reward.Cards.OfType<LegacyCard>().ToArray();
                             if(offered.Length!=6 || offered.Select(c=>c.Key).Distinct().Count()!=6 || offered.Any(c=>!allowed.Contains(c.Key))) throw new InvalidDataException("Wrong or duplicate native reward pool.");
                             rewardChecks+=offered.Length;
@@ -712,12 +712,43 @@ public static class NativeTestBridge
         return new { floor=run.TotalFloor,room=run.CurrentRoom?.GetType().Name,heir=new {Runtime.Heir.name,Runtime.Heir.classId,Runtime.Heir.traits}, hp=player.Creature.CurrentHp,maxHp=player.Creature.MaxHp,block=player.Creature.Block,gold=player.Gold,energy=player.PlayerCombatState?.Energy,turn=player.PlayerCombatState?.TurnNumber,phase=player.PlayerCombatState?.Phase.ToString(),relics=player.Relics.Select(r=>new{id=r.Id.ToString(),title=r.Title.GetFormattedText()}).ToArray(),hand=player.PlayerCombatState?.Hand.Cards.Select(c=>c.Id.ToString()).ToArray(),powers=player.Creature.Powers.Select(p=>new {id=p.Id.ToString(),amount=p.Amount,display=p.DisplayAmount,title=p.Title.GetFormattedText()}).ToArray(),enemies=player.Creature.CombatState?.GetOpponentsOf(player.Creature).Select(e=>new {hp=e.CurrentHp,block=e.Block,powers=e.Powers.Select(p=>new{id=p.Id.ToString(),amount=p.Amount}).ToArray()}).ToArray() };
     }
     // Test-only selector scope acquired across the regular/beta API signatures.
+    internal static ICardSelector? CurrentSelector => (ICardSelector?)AccessTools.Property(typeof(CardSelectCmd),"Selector")?.GetValue(null);
+
+    internal static MegaCrit.Sts2.Core.Rewards.CardReward CreateCardReward(CardCreationOptions options, int count, Player player)
+    {
+        var reward = typeof(MegaCrit.Sts2.Core.Rewards.CardReward);
+        var signature = new[] { typeof(CardCreationOptions), typeof(int), typeof(Player), typeof(PlayerChoiceSynchronizer) };
+        var constructor = AccessTools.Constructor(reward, signature);
+        if (constructor != null)
+            return (MegaCrit.Sts2.Core.Rewards.CardReward)constructor.Invoke([options, count, player, null]);
+        var stack = typeof(CardSelectCmd).Assembly.GetType("MegaCrit.Sts2.Core.CardSelection.CardSelectorStack", true)!;
+        constructor = AccessTools.Constructor(reward, [.. signature, stack]) ??
+            throw new MissingMethodException(reward.FullName, ".ctor");
+        return (MegaCrit.Sts2.Core.Rewards.CardReward)constructor.Invoke([options, count, player, null, null]);
+    }
+
+    internal static Task StartSingleplayer(CharacterModel character, string seed, int ascension)
+    {
+        var method = ApiContract.Require(typeof(NGame), nameof(NGame.StartNewSingleplayerRun), typeof(Task),
+            [typeof(Player), typeof(bool), typeof(IReadOnlyList<ActModel>), typeof(IReadOnlyList<ModifierModel>), typeof(string), typeof(GameMode), typeof(bool), typeof(int), typeof(DateTimeOffset?)],
+            [typeof(CharacterModel), typeof(bool), typeof(IReadOnlyList<ActModel>), typeof(IReadOnlyList<ModifierModel>), typeof(string), typeof(GameMode), typeof(int), typeof(DateTimeOffset?)]);
+        var acts = ModelDb.ActsByIndex.Select(act => act.First()).ToArray();
+        var modifiers = Array.Empty<ModifierModel>();
+        object?[] arguments = method.GetParameters().Length == 9
+            ? [Player.CreateForNewRun(character, MegaCrit.Sts2.Core.Saves.SaveManager.Instance.GenerateUnlockStateFromProgress(), 1), true, acts, modifiers, seed, GameMode.Standard, false, ascension, null]
+            : [character, true, acts, modifiers, seed, GameMode.Standard, ascension, null];
+        return (Task)ApiContract.Invoke(method, NGame.Instance, arguments)!;
+    }
+
     private static IDisposable UseTestSelector(int selectionLimit=1)
     {
         var selector = new FirstChoiceSelector(selectionLimit);
         var method = AccessTools.Method(typeof(CardSelectCmd), "UseSelector", [typeof(ICardSelector), typeof(bool)])
             ?? AccessTools.Method(typeof(CardSelectCmd), "UseSelector", [typeof(ICardSelector)]);
-        return (IDisposable)method.Invoke(null, method.GetParameters().Length == 2 ? [selector, false] : [selector])!;
+        if (method != null)
+            return (IDisposable)ApiContract.Invoke(method, null, method.GetParameters().Length == 2 ? [selector, false] : [selector])!;
+        var stack = typeof(CardSelectCmd).Assembly.GetType("MegaCrit.Sts2.Core.CardSelection.CardSelectorStack", true)!;
+        return (IDisposable)ApiContract.Invoke(ApiContract.Require(stack, "SetTestSelector", typeof(IDisposable), [typeof(ICardSelector)]), null, [selector])!;
     }
     private sealed class FirstChoiceSelector(int selectionLimit) : ICardSelector
     {

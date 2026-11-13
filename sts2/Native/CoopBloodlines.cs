@@ -160,7 +160,14 @@ public sealed class BloodlineLobbyMessage:ICustomMessage
 [HarmonyPatch]
 public static class AttachCoopLobby
 {
-    public static System.Reflection.MethodBase TargetMethod()=>AccessTools.Constructor(typeof(StartRunLobby),[typeof(MegaCrit.Sts2.Core.Runs.GameMode),typeof(INetGameService),typeof(IStartRunLobbyListener),typeof(int)]);
+    public static System.Reflection.MethodBase TargetMethod()
+    {
+        var lobby = typeof(StartRunLobby);
+        var mode = typeof(MegaCrit.Sts2.Core.Runs.GameMode);
+        return AccessTools.Constructor(lobby, [mode, typeof(INetGameService), typeof(IStartRunLobbyListener), typeof(int)])
+            ?? AccessTools.Constructor(lobby, [mode, typeof(bool), typeof(INetGameService), typeof(IStartRunLobbyListener), typeof(int)])
+            ?? throw new MissingMethodException(lobby.FullName, ".ctor");
+    }
     public static void Postfix(StartRunLobby __instance)=>CoopBloodlines.Attach(__instance);
 }
 [HarmonyPatch]

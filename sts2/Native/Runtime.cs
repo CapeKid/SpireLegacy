@@ -12,7 +12,7 @@ public static class Runtime
     public static string DataDirectory => System.Environment.GetEnvironmentVariable("HEIR_DATA_DIR") ?? Path.Combine(System.Environment.GetFolderPath(System.Environment.SpecialFolder.LocalApplicationData), "SpireLegacy2");
     public static string FamilyPath => Path.Combine(DataDirectory, "family.json");
     public static FamilyProfile Profile { get; private set; } = new();
-    public static FamilyProfile.Heir Heir => Profile.active?.heir ?? Profile.selected ?? Profile.offers.First();
+    public static FamilyProfile.Heir Heir => Profile.active?.heir ?? Profile.selected ?? Profile.offers.FirstOrDefault() ?? new();
     private static readonly Dictionary<string, Texture2D> Textures = new();
     private static readonly StartupGate Startup=new();
     public static Texture2D Texture(string path)

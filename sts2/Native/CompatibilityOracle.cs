@@ -75,7 +75,7 @@ public static class CompatibilityOracle
         try{
             Runtime.Profile.selected=new(){classId="mage",traits=["megahealth","diva","cantattack"]};
             foreach(var key in new[]{"accept_tutorials_ftue","map_select_ftue","combat_rules_ftue","shuffle_ftue"})MegaCrit.Sts2.Core.Saves.SaveManager.Instance.MarkFtueAsComplete(key);
-            await NGame.Instance!.StartNewSingleplayerRun(ModelDb.Character<Ironclad>(),true,ModelDb.ActsByIndex.Select(a=>a.First()).ToArray(),[],"SPIRELEGACY-CONTROL",GameMode.Standard,0);
+            await NativeTestBridge.StartSingleplayer(ModelDb.Character<Ironclad>(),"SPIRELEGACY-CONTROL",0);
             var run=(RunState)AccessTools.Property(typeof(RunManager),"State").GetValue(RunManager.Instance)!;
             await RunManager.Instance.EnterRoomDebug(MegaCrit.Sts2.Core.Rooms.RoomType.Monster,model:run.Act.AllEncounters.First(e=>e.RoomType==MegaCrit.Sts2.Core.Rooms.RoomType.Monster).ToMutable(),showTransition:false);
             RunManager.Instance.ActionExecutor.Unpause();
@@ -97,7 +97,7 @@ public static class CompatibilityOracle
             var attack=await Play(CardType.Attack);var guard=await Play(CardType.Skill);
             var heirSprites=NativeTestBridge.Descendants(Tree.Root).OfType<HeirSprite>().Count(s=>s.IsVisibleInTree());
             await (Task)AccessTools.Method(typeof(RunManager),"AbandonInternal").Invoke(RunManager.Instance,[])!;
-            await NGame.Instance.ReturnToMainMenu();
+            await NGame.Instance!.ReturnToMainMenu();
             if(FamilyHash()!=hash)throw new InvalidDataException("Native character modified family state.");
             return new{upgraded,maxHp=player.Creature.MaxHp,healing,attack,guard,heirSprites,familyUnchanged=true};
         }finally{Runtime.Profile.selected=original;if(!patches)NativeStartup.Install(NativeStartup.Owner,NativeStartup.PatchClasses);}

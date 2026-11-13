@@ -24,12 +24,23 @@ public static class CoopOracle
         var version=AccessTools.Method(versionType,"LocalDefault").Invoke(null,[]);
         return Activator.CreateInstance(type,[version])!;
     }
-    private static JoinFlow NewJoinFlow()
+    private static async Task<(JoinFlow Flow, JoinResult Result)> Join(IClientConnectionInitializer initializer, SceneTree tree)
     {
-        var empty=typeof(JoinFlow).GetConstructor(Type.EmptyTypes);
-        if(empty!=null)return (JoinFlow)empty.Invoke([]);
-        var service=CreateNetworkService(AccessTools.TypeByName("MegaCrit.Sts2.Core.Multiplayer.NetClientGameService"));
-        return (JoinFlow)Activator.CreateInstance(typeof(JoinFlow),[service])!;
+        var flowType = typeof(JoinFlow);
+        var begin = ApiContract.Require(flowType, nameof(JoinFlow.Begin), typeof(Task<JoinResult>),
+            [typeof(IClientConnectionInitializer), typeof(SceneTree)], [typeof(SceneTree)]);
+        if (begin.GetParameters().Length == 2)
+        {
+            var empty = flowType.GetConstructor(Type.EmptyTypes);
+            var legacyFlow = (JoinFlow)(empty != null
+                ? empty.Invoke([])
+                : Activator.CreateInstance(flowType, [CreateNetworkService(typeof(NetClientGameService))]))!;
+            return (legacyFlow, await (Task<JoinResult>)ApiContract.Invoke(begin, legacyFlow, [initializer, tree])!);
+        }
+
+        var service = CreateNetworkService(typeof(NetClientGameService));
+        var flow = (JoinFlow)Activator.CreateInstance(flowType, [service, initializer])!;
+        return (flow, await (Task<JoinResult>)ApiContract.Invoke(begin, flow, [tree])!);
     }
     private static INetGameService Service(JoinFlow flow)=>(INetGameService)AccessTools.Property(typeof(JoinFlow),"NetService").GetValue(flow)!;
     public static MegaCrit.Sts2.Core.Multiplayer.Game.Lobby.LoadRunLobby? SavedLobby;
@@ -46,8 +57,7 @@ public static class CoopOracle
             if(error.HasValue)throw new InvalidOperationException(error.ToString());
             screen.InitializeAsHost(service,save.SaveData);
         }else{
-            var flow=NewJoinFlow();
-            var join=await flow.Begin(new ENetClientConnectionInitializer(request.TryGetProperty("peer",out var resumePeer)?resumePeer.GetUInt64():2,"127.0.0.1",port),tree);
+            var (flow, join)=await Join(new ENetClientConnectionInitializer(request.TryGetProperty("peer",out var resumePeer)?resumePeer.GetUInt64():2,"127.0.0.1",port),tree);
             if(!join.loadJoinResponse.HasValue)throw new InvalidOperationException("Expected native saved lobby.");
             screen.InitializeAsClient(Service(flow),join.loadJoinResponse.Value);
         }
@@ -167,8 +177,7 @@ public static class CoopOracle
             if(error.HasValue)throw new InvalidOperationException(error.ToString());
             screen.InitializeMultiplayerAsHost(service,4);
         }else {
-            var flow=NewJoinFlow();
-            var join=await flow.Begin(new ENetClientConnectionInitializer(peer,"127.0.0.1",port),tree);
+            var (flow, join)=await Join(new ENetClientConnectionInitializer(peer,"127.0.0.1",port),tree);
             if(!join.joinResponse.HasValue)throw new InvalidOperationException("Expected a native lobby join response.");
             screen.InitializeMultiplayerAsClient(Service(flow),join.joinResponse.Value);
         }
@@ -176,7 +185,7 @@ public static class CoopOracle
         var button=NativeTestBridge.Descendants(screen).OfType<NCharacterSelectButton>().Single(b=>choice=="ironclad"?b.Character is MegaCrit.Sts2.Core.Models.Characters.Ironclad:choice=="random"?b.Character is MegaCrit.Sts2.Core.Models.Characters.RandomCharacter:b.Character is HeirCharacter);
         // The cached submenu built this button before the fixture revealed epochs.
         if(choice=="random")button.DebugUnlock();
-        screen.SelectCharacter(button,button.Character);
+        ManorCharacterMenu.Select(screen,button);
         // Opening character select clears the debug override; set it only once
         // the native initialization/selection sequence has completed.
         if(host&&request.TryGetProperty("seed",out var seed))NGame.Instance.DebugSeedOverride=seed.GetString();

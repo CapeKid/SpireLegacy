@@ -1,4 +1,5 @@
 using Godot;
+using System.Reflection;
 using HarmonyLib;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Nodes.Screens.CharacterSelect;
@@ -367,7 +368,7 @@ public static class ManorUi
         if (selectionScreen is {} screen && GodotObject.IsInstanceValid(screen) && screen.IsVisibleInTree())
         {
             var button = (NCharacterSelectButton?)AccessTools.Field(typeof(NCharacterSelectScreen),"_selectedButton").GetValue(screen);
-            if (button?.Character is HeirCharacter && !CoopBloodlines.IsReady(CoopBloodlines.Local(screen.Lobby))) {screen.SelectCharacter(button,button.Character);button.GrabFocus();}
+            if (button?.Character is HeirCharacter && !CoopBloodlines.IsReady(CoopBloodlines.Local(screen.Lobby))) {ManorCharacterMenu.Select(screen,button);button.GrabFocus();}
         }
     }
 }
@@ -397,10 +398,20 @@ public static class ManorControllerContext
     }
 }
 
-[HarmonyPatch(typeof(NCharacterSelectScreen),nameof(NCharacterSelectScreen.SelectCharacter))]
+[HarmonyPatch]
 public static class ManorCharacterMenu
 {
-    public static void Postfix(NCharacterSelectScreen __instance, CharacterModel characterModel) => ManorUi.Attach(__instance,characterModel);
+    private static readonly MethodInfo Selection = ApiContract.Require(
+        typeof(NCharacterSelectScreen), nameof(NCharacterSelectScreen.SelectCharacter), typeof(void),
+        [typeof(NCharacterSelectButton)], [typeof(NCharacterSelectButton), typeof(CharacterModel)]);
+
+    public static MethodBase TargetMethod() => Selection;
+
+    internal static void Select(NCharacterSelectScreen screen, NCharacterSelectButton button) =>
+        ApiContract.Invoke(Selection, screen, Selection.GetParameters().Length == 1 ? [button] : [button, button.Character]);
+
+    public static void Postfix(NCharacterSelectScreen __instance, NCharacterSelectButton __0) =>
+        ManorUi.Attach(__instance, __0.Character);
 }
 
 [HarmonyPatch(typeof(NCharacterSelectScreen),"get_InitialFocusedControl")]

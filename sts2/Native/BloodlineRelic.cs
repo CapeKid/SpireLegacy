@@ -161,7 +161,7 @@ public class BloodlineRelic : CustomRelicModel
         await Apply(context,"weak",target,Inheritance.Amount("hurt_weak"));
         if (Inheritance.Has("shock")) shocked = true;
     }
-    public override async Task AfterDeath(PlayerChoiceContext context, Creature creature, bool wasRemovalPrevented, float deathAnimLength)
+    internal async Task AfterEnemyDeath(PlayerChoiceContext context, Creature creature, bool wasRemovalPrevented)
     {
         if (wasRemovalPrevented || creature == Owner.Creature || creature.Side == Owner.Creature.Side || Owner.Creature.IsDead) return;
         if (Inheritance.Amount("diva") > 0) await PlayerCmd.GainGold(Inheritance.Amount("diva"),Owner);

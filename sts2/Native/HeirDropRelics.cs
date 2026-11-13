@@ -54,7 +54,7 @@ public abstract class FamilyDropRelic : CustomRelicModel
             if(Key is "training_dummy" or "triune_crest" or "trail_compass")yield return HoverTipFactory.FromPower<VigorPower>();
         }
     }
-    public override bool IsAllowed(IRunState runState)=>PlayerBloodlines.EligibilityOwner.Value is {} player
+    internal bool IsAllowedForFamily(IRunState runState)=>PlayerBloodlines.EligibilityOwner.Value is {} player
         ?PlayerBloodlines.Eligible(player,Key):runState.Players.Any(p=>PlayerBloodlines.Eligible(p,Key));
     [SavedProperty] public bool CombatClaimed { get; set; }
     [SavedProperty] public int TriggerTurn { get; set; }=-1;
