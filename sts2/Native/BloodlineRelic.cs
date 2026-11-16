@@ -25,7 +25,7 @@ public class BloodlineRelic : CustomRelicModel
     public override string PackedIconPath=>HeirPresentation.TexturePath(IdentityClass+"-energy-icon");
     protected override string PackedIconOutlinePath=>HeirPresentation.TexturePath(IdentityClass+"-outline");
     protected override string BigIconPath=>PackedIconPath;
-    public override List<(string,string)> Localization => [("title", "Family Bloodline"), ("description", "Your class, inherited traits and purchased manor upgrades shape this climb. Open the Family Manor to read every trait."), ("flavor", "Every climb ends. Your bloodline grows.")];
+    public override List<(string,string)> Localization => HeirLocalization.Entries(("title", "Family Bloodline"), ("description", "Your class, inherited traits and purchased manor upgrades shape this climb. Open the Family Manor to read every trait."), ("flavor", "Every climb ends. Your bloodline grows."));
     private bool firstSkill, firstAttack, firstHurt, shocked;
     private HashSet<Creature> firstAttackTargets = new();
     private Dictionary<CardModel,int> costlyDrawTurns = new();

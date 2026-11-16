@@ -48,26 +48,26 @@ public abstract class LegacyPower:CustomPowerModel
  };
  public override string CustomPackedIconPath=>IconSource.PackedIconPath;
  public override string CustomBigIconPath=>IconSource.ResolvedBigIconPath;
- public override List<(string,string)> Localization=>[("title",Key switch {
+ public override List<(string,string)> Localization=>[("title",HeirLocalization.Text(Key switch {
   "class"=>"{ClassTitle}",
   "well_laid"=>"Measured Breath",
   "discard_return"=>"Ghost Luggage",
   "retained_attack_energy"=>"Perch Discipline",
   _=>System.Globalization.CultureInfo.InvariantCulture.TextInfo.ToTitleCase(Key.Replace('_',' '))
- }),("description",DescriptionText),("selectionScreenPrompt","Choose up to {Amount} card(s) to Retain this turn.")];
- public override LocString Title {get {var title=base.Title;if(Key=="class")title.Add("ClassTitle",Design.Get("class_mechanics",PlayerBloodlines.Heir(Owner.Player).classId).Text("name"));return title;}}
+ })),("description",DescriptionText),("selectionScreenPrompt",HeirLocalization.Text("Choose up to {Amount} card(s) to Retain this turn."))];
+ public override LocString Title {get {var title=base.Title;if(Key=="class")title.Add("ClassTitle",Design.Get("class_mechanics",PlayerBloodlines.Heir(Owner.Player).classId).Localized("name"));return title;}}
  private string DescriptionText=>Key switch {
-  "class"=>"{ClassRules} {CounterLabel}: {Counter}.",
-  "plated"=>"At turn end, gain {Amount} Block. Lose a stack when attacked for HP damage.",
-  "reservoir"=>"Each Arcane Charge adds {Amount} extra damage to every hit of your next Attack.",
-  "quiver"=>"Hunter Rhythm draws {Amount} additional cards.",
-  "exhaust_burst"=>"Whenever you Exhaust 3 cards, deal {Amount} damage to ALL enemies. Progress: {Counter}/3.",
+  "class"=>HeirLocalization.Text("{ClassRules} {CounterLabel}: {Counter}."),
+  "plated"=>HeirLocalization.Text("At turn end, gain {Amount} Block. Lose a stack when attacked for HP damage."),
+  "reservoir"=>HeirLocalization.Text("Each Arcane Charge adds {Amount} extra damage to every hit of your next Attack."),
+  "quiver"=>HeirLocalization.Text("Hunter Rhythm draws {Amount} additional cards."),
+  "exhaust_burst"=>HeirLocalization.Text("Whenever you Exhaust 3 cards, deal {Amount} damage to ALL enemies. Progress: {Counter}/3."),
   "skill_echo"=>PowerRules+" {ThesisProgress}",
-  "skill_block" or "skill_energy"=>PowerRules+" Skills left: {Counter}.",
-  "attack_vigor"=>PowerRules+" Attacks left: {Counter}.",
+  "skill_block" or "skill_energy"=>PowerRules+" "+HeirLocalization.Text("Skills left: {Counter}."),
+  "attack_vigor"=>PowerRules+" "+HeirLocalization.Text("Attacks left: {Counter}."),
   _=>PowerRules
  };
- private string PowerRules=>Design.Get("power_effects",Key).Text("summary").Replace("!M!","{Amount}");
+ private string PowerRules=>Design.Get("power_effects",Key).Localized("summary").Replace("!M!","{Amount}");
  private const int PlayThreshold = 3;
  private bool RepeatsOnPlayThreshold=>Key is "skill_block" or "skill_energy" or "attack_vigor";
  private int plays;private bool discardPaid;private bool cyclingDamage;
@@ -95,11 +95,11 @@ public abstract class LegacyPower:CustomPowerModel
    var text=base.Description;
    var classId=PlayerBloodlines.Heir(Owner.Player).classId;
    text.Add("Amount",Amount);
-   text.Add("ClassRules",Design.Get("classes",classId).Text("summary"));
-   text.Add("CounterLabel",classId=="ranger"?"Attacks left":"Current");
+   text.Add("ClassRules",Design.Get("classes",classId).Localized("summary"));
+   text.Add("CounterLabel",HeirLocalization.Text(classId=="ranger"?"Attacks left":"Current"));
    text.Add("Counter",Key=="exhaust_burst"?Math.Max(0,ExhaustsThisTurn)%3:DisplayAmount);
    if(Key=="skill_echo")
-    text.Add("ThesisProgress",EchoTriggered?"Triggered this turn.":$"Skills left: {DisplayAmount}.");
+    text.Add("ThesisProgress",EchoTriggered?HeirLocalization.Text("Triggered this turn."):HeirLocalization.Format($"Skills left: {DisplayAmount}."));
    return text;
   }
  }

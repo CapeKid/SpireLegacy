@@ -26,29 +26,39 @@ public sealed class CardDesign(string id, bool upgraded = false, IEnumerable<str
         return Row.Number(key) + (key == "draw" ? Gene(key) : 0) + (upgraded && key != "hpLoss" && Row.Number(key) > 0 ? increment : 0);
     }
     public int Magic => Row.Number("magic") + (upgraded ? Row.Number("upgradeMagic") : 0);
-    public string Rules(string? nextBlock = null, string? specialBlock = null)
+    public string Rules(string? nextBlock = null, string? specialBlock = null, Func<string, string>? translate = null)
     {
+        string Text(string english) => translate?.Invoke(english) ?? english;
+        string Format(FormattableString text) => string.Format(Text(text.Format), text.GetArguments());
         var lines = new List<string>();
-        if (!Mercy && Damage > 0) lines.Add($"Deal {{Damage}} damage{(Row.Flag("aoe") ? " to ALL enemies" : "")}{(Row.Number("hits") > 1 ? $" {Row.Number("hits")} times" : "")}.");
-        if (Block > 0) lines.Add("Gain {Block} Block.");
+        var all = Row.Flag("aoe");
+        var hits = Row.Number("hits");
+        if (!Mercy && Damage > 0) lines.Add((all, hits > 1) switch
+        {
+            (true, true) => Format($"Deal {{Damage}} damage to ALL enemies {hits} times."),
+            (true, false) => Text("Deal {Damage} damage to ALL enemies."),
+            (false, true) => Format($"Deal {{Damage}} damage {hits} times."),
+            _ => Text("Deal {Damage} damage.")
+        });
+        if (Block > 0) lines.Add(Text("Gain {Block} Block."));
         foreach (var key in new[] { "hpLoss", "heal", "poison", "vigor", "thorns", "plated", "nextEnergy", "nextDraw", "nextBlock", "draw", "energy", "strength", "dexterity", "weak", "vulnerable", "discard" })
         {
-            if (key == "draw" && Row.Text("special") == "scry") lines.Add(Design.Get("special_effects", "scry").Text("summary").Replace("{n}", SpecialAmount.ToString()));
+            if (key == "draw" && Row.Text("special") == "scry") lines.Add(Text(Design.Get("special_effects", "scry").Text("summary")).Replace("{n}", SpecialAmount.ToString()));
             var amount = Amount(key); if (amount <= 0) continue;
             lines.Add(key switch {
-                "hpLoss" => $"Lose {amount} HP.", "heal" => $"Heal {amount} HP.",
-                "draw" => $"Draw {amount} card(s).", "discard" => $"Discard {amount} card(s).",
-                "nextEnergy" => $"Next turn, gain {amount} Energy.", "nextDraw" => $"Next turn, draw {amount} card(s).", "nextBlock" => $"Next turn, gain {nextBlock ?? amount.ToString()} Block.",
-                "weak" or "vulnerable" or "poison" => $"Apply {amount} {key}{(Row.Flag("aoe") ? " to ALL enemies" : "")}.",
-                _ => $"Gain {amount} {key}." });
+                "hpLoss" => Format($"Lose {amount} HP."), "heal" => Format($"Heal {amount} HP."),
+                "draw" => Format($"Draw {amount} card(s)."), "discard" => Format($"Discard {amount} card(s)."),
+                "nextEnergy" => Format($"Next turn, gain {amount} Energy."), "nextDraw" => Format($"Next turn, draw {amount} card(s)."), "nextBlock" => Format($"Next turn, gain {nextBlock ?? amount.ToString()} Block."),
+                "weak" or "vulnerable" or "poison" => all ? Format($"Apply {amount} {Text(key)} to ALL enemies.") : Format($"Apply {amount} {Text(key)}."),
+                _ => Format($"Gain {amount} {Text(key)}.") });
         }
-        if (Gene("heal") > 0) lines.Add($"Heal {Gene("heal")} HP.");
-        if (Mercy) lines.Add($"Apply {MercyPoison} Poison. This inherited starter is a Skill.");
-        if (Row.Text("power") == "reservoir") lines.Add($"Each Arcane Charge adds {Magic} extra damage to every hit of your next Attack.");
-        else if (Row.Text("power") == "quiver") lines.Add($"Hunter Rhythm draws {Magic} additional card(s).");
-        else if (Row.Text("power") == "skill_echo") lines.Add("After you play 3 Skills in a turn, your next Attack that turn is played twice. Triggers once per turn.");
-        else if (Row.Text("power") != "none") lines.Add(Design.Get("power_effects", Row.Text("power")).Text("summary").Replace("!M!", Magic.ToString()));
-        if (Row.Text("special") is not ("none" or "scry")) lines.Add(Design.Get("special_effects", Row.Text("special")).Text("summary").Replace("{n}", specialBlock ?? SpecialAmount.ToString()));
+        if (Gene("heal") > 0) lines.Add(Format($"Heal {Gene("heal")} HP."));
+        if (Mercy) lines.Add(Format($"Apply {MercyPoison} Poison. This inherited starter is a Skill."));
+        if (Row.Text("power") == "reservoir") lines.Add(Format($"Each Arcane Charge adds {Magic} extra damage to every hit of your next Attack."));
+        else if (Row.Text("power") == "quiver") lines.Add(Format($"Hunter Rhythm draws {Magic} additional card(s)."));
+        else if (Row.Text("power") == "skill_echo") lines.Add(Text("After you play 3 Skills in a turn, your next Attack that turn is played twice. Triggers once per turn."));
+        else if (Row.Text("power") != "none") lines.Add(Text(Design.Get("power_effects", Row.Text("power")).Text("summary")).Replace("!M!", Magic.ToString()));
+        if (Row.Text("special") is not ("none" or "scry")) lines.Add(Text(Design.Get("special_effects", Row.Text("special")).Text("summary")).Replace("{n}", specialBlock ?? SpecialAmount.ToString()));
         return string.Join("\n", lines);
     }
 }

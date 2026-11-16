@@ -45,7 +45,7 @@ public abstract class FamilyDropRelic : CustomRelicModel
     protected override string PackedIconOutlinePath=>TexturePath("outline");
     protected override string BigIconPath=>TexturePath("path");
     public override RelicRarity Rarity=>Enum.Parse<RelicRarity>(Row.Text("rarity"));
-    public override List<(string,string)> Localization=>[("title",Row.Text("title")),("description",Row.Text("description")),("flavor",Row.Text("flavor"))];
+    public override List<(string,string)> Localization=>HeirLocalization.Entries(("title",Row.Text("title")),("description",Row.Text("description")),("flavor",Row.Text("flavor")));
     protected override IEnumerable<IHoverTip> ExtraHoverTips
     {
         get

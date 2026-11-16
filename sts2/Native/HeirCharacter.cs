@@ -44,17 +44,17 @@ public sealed class HeirCharacter : PlaceholderCharacterModel
             foreach (var key in Inheritance.Deck(cls, Bloodline?.generation??Runtime.Profile.generation)) yield return NativeCards.Get(key);
         }
     }
-    public override List<(string, string)> Localization => [
+    public override List<(string, string)> Localization => HeirLocalization.Entries(
         ("title", "The Heir"), ("titleObject", "The Heir"), ("description", "A family of Knight, Mage and Ranger heirs. Inherited traits shape each climb; crowns rebuild the Family Manor."),
         ("pronounObject", "them"), ("pronounSubject", "they"), ("pronounPossessive", "theirs"), ("possessiveAdjective", "their"), ("cardsModifierTitle", "Heir Cards"), ("cardsModifierDescription", "Shared family cards and class specialties."),
         ("aromaPrinciple", "Your family taught you to hone what you already carry."),
-        ("goldMonologue", "Another fortune for the family, another burden for its heir.") ];
+        ("goldMonologue", "Another fortune for the family, another burden for its heir."));
 }
 
 public abstract class FamilyCardPool : CustomCardPoolModel
 {
     protected abstract string ClassId { get; }
-    public override string Title => "Spire Legacy";
+    public override string Title => HeirLocalization.Text("Spire Legacy");
     public override string BigEnergyIconPath=>HeirPresentation.TexturePath(ClassId+"-energy-icon");
     public override string TextEnergyIconPath=>HeirPresentation.TexturePath(ClassId+"-energy-text");
     public override Color ShaderColor=>HeirPresentation.Accent(ClassId);

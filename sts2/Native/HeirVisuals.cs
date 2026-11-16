@@ -1,3 +1,4 @@
+using L = SpireLegacy.HeirLocalization;
 using Godot;
 using HarmonyLib;
 using MegaCrit.Sts2.Core.Models;
@@ -43,8 +44,8 @@ public static class HeirVisuals
         visuals.AddChild(banner);
         var symbol = new Label { Text = Symbols[Banner(player)], Position = new(-184,-201), MouseFilter = Control.MouseFilterEnum.Ignore };
         symbol.AddThemeFontSizeOverride("font_size",32); banner.AddChild(symbol);
-        var motto=new Label {Name="FamilyMotto",Text=Motto(player),Position=new(-225,-125),Size=new(220,50),AutowrapMode=TextServer.AutowrapMode.WordSmart,MouseFilter=Control.MouseFilterEnum.Ignore};
-        motto.AddThemeFontSizeOverride("font_size",18);banner.AddChild(motto);
+        var motto=new Label {Name="FamilyMotto",Text=L.Text(Motto(player)),Position=new(-225,-125),Size=new(220,50),AutowrapMode=TextServer.AutowrapMode.WordSmart,MouseFilter=Control.MouseFilterEnum.Ignore};
+        motto.AddThemeFontSizeOverride("font_size",18);L.ApplyFont(motto);banner.AddChild(motto);
         actors.Add((creature,sprite,banner,symbol,TraitAppearance.Attach(visuals,sprite,factor,PlayerBloodlines.Heir(player))));
     }
     private static int Banner(MegaCrit.Sts2.Core.Entities.Players.Player player)=>PlayerBloodlines.State(player) is {coop:true} run?run.banner:Runtime.Profile.banner;
@@ -82,7 +83,7 @@ public static class HeirVisuals
             else if (actor.sprite.Animation == "dead") actor.sprite.PlayPose("idle");
             actor.banner.Color = ManorUi.BannerColorFor(Banner(player));
             actor.symbol.Text=Symbols[Banner(player)];
-            actor.banner.GetNode<Label>("FamilyMotto").Text=Motto(player);
+            actor.banner.GetNode<Label>("FamilyMotto").Text=L.Text(Motto(player));
         }
     }
 }
@@ -158,15 +159,17 @@ public static class HeirRunDetailsButton
         if(player?.Character is not HeirCharacter)return;
         var heir = PlayerBloodlines.Heir(player);
         var family=PlayerBloodlines.State(player) is {coop:true} bloodline?bloodline.family:Runtime.Profile.family;
-        var button = ManorUi.MakeButton($"{heir.name} {family} · Family / Traits",ManorUi.Open);
+        var button = ManorUi.MakeButton(L.Format($"{heir.name} {family} · Family / Traits"),ManorUi.Open);
         button.Position = new(30,150); button.Size = new(580,54);
         __instance.AddChild(button);
         var traits=new HBoxContainer {Position=new(30,212)};
         __instance.AddChild(traits);
         foreach(var row in Inheritance.Rows(heir)) {
-            var info=$"{row.Text("name")}: {row.Text("summary")}\nCrown bonus: {row.Number("goldBonus")}%";
+            var info=L.Format($"{row.Localized("name")}: {row.Localized("summary")}\nCrown bonus: {row.Number("goldBonus")}%");
             traits.AddChild(new TextureRect {Texture=Runtime.TraitIcon(row.Text("id")),CustomMinimumSize=new(48,48),ExpandMode=TextureRect.ExpandModeEnum.IgnoreSize,StretchMode=TextureRect.StretchModeEnum.KeepAspectCentered,TooltipText=info,MouseFilter=Control.MouseFilterEnum.Stop});
-            traits.AddChild(new Label {Text=row.Text("name"),TooltipText=info,MouseFilter=Control.MouseFilterEnum.Stop});
+            var label = new Label {Text=row.Localized("name"),TooltipText=info,MouseFilter=Control.MouseFilterEnum.Stop};
+            L.ApplyFont(label);
+            traits.AddChild(label);
         }
     }
 }

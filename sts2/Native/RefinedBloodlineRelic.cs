@@ -9,10 +9,10 @@ namespace SpireLegacy;
 // Keep all inherited hooks and the saved run carrier when Orobas refines the starter.
 public sealed class RefinedBloodlineRelic : BloodlineRelic
 {
-    public override List<(string,string)> Localization=>[
+    public override List<(string,string)> Localization=>HeirLocalization.Entries(
         ("title","Refined Bloodline"),
         ("description","Draw 1 additional card each turn. Your class, inherited traits and purchased manor upgrades still shape this climb."),
-        ("flavor","The family's potential, awakened.")];
+        ("flavor","The family's potential, awakened."));
     public override decimal ModifyHandDraw(Player player,decimal count)=>base.ModifyHandDraw(player,count)+(player==Owner?1:0);
     public override RelicModel? GetUpgradeReplacement()=>null;
 }

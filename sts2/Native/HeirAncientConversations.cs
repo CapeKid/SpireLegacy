@@ -22,12 +22,11 @@ public static class HeirAncientConversations
         var translations=new Dictionary<string,string>();
         for(var i=0;i<content.Count;i++) {
             var key=$"SPIRELEGACY.ANCIENT.{identity.Entry}.{classId}.{(first?"first":"return")}.{i}";
-            translations[key]=content[i].Text;var line=dialogue.Lines[i];
+            translations[key]=HeirLocalization.Text(content[i].Text);var line=dialogue.Lines[i];
             line.Speaker=content[i].Ancient?AncientDialogueSpeaker.Ancient:AncientDialogueSpeaker.Character;
             line.LineText=new LocString("ancients",key);
-            if(i<content.Count-1){translations[key+".next"]=content[i].Ancient?"Respond":"Continue";line.NextButtonText=new LocString("ancients",key+".next");}
+            if(i<content.Count-1){translations[key+".next"]=HeirLocalization.Text(content[i].Ancient?"Respond":"Continue");line.NextButtonText=new LocString("ancients",key+".next");}
         }
-        // Only original, namespaced English fallback text enters the active locale.
         LocManager.Instance.GetTable("ancients").MergeWith(translations);return true;
     }
 }

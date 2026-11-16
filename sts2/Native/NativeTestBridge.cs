@@ -175,6 +175,25 @@ public static class NativeTestBridge
                 case "inspect":
                     result = new { userData = OS.GetUserDataDir(), character = ModelDb.Character<HeirCharacter>().Id.ToString(), cards = Design.Rows("cards").Select(r => NativeCards.Get(r.Text("id")).Id.ToString()).ToArray(), pools = new[] { ModelDb.CardPool<KnightCardPool>().AllCards.Count(), ModelDb.CardPool<MageCardPool>().AllCards.Count(), ModelDb.CardPool<RangerCardPool>().AllCards.Count() }, labels = Descendants(Tree.Root).OfType<Label>().Where(n=>n.IsVisibleInTree()).Select(n=>n.Text).ToArray() };
                     break;
+                case "localization":
+                    var locale = MegaCrit.Sts2.Core.Localization.LocManager.Instance;
+                    if (request.TryGetProperty("language", out var language))
+                        locale.SetLanguage(language.GetString()!);
+                    var cardText = Design.Rows("cards").Select(row => NativeCards.Get(row.Text("id")))
+                        .Select(card => new { title = card.Title, rules = card.GetDescriptionForPile(PileType.None) }).ToArray();
+                    var promptCard = NativeCards.Get("mage_hourglass");
+                    var discountPrompt = new MegaCrit.Sts2.Core.Localization.LocString("cards", promptCard.Id.Entry + ".discountPrompt");
+                    var endingText = HeirArchitectDialogue.Create("mage", 0).Lines;
+                    result = new
+                    {
+                        locale.Language, cards = cardText,
+                        character = ModelDb.Character<HeirCharacter>().Title.GetFormattedText(),
+                        relic = ModelDb.Relic<BloodlineRelic>().Title.GetFormattedText(),
+                        potion = HeirPotions.Get("briar_vial").Title.GetFormattedText(),
+                        prompt = discountPrompt.GetFormattedText(),
+                        ending = endingText.Select(line => line.LineText!.GetFormattedText())
+                    };
+                    break;
                 case "select":
                     if(NRun.Instance != null)await NGame.Instance.ReturnToMainMenu();
                     NModalContainer.Instance?.Clear();

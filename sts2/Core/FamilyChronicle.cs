@@ -43,16 +43,25 @@ public static class FamilyChronicle
         if(!Design.Rows("family_chronicle").Any(r=>r.Text("rewardKind")=="relic"&&r.Text("rewardId")==key))return true;
         return profile.active is {} run?run.chronicleRelics.Contains(key):Relics(profile).Contains(key);
     }
-    public static string Progress(FamilyProfile profile,Design.Row entry)
+    public static string Progress(FamilyProfile profile,Design.Row entry,Func<string,string>? translate=null)
     {
+        string Text(string english) => translate?.Invoke(english) ?? english;
         var cls=entry.Text("classId");var history=profile.chronicle.classes.GetValueOrDefault(cls);
-        return cls is not ("knight" or "mage" or "ranger")?entry.Text("requirement"):entry.Text("rewardKind")=="motto"
-            ?$"Victories: {history?.wins??0} / 1":$"Best completed climb: {Math.Min(6,history?.maxFloor??0)} / 6 floors";
+        return cls is not ("knight" or "mage" or "ranger")?Text(entry.Text("requirement")):entry.Text("rewardKind")=="motto"
+            ?string.Format(Text("Victories: {0} / 1"), history?.wins??0)
+            :string.Format(Text("Best completed climb: {0} / 6 floors"), Math.Min(6,history?.maxFloor??0));
     }
-    public static string Reward(Design.Row entry)=>entry.Text("rewardKind") switch {
-        "relic"=>$"Unlock: {Design.Get("heir_relics",entry.Text("rewardId")).Text("title")} in future Heir reward and shop pools (not a starting relic).",
-        "motto"=>$"Unlock: family motto “{entry.Text("rewardId")}” for your combat banner.",
-        _=>"Unlock: an original family story entry."};
+    public static string Reward(Design.Row entry,Func<string,string>? translate=null)
+    {
+        string Text(string english) => translate?.Invoke(english) ?? english;
+        return entry.Text("rewardKind") switch
+        {
+            "relic" => string.Format(Text("Unlock: {0} in future Heir reward and shop pools (not a starting relic)."),
+                Text(Design.Get("heir_relics",entry.Text("rewardId")).Text("title"))),
+            "motto" => string.Format(Text("Unlock: family motto “{0}” for your combat banner."), Text(entry.Text("rewardId"))),
+            _ => Text("Unlock: an original family story entry.")
+        };
+    }
     public static bool SelectMotto(FamilyProfile profile,string motto)
     {
         if(motto.Length>0&&!Design.Rows("family_chronicle").Any(r=>r.Text("rewardKind")=="motto"&&r.Text("rewardId")==motto&&profile.chronicle.unlocked.Contains(r.Text("id"))))return false;

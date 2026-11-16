@@ -1,3 +1,4 @@
+using L = SpireLegacy.HeirLocalization;
 using Godot;
 using System.Reflection;
 using HarmonyLib;
@@ -98,6 +99,7 @@ public static class ManorUi
     }
     public static readonly Color[] BannerColors = [new("D8AA47"),new("8798E6"),new("CD6681"),new("76A76C")];
     private static readonly string[] BannerNames = ["Sun", "Moon", "Rose", "Oak"];
+    private const string LauncherText = "Family Manor & Heir Lab (Y)";
     public static Color BannerColorFor(int banner)=>BannerColors[Math.Clamp(banner,0,3)];
     public static Color BannerColor => BannerColors[Math.Clamp(Runtime.Profile.banner,0,3)];
     public static void Attach(NCharacterSelectScreen screen, CharacterModel character)
@@ -106,7 +108,7 @@ public static class ManorUi
         var id = screen.GetInstanceId();
         if (!launchers.TryGetValue(id,out var button) || !GodotObject.IsInstanceValid(button))
         {
-            button = MakeButton("Family Manor & Heir Lab (Y)",Open);
+            button = MakeButton(LauncherText,Open);
             button.Name = "SpireLegacyManor"; button.Size = new(420,60);
             button.AddThemeFontSizeOverride("font_size",22);
             screen.AddChild(button); launchers[id] = button;
@@ -136,6 +138,8 @@ public static class ManorUi
             Tree.ProcessFrame+=Poll;
             screen.TreeExiting+=()=>{Tree.ProcessFrame-=Poll;launchers.Remove(id);};
         }
+        button.Text = L.Text(LauncherText);
+        L.ApplyFont(button);
         button.Visible = character is HeirCharacter;
         if (character is not HeirCharacter) return;
         var background = (Control)AccessTools.Field(typeof(NCharacterSelectScreen),"_bgContainer").GetValue(screen)!;
@@ -150,7 +154,7 @@ public static class ManorUi
     public static Button MakeButton(string text, Action action, string? key=null)
     {
         // Node identity survives rebuilding and must not depend on enabled siblings.
-        var button = new Button { Name=key ?? "Manor_"+Convert.ToHexString(System.Security.Cryptography.SHA256.HashData(System.Text.Encoding.UTF8.GetBytes(text)))[..16], Text = text, CustomMinimumSize = new(0,54), FocusMode = Control.FocusModeEnum.All };
+        var button = new Button { Name=key ?? "Manor_"+Convert.ToHexString(System.Security.Cryptography.SHA256.HashData(System.Text.Encoding.UTF8.GetBytes(text)))[..16], Text = L.Text(text), CustomMinimumSize = new(0,54), FocusMode = Control.FocusModeEnum.All };
         var normal=new StyleBoxFlat {BgColor=new("28344D"),BorderColor=new("526581"),BorderWidthLeft=1,BorderWidthRight=1,BorderWidthTop=1,BorderWidthBottom=1,CornerRadiusTopLeft=8,CornerRadiusTopRight=8,CornerRadiusBottomLeft=8,CornerRadiusBottomRight=8,ContentMarginLeft=18,ContentMarginRight=18,ContentMarginTop=10,ContentMarginBottom=10};
         button.AddThemeStyleboxOverride("normal",normal);
         var focus=new StyleBoxFlat {BgColor=Colors.Transparent,BorderColor=new("FFE0A0"),BorderWidthLeft=4,BorderWidthRight=4,BorderWidthTop=4,BorderWidthBottom=4,CornerRadiusTopLeft=8,CornerRadiusTopRight=8,CornerRadiusBottomLeft=8,CornerRadiusBottomRight=8};
@@ -158,6 +162,7 @@ public static class ManorUi
         var hover=(StyleBoxFlat)normal.Duplicate(); hover.BgColor=new("3C4F70"); button.AddThemeStyleboxOverride("hover",hover);
         button.AddThemeColorOverride("font_color",new("F5F3EC"));
         button.AddThemeFontSizeOverride("font_size",24);
+        L.ApplyFont(button);
         CanvasLayer? owner=null;
         // A run launcher can be created while an old lobby modal is closing.
         // Capture actual ancestry after attachment, rather than creation time.
@@ -172,8 +177,10 @@ public static class ManorUi
     }
     private static Label Text(string value, int size = 23)
     {
-        var label = new Label { Text = value, AutowrapMode = TextServer.AutowrapMode.WordSmart, SizeFlagsHorizontal = Control.SizeFlags.ExpandFill, FocusMode=Control.FocusModeEnum.None };
-        label.AddThemeFontSizeOverride("font_size",size); return label;
+        var label = new Label { Text = L.Text(value), AutowrapMode = TextServer.AutowrapMode.WordSmart, SizeFlagsHorizontal = Control.SizeFlags.ExpandFill, FocusMode=Control.FocusModeEnum.None };
+        label.AddThemeFontSizeOverride("font_size",size);
+        L.ApplyFont(label);
+        return label;
     }
     public static void Open()
     {
@@ -225,14 +232,14 @@ public static class ManorUi
     {
         back=RequestClose;
         BeginPage("manor"); var profile = Runtime.Profile;
-        var heading = Text($"{profile.family} Family Manor — generation {profile.generation + 1}",32); heading.Modulate = BannerColor; content!.AddChild(heading);
-        AddText($"Crowns: {profile.crowns} · Banner: {BannerNames[profile.banner]} · Last heir earned {profile.lastEarned}");
+        var heading = Text(L.Format($"{profile.family} Family Manor — generation {profile.generation + 1}"),32); heading.Modulate = BannerColor; content!.AddChild(heading);
+        AddText(L.Format($"Crowns: {profile.crowns} · Banner: {L.Text(BannerNames[profile.banner])} · Last heir earned {profile.lastEarned}"));
         AddText($"Spire Legacy {CardPlayDiagnostics.Version} · StS2 {MegaCrit.Sts2.Core.Debug.ReleaseInfoManager.Instance.ReleaseInfo?.Version}",20);
         if(Notice is {} notice) AddText(notice,26);
         var options = new VBoxContainer(); content.AddChild(options);
         options.AddChild(MakeButton("Name your family",EditFamilyName));
         var unread=Design.Rows("family_chronicle").Count(r=>profile.chronicle.unlocked.Contains(r.Text("id"))&&!profile.chronicle.read.Contains(r.Text("id")));
-        options.AddChild(MakeButton($"Family Chronicle · {unread} unread",ShowChronicle,"ManorChronicle"));
+        options.AddChild(MakeButton(L.Format($"Family Chronicle · {unread} unread"),ShowChronicle,"ManorChronicle"));
         options.AddChild(MakeButton("Change banner",() => { profile.banner = (profile.banner + 1) % 4; profile.Save(Runtime.FamilyPath); Render(); }));
         options.AddChild(MakeButton("Close",RequestClose));
         var playing=PlayerBloodlines.State(PlayerBloodlines.LocalPlayer)??profile.active;
@@ -253,14 +260,14 @@ public static class ManorUi
         foreach (var row in Design.Rows("manor"))
         {
             var id = row.Text("id");
-            AddText($"{row.Text("name")} · level {trial.Level(id)}/{row.Number("maxLevel")} · {row.Text("summary")}");
-            var button = MakeButton($"Select upgrade — {trial.Cost(row)} crowns",() => { if (CanConfigure() && profile.PreviewPurchases(cart.Append(id)) is not null) { cart.Add(id); Render(); } },"ManorUpgrade_"+id);
+            AddText(L.Format($"{row.Localized("name")} · level {trial.Level(id)}/{row.Number("maxLevel")} · {row.Localized("summary")}"));
+            var button = MakeButton(L.Format($"Select upgrade — {trial.Cost(row)} crowns"),() => { if (CanConfigure() && profile.PreviewPurchases(cart.Append(id)) is not null) { cart.Add(id); Render(); } },"ManorUpgrade_"+id);
             button.Disabled = playing != null || ready || profile.PreviewPurchases(cart.Append(id)) is null;
             content.AddChild(button);
         }
         if (cart.Count > 0)
         {
-            AddText($"Selected {cart.Count} upgrades · total {profile.crowns - trial.crowns} crowns · remaining {trial.crowns}");
+            AddText(L.Format($"Selected {cart.Count} upgrades · total {profile.crowns - trial.crowns} crowns · remaining {trial.crowns}"));
             AddButton("Review purchases",Review);
             AddButton("Clear selected upgrades",() => { cart.Clear(); Render(); });
         }
@@ -270,28 +277,28 @@ public static class ManorUi
     {
         var cls = Design.Get("classes",heir.classId);
         var selected = Runtime.Profile.selected is {} chosen&&chosen.name==heir.name&&chosen.classId==heir.classId&&chosen.traits.SequenceEqual(heir.traits);
-        AddText($"{(selected ? "✓ " : "")}{heir.name} {Runtime.Profile.family} — {cls.Text("name")}",27);
-        AddText(cls.Text("summary"));
+        AddText(L.Format($"{(selected ? "✓ " : "")}{heir.name} {Runtime.Profile.family} — {cls.Localized("name")}"),27);
+        AddText(cls.Localized("summary"));
         foreach (var trait in Inheritance.Rows(heir))
         {
             var detail = new HBoxContainer(); content!.AddChild(detail);
             detail.AddChild(new TextureRect { Texture = Runtime.TraitIcon(trait.Text("id")), CustomMinimumSize = new(48,48), ExpandMode = TextureRect.ExpandModeEnum.IgnoreSize, StretchMode = TextureRect.StretchModeEnum.KeepAspectCentered });
-            detail.AddChild(Text($"{trait.Text("name")}: {trait.Text("summary")}\nCrown bonus: {trait.Number("goldBonus")}%"));
+            detail.AddChild(Text(L.Format($"{trait.Localized("name")}: {trait.Localized("summary")}\nCrown bonus: {trait.Number("goldBonus")}%")));
         }
         if (selectable) content!.AddChild(MakeButton(selected ? "Selected for next climb" : "Choose this heir",() => { if(CanConfigure())Runtime.Profile.CommitHeirSelection(heir,Runtime.FamilyPath); Render(); },"ManorHeir_"+Runtime.Profile.offers.IndexOf(heir)));
     }
     public static void ShowChronicle()
     {
         back=Render;BeginPage("chronicle");var profile=Runtime.Profile;
-        AddText($"{profile.family} · Family Chronicle",32);
+        AddText(L.Format($"{profile.family} · Family Chronicle"),32);
         AddText("Family history and class lessons. Finish a climb to record its milestones; new relics enter future climbs. Existing cards, relics and potions remain available.");
         AddText("D-pad / stick: choose an entry · A: read · LB / RB: scroll · B: return",20);
         foreach(var row in Design.Rows("family_chronicle")) {
             var id=row.Text("id");var unlocked=profile.chronicle.unlocked.Contains(id);
-            AddText(row.Text("requirement"));
-            if(!unlocked)AddText(FamilyChronicle.Progress(profile,row),20);
-            AddText(FamilyChronicle.Reward(row),20);
-            var button=MakeButton((unlocked?profile.chronicle.read.Contains(id)?"Read: ":"NEW · Read: ":"Locked: ")+row.Text("title"),()=>ReadChronicle(id),"ManorStory_"+id);
+            AddText(row.Localized("requirement"));
+            if(!unlocked)AddText(FamilyChronicle.Progress(profile,row,L.Text),20);
+            AddText(FamilyChronicle.Reward(row,L.Text),20);
+            var button=MakeButton(string.Format(L.Text(unlocked?profile.chronicle.read.Contains(id)?"Read: {0}":"NEW · Read: {0}":"Locked: {0}"), row.Localized("title")),()=>ReadChronicle(id),"ManorStory_"+id);
             button.Disabled=!unlocked;content!.AddChild(button);
         }
         if(profile.chronicle.motto.Length>0)AddButton("Clear family motto",()=>{SaveMotto("");ShowChronicle();});
@@ -303,11 +310,11 @@ public static class ManorUi
         var row=Design.Get("family_chronicle",id);
         // Persist before rendering, so a failed write cannot silently mark a story read.
         if(!profile.CommitChronicleRead(id,Runtime.FamilyPath))return;
-        back=ShowChronicle;BeginPage("story_"+id);AddText(row.Text("title"),32);
-        AddText(row.Text("story").Replace("{Family}",profile.family),25);
-        AddText(FamilyChronicle.Reward(row),23);
-        if(row.Text("rewardKind")=="relic")AddText(Design.Get("heir_relics",row.Text("rewardId")).Text("description"));
-        if(row.Text("rewardKind")=="motto")AddButton("Use family motto: "+row.Text("rewardId"),()=>{SaveMotto(row.Text("rewardId"));ReadChronicle(id);});
+        back=ShowChronicle;BeginPage("story_"+id);AddText(row.Localized("title"),32);
+        AddText(row.Localized("story").Replace("{Family}",profile.family),25);
+        AddText(FamilyChronicle.Reward(row,L.Text),23);
+        if(row.Text("rewardKind")=="relic")AddText(Design.Get("heir_relics",row.Text("rewardId")).Localized("description"));
+        if(row.Text("rewardKind")=="motto")AddButton(L.Format($"Use family motto: {L.Text(row.Text("rewardId"))}"),()=>{SaveMotto(row.Text("rewardId"));ReadChronicle(id);});
         AddButton("Back to Chronicle",ShowChronicle);ConfigureNavigation();
     }
     private static void SaveMotto(string motto)
@@ -320,8 +327,8 @@ public static class ManorUi
         BeginPage("review"); var profile = Runtime.Profile; var trial = profile.PreviewPurchases(cart);
         if (trial == null) { cart.Clear(); Render(); return; }
         AddText("Confirm manor purchases",32);
-        foreach (var group in cart.GroupBy(x => x)) AddText($"{Design.Get("manor",group.Key).Text("name")} × {group.Count()}");
-        AddText($"Spend {profile.crowns - trial.crowns} crowns? You will have {trial.crowns} left.");
+        foreach (var group in cart.GroupBy(x => x)) AddText(L.Format($"{Design.Get("manor",group.Key).Localized("name")} × {group.Count()}"));
+        AddText(L.Format($"Spend {profile.crowns - trial.crowns} crowns? You will have {trial.crowns} left."));
         AddButton("Confirm and save",() => { if (CanConfigure() && profile.CommitPurchases(cart,Runtime.FamilyPath)) cart.Clear(); Render(); });
         AddButton("Back to selection",Render); ConfigureNavigation();
     }
@@ -330,11 +337,12 @@ public static class ManorUi
         back=Render;
         BeginPage("name"); AddText("Name your family",32);
         var entry = new LineEdit { Name="ManorEditor", Text = Runtime.Profile.family, MaxLength = 24, VirtualKeyboardEnabled = true, CustomMinimumSize = new(0,60) };
+        L.ApplyFont(entry);
         entry.AddThemeFontSizeOverride("font_size",28); content!.AddChild(entry);
         var error = Text(""); content.AddChild(error);
         AddButton("Save",() =>
         {
-            var name = entry.Text.Trim(); if (name.Length == 0) { error.Text = "Enter a family name."; return; }
+            var name = entry.Text.Trim(); if (name.Length == 0) { error.Text = L.Text("Enter a family name."); return; }
             Runtime.Profile.family = name;
             Runtime.Profile.Save(Runtime.FamilyPath); Render();
         });

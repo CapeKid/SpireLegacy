@@ -27,13 +27,13 @@ public static class HeirArchitectDialogue
         for (var i = 0; i < content.Count; i++)
         {
             var key = $"SPIRELEGACY.ARCHITECT.{classId}.{(first ? "first" : "return")}.{i}";
-            translations[key] = content[i].Text;
+            translations[key] = HeirLocalization.Text(content[i].Text);
             var line = dialogue.Lines[i];
             line.Speaker = content[i].Architect ? AncientDialogueSpeaker.Ancient : AncientDialogueSpeaker.Character;
             line.LineText = new LocString("ancients", key);
             if (i < content.Count - 1)
             {
-                translations[key + ".next"] = content[i].Architect ? "Respond" : "Continue";
+                translations[key + ".next"] = HeirLocalization.Text(content[i].Architect ? "Respond" : "Continue");
                 line.NextButtonText = new LocString("ancients", key + ".next");
             }
         }

@@ -35,7 +35,7 @@ public abstract class FamilyPotion : CustomPotionModel
     public override PotionRarity Rarity=>Enum.Parse<PotionRarity>(Row.Text("rarity"));
     public override PotionUsage Usage=>PotionUsage.CombatOnly;
     public override TargetType TargetType=>Enum.Parse<TargetType>(Row.Text("target"));
-    public override List<(string,string)> Localization=>[("title",Row.Text("title")),("description",Row.Text("description"))];
+    public override List<(string,string)> Localization=>HeirLocalization.Entries(("title",Row.Text("title")),("description",Row.Text("description")));
     public override string CustomPackedImagePath=>TexturePath("path");
     public override string CustomPackedOutlinePath=>TexturePath("outline");
     public override string CustomLargeImagePath=>TexturePath("path");

@@ -49,14 +49,14 @@ public abstract class LegacyCard : CustomCardModel
     {
         get
         {
-            List<(string, string)> entries = [("title", Row.Text("name")), ("description", "{Rules}"), ("returnPrompt", "Choose cards to return to your hand."), ("attackReturnPrompt", "Choose Attacks to return to your hand.")];
-            if (Row.Text("special") == "discount_card") entries.Add(("discountPrompt", "Choose a card to discount this turn."));
+            var entries = HeirLocalization.Entries(("title", Row.Text("name")), ("description", "{Rules}"), ("returnPrompt", "Choose cards to return to your hand."), ("attackReturnPrompt", "Choose Attacks to return to your hand."));
+            if (Row.Text("special") == "discount_card") entries.Add(("discountPrompt", HeirLocalization.Text("Choose a card to discount this turn.")));
             return entries;
         }
     }
     protected override void AddExtraArgsToDescription(LocString description) => description.Add("Rules", DesignCard.Rules(
         Row.Number("nextBlock") > 0 ? NextBlock.ToHighlightedString(false) : null,
-        HasSpecialBlock ? SpecialBlock.ToHighlightedString(false) : null).Replace("{Damage}", DynamicVars.Damage.ToHighlightedString(false)).Replace("{Block}", DynamicVars.Block.ToHighlightedString(false)));
+        HasSpecialBlock ? SpecialBlock.ToHighlightedString(false) : null, HeirLocalization.Text).Replace("{Damage}", DynamicVars.Damage.ToHighlightedString(false)).Replace("{Block}", DynamicVars.Block.ToHighlightedString(false)));
     protected override IEnumerable<DynamicVar> CanonicalVars {
         get {
             var design = new CardDesign(Key);
