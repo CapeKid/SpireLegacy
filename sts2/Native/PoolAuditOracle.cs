@@ -7,6 +7,7 @@ using MegaCrit.Sts2.Core.Entities.Merchant;
 using MegaCrit.Sts2.Core.Entities.Players;
 using MegaCrit.Sts2.Core.Factories;
 using MegaCrit.Sts2.Core.Models;
+using MegaCrit.Sts2.Core.Models.Relics;
 using MegaCrit.Sts2.Core.Nodes.Screens.CardLibrary;
 using MegaCrit.Sts2.Core.Random;
 using MegaCrit.Sts2.Core.Rewards;
@@ -14,6 +15,7 @@ using MegaCrit.Sts2.Core.Rooms;
 using MegaCrit.Sts2.Core.Runs;
 using MegaCrit.Sts2.Core.Saves;
 using MegaCrit.Sts2.Core.Saves.Runs;
+using MegaCrit.Sts2.Core.Unlocks;
 
 namespace SpireLegacy;
 
@@ -22,6 +24,58 @@ public static class PoolAuditOracle
 {
     private static MegaCrit.Sts2.Core.Nodes.Cards.NCard[] menuCards=[];
     private static void Require(bool value,string message) {if(!value)throw new InvalidDataException(message);}
+
+    public static async Task<object> CheckKaleidoscope(RunState run)
+    {
+        var player = run.Players.Single();
+        var unlockField = AccessTools.Field(typeof(Player), "<UnlockState>k__BackingField");
+        var originalUnlocks = player.UnlockState;
+        var relic = ModelDb.Relic<Kaleidoscope>().ToMutable();
+        relic.Owner = player;
+        var harmony = new Harmony("SpireLegacy.KaleidoscopeOracle");
+        var target = AccessTools.Method(typeof(RewardsCmd), nameof(RewardsCmd.OfferCustom));
+        var rolls = 0;
+        try
+        {
+            unlockField.SetValue(player, UnlockState.all);
+            Require(player.UnlockState.CharacterCardPools.Any(pool => pool is FamilyCardPool), "Fixture must include the Heir pool.");
+            harmony.Patch(target, prefix: new HarmonyMethod(typeof(PoolAuditOracle), nameof(CaptureKaleidoscopeRewards)));
+            for (var i = 0; i < 12; i++)
+            {
+                kaleidoscopeRewards = null;
+                await relic.AfterObtained();
+                var rewards = kaleidoscopeRewards ?? throw new InvalidDataException("Kaleidoscope did not offer its rewards.");
+                Require(rewards.Length == 2 && rewards.All(reward => reward.Cards.Count() == 3), "Kaleidoscope reward counts changed.");
+                foreach (var card in rewards.SelectMany(reward => reward.Cards))
+                {
+                    Require(card is not LegacyCard && card.Pool != player.Character.CardPool, "Kaleidoscope offered a card from an excluded pool.");
+                    run.RemoveCard(card);
+                    rolls++;
+                }
+            }
+            var normal = CardFactory.CreateForReward(player, 3, CardCreationOptions.ForRoom(player, RoomType.Monster))
+                .Select(result => result.Card).ToArray();
+            Require(normal.Length == 3 && normal.All(card => (card is LegacyCard) == (player.Character is HeirCharacter)), "Normal rewards escaped the player's pool.");
+            foreach (var card in normal) run.RemoveCard(card);
+            return new { rolls, normal = normal.Length };
+        }
+        finally
+        {
+            harmony.Unpatch(target, HarmonyPatchType.Prefix, harmony.Id);
+            unlockField.SetValue(player, originalUnlocks);
+            kaleidoscopeRewards = null;
+        }
+    }
+
+    private static CardReward[]? kaleidoscopeRewards;
+
+    private static bool CaptureKaleidoscopeRewards(List<Reward> rewards, ref Task __result)
+    {
+        kaleidoscopeRewards = rewards.Cast<CardReward>().ToArray();
+        __result = Task.CompletedTask;
+        return false;
+    }
+
     public static object Registry()
     {
         var cards=ModelDb.AllCards.ToArray();var pools=ModelDb.AllCardPools.ToArray();
