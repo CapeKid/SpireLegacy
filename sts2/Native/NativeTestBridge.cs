@@ -218,6 +218,29 @@ public static class NativeTestBridge
                 case "select-state":
                     var picker=Descendants(Tree.Root).OfType<NCharacterSelectScreen>().Single(s=>s.IsVisibleInTree());
                     result=new{focus=Tree.Root.GuiGetFocusOwner()?.Name.ToString(),controls=Descendants(picker).OfType<Control>().Where(c=>c.IsVisibleInTree() && (c is NCharacterSelectButton || c.Name=="SpireLegacyManor" || c.Name=="BackButton" || c is NAscensionPanel || c.Name=="InfoPanel")).Select(c=>new{name=c.Name.ToString(),rect=c.GetGlobalRect().ToString(),portrait=c is NCharacterSelectButton hb && hb.Character is HeirCharacter ? ((TextureRect)AccessTools.Field(hb.GetType(),"_icon").GetValue(hb)!).Texture==Runtime.Texture("heir/ui/heir-portrait.png") : false}).ToArray()};break;
+                case "blitz-background":
+                    var blitzType = HeirBlitzBackground.ScreenType ?? throw new InvalidOperationException("Blitz is unavailable on this game version.");
+                    var blitzStack = NGame.Instance.MainMenu!.SubmenuStack;
+                    var blitz = blitzStack.GetSubmenuType(blitzType);
+                    AccessTools.Method(blitzType, "InitializeSingleplayer").Invoke(blitz, []);
+                    blitzStack.Push(blitz);
+                    NModalContainer.Instance?.Clear();
+                    var blitzButtons = Descendants(blitz).OfType<NCharacterSelectButton>().ToArray();
+                    var blitzHeir = blitzButtons.Single(button => button.Character is HeirCharacter);
+                    var blitzIronclad = blitzButtons.Single(button => button.Character is MegaCrit.Sts2.Core.Models.Characters.Ironclad);
+                    var blitzContainer = (Control)AccessTools.Field(blitzType, "_bgContainer").GetValue(blitz)!;
+                    var blitzSelect = HeirBlitzBackground.Selection!;
+                    blitzSelect.Invoke(blitz, [blitzHeir]);
+                    var blitzArt = blitzContainer.GetNodeOrNull<TextureRect>(HeirSelectionBackground.NodeName);
+                    var heirArtVisible = blitzArt?.IsVisibleInTree() == true && blitzArt.Texture == Runtime.Texture(HeirSelectionBackground.TexturePath)
+                        && blitzContainer.GetChildren().OfType<CanvasItem>().Count(child => child.Visible) == 1;
+                    blitzSelect.Invoke(blitz, [blitzIronclad]);
+                    var ironcladArtVisible = blitzContainer.GetChildren().OfType<Control>().Any(child =>
+                        child.Name == blitzIronclad.Character.Id.Entry + "_bg" && child.IsVisibleInTree())
+                        && blitzContainer.GetNodeOrNull<TextureRect>(HeirSelectionBackground.NodeName) == null;
+                    blitzStack.Pop();
+                    result = new { heirArtVisible, ironcladArtVisible };
+                    break;
                 case "heal":
                     var healingPlayer=RunState().Players.Single();
                     healingPlayer.Creature.SetCurrentHpInternal(healingPlayer.Creature.MaxHp-10);

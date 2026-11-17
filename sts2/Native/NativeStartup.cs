@@ -9,6 +9,7 @@ public static class NativeStartup
     public static Type[] PatchClasses=>typeof(Runtime).Assembly.GetTypes().Where(t=>t.GetCustomAttributes<HarmonyPatch>().Any())
         .Where(t=>t!=typeof(CaptureCopiedOwnerInheritance)||CaptureCopiedOwnerInheritance.Prepare())
         .Where(t=>t!=typeof(CaptureTransferredOwnerInheritance)||CaptureTransferredOwnerInheritance.Prepare())
+        .Where(t=>t!=typeof(HeirBlitzBackground)||HeirBlitzBackground.Selection!=null)
         .OrderBy(t=>t.FullName,StringComparer.Ordinal).ToArray();
     public static int Install(string owner,IEnumerable<Type> classes,string? failBefore=null)
     {

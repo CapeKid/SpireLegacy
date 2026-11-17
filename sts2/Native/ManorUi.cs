@@ -143,13 +143,7 @@ public static class ManorUi
         button.Visible = character is HeirCharacter;
         if (character is not HeirCharacter) return;
         var background = (Control)AccessTools.Field(typeof(NCharacterSelectScreen),"_bgContainer").GetValue(screen)!;
-        foreach (var child in background.GetChildren().OfType<CanvasItem>()) child.Visible = false;
-        var art = background.GetNodeOrNull<TextureRect>("SpireLegacyBackground");
-        if(art is null) {
-            art = new TextureRect { Name="SpireLegacyBackground",Texture = Runtime.Texture("heir/ui/select-bg.png"), ExpandMode = TextureRect.ExpandModeEnum.IgnoreSize, StretchMode = TextureRect.StretchModeEnum.KeepAspectCovered, MouseFilter = Control.MouseFilterEnum.Ignore };
-            background.AddChild(art); art.SetAnchorsAndOffsetsPreset(Control.LayoutPreset.FullRect);
-        }
-        art.Visible=true;
+        HeirSelectionBackground.Apply(background);
     }
     public static Button MakeButton(string text, Action action, string? key=null)
     {
