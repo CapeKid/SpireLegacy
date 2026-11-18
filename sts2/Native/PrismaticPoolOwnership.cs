@@ -20,7 +20,7 @@ public static class PrismaticPoolOwnership
         if(__instance.Owner!=player||CustomPool?.GetValue(__result)!=null||!__result.Flags.HasFlag(CardCreationFlags.IsCardReward)||__result.Flags.HasFlag(CardCreationFlags.NoCardPoolModifications)||!__result.CardPools.Any(p=>p is FamilyCardPool))return;
         var families=player.Character is HeirCharacter
             ?__state.OfType<FamilyCardPool>().Cast<CardPoolModel>().Append(player.Character.CardPool)
-            :new CardPoolModel[]{ModelDb.CardPool<KnightCardPool>(),ModelDb.CardPool<MageCardPool>(),ModelDb.CardPool<RangerCardPool>()};
+            :Enumerable.Empty<CardPoolModel>();
         // Materialize before WithCardPools clears its mutable input list.
         var pools=__result.CardPools.Concat(__state).Where(p=>p is not FamilyCardPool).Concat(families).Distinct().ToArray();
         __result=(CardCreationOptions)ApiContract.Invoke(ReplacePools,__result,ReplacePools.GetParameters().Length==1?[pools]:[pools,__result.CardPoolFilter])!;

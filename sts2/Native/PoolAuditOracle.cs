@@ -173,12 +173,16 @@ public static class PoolAuditOracle
         foreach(var player in run.Players)
         {
             var relic=ModelDb.Relic<MegaCrit.Sts2.Core.Models.Relics.PrismaticGem>().ToMutable();player.AddRelicInternal(relic,silent:true);
+            var originalUnlocks = player.UnlockState;
+            var unlockField = AccessTools.Field(typeof(Player), "<UnlockState>k__BackingField");
             try
             {
+                unlockField.SetValue(player, UnlockState.all);
                 var input=CardCreationOptions.ForRoom(player,RoomType.Monster).WithFlags(CardCreationFlags.IsCardReward);
                 var options=relic.ModifyCardRewardCreationOptions(player,input);
                 var possible=options.GetPossibleCards(player).OfType<LegacyCard>().Select(c=>c.Key).ToHashSet();
                 var expected=player.Character.CardPool.AllCards.OfType<LegacyCard>().Select(c=>c.Key).ToHashSet();
+                Require(possible.SetEquals(expected), "Prismatic Gem added another character's Heir cards.");
                 var bypass=CardCreationOptions.ForRoom(player,RoomType.Monster).WithFlags(CardCreationFlags.IsCardReward|CardCreationFlags.NoCardPoolModifications);
                 Require(relic.ModifyCardRewardCreationOptions(player,bypass).CardPools.SequenceEqual(new[]{player.Character.CardPool}),"Prismatic bypass expanded the pool.");
                 var original=player.Character.CardPool.AllCards.First(c=>c.Rarity==CardRarity.Common);
@@ -189,11 +193,16 @@ public static class PoolAuditOracle
                 Require(relic.ModifyCardRewardCreationOptions(player,filter).GetPossibleCards(player).Select(c=>c.Id).Distinct().SequenceEqual(new[]{original.Id}),"Prismatic lost the reward filter.");
                 var draws=CardFactory.CreateForReward(player,12,CardCreationOptions.ForRoom(player,RoomType.Monster).WithFlags(CardCreationFlags.IsCardReward|CardCreationFlags.NoUpgradeRoll)).Select(r=>r.Card).ToArray();
                 Require(draws.Length==12&&draws.Select(c=>c.Id).Distinct().Count()==12&&draws.All(c=>c.Owner==player&&!c.IsUpgraded),"Prismatic reward uniqueness/owner/no-upgrade flag.");
+                Require(draws.OfType<LegacyCard>().All(card => expected.Contains(card.Key)), "Prismatic Gem generated a card from another Heir pool.");
                 var upgraded=0;foreach(var card in draws.Where(c=>c.IsUpgradable)){CardCmd.Upgrade(card);Require(card.IsUpgraded,"Generated card upgrade failed.");upgraded++;}
                 results.Add(new{player.NetId,cls=player.Character is HeirCharacter?PlayerBloodlines.Heir(player).classId:"native",pools=options.CardPools.Select(p=>p.Id.ToString()).Order().ToArray(),legacy=possible.Order().ToArray(),ownerPoolOnly=possible.SetEquals(expected),draws=draws.Select(c=>c.Id.ToString()).ToArray(),upgraded,bypassPreserved=true,filterPreserved=true,customPreserved=constructor!=null});
                 foreach(var card in draws)run.RemoveCard(card);
             }
-            finally {player.RemoveRelicInternal(relic,silent:true);}
+            finally
+            {
+                player.RemoveRelicInternal(relic,silent:true);
+                unlockField.SetValue(player, originalUnlocks);
+            }
         }
         return results;
     }
