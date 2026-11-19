@@ -9,12 +9,13 @@ using MegaCrit.Sts2.Core.Nodes.CommonUi;
 
 namespace SpireLegacy;
 
-public static class ManorUi
+public static partial class ManorUi
 {
     private static CanvasLayer? modal;
     private static VBoxContainer? content;
     private static ScrollContainer? scroll;
     private static Button? closeButton;
+    private static Button? embarkConfirm;
     private static ManorInput? input;
     private static Action back = RequestClose;
     private static readonly Dictionary<Node,Node.ProcessModeEnum> inputModes=new();
@@ -23,9 +24,10 @@ public static class ManorUi
     private static readonly Dictionary<string,(string? Focus,int Scroll)> locations=new();
     private static bool wasPaused;
     private static Input.MouseModeEnum mouseMode;
-    private static NCharacterSelectScreen? selectionScreen;
+    private static Control? selectionScreen;
     private static Node? ownerRun;
-    private static NCharacterSelectScreen? ownerSelection;
+    private static Control? ownerSelection;
+    private static Control? ownerFocus;
     private static readonly List<string> cart = new();
     private static readonly Dictionary<ulong,Button> launchers = new();
     private static SceneTree Tree => (SceneTree)Engine.GetMainLoop();
@@ -51,7 +53,8 @@ public static class ManorUi
         foreach(var child in root.GetChildren()) foreach(var node in Descendants(child)) yield return node;
     }
     private static List<Control> NavigationControls() => content == null ? [] :
-        Descendants(content).OfType<Control>().Where(c=>c.FocusMode==Control.FocusModeEnum.All && c.IsVisibleInTree() && (c is not Button b || !b.Disabled)).Concat(closeButton is null ? [] : new Control[]{closeButton}).ToList();
+        Descendants(content).OfType<Control>().Concat(new[] { embarkConfirm, closeButton }.OfType<Control>())
+            .Where(c=>c.FocusMode==Control.FocusModeEnum.All && c.IsVisibleInTree() && (c is not Button b || !b.Disabled)).ToList();
     internal static void Navigate(int direction)
     {
         var controls=NavigationControls(); if(controls.Count==0)return;
@@ -104,6 +107,42 @@ public static class ManorUi
     public static Color BannerColor => BannerColors[Math.Clamp(Runtime.Profile.banner,0,3)];
     public static void Attach(NCharacterSelectScreen screen, CharacterModel character)
     {
+        if (AttachLauncher(screen, character is HeirCharacter, launcher =>
+        {
+            var heir=Descendants(screen).OfType<NCharacterSelectButton>().FirstOrDefault(b=>b.Character is HeirCharacter);
+            if(heir is null)return;
+            HeirSelectIcon.Apply(heir);
+            var rect=heir.GetGlobalRect();
+            var info=(Control)AccessTools.Field(typeof(NCharacterSelectScreen),"_infoPanel").GetValue(screen)!;
+            // Ascension occupies the band above the portraits. Reserve its right
+            // side and put the Manor under the character information on the left.
+            var ascension=(Control)AccessTools.Field(typeof(NCharacterSelectScreen),"_ascensionPanel").GetValue(screen)!;
+            var x=info.GetGlobalRect().Position.X;
+            // The native panel includes the Ascension icon to the left of its text.
+            if(ascension.Visible)x=Math.Min(x,ascension.GetGlobalRect().Position.X-launcher.Size.X-40);
+            launcher.GlobalPosition=new(x,rect.Position.Y-launcher.Size.Y-24);
+            heir.FocusNeighborBottom=launcher.GetPath();launcher.FocusNeighborTop=heir.GetPath();
+        }).Visible)
+        {
+            var background = (Control)AccessTools.Field(typeof(NCharacterSelectScreen), "_bgContainer").GetValue(screen)!;
+            HeirSelectionBackground.Apply(background);
+        }
+    }
+
+    internal static void AttachMode(Control screen, Control backButton, bool showsHeir)
+    {
+        AttachLauncher(screen, showsHeir, launcher =>
+        {
+            var backRect = backButton.GetGlobalRect();
+            launcher.GlobalPosition = new(backRect.End.X + 24, backRect.GetCenter().Y - launcher.Size.Y / 2);
+            launcher.FocusNeighborLeft = backButton.GetPath();
+            var heir = Descendants(screen).OfType<NCharacterSelectButton>().FirstOrDefault(button => button.Character is HeirCharacter);
+            if (heir != null) HeirSelectIcon.Apply(heir);
+        });
+    }
+
+    private static Button AttachLauncher(Control screen, bool visible, Action<Button> update)
+    {
         selectionScreen = screen;
         var id = screen.GetInstanceId();
         if (!launchers.TryGetValue(id,out var button) || !GodotObject.IsInstanceValid(button))
@@ -119,31 +158,17 @@ public static class ManorUi
                 // after SceneTree.ProcessFrame. Track held-state edges across frames.
                 var shortcutHeld=Input.IsActionPressed("ui_accept") || Input.IsActionPressed("controller_face_button_north");
                 var shortcutPressed=shortcutHeld && !shortcutWasHeld;shortcutWasHeld=shortcutHeld;
-                if(!GodotObject.IsInstanceValid(screen) || !screen.IsVisibleInTree() || !captured.Visible || IsOpen || ActiveScreenContext.Instance.GetCurrentScreen()!=screen)return;
-                var heir=Descendants(screen).OfType<NCharacterSelectButton>().FirstOrDefault(b=>b.Character is HeirCharacter);
-                if(heir is null)return;
-                HeirSelectIcon.Apply(heir);
-                var rect=heir.GetGlobalRect();
-                var info=(Control)AccessTools.Field(typeof(NCharacterSelectScreen),"_infoPanel").GetValue(screen)!;
-                // Ascension occupies the band above the portraits. Reserve its right
-                // side and put the Manor under the character information on the left.
-                var ascension=(Control)AccessTools.Field(typeof(NCharacterSelectScreen),"_ascensionPanel").GetValue(screen)!;
-                var x=info.GetGlobalRect().Position.X;
-                // The native panel includes the Ascension icon to the left of its text.
-                if(ascension.Visible)x=Math.Min(x,ascension.GetGlobalRect().Position.X-captured.Size.X-40);
-                captured.GlobalPosition=new(x,rect.Position.Y-captured.Size.Y-24);
-                heir.FocusNeighborBottom=captured.GetPath();captured.FocusNeighborTop=heir.GetPath();
-                if(shortcutPressed)Open();
+                if(!GodotObject.IsInstanceValid(screen) || !screen.IsVisibleInTree() || !captured.Visible || IsOpen)return;
+                update(captured);
+                if(shortcutPressed && ActiveScreenContext.Instance.GetCurrentScreen()==screen)Open();
             }
             Tree.ProcessFrame+=Poll;
             screen.TreeExiting+=()=>{Tree.ProcessFrame-=Poll;launchers.Remove(id);};
         }
         button.Text = L.Text(LauncherText);
         L.ApplyFont(button);
-        button.Visible = character is HeirCharacter;
-        if (character is not HeirCharacter) return;
-        var background = (Control)AccessTools.Field(typeof(NCharacterSelectScreen),"_bgContainer").GetValue(screen)!;
-        HeirSelectionBackground.Apply(background);
+        button.Visible = visible;
+        return button;
     }
     public static Button MakeButton(string text, Action action, string? key=null)
     {
@@ -176,12 +201,16 @@ public static class ManorUi
         L.ApplyFont(label);
         return label;
     }
-    public static void Open()
+    public static void Open() => OpenModal(Render);
+
+    private static void OpenModal(Action render, Control? pickerScreen = null, Button? confirm = null)
     {
         if (IsOpen) return;
         cart.Clear(); locations.Clear();page=""; wasPaused = Tree.Paused;
         ownerRun=MegaCrit.Sts2.Core.Nodes.NRun.Instance;
-        ownerSelection=ownerRun is null && selectionScreen is {} screen && GodotObject.IsInstanceValid(screen) && screen.IsVisibleInTree()?screen:null;
+        var origin = pickerScreen ?? selectionScreen;
+        ownerSelection=ownerRun is null && origin != null && GodotObject.IsInstanceValid(origin) && origin.IsVisibleInTree()?origin:null;
+        ownerFocus=ownerSelection == null ? null : Tree.Root.GuiGetFocusOwner();
         foreach(var node in new Node?[]{NInputManager.Instance,NControllerManager.Instance})
             if(node is not null) {inputModes[node]=node.ProcessMode;node.ProcessMode=Node.ProcessModeEnum.Always;}
         mouseMode = Input.MouseMode; Input.MouseMode = Input.MouseModeEnum.Visible;
@@ -189,9 +218,25 @@ public static class ManorUi
         Tree.Root.AddChild(modal);
         var shade = input = new ManorInput();
         modal.AddChild(shade); shade.SetAnchorsAndOffsetsPreset(Control.LayoutPreset.FullRect);
-        var backdrop=new ColorRect {Color=new(0.025f,.035f,.07f,.97f),MouseFilter=Control.MouseFilterEnum.Ignore};
+        var backdrop=new ColorRect {Color=new(0.025f,.035f,.07f,confirm == null ? .97f : .70f),MouseFilter=Control.MouseFilterEnum.Ignore};
         shade.AddChild(backdrop); backdrop.SetAnchorsAndOffsetsPreset(Control.LayoutPreset.FullRect);
-        var margins = new MarginContainer(); shade.AddChild(margins); margins.SetAnchorsAndOffsetsPreset(Control.LayoutPreset.FullRect);
+        var margins = new MarginContainer();
+        if (confirm == null)
+        {
+            shade.AddChild(margins);
+            margins.SetAnchorsAndOffsetsPreset(Control.LayoutPreset.FullRect);
+        }
+        else
+        {
+            var panel = new PanelContainer();
+            panel.AddThemeStyleboxOverride("panel", PickerSurface(new("211C29"), new("AA895F"), 2));
+            shade.AddChild(panel);
+            panel.SetAnchorAndOffset(Side.Right, .91f, 0);
+            panel.SetAnchorAndOffset(Side.Bottom, .87f, 0);
+            panel.SetAnchorAndOffset(Side.Left, .09f, 0);
+            panel.SetAnchorAndOffset(Side.Top, .13f, 0);
+            panel.AddChild(margins);
+        }
         foreach (var name in new[] {"margin_left","margin_right","margin_top","margin_bottom"}) margins.AddThemeConstantOverride(name,35);
         var frame=new VBoxContainer(); margins.AddChild(frame);
         scroll = new ScrollContainer { Name="ManorScroll", SizeFlagsHorizontal = Control.SizeFlags.ExpandFill, SizeFlagsVertical = Control.SizeFlags.ExpandFill, FollowFocus = false, HorizontalScrollMode=ScrollContainer.ScrollMode.Disabled };
@@ -200,13 +245,24 @@ public static class ManorUi
         content = new VBoxContainer { SizeFlagsHorizontal = Control.SizeFlags.ExpandFill };
         content.AddThemeConstantOverride("separation",16); scroll.AddChild(content);
         var footer=new HBoxContainer(); frame.AddChild(footer);
-        var help=Text("D-pad / left stick: move · A: select · B: back / close · LB / RB: scroll",18);
-        help.FocusMode=Control.FocusModeEnum.None; footer.AddChild(help);
-        closeButton=MakeButton("Close / Back (B)",GoBack); closeButton.CustomMinimumSize=new(245,60); footer.AddChild(closeButton);
+        closeButton=MakeButton(confirm == null ? "Close / Back (B)" : "Back (B)",GoBack);
+        closeButton.CustomMinimumSize=new(confirm == null ? 245 : 145,60);
+        if (confirm == null)
+        {
+            footer.AddChild(Text("D-pad / left stick: move · A: select · B: back / close · LB / RB: scroll",18));
+            footer.AddChild(closeButton);
+        }
+        else
+        {
+            footer.AddChild(closeButton);
+            footer.AddChild(new Control { SizeFlagsHorizontal = Control.SizeFlags.ExpandFill, MouseFilter = Control.MouseFilterEnum.Ignore });
+            footer.AddChild(confirm);
+        }
+        embarkConfirm = confirm;
         var closeStyle=(StyleBoxFlat)closeButton.GetThemeStylebox("normal").Duplicate(); closeStyle.BgColor=new("674D21"); closeStyle.BorderColor=new("E4BB69"); closeButton.AddThemeStyleboxOverride("normal",closeStyle);
         var multiplayer=CoopBloodlines.Lobby?.NetService.Type is MegaCrit.Sts2.Core.Multiplayer.Game.NetGameType.Host or MegaCrit.Sts2.Core.Multiplayer.Game.NetGameType.Client
             || PlayerBloodlines.State(PlayerBloodlines.LocalPlayer)?.coop==true;
-        Tree.Paused = multiplayer?wasPaused:true; Render(); ActiveScreenContext.Instance.Update(); Tree.ProcessFrame+=input.Poll;
+        Tree.Paused = multiplayer?wasPaused:true; render(); ActiveScreenContext.Instance.Update(); Tree.ProcessFrame+=input.Poll;
     }
     private static void BeginPage(string next)
     {
@@ -363,30 +419,73 @@ public static class ManorUi
         if (!IsOpen) return;
         navigationGeneration++;
         if(input is not null)Tree.ProcessFrame-=input.Poll;
-        input=null;cart.Clear(); modal?.QueueFree(); modal = null; content=null;scroll=null;closeButton=null; Tree.Paused = wasPaused; Input.MouseMode = mouseMode;
+        var wasPicker = embarkConfirm != null;
+        input=null;cart.Clear(); modal?.Hide(); modal?.QueueFree(); modal = null; content=null;scroll=null;closeButton=null; embarkConfirm=null; Tree.Paused = wasPaused; Input.MouseMode = mouseMode;
         foreach(var pair in inputModes)if(GodotObject.IsInstanceValid(pair.Key))pair.Key.ProcessMode=pair.Value;
         inputModes.Clear();
+        var origin = ownerSelection;
+        var focus = ownerFocus;
+        ownerSelection = null;
+        ownerFocus = null;
         ActiveScreenContext.Instance.Update();
-        if (selectionScreen is {} screen && GodotObject.IsInstanceValid(screen) && screen.IsVisibleInTree())
+        if (origin == null || !GodotObject.IsInstanceValid(origin) || !origin.IsVisibleInTree()) return;
+        if (!wasPicker && origin is NCharacterSelectScreen screen)
         {
             var button = (NCharacterSelectButton?)AccessTools.Field(typeof(NCharacterSelectScreen),"_selectedButton").GetValue(screen);
             if (button?.Character is HeirCharacter && !CoopBloodlines.IsReady(CoopBloodlines.Local(screen.Lobby))) {ManorCharacterMenu.Select(screen,button);button.GrabFocus();}
         }
+        else if (focus != null && GodotObject.IsInstanceValid(focus) && focus.IsVisibleInTree()) focus.GrabFocus();
     }
 }
 
 // A normally triggers Embark globally. Let it activate a focused Manor button instead.
-[HarmonyPatch(typeof(NCharacterSelectScreen),"OnEmbarkPressed")]
+[HarmonyPatch]
 public static class ManorSelectAction
 {
-    public static bool Prefix(NCharacterSelectScreen __instance)
+    private static Control? confirmedScreen;
+
+    private static IEnumerable<MethodBase> TargetMethods()
     {
+        foreach (var screen in new[] { typeof(NCharacterSelectScreen), HeirBlitzBackground.ScreenType, HeirDreadBackground.ScreenType }.OfType<Type>())
+            if (AccessTools.Method(screen, "OnEmbarkPressed") is { } embark) yield return embark;
+    }
+
+    public static bool Prefix(Control __instance, MethodBase __originalMethod, object[] __args)
+    {
+        if (ReferenceEquals(confirmedScreen, __instance)) return true;
         if(ManorUi.IsOpen)return false;
         if(__instance.GetViewport().GuiGetFocusOwner() is Button {Name:var name} && name=="SpireLegacyManor") {ManorUi.Open();return false;}
-        if(__instance.Lobby.NetService.Type!=MegaCrit.Sts2.Core.Multiplayer.Game.NetGameType.Singleplayer && Runtime.Profile.active!=null && CoopBloodlines.Character(CoopBloodlines.Local(__instance.Lobby)) is HeirCharacter or MegaCrit.Sts2.Core.Models.Characters.RandomCharacter) {
-            ManorUi.Notice="Resume or abandon your unfinished family climb before starting a co-op run.";ManorUi.Open();return false;
+        // The native tutorial confirmation resumes a launch here with a null sender.
+        if (__instance is NCharacterSelectScreen && __args[0] == null) return true;
+        var lobby = (__instance as NCharacterSelectScreen)?.Lobby ?? CoopBloodlines.Lobby;
+        if (lobby == null) return true;
+        var player = CoopBloodlines.Local(lobby);
+        var character = CoopBloodlines.Character(player);
+        var multiplayer = lobby.NetService.Type != MegaCrit.Sts2.Core.Multiplayer.Game.NetGameType.Singleplayer;
+        if (Runtime.Profile.active != null && (character is HeirCharacter || multiplayer && character is MegaCrit.Sts2.Core.Models.Characters.RandomCharacter))
+        {
+            ManorUi.Notice = multiplayer ? "Resume or abandon your unfinished family climb before starting a co-op run."
+                : "Resume or abandon your unfinished family climb before embarking.";
+            ManorUi.Open();
+            return false;
         }
-        return true;
+        if (character is not HeirCharacter || Runtime.Profile.offers.Count == 0) return true;
+        if (CoopBloodlines.IsReady(player)) return false;
+
+        var screen = __instance;
+        var embark = (MethodInfo)__originalMethod;
+        var arguments = __args;
+        bool CanEmbark() => ReferenceEquals(CoopBloodlines.Lobby, lobby) && lobby.NetService.IsConnected
+            && CoopBloodlines.Character(CoopBloodlines.Local(lobby)) is HeirCharacter
+            && !CoopBloodlines.IsReady(CoopBloodlines.Local(lobby));
+        ManorUi.OpenEmbarkPicker(screen, multiplayer, CanEmbark, () =>
+        {
+            if (!CanEmbark()) return;
+            confirmedScreen = screen;
+            try { ApiContract.Invoke(embark, screen, arguments); }
+            finally { confirmedScreen = null; }
+        });
+        return false;
     }
 }
 

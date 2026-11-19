@@ -44,9 +44,37 @@ internal static class HeirBlitzBackground
 
     private static MethodBase? TargetMethod() => Selection;
 
-    private static void Postfix(NCharacterSelectButton __0, Control ____bgContainer)
+    private static void Postfix(Control __instance, NCharacterSelectButton __0, Control ____bgContainer, Control ____backButton)
     {
-        if (__0.Character is HeirCharacter && !__0.IsLocked)
+        var showsHeir = __0.Character is HeirCharacter;
+        ManorUi.AttachMode(__instance, ____backButton, showsHeir);
+        if (showsHeir && !__0.IsLocked)
+            HeirSelectionBackground.Apply(____bgContainer);
+    }
+}
+
+[HarmonyPatch]
+internal static class HeirDreadBackground
+{
+    internal static readonly Type? ScreenType = typeof(CharacterModel).Assembly
+        .GetType("MegaCrit.Sts2.Core.Nodes.Screens.Dread.NDreadScreen");
+    private static readonly Type? RotatingCharacter = typeof(CharacterModel).Assembly
+        .GetType("MegaCrit.Sts2.Core.Models.Characters.RotatingCharacter");
+    internal static readonly MethodInfo? SetVisuals = ScreenType == null ? null :
+        AccessTools.Method(ScreenType, "SetSelectedCharacterVisuals", [typeof(CharacterModel)]);
+
+    private static MethodBase? TargetMethod() => SetVisuals;
+
+    private static void Postfix(Control __instance, CharacterModel __0, Control ____bgContainer, Control ____backButton,
+        CharacterModel? ____rotatingDisplayCharacterOverride, CharacterModel? ____rotatingCharacter)
+    {
+        // During a rotation, the button represents the character currently shown in the preview.
+        var displayed = __0.GetType() == RotatingCharacter
+            ? ____rotatingDisplayCharacterOverride ?? ____rotatingCharacter ?? __0
+            : __0;
+        var showsHeir = displayed is HeirCharacter;
+        ManorUi.AttachMode(__instance, ____backButton, showsHeir);
+        if (showsHeir)
             HeirSelectionBackground.Apply(____bgContainer);
     }
 }
