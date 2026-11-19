@@ -52,3 +52,53 @@ for cls,traits,ascension,quick,tier in cases:
         assert (state['hp'],state['maxHp'],len(state['hand']))==(1,1,6),state
     print(cls,traits,'A'+str(ascension),'quick='+str(quick),state['hp'],state['maxHp'],'pass',flush=True)
     send('abandon')
+
+state=send('start', **{'class':'mage','traits':['onehitdeath','magic'],'quick':False,'manorTier':0,'ascension':2,'seed':'FRAGILE-START'})
+assert state['hp']==state['maxHp']==1,state
+choice=send('neow-leafy-choose')
+assert choice==dict(offered=False,startingMaxHp=1,maxHp=1,hp=1,transformed=True,finished=True),choice
+send('ancient-health-save-lock')
+restored=send('resume')
+assert restored['hp']==restored['maxHp']==1,restored
+advanced=send('advance')
+assert advanced['hp']==advanced['maxHp']==1,advanced
+send('abandon')
+
+state=send('start', **{'class':'knight','traits':[],'quick':False,'manorTier':0,'ascension':2,'seed':'FRAGILE-START'})
+assert send('neow-leafy-eligible')
+choice=send('neow-leafy-choose')
+assert choice['maxHp']==state['maxHp']-12 and choice['hp']>0 and choice['transformed'] and choice['finished'],choice
+send('abandon')
+print('Leafy Poultice resolves safely for Fragile, recovers on resume, and charges the ordinary cost.',flush=True)
+
+def start_cost_case(traits):
+    send('start', **{'class':'mage','traits':traits,'quick':False,'manorTier':0,'ascension':2,'seed':'FRAGILE-START'})
+
+start_cost_case(['onehitdeath'])
+shears=send('neow-shears-choose')
+assert not shears['eligible'] and not shears['offered'] and shears['hp']==1 and shears['removed']==2 and shears['finished'] and not shears['ended'],shears
+send('ancient-health-save-lock')
+assert send('resume')['hp']==1
+send('abandon')
+
+start_cost_case([])
+shears=send('neow-shears-choose')
+assert shears['eligible'] and shears['hp']==shears['hpBefore']-16 and shears['removed']==2 and not shears['ended'],shears
+send('abandon')
+
+start_cost_case(['onehitdeath'])
+beacon=send('event-max-hp-choice',vakuu=False)
+assert beacon==dict(hp=1,maxHp=1,finished=True,reward='FRESNEL_LENS'),beacon
+send('abandon')
+
+start_cost_case(['onehitdeath'])
+vakuu=send('event-max-hp-choice',vakuu=True)
+assert vakuu['hp']==vakuu['maxHp']==1 and vakuu['finished'] and vakuu['reward'] in ('DISTINGUISHED_CAPE','SERE_TALON'),vakuu
+send('ancient-health-save-lock')
+assert send('resume')['hp']==1
+send('abandon')
+
+start_cost_case([])
+defeat=send('neow-shears-choose',forceLowHp=True)
+assert defeat['hp']==0 and defeat['ended'] and not defeat['resumable'],defeat
+print('Shears and the max-HP events resolve safely, and an Ancient defeat leaves no resumable save.',flush=True)

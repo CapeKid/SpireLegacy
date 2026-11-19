@@ -5,6 +5,9 @@ using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Entities.Players;
 using MegaCrit.Sts2.Core.Runs;
 using MegaCrit.Sts2.Core.Models;
+using MegaCrit.Sts2.Core.Models.Events;
+using MegaCrit.Sts2.Core.Models.Relics;
+using MegaCrit.Sts2.Core.Rooms;
 using MegaCrit.Sts2.Core.Unlocks;
 
 namespace SpireLegacy;
@@ -50,10 +53,27 @@ public static class HeirStartingHp
     public static void Prefix(AncientEventModel __instance, bool isPreFinished, out Creature? __state)
     {
         __state = InheritedHealing.StartingHp.Value;
-        if (!isPreFinished && __instance is MegaCrit.Sts2.Core.Models.Events.Neow && __instance.Owner?.Character is HeirCharacter)
-            InheritedHealing.StartingHp.Value = __instance.Owner.Creature;
+        if (__instance.Owner is not { Character: HeirCharacter } player) return;
+        var creature = player.Creature;
+        if (!isPreFinished)
+        {
+            if (__instance is Neow) InheritedHealing.StartingHp.Value = creature;
+        }
+        else if (creature.IsDead && creature.MaxHp == 1 && PlayerBloodlines.Traits(player).Has("fragile") &&
+            player.Relics.Any(relic => IsAffectedReward(__instance, relic, player.RunState.TotalFloor)))
+        {
+            // Older saves can record the finished blessing after its cost killed the heir.
+            creature.SetCurrentHpInternal(1);
+        }
     }
     public static void Finalizer(Creature? __state) => InheritedHealing.StartingHp.Value = __state;
+
+    private static bool IsAffectedReward(AncientEventModel ancient, RelicModel relic, int floor) => ancient switch
+    {
+        Neow => relic is LeafyPoultice or PrecariousShears,
+        Vakuu => relic.FloorAddedToDeck == floor && relic.Id.Entry is "DISTINGUISHED_CAPE" or "SERE_TALON",
+        _ => false,
+    };
 }
 
 // Neow and Neow's Bones both use this eligibility check before offering a relic.
@@ -62,10 +82,62 @@ public static class HeirNeowHealthCosts
 {
     public static void Postfix(RelicModel __instance, Player player, ref bool __result)
     {
-        if (__instance is MegaCrit.Sts2.Core.Models.Relics.LeafyPoultice &&
-            player.Character is HeirCharacter &&
-            player.Creature.MaxHp <= __instance.DynamicVars.MaxHp.BaseValue)
-            __result = false;
+        if (!__result || player.Character is not HeirCharacter) return;
+        __result = __instance switch
+        {
+            LeafyPoultice => player.Creature.MaxHp > __instance.DynamicVars.MaxHp.BaseValue,
+            PrecariousShears => player.Creature.CurrentHp > __instance.DynamicVars.Damage.BaseValue,
+            _ => true,
+        };
+    }
+}
+
+[HarmonyPatch(typeof(PrecariousShears), nameof(PrecariousShears.AfterObtained))]
+internal static class FragileShearsPayment
+{
+    internal static readonly AsyncLocal<Creature?> Owner = new();
+
+    private static void Prefix(PrecariousShears __instance, out Creature? __state)
+    {
+        __state = Owner.Value;
+        var player = __instance.Owner;
+        Owner.Value = player.Character is HeirCharacter && PlayerBloodlines.Traits(player).Has("fragile") ? player.Creature : null;
+    }
+
+    private static void Finalizer(Creature? __state) => Owner.Value = __state;
+}
+
+[HarmonyPatch(typeof(Creature), nameof(Creature.LoseHpInternal))]
+internal static class LimitFragileShearsDamage
+{
+    private static void Prefix(Creature __instance, ref decimal amount)
+    {
+        if (amount > 0 && __instance.IsAlive && ReferenceEquals(FragileShearsPayment.Owner.Value, __instance))
+            amount = Math.Min(amount, __instance.CurrentHp - 1);
+    }
+}
+
+// Ancient callbacks can finish after the defeat handler deletes the run save.
+[HarmonyPatch(typeof(EventRoom), "OnEventStateChanged")]
+internal static class SkipDefeatedAncientSave
+{
+    private static bool Prefix(EventModel eventModel) => eventModel is not AncientEventModel ||
+        eventModel.Owner == null || eventModel.Owner.RunState.Players.Any(player => player.Creature.IsAlive);
+}
+
+[HarmonyPatch(typeof(CreatureCmd), nameof(CreatureCmd.LoseMaxHp))]
+internal static class FragileMaxHpLoss
+{
+    private static bool Prefix(Creature creature, ref decimal amount, ref Task __result)
+    {
+        if (amount <= 0 || creature.Player is not { Character: HeirCharacter } player ||
+            !PlayerBloodlines.Traits(player).Has("fragile")) return true;
+
+        // Native LoseMaxHp applies damage before enforcing its minimum of 1 max HP.
+        amount = Math.Min(amount, Math.Max(0, creature.MaxHp - 1));
+        if (amount > 0) return true;
+        __result = Task.CompletedTask;
+        return false;
     }
 }
 

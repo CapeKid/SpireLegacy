@@ -27,6 +27,69 @@ public static class AncientAuditOracle
     private static void Require(bool ok,string message){if(!ok)throw new InvalidDataException(message);}
     private static async Task Wait(Func<bool> done){var tree=(SceneTree)Engine.GetMainLoop();var deadline=Time.GetTicksMsec()+25000;while(!done()){if(Time.GetTicksMsec()>deadline)throw new TimeoutException("Ancient audit native transition.");await tree.ToSignal(tree,SceneTree.SignalName.ProcessFrame);}}
     private static EventModel Event(RunState run)=>((EventRoom)run.CurrentRoom!).LocalMutableEvent;
+    public static async Task<object> LeafyPoulticeChoice(RunState run)
+    {
+        var neow = (Neow)Event(run);
+        await Wait(() => neow.CurrentOptions.Count > 0);
+        var player = neow.Owner!;
+        var startingMaxHp = player.Creature.MaxHp;
+        var offered = neow.CurrentOptions.Any(option => option.Relic is LeafyPoultice);
+        var strike = player.Deck.Cards.First(card => card.Rarity == CardRarity.Basic && card.Tags.Contains(CardTag.Strike));
+        var defend = player.Deck.Cards.First(card => card.Rarity == CardRarity.Basic && card.Tags.Contains(CardTag.Defend));
+        var deckCount = player.Deck.Cards.Count;
+        // Use the native callback even if eligibility excluded it, as with a preselected or forced blessing.
+        await (neow.CurrentOptions.FirstOrDefault(option => option.Relic is LeafyPoultice)
+            ?? neow.AllPossibleOptions.Single(option => option.Relic is LeafyPoultice)).Chosen();
+        var transformed = !player.Deck.Cards.Contains(strike) && !player.Deck.Cards.Contains(defend) && player.Deck.Cards.Count == deckCount;
+        return new { offered, startingMaxHp, maxHp = player.Creature.MaxHp, hp = player.Creature.CurrentHp, transformed, finished = neow.IsFinished };
+    }
+
+    public static async Task SaveAncientHealthLock(RunState run)
+    {
+        var room = (EventRoom)run.CurrentRoom!;
+        var player = room.LocalMutableEvent.Owner!;
+        Require(room.CanonicalEvent is Neow or Vakuu && room.LocalMutableEvent.IsFinished && player.Creature.MaxHp == 1 &&
+            player.Relics.Any(relic => relic is LeafyPoultice or PrecariousShears || relic.Id.Entry is "DISTINGUISHED_CAPE" or "SERE_TALON"),
+            "Fixture requires a finished Ancient health-cost reward at 1 max HP.");
+        player.Creature.SetCurrentHpInternal(0);
+        await SaveManager.Instance.SaveRun(room);
+    }
+
+    public static async Task<object> PrecariousShearsChoice(RunState run, bool forceLowHp)
+    {
+        var neow = (Neow)Event(run);
+        await Wait(() => neow.CurrentOptions.Count > 0);
+        var player = neow.Owner!;
+        if (forceLowHp) player.Creature.SetCurrentHpInternal(1);
+        var hp = player.Creature.CurrentHp;
+        var deck = player.Deck.Cards.Count;
+        var completedRuns = SaveManager.Instance.Progress.NumberOfRuns;
+        var eligible = ModelDb.Relic<PrecariousShears>().IsAllowedAtNeow(player);
+        var offered = neow.CurrentOptions.FirstOrDefault(option => option.Relic is PrecariousShears);
+        await (offered ?? neow.AllPossibleOptions.Single(option => option.Relic is PrecariousShears)).Chosen();
+        var tree = (SceneTree)Engine.GetMainLoop();
+        for (var i = 0; i < 10; i++) await tree.ToSignal(tree, SceneTree.SignalName.ProcessFrame);
+        var save = SaveManager.Instance.LoadRunSave();
+        return new { eligible, offered = offered != null, hpBefore = hp, hp = player.Creature.CurrentHp, removed = deck - player.Deck.Cards.Count,
+            finished = neow.IsFinished, ended = SaveManager.Instance.Progress.NumberOfRuns > completedRuns, resumable = save.Success };
+    }
+
+    public static async Task<object> OtherMaxHpChoice(RunState run, bool vakuu)
+    {
+        EventModel canonical = vakuu ? ModelDb.Event<Vakuu>() : ModelDb.Event<DrowningBeacon>();
+        await RunManager.Instance.EnterRoomDebug(RoomType.Event, model: canonical, showTransition: false);
+        var model = Event(run);
+        await Wait(() => model.CurrentOptions.Count > 0);
+        var player = model.Owner!;
+        var choice = vakuu
+            ? ((Vakuu)model).AllPossibleOptions.Single(option => option.WillKillPlayer != null &&
+                option.Relic?.Id.Entry is "DISTINGUISHED_CAPE" or "SERE_TALON")
+            : model.CurrentOptions.Single(option => option.TextKey.EndsWith(".CLIMB", StringComparison.Ordinal));
+        await choice.Chosen();
+        return new { hp = player.Creature.CurrentHp, maxHp = player.Creature.MaxHp, finished = model.IsFinished,
+            reward = player.Relics.Last().Id.Entry };
+    }
+
     public static async Task<object> PersistentNeow(RunState run,int visits)
     {
         AncientDialogueOracle.Prepare("NEOW",visits);run.ExtraFields.StartedWithNeow=true;run.CurrentMapPoint!.PointType=MapPointType.Ancient;

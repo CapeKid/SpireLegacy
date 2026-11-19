@@ -491,6 +491,12 @@ public static class NativeTestBridge
                 case "ancient-state":result=AncientDialogueOracle.State(false);break;
                 case "neow-leafy-eligible":
                     result=ModelDb.Relic<MegaCrit.Sts2.Core.Models.Relics.LeafyPoultice>().IsAllowedAtNeow(RunState().Players.Single());break;
+                case "neow-leafy-choose":result=await AncientAuditOracle.LeafyPoulticeChoice(RunState());break;
+                case "ancient-health-save-lock":await AncientAuditOracle.SaveAncientHealthLock(RunState());result=new{saved=true};break;
+                case "neow-shears-choose":
+                    using (UseTestSelector(2)) result=await AncientAuditOracle.PrecariousShearsChoice(RunState(), request.TryGetProperty("forceLowHp",out var forceShearsHp)&&forceShearsHp.GetBoolean());
+                    break;
+                case "event-max-hp-choice":result=await AncientAuditOracle.OtherMaxHpChoice(RunState(), request.GetProperty("vakuu").GetBoolean());break;
                 case "neow-energy":result=await HeirPresentationOracle.NeowEnergy(RunState());break;
                 case "ancient-next":result=AncientDialogueOracle.State(true);break;
                 case "ancient-enter":
