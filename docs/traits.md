@@ -2,6 +2,8 @@ Spire Legacy has 61 selectable inherited traits adapted to turn-based card play.
 
 All enabled entries have implementations. Two older Healthy and Strong save IDs remain recognized but are no longer generated. Existing saved trait IDs are preserved. Only Heart and Hollow Bones are separate traits.
 
+Legacy crown bonuses from inherited traits add together in full. Fragile adds +200% and Pacifist adds +150%, for a combined +350%. Treasury applies afterward.
+
 [traits.json](../sheets/traits.json) contains modifiers, effects and incompatibilities; [trait coverage](../sheets/trait_coverage.json) preserves compatibility metadata. Obsolete source-library analysis has been removed from the current tree. The mod loads its own packaged icons; there is no external content inspection at launch.
 
 ## 1.0.5 trait review

@@ -160,7 +160,7 @@ Inheritance.CurrentHeir = () => new();
 Check(Design.Get("traits", "cantattack").Number("goldBonus") == 150, "Pacifist retains its requested crown bonus");
 var pacifistPayout = new FamilyProfile { selected = new() { classId = "ranger", traits = ["cantattack"] } };
 var pacifistRun = pacifistPayout.Begin(1);
-Check(pacifistPayout.Settle(pacifistRun.id, 50, 200, true) == 306, "Pacifist retains its existing capped double crown payout");
+Check(pacifistPayout.Settle(pacifistRun.id, 50, 200, true) == 382, "Pacifist grants its full +150% crown bonus, rounding once");
 foreach (var upgraded in new[] { false, true })
 {
     var ward = new CardDesign("mage_perfect_ward", upgraded);
@@ -239,9 +239,9 @@ var oldManor = new FamilyProfile { crowns = 5, manor = new() { ["smith"] = 3, ["
 Check(oldManor.RefundRetiredLevels() && oldManor.crowns == 965, "Refund retired levels at their original purchase prices");
 Check(oldManor.Bonus("strength") == 2 && oldManor.Bonus("dexterity") == 2 && oldManor.Bonus("heal") == 2, "Retuned manor stats");
 Check(!oldManor.RefundRetiredLevels() && oldManor.crowns == 965, "Refund migration is idempotent");
-var maxTraitTreasury = new FamilyProfile { selected = new() { classId = "knight", traits = ["megahealth"] }, manor = new() { ["vault"] = 4 } };
+var maxTraitTreasury = new FamilyProfile { selected = new() { classId = "knight", traits = ["onehitdeath", "cantattack"] }, manor = new() { ["vault"] = 4 } };
 var treasuryRun = maxTraitTreasury.Begin(1);
-Check(maxTraitTreasury.Settle(treasuryRun.id, 20, 100, false) == 105, "Treasury multiplies trait-capped earnings, rounding once");
+Check(maxTraitTreasury.Settle(treasuryRun.id, 20, 100, false) == 237, "Fragile and Pacifist stack before Treasury, rounding once");
 var ordinaryTreasury = new FamilyProfile { selected = new() { classId = "knight", traits = [] }, manor = new() { ["vault"] = 4 } };
 var ordinaryTreasuryRun = ordinaryTreasury.Begin(1);
 Check(ordinaryTreasury.Settle(ordinaryTreasuryRun.id, 20, 100, false) == 52, "Treasury remains useful without trait bonuses");
@@ -277,6 +277,9 @@ foreach (var card in Design.Get("decks", cls).List("cards").Distinct())
 var ordinaryPayout = new FamilyProfile { selected = new FamilyProfile.Heir { classId="knight",traits=[] } };
 var ordinaryRun = ordinaryPayout.Begin(1);
 var ordinaryCrowns = ordinaryPayout.Settle(ordinaryRun.id,20,100,false);
+var fragilePayout = new FamilyProfile { selected = new() { classId = "knight", traits = ["onehitdeath"] } };
+var fragileRun = fragilePayout.Begin(1);
+Check(fragilePayout.Settle(fragileRun.id, 20, 100, false) == ordinaryCrowns * 3, "Fragile triples actual settlement crowns");
 var heroPayout = new FamilyProfile { selected = new FamilyProfile.Heir { classId="knight",traits=["megahealth"] } };
 var heroRun = heroPayout.Begin(1);
 Check(heroPayout.Settle(heroRun.id,20,100,false) == ordinaryCrowns * 2, "Hero Complex doubles actual settlement crowns");

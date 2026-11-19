@@ -7,7 +7,7 @@ The policy is:
 - A completed combat qualifies the climb. Completed non-Ancient map points earn the existing 2 crowns each; the unfinished current point does not.
 - A non-abandoned combat death after a completed manual card play earns one participation point. Abandonment kills the player internally, but is explicitly excluded from this death credit. An unplayed loss or untouched start earns zero.
 - Only earned, unspent gold converts at the existing 25:1 rate. Native per-owner history supplies gains, spending, losses and net theft. Earned gold is conservatively spent/lost first, theft recovery cancels the theft, and conversion cannot exceed actual carried gold. Starting capital never becomes earned income.
-- Existing victory, capped trait and frozen Treasury multipliers still apply. Exactly-once atomic settlement and owner guards are unchanged.
+- Add the victory bonus to the base payout, then apply the combined trait bonus and the Treasury multiplier frozen at the start of the run. Settlement pays each owner once.
 - Chronicle milestones retain the actual reached floor. Crown-paying progress and reached floors are now separate settlement inputs.
 
 Native history already survives saves, including older active runs, so no new family fields or save schema migration are required. Replacing an orphaned family run without its native history no longer invents crowns from its cached floor; it still records the reached floor and advances the generation atomically. Historical crown banks are not retroactively reduced.

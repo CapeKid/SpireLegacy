@@ -44,7 +44,7 @@
     "baseCost": 100,
     "costStep": 40,
     "requires": "none",
-    "summary": "+5% legacy earnings per level, applied after the trait bonus cap.",
+    "summary": "+5% legacy earnings per level, applied after trait bonuses.",
     "firstCost": 40
   },
   {

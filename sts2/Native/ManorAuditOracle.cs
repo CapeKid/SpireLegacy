@@ -1,4 +1,7 @@
 using Godot;
+using HarmonyLib;
+using MegaCrit.Sts2.Core.Nodes.Screens.CharacterSelect;
+
 namespace SpireLegacy;
 
 // Reached only through the isolated, opt-in native test bridge.
@@ -22,8 +25,17 @@ public static class ManorAuditOracle
         var rows=Design.Rows("traits").OrderByDescending(r=>r.Text("summary").Length).Skip(offset).Take(3).ToArray();
         if(rows.Length==0)throw new ArgumentOutOfRangeException(nameof(offset));
         Runtime.Profile.offers=rows.Select((r,i)=>new FamilyProfile.Heir{name="ABCDEFGHIJKLMNOPQRSTUVWX",classId=new[]{"knight","mage","ranger"}[i%3],traits=[r.Text("id")]}).ToList();
-        Runtime.Profile.Save(Runtime.FamilyPath);ManorUi.Close();ManorUi.Open();
+        Runtime.Profile.Save(Runtime.FamilyPath);
+        ManorUi.Close();
+        OpenEmbarkPicker();
         return new {total=Design.Rows("traits").Count(),traits=rows.Select(r=>new{id=r.Text("id"),name=r.Text("name"),summary=r.Text("summary")}).ToArray()};
+    }
+    public static void OpenEmbarkPicker()
+    {
+        var type = typeof(NCharacterSelectScreen);
+        var screen = NativeTestBridge.Descendants(Tree.Root).OfType<NCharacterSelectScreen>().Single(node => node.IsVisibleInTree());
+        var button = AccessTools.Field(type, "_embarkButton").GetValue(screen);
+        AccessTools.Method(type, "OnEmbarkPressed").Invoke(screen, [button]);
     }
     public static object Inspect()
     {

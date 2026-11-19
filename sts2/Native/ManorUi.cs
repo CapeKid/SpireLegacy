@@ -221,6 +221,7 @@ public static partial class ManorUi
         var backdrop=new ColorRect {Color=new(0.025f,.035f,.07f,confirm == null ? .97f : .70f),MouseFilter=Control.MouseFilterEnum.Ignore};
         shade.AddChild(backdrop); backdrop.SetAnchorsAndOffsetsPreset(Control.LayoutPreset.FullRect);
         var margins = new MarginContainer();
+        var compactPicker = confirm != null && CompactPickerViewport;
         if (confirm == null)
         {
             shade.AddChild(margins);
@@ -231,19 +232,21 @@ public static partial class ManorUi
             var panel = new PanelContainer();
             panel.AddThemeStyleboxOverride("panel", PickerSurface(new("211C29"), new("AA895F"), 2));
             shade.AddChild(panel);
-            panel.SetAnchorAndOffset(Side.Right, .91f, 0);
-            panel.SetAnchorAndOffset(Side.Bottom, .87f, 0);
-            panel.SetAnchorAndOffset(Side.Left, .09f, 0);
-            panel.SetAnchorAndOffset(Side.Top, .13f, 0);
+            var inset = compactPicker ? new Vector2(.035f, .045f) : new Vector2(.09f, .13f);
+            panel.SetAnchorAndOffset(Side.Right, 1 - inset.X, 0);
+            panel.SetAnchorAndOffset(Side.Bottom, 1 - inset.Y, 0);
+            panel.SetAnchorAndOffset(Side.Left, inset.X, 0);
+            panel.SetAnchorAndOffset(Side.Top, inset.Y, 0);
             panel.AddChild(margins);
         }
-        foreach (var name in new[] {"margin_left","margin_right","margin_top","margin_bottom"}) margins.AddThemeConstantOverride(name,35);
+        var margin = confirm == null ? 35 : compactPicker ? 16 : 24;
+        foreach (var name in new[] {"margin_left","margin_right","margin_top","margin_bottom"}) margins.AddThemeConstantOverride(name,margin);
         var frame=new VBoxContainer(); margins.AddChild(frame);
         scroll = new ScrollContainer { Name="ManorScroll", SizeFlagsHorizontal = Control.SizeFlags.ExpandFill, SizeFlagsVertical = Control.SizeFlags.ExpandFill, FollowFocus = false, HorizontalScrollMode=ScrollContainer.ScrollMode.Disabled };
         scroll.GetVScrollBar().CustomMinimumSize=new(28,0);
         frame.AddChild(scroll);
         content = new VBoxContainer { SizeFlagsHorizontal = Control.SizeFlags.ExpandFill };
-        content.AddThemeConstantOverride("separation",16); scroll.AddChild(content);
+        content.AddThemeConstantOverride("separation",confirm == null ? 16 : 10); scroll.AddChild(content);
         var footer=new HBoxContainer(); frame.AddChild(footer);
         closeButton=MakeButton(confirm == null ? "Close / Back (B)" : "Back (B)",GoBack);
         closeButton.CustomMinimumSize=new(confirm == null ? 245 : 145,60);
@@ -296,15 +299,10 @@ public static partial class ManorUi
         var ready=CoopBloodlines.Lobby is {} lobby&&CoopBloodlines.IsReady(CoopBloodlines.Local(lobby));
         if (playing is {} active)
         {
-            AddText("A climb is in progress. Manor purchases and heir selection are available after it ends.");
-            HeirDetails(active.heir,false);
+            AddText("A climb is in progress. Manor purchases are available after it ends.");
+            ShowActiveHeir(active.heir);
         }
-        else
-        {
-            AddText("Choose your next heir",28);
-            if(ready)AddText("Unready in the lobby before changing your heir or manor. Ready freezes your selection for every player.");
-            foreach (var heir in profile.offers) HeirDetails(heir,!ready);
-        }
+        else if (ready) AddText("Unready in the lobby before buying manor upgrades.");
         AddText("Manor upgrades — select upgrades, then review and confirm to spend crowns",28);
         var trial = profile.PreviewPurchases(cart) ?? profile;
         foreach (var row in Design.Rows("manor"))
@@ -323,11 +321,10 @@ public static partial class ManorUi
         }
         ConfigureNavigation();
     }
-    private static void HeirDetails(FamilyProfile.Heir heir, bool selectable)
+    private static void ShowActiveHeir(FamilyProfile.Heir heir)
     {
         var cls = Design.Get("classes",heir.classId);
-        var selected = Runtime.Profile.selected is {} chosen&&chosen.name==heir.name&&chosen.classId==heir.classId&&chosen.traits.SequenceEqual(heir.traits);
-        AddText(L.Format($"{(selected ? "✓ " : "")}{heir.name} {Runtime.Profile.family} — {cls.Localized("name")}"),27);
+        AddText(L.Format($"{heir.name} {Runtime.Profile.family} — {cls.Localized("name")}"),27);
         AddText(cls.Localized("summary"));
         foreach (var trait in Inheritance.Rows(heir))
         {
@@ -335,7 +332,6 @@ public static partial class ManorUi
             detail.AddChild(new TextureRect { Texture = Runtime.TraitIcon(trait.Text("id")), CustomMinimumSize = new(48,48), ExpandMode = TextureRect.ExpandModeEnum.IgnoreSize, StretchMode = TextureRect.StretchModeEnum.KeepAspectCentered });
             detail.AddChild(Text(L.Format($"{trait.Localized("name")}: {trait.Localized("summary")}\nCrown bonus: {trait.Number("goldBonus")}%")));
         }
-        if (selectable) content!.AddChild(MakeButton(selected ? "Selected for next climb" : "Choose this heir",() => { if(CanConfigure())Runtime.Profile.CommitHeirSelection(heir,Runtime.FamilyPath); Render(); },"ManorHeir_"+Runtime.Profile.offers.IndexOf(heir)));
     }
     public static void ShowChronicle()
     {

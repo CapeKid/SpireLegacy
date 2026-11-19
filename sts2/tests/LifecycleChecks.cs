@@ -171,7 +171,7 @@ public static class LifecycleChecks
         var payoutCount=0;var largestEarly=0;var largestWin=0;
         var traits=Design.Rows("traits").Where(t=>t.Flag("enabled")).ToArray();
         foreach(var first in traits)foreach(var second in traits.Where(t=>FamilyProfile.Compatible(first,t)))foreach(var treasury in new[]{0,4}) {
-            var bonus=Math.Clamp(100+first.Number("goldBonus")+second.Number("goldBonus"),0,200);
+            var bonus=Math.Max(0,100+first.Number("goldBonus")+second.Number("goldBonus"));
             foreach(var victory in new[]{false,true}) {
                 var f=Fresh();f.manor["vault"]=treasury;f.selected!.traits=[first.Text("id"),second.Text("id")];var snapshot=f.Begin(49);
                 var amount=f.Settle(snapshot.id,victory?50:1,victory?200:0,victory);

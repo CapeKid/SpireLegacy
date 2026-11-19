@@ -72,7 +72,7 @@ public sealed class FamilyProfile
     public int Settle(string runId, int floors, int gold, bool victory,int? reachedFloor=null)
     {
         if (active is null || active.familyId != familyId || active.id != runId || settledId == runId || chronicle.settledRuns.Contains(runId)) return 0;
-        var percent = Math.Clamp(100 + active.heir.traits.Sum(id => Design.Get("traits", id).Number("goldBonus")), 0, 200);
+        var percent = new HeirInheritance(active.heir).TraitCrownPercent;
         long basis = (long)Math.Max(0, floors) * Design.Get("systems", "legacy").Number("amount") + Math.Max(0, gold) / Design.Get("systems", "gold_conversion").Number("amount") + (victory ? Design.Get("systems", "victory").Number("amount") : 0);
         var earned = (int)Math.Min(int.MaxValue, basis * percent * (100L + active.bonuses.GetValueOrDefault("gold")) / 10000);
         crowns = (int)Math.Min(int.MaxValue, (long)crowns + earned);

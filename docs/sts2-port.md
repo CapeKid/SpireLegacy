@@ -24,8 +24,8 @@ StS2 adaptations preserve native encounters and rewards. Six exclusive Ancient c
 1. Install Slay the Spire 2.
 2. Subscribe to [BaseLib](https://steamcommunity.com/sharedfiles/filedetails/?id=3737335127) and [Spire Legacy for StS2](https://steamcommunity.com/sharedfiles/filedetails/?id=3816525393). The item is public; version 1.0.32 was tested on Steam Deck by the creator before publication. The original StS1 Workshop item is a different mod.
 3. Start StS2 on your selected branch. Accept its mod notice and enable BaseLib and Spire Legacy in the mod list. Restart if requested.
-4. Select **The Heir**. **Family Manor & Heir Lab** appears beneath the character information, clear of Ascension. Press Y, or move down from the portrait and press A. Choose a family/heir and start a solo climb.
-5. After a climb, return to the manor to choose another heir. Selecting upgrades only stages them; **Review purchases, then Confirm and save** spends crowns.
+4. Select **The Heir** and press **Embark**. Choose one of the three offered heirs and confirm to start the climb.
+5. Open **Family Manor & Heir Lab** with Y or the on-screen button to manage your family and upgrades. **Review purchases**, then **Confirm and save**, to spend crowns.
 
 Spire Legacy supports solo and co-op. Each Heir brings their own frozen class, traits and manor bonuses; crowns stay with their local family. All players need matching game/mod versions. See [co-op setup and progression](coop.md).
 

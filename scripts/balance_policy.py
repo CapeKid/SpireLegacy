@@ -78,7 +78,7 @@ def balance_manor(row):
     if row['id'] in ('smith', 'armory', 'garden'):
         row['maxLevel'] = 2
     if row['id'] == 'vault':
-        row['summary'] = '+5% legacy earnings per level, applied after the trait bonus cap.'
+        row['summary'] = '+5% legacy earnings per level, applied after trait bonuses.'
 
 def class_rules(row):
     if row['id'] == 'knight':

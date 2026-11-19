@@ -13,7 +13,7 @@ The public Manor has no crown-balance editor. Existing family balances and purch
 
 ## Crown pacing
 
-After qualifying combat progress, earn 2 crowns per completed non-Ancient map point, 1 crown per 25 earned, unspent gold, and 45 extra for victory. Starting gold is excluded. A non-abandoned combat death after a manual play earns one participation point. Apply trait bonuses after that calculation, capped at +100%. Treasury multiplies the capped payout by +5% per level. Settlement remains once per run; see [earned-crowns.md](earned-crowns.md).
+After qualifying combat progress, earn 2 crowns per completed non-Ancient map point, 1 crown per 25 earned, unspent gold, and 45 extra for victory. Starting gold is excluded. A non-abandoned combat death after a manual play earns one participation point. Add up the full trait bonuses, then apply the Treasury multiplier of +5% per level. Settlement rounds down once and pays once per run. See [earned-crowns.md](earned-crowns.md).
 
 | Example without bonuses | Crowns |
 | --- | ---: |

@@ -21,6 +21,7 @@ send('chronicle-fixture',unlocked=True)
 send('select',previewAscension=10);send('input',action='controller_face_button_north')
 state=send('manor-state');assert state['paused'] and state['focusableLabels']==0
 assert not any('set crown' in b['text'].lower() or 'playtest' in b['text'].lower() for b in state['buttons']),state
+assert not any(c['name'].startswith('ManorHeir_') or c['text']=='Choose your next heir' for c in send('manor-audit')['controls'])
 original_crowns=send('lifecycle-state')['profile']['crowns']
 activate(next(b['text'] for b in state['buttons'] if b['text'].startswith('Family Chronicle')))
 story=next(b['text'] for b in send('manor-state')['buttons'] if b['text'].endswith('The oath outlives the armor') and not b['disabled'])
@@ -50,20 +51,18 @@ assert send('manor-double-press',text=upgrade)['removed']
 assert any(c['text'].startswith('Selected 1 upgrades') for c in send('manor-audit')['controls'] if c['type']=='Label')
 activate('Close');activate('Discard and close');assert not send('manor-audit')['open']
 assert send('lifecycle-state')['profile']==after['profile']
-send('manor');fixture=send('manor-trait-fixture',offset=0);traits=fixture['traits'];time.sleep(.2)
+fixture=send('manor-trait-fixture',offset=0);traits=fixture['traits'];time.sleep(.2)
 for width,height in [(1280,800),(1280,720),(1200,900),(1920,1080)]:
     state=send('manor-resize',width=width,height=height)
     assert all(c['rect']['x']>=0 and c['rect']['x']+c['rect']['width']<=float(state['viewport'].strip('()').split(',')[0])+1 for c in state['controls'] if c['type'] in ['Button','Label','LineEdit'])
     labels=[c for c in state['controls'] if c['type']=='Label']
-    assert all(any(t['name']+': '+t['summary'] in l['text'] for l in labels) for t in traits)
+    assert all({t['name'],t['summary']} <= {l['text'] for l in labels} for t in traits)
     assert not any(l['focusable'] for l in labels)
-    send('input',action='ui_up',milliseconds=1600)
     path=send('screenshot')['path'];shutil.copyfile(path,root/'private/sts2-evidence'/f'manor-{tag}-{width}x{height}.png')
 for offset in range(3,fixture['total'],3):
     traits=send('manor-trait-fixture',offset=offset)['traits'];time.sleep(.15)
     state=send('manor-audit');labels=[c for c in state['controls'] if c['type']=='Label']
-    assert all(any(t['name']+': '+t['summary'] in l['text'] for l in labels) for t in traits)
-    send('input',action='mega_view_exhaust_pile_and_tab_right');assert send('manor-state')['scroll']>0
+    assert all({t['name'],t['summary']} <= {l['text'] for l in labels} for t in traits)
 send('input',action='ui_cancel');assert not send('manor-audit')['open'];send('select')
 for cls in ['knight','mage','ranger']:
     send('start',**{'class':cls,'traits':[],'quick':True,'seed':'SPIRELEGACY-MANOR-57'})
@@ -71,7 +70,7 @@ for cls in ['knight','mage','ranger']:
     while send('state')['phase']!='Play':
         assert time.monotonic()<deadline;time.sleep(.2)
     send('manor');state=send('manor-state');assert state['paused'] and state['focusableLabels']==0
-    assert not any(b['text']=='Choose this heir' or b['text'].startswith('Select upgrade') and not b['disabled'] for b in state['buttons'])
+    assert not any(b['text'].startswith('Select upgrade') and not b['disabled'] for b in state['buttons'])
     send('input',action='mega_view_exhaust_pile_and_tab_right');send('input',action='ui_down',milliseconds=700)
     send('input',action='ui_cancel');assert not send('manor-audit')['paused'];send('abandon')
 print(tag,'native Manor baseline passed',flush=True)

@@ -45,11 +45,13 @@ for cls,title,motto in [('knight','The oath outlives the armor','Unbroken Oath')
     restored=send('lifecycle-state');assert restored['profile']==restored['persisted'] and restored['profile']['chronicle']==selected['profile']['chronicle']
     assert restored['snapshot']['motto']==snapshot['motto'] and restored['snapshot']['chronicleRelics']==snapshot['chronicleRelics']
     send('abandon');send('select');send('manor')
-    choices=[b['text'] for b in send('manor-state')['buttons'] if b['text']=='Choose this heir' and not b['disabled']]
-    assert choices;send('press',text='Choose this heir',index=0)
-    chosen=send('lifecycle-state');assert chosen['profile']==chosen['persisted'] and chosen['profile']['active'] is None and chosen['profile']['selected'] is not None
-    assert sum(b['text']=='Selected for next climb' for b in send('manor-state')['buttons'])==1,'Persisted selection must keep its visible indicator'
-    send('close');print(tag,cls,'paid cards, Chronicle controller/read/motto/frozen snapshot and next heir selection passed',flush=True)
+    assert not any(c['name'].startswith('ManorHeir_') or c['text']=='Choose your next heir' for c in send('manor-audit')['controls'])
+    send('close');before_picker=send('lifecycle-state')['profile'];send('manor-embark')
+    assert sum(c['name'].startswith('SpireLegacyHeirOffer_') for c in send('manor-audit')['controls'])==3
+    send('press',text='',index=1)
+    send('input',action='ui_cancel')
+    after_picker=send('lifecycle-state');assert after_picker['profile']==after_picker['persisted']==before_picker
+    print(tag,cls,'paid cards, Chronicle controller/read/motto/frozen snapshot and heir-picker cancellation passed',flush=True)
 
 # Observe progression at normal startup without entering a map point, playing a
 # card or clearing a room. This is measurement, not an assertion of good balance.

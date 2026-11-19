@@ -6,6 +6,7 @@ public sealed class HeirInheritance(FamilyProfile.Heir heir)
     public bool Has(string effect) => Traits.Any(t => t.Text("effect") == effect);
     public int Amount(string effect) => Traits.Where(t => t.Text("effect") == effect).Sum(t => t.Number("amount"));
     public int Stat(string field) => Traits.Sum(t => t.Number(field));
+    public int TraitCrownPercent => Math.Max(0, 100 + Stat("goldBonus"));
     public int MaxHp(int hp) => Has("fragile") ? 1 : Math.Max(20, hp + Stat("hp"));
     public decimal Healing(decimal amount)
     {
