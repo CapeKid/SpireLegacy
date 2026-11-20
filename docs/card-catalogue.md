@@ -71,7 +71,7 @@ Each class has 82 rewards on regular (20 common, 36 uncommon, 26 rare), or 85 on
 | Heavy Harness | Common | Skill | 1 | Class unique; 11 Block; Shuffle 1 Wound(s) into your draw pile. |
 | Cast Off | Uncommon | Skill | 1 | Class unique; Exhaust all non-Attacks in your hand. Gain 3 Block per card Exhausted. |
 | Forge Sparks | Uncommon | Power | 1 | Class unique; Whenever you Exhaust a card, deal 2 damage to ALL enemies. |
-| Ashen Advance | Uncommon | Attack | 1 | Class unique; 3 damage; Deal 1 additional damage per card in your Exhaust pile (up to 10 cards). |
+| Ashen Advance | Uncommon | Attack | 1 | Class unique; 3 damage; Deal 2 additional damage per card in your Exhaust pile (up to 10 cards). |
 | Salvage Guard | Uncommon | Skill | 1 | Class unique; 2 Block; Gain 1 Block per card in your Exhaust pile (up to 10 cards). |
 | Scar Tissue | Uncommon | Power | 1 | Class unique; Whenever you draw a Status, draw 1 card(s). |
 | Furnace Breath | Uncommon | Power | 1 | Class unique; Whenever you draw a Status or Curse, deal 3 damage to ALL enemies. |

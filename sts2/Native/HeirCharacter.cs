@@ -45,7 +45,7 @@ public sealed class HeirCharacter : PlaceholderCharacterModel
         }
     }
     public override List<(string, string)> Localization => HeirLocalization.Entries(
-        ("title", "The Heir"), ("titleObject", "The Heir"), ("description", "A family of Knight, Mage and Ranger heirs. Inherited traits shape each climb; crowns rebuild the Family Manor."),
+        ("title", "The Heir"), ("shortTitle", "Heir"), ("titleObject", "The Heir"), ("description", "A family of Knight, Mage and Ranger heirs. Inherited traits shape each climb; crowns rebuild the Family Manor."),
         ("pronounObject", "them"), ("pronounSubject", "they"), ("pronounPossessive", "theirs"), ("possessiveAdjective", "their"), ("cardsModifierTitle", "Heir Cards"), ("cardsModifierDescription", "Shared family cards and class specialties."),
         ("aromaPrinciple", "Your family taught you to hone what you already carry."),
         ("goldMonologue", "Another fortune for the family, another burden for its heir."));

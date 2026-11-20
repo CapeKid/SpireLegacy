@@ -17531,16 +17531,16 @@
       "power": "none",
       "magic": 0,
       "special": "exhaust_damage",
-      "specialAmount": 1,
+      "specialAmount": 2,
       "exhaust": false,
-      "upgradeDamage": 2,
+      "upgradeDamage": 4,
       "upgradeBlock": 0,
       "upgradeMagic": 0,
-      "upgradeSpecial": 1,
+      "upgradeSpecial": 0,
       "upgradeCost": false,
       "upgradeDiscard": 0
     },
-    "reason": "Weaker no-manor baseline; avoid compounded effects/upgrades and free positive-draw cycles."
+    "reason": "Make the base card a stronger Exhaust payoff and keep the per-card scaling equal on upgrade."
   },
   {
     "id": "knight_salvage_guard",

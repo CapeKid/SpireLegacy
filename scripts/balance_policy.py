@@ -26,6 +26,7 @@ CARD_OVERRIDES = {
     'knight_reforge': dict(block=3, rarity='UNCOMMON', upgradeMagic=0),
     'knight_clean_armor': dict(rarity='COMMON'),
     'knight_second_wind': dict(specialAmount=1),
+    'knight_ashen_advance': dict(specialAmount=2, upgradeDamage=4, upgradeSpecial=0),
     'mage_rune_familiar': dict(cost=1, magic=1, upgradeMagic=1, upgradeCost=False),
     'ranger_long_vigil': dict(cost=2, upgradeDamage=4),
     'ranger_poison_tip': dict(poison=4, upgradeMagic=2),
