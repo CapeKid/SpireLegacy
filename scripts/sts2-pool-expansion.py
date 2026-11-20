@@ -21,7 +21,7 @@ plan=[
  ('knight_unbroken_wall','knight','defense and exhaust','Impervious: lower one-use Block budget, same two-Energy cost.',dict(cost=2,block=18,exhaust=True,upgradeBlock=5)),
  ('knight_battlefield_recovery','knight','HP and draw','Offering: paid one-use recovery with smaller draw, small healing and no Energy gain.',dict(cost=2,draw=2,heal=4,exhaust=True,upgradeMagic=1)),
  ('knight_forge_memory','knight','exhaust draw engine','Offensive exhaust engine: gain Vigor when exhausting, distinct from shared Secret Thesis draw.',dict(type='POWER',cost=2,block=4,power='dark_embrace',magic=1,upgradeCost=True)),
- ('knight_king_s_ransom','knight','HP for Energy','Offering: trades HP for Energy once; draws no cards.',dict(cost=0,energy=2,hpLoss=4,exhaust=True,upgradeMagic=1)),
+ ('knight_king_s_ransom','knight','HP for combat scaling','Trade HP for Strength and Dexterity for the fight; Blood Price supplies immediate Energy.',dict(cost=0,hpLoss=4,exhaust=True,upgradeMagic=1)),
  ('mage_celestial_spear','mage','heavy attack','Bludgeon: smaller repeatable damage budget, benefiting from bounded Arcane Charge.',dict(type='ATTACK',cost=3,damage=24,upgradeDamage=6)),
  ('mage_grand_thesis','mage','Arcane Flow setup','One-use draw/charge setup banks next-turn Energy to play Arcane Flow draws; one fewer immediate card, upgrade adds one card and one delayed Energy.',dict(cost=2,draw=3,special='charge_gain',specialAmount=1,exhaust=True,upgradeMagic=1,upgradeSpecial=1)),
  ('mage_hourglass','mage','temporary discounts','Bullet Time: discounts only two random eligible cards by one, once, rather than freeing the hand.',dict(cost=1,special='discount_hand',specialAmount=2,exhaust=True,upgradeSpecial=1)),

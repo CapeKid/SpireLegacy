@@ -58,6 +58,26 @@ public sealed class FamilyProfile
             offers.Add(new Heir { name = Names[random.Next(Names.Length)], classId = cls.Text("id"), traits = [first.Text("id"), second.Text("id")] });
         }
     }
+    internal Heir[] BlitzOffers()
+    {
+        static bool Eligible(string id) => id is not ("revealallchests" or "itemsgoflying" or "cointimer");
+
+        var pool = Design.Rows("traits").Where(row => row.Flag("enabled") && Eligible(row.Text("id"))).ToArray();
+        var random = new Random(StableHash(familyId) ^ generation);
+        return offers.Select(heir =>
+        {
+            if (heir.traits.All(Eligible)) return heir;
+
+            var traits = heir.traits.Where(Eligible).Select(id => Design.Get("traits", id)).ToList();
+            while (traits.Count < heir.traits.Count)
+            {
+                var compatible = pool.Where(candidate => traits.All(trait => Compatible(trait, candidate))).ToArray();
+                traits.Add(compatible[random.Next(compatible.Length)]);
+            }
+            return new Heir { name = heir.name, classId = heir.classId, traits = traits.Select(row => row.Text("id")).ToList() };
+        }).ToArray();
+    }
+
     public FamilyRun Begin(int seed)
     {
         if (active is not null && active.id != settledId) throw new InvalidOperationException("Resume or abandon the unfinished heir first.");

@@ -413,7 +413,9 @@
     "thesis_ready",
     "hunt_momentum",
     "discard_return",
-    "retained_attack_energy"
+    "retained_attack_energy",
+    "mana_fountain",
+    "intangible"
   ],
   "classes": [
     "knight",

@@ -34,13 +34,13 @@ try:
     for upgrade in [False, True]:
         start('mage')
         ward = send('play', card='mage_perfect_ward', upgrade=upgrade)
-        charges = 2 if upgrade else 1
-        assert amount(ward['powers'], 'buffer') == charges, ward
-        for hit in range(charges):
-            guarded = send('injure', amount=1)
-            assert guarded['hp'] == ward['hp'], guarded
-            assert amount(guarded['powers'], 'buffer') == charges-hit-1, guarded
-        assert send('injure', amount=1)['hp'] == ward['hp']-1
+        assert amount(ward['powers'], 'intangible') == 1 and amount(ward['powers'], 'buffer') == 0, ward
+        for hit in range(1, 3):
+            guarded = send('injure', amount=8)
+            assert guarded['hp'] == ward['hp']-hit, guarded
+        send('turn')
+        after = ready(2)
+        assert amount(after['powers'], 'intangible') == 0, after
         before = start('ranger')
         timing = send('play', card='ranger_perfect_timing', upgrade=upgrade)
         assert amount(timing['powers'], 'berserk') == 1, timing
@@ -54,6 +54,6 @@ try:
         assert tripwire['block']-before['block'] == (7 if upgrade else 4), tripwire
         assert amount(tripwire['enemies'][0]['powers'], 'weak') == 1, tripwire
     send('abandon')
-    print(tag + ': base/upgraded Ward consumes exactly 1/2 prevented hits; Timing grants only +1 Energy on consecutive turns; Tripwire gives 4/7 Block and exactly 1 Weak.')
+    print(tag + ': base/upgraded Ward limits both hits and expires after the enemy turn; Timing grants only +1 Energy on consecutive turns; Tripwire gives 4/7 Block and exactly 1 Weak.')
 finally:
     (root / 'private/sts2-evidence' / f'balance113-{tag}.json').write_text(json.dumps(evidence, indent=2), encoding='utf-8')

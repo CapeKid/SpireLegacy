@@ -75,7 +75,15 @@ public static class CardEffects
   switch(row.Text("special")){
    case "guarded_strength":if(creature.Block>0)await Apply(context,"strength",creature,amount,creature,card);return;
    case "upgrade_attacks":foreach(var held in hand.Cards.Where(c=>c.Type==CardType.Attack&&c.IsUpgradable).ToArray())CardCmd.Upgrade(held);return;
-   case "none":case "arcane_aftershock":case "arcane_poison":case "charge_burst":case "skill_damage":case "block_damage":case "chain_damage":case "random_attack":case "execute":case "full_hp_bonus":case "guard_bonus":case "marked_bonus":case "scry":case "exhaust_damage":case "retain_damage":case "retain_block":case "discard_draw":case "discard_energy":case "discard_block":return;
+   case "none":case "arcane_aftershock":case "arcane_poison":case "charge_burst":case "skill_damage":case "block_damage":case "chain_damage":case "random_attack":case "execute":case "full_hp_bonus":case "guard_bonus":case "marked_bonus":case "scry":case "exhaust_damage":case "retain_damage":case "retain_block":case "discard_draw":case "discard_energy":case "discard_block":case "discard_vigor":case "hit_poison":return;
+   case "thunder_splash":
+    var otherEnemies = card.CombatState!.GetOpponentsOf(creature).Where(enemy => enemy.IsAlive && enemy != play.Target).ToArray();
+    if(otherEnemies.Length>0)await CreatureCmd.Damage(context,otherEnemies,amount,ValueProp.Unpowered,creature);
+    break;
+   case "skill_poison":
+    var poison = amount * Math.Min(3,creature.GetPower<P_class>()?.SkillsThisTurn ?? 0);
+    if(play.Target is { IsAlive: true } poisoned)await Apply(context,"poison",poisoned,poison,creature,card);
+    break;
    case "wounds":for(var i=0;i<amount;i++)await CardPileCmd.AddGeneratedCardToCombat(card.CombatState!.CreateCard(ModelDb.Card<MegaCrit.Sts2.Core.Models.Cards.Wound>(),player),PileType.Draw,player,CardPilePosition.Random);break;
    // The native combined command defers Sly autoplay until the exchange draw
    // finishes. Separate Discard/Draw calls let Reflex redraw the discarded fuel.

@@ -5,6 +5,7 @@ using MegaCrit.Sts2.Core.CardSelection;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
+using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models;
@@ -94,6 +95,9 @@ public abstract class LegacyCard : CustomCardModel
         if (Row.Number("nextBlock") > 0) NextBlock.BaseValue = DesignCard.Amount("nextBlock");
         if (HasSpecialBlock) SpecialBlock.BaseValue = DesignCard.SpecialAmount;
     }
+    protected override IEnumerable<IHoverTip> ExtraHoverTips => Row.Text("power") == "intangible"
+        ? base.ExtraHoverTips.Append(HoverTipFactory.FromPower<IntangiblePower>())
+        : base.ExtraHoverTips;
     public override IEnumerable<CardKeyword> CanonicalKeywords => new[] { ("exhaust", CardKeyword.Exhaust), ("retain", CardKeyword.Retain), ("ethereal", CardKeyword.Ethereal), ("innate", CardKeyword.Innate) }.Where(e => Row.Flag(e.Item1)).Select(e => e.Item2);
     protected override HashSet<CardTag> CanonicalTags => Key.EndsWith("_strike") ? [CardTag.Strike] : Key.EndsWith("_guard") ? [CardTag.Defend] : [];
     protected override async Task OnPlay(PlayerChoiceContext context, CardPlay play)
@@ -141,16 +145,25 @@ public abstract class LegacyCard : CustomCardModel
             "marked_bonus" when target is not null && (target.GetPowerAmount<VulnerablePower>() > 0 || target.GetPowerAmount<PoisonPower>() > 0) => n,
             _ => 0 };
     }
+    public override Task AfterDamageReceived(PlayerChoiceContext context, Creature target, DamageResult result, ValueProp props, Creature? dealer, CardModel? card)
+    {
+        if (card != this || Row.Text("special") != "hit_poison" || dealer != Owner.Creature ||
+            !props.IsPoweredAttack() || !target.IsAlive || target.Side == Owner.Creature.Side)
+            return Task.CompletedTask;
+
+        return CardEffects.Apply(context, "poison", target, DesignCard.SpecialAmount, Owner.Creature, this);
+    }
     public override async Task AfterCardDiscarded(PlayerChoiceContext context, CardModel card)
     {
         if (card != this || Owner.PlayerCombatState?.Phase != PlayerTurnPhase.Play || CombatState?.CurrentSide != Owner.Creature.Side) return;
-        if (Row.Text("special") is not ("discard_draw" or "discard_energy" or "discard_block")) return;
+        if (Row.Text("special") is not ("discard_draw" or "discard_energy" or "discard_block" or "discard_vigor")) return;
         var turn = Owner.PlayerCombatState.TurnNumber;
         if (DiscardRewardTurn == turn) return;
         DiscardRewardTurn = turn; // Set before drawing: nested discard effects cannot re-enter the reward.
         var n = DesignCard.SpecialAmount;
         if (Row.Text("special") == "discard_draw") await CardPileCmd.Draw(context, n, Owner);
         if (Row.Text("special") == "discard_energy") await PlayerCmd.GainEnergy(n, Owner);
+        if (Row.Text("special") == "discard_vigor") await CardEffects.Apply(context,"vigor",Owner.Creature,n,Owner.Creature,this);
         if (Row.Text("special") == "discard_block") {
             // This is a discard trigger rather than a card play. Resolve the card's
             // enchantment once, then deliver the result without powered Block hooks.

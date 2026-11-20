@@ -8346,9 +8346,9 @@
     },
     "after": {
       "cost": 1,
-      "damage": 2,
+      "damage": 6,
       "block": 0,
-      "hits": 4,
+      "hits": 1,
       "draw": 0,
       "discard": 0,
       "energy": 0,
@@ -8367,17 +8367,17 @@
       "nextBlock": 0,
       "power": "none",
       "magic": 0,
-      "special": "random_attack",
-      "specialAmount": 0,
+      "special": "thunder_splash",
+      "specialAmount": 3,
       "exhaust": false,
-      "upgradeDamage": 1,
+      "upgradeDamage": 3,
       "upgradeBlock": 0,
       "upgradeMagic": 0,
-      "upgradeSpecial": 0,
+      "upgradeSpecial": 1,
       "upgradeCost": false,
       "upgradeDiscard": 0
     },
-    "reason": "1.0.14: bounded recurring effects, smaller multi-hit upgrades, and meaningful upgrade choices."
+    "reason": "Focus one enemy and hit the other enemies with splash damage, leaving random bolts to Arcane Missile."
   },
   {
     "id": "mage_inferno_wave",
@@ -8640,7 +8640,7 @@
       "dexterity": 0,
       "weak": 0,
       "vulnerable": 0,
-      "poison": 3,
+      "poison": 0,
       "heal": 0,
       "hpLoss": 0,
       "vigor": 0,
@@ -8651,17 +8651,17 @@
       "nextBlock": 0,
       "power": "none",
       "magic": 0,
-      "special": "none",
-      "specialAmount": 0,
+      "special": "skill_poison",
+      "specialAmount": 2,
       "exhaust": false,
       "upgradeDamage": 2,
       "upgradeBlock": 0,
-      "upgradeMagic": 1,
+      "upgradeMagic": 0,
       "upgradeSpecial": 0,
       "upgradeCost": false,
       "upgradeDiscard": 0
     },
-    "reason": "Weaker no-manor baseline; avoid compounded effects/upgrades and free positive-draw cycles."
+    "reason": "Reward playing Skills before attacking while Witchfire applies Poison without setup."
   },
   {
     "id": "mage_cinder_volley",
@@ -9868,7 +9868,7 @@
       "upgradeCost": false,
       "upgradeDiscard": 0
     },
-    "reason": "Reduce delayed draw to one card while preserving the delayed Energy and the upgrade’s 2 immediate Block."
+    "reason": "Reduce delayed draw to one card while preserving the delayed Energy and the upgrade\u2019s 2 immediate Block."
   },
   {
     "id": "mage_time_pocket",
@@ -10974,7 +10974,7 @@
     "after": {
       "cost": 2,
       "damage": 0,
-      "block": 3,
+      "block": 5,
       "hits": 1,
       "draw": 0,
       "discard": 0,
@@ -10992,19 +10992,19 @@
       "nextEnergy": 0,
       "nextDraw": 0,
       "nextBlock": 0,
-      "power": "buffer",
+      "power": "intangible",
       "magic": 1,
       "special": "none",
       "specialAmount": 0,
       "exhaust": true,
       "upgradeDamage": 0,
-      "upgradeBlock": 2,
-      "upgradeMagic": 1,
+      "upgradeBlock": 3,
+      "upgradeMagic": 0,
       "upgradeSpecial": 0,
       "upgradeCost": false,
       "upgradeDiscard": 0
     },
-    "reason": "1.0.13: lower hit prevention; fixed recurring Energy with a cost upgrade; Tripwire upgrades Block only."
+    "reason": "Use Intangible for one defensive turn and leave persistent HP-loss prevention to Guardian Angel."
   },
   {
     "id": "mage_mana_fountain",
@@ -11049,7 +11049,7 @@
       "hits": 1,
       "draw": 0,
       "discard": 0,
-      "energy": 2,
+      "energy": 0,
       "strength": 0,
       "dexterity": 0,
       "weak": 0,
@@ -11063,8 +11063,8 @@
       "nextEnergy": 0,
       "nextDraw": 0,
       "nextBlock": 0,
-      "power": "none",
-      "magic": 0,
+      "power": "mana_fountain",
+      "magic": 3,
       "special": "none",
       "specialAmount": 0,
       "exhaust": true,
@@ -11076,7 +11076,7 @@
       "upgradeDiscard": 0,
       "upgradeDraw": -1
     },
-    "reason": "Targeted six-card review: bounded free resources, paid repeatable setup, and affordable rare payoff."
+    "reason": "Spread the Energy over several turns and leave the immediate HP-for-Energy burst to Blood to Mana."
   },
   {
     "id": "mage_grand_thesis",
@@ -13035,9 +13035,9 @@
     },
     "after": {
       "cost": 1,
-      "damage": 5,
+      "damage": 3,
       "block": 0,
-      "hits": 1,
+      "hits": 2,
       "draw": 0,
       "discard": 0,
       "energy": 0,
@@ -13045,7 +13045,7 @@
       "dexterity": 0,
       "weak": 0,
       "vulnerable": 0,
-      "poison": 3,
+      "poison": 0,
       "heal": 0,
       "hpLoss": 0,
       "vigor": 0,
@@ -13056,17 +13056,17 @@
       "nextBlock": 0,
       "power": "none",
       "magic": 0,
-      "special": "none",
-      "specialAmount": 0,
+      "special": "hit_poison",
+      "specialAmount": 2,
       "exhaust": false,
-      "upgradeDamage": 2,
+      "upgradeDamage": 1,
       "upgradeBlock": 0,
-      "upgradeMagic": 1,
-      "upgradeSpecial": 0,
+      "upgradeMagic": 0,
+      "upgradeSpecial": 1,
       "upgradeCost": false,
       "upgradeDiscard": 0
     },
-    "reason": "Weaker no-manor baseline; avoid compounded effects/upgrades and free positive-draw cycles."
+    "reason": "Apply Poison on each of two hits, distinct from the single Poison application on Barbed Arrow."
   },
   {
     "id": "ranger_crippling_bolt",
@@ -18793,9 +18793,9 @@
       "hits": 1,
       "draw": 0,
       "discard": 0,
-      "energy": 2,
-      "strength": 0,
-      "dexterity": 0,
+      "energy": 0,
+      "strength": 2,
+      "dexterity": 1,
       "weak": 0,
       "vulnerable": 0,
       "poison": 0,
@@ -18819,7 +18819,7 @@
       "upgradeCost": false,
       "upgradeDiscard": 0
     },
-    "reason": "Weaker no-manor baseline; avoid compounded effects/upgrades and free positive-draw cycles."
+    "reason": "Differentiate from Blood Price by trading HP for Strength and Dexterity for the fight."
   },
   {
     "id": "knight_bloodfire_mantle",
@@ -23640,8 +23640,8 @@
       "nextBlock": 0,
       "power": "none",
       "magic": 0,
-      "special": "discard_draw",
-      "specialAmount": 2,
+      "special": "discard_vigor",
+      "specialAmount": 3,
       "exhaust": false,
       "upgradeDamage": 2,
       "upgradeBlock": 0,
@@ -23650,7 +23650,7 @@
       "upgradeCost": false,
       "upgradeDiscard": 0
     },
-    "reason": "Weaker no-manor baseline; avoid compounded effects/upgrades and free positive-draw cycles."
+    "reason": "Gain Vigor on discard while Loose Fletching remains the discard draw card."
   },
   {
     "id": "ranger_spare_provisions",

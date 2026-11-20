@@ -11,6 +11,7 @@ public static class NativeStartup
         .Where(t=>t!=typeof(CaptureTransferredOwnerInheritance)||CaptureTransferredOwnerInheritance.Prepare())
         .Where(t=>t!=typeof(HeirBlitzBackground)||HeirBlitzBackground.Selection!=null)
         .Where(t=>t!=typeof(HeirDreadBackground)||HeirDreadBackground.SetVisuals!=null)
+        .Where(t=>t!=typeof(BlitzTraits)||BlitzTraits.HasMerchantApi)
         .OrderBy(t=>t.FullName,StringComparer.Ordinal).ToArray();
     public static int Install(string owner,IEnumerable<Type> classes,string? failBefore=null)
     {

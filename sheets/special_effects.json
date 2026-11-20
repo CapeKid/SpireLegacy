@@ -32,6 +32,18 @@
     "summary": "Hits target random enemies."
   },
   {
+    "id": "thunder_splash",
+    "summary": "Deal {n} damage to all other enemies."
+  },
+  {
+    "id": "hit_poison",
+    "summary": "Apply {n} Poison on each hit."
+  },
+  {
+    "id": "skill_poison",
+    "summary": "Apply {n} Poison per Skill played this turn, counting up to 3 Skills."
+  },
+  {
     "id": "exhaust_one",
     "summary": "Exhaust {n} card(s) from your hand."
   },
@@ -90,6 +102,10 @@
   {
     "id": "discard_energy",
     "summary": "When discarded during your turn, gain {n} Energy. Triggers at most once per copy each turn."
+  },
+  {
+    "id": "discard_vigor",
+    "summary": "When discarded during your turn, gain {n} Vigor. Triggers at most once per copy each turn."
   },
   {
     "id": "discard_block",

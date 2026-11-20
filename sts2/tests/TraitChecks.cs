@@ -38,6 +38,27 @@ public static class TraitChecks
             check(profile.offers.Count==3,"Three heir offers");
             foreach(var offer in profile.offers)check(offer.traits.Count==2&&offer.traits.All(t=>Design.Get("traits",t).Flag("enabled"))&&FamilyProfile.Compatible(Design.Get("traits",offer.traits[0]),Design.Get("traits",offer.traits[1])),"Seeded offers honor enabled roster and symmetric exclusions");
         }
+        var family = new FamilyProfile();
+        family.offers =
+        [
+            new() { name = "Ada", classId = "knight", traits = ["revealallchests", "bonuschestgold"] },
+            new() { name = "Iris", classId = "mage", traits = ["itemsgoflying", "cointimer"] },
+            new() { name = "June", classId = "ranger", traits = ["cheeronkills", "lowerstoreprice"] },
+        ];
+        var blitz = family.BlitzOffers();
+        var repeated = family.BlitzOffers();
+        for (var i = 0; i < blitz.Length; i++)
+        {
+            var heir = blitz[i];
+            check(heir.name == family.offers[i].name && heir.classId == family.offers[i].classId &&
+                heir.traits.SequenceEqual(repeated[i].traits) && heir.traits.Count == 2 &&
+                heir.traits.All(id => id is not ("revealallchests" or "itemsgoflying" or "cointimer") && Design.Get("traits", id).Flag("enabled")) &&
+                FamilyProfile.Compatible(Design.Get("traits", heir.traits[0]), Design.Get("traits", heir.traits[1])),
+                "Blitz offers replace excluded traits with stable, compatible picks");
+        }
+        check(blitz[0].traits.Contains("bonuschestgold") && blitz[2].traits.SequenceEqual(family.offers[2].traits) &&
+            family.offers[1].traits.SequenceEqual(["itemsgoflying", "cointimer"]),
+            "Blitz preserves eligible traits and the saved offers used in other modes");
         Console.WriteLine(System.Text.Json.JsonSerializer.Serialize(new{traits="passed",enabled=rows.Length,compatiblePairs=pairs,offerSeeds=500}));
     }
 }

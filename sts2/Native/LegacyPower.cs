@@ -20,7 +20,7 @@ public static class LegacyPowers
   ["strength"]="StrengthPower",["dexterity"]="DexterityPower",["poison"]="PoisonPower",["weak"]="WeakPower",["vulnerable"]="VulnerablePower",["vigor"]="VigorPower",["thorns"]="ThornsPower",["nextEnergy"]="EnergyNextTurnPower",["nextDraw"]="DrawCardsNextTurnPower",["nextBlock"]="BlockNextTurnPower",["no_draw"]="NoDrawPower",
   ["juggernaut"]="JuggernautPower",["rupture"]="RupturePower",["feel_no_pain"]="FeelNoPainPower",["barricade"]="BarricadePower",["demon_form"]="DemonFormPower",["dark_embrace"]="DarkEmbracePower",["buffer"]="BufferPower",["panache"]="PanachePower",["tools"]="ToolsOfTheTradePower",["after_image"]="AfterimagePower",["envenom"]="EnvenomPower",["burst"]="BurstPower",["noxious"]="NoxiousFumesPower"};
  private static readonly Dictionary<string,Type> CustomTypes=typeof(LegacyPower).Assembly.GetTypes().Where(t=>!t.IsAbstract&&typeof(LegacyPower).IsAssignableFrom(t)).ToDictionary(t=>t.Name[2..]);
- static LegacyPowers() { NativeNames["flame_barrier"] = "FlameBarrierPower"; }
+ static LegacyPowers() { NativeNames["flame_barrier"] = "FlameBarrierPower"; NativeNames["intangible"] = "IntangiblePower"; }
  public static PowerModel Get(string key){var type=NativeNames.TryGetValue(key,out var name)?typeof(PowerModel).Assembly.GetType("MegaCrit.Sts2.Core.Models.Powers."+name,true)!:CustomTypes[key];return ModelDb.GetById<PowerModel>(ModelDb.GetId(type));}
  public static PowerModel? NativeIconSource(string key)=>NativeNames.ContainsKey(key)?Get(key):null;
 }
@@ -29,13 +29,14 @@ public abstract class LegacyPower:CustomPowerModel
  public string Key=>GetType().Name[2..];
  public override PowerType Type=>PowerType.Buff;
  public override PowerStackType StackType=>PowerStackType.Counter;
+ public override PowerInstanceType InstanceType=>Key=="mana_fountain"?PowerInstanceType.Instanced:base.InstanceType;
  // Choose the same source for the status-bar and tooltip icons. Never silently
  // turn a new draw/defense/utility power into the Strength sword again.
  private PowerModel IconSource=>LegacyPowers.NativeIconSource(Key)??Key switch {
   "metallicize" or "plated"=>ModelDb.Power<PlatingPower>(),
   "skill_block" or "discard_block" or "scry_block" or "status_furnace"=>ModelDb.Power<PlatingPower>(),
   "discard_next_block"=>ModelDb.Power<BlockNextTurnPower>(),
-  "berserk" or "skill_energy" or "discard_energy" or "retained_attack_energy"=>ModelDb.Power<EnergyNextTurnPower>(),
+  "berserk" or "skill_energy" or "discard_energy" or "retained_attack_energy" or "mana_fountain"=>ModelDb.Power<EnergyNextTurnPower>(),
   "brutality" or "power_draw" or "evolve" or "arcane_echo" or "retained_draw" or "quiver"=>ModelDb.Power<DrawCardsNextTurnPower>(),
   "well_laid" or "foresight" or "establishment"=>ModelDb.Power<WellLaidPlansPower>(),
   "equilibrium"=>ModelDb.Power<RetainHandPower>(),
@@ -122,6 +123,7 @@ public abstract class LegacyPower:CustomPowerModel
    case "hunt_momentum":var priorAttacks=Math.Clamp(MomentumAttacks,0,3);MomentumAttacks=0;if(priorAttacks>0)await CardEffects.Apply(context,"vigor",Owner,Amount*priorAttacks,Owner,null);break;
    case "brutality":await CreatureCmd.Damage(context,Owner,Amount,ValueProp.Unblockable|ValueProp.Unpowered,Owner);await CardPileCmd.Draw(context,Amount,player);break;
    case "berserk":await PlayerCmd.GainEnergy(Amount,player);break;
+   case "mana_fountain":await PlayerCmd.GainEnergy(1,player);await PowerCmd.Decrement(this);break;
    case "foresight":await CardEffects.Scry(player,context,Amount);break;
    case "prophecy_return":
     // Claim before the asynchronous choice. Replays stack the discount, not

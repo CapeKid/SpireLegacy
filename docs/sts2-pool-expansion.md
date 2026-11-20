@@ -33,7 +33,7 @@ Values below are before traits, manor bonuses, and combat powers. Retain, Exhaus
 | Unbroken Wall | Both / Rare | 2 (2) | 18 Block; Exhaust | 23 Block; Exhaust | defense and exhaust. Impervious: lower one-use Block budget, same two-Energy cost. |
 | Battlefield Recovery | Both / Rare | 2 (2) | 2 draw; 4 heal; Exhaust | 3 draw; 5 heal; Exhaust | HP and draw. Offering: paid one-use recovery with smaller draw, small healing and no Energy gain. |
 | Forge Memory | Both / Rare | 1 (1) | Whenever you Exhaust a card, gain 3 Vigor | Whenever you Exhaust a card, gain 4 Vigor | Offensive exhaust engine; Secret Thesis retains the draw role. |
-| King's Ransom | Both / Rare | 0 (0) | 2 Energy; 4 HP loss; Exhaust | 3 Energy; 4 HP loss; Exhaust | HP for Energy. Offering: trades HP for Energy once; draws no cards. |
+| King's Ransom | Both / Rare | 0 (0) | Lose 4 HP, gain 2 Strength and 1 Dexterity, then Exhaust | Gain 3 Strength and 2 Dexterity | Blood Price supplies immediate Energy. King's Ransom makes later Attacks and Block cards stronger. |
 | Serrated Spear | Public-beta / Uncommon | 1 (1) | 5 damage; 1 Vulnerable | 7 damage; 1 Vulnerable | Vulnerable setup. Bash: smaller attack and one turn of Vulnerable at one Energy. |
 | Vengeful Armor | Public-beta / Uncommon | 1 (1) | 3 Block; Whenever an enemy attacks you, deal 2 damage to it. | 3 Block; Whenever an enemy attacks you, deal 3 damage to it. | retaliation. Caltrops: smaller recurring Thorns budget with modest initial Block. |
 | Castle Heart | Public-beta / Rare | 2 (1) | 5 Block; At the end of your turn, gain 4 Block. | 5 Block; At the end of your turn, gain 4 Block. | end-turn defense. Afterimage: fixed four end-turn Block instead of scaling with cards played; paid setup and modest initial defense. |

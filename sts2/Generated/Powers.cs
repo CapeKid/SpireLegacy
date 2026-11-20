@@ -11,6 +11,8 @@ public sealed class P_demon_form : LegacyPower { }
 public sealed class P_dark_embrace : LegacyPower { }
 public sealed class P_berserk : LegacyPower { }
 public sealed class P_buffer : LegacyPower { }
+public sealed class P_mana_fountain : LegacyPower { }
+public sealed class P_intangible : LegacyPower { }
 public sealed class P_double_tap : LegacyPower { }
 public sealed class P_equilibrium : LegacyPower { }
 public sealed class P_panache : LegacyPower { }

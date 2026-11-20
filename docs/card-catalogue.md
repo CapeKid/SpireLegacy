@@ -80,7 +80,7 @@ Each class has 82 rewards on regular (20 common, 36 uncommon, 26 rare), or 85 on
 | Iron Avalanche | Rare | Attack | 2 | Class unique; 6 damage to all enemies; Deal 18 additional damage if you have Block.; Exhaust |
 | Phoenix Forge | Rare | Power | 2 | Class unique; Whenever you Exhaust 3 cards, deal 14 damage to ALL enemies. |
 | Ancestral Salvage | Rare | Skill | 2 | Shared family card; 6 Block; You may return an Attack from your Exhaust pile to your hand. If it enters your hand, gain 4 Vigor. Cannot return Spire Legacy Exhaust-recovery cards.; Exhaust |
-| King's Ransom | Rare | Skill | 0 | Class unique; 2 Energy; 4 HP cost; Exhaust |
+| King's Ransom | Rare | Skill | 0 | Class unique; 2 Strength; 1 Dexterity; 4 HP cost; Exhaust |
 | Bloodfire Mantle | Rare | Power | 1 | Class unique; At the end of your turn, lose 1 HP and deal 5 damage to ALL enemies. |
 | Grand Melee | Rare | Attack | 3 | Class unique; 3 damage ×5 to all enemies |
 | Warlord's Command | Rare | Skill | 2 | Class unique; 1 Strength; Your next 2 Attack(s) this turn are played twice.; Exhaust |
@@ -130,10 +130,10 @@ Each class has 82 rewards on regular (20 common, 36 uncommon, 26 rare), or 85 on
 | Cold Read | Common | Skill | 0 | Shared family card; 1 draw; 1 discard |
 | Spell Notes | Common | Skill | 1 | Class unique; Scry 3.; 1 draw; Retain |
 | Kindle | Common | Skill | 0 | Class unique; 2 Block; Gain 1 Arcane Charge(s), up to the normal charge cap.; Exhaust |
-| Thunderchain | Uncommon | Attack | 1 | Class unique; 2 damage ×4; Hits target random enemies. |
+| Thunderchain | Uncommon | Attack | 1 | Class unique; 6 damage; Deal 3 damage to all other enemies. |
 | Inferno Wave | Uncommon | Attack | 2 | Class unique; 10 damage to all enemies |
 | Frozen Spear | Uncommon | Attack | 2 | Class unique; Public-beta only; 10 damage; 2 Weak; 1 Vulnerable |
-| Venom Rune | Uncommon | Attack | 1 | Class unique; 4 damage; 3 Poison |
+| Venom Rune | Uncommon | Attack | 1 | Class unique; 4 damage; Apply 2 Poison per Skill played this turn, counting up to 3 Skills. |
 | Mana Burn | Uncommon | Attack | 0 | Class unique; 5 damage; If Arcane Flow has triggered this turn, deal 5 additional damage.; Exhaust |
 | Rune Detonation | Uncommon | Attack | 1 | Class unique; 6 damage; If you have 2 Arcane Charges and Arcane Flow is ready, gain 1 Energy.; Retain |
 | Toxic Cloud | Uncommon | Skill | 2 | Class unique; 4 Poison to all enemies |
@@ -152,8 +152,8 @@ Each class has 82 rewards on regular (20 common, 36 uncommon, 26 rare), or 85 on
 | Celestial Spear | Rare | Attack | 3 | Class unique; 26 damage |
 | Starfall | Rare | Attack | 3 | Class unique; 6 damage ×3 to all enemies |
 | Soulfire | Rare | Attack | 2 | Class unique; 13 damage; 3 Poison; If you start this Attack with 2 Arcane Charges and Arcane Flow ready, apply that Poison again. |
-| Perfect Ward | Rare | Skill | 2 | Class unique; 3 Block; Prevent the next 1 time(s) you would lose HP.; Exhaust |
-| Mana Fountain | Rare | Skill | 0 | Class unique; 2 Energy; Exhaust |
+| Perfect Ward | Rare | Skill | 2 | Class unique; 5 Block; Gain 1 Intangible.; Exhaust |
+| Mana Fountain | Rare | Skill | 0 | Class unique; At the start of each of your next 3 turns, gain 1 Energy.; Exhaust |
 | Grand Thesis | Rare | Skill | 1 | Class unique; 2 draw; 1 Energy next turn; Gain 1 Arcane Charge(s), up to the normal charge cap.; Exhaust |
 | Hourglass | Rare | Skill | 1 | Class unique; Choose a card in your hand. Reduce its cost by 2 this turn.; Exhaust |
 | Transmutation | Rare | Skill | 1 | Class unique; Exhaust up to 2 cards from your hand. Gain 1 Energy per card Exhausted this way. If you Exhaust any, gain 1 Arcane Charge.; Exhaust |
@@ -230,7 +230,7 @@ Each class has 82 rewards on regular (20 common, 36 uncommon, 26 rare), or 85 on
 | Tripwire | Common | Skill | 1 | Shared family card; 4 Block; 1 Weak |
 | Ambush | Uncommon | Attack | 1 | Class unique; 6 damage; Deal 5 additional damage if the target is Vulnerable or Poisoned.; Retain |
 | Rapid Fire | Uncommon | Attack | 1 | Class unique; 2 damage ×4 |
-| Razor Fletching | Uncommon | Attack | 1 | Class unique; 5 damage; 3 Poison |
+| Razor Fletching | Uncommon | Attack | 1 | Class unique; 3 damage ×2; Apply 2 Poison on each hit. |
 | Finishing Flurry | Uncommon | Attack | 1 | Class unique; Deal 3 damage for each OTHER Attack played this turn. |
 | Hooked Arrow | Uncommon | Attack | 1 | Class unique; 6 damage; Return 1 card(s) from your discard pile to your hand. Cannot return other Spire Legacy recovery cards. |
 | Ricochet | Uncommon | Attack | 1 | Class unique; 3 damage ×3; Hits target random enemies. |
@@ -266,7 +266,7 @@ Each class has 82 rewards on regular (20 common, 36 uncommon, 26 rare), or 85 on
 | Sort Quiver | Common | Skill | 1 | Class unique; 3 draw; 2 discard |
 | Light Pack | Uncommon | Power | 1 | Class unique; Whenever you discard a card during your turn, gain 2 Block. |
 | Tailwind | Uncommon | Power | 1 | Class unique; The first time you discard a card each turn, gain 1 Energy. |
-| Spring Nock | Uncommon | Attack | 1 | Class unique; 6 damage; When discarded during your turn, draw 2 card(s). Triggers at most once per copy each turn. |
+| Spring Nock | Uncommon | Attack | 1 | Class unique; 6 damage; When discarded during your turn, gain 3 Vigor. Triggers at most once per copy each turn. |
 | Venom Reserve | Uncommon | Skill | 1 | Class unique; Double Poison on the target.; Retain; Exhaust |
 | Perch Discipline | Uncommon | Power | 2 | Class unique; If you Retain any Attacks at the end of your turn, gain 1 Energy next turn. |
 | Pursuit Volley | Uncommon | Attack | 1 | Class unique; 1 damage ×2; Deal 3 additional damage if the target is Vulnerable or Poisoned. |

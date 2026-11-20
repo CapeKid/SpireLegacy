@@ -685,13 +685,15 @@ public static class NativeTestBridge
                     await WaitForPlay(discardActor);
                     var discardKey = request.GetProperty("card").GetString()!;
                     var discardCard = (LegacyCard)discardActor.Creature.CombatState!.CreateCard(NativeCards.Get(discardKey),discardActor);
-                    CardCmd.Upgrade(discardCard);
+                    if (!request.TryGetProperty("upgrade", out var discardUpgraded) || discardUpgraded.GetBoolean()) CardCmd.Upgrade(discardCard);
                     await CardPileCmd.Add(discardCard,PileType.Hand,skipVisuals:true);
                     var energyBeforeDiscard = discardActor.PlayerCombatState!.Energy;
                     var handBeforeDiscard = PileType.Hand.GetPile(discardActor).Cards.Count;
+                    var vigorBeforeDiscard = discardActor.Creature.GetPowerAmount<MegaCrit.Sts2.Core.Models.Powers.VigorPower>();
                     await CardCmd.Discard(new BlockingPlayerChoiceContext(),discardCard);
                     var firstEnergyReward = discardActor.PlayerCombatState.Energy-energyBeforeDiscard;
                     var firstDrawReward = PileType.Hand.GetPile(discardActor).Cards.Count-handBeforeDiscard+1;
+                    var vigorAfterDiscard = discardActor.Creature.GetPowerAmount<MegaCrit.Sts2.Core.Models.Powers.VigorPower>();
                     var serializedDiscard = discardCard.ToSerializable();
                     var restoredDiscard = (LegacyCard)discardRun.LoadCard(serializedDiscard,discardActor);
                     discardRun.RemoveCard(restoredDiscard);
@@ -702,7 +704,10 @@ public static class NativeTestBridge
                     await CardCmd.Discard(new BlockingPlayerChoiceContext(),restoredDiscard);
                     var secondEnergyReward = discardActor.PlayerCombatState.Energy-energyBeforeRepeat;
                     var secondDrawReward = PileType.Hand.GetPile(discardActor).Cards.Count-handBeforeRepeat+1;
-                    result = new {firstEnergyReward,firstDrawReward,secondEnergyReward,secondDrawReward,rewardTurn=restoredDiscard.DiscardRewardTurn,turn=discardActor.PlayerCombatState.TurnNumber};break;
+                    result = new { firstEnergyReward, firstDrawReward, secondEnergyReward, secondDrawReward,
+                        firstVigorReward = vigorAfterDiscard - vigorBeforeDiscard,
+                        secondVigorReward = discardActor.Creature.GetPowerAmount<MegaCrit.Sts2.Core.Models.Powers.VigorPower>() - vigorAfterDiscard,
+                        rewardTurn = restoredDiscard.DiscardRewardTurn, turn = discardActor.PlayerCombatState.TurnNumber };break;
                 case "retention-check":
                     result=await RetentionOracle.Check(RunState(),request.GetProperty("upgrade").GetBoolean(),request.GetProperty("stack").GetBoolean(),request.GetProperty("intrinsic").GetBoolean(),request.GetProperty("fullHand").GetBoolean());break;
                 case "retention-confirm":

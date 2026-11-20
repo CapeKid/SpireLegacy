@@ -76,8 +76,8 @@
     "cardId": "knight_king_s_ransom",
     "classId": "knight",
     "availability": "all",
-    "build": "HP for Energy",
-    "reference": "Offering: trades HP for Energy once; draws no cards."
+    "build": "HP for combat scaling",
+    "reference": "Trade HP for Strength and Dexterity for the fight; Blood Price supplies immediate Energy."
   },
   {
     "id": "mage_celestial_spear",

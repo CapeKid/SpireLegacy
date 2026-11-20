@@ -324,13 +324,14 @@ public static partial class ManorUi
     private static void ShowActiveHeir(FamilyProfile.Heir heir)
     {
         var cls = Design.Get("classes",heir.classId);
+        var blitz = PlayerBloodlines.LocalPlayer?.RunState is { } run && BlitzTraits.IsBlitz(run.GameMode);
         AddText(L.Format($"{heir.name} {Runtime.Profile.family} — {cls.Localized("name")}"),27);
         AddText(cls.Localized("summary"));
         foreach (var trait in Inheritance.Rows(heir))
         {
             var detail = new HBoxContainer(); content!.AddChild(detail);
             detail.AddChild(new TextureRect { Texture = Runtime.TraitIcon(trait.Text("id")), CustomMinimumSize = new(48,48), ExpandMode = TextureRect.ExpandModeEnum.IgnoreSize, StretchMode = TextureRect.StretchModeEnum.KeepAspectCentered });
-            detail.AddChild(Text(L.Format($"{trait.Localized("name")}: {trait.Localized("summary")}\nCrown bonus: {trait.Number("goldBonus")}%")));
+            detail.AddChild(Text(L.Format($"{trait.Localized("name")}: {BlitzTraits.Summary(trait, blitz)}\nCrown bonus: {trait.Number("goldBonus")}%")));
         }
     }
     public static void ShowChronicle()
@@ -474,7 +475,7 @@ public static class ManorSelectAction
         bool CanEmbark() => ReferenceEquals(CoopBloodlines.Lobby, lobby) && lobby.NetService.IsConnected
             && CoopBloodlines.Character(CoopBloodlines.Local(lobby)) is HeirCharacter
             && !CoopBloodlines.IsReady(CoopBloodlines.Local(lobby));
-        ManorUi.OpenEmbarkPicker(screen, multiplayer, CanEmbark, () =>
+        ManorUi.OpenEmbarkPicker(screen, multiplayer, BlitzTraits.IsBlitz(lobby.GameMode), CanEmbark, () =>
         {
             if (!CanEmbark()) return;
             confirmedScreen = screen;

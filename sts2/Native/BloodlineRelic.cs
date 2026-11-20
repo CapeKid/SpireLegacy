@@ -1,5 +1,6 @@
 using BaseLib.Abstracts;
 using MegaCrit.Sts2.Core.Commands;
+using MegaCrit.Sts2.Core.Commands.Builders;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Entities.Players;
@@ -7,6 +8,7 @@ using MegaCrit.Sts2.Core.Entities.Relics;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Rooms;
+using MegaCrit.Sts2.Core.Rewards;
 using MegaCrit.Sts2.Core.Entities.Merchant;
 using MegaCrit.Sts2.Core.ValueProps;
 using MegaCrit.Sts2.Core.Saves.Runs;
@@ -30,6 +32,8 @@ public class BloodlineRelic : CustomRelicModel
     private HashSet<Creature> firstAttackTargets = new();
     private Dictionary<CardModel,int> costlyDrawTurns = new();
     private int pendingEnergy;
+    private int divaAttackDepth, pendingDivaVigor;
+    private bool HasBlitzDiva => BlitzTraits.IsBlitz(Owner.RunState.GameMode) && Inheritance.Has("diva");
     protected override void DeepCloneFields()
     {
         base.DeepCloneFields();
@@ -67,6 +71,7 @@ public class BloodlineRelic : CustomRelicModel
     public override async Task BeforeCombatStart()
     {
         firstSkill = firstAttack = firstHurt = true; firstAttackTargets.Clear(); costlyDrawTurns.Clear(); shocked = false; pendingEnergy = 0;
+        divaAttackDepth = pendingDivaVigor = 0;
         var context = new BlockingPlayerChoiceContext();
         await Apply(context,"strength",Owner.Creature,PlayerBloodlines.Bonus(Owner,"strength") + Inheritance.Stat("strength"));
         await Apply(context,"dexterity",Owner.Creature,PlayerBloodlines.Bonus(Owner,"dexterity") + Inheritance.Stat("dexterity"));
@@ -96,6 +101,19 @@ public class BloodlineRelic : CustomRelicModel
     {
         if (play.Card.Owner == Owner) HeirVisuals.Animate(Owner.Creature,play.Card.Type == CardType.Attack ? "attack" : "skill");
         return Task.CompletedTask;
+    }
+    public override Task BeforeAttack(AttackCommand command)
+    {
+        if (command.Attacker == Owner.Creature && HasBlitzDiva) divaAttackDepth++;
+        return Task.CompletedTask;
+    }
+    public override async Task AfterAttack(PlayerChoiceContext context, AttackCommand command)
+    {
+        if (command.Attacker != Owner.Creature || divaAttackDepth == 0 || --divaAttackDepth != 0 || pendingDivaVigor == 0) return;
+        // Existing Vigor has already resolved for this attack. Save the new stacks for the next one.
+        var earned = pendingDivaVigor;
+        pendingDivaVigor = 0;
+        if (Owner.Creature.IsAlive) await Apply(context, "vigor", Owner.Creature, earned);
     }
     public override async Task AfterCardPlayed(PlayerChoiceContext context, CardPlay play)
     {
@@ -164,17 +182,38 @@ public class BloodlineRelic : CustomRelicModel
     internal async Task AfterEnemyDeath(PlayerChoiceContext context, Creature creature, bool wasRemovalPrevented)
     {
         if (wasRemovalPrevented || creature == Owner.Creature || creature.Side == Owner.Creature.Side || Owner.Creature.IsDead) return;
-        if (Inheritance.Amount("diva") > 0) await PlayerCmd.GainGold(Inheritance.Amount("diva"),Owner);
+        var diva = Inheritance.Amount("diva");
+        if (diva > 0)
+        {
+            if (HasBlitzDiva)
+            {
+                if (divaAttackDepth > 0) pendingDivaVigor += diva;
+                else await Apply(context, "vigor", Owner.Creature, diva);
+            }
+            else await PlayerCmd.GainGold(diva, Owner);
+        }
         if (Inheritance.Amount("explosions") > 0) await CreatureCmd.Damage(context,Owner.Creature,Inheritance.Amount("explosions"),ValueProp.Unblockable | ValueProp.Unpowered,Owner.Creature);
     }
     public override async Task AfterRoomEntered(AbstractRoom room)
     {
         if (room is TreasureRoom && Inheritance.Amount("chest") > 0) await CreatureCmd.Damage(new BlockingPlayerChoiceContext(),Owner.Creature,Inheritance.Amount("chest"),ValueProp.Unblockable | ValueProp.Unpowered,Owner.Creature);
-        if (room is TreasureRoom && !Owner.Creature.IsDead && Inheritance.Amount("treasure_gold") > 0) await PlayerCmd.GainGold(Inheritance.Amount("treasure_gold"),Owner);
+        if (room is TreasureRoom && !Owner.Creature.IsDead)
+        {
+            var gold = Inheritance.Traits.Where(trait => trait.Text("effect") == "treasure_gold" &&
+                !(BlitzTraits.IsBlitz(Owner.RunState.GameMode) && trait.Text("id") == "bonuschestgold")).Sum(trait => trait.Number("amount"));
+            if (gold > 0) await PlayerCmd.GainGold(gold, Owner);
+        }
         if (PlayerBloodlines.State(Owner) is {} run) {
             run.floors=Math.Max(run.floors,Owner.RunState.TotalFloor);FamilyRunSnapshot=FamilySnapshot.Serialize(run);
             if(FamilySnapshot.CanSettle(Runtime.Profile,run,MegaCrit.Sts2.Core.Runs.RunManager.Instance.NetService.NetId))Runtime.Profile.Save(Runtime.FamilyPath);
         }
+    }
+    public override bool TryModifyRewards(Player player, List<Reward> rewards, AbstractRoom? room)
+    {
+        if (player != Owner || room is not TreasureRoom || !BlitzTraits.IsBlitz(Owner.RunState.GameMode) ||
+            !Inheritance.Traits.Any(trait => trait.Text("id") == "bonuschestgold")) return false;
+        rewards.Add(new PotionReward(Owner));
+        return true;
     }
     public override async Task AfterCombatVictory(CombatRoom room)
     {

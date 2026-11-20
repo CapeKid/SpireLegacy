@@ -44,6 +44,14 @@
     "summary": "Prevent the next !M! time(s) you would lose HP."
   },
   {
+    "id": "mana_fountain",
+    "summary": "At the start of each of your next !M! turns, gain 1 Energy."
+  },
+  {
+    "id": "intangible",
+    "summary": "Gain !M! Intangible."
+  },
+  {
     "id": "double_tap",
     "summary": "Your next !M! Attack(s) this turn are played twice."
   },

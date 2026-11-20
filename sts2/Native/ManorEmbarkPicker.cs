@@ -7,11 +7,11 @@ public static partial class ManorUi
 {
     private static bool CompactPickerViewport => Tree.Root.GetVisibleRect().Size.Y < 1000;
 
-    internal static void OpenEmbarkPicker(Control screen, bool multiplayer, Func<bool> canEmbark, Action embark)
+    internal static void OpenEmbarkPicker(Control screen, bool multiplayer, bool blitz, Func<bool> canEmbark, Action embark)
     {
         if (IsOpen || Runtime.Profile.offers.Count == 0) return;
 
-        var offers = Runtime.Profile.offers.ToArray();
+        var offers = blitz ? Runtime.Profile.BlitzOffers() : Runtime.Profile.offers.ToArray();
         var selected = Array.FindIndex(offers, heir => SameOffer(heir, Runtime.Profile.selected));
         selected = Math.Max(0, selected);
         var cards = new List<(PanelContainer panel, Button button)>();
@@ -41,7 +41,7 @@ public static partial class ManorUi
             for (var i = 0; i < offers.Length; i++)
             {
                 var index = i;
-                var card = PickerCard(offers[i], () => { selected = index; UpdateSelection(); }, i);
+                var card = PickerCard(offers[i], () => { selected = index; UpdateSelection(); }, i, blitz);
                 cards.Add(card);
                 row.AddChild(card.panel);
             }
@@ -66,7 +66,8 @@ public static partial class ManorUi
         void Confirm()
         {
             if (!ValidateContext() || !canEmbark() || !CanConfigure()) { Close(); return; }
-            var heir = Runtime.Profile.offers.FirstOrDefault(offer => SameOffer(offer, offers[selected]));
+            var currentOffers = blitz ? Runtime.Profile.BlitzOffers() : Runtime.Profile.offers.ToArray();
+            var heir = currentOffers.FirstOrDefault(offer => SameOffer(offer, offers[selected]));
             if (heir == null) { Close(); return; }
             try
             {
@@ -88,7 +89,7 @@ public static partial class ManorUi
     private static bool SameOffer(FamilyProfile.Heir offer, FamilyProfile.Heir? selected) =>
         selected != null && offer.classId == selected.classId && offer.name == selected.name && offer.traits.SequenceEqual(selected.traits);
 
-    private static (PanelContainer panel, Button button) PickerCard(FamilyProfile.Heir heir, Action select, int index)
+    private static (PanelContainer panel, Button button) PickerCard(FamilyProfile.Heir heir, Action select, int index, bool blitz)
     {
         var panel = new PanelContainer { SizeFlagsHorizontal = Control.SizeFlags.ExpandFill, MouseFilter = Control.MouseFilterEnum.Ignore };
         var padding = new MarginContainer { MouseFilter = Control.MouseFilterEnum.Ignore };
@@ -134,7 +135,7 @@ public static partial class ManorUi
             bonus.Modulate = new("F0CC88");
             traitHeading.AddChild(bonus);
             card.AddChild(traitHeading);
-            card.AddChild(Text(trait.Localized("summary"), 20));
+            card.AddChild(Text(BlitzTraits.Summary(trait, blitz), 20));
         }
         var crownBonus = inheritance.TraitCrownPercent - 100;
         var crowns = Text(L.Format($"Total trait bonus: {crownBonus:+0;-0;0}%"), 20);

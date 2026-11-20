@@ -2,7 +2,7 @@
   "title": "Spire Legacy \u2014 Beta",
   "description": "Private beta builds of Spire Legacy for the creator's Steam Deck testing. Requires BaseLib. You may subscribe to both this item and the public Spire Legacy item. In StS2's mod menu, enable ONLY Spire Legacy \u2014 Beta OR Spire Legacy, then restart. They contain the same character and cards and must not run together. Finish a climb before switching builds. Family manor progress is shared. This item does not update the public Workshop listing.",
   "visibility": "private",
-  "changeNote": "1.0.68: Buffed Ashen Advance and fixed the Heir name in Dread mode, including Simplified Chinese.",
+  "changeNote": "1.0.69: Adapted inherited traits for Blitz, fixed stretched Ancient card artwork, and reworked seven Knight, Mage, and Ranger cards to give each a distinct role.",
   "tags": [
     "Characters"
   ],

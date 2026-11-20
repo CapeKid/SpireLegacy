@@ -94,6 +94,16 @@ public static class BalanceOracle
                     await CompleteProtectedTurn(player);
                     return new{key,upgraded,energyDelta,amount,retained=fuel.Count(c=>hand.Cards.Contains(c)),automaticRetained=hand.Cards.Contains(automatic),handAfterTurn=hand.Cards.Count,roundTrip,pile};
                 }
+                if(key=="mage_mana_fountain"){
+                    var countdown = player.Creature.GetPowerAmount<P_mana_fountain>();
+                    var energyByTurn = new List<int>();
+                    for (var i = 0; i <= countdown; i++)
+                    {
+                        await CompleteProtectedTurn(player);
+                        energyByTurn.Add(player.PlayerCombatState.Energy);
+                    }
+                    return new { key, upgraded, energyDelta, countdown, energyByTurn, drawn, healing, roundTrip, pile };
+                }
                 return new{key,upgraded,supported,energyDelta,blockDelta,healing,drawn,damage,setupSpent,roundTrip,pile};
             }
             if(key is "knight_royal_execution" or "mage_celestial_spear" or "ranger_arrow_cascade"){

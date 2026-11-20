@@ -21,7 +21,7 @@ def start(cls):
     send('start',**{'class':cls,'traits':[],'quick':True});return ready()
 def power(s,key):return sum(p['amount'] for p in s['powers'] if key.lower() in p['id'].lower())
 try:
-    for cls,guard,attack,charges in [('knight','knight_guard','knight_sword_dance',2),('mage','mage_guard','mage_thunderchain',2),('ranger',None,'ranger_rapid_fire',0)]:
+    for cls,guard,attack,hits,charges in [('knight','knight_guard','knight_sword_dance',4,2),('mage','mage_guard','mage_arcane_missile',3,2),('ranger',None,'ranger_rapid_fire',4,0)]:
         start(cls);send('kill');send('enter',room='Boss');ready()
         if guard:
             send('play',card=guard)
@@ -29,12 +29,13 @@ try:
         before=send('state');after=send('play',card=attack,upgrade=True)
         enemyBefore=before['enemies'][0];enemyAfter=after['enemies'][0]
         lost=enemyBefore['hp']+enemyBefore['block']-enemyAfter['hp']-enemyAfter['block']
-        expected=12+4*power(before,'strength')+charges
+        expected=hits*(3+power(before,'strength'))+charges
         assert lost==expected,(cls,lost,expected,before,after)
-    for card,energy,draw in [('ranger_pocket_wind',2,0),('ranger_spring_nock',0,3),('ranger_loose_fletching',0,2)]:
+    for card,energy,draw,vigor in [('ranger_pocket_wind',2,0,0),('ranger_spring_nock',0,0,4),('ranger_loose_fletching',0,2,0)]:
         start('ranger');reward=send('discard-balance',card=card)
         assert reward['firstEnergyReward']==energy and reward['firstDrawReward']==draw,reward
         assert reward['secondEnergyReward']==reward['secondDrawReward']==0,reward
+        assert reward['firstVigorReward']==vigor and reward['secondVigorReward']==0,reward
         assert reward['rewardTurn']==reward['turn'],reward
     start('mage');pocket=send('play',card='mage_time_pocket',upgrade=True)
     assert power(pocket,'equilibrium')==2,pocket
