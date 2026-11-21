@@ -32,7 +32,7 @@ cases += [('mage', card) for card in ['mage_returned_prophecy', 'mage_ash_readin
 try:
     for cls, card in cases[int(sys.argv[3]) if len(sys.argv) > 3 else 0:]:
         for upgrade in [False, True]:
-            send('start', **{'class': cls, 'traits': [], 'quick': True})
+            send('start', **{'class': cls, 'traits': [], 'quick': True, 'manorTier': 2})
             state = ready()
             if card == 'volley':
                 # Weak Nibbits can have only 11 HP: measure on a durable target,
@@ -48,29 +48,29 @@ try:
             assert played['pile'] == ('Exhaust' if card in ['knight_arms_vault', 'ranger_second_quiver', 'mage_returned_prophecy', 'mage_ash_reading', 'mage_grand_thesis'] else 'Discard'), played
             assert not played['tableNodePresent'] and played['saveRoundTrip'], played
             assert played['hpChange'] == 0, played
-            hand_before = len(played['costsBefore'])
+            hand_before = len(played['costsBefore']) # Hand before play, excluding the played card.
             if card == 'knight_arms_vault':
                 assert played['fuelReturned'] and played['cost'] == 1, played
-                assert len(played['hand']) == hand_before + 2, played
+                assert len(played['hand']) == hand_before + 2 + int(upgrade), played
             elif card == 'mage_returned_prophecy':
                 assert not played['fuelReturned'] and played['cost'] == 1, played
-                assert len(played['hand']) == hand_before - 1, played # Delayed recovery has a dedicated turn-boundary fixture.
+                assert len(played['hand']) == hand_before, played # Delayed recovery has a dedicated turn-boundary fixture.
             elif card == 'knight_battle_meditation':
-                assert len(played['hand']) == hand_before + 1 + int(upgrade), played
+                assert len(played['hand']) == hand_before + 2 + int(upgrade), played
             elif card == 'ranger_second_quiver':
                 assert played['cost'] == 0 and played['energyChange'] == 0, played
                 assert len(played['hand']) == hand_before, played # Only a Skill is supplied in discard here.
             elif card == 'volley':
                 after = send('state')
                 blocked = state['enemies'][0]['block'] - after['enemies'][0]['block']
-                assert played['enemyDamage'] + blocked == (18 if upgrade else 15) + 6, (state, played, after)
+                assert played['enemyDamage'] + blocked == (15 if upgrade else 12) + 6, (state, played, after)
             elif card == 'mage_geode_ward':
                 assert played['blockChange'] == (15 if upgrade else 12), played
             elif card == 'mage_ash_reading':
                 assert played['cost'] == 0 and len(played['hand']) == hand_before + int(upgrade), played
             elif card == 'mage_grand_thesis':
                 assert played['cost'] == 1 and played['charges'] == 2, played
-                assert len(played['hand']) == hand_before + 3 + int(upgrade), played
+                assert len(played['hand']) == hand_before + 2 + int(upgrade), played
             if card != 'ranger_second_quiver':
                 assert played['energyChange'] == -played['cost'], played
             print(tag, cls, card, upgrade, 'paid effect, cleanup and round-trip passed', flush=True)

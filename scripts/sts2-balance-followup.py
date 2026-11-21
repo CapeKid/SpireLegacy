@@ -60,7 +60,7 @@ try:
                 assert r['values']==[initial,initial+growth,initial+2*growth] and r['roundTrip']==after,r
                 assert r['energySpent']==(2 if after else 3) and r['damage']==initial+2*growth+2,r
             elif card in ['ranger_poison_tip','mage_toxic_cloud']:
-                amount=(6 if upgraded else 4) if after else (4 if upgraded else 3)
+                amount=((7 if upgraded else 5) if card=='ranger_poison_tip' else (6 if upgraded else 4)) if after else (4 if upgraded else 3)
                 assert r['initial'][0]==amount and r['twoTurnDamage'][0]==2*amount-1,r
             else:assert r['returned'] and r['pile']=='Exhaust',r
             print(tag,card,upgraded,r,flush=True)

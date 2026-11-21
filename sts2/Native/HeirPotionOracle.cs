@@ -49,7 +49,7 @@ public static class HeirPotionOracle
         if(shop)
         {
             var entry=new MerchantPotionEntry(potion,player);var gold=player.Gold;await PlayerCmd.GainGold(entry.Cost,player);
-            if(!await entry.OnTryPurchaseWrapper(null)||player.Gold!=gold)throw new InvalidDataException("Native potion purchase failed.");
+            if(!await MerchantTestCommands.PurchaseDetached(entry)||player.Gold!=gold)throw new InvalidDataException("Native potion purchase failed.");
         }
         else if(!await new PotionReward(potion,player).SelectUnsynchronized())throw new InvalidDataException("Native potion reward failed.");
         if(!player.Potions.Contains(potion))throw new InvalidDataException("Potion absent after procurement.");

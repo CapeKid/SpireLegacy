@@ -248,10 +248,7 @@ public static class BalanceOracle
         }
     }
     private static void Count(Dictionary<string,int> counts,CardModel card){var key=card is LegacyCard lc?lc.Key:card.Id.ToString();counts[key]=counts.GetValueOrDefault(key)+1;}
-    public static IDisposable MaxChoices(){
-        var method=AccessTools.Method(typeof(CardSelectCmd),"UseSelector",[typeof(ICardSelector),typeof(bool)])??AccessTools.Method(typeof(CardSelectCmd),"UseSelector",[typeof(ICardSelector)]);
-        return (IDisposable)method.Invoke(null,method.GetParameters().Length==2?[new MaximumSelector(),false]:[new MaximumSelector()])!;
-    }
+    public static IDisposable MaxChoices()=>NativeTestBridge.UseTestSelector(new MaximumSelector());
     private sealed class MaximumSelector:ICardSelector{
         public Task<IEnumerable<CardModel>> GetSelectedCards(IEnumerable<CardModel> options,int minSelect,int maxSelect)=>Task.FromResult(options.Take(maxSelect));
         public CardRewardSelection GetSelectedCardReward(IReadOnlyList<CardCreationResult> options,IReadOnlyList<CardRewardAlternative> alternatives)=>new(){card=options.FirstOrDefault()?.Card};

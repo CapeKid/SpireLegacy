@@ -1,4 +1,3 @@
-using HarmonyLib;
 using Godot;
 using MegaCrit.Sts2.Core.Combat;
 using MegaCrit.Sts2.Core.Commands;
@@ -101,11 +100,8 @@ public static class TacticalPilot
             &&legacy.DesignCard.Row.Text("special")=="none"&&legacy.DesignCard.Row.Text("power")=="none"
             &&legacy.DesignCard.Amount("strength")+legacy.DesignCard.Amount("vigor")>0
         :card is MegaCrit.Sts2.Core.Models.Cards.Inflame;
-    public static IDisposable Selector(bool planned=false)
-    {
-        var method=AccessTools.Method(typeof(CardSelectCmd),"UseSelector",[typeof(ICardSelector),typeof(bool)])??AccessTools.Method(typeof(CardSelectCmd),"UseSelector",[typeof(ICardSelector)]);
-        return (IDisposable)method.Invoke(null,method.GetParameters().Length==2?[new FuelSelector(planned),false]:[new FuelSelector(planned)])!;
-    }
+    public static IDisposable Selector(bool planned=false) =>
+        NativeTestBridge.UseTestSelector(new FuelSelector(planned));
     public static async Task<object> Probe(RunState run,string kind)
     {
         using(Selector()){

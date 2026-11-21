@@ -41,7 +41,7 @@ for kind in ['vulnerable','exhaust','lethal','area','execute','execute-upgraded'
     if kind=='vulnerable':assert r['vulnerable']==2 and r['followUpDamage']==7 and r['energySpent']==3,r
     elif kind=='exhaust':assert r['fuelExhausted'] and r['blockGained']==6,r
     elif kind=='lethal':assert r['targetDead'] and r['Reason']=='estimated-lethal',r
-    elif kind=='area':assert len(r['damage'])>1 and all(d==3 for d in r['damage']),r
+    elif kind=='area':assert r['picked']=='knight_sweeping_edge' and len(r['damage'])>1 and all(d==5 for d in r['damage']),r
     else:
         assert r['targetDead'] and r['damage']==r['expected'] and r['Reason']=='estimated-lethal',r
         if 'finisher' in kind:

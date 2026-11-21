@@ -796,6 +796,19 @@ public static class NativeTestBridge
         return (MegaCrit.Sts2.Core.Rewards.CardReward)constructor.Invoke([options, count, player, null, null]);
     }
 
+    internal static MegaCrit.Sts2.Core.Rewards.CardReward CreateCardReward(IEnumerable<CardModel> cards, CardCreationSource source, Player player, CardCreationOptions rerollOptions)
+    {
+        var reward = typeof(MegaCrit.Sts2.Core.Rewards.CardReward);
+        var signature = new[] { typeof(IEnumerable<CardModel>), typeof(CardCreationSource), typeof(Player), typeof(CardCreationOptions), typeof(PlayerChoiceSynchronizer) };
+        var constructor = AccessTools.Constructor(reward, signature);
+        if (constructor != null)
+            return (MegaCrit.Sts2.Core.Rewards.CardReward)constructor.Invoke([cards, source, player, rerollOptions, null]);
+        var stack = typeof(CardSelectCmd).Assembly.GetType("MegaCrit.Sts2.Core.CardSelection.CardSelectorStack", true)!;
+        constructor = AccessTools.Constructor(reward, [.. signature, stack]) ??
+            throw new MissingMethodException(reward.FullName, ".ctor");
+        return (MegaCrit.Sts2.Core.Rewards.CardReward)constructor.Invoke([cards, source, player, rerollOptions, null, null]);
+    }
+
     internal static Task StartSingleplayer(CharacterModel character, string seed, int ascension)
     {
         var method = ApiContract.Require(typeof(NGame), nameof(NGame.StartNewSingleplayerRun), typeof(Task),
@@ -809,9 +822,11 @@ public static class NativeTestBridge
         return (Task)ApiContract.Invoke(method, NGame.Instance, arguments)!;
     }
 
-    private static IDisposable UseTestSelector(int selectionLimit=1)
+    private static IDisposable UseTestSelector(int selectionLimit=1) =>
+        UseTestSelector(new FirstChoiceSelector(selectionLimit));
+
+    internal static IDisposable UseTestSelector(ICardSelector selector)
     {
-        var selector = new FirstChoiceSelector(selectionLimit);
         var method = AccessTools.Method(typeof(CardSelectCmd), "UseSelector", [typeof(ICardSelector), typeof(bool)])
             ?? AccessTools.Method(typeof(CardSelectCmd), "UseSelector", [typeof(ICardSelector)]);
         if (method != null)

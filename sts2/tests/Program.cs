@@ -183,7 +183,7 @@ foreach (var upgraded in new[] { false, true })
     var angel = new CardDesign("knight_guardian_angel", upgraded);
     Check(angel.Cost == (upgraded ? 1 : 2) && angel.Magic == 1, "Guardian Angel upgrades efficiency instead of prevention capacity");
     var mantle = new CardDesign("mage_astral_mantle", upgraded);
-    Check(mantle.Cost == (upgraded ? 1 : 2) && mantle.Magic == 1, "Astral Mantle upgrades setup without doubling permanent Block");
+    Check(mantle.Cost == (upgraded ? 0 : 1) && mantle.Magic == 1, "Astral Mantle upgrades setup without doubling permanent Block");
 }
 Check(Design.Rows("cards").Where(c => c.Number("hits") > 1).All(c => c.Number("upgradeDamage") <= 1), "Multi-hit upgrade budget");
 // Recovery text must correspond to a non-empty native selection at both levels.
@@ -194,7 +194,7 @@ foreach (var upgraded in new[] { false, true })
 {
     var quiver = new CardDesign("ranger_second_quiver", upgraded);
     var meditate = new CardDesign("meditate", upgraded);
-    Check(meditate.Cost==0&&meditate.Amount("draw")== (upgraded?2:1)&&meditate.Amount("energy")== (upgraded?2:1),"Meditate retains its shared immediate resource burst");
+    Check(meditate.Cost==0&&meditate.Amount("draw")== (upgraded?3:2)&&meditate.Amount("energy")== (upgraded?2:1),"Meditate retains its shared immediate resource burst");
     Check(quiver.Cost==0&&quiver.Amount("draw")==0&&quiver.Amount("energy")==0&&quiver.Row.Text("special")=="reload_attacks"&&quiver.SpecialAmount==(upgraded?3:2),"Second Quiver is free selective Attack recovery, distinct from Meditate");
     var reading = new CardDesign("mage_ash_reading", upgraded);
     Check(reading.Cost == 0 && reading.Amount("hpLoss") == 0 && reading.Row.Flag("exhaust") && reading.SpecialAmount == 1, "Free positive-draw Ash Reading is single use and exhausts fuel");
@@ -230,7 +230,7 @@ foreach (var upgraded in new[] {false,true})
     var vigil=new CardDesign("ranger_long_vigil",upgraded);
     Check(vigil.Cost==2&&vigil.Damage==(upgraded?19:15),"Long Vigil has an affordable retained finisher budget");
     foreach(var poisonId in new[]{"ranger_poison_tip","mage_toxic_cloud"})
-        Check(new CardDesign(poisonId,upgraded).Amount("poison")== (upgraded?6:4),poisonId+" supplies a useful Poison seed without global manor scaling");
+        Check(new CardDesign(poisonId,upgraded).Amount("poison")== (poisonId=="ranger_poison_tip"?(upgraded?7:5):(upgraded?6:4)),poisonId+" supplies a useful Poison seed without global manor scaling");
 }
 foreach (var traitId in new[] { "nocolor", "oldyellowtint", "colortrails", "fmffan" }) Check(Design.Get("traits", traitId).Number("goldBonus") == 0, "No free crown bonus: " + traitId);
 foreach(var upgraded in new[]{false,true}){
@@ -376,7 +376,7 @@ foreach(var upgraded in new[]{false,true}){
     var quiver=new CardDesign("ranger_second_quiver",upgraded);
     Check(quiver.Row.Flag("exhaust")&&quiver.Cost==0&&quiver.Amount("hpLoss")==0,"Second Quiver keeps free single-use recovery in both forms");
     var fountain = new CardDesign("mage_mana_fountain", upgraded);
-    Check(fountain.Amount("energy") == 0 && fountain.Row.Text("power") == "mana_fountain" &&
+    Check(fountain.Cost == 1 && fountain.Amount("energy") == 0 && fountain.Row.Text("power") == "mana_fountain" &&
         fountain.Magic == (upgraded ? 4 : 3) && fountain.Row.Flag("exhaust"),
         "Mana Fountain grants the delayed Energy through a bounded countdown");
     var bookmark=new CardDesign("mage_eternal_bookmark",upgraded);

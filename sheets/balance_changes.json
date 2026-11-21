@@ -896,7 +896,7 @@
       "discard": 0,
       "energy": 0,
       "strength": 0,
-      "dexterity": 2,
+      "dexterity": 3,
       "weak": 0,
       "vulnerable": 0,
       "poison": 0,
@@ -920,7 +920,7 @@
       "upgradeCost": true,
       "upgradeDiscard": 0
     },
-    "reason": "Weaker no-manor baseline; avoid compounded effects/upgrades and free positive-draw cycles."
+    "reason": "Rare Dexterity power was below native Footwork rate per cost; 3 Dexterity."
   },
   {
     "id": "oath",
@@ -1812,7 +1812,7 @@
     },
     "after": {
       "cost": 2,
-      "damage": 5,
+      "damage": 4,
       "block": 0,
       "hits": 3,
       "draw": 0,
@@ -1843,7 +1843,7 @@
       "upgradeCost": false,
       "upgradeDiscard": 0
     },
-    "reason": "Targeted under-tuning correction: useful setup/recovery and paid draw without reusable free positive-draw loops."
+    "reason": "Three hits gain +6 at full Strength; 4x3 for 2 keeps it near native AoE value with the manor."
   },
   {
     "id": "mark",
@@ -2312,7 +2312,7 @@
       "damage": 0,
       "block": 0,
       "hits": 1,
-      "draw": 1,
+      "draw": 2,
       "discard": 0,
       "energy": 1,
       "strength": 0,
@@ -2340,7 +2340,7 @@
       "upgradeCost": false,
       "upgradeDiscard": 0
     },
-    "reason": "Weaker no-manor baseline; avoid compounded effects/upgrades and free positive-draw cycles."
+    "reason": "Exhausting rare Energy+draw was below native Adrenaline; draw 2 (3 upgraded)."
   },
   {
     "id": "reservoir",
@@ -2806,7 +2806,7 @@
     },
     "after": {
       "cost": 1,
-      "damage": 3,
+      "damage": 5,
       "block": 0,
       "hits": 1,
       "draw": 0,
@@ -2837,7 +2837,7 @@
       "upgradeCost": false,
       "upgradeDiscard": 0
     },
-    "reason": "Weaker no-manor baseline; avoid compounded effects/upgrades and free positive-draw cycles."
+    "reason": "AoE common was far below native Cleave; 5 (7 upgraded) is native minus 3 before manor."
   },
   {
     "id": "knight_twin_cut",
@@ -3516,7 +3516,7 @@
     },
     "after": {
       "cost": 1,
-      "damage": 4,
+      "damage": 5,
       "block": 0,
       "hits": 1,
       "draw": 1,
@@ -3524,7 +3524,7 @@
       "energy": 0,
       "strength": 0,
       "dexterity": 0,
-      "weak": 0,
+      "weak": 1,
       "vulnerable": 0,
       "poison": 0,
       "heal": 0,
@@ -3540,14 +3540,14 @@
       "special": "none",
       "specialAmount": 0,
       "exhaust": false,
-      "upgradeDamage": 2,
+      "upgradeDamage": 3,
       "upgradeBlock": 0,
       "upgradeMagic": 0,
       "upgradeSpecial": 0,
       "upgradeCost": false,
       "upgradeDiscard": 0
     },
-    "reason": "Weaker no-manor baseline; avoid compounded effects/upgrades and free positive-draw cycles."
+    "reason": "Draw-attack trailed native Pommel Strike by more than the heir margin; 5 (8 upgraded) with 1 Weak keeps foes at spear length and stays distinct from Aim."
   },
   {
     "id": "knight_field_rations",
@@ -4084,7 +4084,7 @@
     },
     "after": {
       "cost": 2,
-      "damage": 9,
+      "damage": 11,
       "block": 0,
       "hits": 1,
       "draw": 0,
@@ -4115,7 +4115,7 @@
       "upgradeCost": false,
       "upgradeDiscard": 0
     },
-    "reason": "Weaker no-manor baseline; avoid compounded effects/upgrades and free positive-draw cycles."
+    "reason": "2-cost conditional execute was under native 2-cost attacks; 11 (13 upgraded)."
   },
   {
     "id": "knight_counter_lunge",
@@ -4725,7 +4725,7 @@
       "cost": 1,
       "damage": 2,
       "block": 0,
-      "hits": 4,
+      "hits": 3,
       "draw": 0,
       "discard": 0,
       "energy": 0,
@@ -4754,7 +4754,7 @@
       "upgradeCost": false,
       "upgradeDiscard": 0
     },
-    "reason": "1.0.14: bounded recurring effects, smaller multi-hit upgrades, and meaningful upgrade choices."
+    "reason": "Multi-hit scales with manor Strength twice over; 2x3 keeps full-manor parity with native Sword Boomerang tier."
   },
   {
     "id": "knight_castle_cleaver",
@@ -5150,7 +5150,7 @@
     "after": {
       "cost": 1,
       "damage": 0,
-      "block": 5,
+      "block": 4,
       "hits": 1,
       "draw": 0,
       "discard": 0,
@@ -5167,7 +5167,7 @@
       "plated": 0,
       "nextEnergy": 0,
       "nextDraw": 0,
-      "nextBlock": 5,
+      "nextBlock": 4,
       "power": "none",
       "magic": 0,
       "special": "none",
@@ -5180,7 +5180,7 @@
       "upgradeCost": false,
       "upgradeDiscard": 0
     },
-    "reason": "Weaker no-manor baseline; avoid compounded effects/upgrades and free positive-draw cycles."
+    "reason": "Both Block instances take Dexterity; 4+4 avoids double-dipping the Armory."
   },
   {
     "id": "knight_tempered_steel",
@@ -5808,7 +5808,7 @@
       "nextDraw": 0,
       "nextBlock": 0,
       "power": "metallicize",
-      "magic": 2,
+      "magic": 3,
       "special": "none",
       "specialAmount": 0,
       "exhaust": false,
@@ -5819,7 +5819,7 @@
       "upgradeCost": false,
       "upgradeDiscard": 0
     },
-    "reason": "Weaker no-manor baseline; avoid compounded effects/upgrades and free positive-draw cycles."
+    "reason": "Power Block does not scale with the manor; matches native Metallicize at 3 (4 upgraded)."
   },
   {
     "id": "knight_battle_rhythm",
@@ -6021,7 +6021,7 @@
       "nextDraw": 0,
       "nextBlock": 0,
       "power": "feel_no_pain",
-      "magic": 2,
+      "magic": 3,
       "special": "none",
       "specialAmount": 0,
       "exhaust": false,
@@ -6032,7 +6032,7 @@
       "upgradeCost": false,
       "upgradeDiscard": 0
     },
-    "reason": "Weaker no-manor baseline; avoid compounded effects/upgrades and free positive-draw cycles."
+    "reason": "Power Block does not scale with the manor; matches native Feel No Pain at 3 (4 upgraded)."
   },
   {
     "id": "knight_vengeful_armor",
@@ -6499,7 +6499,7 @@
     "after": {
       "cost": 2,
       "damage": 0,
-      "block": 18,
+      "block": 24,
       "hits": 1,
       "draw": 0,
       "discard": 0,
@@ -6523,13 +6523,13 @@
       "specialAmount": 0,
       "exhaust": true,
       "upgradeDamage": 0,
-      "upgradeBlock": 5,
+      "upgradeBlock": 6,
       "upgradeMagic": 0,
       "upgradeSpecial": 0,
       "upgradeCost": false,
       "upgradeDiscard": 0
     },
-    "reason": "Weaker no-manor baseline; avoid compounded effects/upgrades and free positive-draw cycles."
+    "reason": "Exhausting 2-cost rare Block was below native Impervious; 24 (30 upgraded)."
   },
   {
     "id": "knight_guardian_angel",
@@ -7352,7 +7352,7 @@
     },
     "after": {
       "cost": 1,
-      "damage": 3,
+      "damage": 4,
       "block": 0,
       "hits": 1,
       "draw": 0,
@@ -7362,7 +7362,7 @@
       "dexterity": 0,
       "weak": 0,
       "vulnerable": 0,
-      "poison": 1,
+      "poison": 2,
       "heal": 0,
       "hpLoss": 0,
       "vigor": 0,
@@ -7383,7 +7383,7 @@
       "upgradeCost": false,
       "upgradeDiscard": 0
     },
-    "reason": "Weaker no-manor baseline; avoid compounded effects/upgrades and free positive-draw cycles."
+    "reason": "Hybrid common trailed native Poisoned Stab on both axes; 4 damage and 2 Poison."
   },
   {
     "id": "mage_shock_lance",
@@ -9696,7 +9696,7 @@
     "after": {
       "cost": 1,
       "damage": 0,
-      "block": 0,
+      "block": 3,
       "hits": 1,
       "draw": 0,
       "discard": 0,
@@ -9720,13 +9720,13 @@
       "specialAmount": 1,
       "exhaust": false,
       "upgradeDamage": 0,
-      "upgradeBlock": 0,
+      "upgradeBlock": 2,
       "upgradeMagic": 0,
       "upgradeSpecial": 1,
       "upgradeCost": false,
       "upgradeDiscard": 0
     },
-    "reason": "Weaker no-manor baseline; avoid compounded effects/upgrades and free positive-draw cycles."
+    "reason": "Retrieval Skill had no body; 3 Block (5 upgraded) keeps it playable as filler."
   },
   {
     "id": "mage_cleanse_sigil",
@@ -9868,7 +9868,7 @@
       "upgradeCost": false,
       "upgradeDiscard": 0
     },
-    "reason": "Reduce delayed draw to one card while preserving the delayed Energy and the upgrade\u2019s 2 immediate Block."
+    "reason": "Reduce delayed draw to one card while preserving the delayed Energy and the upgrade’s 2 immediate Block."
   },
   {
     "id": "mage_time_pocket",
@@ -10638,7 +10638,7 @@
       "nextDraw": 0,
       "nextBlock": 0,
       "power": "sadistic",
-      "magic": 2,
+      "magic": 3,
       "special": "none",
       "specialAmount": 0,
       "exhaust": false,
@@ -10649,7 +10649,7 @@
       "upgradeCost": false,
       "upgradeDiscard": 0
     },
-    "reason": "Weaker no-manor baseline; avoid compounded effects/upgrades and free positive-draw cycles."
+    "reason": "Power damage does not scale with the manor; 3 (4 upgraded) restores native Sadistic Nature value."
   },
   {
     "id": "mage_celestial_spear",
@@ -11043,7 +11043,7 @@
       "upgradeDiscard": 0
     },
     "after": {
-      "cost": 0,
+      "cost": 1,
       "damage": 0,
       "block": 0,
       "hits": 1,
@@ -11076,7 +11076,7 @@
       "upgradeDiscard": 0,
       "upgradeDraw": -1
     },
-    "reason": "Spread the Energy over several turns and leave the immediate HP-for-Energy burst to Blood to Mana."
+    "reason": "Zero-cost Energy engine outpaced native rares; costing 1 keeps the payoff without a free turn."
   },
   {
     "id": "mage_grand_thesis",
@@ -11401,7 +11401,7 @@
       "upgradeDiscard": 0
     },
     "after": {
-      "cost": 2,
+      "cost": 1,
       "damage": 0,
       "block": 0,
       "hits": 1,
@@ -11433,7 +11433,7 @@
       "upgradeCost": true,
       "upgradeDiscard": 0
     },
-    "reason": "Weaker no-manor baseline; avoid compounded effects/upgrades and free positive-draw cycles."
+    "reason": "Draw engine power was overpriced versus native Brutality; 1 (0 upgraded)."
   },
   {
     "id": "mage_arcane_conductor",
@@ -11543,7 +11543,7 @@
       "upgradeDiscard": 0
     },
     "after": {
-      "cost": 2,
+      "cost": 1,
       "damage": 0,
       "block": 0,
       "hits": 1,
@@ -11575,7 +11575,7 @@
       "upgradeCost": true,
       "upgradeDiscard": 0
     },
-    "reason": "1.0.14: bounded recurring effects, smaller multi-hit upgrades, and meaningful upgrade choices."
+    "reason": "Power effect does not scale with the manor; matches native After Image cost (1, 0 upgraded)."
   },
   {
     "id": "ranger_quick_nock",
@@ -11696,7 +11696,7 @@
       "dexterity": 0,
       "weak": 0,
       "vulnerable": 0,
-      "poison": 1,
+      "poison": 2,
       "heal": 0,
       "hpLoss": 0,
       "vigor": 0,
@@ -11717,7 +11717,7 @@
       "upgradeCost": false,
       "upgradeDiscard": 0
     },
-    "reason": "Weaker no-manor baseline; avoid compounded effects/upgrades and free positive-draw cycles."
+    "reason": "Poison rider does not scale with the manor; 2 (3 upgraded) matches native Poisoned Stab rate."
   },
   {
     "id": "ranger_pinning_shot",
@@ -11899,7 +11899,7 @@
     },
     "after": {
       "cost": 1,
-      "damage": 3,
+      "damage": 5,
       "block": 0,
       "hits": 1,
       "draw": 0,
@@ -11930,7 +11930,7 @@
       "upgradeCost": false,
       "upgradeDiscard": 0
     },
-    "reason": "Weaker no-manor baseline; avoid compounded effects/upgrades and free positive-draw cycles."
+    "reason": "AoE common was far below native Cleave; 5 (7 upgraded) is native minus 3 before manor."
   },
   {
     "id": "ranger_hidden_knife",
@@ -12548,7 +12548,7 @@
       "dexterity": 0,
       "weak": 0,
       "vulnerable": 0,
-      "poison": 4,
+      "poison": 5,
       "heal": 0,
       "hpLoss": 0,
       "vigor": 0,
@@ -12569,7 +12569,7 @@
       "upgradeCost": false,
       "upgradeDiscard": 0
     },
-    "reason": "Follow-up balance: affordable engines and retention, practical exhaust support, stronger Poison seeds and working historical recovery."
+    "reason": "Poison does not scale with the manor; 5 (7 upgraded) matches native Deadly Poison."
   },
   {
     "id": "ranger_watch_the_wind",
@@ -12966,7 +12966,7 @@
       "cost": 1,
       "damage": 2,
       "block": 0,
-      "hits": 4,
+      "hits": 3,
       "draw": 0,
       "discard": 0,
       "energy": 0,
@@ -12995,7 +12995,7 @@
       "upgradeCost": false,
       "upgradeDiscard": 0
     },
-    "reason": "1.0.14: bounded recurring effects, smaller multi-hit upgrades, and meaningful upgrade choices."
+    "reason": "Multi-hit scales with manor Strength; 2x3 lines up with native multi-hit commons after +2 Strength."
   },
   {
     "id": "ranger_razor_fletching",
@@ -13341,7 +13341,7 @@
       "power": "none",
       "magic": 0,
       "special": "chain_damage",
-      "specialAmount": 3,
+      "specialAmount": 5,
       "exhaust": false,
       "upgradeDamage": 0,
       "upgradeBlock": 0,
@@ -13350,7 +13350,7 @@
       "upgradeCost": false,
       "upgradeDiscard": 0
     },
-    "reason": "Weaker no-manor baseline; avoid compounded effects/upgrades and free positive-draw cycles."
+    "reason": "Chain damage payoff was below native per-attack value; 5 (6 upgraded) makes the finisher worthwhile."
   },
   {
     "id": "ranger_deadeye",
@@ -13674,7 +13674,7 @@
     },
     "after": {
       "cost": 1,
-      "damage": 3,
+      "damage": 2,
       "block": 0,
       "hits": 3,
       "draw": 0,
@@ -13705,7 +13705,7 @@
       "upgradeCost": false,
       "upgradeDiscard": 0
     },
-    "reason": "1.0.14: bounded recurring effects, smaller multi-hit upgrades, and meaningful upgrade choices."
+    "reason": "Random 3-hit gains +3 from full manor Strength; 2x3 base lands at native value with the manor."
   },
   {
     "id": "ranger_snakebite",
@@ -15043,7 +15043,7 @@
       "nextDraw": 0,
       "nextBlock": 0,
       "power": "sadistic",
-      "magic": 2,
+      "magic": 3,
       "special": "none",
       "specialAmount": 0,
       "exhaust": false,
@@ -15054,7 +15054,7 @@
       "upgradeCost": false,
       "upgradeDiscard": 0
     },
-    "reason": "Weaker no-manor baseline; avoid compounded effects/upgrades and free positive-draw cycles."
+    "reason": "Power damage does not scale with the manor; 3 (4 upgraded) restores native Sadistic Nature value."
   },
   {
     "id": "ranger_storm_of_arrows",
@@ -15662,7 +15662,7 @@
       "upgradeDiscard": 0
     },
     "after": {
-      "cost": 2,
+      "cost": 1,
       "damage": 0,
       "block": 6,
       "hits": 1,
@@ -15688,13 +15688,13 @@
       "specialAmount": 0,
       "exhaust": true,
       "upgradeDamage": 0,
-      "upgradeBlock": 0,
+      "upgradeBlock": 3,
       "upgradeMagic": 0,
       "upgradeSpecial": 0,
-      "upgradeCost": true,
+      "upgradeCost": false,
       "upgradeDiscard": 0
     },
-    "reason": "Add immediate Block so healing and cleansing are viable on a threatened turn."
+    "reason": "Exhausting rare cleanse/heal was overpriced at 2; cost 1 with a Block upgrade instead."
   },
   {
     "id": "ranger_poisoned_arsenal",
@@ -16729,7 +16729,7 @@
     "after": {
       "cost": 1,
       "damage": 0,
-      "block": 11,
+      "block": 10,
       "hits": 1,
       "draw": 0,
       "discard": 0,
@@ -16759,7 +16759,7 @@
       "upgradeCost": false,
       "upgradeDiscard": 0
     },
-    "reason": "Weaker no-manor baseline; avoid compounded effects/upgrades and free positive-draw cycles."
+    "reason": "Single Block gain also takes manor Dexterity; 10 keeps Wound-tax Block one under native-equivalent."
   },
   {
     "id": "knight_rationed_assault",
@@ -18787,7 +18787,7 @@
       "upgradeDiscard": 0
     },
     "after": {
-      "cost": 0,
+      "cost": 1,
       "damage": 0,
       "block": 0,
       "hits": 1,
@@ -18820,7 +18820,7 @@
       "upgradeDiscard": 0,
       "upgradeStrength": 1
     },
-    "reason": "Trade HP for Strength and Dexterity for the fight. The upgrade adds Strength only."
+    "reason": "Free permanent Strength and Dexterity stacked too well with the manor; costing 1 restores a tempo price."
   },
   {
     "id": "knight_bloodfire_mantle",
@@ -19855,7 +19855,7 @@
     },
     "after": {
       "cost": 1,
-      "damage": 3,
+      "damage": 4,
       "block": 0,
       "hits": 1,
       "draw": 0,
@@ -19877,7 +19877,7 @@
       "power": "none",
       "magic": 0,
       "special": "retain_damage",
-      "specialAmount": 2,
+      "specialAmount": 3,
       "exhaust": false,
       "upgradeDamage": 2,
       "upgradeBlock": 0,
@@ -19886,7 +19886,7 @@
       "upgradeCost": false,
       "upgradeDiscard": 0
     },
-    "reason": "Weaker no-manor baseline; avoid compounded effects/upgrades and free positive-draw cycles."
+    "reason": "Retain payoff grew too slowly to justify holding it; 4 base and +3 per retain."
   },
   {
     "id": "mage_crystal_seed",
@@ -19927,7 +19927,7 @@
     "after": {
       "cost": 1,
       "damage": 0,
-      "block": 3,
+      "block": 4,
       "hits": 1,
       "draw": 0,
       "discard": 0,
@@ -19948,7 +19948,7 @@
       "power": "none",
       "magic": 0,
       "special": "retain_block",
-      "specialAmount": 2,
+      "specialAmount": 3,
       "exhaust": false,
       "upgradeDamage": 0,
       "upgradeBlock": 2,
@@ -19957,7 +19957,7 @@
       "upgradeCost": false,
       "upgradeDiscard": 0
     },
-    "reason": "Weaker no-manor baseline; avoid compounded effects/upgrades and free positive-draw cycles."
+    "reason": "Retain payoff grew too slowly to justify holding it; 4 base and +3 per retain."
   },
   {
     "id": "mage_patient_study",
@@ -21418,7 +21418,7 @@
     },
     "after": {
       "cost": 2,
-      "damage": 4,
+      "damage": 6,
       "block": 0,
       "hits": 1,
       "draw": 0,
@@ -21449,7 +21449,7 @@
       "upgradeCost": false,
       "upgradeDiscard": 0
     },
-    "reason": "Keep Weak at two per enemy and improve damage on upgrade."
+    "reason": "2-cost AoE Weak was under native rate; 6 (9 upgraded) earns the cost."
   },
   {
     "id": "mage_viper_script",

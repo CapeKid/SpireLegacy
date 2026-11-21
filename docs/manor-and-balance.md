@@ -73,3 +73,16 @@ Perfect Ward remains a 2-Energy Exhaust Skill, but prevents 1 HP-loss event (2 u
 - Blacksmith, Armory and Garden cap at two levels; Living Quarters and Library retain their bonuses. Vampirism heals 3 instead of 4. Full Garden with Vampirism/Super Healer heals 10 instead of 16. Retired purchased levels are refunded at their old purchase prices once, with atomic persistence and no changes to an active run snapshot.
 
 Core checks cover every active card's effective upgrade, migration/refund persistence, payout caps and healing combinations. Opt-in native checks exercise real multi-hit damage, discard serialization, retention duration and upgraded card behavior on both game branches. Full-run win-rate tuning still requires playtesting.
+
+## Manor-state difficulty targets
+
+Heir cards are tuned against native cards from every character, counting the manor's per-hit Strength and per-gain Dexterity. A fair Heir card sits about 1 below native per damage or Block instance with no manor, matching the Heir basics (Strike 5, Defend 4). Effects the manor does not scale, such as Poison, Power-generated Block, Power damage, Energy and costs, are tuned to native values directly.
+
+| Manor state | Target |
+|---|---|
+| No manor, Ascension 0 | Clearly harder than native characters |
+| Partial manor | About native difficulty at Ascension 0 |
+| Full manor, Ascension 0 | Noticeably easier than native: finishing the manor is the progression reward |
+| Higher Ascension | The challenge for finished families |
+
+Base cards are not weakened across the board to offset the manor, Library draw, Garden healing, traits or colorless access. Multi-hit cards, which gain the manor's Strength on every hit, carry the extra margin instead. If a full manor proves too easy, trim Library (+1 draw) first, or raise the price of the top Blacksmith and Armory levels, before touching base cards.

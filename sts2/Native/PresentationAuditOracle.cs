@@ -36,11 +36,11 @@ public static class PresentationAuditOracle
     public static async Task<object> Shop(RunState run)
     {
         var player=PlayerBloodlines.LocalPlayer!;var room=(MegaCrit.Sts2.Core.Rooms.MerchantRoom)run.CurrentRoom!;
-        var inventory=room.GetLocalInventory();var entry=inventory.CharacterCardEntries.First(e=>e.IsStocked);
+        var inventory=MerchantTestCommands.LocalInventory(room);var entry=inventory.CharacterCardEntries.First(e=>e.IsStocked);
         var sprites=NativeTestBridge.Descendants(Tree.Root).OfType<HeirSprite>().Where(s=>s.Name=="SpireLegacyRoomHeir"&&s.IsVisibleInTree()).ToArray();
         var counts=sprites.Select(s=>s.Events.Count(e=>e=="skill")).ToArray();
         await PlayerCmd.GainGold(1000,player);var gold=player.Gold;var deck=player.Deck.Cards.Count;
-        var bought=await entry.OnTryPurchaseWrapper(inventory);
+        var bought=await MerchantTestCommands.Purchase(entry,inventory);
         return new {owner=player.NetId,bought,goldSpent=gold-player.Gold,cardsAdded=player.Deck.Cards.Count-deck,sprites=sprites.Select((s,i)=>new {owner=s.GetMeta("spirelegacy_owner").AsUInt64(),cls=s.ClassId,skillEvents=s.Events.Count(e=>e=="skill")-counts[i]}).ToArray()};
     }
     public static object RoomFacing()=>NativeTestBridge.Descendants(Tree.Root).OfType<HeirSprite>().Where(s=>s.Name=="SpireLegacyRoomHeir"&&s.IsVisibleInTree()).Select(s=>new {owner=s.GetMeta("spirelegacy_owner").AsUInt64(),cls=s.ClassId,nativeX=s.GetParent().GetChildren().OfType<Node2D>().First(n=>n.GetClass()=="SpineSprite").Scale.X,spriteX=s.Scale.X}).ToArray();

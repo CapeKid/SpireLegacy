@@ -96,7 +96,7 @@ public static class ControlPilotOracle
                 var rewardPolicy=kind=="skip"?"deck":"defensive";
                 var count=player.Deck.Cards.Count;
                 var options=Enumerable.Range(0,3).Select(_=>run.CreateCard(ModelDb.Card<StrikeIronclad>(),player)).ToArray();
-                var reward=new CardReward(options,CardCreationSource.Encounter,player,CardCreationOptions.ForRoom(player,run.CurrentRoom!.RoomType));
+                var reward=NativeTestBridge.CreateCardReward(options,CardCreationSource.Encounter,player,CardCreationOptions.ForRoom(player,run.CurrentRoom!.RoomType));
                 var set=new RewardsSet(player);set.Rewards.Add(reward);var offering=set.Offer();
                 for(var frame=0;frame<20&&NOverlayStack.Instance?.Peek() is not NRewardsScreen;frame++)await tree.ToSignal(tree,SceneTree.SignalName.ProcessFrame);
                 await CampaignOracle.Step(run,"tactical",new BorrowedSelector(),"deck");
@@ -110,7 +110,7 @@ public static class ControlPilotOracle
                 var replaySkipped=false;
                 if(took){
                     var more=Enumerable.Range(0,3).Select(_=>run.CreateCard(ModelDb.Card<StrikeIronclad>(),player)).ToArray();
-                    var replay=new CardReward(more,CardCreationSource.Encounter,player,CardCreationOptions.ForRoom(player,run.CurrentRoom!.RoomType));
+                    var replay=NativeTestBridge.CreateCardReward(more,CardCreationSource.Encounter,player,CardCreationOptions.ForRoom(player,run.CurrentRoom!.RoomType));
                     var secondSet=new RewardsSet(player);secondSet.Rewards.Add(replay);var secondOffer=secondSet.Offer();
                     for(var frame=0;frame<20&&NOverlayStack.Instance?.Peek() is not NRewardsScreen;frame++)await tree.ToSignal(tree,SceneTree.SignalName.ProcessFrame);
                     await CampaignOracle.Step(run,"tactical",new BorrowedSelector(),rewardPolicy,choice,run.TotalFloor);

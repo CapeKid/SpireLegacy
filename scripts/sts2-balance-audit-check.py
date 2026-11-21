@@ -21,7 +21,8 @@ def start(cls):
     send('start',**{'class':cls,'traits':[],'quick':True});return ready()
 def power(s,key):return sum(p['amount'] for p in s['powers'] if key.lower() in p['id'].lower())
 try:
-    for cls,guard,attack,hits,charges in [('knight','knight_guard','knight_sword_dance',4,2),('mage','mage_guard','mage_arcane_missile',3,2),('ranger',None,'ranger_rapid_fire',4,0)]:
+    # Knight's primed bonus adds to every hit; Mage charges draw instead of adding damage outside Reservoir.
+    for cls,guard,attack,hits,bonus in [('knight','knight_guard','knight_sword_dance',3,2),('mage','mage_guard','mage_arcane_missile',3,0),('ranger',None,'ranger_rapid_fire',3,0)]:
         start(cls);send('kill');send('enter',room='Boss');ready()
         if guard:
             send('play',card=guard)
@@ -29,7 +30,7 @@ try:
         before=send('state');after=send('play',card=attack,upgrade=True)
         enemyBefore=before['enemies'][0];enemyAfter=after['enemies'][0]
         lost=enemyBefore['hp']+enemyBefore['block']-enemyAfter['hp']-enemyAfter['block']
-        expected=hits*(3+power(before,'strength'))+charges
+        expected=hits*(3+power(before,'strength')+bonus)
         assert lost==expected,(cls,lost,expected,before,after)
     for card,energy,draw,vigor in [('ranger_pocket_wind',2,0,0),('ranger_spring_nock',0,0,4),('ranger_loose_fletching',0,2,0)]:
         start('ranger');reward=send('discard-balance',card=card)
@@ -54,9 +55,9 @@ try:
         start('mage');base=send('play',card=card);assert base['powers'],base
         start('mage');upgraded=send('play',card=card,upgrade=True)
         if card=='mage_kindle':assert upgraded['block']==base['block']+2,(base,upgraded)
-        else:assert len(upgraded['hand'])==len(base['hand'])+1,(base,upgraded)
+        else:assert power(upgraded,'energy_next_turn')==power(base,'energy_next_turn')+1,(base,upgraded)
     start('mage');cards=send('cards');assert cards['count']==720,cards['count']
     send('abandon')
-    print(tag+': multi-hit class bonuses once per target; saved discard rewards bounded; two retention turns; fixed Mantle Block; meaningful charge upgrades; 720 native base/upgraded card checks.')
+    print(tag+': multi-hit class bonuses on every hit; saved discard rewards bounded; two retention turns; fixed Mantle Block; meaningful charge upgrades; 720 native base/upgraded card checks.')
 finally:
     (root/'private/sts2-evidence'/f'balance114-{tag}.json').write_text(json.dumps(evidence,indent=2),encoding='utf-8')

@@ -33,7 +33,7 @@ public static class HealthPlanningOracle
             player.Creature.SetCurrentHpInternal(kind=="reward-low"?3:player.Creature.MaxHp);
             var hpBefore=player.Creature.CurrentHp;var turnBefore=player.PlayerCombatState!.TurnNumber;
             var options=new[]{"knight_bloodied_blade","knight_measured_cut"}.Select(key=>run.CreateCard(NativeCards.Get(key),player)).ToArray();
-            var reward=new CardReward(options,CardCreationSource.Encounter,player,CardCreationOptions.ForRoom(player,run.CurrentRoom!.RoomType));
+            var reward=NativeTestBridge.CreateCardReward(options,CardCreationSource.Encounter,player,CardCreationOptions.ForRoom(player,run.CurrentRoom!.RoomType));
             var set=new RewardsSet(player);set.Rewards.Add(reward);var offering=set.Offer();
             for(var frame=0;frame<20&&NOverlayStack.Instance?.Peek() is not NRewardsScreen;frame++)await tree.ToSignal(tree,SceneTree.SignalName.ProcessFrame);
             await CampaignOracle.Step(run,"tactical",new BorrowedSelector(),"defensive");

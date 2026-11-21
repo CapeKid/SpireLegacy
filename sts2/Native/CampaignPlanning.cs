@@ -1,5 +1,3 @@
-using System.Reflection;
-using HarmonyLib;
 using MegaCrit.Sts2.Core.CardSelection;
 using MegaCrit.Sts2.Core.Entities.CardRewardAlternatives;
 using MegaCrit.Sts2.Core.Entities.Cards;
@@ -31,16 +29,12 @@ public static class CampaignPlanning
         }
         public CardRewardSelection GetSelectedCardReward(IReadOnlyList<CardCreationResult> options,IReadOnlyList<CardRewardAlternative> alternatives)=>new(){card=options.FirstOrDefault()?.Card};
     }
-    public static IDisposable Select(bool upgrade)
-    {
-        var method=AccessTools.Method(typeof(MegaCrit.Sts2.Core.Commands.CardSelectCmd),"UseSelector",[typeof(ICardSelector),typeof(bool)])
-            ??AccessTools.Method(typeof(MegaCrit.Sts2.Core.Commands.CardSelectCmd),"UseSelector",[typeof(ICardSelector)]);
-        return (IDisposable)method.Invoke(null,method.GetParameters().Length==2?[new Selector(upgrade),false]:[new Selector(upgrade)])!;
-    }
+    public static IDisposable Select(bool upgrade) =>
+        NativeTestBridge.UseTestSelector(new Selector(upgrade));
     public static async Task<object> Shop(RunState run)
     {
         var player=run.Players.Single();var room=(MegaCrit.Sts2.Core.Rooms.MerchantRoom)run.CurrentRoom!;
-        var inventory=room.GetLocalInventory();var deck=player.Deck.Cards.Select(PilotCardInfo.Describe).ToArray();
+        var inventory=MerchantTestCommands.LocalInventory(room);var deck=player.Deck.Cards.Select(PilotCardInfo.Describe).ToArray();
         double Value(MerchantEntry e)=>e switch {
             MerchantCardEntry c when c.CreationResult!=null=>Score(c.CreationResult.Card,deck)>=10?Score(c.CreationResult.Card,deck)*8:0,
             MerchantCardRemovalEntry when deck.Length>10=>40,
@@ -54,7 +48,7 @@ public static class CampaignPlanning
         var chosen=entries.Where(e=>e.EnoughGold&&Value(e)>0).OrderByDescending(e=>Value(e)/Math.Max(1,e.Cost)).ThenBy(Id,StringComparer.Ordinal).FirstOrDefault();
         if(chosen==null)return new{action="shop-done",offers};
         var gold=player.Gold;var id=Id(chosen);var cost=chosen.Cost;var before=player.Deck.Cards.Select(c=>c.Id.ToString()).ToArray();
-        using(Select(false))if(!await chosen.OnTryPurchaseWrapper(inventory))throw new InvalidDataException("Native planned shop purchase failed.");
+        using(Select(false))if(!await MerchantTestCommands.Purchase(chosen,inventory))throw new InvalidDataException("Native planned shop purchase failed.");
         // Native acquisition hooks (for example Lucky Fysh) can grant gold
         // during a purchase. Net balance change is not the displayed price.
         return new{action="shop-purchase",offers,picked=id,cost,goldBefore=gold,goldAfter=player.Gold,netGoldSpent=gold-player.Gold,goldAdjustment=player.Gold-(gold-cost),relics=player.Relics.Select(r=>r.Id.ToString()).ToArray(),deckBefore=before,deckAfter=player.Deck.Cards.Select(c=>c.Id.ToString()).ToArray()};

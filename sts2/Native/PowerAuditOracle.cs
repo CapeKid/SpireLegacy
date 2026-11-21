@@ -263,8 +263,8 @@ public static partial class PowerAuditOracle
             Require(loaded.Id==card.Id&&loaded.IsUpgraded==up&&loaded.DesignCard.Rules()==card.DesignCard.Rules(),"Reload card save round-trip.");run.RemoveCard(loaded);
             if(mode=="meditate"){
                 var before=hand.Cards.Count;await Play(card,energyGain:up?2:1);
-                Require(hand.Cards.Count-before+1==(up?2:1)&&card.Pile?.Type==PileType.Exhaust,"Meditate resource burst changed.");
-                return new{mode,up,key,drawn=up?2:1,energyGained=up?2:1,cost=0,saveRoundTrip=true};
+                Require(hand.Cards.Count-before+1==(up?3:2)&&card.Pile?.Type==PileType.Exhaust,"Meditate resource burst changed.");
+                return new{mode,up,key,drawn=up?3:2,energyGained=up?2:1,cost=0,saveRoundTrip=true};
             }
             var attackCount=mode is "empty" or "skills"?0:mode=="partial"?1:4;
             var attacks=new List<CardModel>();

@@ -2,7 +2,9 @@ using Godot;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Relics;
 using MegaCrit.Sts2.Core.Entities.Merchant;
+using MegaCrit.Sts2.Core.Entities.Players;
 using MegaCrit.Sts2.Core.Models;
+using MegaCrit.Sts2.Core.Random;
 using MegaCrit.Sts2.Core.Rewards;
 using MegaCrit.Sts2.Core.Runs;
 
@@ -11,6 +13,16 @@ namespace SpireLegacy;
 /// <summary>Private-profile native eligibility/acquisition/save oracle, opt-in bridge only.</summary>
 public static class HeirRelicOracle
 {
+    private static RelicReward CreateReward<T>(T item, Player player)
+    {
+        var type = typeof(RelicReward);
+        if (type.GetConstructor([typeof(T), typeof(Player)]) is { } regular)
+            return (RelicReward)regular.Invoke([item, player]);
+        var beta = type.GetConstructor([typeof(T), typeof(Player), typeof(Rng)])
+            ?? throw new MissingMethodException(type.FullName, ".ctor");
+        return (RelicReward)beta.Invoke([item, player, null]);
+    }
+
     public static object Inspect(RunState run)
     {
         var player=run.Players.Single();var original=player.RelicGrabBag.ToSerializable();
@@ -21,7 +33,7 @@ public static class HeirRelicOracle
         foreach(var rarity in new[]{RelicRarity.Common,RelicRarity.Uncommon,RelicRarity.Rare})
             for(var i=0;i<150;i++)
             {
-                var reward=new RelicReward(rarity,player);reward.Populate();var relic=reward.Relic!;
+                var reward=CreateReward(rarity,player);reward.Populate();var relic=reward.Relic!;
                 if(relic is BloodlineRelic)throw new InvalidDataException("Starter offered as reward.");
                 if(relic is FamilyDropRelic)seenDrops.Add(relic.Id);
             }
@@ -56,10 +68,10 @@ public static class HeirRelicOracle
         {
             var entry=new MerchantRelicEntry(rolled.ToMutable(),player);var before=player.Gold;
             await PlayerCmd.GainGold(entry.Cost,player);
-            if(!await entry.OnTryPurchaseWrapper(null))throw new InvalidDataException("Native shop purchase failed.");
+            if(!await MerchantTestCommands.PurchaseDetached(entry))throw new InvalidDataException("Native shop purchase failed.");
             if(player.Gold!=before)throw new InvalidDataException("Wrong shop charge.");
         }
-        else {var reward=new RelicReward(rolled.ToMutable(),player);if(!await reward.SelectUnsynchronized())throw new InvalidDataException("Native reward claim failed.");}
+        else {var reward=CreateReward<RelicModel>(rolled.ToMutable(),player);if(!await reward.SelectUnsynchronized())throw new InvalidDataException("Native reward claim failed.");}
         return Counters(run);
     }
     public static object Counters(RunState run)=>run.Players.Single().Relics.OfType<FamilyDropRelic>().Select(r=>new{key=r.Key,r.CombatClaimed,r.TriggerTurn,r.TypeMask,r.MaskTurn,counter=r.DisplayAmount,status=r.Status.ToString()}).ToArray();

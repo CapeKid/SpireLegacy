@@ -33,7 +33,7 @@ for tier in [0,2]:
                 elif key=='ranger_second_quiver':assert r['drawn']==0 and r['energyDelta']==0 and r['pile']=='Exhaust',r # No discarded Attacks in this fixture; the dedicated reload driver checks recovery.
                 elif key=='mage_mana_fountain':
                     turns=4 if upgraded else 3
-                    assert r['energyDelta']==0 and r['countdown']==turns and r['energyByTurn']==[4]*turns+[3],r
+                    assert r['energyDelta']==-1 and r['countdown']==turns and r['energyByTurn']==[4]*turns+[3],r
                     assert r['drawn']==0 and r['pile']=='Exhaust' and r['healing']==0,r
                 elif key=='mage_eternal_bookmark':assert r['energyDelta']==(-1 if upgraded else -2) and r['amount']==2 and r['retained']==0 and r['automaticRetained'] and r['handAfterTurn']>=8,r
                 elif key=='knight_battlefield_recovery':assert r['energyDelta']==-1 and r['drawn']==2+int(upgraded) and r['healing']==4+int(upgraded) and r['pile']=='Exhaust',r
