@@ -65,6 +65,22 @@ public static class BalanceOracle
             foreach(var target in targets){target.SetMaxHpInternal(10000);target.SetCurrentHpInternal(10000);}
             var card=await Add(player,key,upgraded);
             var beforeEnergy=player.PlayerCombatState!.Energy;var beforeBlock=player.Creature.Block;
+            if (key is "mage_woven_incantation" or "mage_rune_storm") {
+                await Play(card);
+                await PlayerCmd.GainEnergy(8,player);
+                var skill = key == "mage_woven_incantation" ? "mage_kindle" : "mage_warding_verse";
+                beforeBlock=player.Creature.Block;
+                var beforeHp=targets.Select(t=>t.CurrentHp).ToArray();
+                var threshold=key=="mage_woven_incantation"?3:5;
+                var blockBySkill=new List<int>();
+                var damageBySkill=new List<int[]>();
+                for(var i=0;i<threshold;i++) {
+                    await Play(await Add(player,skill));
+                    blockBySkill.Add(player.Creature.Block-beforeBlock);
+                    damageBySkill.Add(targets.Select((t,j)=>beforeHp[j]-t.CurrentHp).ToArray());
+                }
+                return new { key,upgraded,blockBySkill,damageBySkill };
+            }
             if(key is "mage_slow_incantation" or "ranger_second_quiver" or "mage_mana_fountain" or "mage_eternal_bookmark" or "knight_battlefield_recovery" or "knight_iron_avalanche"){
                 var setupSpent=0;
                 if(key=="knight_iron_avalanche"&&supported){await Play(await Add(player,"fortify"));setupSpent=beforeEnergy-player.PlayerCombatState.Energy;}

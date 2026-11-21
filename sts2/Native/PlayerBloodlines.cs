@@ -33,7 +33,7 @@ public static class PlayerBloodlines
         var state=State(player);
         var milestone=Design.Rows("family_chronicle").Any(r=>r.Text("rewardKind")=="relic"&&r.Text("rewardId")==relic);
         if(milestone&&!(state?.chronicleRelics.Contains(relic)??FamilyChronicle.RelicAvailable(Runtime.Profile,relic)))return false;
-        return !(Traits(player).Has("pacifist")&&(relic is "training_dummy" or "family_seal" or "guardian_knot" or "trail_compass"||relic=="triune_crest"&&Heir(player).classId=="ranger"));
+        return !(Traits(player).Has("pacifist") && (relic is "training_dummy" or "family_seal" or "trail_compass" or "triune_crest"));
     }
     public static Player? LocalPlayer=>AccessTools.Property(typeof(RunManager),"State").GetValue(RunManager.Instance) is RunState run
         ?run.Players.FirstOrDefault(p=>p.NetId==RunManager.Instance.NetService?.NetId):null;

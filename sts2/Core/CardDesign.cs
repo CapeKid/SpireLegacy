@@ -21,8 +21,10 @@ public sealed class CardDesign(string id, bool upgraded = false, IEnumerable<str
     {
         if (key == "discard") return Row.Number(key) + (upgraded ? Row.Number("upgradeDiscard") : 0);
         var increment=Row.Number("upgradeMagic");
-        // A negative/missing draw override preserves the historical shared resource upgrade.
-        if(key=="draw"&&Row.Json.TryGetProperty("upgradeDraw",out var drawUpgrade)&&drawUpgrade.GetInt32()>=0)increment=drawUpgrade.GetInt32();
+        var overrideKey = key switch { "draw" => "upgradeDraw", "strength" => "upgradeStrength", _ => null };
+        // Missing overrides and the historical -1 draw sentinel use the shared increment.
+        if (overrideKey != null && Row.Json.TryGetProperty(overrideKey, out var statUpgrade) && statUpgrade.GetInt32() >= 0)
+            increment = statUpgrade.GetInt32();
         return Row.Number(key) + (key == "draw" ? Gene(key) : 0) + (upgraded && key != "hpLoss" && Row.Number(key) > 0 ? increment : 0);
     }
     public int Magic => Row.Number("magic") + (upgraded ? Row.Number("upgradeMagic") : 0);

@@ -77,7 +77,7 @@ Each class has 82 rewards on regular (20 common, 36 uncommon, 26 rare), or 85 on
 | Furnace Breath | Uncommon | Power | 1 | Class unique; Whenever you draw a Status or Curse, deal 3 damage to ALL enemies. |
 | Patient Riposte | Uncommon | Attack | 2 | Class unique; 12 damage; Whenever this is Retained, gain 3 damage this combat.; Retain |
 | Castle Heart | Rare | Power | 2 | Class unique; Public-beta only; 5 Block; At the end of your turn, gain 4 Block. |
-| Iron Avalanche | Rare | Attack | 2 | Class unique; 6 damage to all enemies; Deal 18 additional damage if you have Block.; Exhaust |
+| Iron Avalanche | Rare | Attack | 2 | Class unique; 6 damage to all enemies; Deal 14 additional damage if you have Block.; Exhaust |
 | Phoenix Forge | Rare | Power | 2 | Class unique; Whenever you Exhaust 3 cards, deal 14 damage to ALL enemies. |
 | Ancestral Salvage | Rare | Skill | 2 | Shared family card; 6 Block; You may return an Attack from your Exhaust pile to your hand. If it enters your hand, gain 4 Vigor. Cannot return Spire Legacy Exhaust-recovery cards.; Exhaust |
 | King's Ransom | Rare | Skill | 0 | Class unique; 2 Strength; 1 Dexterity; 4 HP cost; Exhaust |
@@ -88,7 +88,7 @@ Each class has 82 rewards on regular (20 common, 36 uncommon, 26 rare), or 85 on
 | Siege Tomorrow | Rare | Skill | 2 | Class unique; 3 Energy next turn; 15 Block next turn; Exhaust |
 | Stored Ember | Common | Attack | 1 | Shared family card; 3 damage; Whenever this is Retained, gain 2 damage this combat.; Retain |
 | Crystal Seed | Common | Skill | 1 | Shared family card; 3 Block; Whenever this is Retained, gain 2 Block this combat.; Retain |
-| Woven Incantation | Uncommon | Power | 1 | Shared family card; Every third Skill you play each turn grants 3 Block. |
+| Woven Incantation | Uncommon | Power | 1 | Shared family card; Every third Skill you play each turn grants 5 Block. |
 | Alchemist's Patience | Uncommon | Power | 1 | Shared family card; At the start of your turn, apply 2 Poison to ALL enemies. |
 | Mirror Manuscript | Rare | Skill | 1 | Shared family card; Your next 1 Skill(s) this turn are played twice.; Retain; Exhaust |
 | Comet Calendar | Rare | Skill | 2 | Shared family card; 4 draw next turn; 3 Energy next turn; Exhaust |
@@ -149,7 +149,7 @@ Each class has 82 rewards on regular (20 common, 36 uncommon, 26 rare), or 85 on
 | Spell Threads | Uncommon | Power | 2 | Class unique; Whenever you play a card, deal 1 damage to ALL enemies. |
 | Secret Thesis | Uncommon | Power | 2 | Shared family card; Whenever you Exhaust a card, draw 1 card(s). |
 | Toxic Theory | Uncommon | Power | 1 | Class unique; Whenever you apply a debuff to an enemy, deal 2 damage to it. |
-| Celestial Spear | Rare | Attack | 3 | Class unique; 26 damage |
+| Celestial Spear | Rare | Attack | 3 | Class unique; 26 damage; If this Attack consumes 2 Arcane Charges, deal 8 additional damage. |
 | Starfall | Rare | Attack | 3 | Class unique; 6 damage ×3 to all enemies |
 | Soulfire | Rare | Attack | 2 | Class unique; 13 damage; 3 Poison; If you start this Attack with 2 Arcane Charges and Arcane Flow ready, apply that Poison again. |
 | Perfect Ward | Rare | Skill | 2 | Class unique; 5 Block; Gain 1 Intangible.; Exhaust |
@@ -170,7 +170,7 @@ Each class has 82 rewards on regular (20 common, 36 uncommon, 26 rare), or 85 on
 | Stored Ember | Common | Attack | 1 | Shared family card; 3 damage; Whenever this is Retained, gain 2 damage this combat.; Retain |
 | Crystal Seed | Common | Skill | 1 | Shared family card; 3 Block; Whenever this is Retained, gain 2 Block this combat.; Retain |
 | Chilling Words | Common | Skill | 1 | Class unique; 2 Block; Scry 2.; 1 Weak |
-| Woven Incantation | Uncommon | Power | 1 | Shared family card; Every third Skill you play each turn grants 3 Block. |
+| Woven Incantation | Uncommon | Power | 1 | Shared family card; Every third Skill you play each turn grants 5 Block. |
 | Arcane Meter | Uncommon | Power | 1 | Class unique; Every third Skill you play each turn grants 1 Energy NEXT turn. |
 | Tower Library | Uncommon | Power | 2 | Class unique; Whenever a card is Retained, reduce its cost by 1 this combat. |
 | Moonstone Lance | Uncommon | Attack | 1 | Class unique; 5 damage; Deal 2 additional damage for each Skill played this turn (up to 3 Skills). |
@@ -230,7 +230,7 @@ Each class has 82 rewards on regular (20 common, 36 uncommon, 26 rare), or 85 on
 | Tripwire | Common | Skill | 1 | Shared family card; 4 Block; 1 Weak |
 | Ambush | Uncommon | Attack | 1 | Class unique; 6 damage; Deal 5 additional damage if the target is Vulnerable or Poisoned.; Retain |
 | Rapid Fire | Uncommon | Attack | 1 | Class unique; 2 damage ×4 |
-| Razor Fletching | Uncommon | Attack | 1 | Class unique; 3 damage ×2; Apply 2 Poison on each hit. |
+| Razor Fletching | Uncommon | Attack | 1 | Class unique; 2 damage ×2; Apply 2 Poison on each hit. |
 | Finishing Flurry | Uncommon | Attack | 1 | Class unique; Deal 3 damage for each OTHER Attack played this turn. |
 | Hooked Arrow | Uncommon | Attack | 1 | Class unique; 6 damage; Return 1 card(s) from your discard pile to your hand. Cannot return other Spire Legacy recovery cards. |
 | Ricochet | Uncommon | Attack | 1 | Class unique; 3 damage ×3; Hits target random enemies. |
@@ -238,7 +238,7 @@ Each class has 82 rewards on regular (20 common, 36 uncommon, 26 rare), or 85 on
 | Scouting | Uncommon | Skill | 1 | Class unique; Public-beta only; Scry 2.; 2 draw; 1 discard |
 | Double Dose | Uncommon | Skill | 1 | Class unique; Apply 3 Poison twice. |
 | Escape Route | Uncommon | Skill | 0 | Class unique; 2 discard; 1 Energy |
-| Pocket Arsenal | Uncommon | Skill | 1 | Class unique; Public-beta only; 1 draw; Reduce the cost of 1 random card(s) in your hand by 1 this turn.; Exhaust |
+| Pocket Arsenal | Uncommon | Skill | 1 | Class unique; Public-beta only; 1 draw; Choose up to 1 card(s) in your hand. Reduce their cost by 1 this turn.; Exhaust |
 | Patient Hunter | Uncommon | Skill | 1 | Class unique; 3 next Attack damage; 2 draw next turn |
 | Measured Breath | Uncommon | Power | 1 | Shared family card; At the end of your turn, Retain up to 1 card(s). |
 | Cruel Precision | Uncommon | Power | 1 | Class unique; Whenever you apply a debuff to an enemy, deal 2 damage to it. |
@@ -256,7 +256,7 @@ Each class has 82 rewards on regular (20 common, 36 uncommon, 26 rare), or 85 on
 | Ancestral Salvage | Rare | Skill | 2 | Shared family card; 6 Block; You may return an Attack from your Exhaust pile to your hand. If it enters your hand, gain 4 Vigor. Cannot return Spire Legacy Exhaust-recovery cards.; Exhaust |
 | Stored Ember | Common | Attack | 1 | Shared family card; 3 damage; Whenever this is Retained, gain 2 damage this combat.; Retain |
 | Crystal Seed | Common | Skill | 1 | Shared family card; 3 Block; Whenever this is Retained, gain 2 Block this combat.; Retain |
-| Woven Incantation | Uncommon | Power | 1 | Shared family card; Every third Skill you play each turn grants 3 Block. |
+| Woven Incantation | Uncommon | Power | 1 | Shared family card; Every third Skill you play each turn grants 5 Block. |
 | Alchemist's Patience | Uncommon | Power | 1 | Shared family card; At the start of your turn, apply 2 Poison to ALL enemies. |
 | Mirror Manuscript | Rare | Skill | 1 | Shared family card; Your next 1 Skill(s) this turn are played twice.; Retain; Exhaust |
 | Comet Calendar | Rare | Skill | 2 | Shared family card; 4 draw next turn; 3 Energy next turn; Exhaust |
@@ -274,7 +274,7 @@ Each class has 82 rewards on regular (20 common, 36 uncommon, 26 rare), or 85 on
 | Owl Watch | Uncommon | Power | 1 | Class unique; At the start of your turn, Scry 2. |
 | Empty Quiver | Rare | Skill | 1 | Class unique; 4 Block; Discard your hand, then draw that many cards. |
 | Ghost Luggage | Rare | Power | 2 | Class unique; At the start of your turn, choose an Attack you discarded during your previous turn. Return it to your hand. It costs 1 less this turn. |
-| Falcon Courier | Rare | Attack | 2 | Class unique; 10 damage; When discarded during your turn, gain 3 Energy. Triggers at most once per copy each turn.; Exhaust |
+| Falcon Courier | Rare | Attack | 2 | Class unique; 10 damage; When discarded during your turn, Exhaust this card and gain 3 Energy.; Exhaust |
 | Venom Eclipse | Rare | Skill | 2 | Class unique; 7 Poison to all enemies; Exhaust |
 | Long Vigil | Rare | Attack | 2 | Class unique; 15 damage; Whenever this is Retained, gain 6 damage this combat.; Retain |
 | Arrow Cascade | Rare | Attack | 2 | Class unique; Deal 4 damage for each OTHER Attack played this turn to all enemies.; Exhaust |

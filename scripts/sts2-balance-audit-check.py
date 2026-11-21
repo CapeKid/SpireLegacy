@@ -37,6 +37,11 @@ try:
         assert reward['secondEnergyReward']==reward['secondDrawReward']==0,reward
         assert reward['firstVigorReward']==vigor and reward['secondVigorReward']==0,reward
         assert reward['rewardTurn']==reward['turn'],reward
+    for upgrade in (False,True):
+        start('ranger')
+        courier=send('discard-balance',card='ranger_falcon_courier',upgrade=upgrade)
+        assert courier['firstEnergyReward']==courier['secondEnergyReward']==3+int(upgrade),courier
+        assert courier['firstDiscardPile']==courier['secondDiscardPile']=='Exhaust',courier
     start('mage');pocket=send('play',card='mage_time_pocket',upgrade=True)
     assert power(pocket,'equilibrium')==2,pocket
     send('turn');assert power(ready(2),'equilibrium')==1

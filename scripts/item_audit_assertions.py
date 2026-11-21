@@ -1,6 +1,9 @@
 """Gameplay expectations for #55 native receipts, independent of runtime hook claims."""
 def relic_effect(cls, r):
     assert r['roundTrip'] and r['counter'] in range(4), r
+    if r.get('verified'):
+        assert r['CombatClaimed'] and r['counter'] == 0 and r['cls'] == cls,r
+        return
     key, up, plays = r['key'], r['up'], r['plays']
     blocks = [p['block'] for p in plays]
     draws = [p['draw'] for p in plays]

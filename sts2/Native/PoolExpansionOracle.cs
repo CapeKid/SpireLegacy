@@ -36,7 +36,8 @@ public static class PoolExpansionOracle
                 var payoff = combat.CreateCard(NativeCards.Get("mage_celestial_spear"), player);
                 await CardPileCmd.Add(payoff, PileType.Hand, CardPilePosition.Top, skipVisuals: true);
             }
-            var costs=hand.Cards.Where(c=>c!=card&&!c.EnergyCost.CostsX).Select(c=>c.EnergyCost.GetWithModifiers(CostModifiers.All)).ToArray();
+            var originalHand=hand.Cards.Where(c=>c!=card&&!c.EnergyCost.CostsX).ToArray();
+            var costs=originalHand.Select(c=>c.EnergyCost.GetWithModifiers(CostModifiers.All)).ToArray();
             var hp=player.Creature.CurrentHp;var enemyHp=enemy.CurrentHp;var block=player.Creature.Block;var energy=player.PlayerCombatState!.Energy;
             var target=card.TargetType==TargetType.AnyEnemy?enemy:null;
             var cost=card.EnergyCost.GetWithModifiers(CostModifiers.All);
@@ -65,6 +66,7 @@ public static class PoolExpansionOracle
                 poison=enemy.GetPowerAmount<PoisonPower>(),charges=player.Creature.GetPower<P_class>()?.Charges,
                 hand=hand.Cards.Select(c=>c is LegacyCard legacy?legacy.Key:c.Id.ToString()).ToArray(),
                 costsBefore=costs,costsAfter=hand.Cards.Where(c=>!c.EnergyCost.CostsX).Select(c=>c.EnergyCost.GetWithModifiers(CostModifiers.All)).ToArray(),
+                originalCostsAfter=originalHand.Select(c=>c.EnergyCost.GetWithModifiers(CostModifiers.All)).ToArray(),
                 powers=player.Creature.Powers.Select(p=>new{id=p.Id.ToString(),amount=p.Amount}).ToArray(),
                 fuelReturned=hand.Cards.Contains(fuel),saveRoundTrip=true,tableNodePresent=false};
         }

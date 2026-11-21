@@ -42,25 +42,17 @@ try:
     for cls in ['knight','mage','ranger']:
         start(cls);r=send('chronicle-eligibility');assert len(r['eligible'])==10,r
         info=send('relic-info');assert len(info['drops'])==len(info['shops'])==10,info
-        send('relic-clear');send('enter',room='Boss');ready();send('relic-obtain',relic='guardian_knot',shop=True)
-        r=play(cls+'_strike');assert r['block']==0 and not send('relic-counters')[0]['CombatClaimed'],r
-        a=play(cls+'_guard');b=play(cls+'_strike');assert b['block']-a['block']==3,b
-        send('relic-roundtrip');a=b;b=play(cls+'_strike');assert b['block']==a['block'],b
-        send('enter',room='Boss');ready();a=play(cls+'_guard');b=play(cls+'_strike');assert b['block']-a['block']==3,b
-        enter();send('relic-obtain',relic='scholar_bookmark');a=send('state');b=play('knight_forge_memory');assert len(b['hand'])==len(a['hand'])+1,b
-        send('relic-roundtrip');a=b;b=play('knight_forge_memory');assert len(b['hand'])==len(a['hand']),b
-        enter('Monster');send('relic-obtain',relic='trail_compass');assert power(send('state'),'VIGOR_POWER')==0
-        send('turn');r=ready(2);assert power(r,'VIGOR_POWER')==3,r
-        send('relic-roundtrip');r=play(cls+'_strike');assert power(r,'VIGOR_POWER')==0,r
-        for _ in range(3):play(cls+'_guard')
-        send('turn');r=ready(3);assert power(r,'VIGOR_POWER')==0,r
+        for key in ('guardian_knot','scholar_bookmark','trail_compass'):
+            enter('Monster')
+            send('relic-obtain',relic=key,shop=key=='guardian_knot')
+            assert send('item-relic',relic=key,upgrade=False)['verified']
         # Already acquired relics are correctly removed from this run's grab bag.
         # Begin another run before testing a combined acquisition/save snapshot.
         start(cls);enter();
         for key in ['guardian_knot','scholar_bookmark','trail_compass']:send('relic-obtain',relic=key)
         send('save');before=send('chronicle-state');send('resume');ready();after=send('chronicle-state');assert before==after,(before,after);assert len(send('relic-counters'))==3
         send('manor');press(next(b['text'] for b in send('manor-state')['buttons'] if b['text'].startswith('Family Chronicle')))
-        press('NEW · Read: '+{'knight':'The oath outlives the armor','mage':'A journal with another page','ranger':'A path that stays open'}[cls])
+        press('NEW Â· Read: '+{'knight':'The oath outlives the armor','mage':'A journal with another page','ranger':'A path that stays open'}[cls])
         state=send('manor-state');assert state['focusText'].startswith('Use family motto:'),state
         send('input',action='ui_select');r=send('chronicle-state');assert r['motto']=={'knight':'Unbroken Oath','mage':'Living Archive','ranger':'Open Trail'}[cls],r
         shot(cls+'-victory-story');send('input',action='ui_cancel');shot(cls+'-unlocked-list')

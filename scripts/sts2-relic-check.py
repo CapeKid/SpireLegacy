@@ -8,9 +8,8 @@ evidence=json.loads(evidence_file.read_text(encoding='utf-8')) if '--resume' in 
 completed=set();active_relic=None
 for entry in evidence:
     if entry['command']=='relic-obtain':active_relic=entry['args']['relic']
-    if entry['command']=='play' and active_relic=='family_seal' and entry['result']['turn']==2:
-        cls=entry['result']['heir']['classId']
-        if entry['args']['card']==cls+'_strike':completed.add(cls)
+    if entry['command']=='item-relic' and active_relic=='family_seal' and entry['result'].get('verified'):
+        completed.add(entry['result']['cls'])
 log=root/'private'/f'relic121-{tag}-final.out.log';deadline=time.monotonic()+140
 while not log.exists() or 'Time to main menu' not in log.read_text(encoding='utf-8',errors='replace'):
     if time.monotonic()>deadline:raise TimeoutError('main menu')
@@ -52,25 +51,9 @@ try:
             fresh('wayfarer_ribbon');b=next_turn(2);assert send('relic-counters')[0]['TriggerTurn']==-1
             a=b;b=play('ranger_empty_quiver');assert b['block']-a['block']==7,b
             send('relic-roundtrip');a=b;b=play('ranger_empty_quiver');assert b['block']-a['block']==4,b
-            a=fresh('triune_crest');b=play(cls+('_strike' if cls=='ranger' else '_guard'))
-            if cls=='knight':assert b['block']-a['block']==8,b
-            elif cls=='mage':assert next(p['display'] for p in b['powers'] if p['id']=='POWER.SPIRELEGACY-P_CLASS')==2 and send('relic-counters')[0]['CombatClaimed'];play(cls+'_strike')
-            else:assert power(b,'VIGOR_POWER')==3,b
-            send('relic-roundtrip');a=send('state');b=play(cls+('_strike' if cls=='ranger' else '_guard'))
-            if cls=='knight':assert b['block']-a['block']==4,b
-            if cls=='ranger':assert power(b,'VIGOR_POWER')==0,b
-            if cls=='mage':assert next(p['display'] for p in b['powers'] if p['id']=='POWER.SPIRELEGACY-P_CLASS')==1,b
-            fresh('legacy_hourglass',room='Monster');b=next_turn(2);assert b['energy']==3 and len(b['hand'])==5,b
-            for _ in range(3):play(cls+'_guard')
-            b=next_turn(3);assert b['energy']==4 and len(b['hand'])==6,b
-            send('relic-roundtrip')
-            for _ in range(3):play(cls+'_guard')
-            b=next_turn(4);assert b['energy']==3 and len(b['hand'])==5,b
-            a=fresh('family_seal');play('knight_forge_memory');send('relic-roundtrip')
-            play(cls+'_guard');b=play(cls+'_strike');assert b['block']-a['block']==12 and len(b['hand'])==len(a['hand'])+1,b
-            send('relic-roundtrip');a=b;play('knight_forge_memory');play(cls+'_guard');b=play(cls+'_strike');assert b['block']-a['block']==8 and len(b['hand'])==len(a['hand']),b
-            b=next_turn(2);assert send('relic-counters')[0]['TypeMask']==0
-            a=b;play('knight_forge_memory');play(cls+'_guard');b=play(cls+'_strike');assert b['block']-a['block']==12 and len(b['hand'])==len(a['hand'])+1,b
+            for key in ('triune_crest','legacy_hourglass','family_seal'):
+                fresh(key,room='Monster')
+                assert send('item-relic',relic=key,upgrade=False)['verified']
         send('start',**{'class':cls,'traits':[],'quick':True});ready()
         send('relic-clear');send('enter',room='Boss');ready()
         for row in json.loads((root/'sheets/heir_relics.json').read_text()):

@@ -75,7 +75,7 @@ public static class CardEffects
   switch(row.Text("special")){
    case "guarded_strength":if(creature.Block>0)await Apply(context,"strength",creature,amount,creature,card);return;
    case "upgrade_attacks":foreach(var held in hand.Cards.Where(c=>c.Type==CardType.Attack&&c.IsUpgradable).ToArray())CardCmd.Upgrade(held);return;
-   case "none":case "arcane_aftershock":case "arcane_poison":case "charge_burst":case "skill_damage":case "block_damage":case "chain_damage":case "random_attack":case "execute":case "full_hp_bonus":case "guard_bonus":case "marked_bonus":case "scry":case "exhaust_damage":case "retain_damage":case "retain_block":case "discard_draw":case "discard_energy":case "discard_block":case "discard_vigor":case "hit_poison":return;
+   case "none":case "arcane_aftershock":case "arcane_poison":case "charge_burst":case "full_charge_bonus":case "skill_damage":case "block_damage":case "chain_damage":case "random_attack":case "execute":case "full_hp_bonus":case "guard_bonus":case "marked_bonus":case "scry":case "exhaust_damage":case "retain_damage":case "retain_block":case "discard_draw":case "discard_energy":case "discard_energy_exhaust":case "discard_block":case "discard_vigor":case "hit_poison":return;
    case "thunder_splash":
     var otherEnemies = card.CombatState!.GetOpponentsOf(creature).Where(enemy => enemy.IsAlive && enemy != play.Target).ToArray();
     if(otherEnemies.Length>0)await CreatureCmd.Damage(context,otherEnemies,amount,ValueProp.Unpowered,creature);
@@ -133,13 +133,15 @@ public static class CardEffects
    case "charged_energy":if(FullArcaneFlowReady(player))await PlayerCmd.GainEnergy(amount,player);break;
    case "discount_hand":var eligible=hand.Cards.Where(c=>!c.EnergyCost.CostsX&&c.EnergyCost.GetWithModifiers(CostModifiers.All)>0).ToList();for(var i=0;i<amount&&eligible.Count>0;i++){var index=player.RunState.Rng.CombatCardSelection.NextInt(eligible.Count);var discounted=eligible[index];eligible.RemoveAt(index);discounted.EnergyCost.AddThisTurn(-1);}break;
    case "discount_card":
+   case "discount_choice":
    {
+    var chooseMultiple = row.Text("special") == "discount_choice";
     var prompt = new LocString("cards", card.Id.Entry + ".discountPrompt");
-    var prefs = new CardSelectorPrefs(prompt, 1);
+    var prefs = chooseMultiple ? new CardSelectorPrefs(prompt, 0, amount) : new CardSelectorPrefs(prompt, 1);
     var chosen = await CardChoiceLifetime.Run(player, () => CardSelectCmd.FromHand(context, player, prefs,
         candidate => candidate != card && !candidate.EnergyCost.CostsX && candidate.EnergyCost.GetWithModifiers(CostModifiers.All) > 0, card));
     foreach (var discounted in chosen)
-        discounted.EnergyCost.AddThisTurn(-Math.Min(amount, discounted.EnergyCost.GetWithModifiers(CostModifiers.All)));
+        discounted.EnergyCost.AddThisTurn(-Math.Min(chooseMultiple ? 1 : amount, discounted.EnergyCost.GetWithModifiers(CostModifiers.All)));
     break;
    }
    case "free_hand":foreach(var held in hand.Cards.Where(c=>!c.EnergyCost.CostsX))held.SetToFreeThisTurn();await Apply(context,"no_draw",creature,1,creature,card);break;

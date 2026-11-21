@@ -51,49 +51,49 @@
     "id": "triune_crest",
     "title": "Triune Crest",
     "rarity": "Uncommon",
-    "amount": 4,
-    "threshold": 3,
+    "amount": 8,
+    "threshold": 2,
     "extra": 1,
-    "description": "Once per combat: Knight gains 4 Block after a Skill; Mage gains 1 Arcane Charge after a Skill (maximum 2); Ranger gains 3 Vigor after an Attack.",
+    "description": "Once per combat: Knight gains 8 Block when a Counterguard Attack hits. Mage gains 1 Energy after triggering Arcane Flow with 2 charges. Ranger applies 2 extra Vulnerable the first time Hunter Rhythm applies it.",
     "flavor": "Three callings, one family name.",
-    "route": "Class keepsake",
-    "baseline": "A small one-use class resource; no permanent stat or crown multiplier."
+    "route": "Class mechanic payoff",
+    "baseline": "Reward Counterguard, a fully charged Arcane Flow, or Hunter Rhythm once per combat."
   },
   {
     "id": "legacy_hourglass",
     "title": "Legacy Hourglass",
     "rarity": "Rare",
-    "amount": 1,
-    "threshold": 3,
-    "extra": 1,
-    "description": "At the start of turn 3, gain 1 Energy and draw 1 card. Once per combat.",
+    "amount": 3,
+    "threshold": 2,
+    "extra": 2,
+    "description": "Once per combat, if you end a turn with at least 2 unspent Energy, gain 3 Energy and draw 2 cards at the start of your next turn.",
     "flavor": "The next heir will inherit the time you leave behind.",
-    "route": "Delayed resources",
-    "baseline": "A delayed one-use burst; Pocketwatch can draw 3 each qualifying turn."
+    "route": "Save Energy for a burst turn",
+    "baseline": "Rewards deliberately banking Energy rather than waiting for a fixed turn."
   },
   {
     "id": "family_seal",
     "title": "Family Seal",
     "rarity": "Rare",
-    "amount": 4,
+    "amount": 1,
     "threshold": 3,
-    "extra": 1,
-    "description": "Once each turn, after you have played an Attack, a Skill and a Power, gain 4 Block and draw 1 card.",
+    "extra": 0,
+    "description": "Once per combat, after you play an Attack, a Skill, and a Power, your next Attack or Skill is played twice.",
     "flavor": "Not all branches look alike. They still share the same roots.",
-    "route": "Mixed-type sequences",
-    "baseline": "Three distinct types required; Ornamental Fan grants 4 Block per three Attacks and Letter Opener deals 5 to all per three Skills."
+    "route": "Mixed-type sequencing",
+    "baseline": "Track all three card types across turns, then use one native replay."
   },
   {
     "id": "guardian_knot",
     "title": "Guardian Knot",
     "rarity": "Uncommon",
-    "amount": 3,
+    "amount": 1,
     "threshold": 1,
     "extra": 0,
-    "description": "Once per combat, after you play an Attack while you have Block, gain 3 Block.",
+    "description": "The first time you fully Block an enemy hit each combat, gain 1 Energy next turn.",
     "flavor": "A cord tied around a lesson the family means to keep.",
-    "route": "Guarded preparation",
-    "baseline": "Only 3 Block once per combat after an Attack with existing Block; Anchor grants 10 immediately."
+    "route": "Defend now, act next turn",
+    "baseline": "Rewards preventing an enemy hit with Block regardless of whether your deck uses Attacks."
   },
   {
     "id": "scholar_bookmark",
@@ -102,21 +102,21 @@
     "amount": 1,
     "threshold": 1,
     "extra": 0,
-    "description": "Once per combat, after you play a Power, draw 1 card.",
+    "description": "The first Power you draw each combat that costs Energy costs 1 less that turn.",
     "flavor": "A feather left in the margin where the next question begins.",
     "route": "Power setup",
-    "baseline": "One draw per combat after paying for a Power; no energy refund or unlimited draw loop."
+    "baseline": "A temporary discount helps get a Power into play on the turn you draw it."
   },
   {
     "id": "trail_compass",
     "title": "Trail Compass",
     "rarity": "Uncommon",
-    "amount": 3,
-    "threshold": 2,
+    "amount": 2,
+    "threshold": 1,
     "extra": 0,
-    "description": "At the start of turn 2, gain 3 Vigor. Once per combat.",
+    "description": "The first time each combat one of your Attacks hits a Vulnerable enemy, draw 2 cards.",
     "flavor": "It points toward a chance, never a promise.",
-    "route": "Delayed attack",
-    "baseline": "One delayed +3 damage bonus to the next Attack, including its hits; not permanent Strength."
+    "route": "Follow a Vulnerable opening",
+    "baseline": "Rewards setting up Vulnerable before attacking."
   }
 ]

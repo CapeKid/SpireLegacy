@@ -38,7 +38,7 @@ for tier in [0,2]:
                 elif key=='mage_eternal_bookmark':assert r['energyDelta']==(-1 if upgraded else -2) and r['amount']==2 and r['retained']==0 and r['automaticRetained'] and r['handAfterTurn']>=8,r
                 elif key=='knight_battlefield_recovery':assert r['energyDelta']==-1 and r['drawn']==2+int(upgraded) and r['healing']==4+int(upgraded) and r['pile']=='Exhaust',r
                 else:
-                    damage=(8 if upgraded else 6)+strength+(20 if supported else 0)
+                    damage=(8 if upgraded else 6)+strength+(16 if supported else 0)
                     assert r['energyDelta']==-2 and r['setupSpent']==int(supported) and r['pile']=='Exhaust' and r['damage'] and all(d==damage for d in r['damage']),r
                 print(tag,tier,key,upgraded,supported,r,flush=True)
 send('abandon')

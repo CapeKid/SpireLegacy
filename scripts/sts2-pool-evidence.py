@@ -13,7 +13,10 @@ for tag in sys.argv[1:] or ['regular','beta']:
         if entry['command']=='start':cls=entry['args']['class']
         if entry['command']!='expansion-play':continue
         result=entry['result'];row=cards[result['key']];up=result['upgrade']
-        amount=lambda key:row[key]+(row['upgradeMagic'] if up and row[key]>0 and key!='hpLoss' else 0)
+        def amount(key):
+            override=row.get({'draw':'upgradeDraw','strength':'upgradeStrength'}.get(key),-1)
+            increment=row['upgradeMagic'] if override<0 else override
+            return row[key]+(increment if up and row[key]>0 and key!='hpLoss' else 0)
         assert len(result['hand'])==5+amount('draw')+(row['special']=='exhume'),result
         damage=(row['damage']+(row['upgradeDamage'] if up else 0))*row['hits']
         if row['special']=='execute':damage*=row['specialAmount']

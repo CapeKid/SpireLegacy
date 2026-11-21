@@ -155,13 +155,20 @@ public abstract class LegacyPower:CustomPowerModel
    if(card.Type==CardType.Attack){AttacksThisTurn++;
     var spent=Charges;if(PlayerBloodlines.Heir(Owner.Player).classId is "knight" or "mage")Charges=0;
     // Claim before awaiting: replays and further Attacks cannot draw again this turn.
-    if(PlayerBloodlines.Heir(Owner.Player).classId=="mage"&&spent>0&&!ArcaneDrawUsed){ArcaneDrawUsed=true;await CardPileCmd.Draw(context,spent,Owner.Player!);}
+    if(PlayerBloodlines.Heir(Owner.Player).classId=="mage"&&spent>0&&!ArcaneDrawUsed){
+     ArcaneDrawUsed=true;await CardPileCmd.Draw(context,spent,Owner.Player!);
+     foreach(var crest in Owner.Player!.Relics.OfType<R_triune_crest>().Where(relic=>!relic.IsMelted))await crest.OnArcaneFlow(spent);
+    }
     if(PlayerBloodlines.Heir(Owner.Player).classId=="ranger"&&AttacksThisTurn%PlayThreshold==0){
      await CardPileCmd.Draw(context,1+FindAmount("quiver"),Owner.Player!);
      var opponents=Owner.CombatState!.GetOpponentsOf(Owner).Where(e=>e.IsAlive).ToArray();
      var random=card is LegacyCard legacy&&legacy.DesignCard.Row.Text("special")=="random_attack";
      IEnumerable<Creature> targets=random&&opponents.Length>0?new[]{opponents[Owner.Player!.RunState.Rng.CombatTargets.NextInt(opponents.Length)]}:card.TargetType==TargetType.AllEnemies?opponents:play.Target is {} target?new[]{target}:[];
-     foreach(var enemy in targets.Where(e=>e.IsAlive))await CardEffects.Apply(context,"vulnerable",enemy,1,Owner,card);}}
+     var survivingTargets=targets.Where(e=>e.IsAlive).ToArray();
+     if(survivingTargets.Length>0){
+      var vulnerable=1+Owner.Player!.Relics.OfType<R_triune_crest>().Where(relic=>!relic.IsMelted).Sum(crest=>crest.ExtraRhythmVulnerable());
+      foreach(var enemy in survivingTargets.Where(e=>e.IsAlive))await CardEffects.Apply(context,"vulnerable",enemy,vulnerable,Owner,card);
+     }}}
   }
   if(Key=="power_draw"&&card.Type==CardType.Power)await CardPileCmd.Draw(context,Amount,Owner.Player!);
   if(Key=="arcane_echo"&&card.Type==CardType.Skill&&++plays==1){if(Owner.GetPower<P_class>() is {} charge&&PlayerBloodlines.Heir(Owner.Player).classId=="mage")charge.Charges=Math.Min(2,charge.Charges+1);await CardPileCmd.Draw(context,Amount,Owner.Player!);}

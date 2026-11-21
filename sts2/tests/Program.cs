@@ -94,7 +94,8 @@ Check(dropRelics.Count==10&&dropRelics.Select(r=>r.Text("id")).Distinct().Count(
 Check(dropRelics.All(r=>new[]{"Common","Uncommon","Rare"}.Contains(r.Text("rarity"))),"No starter in ordinary drop definitions");
 foreach(var relic in dropRelics)
 {
-    Check(!relic.Text("description").Contains('{')&&relic.Number("extra")<=1,"Complete bounded relic text/resources "+relic.Text("id"));
+    var maxExtra = relic.Text("id") == "legacy_hourglass" ? 3 : 1;
+    Check(!relic.Text("description").Contains('{')&&relic.Number("extra")<=maxExtra,"Complete bounded relic text/resources "+relic.Text("id"));
     Check(Design.Get("relic_art",relic.Text("id")).Text("license")=="MIT","Original relic artwork "+relic.Text("id"));
 }
 Check(Design.Rows("relic_art").Select(r=>r.Text("sha256")).Distinct().Count()==10,"Distinct relic silhouettes");
@@ -164,7 +165,8 @@ Check(pacifistPayout.Settle(pacifistRun.id, 50, 200, true) == 382, "Pacifist gra
 foreach (var upgraded in new[] { false, true })
 {
     var ward = new CardDesign("mage_perfect_ward", upgraded);
-    Check(ward.Cost == 2 && ward.Magic == (upgraded ? 2 : 1) && ward.Row.Flag("exhaust"), "Ward has a bounded, single-use prevention budget");
+    Check(ward.Cost == 2 && ward.Magic == 1 && ward.Block == (upgraded ? 8 : 5) && ward.Row.Flag("exhaust"),
+        "Ward upgrades Block and keeps one stack of Intangible");
     var timing = new CardDesign("ranger_perfect_timing", upgraded);
     Check(timing.Cost == (upgraded ? 2 : 3) && timing.Magic == 1 && timing.Amount("hpLoss") == 3, "Timing upgrade lowers setup cost without doubling recurring energy");
     Check(timing.Rules().Contains("gain 1 Energy") && timing.Rules().Contains("Lose 3 HP"), "Timing text matches its recurring energy and HP price");
@@ -202,8 +204,13 @@ foreach (var upgraded in new[] { false, true })
     var vault = new CardDesign("knight_arms_vault", upgraded);
     Check(prophecy.Cost==vault.Cost&&prophecy.Amount("draw")==0&&prophecy.Row.Text("special")=="exhume_next_turn"&&prophecy.SpecialAmount==(upgraded?2:1),"Prophecy delays recovery with a temporary discount instead of duplicating Arms Vault draw");
     var thesis = new CardDesign("mage_grand_thesis", upgraded);
-    Check(thesis.Cost == 1 && thesis.Row.Flag("exhaust") && thesis.SpecialAmount == 1, "Grand Thesis has affordable draw without a wasted charge upgrade");
-    Check(new CardDesign("mage_spell_notes",upgraded).Rules().StartsWith($"Scry {(upgraded?4:3)}.\nDraw 1 card(s)."),"Spell Notes text matches native Scry-before-draw execution");
+    Check(thesis.Cost == 1 && thesis.Row.Flag("exhaust") && thesis.SpecialAmount == 1 &&
+        thesis.Amount("draw") == (upgraded ? 3 : 2) && thesis.Amount("nextEnergy") == 1,
+        "Grand Thesis upgrades draw only");
+    Check(new CardDesign("mage_spell_notes",upgraded).Rules().StartsWith($"Scry {(upgraded?5:3)}.\nDraw 1 card(s)."),"Spell Notes text matches native Scry-before-draw execution");
+    var ransom = new CardDesign("knight_king_s_ransom", upgraded);
+    Check(ransom.Amount("strength") == (upgraded ? 3 : 2) && ransom.Amount("dexterity") == 1,
+        "King's Ransom upgrades Strength independently of Dexterity");
 }
 var baseMeditation = new CardDesign("knight_battle_meditation");
 var upgradedMeditation = new CardDesign("knight_battle_meditation", true);
@@ -231,7 +238,8 @@ foreach(var upgraded in new[]{false,true}){
     var execution=new CardDesign("knight_royal_execution",upgraded);
     var spear=new CardDesign("mage_celestial_spear",upgraded);
     Check(execution.Cost==3&&execution.Damage<nativeBludgeon&&execution.Damage*execution.SpecialAmount>nativeBludgeon,"Royal Execution remains below native unconditional budget and rewards its health condition");
-    Check(spear.Cost==3&&spear.Damage+4<nativeBludgeon,"Celestial Spear plus full Smith and two charges stays below native Bludgeon");
+    Check(spear.Cost==3&&spear.Damage==(upgraded?34:26)&&spear.Row.Text("special")=="full_charge_bonus"&&spear.SpecialAmount==8,
+        "Celestial Spear keeps its base damage and rewards a full charge spend");
     var cascade=new CardDesign("ranger_arrow_cascade",upgraded);
     Check(cascade.Row.Flag("aoe")&&cascade.Row.Flag("exhaust")&&cascade.SpecialAmount<6&&cascade.Row.Number("damage")==0,"Arrow Cascade retains setup and single-use limits below native Finisher's per-attack base");
 }
@@ -367,15 +375,29 @@ foreach(var upgraded in new[]{false,true}){
     Check(slow.Block==(upgraded?2:0)&&!slow.Row.Flag("exhaust"),"Slow Incantation upgrades protection without free cycling");
     var quiver=new CardDesign("ranger_second_quiver",upgraded);
     Check(quiver.Row.Flag("exhaust")&&quiver.Cost==0&&quiver.Amount("hpLoss")==0,"Second Quiver keeps free single-use recovery in both forms");
-    Check(new CardDesign("mage_mana_fountain",upgraded).Amount("energy")==2+(upgraded?1:0),"Mana Fountain has a bounded single-use Energy burst");
+    var fountain = new CardDesign("mage_mana_fountain", upgraded);
+    Check(fountain.Amount("energy") == 0 && fountain.Row.Text("power") == "mana_fountain" &&
+        fountain.Magic == (upgraded ? 4 : 3) && fountain.Row.Flag("exhaust"),
+        "Mana Fountain grants the delayed Energy through a bounded countdown");
     var bookmark=new CardDesign("mage_eternal_bookmark",upgraded);
     Check(bookmark.Cost==(upgraded?1:2)&&bookmark.Magic==2&&bookmark.Row.Text("power")=="retained_draw","Rare Bookmark rewards retention with draw; upgrade reduces setup cost");
     var recovery=new CardDesign("knight_battlefield_recovery",upgraded);
     Check(recovery.Cost==1&&recovery.Amount("draw")==2+(upgraded?1:0)&&recovery.Amount("heal")==4+(upgraded?1:0)&&recovery.Row.Flag("exhaust"),"Battlefield Recovery leaves Energy to use drawn cards without increasing healing");
     var avalanche=new CardDesign("knight_iron_avalanche",upgraded);
-    Check(avalanche.Cost==2&&avalanche.SpecialAmount==18&&avalanche.Row.Flag("exhaust"),"Iron Avalanche fits one paid guard plus its conditional single-use attack in three Energy");
+    Check(avalanche.Cost==2&&avalanche.SpecialAmount==14&&avalanche.Row.Flag("exhaust"),"Iron Avalanche fits one paid guard plus its conditional single-use attack in three Energy");
+    var woven=new CardDesign("mage_woven_incantation",upgraded);
+    Check(woven.Cost==1&&woven.Magic==(upgraded?7:5)&&woven.Rules().Contains("each turn"),
+        "Woven Incantation keeps the turn-local trigger and gains more Block");
+    var pocket=new CardDesign("ranger_pocket_arsenal",upgraded);
+    Check(pocket.Cost==1&&pocket.Amount("draw")==1&&pocket.Row.Flag("exhaust")&&
+        pocket.Row.Text("special")=="discount_choice"&&pocket.SpecialAmount==(upgraded?2:1),
+        "Pocket Arsenal draws then discounts chosen cards");
+    var fletching=new CardDesign("ranger_razor_fletching",upgraded);
+    Check(fletching.Cost==1&&fletching.Damage==(upgraded?3:2)&&fletching.Row.Number("hits")==2&&
+        fletching.Row.Text("special")=="hit_poison"&&fletching.SpecialAmount==(upgraded?3:2),
+        "Razor Fletching trims damage and preserves Poison per hit");
 }
-foreach(var card in Design.Rows("cards").Where(c=>c.Text("id")!="ranger_second_quiver")){
+foreach(var card in Design.Rows("cards").Where(c=>c.Text("id") is not ("ranger_second_quiver" or "mage_grand_thesis"))){
     Check(card.Number("upgradeDraw")==-1,"Existing draw upgrades preserve the shared resource increment: "+card.Text("id"));
 }
 foreach(var upgraded in new[]{false,true}){

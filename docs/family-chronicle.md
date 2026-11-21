@@ -6,11 +6,11 @@ Nine original stories follow the family: its founding, first completed climb, fi
 
 | Lesson | Added Uncommon relic | Effect |
 |---|---|---|
-| Knight | Guardian Knot | Once per combat, after an Attack while you have Block, gain 3 Block. |
-| Mage | Scholar Bookmark | Once per combat, after a Power, draw 1 card. |
-| Ranger | Trail Compass | At the start of turn 2, gain 3 Vigor once per combat. |
+| Knight | Guardian Knot | The first time you fully Block an enemy hit each combat, gain 1 Energy next turn. |
+| Mage | Scholar Bookmark | The first Power you draw each combat that costs Energy costs 1 less that turn. |
+| Ranger | Trail Compass | The first time each combat one of your Attacks hits a Vulnerable enemy, draw 2 cards. |
 
-These are additional native reward/shop possibilities, not free starting relics. They preserve the existing seven family relics, all ordinary card choices, six Ancient cards and three potions. Each has an original packaged icon and selection outline. Guardian Knot is much smaller than Anchor's immediate 10 Block, Bookmark grants only one draw per combat, and Compass adds a delayed next-Attack bonus rather than permanent Strength. Pacifist excludes the two attack-specific relics, as it does the existing attack-specific keepsakes.
+These relics can appear in rewards and shops. Each has an original packaged icon and selection outline. Pacifist heirs can find Guardian Knot and Scholar Bookmark.
 
 A class victory unlocks the corresponding story and a selectable family motto: **Unbroken Oath**, **Living Archive**, or **Open Trail**. Read that entry and choose **Use family motto** to display it beneath the combat banner. Clear it from the Chronicle list. Mottos grant no combat stats or crown bonus.
 

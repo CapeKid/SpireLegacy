@@ -7876,11 +7876,11 @@
       "upgradeDamage": 0,
       "upgradeBlock": 0,
       "upgradeMagic": 0,
-      "upgradeSpecial": 1,
+      "upgradeSpecial": 2,
       "upgradeCost": false,
       "upgradeDiscard": 0
     },
-    "reason": "Retained paid Scry prepares the cards reached by Arcane Flow; fixed one-card draw replaces the old draw/discard exchange. Upgrade improves Scry only."
+    "reason": "Scry before drawing one card. The upgrade increases Scry from 3 to 5."
   },
   {
     "id": "mage_crystal_guard",
@@ -8441,14 +8441,14 @@
       "special": "none",
       "specialAmount": 0,
       "exhaust": false,
-      "upgradeDamage": 2,
+      "upgradeDamage": 4,
       "upgradeBlock": 0,
       "upgradeMagic": 0,
       "upgradeSpecial": 0,
       "upgradeCost": false,
       "upgradeDiscard": 0
     },
-    "reason": "Weaker no-manor baseline; avoid compounded effects/upgrades and free positive-draw cycles."
+    "reason": "Increase the upgraded area damage on a two-Energy Attack."
   },
   {
     "id": "mage_frozen_spear",
@@ -10289,12 +10289,12 @@
       "exhaust": false,
       "upgradeDamage": 0,
       "upgradeBlock": 0,
-      "upgradeMagic": 1,
+      "upgradeMagic": 2,
       "upgradeSpecial": 0,
       "upgradeCost": false,
       "upgradeDiscard": 0
     },
-    "reason": "Weaker no-manor baseline; avoid compounded effects/upgrades and free positive-draw cycles."
+    "reason": "Increase the damage payoff for playing five cards in one turn."
   },
   {
     "id": "mage_spell_threads",
@@ -10710,8 +10710,8 @@
       "nextBlock": 0,
       "power": "none",
       "magic": 0,
-      "special": "none",
-      "specialAmount": 0,
+      "special": "full_charge_bonus",
+      "specialAmount": 8,
       "exhaust": false,
       "upgradeDamage": 8,
       "upgradeBlock": 0,
@@ -11142,13 +11142,13 @@
       "exhaust": true,
       "upgradeDamage": 0,
       "upgradeBlock": 0,
-      "upgradeMagic": 1,
+      "upgradeMagic": 0,
       "upgradeSpecial": 0,
       "upgradeCost": false,
       "upgradeDiscard": 0,
-      "upgradeDraw": -1
+      "upgradeDraw": 1
     },
-    "reason": "One-use draw/charge setup banks next-turn Energy to play Arcane Flow draws; one fewer immediate card, upgrade adds one card and one delayed Energy."
+    "reason": "One-use draw and charge setup banks one Energy for next turn. The upgrade draws one extra card."
   },
   {
     "id": "mage_hourglass",
@@ -13035,7 +13035,7 @@
     },
     "after": {
       "cost": 1,
-      "damage": 3,
+      "damage": 2,
       "block": 0,
       "hits": 2,
       "draw": 0,
@@ -14476,7 +14476,7 @@
       "nextBlock": 0,
       "power": "none",
       "magic": 0,
-      "special": "discount_hand",
+      "special": "discount_choice",
       "specialAmount": 1,
       "exhaust": true,
       "upgradeDamage": 0,
@@ -15760,12 +15760,12 @@
       "exhaust": false,
       "upgradeDamage": 0,
       "upgradeBlock": 0,
-      "upgradeMagic": 1,
+      "upgradeMagic": 0,
       "upgradeSpecial": 0,
-      "upgradeCost": false,
+      "upgradeCost": true,
       "upgradeDiscard": 0
     },
-    "reason": "Weaker no-manor baseline; avoid compounded effects/upgrades and free positive-draw cycles."
+    "reason": "The upgrade lowers setup cost by one Energy. Each unblocked Attack hit applies one Poison in both versions."
   },
   {
     "id": "ranger_unseen_hunter",
@@ -18596,7 +18596,7 @@
       "power": "none",
       "magic": 0,
       "special": "guard_bonus",
-      "specialAmount": 18,
+      "specialAmount": 14,
       "exhaust": true,
       "upgradeDamage": 2,
       "upgradeBlock": 0,
@@ -18814,12 +18814,13 @@
       "exhaust": true,
       "upgradeDamage": 0,
       "upgradeBlock": 0,
-      "upgradeMagic": 1,
+      "upgradeMagic": 0,
       "upgradeSpecial": 0,
       "upgradeCost": false,
-      "upgradeDiscard": 0
+      "upgradeDiscard": 0,
+      "upgradeStrength": 1
     },
-    "reason": "Differentiate from Blood Price by trading HP for Strength and Dexterity for the fight."
+    "reason": "Trade HP for Strength and Dexterity for the fight. The upgrade adds Strength only."
   },
   {
     "id": "knight_bloodfire_mantle",
@@ -20300,13 +20301,13 @@
       "nextDraw": 0,
       "nextBlock": 0,
       "power": "skill_block",
-      "magic": 3,
+      "magic": 5,
       "special": "none",
       "specialAmount": 0,
       "exhaust": false,
       "upgradeDamage": 0,
       "upgradeBlock": 0,
-      "upgradeMagic": 1,
+      "upgradeMagic": 2,
       "upgradeSpecial": 0,
       "upgradeCost": false,
       "upgradeDiscard": 0
@@ -25060,7 +25061,7 @@
       "nextBlock": 0,
       "power": "none",
       "magic": 0,
-      "special": "discard_energy",
+      "special": "discard_energy_exhaust",
       "specialAmount": 3,
       "exhaust": true,
       "upgradeDamage": 2,
@@ -25070,7 +25071,7 @@
       "upgradeCost": false,
       "upgradeDiscard": 0
     },
-    "reason": "Weaker no-manor baseline; avoid compounded effects/upgrades and free positive-draw cycles."
+    "reason": "Exhaust Falcon Courier on discard so it cannot cycle back through the discard pile."
   },
   {
     "id": "ranger_venom_eclipse",

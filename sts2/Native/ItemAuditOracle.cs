@@ -42,26 +42,21 @@ public static class ItemAuditOracle
         Require(CardPlayDiagnostics.LastFailure==failure&&card.Owner.PlayerCombatState.Energy==energy-cost+gained,"Item play payment/diagnostic.");}
     public static async Task<object> Relic(RunState run,string key,bool up)
     {
+        if (RelicReworkOracle.Handles(key)) return await RelicReworkOracle.Verify(run, key, up);
         var player=run.Players.Single();var combat=player.Creature.CombatState!;foreach(var enemy in combat.GetOpponentsOf(player.Creature)){enemy.SetMaxHpInternal(10000);enemy.SetCurrentHpInternal(10000);}
         player.Creature.SetMaxHpInternal(10000);player.Creature.SetCurrentHpInternal(10000);
         foreach(var card in player.PlayerCombatState!.Hand.Cards.ToArray())await CardPileCmd.Add(card,PileType.Draw,skipVisuals:true);
         await PlayerCmd.GainEnergy(100,player);
         var relic=player.Relics.OfType<FamilyDropRelic>().Single(r=>r.Key==key);
-        var first=player.PlayerCombatState.TurnNumber;var block=player.Creature.Block;var draw=player.PlayerCombatState.Hand.Cards.Count;
+        var block=player.Creature.Block;var draw=player.PlayerCombatState.Hand.Cards.Count;
         var power="knight_forge_memory";var attack=PlayerBloodlines.Heir(player).classId+"_strike";var skill=PlayerBloodlines.Heir(player).classId+"_guard";
         var plays=new List<object>();
         async Task Paid(string cardKey){var card=await Add(player,cardKey,up);var beforeBlock=player.Creature.Block;var beforeHand=player.PlayerCombatState.Hand.Cards.Count;await Play(card);plays.Add(new{card=cardKey,up,block=player.Creature.Block-beforeBlock,draw=player.PlayerCombatState.Hand.Cards.Count-beforeHand+1,vigor=player.Creature.GetPowerAmount<VigorPower>(),charges=player.Creature.GetPower<P_class>()?.Charges,claimed=relic.CombatClaimed,turn=relic.TriggerTurn,mask=relic.TypeMask,counter=relic.DisplayAmount});}
         switch(key){
-            case "heirloom_brooch":case "scholar_bookmark":await Paid(power);await Paid(power);break;
-            case "training_dummy":case "guardian_knot":await CreatureCmd.GainBlock(player.Creature,20,ValueProp.Unpowered,null);await Paid(attack);await Paid(attack);break;
-            case "triune_crest":await Paid(PlayerBloodlines.Heir(player).classId=="ranger"?attack:skill);await Paid(PlayerBloodlines.Heir(player).classId=="ranger"?attack:skill);break;
-            case "family_seal":await Paid(power);await Paid(skill);await Paid(attack);await Paid(power);await Paid(skill);await Paid(attack);break;
+            case "heirloom_brooch":await Paid(power);await Paid(power);break;
+            case "training_dummy":await CreatureCmd.GainBlock(player.Creature,20,ValueProp.Unpowered,null);await Paid(attack);await Paid(attack);break;
             case "threadbound_ledger":await Paid("knight_king_s_ransom");await Paid("knight_king_s_ransom");break;
             case "wayfarer_ribbon":await Add(player,skill);await Paid("ranger_empty_quiver");await Paid("ranger_empty_quiver");break;
-            case "legacy_hourglass":case "trail_compass":
-                // Actual turn start, not an invented counter callback.
-                while(player.PlayerCombatState.TurnNumber<relic.Row.Number("threshold")){CombatManager.Instance.SetReadyToEndTurn(player,false);await Wait(()=>player.PlayerCombatState.Phase==PlayerTurnPhase.Play&&player.PlayerCombatState.TurnNumber>first);first=player.PlayerCombatState.TurnNumber;}
-                break;
         }
         var restored=(FamilyDropRelic)RelicModel.FromSerializable(relic.ToSerializable());
         Require(restored.CombatClaimed==relic.CombatClaimed&&restored.TriggerTurn==relic.TriggerTurn&&restored.TypeMask==relic.TypeMask&&restored.MaskTurn==relic.MaskTurn&&restored.Status==relic.Status,"Saved relic state mismatch.");
@@ -131,11 +126,11 @@ public static class ItemAuditOracle
         await Sequence();var first=player.PlayerCombatState!.TurnNumber;
         var firstCounters=HeirRelicOracle.Counters(run);var saved=System.Text.Json.JsonSerializer.Serialize(firstCounters);await HeirRelicOracle.RoundTrip(run);Require(saved==System.Text.Json.JsonSerializer.Serialize(HeirRelicOracle.Counters(run)),"Stacked counter round trip.");
         CombatManager.Instance.SetReadyToEndTurn(player,false);await Wait(()=>player.PlayerCombatState.Phase==PlayerTurnPhase.Play&&player.PlayerCombatState.TurnNumber>first);
-        foreach(var key in new[]{"training_dummy","threadbound_ledger","wayfarer_ribbon","family_seal"})Require(Relic(key).TriggerTurn==first,"End-turn discard/exhaust claimed a new turn.");
-        Require(Relic("family_seal").TypeMask==0&&Relic("trail_compass").CombatClaimed,"Turn-start reset/compass.");
+        foreach(var key in new[]{"training_dummy","threadbound_ledger","wayfarer_ribbon"})Require(Relic(key).TriggerTurn==first,"End-turn discard/exhaust claimed a new turn.");
+        Require(Relic("family_seal").TypeMask==7&&Relic("family_seal").CombatClaimed&&!Relic("trail_compass").CombatClaimed,"Family Seal replay or unmarked Trail Compass.");
         await Sequence();var second=player.PlayerCombatState.TurnNumber;
-        foreach(var key in new[]{"training_dummy","threadbound_ledger","wayfarer_ribbon","family_seal"})Require(Relic(key).TriggerTurn==second,"Per-turn relic failed to rearm.");
-        foreach(var key in new[]{"heirloom_brooch","guardian_knot","scholar_bookmark","triune_crest"})Require(Relic(key).CombatClaimed,"Combat cap lost.");
+        foreach(var key in new[]{"training_dummy","threadbound_ledger","wayfarer_ribbon"})Require(Relic(key).TriggerTurn==second,"Per-turn relic failed to rearm.");
+        foreach(var key in new[]{"heirloom_brooch","family_seal","legacy_hourglass"})Require(Relic(key).CombatClaimed,"Combat cap lost.");
         var beforeReacquire=HeirRelicOracle.Counters(run);await RelicCmd.Remove(Relic("heirloom_brooch"));await RelicCmd.Obtain(HeirDropRelics.Get("heirloom_brooch").ToMutable(),player);Require(!Relic("heirloom_brooch").CombatClaimed,"Fresh relic did not reset.");
         var block=player.Creature.Block;await Play(await Add(player,"knight_forge_memory"));Require(player.Creature.Block-block==9&&Relic("heirloom_brooch").CombatClaimed,"Reacquired relic trigger.");
         var original=player.RelicGrabBag.ToSerializable();var fallback=new List<string>();

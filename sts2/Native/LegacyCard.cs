@@ -52,6 +52,7 @@ public abstract class LegacyCard : CustomCardModel
         {
             var entries = HeirLocalization.Entries(("title", Row.Text("name")), ("description", "{Rules}"), ("returnPrompt", "Choose cards to return to your hand."), ("attackReturnPrompt", "Choose Attacks to return to your hand."));
             if (Row.Text("special") == "discount_card") entries.Add(("discountPrompt", HeirLocalization.Text("Choose a card to discount this turn.")));
+            if (Row.Text("special") == "discount_choice") entries.Add(("discountPrompt", HeirLocalization.Text("Choose cards to discount this turn.")));
             return entries;
         }
     }
@@ -138,6 +139,8 @@ public abstract class LegacyCard : CustomCardModel
             "exhaust_damage" => Math.Min(10, PileType.Exhaust.GetPile(Owner).Cards.Count) * n,
             "arcane_aftershock" when PlayerBloodlines.Heir(Owner).classId=="mage" && Owner.Creature.GetPower<P_class>() is {ArcaneDrawUsed:true} => n,
             "charge_burst" when PlayerBloodlines.Heir(Owner).classId=="mage" => (Owner.Creature.GetPower<P_class>()?.Charges ?? 0)*n,
+            "full_charge_bonus" when PlayerBloodlines.Heir(Owner).classId == "mage" &&
+                Owner.Creature.GetPower<P_class>() is { Charges: 2 } => n,
             "skill_damage" => Math.Min(3,Owner.Creature.GetPower<P_class>()?.SkillsThisTurn ?? 0)*n,
             "guard_bonus" when Owner.Creature.Block > 0 => n,
             "execute" when target is not null && target.CurrentHp * 2 <= target.MaxHp => basis * (n - 1),
@@ -156,7 +159,15 @@ public abstract class LegacyCard : CustomCardModel
     public override async Task AfterCardDiscarded(PlayerChoiceContext context, CardModel card)
     {
         if (card != this || Owner.PlayerCombatState?.Phase != PlayerTurnPhase.Play || CombatState?.CurrentSide != Owner.Creature.Side) return;
-        if (Row.Text("special") is not ("discard_draw" or "discard_energy" or "discard_block" or "discard_vigor")) return;
+        var special = Row.Text("special");
+        if (special is not ("discard_draw" or "discard_energy" or "discard_block" or "discard_vigor" or "discard_energy_exhaust")) return;
+        if (special == "discard_energy_exhaust")
+        {
+            if (Pile?.Type != PileType.Discard) return;
+            await BranchCommands.Exhaust(context, this);
+            await PlayerCmd.GainEnergy(DesignCard.SpecialAmount, Owner);
+            return;
+        }
         var turn = Owner.PlayerCombatState.TurnNumber;
         if (DiscardRewardTurn == turn) return;
         DiscardRewardTurn = turn; // Set before drawing: nested discard effects cannot re-enter the reward.

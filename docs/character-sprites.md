@@ -12,6 +12,12 @@ Each 1448×1086 atlas has twelve authored poses. Row one contains four idle fram
 
 Idle and attack are frame animations. Skill and hurt hold an authored pose briefly and return to idle; death and victory hold their authored poses. Native animation triggers and card-play hooks select these states without delaying gameplay. Rest sites and merchants use the selected class's idle animation. Trait sizes/colors remain supported. Family colors appear on the banner rather than tinting the entire illustration.
 
+## Class-size comparison and Workshop captures
+
+All three classes normalize their authored sprite height to 230 local units before trait and scene scaling. Dwarfism multiplies this by 0.8 (184 units), while Gigantism multiplies it by 1.3. Class identity does not add a size multiplier. The initial Workshop gallery compared Dwarfism Knight/Ranger heirs with a normal-sized Mage, making the Mage appear larger. The replacement combat captures use no traits, no manor investment, Ascension 0, the same seed and viewport, and an idle pose. They are isolated visual fixtures, not natural campaign or balance evidence.
+
+`scripts/sts2-class-size-check.py` verifies the loaded release DLL and class/trait state, checks native sprite scales and visible idle-art bounds for all three classes both without traits and with Dwarfism, then captures the three neutral combat images. It requires an already launched disposable owned-game oracle profile. This corrects the gallery comparison without changing intended trait effects or class artwork.
+
 ## Art direction and records
 
 The original class atlases use compact fantasy proportions, clear silhouettes, dark contours and class-specific equipment. Original generation prompts and correction records have been removed from the current tree. These descriptions summarize the current art direction.

@@ -8,6 +8,10 @@
     "summary": "If you start this Attack with 2 Arcane Charges and Arcane Flow ready, apply that Poison again."
   },
   {
+    "id": "full_charge_bonus",
+    "summary": "If this Attack consumes 2 Arcane Charges, deal {n} additional damage."
+  },
+  {
     "id": "block_damage",
     "summary": "Deal damage equal to your current Block."
   },
@@ -80,6 +84,10 @@
     "summary": "Choose a card in your hand. Reduce its cost by {n} this turn."
   },
   {
+    "id": "discount_choice",
+    "summary": "Choose up to {n} card(s) in your hand. Reduce their cost by 1 this turn."
+  },
+  {
     "id": "free_hand",
     "summary": "Cards currently in your hand cost 0 this turn. You cannot draw additional cards this turn."
   },
@@ -102,6 +110,10 @@
   {
     "id": "discard_energy",
     "summary": "When discarded during your turn, gain {n} Energy. Triggers at most once per copy each turn."
+  },
+  {
+    "id": "discard_energy_exhaust",
+    "summary": "When discarded during your turn, Exhaust this card and gain {n} Energy."
   },
   {
     "id": "discard_vigor",

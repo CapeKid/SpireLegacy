@@ -29,7 +29,7 @@ for tier in [0,2]:
                 if cls=='knight':
                     damage=(26 if upgrade else 20)*(2 if supported else 1)+strength;cost=3
                 elif cls=='mage':
-                    damage=(34 if upgrade else 26)+strength+(2 if supported else 0);cost=3
+                    damage=(34 if upgrade else 26)+strength+(8 if supported else 0);cost=3
                     assert result['charges']==(2 if supported else 0),result
                 else:
                     damage=(8 if supported else 0)+strength;cost=1 if upgrade else 2

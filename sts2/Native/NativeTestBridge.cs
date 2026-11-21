@@ -370,7 +370,9 @@ public static class NativeTestBridge
                     result=await VigorOracle.Check(RunState(),request.GetProperty("card").GetString()!,request.GetProperty("upgrade").GetBoolean(),UseTestSelector());break;
                 case "expansion-play":
                     await WaitForPlay(RunState().Players.Single());
-                    result=await PoolExpansionOracle.Play(RunState(),request.GetProperty("card").GetString()!,request.GetProperty("upgrade").GetBoolean(),UseTestSelector());break;
+                    var expansionKey = request.GetProperty("card").GetString()!;
+                    var expansionSelection = expansionKey == "ranger_pocket_arsenal" ? 2 : 1;
+                    result=await PoolExpansionOracle.Play(RunState(),expansionKey,request.GetProperty("upgrade").GetBoolean(),UseTestSelector(expansionSelection));break;
                 case "card-resolution":
                     await WaitForPlay(RunState().Players.Single());
                     result=await CardResolutionOracle.Play(RunState(),request.GetProperty("card").GetString()!,request.GetProperty("upgrade").GetBoolean(),request.TryGetProperty("mode",out var resolutionMode)?resolutionMode.GetString()!:"normal",UseTestSelector(request.TryGetProperty("selectionLimit",out var resolutionLimit)?resolutionLimit.GetInt32():1));break;
@@ -691,20 +693,32 @@ public static class NativeTestBridge
                     var handBeforeDiscard = PileType.Hand.GetPile(discardActor).Cards.Count;
                     var vigorBeforeDiscard = discardActor.Creature.GetPowerAmount<MegaCrit.Sts2.Core.Models.Powers.VigorPower>();
                     await CardCmd.Discard(new BlockingPlayerChoiceContext(),discardCard);
+                    var firstDiscardPile = discardCard.Pile?.Type.ToString();
                     var firstEnergyReward = discardActor.PlayerCombatState.Energy-energyBeforeDiscard;
                     var firstDrawReward = PileType.Hand.GetPile(discardActor).Cards.Count-handBeforeDiscard+1;
                     var vigorAfterDiscard = discardActor.Creature.GetPowerAmount<MegaCrit.Sts2.Core.Models.Powers.VigorPower>();
-                    var serializedDiscard = discardCard.ToSerializable();
-                    var restoredDiscard = (LegacyCard)discardRun.LoadCard(serializedDiscard,discardActor);
-                    discardRun.RemoveCard(restoredDiscard);
-                    discardActor.Creature.CombatState.AddCard(restoredDiscard,discardActor);
-                    await CardPileCmd.Add(restoredDiscard,PileType.Hand,skipVisuals:true);
+                    var restoredDiscard = discardCard;
+                    if (discardCard.DesignCard.Row.Text("special") == "discard_energy_exhaust")
+                    {
+                        using (UseTestSelector())
+                            await CardEffects.RecoverFromExhaust(discardActor, new BlockingPlayerChoiceContext(), attacksOnly: true);
+                        if (discardCard.Pile?.Type != PileType.Hand)
+                            throw new InvalidDataException("Falcon Courier was not recovered from Exhaust.");
+                    }
+                    else
+                    {
+                        restoredDiscard = (LegacyCard)discardRun.LoadCard(discardCard.ToSerializable(),discardActor);
+                        discardRun.RemoveCard(restoredDiscard);
+                        discardActor.Creature.CombatState.AddCard(restoredDiscard,discardActor);
+                        await CardPileCmd.Add(restoredDiscard,PileType.Hand,skipVisuals:true);
+                    }
                     var energyBeforeRepeat = discardActor.PlayerCombatState.Energy;
                     var handBeforeRepeat = PileType.Hand.GetPile(discardActor).Cards.Count;
                     await CardCmd.Discard(new BlockingPlayerChoiceContext(),restoredDiscard);
                     var secondEnergyReward = discardActor.PlayerCombatState.Energy-energyBeforeRepeat;
                     var secondDrawReward = PileType.Hand.GetPile(discardActor).Cards.Count-handBeforeRepeat+1;
                     result = new { firstEnergyReward, firstDrawReward, secondEnergyReward, secondDrawReward,
+                        firstDiscardPile, secondDiscardPile=restoredDiscard.Pile?.Type.ToString(),
                         firstVigorReward = vigorAfterDiscard - vigorBeforeDiscard,
                         secondVigorReward = discardActor.Creature.GetPowerAmount<MegaCrit.Sts2.Core.Models.Powers.VigorPower>() - vigorAfterDiscard,
                         rewardTurn = restoredDiscard.DiscardRewardTurn, turn = discardActor.PlayerCombatState.TurnNumber };break;

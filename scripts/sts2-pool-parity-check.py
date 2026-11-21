@@ -61,6 +61,13 @@ try:
                 if row['special']=='discount_hand':
                     assert all(cost==1 for cost in result['costsBefore']),result
                     assert sum(1-cost for cost in result['costsAfter'])==row['specialAmount']+(row['upgradeSpecial'] if up else 0),result
+                if key=='ranger_pocket_arsenal':
+                    expected_costs=result['costsBefore'].copy()
+                    eligible=[i for i,cost in enumerate(expected_costs) if cost>0]
+                    assert len(eligible)>=2,result
+                    for i in eligible[:2 if up else 1]:
+                        expected_costs[i]-=1
+                    assert result['originalCostsAfter']==expected_costs and len(result['hand'])==len(expected_costs)+1,result
                 if key=='mage_hourglass':
                     assert result['costsBefore'][0]==3,result
                     assert result['costsAfter']==[1]+result['costsBefore'][1:],result
