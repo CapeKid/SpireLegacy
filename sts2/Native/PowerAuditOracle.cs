@@ -85,7 +85,7 @@ public static partial class PowerAuditOracle
             var charges=new List<int>();
             for(var i=0;i<4;i++) {
                 await Play(await Add(player,ModelDb.Card<DefendIronclad>(),up));charges.Add(counter.Charges);
-                var expected=cls=="knight"?1:cls=="mage"?Math.Min(2,i+1+(mode=="reservoir"?1:0)):0;
+                var expected=cls=="knight"?1:cls=="mage"?i+1+(mode=="reservoir"?1:0):0;
                 Require(counter.Charges==expected,"Class Skill cap/echo mismatch: "+cls);
             }
             // Regular does not cache power fields: run saves contain no live powers.
@@ -139,16 +139,16 @@ public static partial class PowerAuditOracle
             var repeats=player.Creature.Powers.OfType<LegacyPower>().Any(p=>p.Key=="double_tap")?2:1;
             await Play(card,enemies[0]);var drawn=hand.Cards.Count-before+1;draws.Add(drawn);
             var lost=hp-enemies[0].CurrentHp;damage.Add(lost);
-            Require(lost==2*(up?7:5)*repeats+(mode=="reservoir"?4*spent:0),"Mage native HP damage differs.");
+            Require(lost==2*(up?7:5)*repeats+(mode=="reservoir"?4*spent:0),$"Mage native HP damage differs: lost {lost}, spent {spent}, enemy block {enemies[0].Block}, turn {player.PlayerCombatState!.TurnNumber}.");
             Require(drawn==expectedDraw,"Arcane Flow drew "+drawn+", expected "+expectedDraw);
             Require(counter.Charges==0,"Arcane Flow did not consume charges.");
         }
         for(var i=0;i<chargeCount;i++)await Skill();
-        Require(counter.Charges==Math.Min(2,chargeCount),"Arcane Flow charge cap.");
+        Require(counter.Charges==chargeCount,"Arcane Flow charges are uncapped.");
         if(mode=="replay")await Apply(player,"double_tap",1);
         if(mode=="blocked")await Apply(player,"no_draw",1);
         if(mode=="full")while(hand.Cards.Count<9)await Add(player,ModelDb.Card<DefendIronclad>(),up);
-        var expected=mode is "blocked" or "full"?0:Math.Min(2,chargeCount);
+        var expected=mode is "blocked" or "full"?0:chargeCount;
         // Full hand is inspected separately: an Attack in Play may leave a slot.
         if(mode=="full")expected=1;
         await Attack(expected);
@@ -162,13 +162,16 @@ public static partial class PowerAuditOracle
         foreach(var held in hand.Cards.ToArray())await CardPileCmd.Add(held,PileType.Discard,skipVisuals:true);
         if(mode=="blocked")await PowerCmd.Remove(player.Creature.Powers.OfType<NoDrawPower>().Single());
         await Skill();await Skill();await Attack(chargeCount==0?2:0);
-        // Unspent charges survive the turn; the once-per-turn draw allowance resets.
-        await Skill();Require(counter.Charges==1,"Missing banked Arcane Charge.");
+        // Unspent charges dissipate at end of turn; the once-per-turn draw allowance resets.
+        await Skill();Require(counter.Charges==1,"Missing unspent Arcane Charge.");
         await BalanceOracle.End(player,true);
-        Require(!counter.ArcaneDrawUsed&&counter.Charges==1,"Arcane Flow turn reset/carry.");
+        Require(!counter.ArcaneDrawUsed&&counter.Charges==0,"Arcane Flow turn reset/dissipation.");
         foreach(var held in hand.Cards.ToArray())await CardPileCmd.Add(held,PileType.Discard,skipVisuals:true);
-        await Attack(1);
-        return new{chargeCount,up,mode,draws,damage,serialized=true,cloneIndependent=true,realTurnReset=true,bankedCharge=true};
+        // The real monster turn can apply Shrink or gain Block; isolate the draw reset from those damage modifiers.
+        foreach(var power in player.Creature.Powers.Where(p=>p.Type==MegaCrit.Sts2.Core.Entities.Powers.PowerType.Debuff).ToArray())await PowerCmd.Remove(power);
+        foreach(var enemy in enemies){foreach(var power in enemy.Powers.ToArray())await PowerCmd.Remove(power);enemy.LoseBlockInternal(enemy.Block);}
+        await Skill();await Attack(1);
+        return new{chargeCount,up,mode,draws,damage,serialized=true,cloneIndependent=true,realTurnReset=true,chargesDissipated=true};
     }
     public static async Task<object> MagePool(RunState run,string key,bool up,string mode,IDisposable selector)
     {
@@ -204,7 +207,7 @@ public static partial class PowerAuditOracle
             if(key=="mage_moonstone_lance"){
                 Require(!card.ShouldRetainThisTurn,"Moonstone Lance no longer duplicates retained growth.");
                 await Skill();await Skill();var hp=enemies[0].CurrentHp;
-                await Play(card,enemies[0]);Require(hp-enemies[0].CurrentHp==card.DesignCard.Damage+2*card.DesignCard.SpecialAmount,"Skill sequence Lance damage.");
+                await Play(card,enemies[0]);Require(hp-enemies[0].CurrentHp==card.DesignCard.Damage+card.DesignCard.SpecialAmount,"Skill sequence Lance damage.");
                 return new{key,up,mode,skills=2,flowDraw=2,cost=card.DesignCard.Cost,saveRoundTrip=true};
             }
             if(key=="mage_ember_dart"){
@@ -216,14 +219,14 @@ public static partial class PowerAuditOracle
                 await Play(card,enemies[0]);Require(hand.Cards.Count-before+1==2&&hp-enemies[0].CurrentHp==card.DesignCard.Damage+growth,"Retained cash-out damage/draw.");
                 return new{key,up,mode,growth,flowDraw=2,cost=card.DesignCard.Cost,saveRoundTrip=true};
             }
-            var hpBefore=player.Creature.CurrentHp;var held=hand.Cards.Count;
+            var hpBefore=player.Creature.CurrentHp;var held=hand.Cards.Count;var primedCharges=counter.Charges;
             await Play(card);var drawn=hand.Cards.Count-held+1;
-            Require(counter.Charges==2&&drawn==card.DesignCard.Amount("draw"),"Delayed setup draw/charges.");
+            Require(counter.Charges==primedCharges+1+(card.DesignCard.Row.Text("special")=="charge_gain"?card.DesignCard.SpecialAmount:0)&&drawn==card.DesignCard.Amount("draw"),$"Delayed setup draw/charges: {primedCharges}->{counter.Charges}, drew {drawn}.");
             var loss=hpBefore-player.Creature.CurrentHp;Require(loss==card.DesignCard.Amount("hpLoss"),"Overcharge HP payment.");
             await BalanceOracle.End(player,true);
-            Require(player.PlayerCombatState!.Energy==3+card.DesignCard.Amount("nextEnergy")&&counter.Charges==2&&!counter.ArcaneDrawUsed,"Delayed setup Energy and banked charges.");
+            Require(player.PlayerCombatState!.Energy==3+card.DesignCard.Amount("nextEnergy")&&counter.Charges==0&&!counter.ArcaneDrawUsed,"Delayed setup Energy and dissipated charges.");
             var count=hand.Cards.Count;await Play(await Add(player,NativeCards.Get("mage_ember_dart")),enemies[0]);
-            Require(hand.Cards.Count-count==2,"Delayed setup Arcane Flow draw.");
+            Require(hand.Cards.Count-count==0,"Dissipated charges still drew.");
             return new{key,up,mode,drawn,hpLoss=loss,nextEnergy=card.DesignCard.Amount("nextEnergy"),flowDraw=2,saveRoundTrip=true};
         }
     }
@@ -322,8 +325,8 @@ public static partial class PowerAuditOracle
         var others=run.Players.Where(p=>p!=player).Select(p=>new{p,charges=p.Creature.GetPower<P_class>()!.Charges,hand=p.PlayerCombatState!.Hand.Cards.Count,energy=p.PlayerCombatState.Energy}).ToArray();
         try{
             harmony.Patch(typeof(Hook).GetMethods(BindingFlags.Public|BindingFlags.Static).Single(m=>m.Name=="AfterDamageGiven"),prefix:new HarmonyMethod(typeof(PowerAuditOracle),nameof(Observe)));
-            foreach(var card in player.PlayerCombatState!.Hand.Cards.OfType<DefendIronclad>().ToArray())await Play(card);
-            var counter=player.Creature.GetPower<P_class>()!;var primed=counter.Charges;Require(primed==(PlayerBloodlines.Heir(player).classId=="knight"?1:2),"Co-op class priming.");
+            var defends=player.PlayerCombatState!.Hand.Cards.OfType<DefendIronclad>().ToArray();foreach(var card in defends)await Play(card);
+            var counter=player.Creature.GetPower<P_class>()!;var primed=counter.Charges;Require(primed==(PlayerBloodlines.Heir(player).classId=="knight"?1:defends.Length),"Co-op class priming.");
             var target=player.Creature.CombatState!.GetOpponentsOf(player.Creature).First(e=>e.IsAlive);var measured=new List<int[]>();
             foreach(var card in player.PlayerCombatState.Hand.Cards.OfType<TwinStrike>().ToArray()){
                 observed=card;hits.Clear();await Play(card,target);measured.Add(hits.Select(h=>h.damage).ToArray());Require(counter.Charges==0,"Co-op charge consumption.");
@@ -578,7 +581,7 @@ public static partial class PowerAuditOracle
         foreach(var card in cards)await Play(card);
         Require(player.PlayerCombatState.Energy==energy-3&&player.Creature.Block-block==3*(up?8:5)+3,"Co-op third Skill stacking differs.");
         var counter=player.Creature.GetPower<P_class>()!;var cls=PlayerBloodlines.Heir(player).classId;
-        Require(counter.Charges==(cls=="knight"?1:cls=="mage"?2:0),"Co-op class Skill cap differs.");
+        Require(counter.Charges==(cls=="knight"?1:cls=="mage"?3:0),"Co-op class Skill count differs.");
         var attackPlays=0;if(cls=="ranger") {
             var before=counter.AttacksThisTurn;var target=player.Creature.CombatState!.GetOpponentsOf(player.Creature).First(e=>e.IsAlive);
             var attacks=player.PlayerCombatState.Hand.Cards.OfType<TwinStrike>().Where(c=>c.IsUpgraded==up).TakeLast(3).ToArray();Require(attacks.Length==3,"Missing prepared co-op Attack fuel.");

@@ -72,7 +72,7 @@ public abstract class FamilyPotion : CustomPotionModel
                 await CreatureCmd.GainBlock(target,Row.Number("amount"),ValueProp.Unpowered,null);
                 await PowerCmd.Apply<VigorPower>(context,target,Row.Number("extra"),Owner.Creature,null);break;
             case "mage":
-                if(target.GetPower<P_class>() is {} charge)charge.Charges=Math.Min(2,charge.Charges+Row.Number("extra"));
+                if(target.GetPower<P_class>() is {} charge)charge.Charges+=Row.Number("extra");
                 await CardPileCmd.Draw(context,1,Owner);break;
             case "ranger":
                 await PowerCmd.Apply<VigorPower>(context,target,3,Owner.Creature,null);

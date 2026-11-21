@@ -413,6 +413,9 @@
     "thesis_ready",
     "hunt_momentum",
     "discard_return",
+    "debuff_charge",
+    "exhaust_charge",
+    "flow_draw",
     "retained_attack_energy",
     "mana_fountain",
     "intangible"

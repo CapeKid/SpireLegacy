@@ -140,7 +140,7 @@ public abstract class LegacyCard : CustomCardModel
             "arcane_aftershock" when PlayerBloodlines.Heir(Owner).classId=="mage" && Owner.Creature.GetPower<P_class>() is {ArcaneDrawUsed:true} => n,
             "charge_burst" when PlayerBloodlines.Heir(Owner).classId=="mage" => (Owner.Creature.GetPower<P_class>()?.Charges ?? 0)*n,
             "full_charge_bonus" when PlayerBloodlines.Heir(Owner).classId == "mage" &&
-                Owner.Creature.GetPower<P_class>() is { Charges: 2 } => n,
+                Owner.Creature.GetPower<P_class>() is { Charges: >= 2 } => n,
             "skill_damage" => Math.Min(3,Owner.Creature.GetPower<P_class>()?.SkillsThisTurn ?? 0)*n,
             "guard_bonus" when Owner.Creature.Block > 0 => n,
             "execute" when target is not null && target.CurrentHp * 2 <= target.MaxHp => basis * (n - 1),

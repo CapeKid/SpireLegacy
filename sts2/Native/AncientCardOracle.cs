@@ -40,7 +40,7 @@ public static class AncientCardOracle
                 var before=hand.Cards.Count;await Skill();firstDraw=hand.Cards.Count-before;
                 if(firstDraw!=1||creature.GetPower<P_class>()?.Charges!=2)throw new InvalidDataException("First Skill charge/draw mismatch.");
                 before=hand.Cards.Count;await Skill();secondDraw=hand.Cards.Count-before;
-                if(secondDraw!=0||creature.GetPower<P_class>()?.Charges!=2)throw new InvalidDataException("Arcane Echo repeated or exceeded its cap.");
+                if(secondDraw!=0||creature.GetPower<P_class>()?.Charges!=3)throw new InvalidDataException("Arcane Echo repeated or lost a charge.");
                 await CreatureCmd.GainBlock(creature,999,ValueProp.Unpowered,null);
                 var turn=player.PlayerCombatState!.TurnNumber;CombatManager.Instance.SetReadyToEndTurn(player,false);
                 var tree=(SceneTree)Engine.GetMainLoop();var deadline=Time.GetTicksMsec()+20000;

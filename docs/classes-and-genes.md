@@ -3,7 +3,7 @@ The Knight, Mage and Ranger now use different combat loops, in addition to their
 | Class | Combat loop | Starter identity |
 | --- | --- | --- |
 | Knight | A Skill primes the next Attack for +2 damage; the counter is consumed on attacking. | Sword Strike deals 5 damage with no extra Block. Guard gives 4 Block and prepares a counterattack. |
-| Mage | Each Skill adds one Arcane Charge, capped at two. The next Attack gains +1 damage per charge and consumes them. Arcane Reservoir increases damage per charge. | Spark has 5 base damage; Ward has 4 base Block. Skill/spell sequences build a burst. |
+| Mage | Each Skill adds one Arcane Charge, with no cap. The next Attack consumes all charges to draw that many cards, once per turn, and charges dissipate at the end of the turn. Arcane Reservoir adds damage per charge. | Spark has 5 base damage; Ward has 4 base Block. Skill/spell sequences build a burst. |
 | Ranger | Every third Attack in a turn draws a card and applies 1 Vulnerable to its target. Area attacks mark all enemies; random attacks mark a random enemy. Endless Quiver increases chain draw. | Sidestep gives 4 Block without extra draw/discard; later rewards provide cycling. |
 
 Starter genetics apply to BASIC cards, including class signatures, and remain visible in printed damage, Block and card text. Genetic modifiers stack, while class/reward cards retain their own authored values. Ordinary Strength, Dexterity and trait powers still apply on top.

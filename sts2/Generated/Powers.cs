@@ -50,6 +50,9 @@ public sealed class P_thesis_ready : LegacyPower { }
 public sealed class P_hunt_momentum : LegacyPower { }
 public sealed class P_discard_return : LegacyPower { }
 public sealed class P_retained_attack_energy : LegacyPower { }
+public sealed class P_debuff_charge : LegacyPower { }
+public sealed class P_exhaust_charge : LegacyPower { }
+public sealed class P_flow_draw : LegacyPower { }
 public sealed class P_plated : LegacyPower { }
 public sealed class P_reservoir : LegacyPower { }
 public sealed class P_quiver : LegacyPower { }

@@ -8,7 +8,7 @@ def relic_effect(cls, r):
     blocks = [p['block'] for p in plays]
     draws = [p['draw'] for p in plays]
     guard = 6 if up else 4
-    if key == 'heirloom_brooch': assert blocks == [9, 4] and draws == [0, 0], r
+    if key == 'heirloom_brooch': assert blocks == [5, 0] and draws == [0, 0], r
     elif key == 'training_dummy': assert blocks == [0, 0] and [p['vigor'] for p in plays] == [1, 0], r
     elif key == 'threadbound_ledger': assert draws == [1, 0], r
     elif key == 'wayfarer_ribbon': assert blocks == ([10, 7] if up else [7, 4]), r

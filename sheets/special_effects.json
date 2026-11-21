@@ -5,11 +5,11 @@
   },
   {
     "id": "arcane_poison",
-    "summary": "If you start this Attack with 2 Arcane Charges and Arcane Flow ready, apply that Poison again."
+    "summary": "If you start this Attack with 2 or more Arcane Charges and Arcane Flow ready, apply that Poison again."
   },
   {
     "id": "full_charge_bonus",
-    "summary": "If this Attack consumes 2 Arcane Charges, deal {n} additional damage."
+    "summary": "If this Attack consumes 2 or more Arcane Charges, deal {n} additional damage."
   },
   {
     "id": "block_damage",
@@ -73,7 +73,7 @@
   },
   {
     "id": "charge_gain",
-    "summary": "Gain {n} Arcane Charge(s), up to the normal charge cap."
+    "summary": "Gain {n} Arcane Charge(s)."
   },
   {
     "id": "discount_hand",
@@ -161,7 +161,7 @@
   },
   {
     "id": "charged_energy",
-    "summary": "If you have 2 Arcane Charges and Arcane Flow is ready, gain {n} Energy."
+    "summary": "If you have 2 or more Arcane Charges and Arcane Flow is ready, gain {n} Energy."
   },
   {
     "id": "arcane_aftershock",
@@ -173,7 +173,7 @@
   },
   {
     "id": "cleanse_charge",
-    "summary": "Remove all debuffs from yourself. Gain {n} Arcane Charges, up to the normal charge cap."
+    "summary": "Remove all debuffs from yourself. Gain {n} Arcane Charges."
   },
   {
     "id": "charge_burst",

@@ -52,7 +52,7 @@ public static partial class PowerAuditOracle
             }
             if(key=="mage_cleanse_sigil"){
                 await Apply(player,"weak",2);await Apply(player,"vulnerable",2);await Apply(player,"dexterity",2);
-                await Play(card);Require(!owner.Powers.Any(p=>p.Type==MegaCrit.Sts2.Core.Entities.Powers.PowerType.Debuff)&&owner.GetPowerAmount<DexterityPower>()==2&&counter.Charges==2&&owner.Block==0&&card.Pile?.Type==PileType.Exhaust,"Sigil must cleanse, preserve buffs, fill charges and Exhaust without Block.");
+                await Play(card);Require(!owner.Powers.Any(p=>p.Type==MegaCrit.Sts2.Core.Entities.Powers.PowerType.Debuff)&&owner.GetPowerAmount<DexterityPower>()==2&&counter.Charges==d.SpecialAmount+1&&owner.Block==0&&card.Pile?.Type==PileType.Exhaust,"Sigil must cleanse, preserve buffs, grant its charges plus the Skill charge, and Exhaust without Block.");
                 return new{key,up,mode,cost=d.Cost,charges=counter.Charges,saveRoundTrip=true};
             }
             if(key is "nova" or "mage_moonstone_lance"){
@@ -70,7 +70,7 @@ public static partial class PowerAuditOracle
                 if(mode=="replay")await Apply(player,"double_tap",1);
                 var charges=counter.Charges;var skills=counter.SkillsThisTurn;var hp=enemies.Select(e=>e.CurrentHp).ToArray();
                 var before=hand.Cards.Count;await Play(card,enemies[0]);
-                var expected=d.Damage+(key=="nova"?charges:skills)*d.SpecialAmount+(mode=="reservoir"?charges*2:0);
+                var expected=d.Damage+(key=="nova"?charges*d.SpecialAmount:charges>=2?d.SpecialAmount:0)+(mode=="reservoir"?charges*2:0);
                 if(mode=="replay")expected+=d.Damage;
                 Require(hp[0]-enemies[0].CurrentHp==expected,"Sequencing/charge damage differs: "+key+"/"+mode);
                 if(key=="nova")Require(enemies.Select((e,i)=>hp[i]-e.CurrentHp).All(n=>n==expected)&&card.Pile?.Type==PileType.Exhaust,"Nova must hit all targets and Exhaust.");

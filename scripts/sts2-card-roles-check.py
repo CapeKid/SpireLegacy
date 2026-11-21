@@ -28,7 +28,7 @@ cases = {
         'mage_moonstone_lance': ['zero', 'one', 'full', 'cap', 'reset'],
         'mage_returned_prophecy': ['full', 'empty', 'cancel', 'hand-cap', 'replay'],
     },
-    'ranger': {'ranger_ghost_luggage': ['full']},
+    # Ghost Luggage now returns discarded Attacks; sts2-ghost-luggage-check.py covers it.
 }
 send('trait-speed', value=8)
 for cls, cards in cases.items():

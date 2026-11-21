@@ -13,7 +13,7 @@
     "effect": "charges",
     "amount": 1,
     "limit": 2,
-    "summary": "Each Skill grants 1 Arcane Charge (max 2). Your next Attack consumes all charges to draw that many cards, once per turn."
+    "summary": "Each Skill grants 1 Arcane Charge. Your next Attack consumes all charges to draw that many cards, once per turn. Charges dissipate at the end of your turn."
   },
   {
     "id": "ranger",

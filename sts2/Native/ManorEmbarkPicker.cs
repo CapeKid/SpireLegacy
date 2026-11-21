@@ -22,7 +22,12 @@ public static partial class ManorUi
         confirm.CustomMinimumSize = new(235, 60);
         var gold = PickerSurface(new("EBC785"), new("F9DCA3"), 2);
         confirm.AddThemeStyleboxOverride("normal", gold);
-        confirm.AddThemeStyleboxOverride("hover", PickerSurface(new("FFE2A9"), new("FFF0CA"), 2));
+        confirm.AddThemeStyleboxOverride("hover", PickerSurface(new("FFE9BD"), new("FFFFFF"), 3));
+        // The shared gold focus ring vanishes against this gold button, so draw a white ring outside it on the dark panel.
+        var focus = PickerSurface(Colors.Transparent, new("FFFFFF"), 3);
+        focus.ExpandMarginLeft = focus.ExpandMarginRight = focus.ExpandMarginTop = focus.ExpandMarginBottom = 6;
+        focus.CornerRadiusTopLeft = focus.CornerRadiusTopRight = focus.CornerRadiusBottomLeft = focus.CornerRadiusBottomRight = 12;
+        confirm.AddThemeStyleboxOverride("focus", focus);
         foreach (var color in new[] { "font_color", "font_hover_color", "font_focus_color", "font_pressed_color" })
             confirm.AddThemeColorOverride(color, new("281C18"));
 

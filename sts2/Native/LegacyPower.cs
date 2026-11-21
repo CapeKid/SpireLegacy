@@ -37,14 +37,14 @@ public abstract class LegacyPower:CustomPowerModel
   "skill_block" or "discard_block" or "scry_block" or "status_furnace"=>ModelDb.Power<PlatingPower>(),
   "discard_next_block"=>ModelDb.Power<BlockNextTurnPower>(),
   "berserk" or "skill_energy" or "discard_energy" or "retained_attack_energy" or "mana_fountain"=>ModelDb.Power<EnergyNextTurnPower>(),
-  "brutality" or "power_draw" or "evolve" or "arcane_echo" or "retained_draw" or "quiver"=>ModelDb.Power<DrawCardsNextTurnPower>(),
+  "brutality" or "power_draw" or "evolve" or "arcane_echo" or "retained_draw" or "quiver" or "flow_draw"=>ModelDb.Power<DrawCardsNextTurnPower>(),
   "well_laid" or "foresight" or "establishment"=>ModelDb.Power<WellLaidPlansPower>(),
   "equilibrium"=>ModelDb.Power<RetainHandPower>(),
   "prophecy_return" or "discard_return"=>ModelDb.Power<ReboundPower>(),
   "attack_vigor" or "exhaust_vigor" or "hunt_momentum"=>ModelDb.Power<VigorPower>(),
   "double_tap" or "skill_echo" or "thesis_ready"=>ModelDb.Power<EchoFormPower>(),
   "thousand_cuts" or "sadistic" or "exhaust_damage" or "fire_breathing" or "combust" or "exhaust_burst"=>ModelDb.Power<InfernoPower>(),
-  "reservoir" or "class"=>ModelDb.Power<FocusPower>(),
+  "reservoir" or "class" or "debuff_charge" or "exhaust_charge"=>ModelDb.Power<FocusPower>(),
   _=>throw new InvalidOperationException($"No power icon assigned for {Key}.")
  };
  public override string CustomPackedIconPath=>IconSource.PackedIconPath;
@@ -54,6 +54,9 @@ public abstract class LegacyPower:CustomPowerModel
   "well_laid"=>"Measured Breath",
   "discard_return"=>"Ghost Luggage",
   "retained_attack_energy"=>"Perch Discipline",
+  "debuff_charge"=>"Toxic Theory",
+  "exhaust_charge"=>"Book of Embers",
+  "flow_draw"=>"Infinite Script",
   _=>System.Globalization.CultureInfo.InvariantCulture.TextInfo.ToTitleCase(Key.Replace('_',' '))
  })),("description",DescriptionText),("selectionScreenPrompt",HeirLocalization.Text("Choose up to {Amount} card(s) to Retain this turn."))];
  public override LocString Title {get {var title=base.Title;if(Key=="class")title.Add("ClassTitle",Design.Get("class_mechanics",PlayerBloodlines.Heir(Owner.Player).classId).Localized("name"));return title;}}
@@ -151,12 +154,12 @@ public abstract class LegacyPower:CustomPowerModel
    }
   }
   if(Key=="class"){
-   if(card.Type==CardType.Skill){SkillsThisTurn=Math.Min(3,SkillsThisTurn+1);if(PlayerBloodlines.Heir(Owner.Player).classId=="knight")Charges=1;if(PlayerBloodlines.Heir(Owner.Player).classId=="mage")Charges=Math.Min(2,Charges+1);}
+   if(card.Type==CardType.Skill){SkillsThisTurn=Math.Min(3,SkillsThisTurn+1);if(PlayerBloodlines.Heir(Owner.Player).classId=="knight")Charges=1;if(PlayerBloodlines.Heir(Owner.Player).classId=="mage")Charges++;}
    if(card.Type==CardType.Attack){AttacksThisTurn++;
     var spent=Charges;if(PlayerBloodlines.Heir(Owner.Player).classId is "knight" or "mage")Charges=0;
     // Claim before awaiting: replays and further Attacks cannot draw again this turn.
     if(PlayerBloodlines.Heir(Owner.Player).classId=="mage"&&spent>0&&!ArcaneDrawUsed){
-     ArcaneDrawUsed=true;await CardPileCmd.Draw(context,spent,Owner.Player!);
+     ArcaneDrawUsed=true;await CardPileCmd.Draw(context,spent+FindAmount("flow_draw"),Owner.Player!);
      foreach(var crest in Owner.Player!.Relics.OfType<R_triune_crest>().Where(relic=>!relic.IsMelted))await crest.OnArcaneFlow(spent);
     }
     if(PlayerBloodlines.Heir(Owner.Player).classId=="ranger"&&AttacksThisTurn%PlayThreshold==0){
@@ -171,7 +174,7 @@ public abstract class LegacyPower:CustomPowerModel
      }}}
   }
   if(Key=="power_draw"&&card.Type==CardType.Power)await CardPileCmd.Draw(context,Amount,Owner.Player!);
-  if(Key=="arcane_echo"&&card.Type==CardType.Skill&&++plays==1){if(Owner.GetPower<P_class>() is {} charge&&PlayerBloodlines.Heir(Owner.Player).classId=="mage")charge.Charges=Math.Min(2,charge.Charges+1);await CardPileCmd.Draw(context,Amount,Owner.Player!);}
+  if(Key=="arcane_echo"&&card.Type==CardType.Skill&&++plays==1){GainArcaneCharges(1);await CardPileCmd.Draw(context,Amount,Owner.Player!);}
   if(Key=="thousand_cuts")await DamageAll(context,Amount);
   if((Key is "skill_block" or "skill_energy"&&card.Type==CardType.Skill)||(Key=="attack_vigor"&&card.Type==CardType.Attack)){
    var triggered=++plays==PlayThreshold;
@@ -191,6 +194,7 @@ public abstract class LegacyPower:CustomPowerModel
   if(Key!="class"||dealer!=Owner||card?.Type!=CardType.Attack||!props.IsPoweredAttack()||target is null)return 0;
   return PlayerBloodlines.Heir(Owner.Player).classId switch{"knight"=>Charges>0?2:0,"mage"=>Charges*FindAmount("reservoir"),_=>0};
  }
+ private void GainArcaneCharges(int amount){if(Owner.GetPower<P_class>() is {} counter&&PlayerBloodlines.Heir(Owner.Player).classId=="mage")counter.Charges+=amount;}
  private int FindAmount(string key)=>Owner.Powers.OfType<LegacyPower>().Where(p=>p.Key==key).Sum(p=>p.Amount);
  public override async Task AfterCardDiscarded(PlayerChoiceContext context,CardModel card)
  {
@@ -202,6 +206,7 @@ public abstract class LegacyPower:CustomPowerModel
  public override async Task AfterCardExhausted(PlayerChoiceContext context,CardModel card,bool causedByEthereal){
   if(card.Owner.Creature!=Owner)return;
   if(Key=="exhaust_damage")await DamageAll(context,Amount);
+  if(Key=="exhaust_charge")GainArcaneCharges(Amount);
   if(Key=="exhaust_vigor")await CardEffects.Apply(context,"vigor",Owner,Amount,Owner,null);
   if(Key=="exhaust_burst"){
    ExhaustsThisTurn=Math.Max(0,ExhaustsThisTurn)%3+1;
@@ -235,12 +240,13 @@ public abstract class LegacyPower:CustomPowerModel
   foreach(var card in chosen)card.GiveSingleTurnRetain();
  }
  public override bool ShouldFlush(Player player)=>Key!="equilibrium"||player!=Owner.Player;
- public override async Task AfterSideTurnEnd(PlayerChoiceContext context,CombatSide side,IEnumerable<Creature> participants){if(!participants.Contains(Owner))return;if(Key=="equilibrium")await PowerCmd.Decrement(this);else if(Key is "double_tap" or "thesis_ready")await PowerCmd.Remove(this);}
+ public override async Task AfterSideTurnEnd(PlayerChoiceContext context,CombatSide side,IEnumerable<Creature> participants){if(!participants.Contains(Owner))return;if(Key=="class"&&PlayerBloodlines.Heir(Owner.Player).classId=="mage")Charges=0;if(Key=="equilibrium")await PowerCmd.Decrement(this);else if(Key is "double_tap" or "thesis_ready")await PowerCmd.Remove(this);}
  public override int ModifyCardPlayCount(CardModel card,Creature? target,int count)=>card.Owner.Creature==Owner&&card.Type==CardType.Attack?Key switch{"double_tap"=>count+1,"thesis_ready"=>count+Amount,_=>count}:count;
  public override async Task AfterModifyingCardPlayCount(CardModel card){if(Key=="double_tap")await PowerCmd.Decrement(this);else if(Key=="thesis_ready")await PowerCmd.Remove(this);}
  public override async Task AfterPowerAmountChanged(PlayerChoiceContext context,PowerModel power,decimal amount,Creature? applier,CardModel? card)
  {
   if(Key=="sadistic"&&power.Owner!=Owner&&power.Owner.IsAlive&&power.Type==PowerType.Debuff&&applier==Owner&&amount>0&&!cyclingDamage){cyclingDamage=true;try{await CreatureCmd.Damage(context,power.Owner,Amount,ValueProp.Unpowered,Owner);}finally{cyclingDamage=false;}}
+  if(Key=="debuff_charge"&&power.Owner!=Owner&&power.Type==PowerType.Debuff&&applier==Owner&&amount>0)GainArcaneCharges(Amount);
  }
  public override async Task AfterDamageReceived(PlayerChoiceContext context,Creature target,DamageResult result,ValueProp props,Creature? dealer,CardModel? card){if(Key=="plated"&&target==Owner&&dealer!=Owner&&result.UnblockedDamage>0&&props.IsPoweredAttack())await PowerCmd.Decrement(this);}
  private async Task DamageAll(PlayerChoiceContext context,int amount){var opponents=Owner.CombatState?.GetOpponentsOf(Owner).Where(e=>e.IsAlive).ToArray()??[];if(opponents.Length>0)await CreatureCmd.Damage(context,opponents,amount,ValueProp.Unpowered,Owner);}

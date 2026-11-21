@@ -54,7 +54,7 @@
     "amount": 8,
     "threshold": 2,
     "extra": 1,
-    "description": "Once per combat: Knight gains 8 Block when a Counterguard Attack hits. Mage gains 1 Energy after triggering Arcane Flow with 2 charges. Ranger applies 2 extra Vulnerable the first time Hunter Rhythm applies it.",
+    "description": "Once per combat: Knight gains 8 Block when a Counterguard Attack hits. Mage gains 1 Energy after triggering Arcane Flow with 2 or more charges. Ranger applies 2 extra Vulnerable the first time Hunter Rhythm applies it.",
     "flavor": "Three callings, one family name.",
     "route": "Class mechanic payoff",
     "baseline": "Reward Counterguard, a fully charged Arcane Flow, or Hunter Rhythm once per combat."

@@ -153,7 +153,7 @@
   },
   {
     "id": "arcane_echo",
-    "summary": "The first Skill you play each turn draws !M! card(s) and grants 1 Arcane Charge (up to 2)."
+    "summary": "The first Skill you play each turn draws !M! card(s) and grants 1 Arcane Charge."
   },
   {
     "id": "exhaust_vigor",
@@ -198,5 +198,17 @@
   {
     "id": "retained_attack_energy",
     "summary": "If you Retain any Attacks at the end of your turn, gain !M! Energy next turn."
+  },
+  {
+    "id": "debuff_charge",
+    "summary": "Whenever you apply a debuff to an enemy, gain !M! Arcane Charge(s)."
+  },
+  {
+    "id": "exhaust_charge",
+    "summary": "Whenever you Exhaust a card, gain !M! Arcane Charge(s)."
+  },
+  {
+    "id": "flow_draw",
+    "summary": "Arcane Flow draws !M! additional card(s)."
   }
 ]

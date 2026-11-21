@@ -171,7 +171,7 @@ public sealed class R_wayfarer_ribbon : FamilyDropRelic { }
 public sealed class R_triune_crest : FamilyDropRelic
 {
     internal Task OnArcaneFlow(int charges) =>
-        charges == 2 && ClaimCombat() ? PlayerCmd.GainEnergy(Row.Number("extra"),Owner) : Task.CompletedTask;
+        charges >= 2 && ClaimCombat() ? PlayerCmd.GainEnergy(Row.Number("extra"),Owner) : Task.CompletedTask;
     internal int ExtraRhythmVulnerable() => ClaimCombat() ? Row.Number("threshold") : 0;
 }
 public sealed class R_legacy_hourglass : FamilyDropRelic { }

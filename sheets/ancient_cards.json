@@ -21,7 +21,7 @@
     "cardId": "mage_arcane_conductor",
     "reference": "Native character Ancient cards: Corruption / Relax / Tools of the Trade; two Ancient identities per pool",
     "role": "charge sequencing",
-    "reason": "Paid Power draws once on the first Skill each turn; Arcane Charge stays capped at two."
+    "reason": "Paid Power draws once on the first Skill each turn; charges it grants dissipate at the end of the turn."
   },
   {
     "id": "mage_elixir_of_life",

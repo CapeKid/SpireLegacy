@@ -202,11 +202,12 @@ public static class TacticalPilot
                     if(scenario=="guarded")await CreatureCmd.GainBlock(player.Creature,2,MegaCrit.Sts2.Core.ValueProps.ValueProp.Unpowered,null);
                     else await PowerCmd.Apply<PoisonPower>(new BlockingPlayerChoiceContext(),target,1,player.Creature,null);
                 }else{
-                    // Real turn flushing applies intrinsic Retain growth; no direct growth injection.
+                    // Patient Riposte survives a real turn flush without growing, then pays its Block condition.
                     await CreatureCmd.GainBlock(player.Creature,999,MegaCrit.Sts2.Core.ValueProps.ValueProp.Unpowered,null);
                     await BalanceOracle.End(player,false);
                     foreach(var other in hand.Cards.Where(c=>c!=conditional).ToArray())await CardPileCmd.Add(other,PileType.Draw,skipVisuals:true);
-                    if(!hand.Cards.Contains(conditional)||conditional.RetainedGrowth!=design.SpecialAmount)throw new InvalidDataException("Native retention growth missing");
+                    if(!hand.Cards.Contains(conditional)||conditional.RetainedGrowth!=0)throw new InvalidDataException("Patient Riposte retention changed");
+                    await CreatureCmd.GainBlock(player.Creature,2,MegaCrit.Sts2.Core.ValueProps.ValueProp.Unpowered,null);
                     expected+=design.SpecialAmount;target.SetCurrentHpInternal(expected);
                 }
                 var decision=Choose(player,0)!;
