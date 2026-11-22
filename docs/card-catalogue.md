@@ -10,7 +10,7 @@ Each class has 82 rewards on regular (20 common, 36 uncommon, 26 rare), or 85 on
 | Guard Defend | Basic | Skill | 1 | Class unique; 4 Block |
 | Shield Bash | Basic | Attack | 1 | Class unique; 5 damage; 3 Block |
 | Fortify | Common | Skill | 1 | Class unique; 7 Block |
-| Riposte | Common | Attack | 1 | Class unique; 7 damage; 4 Block next turn |
+| Riposte | Common | Attack | 1 | Class unique; 6 damage; 3 Block next turn |
 | Challenge | Uncommon | Attack | 2 | Shared family card; 8 damage; 2 Vulnerable |
 | Bastion | Rare | Power | 1 | Class unique; 3 Dexterity |
 | Family Oath | Rare | Attack | 2 | Shared family card; 6 damage ×2; 1 Strength; Exhaust |

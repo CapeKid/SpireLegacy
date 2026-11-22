@@ -7,6 +7,7 @@ More look-alike cards are differentiated, and trait crown bonuses now match how 
 - Twin Cut deals 2 ×2 and gains 2 Block.
 - Pommel Knock deals 3, plus 2 per Skill played this turn (up to 3 Skills), and no longer applies Weak. Upgrade +2 damage.
 - Tower Guard gains 5 Block, plus 3 if you already have Block, and no longer has Retain. Upgrade +2 Block.
+- Riposte deals 6 and gives 3 Block next turn. Upgrade +2 damage, +1 Block.
 
 ## Ranger
 

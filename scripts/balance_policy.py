@@ -111,7 +111,7 @@ CARD_OVERRIDES = {
     'ranger_snap_shot': dict(rarity='UNCOMMON'),
     'mark': dict(rarity='COMMON'),
     'knight_banner_charge': dict(damage=4, aoe=True),
-    'riposte': dict(damage=7, block=0, upgradeBlock=0, nextBlock=4, upgradeMagic=2),
+    'riposte': dict(damage=6, block=0, upgradeBlock=0, nextBlock=3, upgradeDamage=2, upgradeMagic=1),
     'double': dict(cost=0, damage=2, hits=2),
     'barrier': dict(draw=0, special='charge_gain', specialAmount=1),
     'mage_starfall': dict(damage=5, special='full_charge_bonus', specialAmount=3),
@@ -122,6 +122,9 @@ CARD_OVERRIDES = {
     'ranger_sort_quiver': dict(draw=2, discard=1, special='discard_attack_energy', specialAmount=1, upgradeSpecial=0, upgradeMagic=0, upgradeDraw=1, upgradeDiscard=0),
     'knight_pommel_knock': dict(damage=3, weak=0, special='skill_damage', specialAmount=2, upgradeDamage=2, upgradeMagic=0, upgradeSpecial=0),
     'knight_tower_guard': dict(block=5, retain=False, special='guard_block', specialAmount=3, upgradeBlock=2, upgradeSpecial=0),
+    'knight_flanking_march': dict(damage=2, nextBlock=2, upgradeDamage=1, upgradeMagic=1),
+    'knight_shoulder_check': dict(damage=2, block=1, upgradeDamage=1, upgradeBlock=1),
+    'ranger_running_volley': dict(damage=3, hits=2, block=2, upgradeDamage=1, upgradeBlock=1),
 }
 
 def balance_card(row):
