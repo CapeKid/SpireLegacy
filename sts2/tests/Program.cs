@@ -397,7 +397,7 @@ foreach(var upgraded in new[]{false,true}){
         fletching.Row.Text("special")=="hit_poison"&&fletching.SpecialAmount==(upgraded?3:2),
         "Razor Fletching trims damage and preserves Poison per hit");
 }
-foreach(var card in Design.Rows("cards").Where(c=>c.Text("id") is not ("ranger_second_quiver" or "mage_grand_thesis"))){
+foreach(var card in Design.Rows("cards").Where(c=>c.Text("id") is not ("ranger_second_quiver" or "mage_grand_thesis" or "ranger_sort_quiver"))){
     Check(card.Number("upgradeDraw")==-1,"Existing draw upgrades preserve the shared resource increment: "+card.Text("id"));
 }
 foreach(var upgraded in new[]{false,true}){

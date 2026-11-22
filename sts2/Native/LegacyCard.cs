@@ -39,7 +39,7 @@ public abstract class LegacyCard : CustomCardModel
     // BaseLib infers this from the presence of a BlockVar, including our zero-value
     // compatibility slot. Enchantment eligibility must reflect actual card effects.
     public override bool GainsBlock => DesignCard.Block > 0 || Row.Number("nextBlock") > 0 || HasSpecialBlock || Row.Text("special") == "double_block";
-    public bool HasSpecialBlock => Row.Text("special") is "discard_block" or "exhaust_block" or "exhaust_nonattacks";
+    public bool HasSpecialBlock => Row.Text("special") is "discard_block" or "exhaust_block" or "exhaust_nonattacks" or "guard_block";
     public BlockVar NextBlock => (BlockVar)DynamicVars["BlockNextTurn"];
     public BlockVar SpecialBlock => (BlockVar)DynamicVars["SpecialBlock"];
     public override Texture2D CustomPortrait => Runtime.Texture(Design.Get("card_art", Row.Text("art")).Text("path"));
@@ -115,7 +115,9 @@ public abstract class LegacyCard : CustomCardModel
                 else attack.Targeting(play.Target!);
                 await attack.Execute(context);
             }
+        var hadBlock = Owner.Creature.Block > 0;
         if (DynamicVars.Block.BaseValue > 0) await CreatureCmd.GainBlock(Owner.Creature, DynamicVars.Block, play);
+        if (Row.Text("special") == "guard_block" && hadBlock) await CreatureCmd.GainBlock(Owner.Creature, SpecialBlock, play);
         await CardEffects.Execute(this, context, play, repeatPoison);
     }
     protected override void OnUpgrade()

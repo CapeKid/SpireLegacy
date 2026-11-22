@@ -31,6 +31,7 @@ def play(row,up,mode='normal'):
         damage=row['damage']+(row['upgradeDamage'] if up else 0)
         if row['special'] in ['block_damage','chain_damage']:damage=0
         if row['special']=='exhaust_damage':damage+=row['specialAmount']+(row['upgradeSpecial'] if up else 0)
+        if row['special']=='full_hp_bonus':damage+=row['specialAmount']+(row['upgradeSpecial'] if up else 0)
         if row['special']=='thunder_splash':
             splash=row['specialAmount']+(row['upgradeSpecial'] if up else 0)
             assert result['damage']==[damage]+[splash]*(len(result['damage'])-1),result

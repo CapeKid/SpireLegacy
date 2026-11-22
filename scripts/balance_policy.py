@@ -79,7 +79,7 @@ CARD_OVERRIDES = {
     'mage_archmage_thesis': dict(cost=2, block=0, upgradeBlock=0, power='skill_echo', magic=1, upgradeMagic=0, upgradeCost=True),
     'ranger_hunt_without_end': dict(cost=2, vigor=0, power='hunt_momentum', magic=2, upgradeMagic=1, upgradeCost=False),
     'knight_sword_dance': dict(hits=3, rarity='COMMON', retain=True),
-    'ranger_rapid_fire': dict(hits=3, retain=True, special='marked_bonus', specialAmount=1, upgradeSpecial=0),
+    'ranger_rapid_fire': dict(hits=3, retain=False, special='marked_bonus', specialAmount=1, upgradeSpecial=0),
     'ranger_ricochet': dict(damage=3, cost=2, hits=4),
     'knight_heavy_harness': dict(block=10),
     'knight_reinforce': dict(block=4, nextBlock=4),
@@ -107,7 +107,7 @@ CARD_OVERRIDES = {
     'mage_spell_threads': dict(rarity='RARE'),
     'surge': dict(rarity='UNCOMMON'),
     'ranger_tailwind': dict(rarity='RARE'),
-    'ranger_heartseeker': dict(rarity='UNCOMMON'),
+    'ranger_heartseeker': dict(rarity='UNCOMMON', damage=12, hits=1, vulnerable=2, retain=False, upgradeDamage=3, upgradeMagic=0),
     'ranger_snap_shot': dict(rarity='UNCOMMON'),
     'mark': dict(rarity='COMMON'),
     'knight_banner_charge': dict(damage=4, aoe=True),
@@ -118,6 +118,10 @@ CARD_OVERRIDES = {
     'ranger_storm_of_arrows': dict(damage=3, special='marked_bonus', specialAmount=2),
     'ranger_unseen_hunter': dict(cost=1, block=0, power='tools', magic=2, upgradeMagic=0),
     'mage_book_of_embers': dict(power='exhaust_charge', cost=1, magic=1, upgradeMagic=0, upgradeCost=True),
+    'knight_twin_cut': dict(damage=2, block=2),
+    'ranger_sort_quiver': dict(draw=2, discard=1, special='discard_attack_energy', specialAmount=1, upgradeSpecial=0, upgradeMagic=0, upgradeDraw=1, upgradeDiscard=0),
+    'knight_pommel_knock': dict(damage=3, weak=0, special='skill_damage', specialAmount=2, upgradeDamage=2, upgradeMagic=0, upgradeSpecial=0),
+    'knight_tower_guard': dict(block=5, retain=False, special='guard_block', specialAmount=3, upgradeBlock=2, upgradeSpecial=0),
 }
 
 def balance_card(row):

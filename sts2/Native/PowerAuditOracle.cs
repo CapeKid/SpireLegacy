@@ -472,7 +472,7 @@ public static partial class PowerAuditOracle
                 Require(skill.Pile?.Type==PileType.Hand&&player.PlayerCombatState.Energy==3,"A retained Skill triggered Perch Discipline.");
 
                 var first=await Add(player,NativeCards.Get("ranger_long_vigil"));
-                var second=await Add(player,NativeCards.Get("ranger_heartseeker"));
+                var second=await Add(player,NativeCards.Get("ranger_eagle_focus"));
                 await BalanceOracle.End(player,true);
                 Require(first.Pile?.Type==PileType.Hand&&second.Pile?.Type==PileType.Hand,"The Attack fixtures were not retained.");
                 Require(player.PlayerCombatState.Energy==4&&creature.GetPower<EnergyNextTurnPower>()==null,"Perch Discipline did not pay exactly 1 Energy next turn.");

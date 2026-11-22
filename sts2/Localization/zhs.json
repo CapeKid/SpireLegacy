@@ -1007,5 +1007,7 @@
   "{ClassRules} {CounterLabel}: {Counter}.": "{ClassRules} {CounterLabel}：{Counter}。",
   "Whenever you apply a debuff to an enemy, gain !M! Arcane Charge(s).": "每当你对敌人施加负面效果时，获得!M!层奥术充能。",
   "Whenever you Exhaust a card, gain !M! Arcane Charge(s).": "每当你消耗一张牌时，获得!M!层奥术充能。",
-  "Arcane Flow draws !M! additional card(s).": "奥术涌流额外抽!M!张牌。"
+  "Arcane Flow draws !M! additional card(s).": "奥术涌流额外抽!M!张牌。",
+  "If you discarded an Attack, gain {n} Energy.": "如果你丢弃了一张攻击牌，获得{n}点能量。",
+  "If you already have Block, gain {n} additional Block.": "如果你已有格挡，额外获得{n}点格挡。"
 }

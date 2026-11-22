@@ -190,5 +190,13 @@
   {
     "id": "exhume_attack",
     "summary": "You may return an Attack from your Exhaust pile to your hand. If it enters your hand, gain {n} Vigor. Cannot return Spire Legacy Exhaust-recovery cards."
+  },
+  {
+    "id": "discard_attack_energy",
+    "summary": "If you discarded an Attack, gain {n} Energy."
+  },
+  {
+    "id": "guard_block",
+    "summary": "If you already have Block, gain {n} additional Block."
   }
 ]

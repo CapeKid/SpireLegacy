@@ -64,3 +64,7 @@ Previously, repeating converted Arrows supplied both stacking damage and 4/7 Blo
 ## 1.0.19 cosmetic trait audit
 
 Synesthesia has six animated rainbow motes and a shifting colored ring around the heir's feet, visible alongside grayscale or other palettes. Cosmetic traits now apply at rest sites and shops as well as combat; inherited sprite size applies there too. Blue, Nature, Halloween and Christmas palettes retain distinct colored accents when paired. Histrionic briefly flashes red on real HP loss, then returns to the ordinary palette, even with Colorblind. HP and crown bonuses are unchanged; Synesthesia remains cosmetic with no crown bonus. See [the full 63-ID audit](trait-effect-audit.md) for each trait's gameplay or visual consumer.
+
+## 1.0.73 crown review
+
+Crown bonuses now track each trait's net effect. Masochism, Vampirism and Dwarfism are net upsides and grant no crowns. Inter-dimensional and Lootbox Addict grant +10%, Perfectionist and Crippling Intellect +20%, Diva +25% and Vegan +40%. Clumsy and IBS now grant +15% and Overcompensation +25%. Puritan grants +30%, Forgetful +40%, Associative Agnosia +50%, and Exhausted and Explosive Enemies +75%. Cosmetic traits remain free.

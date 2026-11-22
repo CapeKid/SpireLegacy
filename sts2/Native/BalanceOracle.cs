@@ -214,7 +214,7 @@ public static class BalanceOracle
                 var additions=audit?BalanceAuditOracle.Builds[build]:build switch{
                     "exhaust"=>new[]{"knight_second_wind","knight_burnished_legacy","knight_cast_off","knight_forge_sparks"},
                     "powers"=>new[]{"mage_rune_familiar","reservoir","mage_spell_threads","surge"},
-                    "retention"=>new[]{"ranger_long_vigil","ranger_heartseeker","ranger_perch_discipline","mage_crystal_seed"},
+                    "retention"=>new[]{"ranger_long_vigil","ranger_ambush","ranger_perch_discipline","mage_crystal_seed"},
                     "poison"=>new[]{"ranger_poison_tip","ranger_poison_tip","ranger_razor_fletching","ranger_double_dose"},
                     _=>throw new ArgumentException("Unknown balance deck.")};
                 foreach(var key in additions)await CardPileCmd.Add(run.CreateCard(NativeCards.Get(key),player),PileType.Deck,skipVisuals:true);

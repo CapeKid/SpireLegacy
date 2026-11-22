@@ -16,10 +16,10 @@ Each class has 82 rewards on regular (20 common, 36 uncommon, 26 rare), or 85 on
 | Family Oath | Rare | Attack | 2 | Shared family card; 6 damage ×2; 1 Strength; Exhaust |
 | Study | Common | Skill | 1 | Shared family card; 2 draw |
 | Meditate | Rare | Skill | 0 | Shared family card; 2 draw; 1 Energy; Exhaust |
-| Pommel Knock | Common | Attack | 1 | Class unique; 4 damage; 1 Weak |
+| Pommel Knock | Common | Attack | 1 | Class unique; 3 damage; Deal 2 additional damage for each Skill played this turn (up to 3 Skills). |
 | Sweeping Edge | Common | Attack | 1 | Class unique; 5 damage to all enemies |
-| Twin Cut | Common | Attack | 1 | Class unique; 3 damage ×2 |
-| Tower Guard | Common | Skill | 1 | Class unique; 6 Block; Retain |
+| Twin Cut | Common | Attack | 1 | Class unique; 2 damage ×2; 2 Block |
+| Tower Guard | Common | Skill | 1 | Class unique; 5 Block; If you already have Block, gain 3 additional Block. |
 | Iron Resolve | Common | Skill | 1 | Class unique; 4 Block; 2 next Attack damage |
 | Blood Price | Uncommon | Skill | 0 | Class unique; 1 Energy; 3 HP cost |
 | Brave Advance | Common | Attack | 1 | Shared family card; 5 damage; 1 Energy next turn |
@@ -229,7 +229,7 @@ Each class has 82 rewards on regular (20 common, 36 uncommon, 26 rare), or 85 on
 | Watch the Wind | Common | Skill | 1 | Class unique; 3 Block; Scry 3. |
 | Tripwire | Common | Skill | 1 | Shared family card; 4 Block; 1 Weak |
 | Ambush | Uncommon | Attack | 1 | Class unique; 6 damage; Deal 5 additional damage if the target is Vulnerable or Poisoned.; Retain |
-| Rapid Fire | Uncommon | Attack | 1 | Class unique; 2 damage ×3; Deal 1 additional damage if the target is Vulnerable or Poisoned.; Retain |
+| Rapid Fire | Uncommon | Attack | 1 | Class unique; 2 damage ×3; Deal 1 additional damage if the target is Vulnerable or Poisoned. |
 | Razor Fletching | Uncommon | Attack | 1 | Class unique; 2 damage ×2; Apply 2 Poison on each hit. |
 | Finishing Flurry | Uncommon | Attack | 1 | Class unique; Deal 5 damage for each OTHER Attack played this turn. |
 | Hooked Arrow | Uncommon | Attack | 1 | Class unique; 6 damage; Return 1 card(s) from your discard pile to your hand. Cannot return other Spire Legacy recovery cards. |
@@ -244,7 +244,7 @@ Each class has 82 rewards on regular (20 common, 36 uncommon, 26 rare), or 85 on
 | Cruel Precision | Uncommon | Power | 1 | Class unique; Whenever you apply a debuff to an enemy, deal 3 damage to it. |
 | Storm of Arrows | Rare | Attack | 3 | Class unique; 3 damage ×4 to all enemies; Deal 2 additional damage if the target is Vulnerable or Poisoned. |
 | Assassinate | Rare | Attack | 2 | Class unique; 18 damage; Deal 9 additional damage if the target is Vulnerable or Poisoned.; Exhaust |
-| Heartseeker | Uncommon | Attack | 2 | Class unique; 5 damage ×3; Retain |
+| Heartseeker | Uncommon | Attack | 2 | Class unique; 12 damage; 2 Vulnerable |
 | Black Arrow | Rare | Attack | 2 | Class unique; 13 damage; 6 Poison |
 | Master Plan | Rare | Skill | 3 | Shared family card; Cards currently in your hand cost 0 this turn. You cannot draw additional cards this turn.; Exhaust |
 | Serpent Oil | Rare | Skill | 2 | Class unique; 4 Poison; Double Poison on the target.; Exhaust |
@@ -263,7 +263,7 @@ Each class has 82 rewards on regular (20 common, 36 uncommon, 26 rare), or 85 on
 | Eternal Bookmark | Rare | Power | 2 | Shared family card; At the start of your turn, if you Retained any cards last turn, draw 2 cards. |
 | Loose Fletching | Common | Attack | 1 | Class unique; 4 damage; When discarded during your turn, draw 1 card(s). Triggers at most once per copy each turn. |
 | Pocket Wind | Common | Skill | 1 | Class unique; 3 Block; When discarded during your turn, gain 1 Energy. Triggers at most once per copy each turn. |
-| Sort Quiver | Common | Skill | 1 | Class unique; 3 draw; 2 discard |
+| Sort Quiver | Common | Skill | 1 | Class unique; 2 draw; 1 discard; If you discarded an Attack, gain 1 Energy. |
 | Light Pack | Uncommon | Power | 1 | Class unique; Whenever you discard a card during your turn, gain 2 Block. |
 | Tailwind | Rare | Power | 1 | Class unique; The first time you discard a card each turn, gain 1 Energy. |
 | Spring Nock | Uncommon | Attack | 1 | Class unique; 6 damage; When discarded during your turn, gain 3 Vigor. Triggers at most once per copy each turn. |
