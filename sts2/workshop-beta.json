@@ -2,7 +2,7 @@
   "title": "Spire Legacy \u2014 Beta",
   "description": "Private beta builds of Spire Legacy for the creator's Steam Deck testing. Requires BaseLib. You may subscribe to both this item and the public Spire Legacy item. In StS2's mod menu, enable ONLY Spire Legacy \u2014 Beta OR Spire Legacy, then restart. They contain the same character and cards and must not run together. Finish a climb before switching builds. Family manor progress is shared. This item does not update the public Workshop listing.",
   "visibility": "private",
-  "changeNote": "1.0.74: Clarified 12 trait descriptions in English and Simplified Chinese, including Bookish's 10 maximum HP cost. Trait effects remain the same.",
+  "changeNote": "1.0.75: Cleansing the Queen's Chains of Binding now removes Bound from affected cards immediately and refreshes their text in hand.",
   "tags": [
     "Characters"
   ],

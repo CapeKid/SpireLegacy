@@ -314,7 +314,7 @@ public static class NativeTestBridge
                     }
                     Runtime.Profile.selected = cls=="ironclad"?null:new FamilyProfile.Heir { name="PortTester",classId=cls,traits=request.TryGetProperty("traits",out var traits) ? traits.EnumerateArray().Select(t=>t.GetString()!).ToList() : [] };
                     if(request.TryGetProperty("quick",out var quick) && Runtime.Profile.active==null)Runtime.Profile.generation=quick.GetBoolean()?0:3;
-                    await StartSingleplayer(cls=="ironclad"?ModelDb.Character<MegaCrit.Sts2.Core.Models.Characters.Ironclad>():ModelDb.Character<HeirCharacter>(),request.TryGetProperty("seed",out var balanceSeed)?balanceSeed.GetString()!:"SPIRELEGACY-PORT-TEST",request.TryGetProperty("ascension",out var ascension)?ascension.GetInt32():0);
+                    await StartSingleplayer(cls=="ironclad"?ModelDb.Character<MegaCrit.Sts2.Core.Models.Characters.Ironclad>():ModelDb.Character<HeirCharacter>(),request.TryGetProperty("seed",out var balanceSeed)?balanceSeed.GetString()!:"SPIRELEGACY-PORT-TEST",request.TryGetProperty("ascension",out var ascension)?ascension.GetInt32():0,request.TryGetProperty("blitz",out var blitzMode)&&blitzMode.GetBoolean()?Enum.Parse<GameMode>("Blitz"):GameMode.Standard);
                     result = StateSummary(); break;
                 case "campaign-purchase":
                     if(Runtime.Profile.active!=null||PlayerBloodlines.LocalPlayer!=null)throw new InvalidOperationException("Return the completed lab run to the menu before purchasing.");
@@ -722,6 +722,7 @@ public static class NativeTestBridge
                         firstVigorReward = vigorAfterDiscard - vigorBeforeDiscard,
                         secondVigorReward = discardActor.Creature.GetPowerAmount<MegaCrit.Sts2.Core.Models.Powers.VigorPower>() - vigorAfterDiscard,
                         rewardTurn = restoredDiscard.DiscardRewardTurn, turn = discardActor.PlayerCombatState.TurnNumber };break;
+                case "queen-binding":result=await RetentionOracle.QueenBinding(RunState(),request.GetProperty("cleanse").GetString());break;
                 case "retention-check":
                     result=await RetentionOracle.Check(RunState(),request.GetProperty("upgrade").GetBoolean(),request.GetProperty("stack").GetBoolean(),request.GetProperty("intrinsic").GetBoolean(),request.GetProperty("fullHand").GetBoolean());break;
                 case "retention-confirm":
@@ -809,7 +810,7 @@ public static class NativeTestBridge
         return (MegaCrit.Sts2.Core.Rewards.CardReward)constructor.Invoke([cards, source, player, rerollOptions, null, null]);
     }
 
-    internal static Task StartSingleplayer(CharacterModel character, string seed, int ascension)
+    internal static Task StartSingleplayer(CharacterModel character, string seed, int ascension, GameMode gameMode=GameMode.Standard)
     {
         var method = ApiContract.Require(typeof(NGame), nameof(NGame.StartNewSingleplayerRun), typeof(Task),
             [typeof(Player), typeof(bool), typeof(IReadOnlyList<ActModel>), typeof(IReadOnlyList<ModifierModel>), typeof(string), typeof(GameMode), typeof(bool), typeof(int), typeof(DateTimeOffset?)],
@@ -817,8 +818,8 @@ public static class NativeTestBridge
         var acts = ModelDb.ActsByIndex.Select(act => act.First()).ToArray();
         var modifiers = Array.Empty<ModifierModel>();
         object?[] arguments = method.GetParameters().Length == 9
-            ? [Player.CreateForNewRun(character, MegaCrit.Sts2.Core.Saves.SaveManager.Instance.GenerateUnlockStateFromProgress(), 1), true, acts, modifiers, seed, GameMode.Standard, false, ascension, null]
-            : [character, true, acts, modifiers, seed, GameMode.Standard, ascension, null];
+            ? [Player.CreateForNewRun(character, MegaCrit.Sts2.Core.Saves.SaveManager.Instance.GenerateUnlockStateFromProgress(), 1), true, acts, modifiers, seed, gameMode, false, ascension, null]
+            : [character, true, acts, modifiers, seed, gameMode, ascension, null];
         return (Task)ApiContract.Invoke(method, NGame.Instance, arguments)!;
     }
 

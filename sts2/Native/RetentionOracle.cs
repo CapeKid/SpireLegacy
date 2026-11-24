@@ -7,16 +7,114 @@ using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.CardRewardAlternatives;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Models;
+using MegaCrit.Sts2.Core.Models.Afflictions;
+using MegaCrit.Sts2.Core.Models.Cards;
+using MegaCrit.Sts2.Core.Models.Encounters;
+using MegaCrit.Sts2.Core.Models.Powers;
+using MegaCrit.Sts2.Core.Nodes.Cards;
+using MegaCrit.Sts2.Core.Rooms;
 using MegaCrit.Sts2.Core.Runs;
 using MegaCrit.Sts2.Core.TestSupport;
 using MegaCrit.Sts2.Core.ValueProps;
 
 namespace SpireLegacy;
 
-// Only invoked by the opt-in owned-game bridge. Exercise native end-turn flushing,
-// not just a direct call to the new power's selection hook.
+// Only invoked by the opt-in owned-game bridge.
 public static class RetentionOracle
 {
+    public static async Task<object> QueenBinding(RunState run, string? cleanse)
+    {
+        await RunManager.Instance.EnterRoomDebug(RoomType.Boss, model: ModelDb.Encounter<QueenBoss>().ToMutable(), showTransition: false);
+        RunManager.Instance.ActionExecutor.Unpause();
+        var player = run.Players.Single();
+        var owner = player.Creature;
+        var combat = owner.CombatState!;
+        var tree = (SceneTree)Engine.GetMainLoop();
+        var deadline = Time.GetTicksMsec() + 20000;
+        while (player.PlayerCombatState?.Phase != PlayerTurnPhase.Play)
+        {
+            if (Time.GetTicksMsec() > deadline) throw new TimeoutException("Queen combat did not start.");
+            await tree.ToSignal(tree, SceneTree.SignalName.ProcessFrame);
+        }
+        var hand = PileType.Hand.GetPile(player);
+        foreach (var card in hand.Cards.ToArray())
+            await CardPileCmd.Add(card, PileType.Discard, skipVisuals: true);
+
+        for (var i = 0; i < 12; i++)
+            await CardPileCmd.Add(combat.CreateCard(NativeCards.Get("mage_guard"), player), PileType.Draw, skipVisuals: true);
+
+        var cases = new (CardModel Model, bool Upgrade, bool Retain)[]
+        {
+            (NativeCards.Get("mage_warding_verse"), false, true),
+            (NativeCards.Get("mage_warding_verse"), true, true),
+            (NativeCards.Get(cleanse is null ? "mage_crystal_seed" : "mage_cold_read"), false, false),
+            (NativeCards.Get("mage_hourglass"), true, true),
+            (ModelDb.Card<DefendIronclad>(), false, true),
+            (NativeCards.Get("mage_guard"), false, false),
+        };
+        var originals = new List<CardModel>();
+        foreach (var (model, upgrade, retain) in cases.Reverse())
+        {
+            var card = combat.CreateCard(model, player);
+            if (upgrade) CardCmd.Upgrade(card);
+            if (retain && card is not LegacyCard) card.AddKeyword(CardKeyword.Retain);
+            await CardPileCmd.Add(card, PileType.Draw, CardPilePosition.Top, skipVisuals: true);
+            originals.Add(card);
+        }
+        originals.Reverse();
+        await BalanceOracle.End(player, true);
+        if (owner.GetPower<ChainsOfBindingPower>() is null
+            || originals.Take(3).Any(card => !hand.Cards.Contains(card) || card.Affliction is not Bound))
+            throw new InvalidDataException("The Queen did not bind the first three drawn cards.");
+        foreach (var card in originals.Skip(3))
+        {
+            if (!hand.Cards.Contains(card)) await CardPileCmd.Add(card, PileType.Hand, skipVisuals: true);
+            if (card.Affliction is null) await CardCmd.Afflict<Bound>(card, 1);
+        }
+
+        var active = Design.Rows("card_pools").Concat(Design.Rows("branch_cards"))
+            .Select(row => row.Text("cardId")).Distinct();
+        var offHand = new List<CardModel>();
+        foreach (var key in active)
+        {
+            if (!new CardDesign(key, true).Retain) continue;
+            foreach (var upgraded in new[] { false, true })
+            {
+                if (!new CardDesign(key, upgraded).Retain) continue;
+                var card = combat.CreateCard(NativeCards.Get(key), player);
+                if (upgraded) CardCmd.Upgrade(card);
+                await CardPileCmd.Add(card, PileType.Discard, skipVisuals: true);
+                await CardCmd.Afflict<Bound>(card, 1);
+                if (card.Affliction is not Bound) throw new InvalidDataException("Could not bind " + card.Id);
+                offHand.Add(card);
+            }
+        }
+
+        string? VisibleText(CardModel card)
+        {
+            var view = NativeTestBridge.Descendants(tree.Root).OfType<NCard>()
+                .FirstOrDefault(node => node.IsVisibleInTree() && ReferenceEquals(node.Model, card));
+            return view is not null && AccessTools.Field(typeof(NCard), "_descriptionLabel").GetValue(view) is RichTextLabel label
+                ? label.GetParsedText() : null;
+        }
+        var before = originals.Select(VisibleText).ToArray();
+        if (cleanse is null) await BalanceOracle.End(player, true);
+        else
+        {
+            var sigil = combat.CreateCard(NativeCards.Get(cleanse), player);
+            await CardPileCmd.Add(sigil, PileType.Hand);
+            if (!sigil.TryManualPlay(null)) throw new InvalidDataException("Cleanse refused paid native play.");
+            var cleanseDeadline = Time.GetTicksMsec() + 10000;
+            while (sigil.Pile?.Type is PileType.Hand or PileType.Play && Time.GetTicksMsec() < cleanseDeadline)
+                await tree.ToSignal(tree, SceneTree.SignalName.ProcessFrame);
+            if (owner.GetPower<ChainsOfBindingPower>() is not null) throw new InvalidDataException("Cleanse did not remove Chains.");
+        }
+        var results = originals.Select((card, i) => new { id = card.Id.Entry, upgraded = cases[i].Upgrade, retained = hand.Cards.Contains(card),
+            bound = card.Affliction is Bound, playable = card.CanPlay(), rules = card.GetDescriptionForPile(PileType.Hand), before = before[i], after = VisibleText(card) }).ToArray();
+        return new { cleanse, results, offHand = offHand.Count, stillBoundOffHand = offHand.Where(card => card.Affliction is Bound).Select(card => card.Id.Entry).ToArray() };
+    }
+
+    // Exercise native end-turn flushing and the retention selection together.
     public static async Task<object> Check(RunState run,bool upgrade,bool stack,bool intrinsic,bool fullHand)
     {
         var player=run.Players.Single();var combat=player.Creature.CombatState!;

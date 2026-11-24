@@ -6,7 +6,9 @@ using MegaCrit.Sts2.Core.Entities.Players;
 using MegaCrit.Sts2.Core.Entities.Powers;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Models;
+using MegaCrit.Sts2.Core.Models.Afflictions;
 using MegaCrit.Sts2.Core.Models.Powers;
+using MegaCrit.Sts2.Core.Nodes.Combat;
 using MegaCrit.Sts2.Core.ValueProps;
 using MegaCrit.Sts2.Core.Hooks;
 using MegaCrit.Sts2.Core.Localization;
@@ -16,6 +18,25 @@ public static class CardEffects
  internal static bool FullArcaneFlowReady(Player player) =>
     PlayerBloodlines.Heir(player).classId == "mage" &&
     player.Creature.GetPower<P_class>() is { Charges: >= 2, ArcaneDrawUsed: false };
+
+ private static async Task Cleanse(Player player)
+ {
+    var creature = player.Creature;
+    var hadChains = creature.GetPower<ChainsOfBindingPower>() is not null;
+    foreach (var debuff in creature.Powers.Where(power => power.Type == PowerType.Debuff).ToArray())
+        await PowerCmd.Remove(debuff);
+
+    // Chains normally clears Bound at turn end. Removing the power skips that cleanup.
+    if (!hadChains || creature.GetPower<ChainsOfBindingPower>() is not null || player.PlayerCombatState is not { } combat)
+        return;
+    foreach (var boundCard in combat.AllCards.Where(card => card.Affliction is Bound).ToArray())
+    {
+        CardCmd.ClearAffliction(boundCard);
+        // The affliction event redraws the overlay. Refresh the hand text as well.
+        if (boundCard.Pile?.Type == PileType.Hand)
+            NPlayerHand.Instance?.GetCard(boundCard)?.UpdateVisuals(PileType.Hand, CardPreviewMode.Normal);
+    }
+ }
 
  public static async Task Apply(PlayerChoiceContext context,string key,Creature target,int amount,Creature source,CardModel? card)
  {
@@ -97,9 +118,9 @@ public static class CardEffects
     break;
    case "exhaust_nonattacks":foreach(var fuel in hand.Cards.Where(c=>c.Type!=CardType.Attack).ToArray()){await BranchCommands.Exhaust(context,fuel);await CreatureCmd.GainBlock(creature,card.SpecialBlock,play);}break;
    case "double_block":await CreatureCmd.GainBlock(creature,creature.Block,ValueProp.Unpowered,play);break;
-   case "cleanse":foreach(var power in creature.Powers.Where(p=>p.Type==PowerType.Debuff).ToArray())await PowerCmd.Remove(power);break;
+   case "cleanse":await Cleanse(player);break;
    case "cleanse_charge":
-    foreach(var debuff in creature.Powers.Where(p=>p.Type==PowerType.Debuff).ToArray())await PowerCmd.Remove(debuff);
+    await Cleanse(player);
     if(PlayerBloodlines.Heir(player).classId=="mage"&&creature.GetPower<P_class>() is {} cleansedCharge)cleansedCharge.Charges+=amount;break;
    case "exhume_next_turn":await Apply(context,"prophecy_return",creature,amount,creature,card);break;
    case "exhume_attack":if(await RecoverFromExhaust(player,context,attacksOnly:true))await Apply(context,"vigor",creature,amount,creature,card);break;
