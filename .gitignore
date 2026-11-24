@@ -1,6 +1,10 @@
 tools/
 private/
-build/
+build/*
+!build/verify-family-core.ps1
+!build/family-core/
+build/family-core/*
+!build/family-core/native-check.py
 dist/
 *.log
 __pycache__/
