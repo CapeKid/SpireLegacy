@@ -18,6 +18,8 @@ try {
         if($old.LinkType){throw 'Expected independent copies of test mod files'}
     }
     Copy-Item -LiteralPath $dl -Destination (Join-Path $mod "$modId.dll")
+    # Card illustrations load from the mod folder, so refresh them with the DLL.
+    Copy-Item -Path (Join-Path $root 'src/main/resources/heir/cards/*.png') -Destination (Join-Path $mod 'heir/cards') -Force
     $manifest=Get-Content (Join-Path $root 'sts2/SpireLegacy.json') -Raw | ConvertFrom-Json
     $manifest.id=$modId
     $manifest | ConvertTo-Json -Depth 12 | Set-Content -Encoding utf8 (Join-Path $mod "$modId.json")

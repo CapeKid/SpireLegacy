@@ -24,6 +24,7 @@ def send(command, **args):
 
 cards = {r["id"]: r for r in json.loads((root / "sheets/cards.json").read_text())}
 reactions = {r["id"]: r for r in json.loads((root / "sheets/class_reactions.json").read_text())}
+NEW_ART = ["family_motto", "heirloom_blade", "banner_volley", "inherited_grudge", "lineage_strike", "heraldry", "hearth_memory", "old_grudges", "birthright", "crown_breaker", "generations"]
 pools = json.loads((root / "sheets/card_pools.json").read_text())
 
 
@@ -60,6 +61,12 @@ for cls in ("knight", "mage", "ranger"):
         for other in ("knight", "mage", "ranger"):
             piece = max(reactions[card][other].split("{n}"), key=len).strip()
             check(f"{cls} text {card} {other}", (piece in text["description"]) == (other == cls), (piece, text))
+    if cls == "knight":
+        for card in NEW_ART:
+            art = send("family-core-text", card=card)["portrait"]
+            evidence.append({"label": f"portrait {card}", "result": art})
+            check(f"portrait {card}", art and (art["width"], art["height"]) == (250, 190), art)
+            check(f"portrait art id {card}", cards[card]["art"] == card, cards[card]["art"])
     for up in (False, True):
         tag = f"{cls}{'+' if up else ''}"
         # Family Motto

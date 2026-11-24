@@ -108,6 +108,7 @@ public static class FamilyCoreOracle
     {
         var player=run.Players.Single();
         var card=player.Creature.CombatState is {} combat?combat.CreateCard(NativeCards.Get(key),player):run.CreateCard(NativeCards.Get(key),player);
-        return new{key,description=card.GetDescriptionForPile(PileType.Hand),canonical=NativeCards.Get(key).GetDescriptionForPile(PileType.Deck)};
+        var art=(card as LegacyCard)?.CustomPortrait;
+        return new{key,description=card.GetDescriptionForPile(PileType.Hand),canonical=NativeCards.Get(key).GetDescriptionForPile(PileType.Deck),portrait=art==null?null:new{path=art.ResourcePath,width=art.GetWidth(),height=art.GetHeight()}};
     }
 }
