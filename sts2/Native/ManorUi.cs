@@ -3,6 +3,7 @@ using Godot;
 using System.Reflection;
 using HarmonyLib;
 using MegaCrit.Sts2.Core.Models;
+using MegaCrit.Sts2.Core.Models.Characters;
 using MegaCrit.Sts2.Core.Nodes.Screens.CharacterSelect;
 using MegaCrit.Sts2.Core.Nodes.Screens.ScreenContext;
 using MegaCrit.Sts2.Core.Nodes.CommonUi;
@@ -505,20 +506,24 @@ public static class ManorSelectAction
         var player = CoopBloodlines.Local(lobby);
         var character = CoopBloodlines.Character(player);
         var multiplayer = lobby.NetService.Type != MegaCrit.Sts2.Core.Multiplayer.Game.NetGameType.Singleplayer;
-        if (Runtime.Profile.active != null && (character is HeirCharacter || multiplayer && character is MegaCrit.Sts2.Core.Models.Characters.RandomCharacter))
+        var random = character is RandomCharacter;
+        var roll = random && !multiplayer ? RandomHeirEmbark.Preview(lobby) : null;
+        var needsHeir = character is HeirCharacter || roll?.IsHeir == true || random && multiplayer;
+        if (Runtime.Profile.active != null && needsHeir)
         {
             ManorUi.Notice = null;
             ManorUi.Open();
             return false;
         }
-        if (character is not HeirCharacter || Runtime.Profile.offers.Count == 0) return true;
+        if (!needsHeir || Runtime.Profile.offers.Count == 0) return true;
         if (CoopBloodlines.IsReady(player)) return false;
 
         var screen = __instance;
         var embark = (MethodInfo)__originalMethod;
         var arguments = __args;
         bool CanEmbark() => ReferenceEquals(CoopBloodlines.Lobby, lobby) && lobby.NetService.IsConnected
-            && CoopBloodlines.Character(CoopBloodlines.Local(lobby)) is HeirCharacter
+            && ReferenceEquals(CoopBloodlines.Character(CoopBloodlines.Local(lobby)), character)
+            && (roll is null || roll.IsCurrent(lobby))
             && !CoopBloodlines.IsReady(CoopBloodlines.Local(lobby));
         ManorUi.OpenEmbarkPicker(screen, multiplayer, BlitzTraits.IsBlitz(lobby.GameMode), CanEmbark, () =>
         {
@@ -526,7 +531,7 @@ public static class ManorSelectAction
             confirmedScreen = screen;
             try { ApiContract.Invoke(embark, screen, arguments); }
             finally { confirmedScreen = null; }
-        });
+        }, random && multiplayer);
         return false;
     }
 }

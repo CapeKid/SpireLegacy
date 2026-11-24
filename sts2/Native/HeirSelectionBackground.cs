@@ -1,8 +1,12 @@
 using System.Reflection;
 using Godot;
 using HarmonyLib;
+using MegaCrit.Sts2.Core.Commands;
+using MegaCrit.Sts2.Core.Entities.Players;
 using MegaCrit.Sts2.Core.Models;
+using MegaCrit.Sts2.Core.Nodes;
 using MegaCrit.Sts2.Core.Nodes.Screens.CharacterSelect;
+using MegaCrit.Sts2.Core.Nodes.Vfx.Utilities;
 
 namespace SpireLegacy;
 
@@ -31,6 +35,52 @@ internal static class HeirSelectionBackground
             art.SetAnchorsAndOffsetsPreset(Control.LayoutPreset.FullRect);
         }
         art.Show();
+    }
+}
+
+[HarmonyPatch]
+internal static class HeirRandomSelectionBackground
+{
+    internal static MethodBase[] RevealMethods()
+    {
+        return new[] { typeof(NCharacterSelectScreen), HeirBlitzBackground.ScreenType }.OfType<Type>()
+            .Select(screen => AccessTools.Method(screen, "DoRandomCharacterChange", [typeof(Player)]))
+            .OfType<MethodBase>().ToArray();
+    }
+    private static IEnumerable<MethodBase> TargetMethods() => RevealMethods();
+
+    private static bool Prefix(Player __0, Control ____bgContainer, ref Task __result)
+    {
+        if (__0.Character is not HeirCharacter heir) return true;
+
+        // The native reveal looks up the character's packed scene, which falls back to Ironclad for the Heir.
+        Reveal(heir, ____bgContainer);
+        __result = Cmd.Wait(1, false);
+        return false;
+    }
+
+    internal static void Reveal(HeirCharacter heir, Control background)
+    {
+        NGame.Instance?.ScreenShake(ShakeStrength.Weak, ShakeDuration.Short, 90);
+        SfxCmd.Play(heir.CharacterSelectSfx);
+        HeirSelectionBackground.Apply(background);
+    }
+}
+
+[HarmonyPatch]
+internal static class HeirRegularRandomBackground
+{
+    internal static readonly MethodInfo? Selection = AccessTools.Method(typeof(NCharacterSelectScreen),
+        "OnLocalCharacterChangedForRandom", [typeof(CharacterModel)]);
+
+    private static MethodBase? TargetMethod() => Selection;
+
+    private static bool Prefix(CharacterModel __0, Control ____bgContainer, ref bool ____delayEmbarkForCharacterSelect)
+    {
+        if (__0 is not HeirCharacter heir) return true;
+        HeirRandomSelectionBackground.Reveal(heir, ____bgContainer);
+        ____delayEmbarkForCharacterSelect = true;
+        return false;
     }
 }
 

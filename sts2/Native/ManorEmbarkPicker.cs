@@ -7,7 +7,8 @@ public static partial class ManorUi
 {
     private static bool CompactPickerViewport => Tree.Root.GetVisibleRect().Size.Y < 1000;
 
-    internal static void OpenEmbarkPicker(Control screen, bool multiplayer, bool blitz, Func<bool> canEmbark, Action embark)
+    internal static void OpenEmbarkPicker(Control screen, bool multiplayer, bool blitz, Func<bool> canEmbark, Action embark,
+        bool randomCoOp = false)
     {
         if (IsOpen || Runtime.Profile.offers.Count == 0) return;
 
@@ -39,6 +40,7 @@ public static partial class ManorUi
             heading.Modulate = new("F6DDB0");
             content!.AddChild(heading);
             AddText(L.Format($"The {Runtime.Profile.family} family"), 22);
+            if (randomCoOp) AddText("If Random chooses the Heir, you'll play as the heir you pick here.", 20);
             content.AddChild(message);
             var row = new HBoxContainer();
             row.AddThemeConstantOverride("separation", 14);
