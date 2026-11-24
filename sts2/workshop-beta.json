@@ -2,7 +2,7 @@
   "title": "Spire Legacy \u2014 Beta",
   "description": "Private beta builds of Spire Legacy for the creator's Steam Deck testing. Requires BaseLib. You may subscribe to both this item and the public Spire Legacy item. In StS2's mod menu, enable ONLY Spire Legacy \u2014 Beta OR Spire Legacy, then restart. They contain the same character and cards and must not run together. Finish a climb before switching builds. Family manor progress is shared. This item does not update the public Workshop listing.",
   "visibility": "private",
-  "changeNote": "1.0.77: Reworked the 34 shared family cards. Ten repetitive cards were replaced with new Attacks and Powers. Six cards now include a separate Knight, Mage, or Ranger bonus. Every heir starts with a new shared card, Family Motto.",
+  "changeNote": "1.0.78: Added a Manor option to clear a stuck solo run record when there is no saved climb, while keeping family progress.",
   "tags": [
     "Characters"
   ],

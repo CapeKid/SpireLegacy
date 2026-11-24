@@ -1,6 +1,10 @@
 using Godot;
 using HarmonyLib;
 using MegaCrit.Sts2.Core.Nodes.Screens.CharacterSelect;
+using MegaCrit.Sts2.Core.Saves;
+using MegaCrit.Sts2.Core.Saves.Managers;
+using System.Text.Json;
+using System.Text.Json.Nodes;
 
 namespace SpireLegacy;
 
@@ -8,6 +12,100 @@ namespace SpireLegacy;
 public static class ManorAuditOracle
 {
     private static SceneTree Tree=>(SceneTree)Engine.GetMainLoop();
+    private static (ISaveStore Store, string Path) SoloSave()
+    {
+        var saves = SaveManager.Instance;
+        var store = (ISaveStore)AccessTools.Field(typeof(SaveManager), "_saveStore").GetValue(saves)!;
+        return (store, RunSaveManager.GetRunSavePath(saves.CurrentProfileId, "current_run.save", true));
+    }
+    public static string CaptureRecoverySave()
+    {
+        var (store, path) = SoloSave();
+        return store.ReadFile(path) ?? throw new InvalidDataException("Missing native recovery fixture save.");
+    }
+    public static object StuckRun(string fixture)
+    {
+        void Require(bool condition, string message)
+        {
+            if (!condition) throw new InvalidDataException(message);
+        }
+        Button? Find(string name) => NativeTestBridge.Descendants(Tree.Root).OfType<Button>()
+            .SingleOrDefault(button => button.IsVisibleInTree() && button.Name == name);
+        void Press(string name) => (Find(name) ?? throw new InvalidDataException("Missing button " + name))
+            .EmitSignal(Button.SignalName.Pressed);
+        void Open()
+        {
+            ManorUi.Close();
+            ManorUi.Notice = null;
+            ManorUi.Open();
+        }
+        const string clear = "ManorClearStuckRun", confirm = "ManorConfirmClearStuckRun", cancel = "ManorCancelClearStuckRun";
+        var profile = Runtime.Profile;
+        Require(profile.active is null, "Expected a fresh isolated family.");
+        profile.crowns = 250;
+        profile.manor[Design.Rows("manor").First().Text("id")] = 1;
+        var run = profile.Begin(178);
+        profile.Save(Runtime.FamilyPath);
+        var original = JsonSerializer.SerializeToNode(profile, FamilyProfile.JsonOptions)!.AsObject();
+        original["active"] = null;
+        var saves = SaveManager.Instance;
+        var (store, solo) = SoloSave();
+        var otherProfile = saves.CurrentProfileId == 1 ? 2 : 1;
+        var backup = RunSaveManager.GetRunSavePath(otherProfile, "current_run_mp.save", true) + ".backup";
+        void WithSave(string path, Action check)
+        {
+            Require(!store.FileExists(path), "Fixture attempted to overwrite a save.");
+            store.CreateDirectory(path[..path.LastIndexOf('/')]);
+            store.WriteFile(path, fixture);
+            try
+            {
+                check();
+                Require(store.ReadFile(path) == fixture, "Recovery changed the native save.");
+            }
+            finally { store.DeleteFile(path); }
+        }
+
+        WithSave(solo, () =>
+        {
+            Open();
+            var status = StuckRunRecovery.Check(run);
+            Require(Find(clear) is null && status == StuckRunRecovery.Status.CurrentSave,
+                $"A current native save should block recovery. Status={status}, visible={Find(clear) is not null}, found={saves.HasRunSave}, initialized={saves.IsProfileInitialized}, pending={saves.CurrentRunSaveTask?.Status}.");
+        });
+        WithSave(backup, () =>
+        {
+            Open();
+            Require(Find(clear) is null && StuckRunRecovery.Check(run) == StuckRunRecovery.Status.OtherProfile,
+                "A different profile's backup should block recovery.");
+        });
+        run.coop = true;
+        Open();
+        Require(Find(clear) is null && StuckRunRecovery.Check(run) == StuckRunRecovery.Status.CoOp,
+            "A remote co-op record should block recovery.");
+        run.coop = false;
+
+        Open();
+        Press(clear);
+        Press(cancel);
+        Require(profile.active?.id == run.id && Find(clear) is not null, "Cancelling changed the active record.");
+        Press(clear);
+        WithSave(solo, () =>
+        {
+            Press(confirm);
+            Require(profile.active?.id == run.id && Find(clear) is null, "Confirmation did not recheck for a save.");
+        });
+        Open();
+        Press(clear);
+        Press(confirm);
+        var reloaded = FamilyProfile.Load(Runtime.FamilyPath);
+        var after = JsonSerializer.SerializeToNode(reloaded, FamilyProfile.JsonOptions);
+        Require(profile.active is null && JsonNode.DeepEquals(original, after), "Recovery changed more than the active record.");
+        Require(Find(clear) is null, "Recovery was still available after clearing the record.");
+        ManorUi.Close();
+        return new { cleared = true, currentSaveProtected = true, otherProfileBackupProtected = true, coOpProtected = true,
+            cancelPreservedRecord = true, recheckedAtConfirmation = true, progressPreserved = true };
+    }
+
     public static object LaunchRun()
     {
         var button=NativeTestBridge.Descendants(Tree.Root).OfType<Button>().Single(b=>b.IsVisibleInTree()&&b.Text.EndsWith(" · Family / Traits"));

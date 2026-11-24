@@ -257,6 +257,8 @@ public static class NativeTestBridge
                     Engine.TimeScale=auditSpeed;result=new{speed=auditSpeed};break;
                 case "manor": ManorUi.Open(); result = new { open = true }; break;
                 case "manor-audit":result=ManorAuditOracle.Inspect();break;
+                case "manor-capture-run-save":result=ManorAuditOracle.CaptureRecoverySave();break;
+                case "manor-stuck-run":result=ManorAuditOracle.StuckRun(request.GetProperty("savedRun").GetString()!);break;
                 case "manor-run-launch":result=ManorAuditOracle.LaunchRun();break;
                 case "manor-double-press":result=ManorAuditOracle.Duplicate(request.GetProperty("text").GetString()!);break;
                 case "manor-embark":ManorAuditOracle.OpenEmbarkPicker();result=ManorAuditOracle.Inspect();break;

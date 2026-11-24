@@ -289,6 +289,17 @@ public static partial class ManorUi
         AddText(L.Format($"Crowns: {profile.crowns} · Banner: {L.Text(BannerNames[profile.banner])} · Last heir earned {profile.lastEarned}"));
         AddText($"Spire Legacy {CardPlayDiagnostics.Version} · StS2 {MegaCrit.Sts2.Core.Debug.ReleaseInfoManager.Instance.ReleaseInfo?.Version}",20);
         if(Notice is {} notice) AddText(notice,26);
+        var recovery = profile.active is { } pending && ownerRun is null ? StuckRunRecovery.Check(pending) : (StuckRunRecovery.Status?)null;
+        if (recovery is { } status)
+        {
+            if (status == StuckRunRecovery.Status.Clearable && profile.active is { } stuck)
+            {
+                AddText("An old run record is blocking your heir. No saved climb was found.");
+                content.AddChild(MakeButton("Clear stuck run", () => ConfirmStuckRun(stuck.id), "ManorClearStuckRun"));
+            }
+            else if (StuckRunRecovery.Guidance(status) is { } guidance)
+                AddText(guidance);
+        }
         var options = new VBoxContainer(); content.AddChild(options);
         options.AddChild(MakeButton("Name your family",EditFamilyName));
         var unread=Design.Rows("family_chronicle").Count(r=>profile.chronicle.unlocked.Contains(r.Text("id"))&&!profile.chronicle.read.Contains(r.Text("id")));
@@ -299,7 +310,7 @@ public static partial class ManorUi
         var ready=CoopBloodlines.Lobby is {} lobby&&CoopBloodlines.IsReady(CoopBloodlines.Local(lobby));
         if (playing is {} active)
         {
-            AddText("A climb is in progress. Manor purchases are available after it ends.");
+            if (recovery is null) AddText("A climb is in progress. Manor purchases are available after it ends.");
             ShowActiveHeir(active.heir);
         }
         else if (ready) AddText("Unready in the lobby before buying manor upgrades.");
@@ -411,6 +422,41 @@ public static partial class ManorUi
         BeginPage("discard"); AddText("Discard the selected upgrades? Your crowns have not been spent.",30);
         AddButton("Keep selecting",Render); AddButton("Discard and close",Close); ConfigureNavigation();
     }
+
+    private static void ConfirmStuckRun(string expectedRunId)
+    {
+        back = Render;
+        BeginPage("clear-stuck-run");
+        AddText("Clear stuck run?", 32);
+        AddText("This clears the old run record and keeps your crowns and Manor upgrades.");
+        content!.AddChild(MakeButton("Cancel", Render, "ManorCancelClearStuckRun"));
+        content.AddChild(MakeButton("Clear run record", () =>
+        {
+            var profile = Runtime.Profile;
+            if (profile.active is not { } pending || pending.id != expectedRunId)
+            {
+                Notice = "The active run changed. Review its status before trying again.";
+            }
+            else if (StuckRunRecovery.Check(pending) != StuckRunRecovery.Status.Clearable)
+            {
+                Notice = null;
+            }
+            else
+            {
+                try
+                {
+                    if (profile.CommitClearStuckRun(expectedRunId, Runtime.FamilyPath))
+                        Notice = "Run record cleared. Close the Manor and embark again.";
+                }
+                catch (Exception error) when (error is IOException or UnauthorizedAccessException)
+                {
+                    Notice = "The family file could not be saved. Restart the game before trying again.";
+                }
+            }
+            Render();
+        }, "ManorConfirmClearStuckRun"));
+        ConfigureNavigation("ManorCancelClearStuckRun");
+    }
     public static void Close()
     {
         if (!IsOpen) return;
@@ -461,8 +507,7 @@ public static class ManorSelectAction
         var multiplayer = lobby.NetService.Type != MegaCrit.Sts2.Core.Multiplayer.Game.NetGameType.Singleplayer;
         if (Runtime.Profile.active != null && (character is HeirCharacter || multiplayer && character is MegaCrit.Sts2.Core.Models.Characters.RandomCharacter))
         {
-            ManorUi.Notice = multiplayer ? "Resume or abandon your unfinished family climb before starting a co-op run."
-                : "Resume or abandon your unfinished family climb before embarking.";
+            ManorUi.Notice = null;
             ManorUi.Open();
             return false;
         }

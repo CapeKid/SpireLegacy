@@ -156,6 +156,14 @@ public sealed class FamilyProfile
         var trial=Trial();var earned=trial.Settle(run.id,floors,gold,victory,reachedFloor);
         Persist(trial,path);return earned;
     }
+    internal bool CommitClearStuckRun(string expectedRunId, string path)
+    {
+        if (active is not { coop: false } run || run.id != expectedRunId) return false;
+        var trial = Trial();
+        trial.active = null;
+        Persist(trial, path);
+        return true;
+    }
     public bool CommitRunStart(FamilyRun run,string path)
     {
         FamilyData.Run(run);

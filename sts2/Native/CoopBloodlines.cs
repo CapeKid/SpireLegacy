@@ -101,7 +101,7 @@ public static class CoopBloodlines
         if(Selections.Session==""){RequestSession();ManorUi.Notice="Waiting for this lobby's heir selections to synchronize.";return false;}
         var local=Local(lobby);
         if(!NeedsSnapshot(local)){ownPayload="";SendSelection("");return true;}
-        if(Runtime.Profile.active!=null){ManorUi.Notice="Resume or abandon your unfinished family climb before starting a co-op run.";ManorUi.Open();return false;}
+        if(Runtime.Profile.active!=null){ManorUi.Notice=null;ManorUi.Open();return false;}
         if(!IsReady(local)||ownPayload.Length==0)ownPayload=FamilySnapshot.Serialize(FamilySnapshot.Freeze(Runtime.Profile,Runtime.Heir,lobby.NetService.NetId,true));
         FamilySnapshot.ReadNetwork(ownPayload,lobby.NetService.NetId);
         SendSelection(ownPayload);ManorUi.Notice=null;return true;
