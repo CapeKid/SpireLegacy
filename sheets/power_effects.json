@@ -210,5 +210,21 @@
   {
     "id": "flow_draw",
     "summary": "Arcane Flow draws !M! additional card(s)."
+  },
+  {
+    "id": "heraldry",
+    "summary": "At the start of your turn, gain your class's Heraldry bonus."
+  },
+  {
+    "id": "hearth_memory",
+    "summary": "Whenever you Retain a card, gain !M! Block."
+  },
+  {
+    "id": "old_grudges",
+    "summary": "Whenever you apply Weak or Vulnerable to an enemy, deal !M! damage to it."
+  },
+  {
+    "id": "generations",
+    "summary": "At the start of your turn, add !M! random card(s) unique to your class into your hand. They cost 0 this turn and Exhaust."
   }
 ]

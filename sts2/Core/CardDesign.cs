@@ -10,6 +10,10 @@ public sealed class CardDesign(string id, bool upgraded = false, IEnumerable<str
     public int MercyPoison => Mercy ? Gene("poison") + (upgraded ? 1 : 0) : 0;
     public int Cost => Row.Number("cost") - (upgraded && Row.Flag("upgradeCost") ? 1 : 0);
     public bool Retain => Row.Flag("retain") || (upgraded && Row.Json.TryGetProperty("upgradeRetain", out var retain) && retain.GetBoolean());
+    public bool Innate => Row.Flag("innate") || (upgraded && Row.Json.TryGetProperty("upgradeInnate", out var innate) && innate.GetBoolean());
+    // Shared family cards may carry one extra line per class; only the owner's line applies in combat.
+    public Design.Row? Reaction => Design.Rows("class_reactions").FirstOrDefault(r => r.Text("id") == id);
+    public int ReactionAmount(string classId) => Reaction is {} reaction ? reaction.Number(classId + "Amount") + (upgraded ? reaction.Number(classId + "Upgrade") : 0) : 0;
     public int SpecialAmount => Row.Number("specialAmount") + (upgraded ? Row.Number("upgradeSpecial") : 0);
     // Recovery cards cannot retrieve one another after being discounted to zero.
     public bool RecoverableFromExhaust => Row.Text("special") is not ("exhume" or "exhume_attack" or "exhume_next_turn");
@@ -28,7 +32,7 @@ public sealed class CardDesign(string id, bool upgraded = false, IEnumerable<str
         return Row.Number(key) + (key == "draw" ? Gene(key) : 0) + (upgraded && key != "hpLoss" && Row.Number(key) > 0 ? increment : 0);
     }
     public int Magic => Row.Number("magic") + (upgraded ? Row.Number("upgradeMagic") : 0);
-    public string Rules(string? nextBlock = null, string? specialBlock = null, Func<string, string>? translate = null)
+    public string Rules(string? nextBlock = null, string? specialBlock = null, Func<string, string>? translate = null, string? classId = null)
     {
         string Text(string english) => translate?.Invoke(english) ?? english;
         string Format(FormattableString text) => string.Format(Text(text.Format), text.GetArguments());
@@ -61,6 +65,10 @@ public sealed class CardDesign(string id, bool upgraded = false, IEnumerable<str
         else if (Row.Text("power") == "skill_echo") lines.Add(Text("After you play 3 Skills in a turn, your next Attack that turn is played twice. Triggers once per turn."));
         else if (Row.Text("power") != "none") lines.Add(Text(Design.Get("power_effects", Row.Text("power")).Text("summary")).Replace("!M!", Magic.ToString()));
         if (Row.Text("special") is not ("none" or "scry")) lines.Add(Text(Design.Get("special_effects", Row.Text("special")).Text("summary")).Replace("{n}", specialBlock ?? SpecialAmount.ToString()));
+        // Unowned (Compendium) cards list every class line; an heir's copy shows only its own.
+        if (Reaction is {} reaction)
+            foreach (var cls in classId is null ? new[] { "knight", "mage", "ranger" } : [classId])
+                lines.Add(Text(Design.Get("classes", cls).Text("name")) + ": " + Text(reaction.Text(cls)).Replace("{n}", ReactionAmount(cls).ToString()));
         return string.Join("\n", lines);
     }
 }

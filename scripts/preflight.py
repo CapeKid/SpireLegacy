@@ -15,7 +15,7 @@ def validate(historical_assets=False):
     errors=[]; cells=0
     for name,rows in sheets.items():
         if not rows: errors.append(f'{name}: empty sheet'); continue
-        optional = {'upgradeRetain', 'upgradeStrength'} if name == 'cards' else set()
+        optional = {'upgradeRetain', 'upgradeStrength', 'upgradeInnate'} if name == 'cards' else set()
         columns=set(rows[0])-optional; ids=set()
         for row in rows:
             id=row.get('id','?')
@@ -74,11 +74,11 @@ def validate(historical_assets=False):
         if row.get('aoe') and row.get('special')=='random_attack':errors.append('Conflicting multi-target modes '+row['id'])
     members=sheets['card_pools']
     membership={cls:{r['cardId'] for r in members if r['classId']==cls} for cls in classes}
-    shared_sets=[]
+    shared_sets=[];starter_sets=[]
     active=set()
     for row in members:
         ref('card_pools',row,'classId',classes);ref('card_pools',row,'cardId',cards)
-        if row['scope'] not in ('shared','unique'):errors.append('Invalid membership scope '+row['id'])
+        if row['scope'] not in ('shared','unique','starter'):errors.append('Invalid membership scope '+row['id'])
     for art in sheets.get('character_art',[]):
         path=ROOT/'src/main/resources'/art['path']
         if not path.is_file() or hashlib.sha256(path.read_bytes()).hexdigest()!=art['sha256']:
@@ -104,7 +104,11 @@ def validate(historical_assets=False):
         if len(rows)!=len(membership[cls]):errors.append(cls+': duplicate pool membership')
         shared={r['cardId'] for r in rows if r['scope']=='shared'}
         unique={r['cardId'] for r in rows if r['scope']=='unique'}
-        if len(shared)!=34 or len(unique)!=51:errors.append(cls+': expected 34 shared and 51 unique')
+        starter={r['cardId'] for r in rows if r['scope']=='starter'}
+        if len(shared)!=34 or len(unique)!=51 or len(starter)!=1:errors.append(cls+': expected 34 shared, 51 unique and 1 shared starter')
+        starter_sets.append(starter)
+        for key in starter:
+            if key in cards and next(r for r in sheets['cards'] if r['id']==key)['rarity']!='BASIC':errors.append('Shared starter must be BASIC '+key)
         shared_sets.append(shared);active.update(membership[cls])
         for key in unique:
             if key not in cards:continue
@@ -115,7 +119,14 @@ def validate(historical_assets=False):
             card=next(r for r in sheets['cards'] if r['id']==key)
             if card['rarity']=='BASIC' or card['power'] in ('reservoir','quiver') or card['special'] in ('charge_gain','charged_energy','arcane_aftershock','arcane_poison','charge_burst','full_charge_bonus','cleanse_charge','exhaust_mana','skill_damage','skill_poison'):errors.append('Class-specific mechanic in shared core '+key)
     if any(shared!=shared_sets[0] for shared in shared_sets):errors.append('Shared core differs by class')
-    if len(active)!=187:errors.append('Expected 187 regular active cards across all classes')
+    if any(starter!=starter_sets[0] for starter in starter_sets):errors.append('Shared starter differs by class')
+    reactions={r['id'] for r in sheets.get('class_reactions',[])}
+    for row in sheets.get('class_reactions',[]):
+        ref('class_reactions',row,'id',cards)
+        if row['id'] not in shared_sets[0]|starter_sets[0]:errors.append('Class reaction on a card outside the shared core '+row['id'])
+        for cls in ('knight','mage','ranger'):
+            if '{n}' in row[cls] and row[cls+'Amount']<=0:errors.append(f'class_reactions.{row["id"]}.{cls}Amount: missing amount')
+    if len(active)!=188:errors.append('Expected 188 regular active cards across all classes')
     for row in sheets.get('branch_cards',[]):
         ref('branch_cards',row,'classId',classes);ref('branch_cards',row,'cardId',cards)
         if row['cardId'] in active:errors.append('Branch addition duplicates regular membership '+row['cardId'])
@@ -125,11 +136,11 @@ def validate(historical_assets=False):
         extra=[r for r in sheets.get('branch_cards',[]) if r['classId']==cls]
         if len(extra)!=3 or len({r['cardId'] for r in extra})!=3:errors.append(cls+': expected three distinct beta additions')
         expanded=[r for r in sheets['cards'] if r['id'] in membership[cls]|{r['cardId'] for r in extra}]
-        for rarity,count in [('BASIC',3),('COMMON',20),('UNCOMMON',38),('RARE',27)]:
+        for rarity,count in [('BASIC',4),('COMMON',20),('UNCOMMON',38),('RARE',27)]:
             if sum(r['rarity']==rarity for r in expanded)!=count:errors.append(cls+': beta '+rarity+' parity mismatch')
         signatures=set()
         for card in expanded:
-            signature=tuple((k,str(card[k])) for k in sorted(card) if k not in ('id','name','asset','art','classId','rarity') and not k.startswith('upgrade'))
+            signature=tuple((k,str(card[k])) for k in sorted(card) if k not in ('id','name','asset','art','classId','rarity') and not k.startswith('upgrade'))+((('reaction',card['id']),) if card['id'] in reactions else ())
             if signature in signatures:errors.append(cls+': duplicate beta mechanics '+card['id'])
             signatures.add(signature)
     active.update(r['cardId'] for r in sheets.get('branch_cards',[]))
@@ -140,7 +151,8 @@ def validate(historical_assets=False):
             increment=row['upgradeDraw'] if row['upgradeDraw']>=0 else row['upgradeMagic']
             draw=row['draw']+(increment if upgraded and row['draw'] else 0)
             discard=row['discard']+(row['upgradeDiscard'] if upgraded else 0)
-            if cost==0 and not row['exhaust'] and draw>discard:errors.append('Repeatable free positive-draw card '+row['id'])
+            # The shared starter is a single deck copy and never a reward; it replaces itself unupgraded.
+            if cost==0 and not row['exhaust'] and draw>discard and row['id'] not in starter_sets[0]:errors.append('Repeatable free positive-draw card '+row['id'])
     for target in sheets.get('pool_targets',[]):
         ref('pool_targets',target,'id',classes)
         pool=[r for r in sheets['cards'] if r['id'] in membership[target['id']]]
@@ -151,7 +163,7 @@ def validate(historical_assets=False):
         pool=[r for r in sheets['cards'] if r['id'] in membership[cls] and r['rarity']!='BASIC']
         signatures=set()
         for row in pool:
-            signature=tuple((key,str(row[key])) for key in sorted(row) if key not in ('id','name','asset','art','classId','rarity') and not key.startswith('upgrade'))
+            signature=tuple((key,str(row[key])) for key in sorted(row) if key not in ('id','name','asset','art','classId','rarity') and not key.startswith('upgrade'))+((('reaction',row['id']),) if row['id'] in reactions else ())
             if signature in signatures:errors.append(cls+': duplicated card mechanics '+row['id'])
             signatures.add(signature)
     for row in sheets.get('card_builds',[]):

@@ -7,12 +7,12 @@
       "knight_strike",
       "knight_strike",
       "knight_strike",
-      "knight_strike",
       "knight_guard",
       "knight_guard",
       "knight_guard",
       "knight_guard",
-      "shield"
+      "shield",
+      "family_motto"
     ]
   },
   {
@@ -23,12 +23,12 @@
       "mage_strike",
       "mage_strike",
       "mage_strike",
-      "mage_strike",
       "mage_guard",
       "mage_guard",
       "mage_guard",
       "mage_guard",
-      "flame"
+      "flame",
+      "family_motto"
     ]
   },
   {
@@ -39,12 +39,12 @@
       "ranger_strike",
       "ranger_strike",
       "ranger_strike",
-      "ranger_strike",
       "ranger_guard",
       "ranger_guard",
       "ranger_guard",
       "ranger_guard",
-      "aim"
+      "aim",
+      "family_motto"
     ]
   }
 ]

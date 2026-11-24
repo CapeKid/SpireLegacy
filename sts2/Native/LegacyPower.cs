@@ -44,7 +44,10 @@ public abstract class LegacyPower:CustomPowerModel
   "attack_vigor" or "exhaust_vigor" or "hunt_momentum"=>ModelDb.Power<VigorPower>(),
   "double_tap" or "skill_echo" or "thesis_ready"=>ModelDb.Power<EchoFormPower>(),
   "thousand_cuts" or "sadistic" or "exhaust_damage" or "fire_breathing" or "combust" or "exhaust_burst"=>ModelDb.Power<InfernoPower>(),
-  "reservoir" or "class" or "debuff_charge" or "exhaust_charge"=>ModelDb.Power<FocusPower>(),
+  "reservoir" or "class" or "debuff_charge" or "exhaust_charge" or "heraldry"=>ModelDb.Power<FocusPower>(),
+  "hearth_memory"=>ModelDb.Power<PlatingPower>(),
+  "old_grudges"=>ModelDb.Power<InfernoPower>(),
+  "generations"=>ModelDb.Power<DrawCardsNextTurnPower>(),
   _=>throw new InvalidOperationException($"No power icon assigned for {Key}.")
  };
  public override string CustomPackedIconPath=>IconSource.PackedIconPath;
@@ -69,6 +72,7 @@ public abstract class LegacyPower:CustomPowerModel
   "skill_echo"=>PowerRules+" {ThesisProgress}",
   "skill_block" or "skill_energy"=>PowerRules+" "+HeirLocalization.Text("Skills left: {Counter}."),
   "attack_vigor"=>PowerRules+" "+HeirLocalization.Text("Attacks left: {Counter}."),
+  "heraldry" when IsMutable&&Owner?.Player is {} heir=>PowerRules+" "+HeirLocalization.Text(Design.Get("class_reactions","heraldry").Text(PlayerBloodlines.Heir(heir).classId)).Replace("{n}","{Amount}"),
   _=>PowerRules
  };
  private string PowerRules=>Design.Get("power_effects",Key).Localized("summary").Replace("!M!","{Amount}");
@@ -80,6 +84,8 @@ public abstract class LegacyPower:CustomPowerModel
  [SavedProperty] public int AttacksThisTurn {get=>attacks;set{attacks=value;if(IsMutable)InvokeDisplayAmountChanged();}}
  [SavedProperty] public bool ArcaneDrawUsed {get;set;}
  [SavedProperty] public int SkillsThisTurn {get;set;}
+ // Powers played this combat, for Lineage Strike. The class power is new each combat.
+ [SavedProperty] public int PowersPlayed {get;set;}
  // Retain the saved field name for compatibility; Phoenix now carries 0–2
  // Exhausts across turns. Legacy capped values are normalized on the next event.
  [SavedProperty] public int ExhaustsThisTurn {get;set;}
@@ -120,6 +126,11 @@ public abstract class LegacyPower:CustomPowerModel
   var refreshCountdown=RepeatsOnPlayThreshold&&plays!=0 || Key=="skill_echo"&&(SkillsThisTurn!=0||EchoTriggered);
   plays=0;discardPaid=false;AttacksThisTurn=0;ArcaneDrawUsed=false;SkillsThisTurn=0;EchoTriggered=false;
   if(refreshCountdown)InvokeDisplayAmountChanged();
+  if(Key=="class"&&FindAmount("heraldry") is var heraldry and >0)switch(PlayerBloodlines.Heir(Owner.Player).classId){
+   case "knight":Charges=1;break;
+   case "mage":Charges+=heraldry;break;
+   case "ranger":AttacksThisTurn=Math.Min(PlayThreshold-1,heraldry);break;
+  }
   switch(Key){
    case "discard_return":await GhostLuggage.Recover(this,context,player);break;
    case "retained_draw":var retained=RetainedLastTurn;RetainedLastTurn=false;if(retained)await CardPileCmd.Draw(context,Amount,player);break;
@@ -128,6 +139,7 @@ public abstract class LegacyPower:CustomPowerModel
    case "berserk":await PlayerCmd.GainEnergy(Amount,player);break;
    case "mana_fountain":await PlayerCmd.GainEnergy(1,player);await PowerCmd.Decrement(this);break;
    case "foresight":await CardEffects.Scry(player,context,Amount);break;
+   case "generations":await Generations(player);break;
    case "prophecy_return":
     // Claim before the asynchronous choice. Replays stack the discount, not
     // additional recovery actions, and no live card references survive a run.
@@ -154,24 +166,18 @@ public abstract class LegacyPower:CustomPowerModel
    }
   }
   if(Key=="class"){
+   if(card.Type==CardType.Power)PowersPlayed++;
    if(card.Type==CardType.Skill){SkillsThisTurn=Math.Min(3,SkillsThisTurn+1);if(PlayerBloodlines.Heir(Owner.Player).classId=="knight")Charges=1;if(PlayerBloodlines.Heir(Owner.Player).classId=="mage")Charges++;}
    if(card.Type==CardType.Attack){AttacksThisTurn++;
-    var spent=Charges;if(PlayerBloodlines.Heir(Owner.Player).classId is "knight" or "mage")Charges=0;
+    // Birthright lets a Mage keep the charges, and so spends no Arcane Flow draw.
+    var keep=ClassReactions.Is(card,"birthright","mage");
+    var spent=Charges;if(!keep&&PlayerBloodlines.Heir(Owner.Player).classId is "knight" or "mage")Charges=0;
     // Claim before awaiting: replays and further Attacks cannot draw again this turn.
-    if(PlayerBloodlines.Heir(Owner.Player).classId=="mage"&&spent>0&&!ArcaneDrawUsed){
+    if(PlayerBloodlines.Heir(Owner.Player).classId=="mage"&&spent>0&&!ArcaneDrawUsed&&!keep){
      ArcaneDrawUsed=true;await CardPileCmd.Draw(context,spent+FindAmount("flow_draw"),Owner.Player!);
      foreach(var crest in Owner.Player!.Relics.OfType<R_triune_crest>().Where(relic=>!relic.IsMelted))await crest.OnArcaneFlow(spent);
     }
-    if(PlayerBloodlines.Heir(Owner.Player).classId=="ranger"&&AttacksThisTurn%PlayThreshold==0){
-     await CardPileCmd.Draw(context,1+FindAmount("quiver"),Owner.Player!);
-     var opponents=Owner.CombatState!.GetOpponentsOf(Owner).Where(e=>e.IsAlive).ToArray();
-     var random=card is LegacyCard legacy&&legacy.DesignCard.Row.Text("special")=="random_attack";
-     IEnumerable<Creature> targets=random&&opponents.Length>0?new[]{opponents[Owner.Player!.RunState.Rng.CombatTargets.NextInt(opponents.Length)]}:card.TargetType==TargetType.AllEnemies?opponents:play.Target is {} target?new[]{target}:[];
-     var survivingTargets=targets.Where(e=>e.IsAlive).ToArray();
-     if(survivingTargets.Length>0){
-      var vulnerable=1+Owner.Player!.Relics.OfType<R_triune_crest>().Where(relic=>!relic.IsMelted).Sum(crest=>crest.ExtraRhythmVulnerable());
-      foreach(var enemy in survivingTargets.Where(e=>e.IsAlive))await CardEffects.Apply(context,"vulnerable",enemy,vulnerable,Owner,card);
-     }}}
+    if(PlayerBloodlines.Heir(Owner.Player).classId=="ranger"&&AttacksThisTurn%PlayThreshold==0)await RhythmReward(context,card,play);}
   }
   if(Key=="power_draw"&&card.Type==CardType.Power)await CardPileCmd.Draw(context,Amount,Owner.Player!);
   if(Key=="arcane_echo"&&card.Type==CardType.Skill&&++plays==1){GainArcaneCharges(1);await CardPileCmd.Draw(context,Amount,Owner.Player!);}
@@ -185,6 +191,33 @@ public abstract class LegacyPower:CustomPowerModel
     if(Key=="skill_energy")await CardEffects.Apply(context,"nextEnergy",Owner,Amount,Owner,card);
     if(Key=="attack_vigor")await CardEffects.Apply(context,"vigor",Owner,Amount,Owner,card);
    }
+  }
+ }
+ // Shared family cards can count extra Attacks toward Hunter Rhythm.
+ internal async Task AdvanceRhythm(PlayerChoiceContext context,CardModel card,CardPlay play,int steps){
+  if(Key!="class"||PlayerBloodlines.Heir(Owner.Player).classId!="ranger")return;
+  for(var i=0;i<steps;i++){AttacksThisTurn++;if(AttacksThisTurn%PlayThreshold==0)await RhythmReward(context,card,play);}
+ }
+ private async Task RhythmReward(PlayerChoiceContext context,CardModel card,CardPlay play){
+  await CardPileCmd.Draw(context,1+FindAmount("quiver"),Owner.Player!);
+  var opponents=Owner.CombatState!.GetOpponentsOf(Owner).Where(e=>e.IsAlive).ToArray();
+  var random=card is LegacyCard legacy&&legacy.DesignCard.Row.Text("special")=="random_attack";
+  var all=card.TargetType==TargetType.AllEnemies||ClassReactions.Is(card,"birthright","ranger");
+  IEnumerable<Creature> targets=random&&opponents.Length>0?new[]{opponents[Owner.Player!.RunState.Rng.CombatTargets.NextInt(opponents.Length)]}:all?opponents:play.Target is {} target?new[]{target}:[];
+  var survivingTargets=targets.Where(e=>e.IsAlive).ToArray();
+  if(survivingTargets.Length>0){
+   var vulnerable=1+Owner.Player!.Relics.OfType<R_triune_crest>().Where(relic=>!relic.IsMelted).Sum(crest=>crest.ExtraRhythmVulnerable());
+   foreach(var enemy in survivingTargets.Where(e=>e.IsAlive))await CardEffects.Apply(context,"vulnerable",enemy,vulnerable,Owner,card);
+  }
+ }
+ private async Task Generations(Player player){
+  if(Owner.CombatState is not {} combat)return;
+  var classId=PlayerBloodlines.Heir(player).classId;
+  var options=Design.Rows("card_pools").Where(r=>r.Text("classId")==classId&&r.Text("scope")=="unique").Select(r=>r.Text("cardId")).Where(id=>Design.Get("cards",id).Text("rarity")!="BASIC").ToArray();
+  for(var i=0;i<Amount&&options.Length>0;i++){
+   var card=combat.CreateCard(NativeCards.Get(options[player.RunState.Rng.CombatCardGeneration.NextInt(options.Length)]),player);
+   card.SetToFreeThisTurn();card.AddKeyword(CardKeyword.Exhaust);
+   await CardPileCmd.AddGeneratedCardToCombat(card,PileType.Hand,player,CardPilePosition.Bottom);
   }
  }
  public decimal InheritedDamageAdditive(Creature? target,decimal amount,ValueProp props,Creature? dealer,CardModel? card)
@@ -228,6 +261,7 @@ public abstract class LegacyPower:CustomPowerModel
   if(player!=Owner.Player!)return;
   if(Key=="retained_draw")RetainedLastTurn=retained.Count>0;
   if(Key=="establishment")foreach(var card in retained)if(!card.EnergyCost.CostsX)card.EnergyCost.SetThisCombat(Math.Max(0,card.EnergyCost.GetWithModifiers(CostModifiers.Local)-Amount));
+  if(Key=="hearth_memory"&&retained.Count>0)await CreatureCmd.GainBlock(Owner,Amount*retained.Count,ValueProp.Unpowered,null);
   if(Key=="retained_attack_energy"&&retained.Any(card=>card.Type==CardType.Attack))
    await CardEffects.Apply(context,"nextEnergy",Owner,Amount,Owner,null);
  }
@@ -246,6 +280,7 @@ public abstract class LegacyPower:CustomPowerModel
  public override async Task AfterPowerAmountChanged(PlayerChoiceContext context,PowerModel power,decimal amount,Creature? applier,CardModel? card)
  {
   if(Key=="sadistic"&&power.Owner!=Owner&&power.Owner.IsAlive&&power.Type==PowerType.Debuff&&applier==Owner&&amount>0&&!cyclingDamage){cyclingDamage=true;try{await CreatureCmd.Damage(context,power.Owner,Amount,ValueProp.Unpowered,Owner);}finally{cyclingDamage=false;}}
+  if(Key=="old_grudges"&&power is WeakPower or VulnerablePower&&power.Owner!=Owner&&power.Owner.IsAlive&&applier==Owner&&amount>0&&!cyclingDamage){cyclingDamage=true;try{await CreatureCmd.Damage(context,power.Owner,Amount,ValueProp.Unpowered,Owner);}finally{cyclingDamage=false;}}
   if(Key=="debuff_charge"&&power.Owner!=Owner&&power.Type==PowerType.Debuff&&applier==Owner&&amount>0)GainArcaneCharges(Amount);
  }
  public override async Task AfterDamageReceived(PlayerChoiceContext context,Creature target,DamageResult result,ValueProp props,Creature? dealer,CardModel? card){if(Key=="plated"&&target==Owner&&dealer!=Owner&&result.UnblockedDamage>0&&props.IsPoweredAttack())await PowerCmd.Decrement(this);}

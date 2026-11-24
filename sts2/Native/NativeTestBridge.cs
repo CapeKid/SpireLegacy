@@ -382,6 +382,9 @@ public static class NativeTestBridge
                 case "card-choice-lifetime":
                     await WaitForPlay(RunState().Players.Single());
                     result=await CardChoiceLifetimeOracle.Check(RunState(),request.GetProperty("upgrade").GetBoolean(),request.GetProperty("mode").GetString()!);break;
+                case "family-core":await WaitForPlay(RunState().Players.Single());result=await FamilyCoreOracle.Step(RunState(),request);break;
+                case "family-core-deck":result=FamilyCoreOracle.Deck(RunState());break;
+                case "family-core-text":result=FamilyCoreOracle.Text(RunState(),request.GetProperty("card").GetString()!);break;
                 case "card-deck-identity":result=RunState().Players.Single().Deck.Cards.Select(c=>c.Id.ToString()+":"+c.CurrentUpgradeLevel).ToArray();break;
                 case "card-flush":await WaitForPlay(RunState().Players.Single());result=await CardFlushOracle.Check(RunState(),request.GetProperty("card").GetString()!,request.GetProperty("upgrade").GetBoolean());break;
                 case "card-flush-next":await WaitForPlay(RunState().Players.Single());result=CardFlushOracle.NextCombat(RunState(),request.GetProperty("card").GetString()!);break;

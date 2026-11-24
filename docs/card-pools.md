@@ -2,20 +2,26 @@
 
 Version 1.0.20 gives each heir **82 ordinary reward cards on regular and 85 on public-beta**, matching the native StS2 characters on regular v0.107.1 and public-beta v0.111.0. Each class also has three basic starters. Regular has 20 common, 36 uncommon and 26 rare rewards; beta has 20 common, 38 uncommon and 27 rare. Ancient cards are separate and tracked in #26. The earlier 75-card target was based on StS1.
 
-There are **187 distinct active cards on regular and 196 on beta**. Each class has the same 34 shared IDs: 8 common, 16 uncommon and 10 rare. Regular class specialties add 3 basics, 12 commons, 20 uncommons and 16 rares; beta adds two uncommons and one rare per class. [The catalogue](card-catalogue.md) lists shared, unique and beta-only cards. [The expansion guide](sts2-pool-expansion.md) covers new choices, upgrades and balance comparisons.
+There are **188 distinct active cards on regular and 197 on beta**. Each class has the same 34 shared IDs: 8 common, 16 uncommon and 10 rare (15 Skills, 12 Attacks and 7 Powers). Every class also starts with the shared basic Family Motto. Regular class specialties add 3 basics, 12 commons, 20 uncommons and 16 rares; beta adds two uncommons and one rare per class. [The catalogue](card-catalogue.md) lists shared, unique and beta-only cards. [The expansion guide](sts2-pool-expansion.md) covers new choices, upgrades and balance comparisons.
+
+## Starting deck
+
+Each heir starts with 4 Strikes, 4 Guards, the class signature and Family Motto (0 Energy Skill: draw 1 card, or 2 upgraded). Family Motto reacts to the heir: the Knight gains 3 Block, the Mage gains an extra Arcane Charge, and the Ranger counts it as an Attack for Hunter Rhythm.
 
 ## Shared core
 
-Shared cards keep identical rules, upgrades, art and IDs in all classes. The selected class's passive changes how they fit a deck. Study and Spellweave prime Knight counters, generate Mage charges and help Ranger find more Attacks. Long Reach consumes counters/charges or advances Hunter Rhythm. Woven Incantation rewards Skill sequences in every class; Tracking Rhythm rewards Attack sequences in every class.
+Shared cards keep identical rules, upgrades, art and IDs in all classes. The selected class's passive changes how they fit a deck. Six cards marked in the catalogue (Family Motto, Heirloom Blade, Clean Armor, Banner Volley, Heraldry and Birthright) also carry one line per class. In combat only the heir's line applies; the Compendium shows all three. Knight Block lines are not scaled by Dexterity, because the Manor already scales the card's printed values.
 
 | Shared route | Support and payoffs | Class connections |
 | --- | --- | --- |
-| Exhaust | Reforge, Enchanted Ink, Last Stand, Merciless, Burnished Legacy, Secret Thesis, Arms Vault | Knight adds Forge Sparks and Cast Off; Mage adds Ash Reading and Transmutation; Ranger can exhaust utility cards to cycle into repeatable shots. |
-| Retention | Stored Ember, Crystal Seed, Memory Prism, Time Pocket, Measured Breath | Knight adds Patient Riposte; Mage adds Tower Library, Moonstone Lance and Geode Ward; Ranger adds Perch Discipline and Long Vigil. |
-| Sequencing | Study, Cold Read, Long Reach, Battle Meditation, Woven Incantation, Tracking Rhythm | Skills support Knight/Mage passives; Attacks support Ranger rhythm. Either sequence can become a secondary route in any class. |
-| Delayed resources | Brave Advance, Spellweave, Comet Calendar, Perfect Timing | Knight adds Reinforce and Siege Tomorrow; Mage adds Mana Shield; Ranger adds Patient Hunter. |
-| Debuffs | Challenge, Tripwire, Merciless, Alchemist's Patience | Knight gains armor and Strength payoffs; Mage adds Toxic Theory and area spells; Ranger adds poison doubling and marked-target shots. |
-| Flexible bursts | Meditate, Guardian Angel, Mirror Manuscript, Master Plan | Resource, protection and Skill duplication tools support several routes rather than one class-exclusive combo. |
+| Exhaust | Reforge, Enchanted Ink, Last Stand, Merciless, Ancestral Salvage | Knight adds Forge Sparks and Cast Off; Mage adds Ash Reading and Transmutation; Ranger can exhaust utility cards to cycle into repeatable shots. |
+| Retention | Stored Ember, Crystal Seed, Memory Prism, Time Pocket, Eternal Bookmark, Hearth Memory | Knight adds Patient Riposte; Mage adds Tower Library, Moonstone Lance and Geode Ward; Ranger adds Perch Discipline and Long Vigil. |
+| Sequencing | Study, Long Reach, Battle Meditation, Woven Incantation, Tracking Rhythm, Heraldry | Skills support Knight/Mage passives; Attacks support Ranger rhythm. Heraldry starts each turn with the heir's passive already in motion. |
+| Attacks | Heirloom Blade, Banner Volley, Lineage Strike, Birthright, Crown Breaker, Family Oath | Lineage Strike costs 1 less for each Power played this combat; Crown Breaker refunds Energy and cards on a kill. |
+| Debuffs | Challenge, Tripwire, Inherited Grudge, Old Grudges | Inherited Grudge strikes again at Weak or Vulnerable targets; Old Grudges pays off Hunter Rhythm, Challenge and Tripwire. |
+| Flexible bursts | Meditate, Guardian Angel, Mirror Manuscript, Comet Calendar, Generations | Generations adds a free, exhausting class card each turn (3 Energy, 2 upgraded). |
+
+Cold Read, Arms Vault, Spellweave, Forest Remedy, Master Plan, Burnished Legacy, Secret Thesis, Measured Breath, Alchemist's Patience and Perfect Timing left the shared core. They stay loadable by ID for old saves and future pools.
 
 Shared cards are identified in the catalogue and count toward each class's pool. The native pool chooses beta additions from the installed game's built-in card distribution, excluding other mods' injected cards. Both packages retain all model IDs so saves can load previously acquired cards even when branch eligibility changes.
 

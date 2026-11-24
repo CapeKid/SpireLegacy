@@ -6,12 +6,6 @@
     "scope": "shared"
   },
   {
-    "id": "knight__mage_cold_read",
-    "classId": "knight",
-    "cardId": "mage_cold_read",
-    "scope": "shared"
-  },
-  {
     "id": "knight__knight_reforge",
     "classId": "knight",
     "cardId": "knight_reforge",
@@ -60,12 +54,6 @@
     "scope": "shared"
   },
   {
-    "id": "knight__mage_spellweave",
-    "classId": "knight",
-    "cardId": "mage_spellweave",
-    "scope": "shared"
-  },
-  {
     "id": "knight__mage_memory_prism",
     "classId": "knight",
     "cardId": "mage_memory_prism",
@@ -75,12 +63,6 @@
     "id": "knight__knight_clean_armor",
     "classId": "knight",
     "cardId": "knight_clean_armor",
-    "scope": "shared"
-  },
-  {
-    "id": "knight__knight_arms_vault",
-    "classId": "knight",
-    "cardId": "knight_arms_vault",
     "scope": "shared"
   },
   {
@@ -102,24 +84,6 @@
     "scope": "shared"
   },
   {
-    "id": "knight__knight_burnished_legacy",
-    "classId": "knight",
-    "cardId": "knight_burnished_legacy",
-    "scope": "shared"
-  },
-  {
-    "id": "knight__mage_secret_thesis",
-    "classId": "knight",
-    "cardId": "mage_secret_thesis",
-    "scope": "shared"
-  },
-  {
-    "id": "knight__ranger_measured_breath",
-    "classId": "knight",
-    "cardId": "ranger_measured_breath",
-    "scope": "shared"
-  },
-  {
     "id": "knight__mage_woven_incantation",
     "classId": "knight",
     "cardId": "mage_woven_incantation",
@@ -129,12 +93,6 @@
     "id": "knight__ranger_tracking_rhythm",
     "classId": "knight",
     "cardId": "ranger_tracking_rhythm",
-    "scope": "shared"
-  },
-  {
-    "id": "knight__mage_alchemist_s_patience",
-    "classId": "knight",
-    "cardId": "mage_alchemist_s_patience",
     "scope": "shared"
   },
   {
@@ -165,18 +123,6 @@
     "id": "knight__mage_comet_calendar",
     "classId": "knight",
     "cardId": "mage_comet_calendar",
-    "scope": "shared"
-  },
-  {
-    "id": "knight__ranger_master_plan",
-    "classId": "knight",
-    "cardId": "ranger_master_plan",
-    "scope": "shared"
-  },
-  {
-    "id": "knight__ranger_perfect_timing",
-    "classId": "knight",
-    "cardId": "ranger_perfect_timing",
     "scope": "shared"
   },
   {
@@ -456,12 +402,6 @@
     "scope": "shared"
   },
   {
-    "id": "mage__mage_cold_read",
-    "classId": "mage",
-    "cardId": "mage_cold_read",
-    "scope": "shared"
-  },
-  {
     "id": "mage__knight_reforge",
     "classId": "mage",
     "cardId": "knight_reforge",
@@ -510,12 +450,6 @@
     "scope": "shared"
   },
   {
-    "id": "mage__mage_spellweave",
-    "classId": "mage",
-    "cardId": "mage_spellweave",
-    "scope": "shared"
-  },
-  {
     "id": "mage__mage_memory_prism",
     "classId": "mage",
     "cardId": "mage_memory_prism",
@@ -525,12 +459,6 @@
     "id": "mage__knight_clean_armor",
     "classId": "mage",
     "cardId": "knight_clean_armor",
-    "scope": "shared"
-  },
-  {
-    "id": "mage__knight_arms_vault",
-    "classId": "mage",
-    "cardId": "knight_arms_vault",
     "scope": "shared"
   },
   {
@@ -552,24 +480,6 @@
     "scope": "shared"
   },
   {
-    "id": "mage__knight_burnished_legacy",
-    "classId": "mage",
-    "cardId": "knight_burnished_legacy",
-    "scope": "shared"
-  },
-  {
-    "id": "mage__mage_secret_thesis",
-    "classId": "mage",
-    "cardId": "mage_secret_thesis",
-    "scope": "shared"
-  },
-  {
-    "id": "mage__ranger_measured_breath",
-    "classId": "mage",
-    "cardId": "ranger_measured_breath",
-    "scope": "shared"
-  },
-  {
     "id": "mage__mage_woven_incantation",
     "classId": "mage",
     "cardId": "mage_woven_incantation",
@@ -579,12 +489,6 @@
     "id": "mage__ranger_tracking_rhythm",
     "classId": "mage",
     "cardId": "ranger_tracking_rhythm",
-    "scope": "shared"
-  },
-  {
-    "id": "mage__mage_alchemist_s_patience",
-    "classId": "mage",
-    "cardId": "mage_alchemist_s_patience",
     "scope": "shared"
   },
   {
@@ -615,18 +519,6 @@
     "id": "mage__mage_comet_calendar",
     "classId": "mage",
     "cardId": "mage_comet_calendar",
-    "scope": "shared"
-  },
-  {
-    "id": "mage__ranger_master_plan",
-    "classId": "mage",
-    "cardId": "ranger_master_plan",
-    "scope": "shared"
-  },
-  {
-    "id": "mage__ranger_perfect_timing",
-    "classId": "mage",
-    "cardId": "ranger_perfect_timing",
     "scope": "shared"
   },
   {
@@ -906,12 +798,6 @@
     "scope": "shared"
   },
   {
-    "id": "ranger__mage_cold_read",
-    "classId": "ranger",
-    "cardId": "mage_cold_read",
-    "scope": "shared"
-  },
-  {
     "id": "ranger__knight_reforge",
     "classId": "ranger",
     "cardId": "knight_reforge",
@@ -960,12 +846,6 @@
     "scope": "shared"
   },
   {
-    "id": "ranger__mage_spellweave",
-    "classId": "ranger",
-    "cardId": "mage_spellweave",
-    "scope": "shared"
-  },
-  {
     "id": "ranger__mage_memory_prism",
     "classId": "ranger",
     "cardId": "mage_memory_prism",
@@ -975,12 +855,6 @@
     "id": "ranger__knight_clean_armor",
     "classId": "ranger",
     "cardId": "knight_clean_armor",
-    "scope": "shared"
-  },
-  {
-    "id": "ranger__knight_arms_vault",
-    "classId": "ranger",
-    "cardId": "knight_arms_vault",
     "scope": "shared"
   },
   {
@@ -1002,24 +876,6 @@
     "scope": "shared"
   },
   {
-    "id": "ranger__knight_burnished_legacy",
-    "classId": "ranger",
-    "cardId": "knight_burnished_legacy",
-    "scope": "shared"
-  },
-  {
-    "id": "ranger__mage_secret_thesis",
-    "classId": "ranger",
-    "cardId": "mage_secret_thesis",
-    "scope": "shared"
-  },
-  {
-    "id": "ranger__ranger_measured_breath",
-    "classId": "ranger",
-    "cardId": "ranger_measured_breath",
-    "scope": "shared"
-  },
-  {
     "id": "ranger__mage_woven_incantation",
     "classId": "ranger",
     "cardId": "mage_woven_incantation",
@@ -1029,12 +885,6 @@
     "id": "ranger__ranger_tracking_rhythm",
     "classId": "ranger",
     "cardId": "ranger_tracking_rhythm",
-    "scope": "shared"
-  },
-  {
-    "id": "ranger__mage_alchemist_s_patience",
-    "classId": "ranger",
-    "cardId": "mage_alchemist_s_patience",
     "scope": "shared"
   },
   {
@@ -1065,18 +915,6 @@
     "id": "ranger__mage_comet_calendar",
     "classId": "ranger",
     "cardId": "mage_comet_calendar",
-    "scope": "shared"
-  },
-  {
-    "id": "ranger__ranger_master_plan",
-    "classId": "ranger",
-    "cardId": "ranger_master_plan",
-    "scope": "shared"
-  },
-  {
-    "id": "ranger__ranger_perfect_timing",
-    "classId": "ranger",
-    "cardId": "ranger_perfect_timing",
     "scope": "shared"
   },
   {
@@ -1404,24 +1242,6 @@
     "scope": "shared"
   },
   {
-    "id": "knight__ranger_forest_remedy",
-    "classId": "knight",
-    "cardId": "ranger_forest_remedy",
-    "scope": "shared"
-  },
-  {
-    "id": "mage__ranger_forest_remedy",
-    "classId": "mage",
-    "cardId": "ranger_forest_remedy",
-    "scope": "shared"
-  },
-  {
-    "id": "ranger__ranger_forest_remedy",
-    "classId": "ranger",
-    "cardId": "ranger_forest_remedy",
-    "scope": "shared"
-  },
-  {
     "id": "knight__knight_royal_execution",
     "classId": "knight",
     "cardId": "knight_royal_execution",
@@ -1528,5 +1348,203 @@
     "classId": "ranger",
     "cardId": "ranger_hunt_without_end",
     "scope": "unique"
+  },
+  {
+    "id": "knight__heirloom_blade",
+    "classId": "knight",
+    "cardId": "heirloom_blade",
+    "scope": "shared"
+  },
+  {
+    "id": "knight__banner_volley",
+    "classId": "knight",
+    "cardId": "banner_volley",
+    "scope": "shared"
+  },
+  {
+    "id": "knight__inherited_grudge",
+    "classId": "knight",
+    "cardId": "inherited_grudge",
+    "scope": "shared"
+  },
+  {
+    "id": "knight__lineage_strike",
+    "classId": "knight",
+    "cardId": "lineage_strike",
+    "scope": "shared"
+  },
+  {
+    "id": "knight__heraldry",
+    "classId": "knight",
+    "cardId": "heraldry",
+    "scope": "shared"
+  },
+  {
+    "id": "knight__hearth_memory",
+    "classId": "knight",
+    "cardId": "hearth_memory",
+    "scope": "shared"
+  },
+  {
+    "id": "knight__old_grudges",
+    "classId": "knight",
+    "cardId": "old_grudges",
+    "scope": "shared"
+  },
+  {
+    "id": "knight__birthright",
+    "classId": "knight",
+    "cardId": "birthright",
+    "scope": "shared"
+  },
+  {
+    "id": "knight__crown_breaker",
+    "classId": "knight",
+    "cardId": "crown_breaker",
+    "scope": "shared"
+  },
+  {
+    "id": "knight__generations",
+    "classId": "knight",
+    "cardId": "generations",
+    "scope": "shared"
+  },
+  {
+    "id": "knight__family_motto",
+    "classId": "knight",
+    "cardId": "family_motto",
+    "scope": "starter"
+  },
+  {
+    "id": "mage__heirloom_blade",
+    "classId": "mage",
+    "cardId": "heirloom_blade",
+    "scope": "shared"
+  },
+  {
+    "id": "mage__banner_volley",
+    "classId": "mage",
+    "cardId": "banner_volley",
+    "scope": "shared"
+  },
+  {
+    "id": "mage__inherited_grudge",
+    "classId": "mage",
+    "cardId": "inherited_grudge",
+    "scope": "shared"
+  },
+  {
+    "id": "mage__lineage_strike",
+    "classId": "mage",
+    "cardId": "lineage_strike",
+    "scope": "shared"
+  },
+  {
+    "id": "mage__heraldry",
+    "classId": "mage",
+    "cardId": "heraldry",
+    "scope": "shared"
+  },
+  {
+    "id": "mage__hearth_memory",
+    "classId": "mage",
+    "cardId": "hearth_memory",
+    "scope": "shared"
+  },
+  {
+    "id": "mage__old_grudges",
+    "classId": "mage",
+    "cardId": "old_grudges",
+    "scope": "shared"
+  },
+  {
+    "id": "mage__birthright",
+    "classId": "mage",
+    "cardId": "birthright",
+    "scope": "shared"
+  },
+  {
+    "id": "mage__crown_breaker",
+    "classId": "mage",
+    "cardId": "crown_breaker",
+    "scope": "shared"
+  },
+  {
+    "id": "mage__generations",
+    "classId": "mage",
+    "cardId": "generations",
+    "scope": "shared"
+  },
+  {
+    "id": "mage__family_motto",
+    "classId": "mage",
+    "cardId": "family_motto",
+    "scope": "starter"
+  },
+  {
+    "id": "ranger__heirloom_blade",
+    "classId": "ranger",
+    "cardId": "heirloom_blade",
+    "scope": "shared"
+  },
+  {
+    "id": "ranger__banner_volley",
+    "classId": "ranger",
+    "cardId": "banner_volley",
+    "scope": "shared"
+  },
+  {
+    "id": "ranger__inherited_grudge",
+    "classId": "ranger",
+    "cardId": "inherited_grudge",
+    "scope": "shared"
+  },
+  {
+    "id": "ranger__lineage_strike",
+    "classId": "ranger",
+    "cardId": "lineage_strike",
+    "scope": "shared"
+  },
+  {
+    "id": "ranger__heraldry",
+    "classId": "ranger",
+    "cardId": "heraldry",
+    "scope": "shared"
+  },
+  {
+    "id": "ranger__hearth_memory",
+    "classId": "ranger",
+    "cardId": "hearth_memory",
+    "scope": "shared"
+  },
+  {
+    "id": "ranger__old_grudges",
+    "classId": "ranger",
+    "cardId": "old_grudges",
+    "scope": "shared"
+  },
+  {
+    "id": "ranger__birthright",
+    "classId": "ranger",
+    "cardId": "birthright",
+    "scope": "shared"
+  },
+  {
+    "id": "ranger__crown_breaker",
+    "classId": "ranger",
+    "cardId": "crown_breaker",
+    "scope": "shared"
+  },
+  {
+    "id": "ranger__generations",
+    "classId": "ranger",
+    "cardId": "generations",
+    "scope": "shared"
+  },
+  {
+    "id": "ranger__family_motto",
+    "classId": "ranger",
+    "cardId": "family_motto",
+    "scope": "starter"
   }
 ]

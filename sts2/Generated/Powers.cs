@@ -53,6 +53,10 @@ public sealed class P_retained_attack_energy : LegacyPower { }
 public sealed class P_debuff_charge : LegacyPower { }
 public sealed class P_exhaust_charge : LegacyPower { }
 public sealed class P_flow_draw : LegacyPower { }
+public sealed class P_heraldry : LegacyPower { }
+public sealed class P_hearth_memory : LegacyPower { }
+public sealed class P_old_grudges : LegacyPower { }
+public sealed class P_generations : LegacyPower { }
 public sealed class P_plated : LegacyPower { }
 public sealed class P_reservoir : LegacyPower { }
 public sealed class P_quiver : LegacyPower { }

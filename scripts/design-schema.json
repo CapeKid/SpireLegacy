@@ -90,7 +90,7 @@
       "cardId": {"types": ["str"]},
       "classId": {"types": ["str"]},
       "id": {"types": ["str"], "pattern": "[A-Za-z][A-Za-z0-9_-]*"},
-      "scope": {"types": ["str"], "enum": ["shared", "unique"]}
+      "scope": {"types": ["str"], "enum": ["shared", "starter", "unique"]}
     }
   },
   "cards": {
@@ -137,6 +137,7 @@
       "upgradeDraw": {"types": ["int"], "min": -1, "max": 10000},
       "upgradeMagic": {"types": ["int"], "min": 0, "max": 10000},
       "upgradeRetain": {"types": ["bool"]},
+      "upgradeInnate": {"types": ["bool"]},
       "upgradeSpecial": {"types": ["int"], "min": 0, "max": 10000},
       "upgradeStrength": {"types": ["int"], "min": 0, "max": 10000},
       "vigor": {"types": ["int"], "min": 0, "max": 10000},
@@ -157,6 +158,22 @@
       "path": {"types": ["str"]},
       "regions": {"types": ["list"], "items": {"types": ["list"], "items": {"types": ["int"], "min": -10000, "max": 10000}}},
       "sha256": {"types": ["str"], "pattern": "[a-f0-9]{64}"}
+    }
+  },
+  "class_reactions": {
+    "types": ["dict"],
+    "required": ["id", "knight", "knightAmount", "knightUpgrade", "mage", "mageAmount", "mageUpgrade", "ranger", "rangerAmount", "rangerUpgrade"],
+    "fields": {
+      "id": {"types": ["str"], "pattern": "[a-z][a-z0-9_]*"},
+      "knight": {"types": ["str"]},
+      "knightAmount": {"types": ["int"], "min": 0, "max": 10000},
+      "knightUpgrade": {"types": ["int"], "min": 0, "max": 10000},
+      "mage": {"types": ["str"]},
+      "mageAmount": {"types": ["int"], "min": 0, "max": 10000},
+      "mageUpgrade": {"types": ["int"], "min": 0, "max": 10000},
+      "ranger": {"types": ["str"]},
+      "rangerAmount": {"types": ["int"], "min": 0, "max": 10000},
+      "rangerUpgrade": {"types": ["int"], "min": 0, "max": 10000}
     }
   },
   "class_mechanics": {
@@ -335,7 +352,7 @@
     "types": ["dict"],
     "required": ["id", "summary"],
     "fields": {
-      "id": {"types": ["str"], "pattern": "[a-z][a-z0-9_]*", "enum": ["debuff_charge", "exhaust_charge", "flow_draw", "retained_attack_energy", "retained_draw", "skill_echo", "thesis_ready", "hunt_momentum", "exhaust_vigor", "discard_next_block", "discard_return", "exhaust_burst", "status_furnace", "prophecy_return", "after_image", "arcane_echo", "attack_vigor", "barricade", "berserk", "brutality", "buffer", "mana_fountain", "intangible", "burst", "combust", "dark_embrace", "demon_form", "discard_block", "discard_energy", "double_tap", "envenom", "equilibrium", "establishment", "evolve", "exhaust_damage", "feel_no_pain", "fire_breathing", "flame_barrier", "foresight", "juggernaut", "metallicize", "noxious", "panache", "power_draw", "rupture", "sadistic", "scry_block", "skill_block", "skill_energy", "thorns", "thousand_cuts", "tools", "well_laid"]},
+      "id": {"types": ["str"], "pattern": "[a-z][a-z0-9_]*", "enum": ["heraldry", "hearth_memory", "old_grudges", "generations", "debuff_charge", "exhaust_charge", "flow_draw", "retained_attack_energy", "retained_draw", "skill_echo", "thesis_ready", "hunt_momentum", "exhaust_vigor", "discard_next_block", "discard_return", "exhaust_burst", "status_furnace", "prophecy_return", "after_image", "arcane_echo", "attack_vigor", "barricade", "berserk", "brutality", "buffer", "mana_fountain", "intangible", "burst", "combust", "dark_embrace", "demon_form", "discard_block", "discard_energy", "double_tap", "envenom", "equilibrium", "establishment", "evolve", "exhaust_damage", "feel_no_pain", "fire_breathing", "flame_barrier", "foresight", "juggernaut", "metallicize", "noxious", "panache", "power_draw", "rupture", "sadistic", "scry_block", "skill_block", "skill_energy", "thorns", "thousand_cuts", "tools", "well_laid"]},
       "summary": {"types": ["str"]}
     }
   },
@@ -370,7 +387,7 @@
     "types": ["dict"],
     "required": ["id", "summary"],
     "fields": {
-      "id": {"types": ["str"], "pattern": "[a-z][a-z0-9_]*", "enum": ["cleanse_charge", "discard_attack_energy", "guard_block", "charge_burst", "full_charge_bonus", "skill_damage", "skill_poison", "hit_poison", "thunder_splash", "discard_vigor", "exhume_next_turn", "exhume_attack", "arcane_aftershock", "arcane_poison", "block_damage", "chain_damage", "charge_gain", "charged_energy", "cleanse", "discard_block", "discard_draw", "discard_energy", "discard_energy_exhaust", "discount_card", "discount_hand", "discount_choice", "double_block", "double_poison", "poison_twice", "execute", "exhaust_block", "exhaust_damage", "exhaust_mana", "exhaust_nonattacks", "exhaust_one", "exhume", "free_hand", "full_hp_bonus", "guard_bonus", "guarded_strength", "marked_bonus", "random_attack", "refill_hand", "reload_attacks", "retain_block", "retain_damage", "retrieve", "scry", "upgrade_attacks", "wounds"]},
+      "id": {"types": ["str"], "pattern": "[a-z][a-z0-9_]*", "enum": ["grudge_repeat", "power_discount", "crown_breaker", "cleanse_charge", "discard_attack_energy", "guard_block", "charge_burst", "full_charge_bonus", "skill_damage", "skill_poison", "hit_poison", "thunder_splash", "discard_vigor", "exhume_next_turn", "exhume_attack", "arcane_aftershock", "arcane_poison", "block_damage", "chain_damage", "charge_gain", "charged_energy", "cleanse", "discard_block", "discard_draw", "discard_energy", "discard_energy_exhaust", "discount_card", "discount_hand", "discount_choice", "double_block", "double_poison", "poison_twice", "execute", "exhaust_block", "exhaust_damage", "exhaust_mana", "exhaust_nonattacks", "exhaust_one", "exhume", "free_hand", "full_hp_bonus", "guard_bonus", "guarded_strength", "marked_bonus", "random_attack", "refill_hand", "reload_attacks", "retain_block", "retain_damage", "retrieve", "scry", "upgrade_attacks", "wounds"]},
       "summary": {"types": ["str"]}
     }
   },

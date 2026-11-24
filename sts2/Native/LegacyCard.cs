@@ -58,7 +58,7 @@ public abstract class LegacyCard : CustomCardModel
     }
     protected override void AddExtraArgsToDescription(LocString description) => description.Add("Rules", DesignCard.Rules(
         Row.Number("nextBlock") > 0 ? NextBlock.ToHighlightedString(false) : null,
-        HasSpecialBlock ? SpecialBlock.ToHighlightedString(false) : null, HeirLocalization.Text).Replace("{Damage}", DynamicVars.Damage.ToHighlightedString(false)).Replace("{Block}", DynamicVars.Block.ToHighlightedString(false)));
+        HasSpecialBlock ? SpecialBlock.ToHighlightedString(false) : null, HeirLocalization.Text, ClassReactions.ClassOf(this)).Replace("{Damage}", DynamicVars.Damage.ToHighlightedString(false)).Replace("{Block}", DynamicVars.Block.ToHighlightedString(false)));
     protected override IEnumerable<DynamicVar> CanonicalVars {
         get {
             var design = new CardDesign(Key);
@@ -109,16 +109,25 @@ public abstract class LegacyCard : CustomCardModel
             {
                 // Native Vigor and other attack-scoped effects last for the complete
                 // multi-hit command, rather than being consumed by its first hit.
-                var attack = DamageCmd.Attack(DynamicVars.Damage.BaseValue).WithHitCount(Row.Number("hits")).FromCardCompatibility(this, play);
-                if (Row.Flag("aoe")) attack.TargetingAllOpponents(CombatState!);
+                var hits = Row.Number("hits") + (Row.Text("special") == "grudge_repeat" && play.Target is {} marked && (marked.GetPowerAmount<WeakPower>() > 0 || marked.GetPowerAmount<VulnerablePower>() > 0) ? 1 : 0);
+                var attack = DamageCmd.Attack(DynamicVars.Damage.BaseValue).WithHitCount(hits).FromCardCompatibility(this, play);
+                var victim = play.Target; var victimAlive = victim?.IsAlive == true;
+                if (Row.Flag("aoe") || ClassReactions.Is(this, "birthright", "ranger")) attack.TargetingAllOpponents(CombatState!);
                 else if (Row.Text("special") == "random_attack") attack.TargetingRandomOpponents(CombatState!);
                 else attack.Targeting(play.Target!);
                 await attack.Execute(context);
+                // Only a kill made by this play pays out, not a replay on a corpse.
+                if (Row.Text("special") == "crown_breaker" && victimAlive && victim is { IsAlive: false })
+                {
+                    await PlayerCmd.GainEnergy(1, Owner);
+                    await CardPileCmd.Draw(context, 2, Owner);
+                }
             }
         var hadBlock = Owner.Creature.Block > 0;
         if (DynamicVars.Block.BaseValue > 0) await CreatureCmd.GainBlock(Owner.Creature, DynamicVars.Block, play);
         if (Row.Text("special") == "guard_block" && hadBlock) await CreatureCmd.GainBlock(Owner.Creature, SpecialBlock, play);
         await CardEffects.Execute(this, context, play, repeatPoison);
+        await ClassReactions.OnPlay(this, context, play);
     }
     protected override void OnUpgrade()
     {
@@ -130,6 +139,14 @@ public abstract class LegacyCard : CustomCardModel
         if (HasSpecialBlock && Row.Number("upgradeSpecial") != 0) SpecialBlock.UpgradeValueBy(Row.Number("upgradeSpecial"));
         if (Row.Flag("upgradeCost")) EnergyCost.UpgradeBy(-1);
         if (!Row.Flag("retain") && DesignCard.Retain) AddKeyword(CardKeyword.Retain);
+        if (!Row.Flag("innate") && DesignCard.Innate) AddKeyword(CardKeyword.Innate);
+    }
+    public override bool TryModifyEnergyCostInCombat(CardModel card, decimal originalCost, out decimal modifiedCost)
+    {
+        modifiedCost = originalCost;
+        if (card != this || Row.Text("special") != "power_discount" || Owner?.Creature.GetPower<P_class>() is not { PowersPlayed: > 0 } counter) return false;
+        modifiedCost = Math.Max(0, modifiedCost - counter.PowersPlayed);
+        return true;
     }
     public decimal InheritedDamageAdditive(Creature? target, decimal amount, ValueProp props, Creature? dealer, CardModel? source)
     {
@@ -148,7 +165,7 @@ public abstract class LegacyCard : CustomCardModel
             "execute" when target is not null && target.CurrentHp * 2 <= target.MaxHp => basis * (n - 1),
             "full_hp_bonus" when target is not null && target.CurrentHp == target.MaxHp => n,
             "marked_bonus" when target is not null && (target.GetPowerAmount<VulnerablePower>() > 0 || target.GetPowerAmount<PoisonPower>() > 0) => n,
-            _ => 0 };
+            _ => 0 } + ClassReactions.DamageBonus(this);
     }
     public override Task AfterDamageReceived(PlayerChoiceContext context, Creature target, DamageResult result, ValueProp props, Creature? dealer, CardModel? card)
     {

@@ -1,0 +1,74 @@
+[
+  {
+    "id": "family_motto",
+    "knight": "Gain {n} Block.",
+    "knightAmount": 3,
+    "knightUpgrade": 0,
+    "mage": "Gain {n} additional Arcane Charge.",
+    "mageAmount": 1,
+    "mageUpgrade": 0,
+    "ranger": "Counts as an Attack for Hunter Rhythm.",
+    "rangerAmount": 1,
+    "rangerUpgrade": 0
+  },
+  {
+    "id": "heirloom_blade",
+    "knight": "Gain {n} Block.",
+    "knightAmount": 4,
+    "knightUpgrade": 0,
+    "mage": "Draw {n} card(s).",
+    "mageAmount": 1,
+    "mageUpgrade": 0,
+    "ranger": "Deal {n} additional damage if this is your third or later Attack this turn.",
+    "rangerAmount": 4,
+    "rangerUpgrade": 0
+  },
+  {
+    "id": "knight_clean_armor",
+    "knight": "Gain {n} additional Block.",
+    "knightAmount": 3,
+    "knightUpgrade": 0,
+    "mage": "Gain {n} Arcane Charge.",
+    "mageAmount": 1,
+    "mageUpgrade": 0,
+    "ranger": "Draw {n} card(s).",
+    "rangerAmount": 1,
+    "rangerUpgrade": 0
+  },
+  {
+    "id": "banner_volley",
+    "knight": "Gain {n} Block.",
+    "knightAmount": 4,
+    "knightUpgrade": 0,
+    "mage": "Deal {n} additional damage for each Arcane Charge this consumes, up to 8.",
+    "mageAmount": 2,
+    "mageUpgrade": 0,
+    "ranger": "Counts as 2 Attacks for Hunter Rhythm.",
+    "rangerAmount": 2,
+    "rangerUpgrade": 0
+  },
+  {
+    "id": "heraldry",
+    "knight": "Start each turn with Counterguard primed.",
+    "knightAmount": 1,
+    "knightUpgrade": 0,
+    "mage": "Gain {n} Arcane Charge at the start of each turn.",
+    "mageAmount": 1,
+    "mageUpgrade": 0,
+    "ranger": "Hunter Rhythm starts each turn with {n} Attack counted.",
+    "rangerAmount": 1,
+    "rangerUpgrade": 0
+  },
+  {
+    "id": "birthright",
+    "knight": "Gain {n} Block.",
+    "knightAmount": 8,
+    "knightUpgrade": 2,
+    "mage": "Does not consume Arcane Charges. Deal {n} additional damage for each Arcane Charge, up to 10.",
+    "mageAmount": 2,
+    "mageUpgrade": 0,
+    "ranger": "Hits ALL enemies.",
+    "rangerAmount": 1,
+    "rangerUpgrade": 0
+  }
+]

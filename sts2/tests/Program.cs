@@ -122,14 +122,17 @@ foreach (var firstEnding in new[] { false, true })
     Check(lines.All(l => !string.IsNullOrWhiteSpace(l.Text) && !l.Text.Contains('{')), cls + " ending has complete literal dialogue");
     Check(endingScripts.Add(string.Join("\n", lines.Select(l => l.Text))), cls + " unique first/return ending");
 }
-Check(Design.Rows("cards").Count == 360, "Preserve every historical card");
+Check(Design.Rows("cards").Count == 371, "Preserve every historical card");
 foreach (var cls in new[] { "knight", "mage", "ranger" })
 {
     var pool = Design.Pool(cls).ToArray();
-    Check(pool.Length == 85 && pool.Select(r => r.Text("id")).Distinct().Count() == 85, cls + " regular pool");
+    Check(pool.Length == 86 && pool.Select(r => r.Text("id")).Distinct().Count() == 86, cls + " regular pool");
     Check(Design.Rows("card_pools").Count(r => r.Text("classId") == cls && r.Text("scope") == "shared") == 34, cls + " shared core");
+    Check(Design.Rows("card_pools").Count(r => r.Text("classId") == cls && r.Text("scope") == "starter" && r.Text("cardId") == "family_motto") == 1, cls + " shared starter");
+    Check(Design.Get("decks", cls).List("cards").Count(c => c == "family_motto") == 1 && Design.Get("decks", cls).List("cards").Count(c => c.EndsWith("_strike")) == 4, cls + " deck holds Family Motto and four Strikes");
+    Check(new CardDesign("birthright").Rules(classId: cls).Split((char)10).Count(l => l.Contains(":")) == 1 && new CardDesign("birthright").Rules().Split((char)10).Count(l => l.Contains(":")) == 3, cls + " reaction line shows only the owner class");
     var expanded=Design.Pool(cls,true).ToArray();
-    Check(expanded.Length==88 && expanded.Select(r=>r.Text("id")).Distinct().Count()==88,cls+" beta pool");
+    Check(expanded.Length==89 && expanded.Select(r=>r.Text("id")).Distinct().Count()==89,cls+" beta pool");
     foreach(var item in new[]{("COMMON",20,20),("UNCOMMON",36,38),("RARE",26,27)})
         Check(pool.Count(r=>r.Text("rarity")==item.Item1)==item.Item2 && expanded.Count(r=>r.Text("rarity")==item.Item1)==item.Item3,cls+" native "+item.Item1+" reward parity");
     Check(Design.Get("decks", cls).List("cards").Length == 10, cls + " starters");
@@ -176,7 +179,7 @@ foreach (var upgraded in new[] { false, true })
 foreach (var cardId in Design.Rows("card_pools").Select(r => r.Text("cardId")).Distinct())
 {
     var normal = new CardDesign(cardId); var upgraded = new CardDesign(cardId, true);
-    Check(normal.Cost != upgraded.Cost || normal.Damage != upgraded.Damage || normal.Block != upgraded.Block || normal.Retain != upgraded.Retain || normal.Rules() != upgraded.Rules(), cardId + " has an effective upgrade");
+    Check(normal.Cost != upgraded.Cost || normal.Damage != upgraded.Damage || normal.Block != upgraded.Block || normal.Retain != upgraded.Retain || normal.Innate != upgraded.Innate || normal.Rules() != upgraded.Rules(), cardId + " has an effective upgrade");
 }
 foreach (var upgraded in new[] { false, true })
 {
@@ -423,7 +426,7 @@ foreach(var up in new[]{false,true}) {
     Check(reserve.Row.Text("special")=="double_poison"&&reserve.Row.Flag("retain")&&reserve.Row.Flag("exhaust")&&reserve.Cost==(up?0:1),"Venom Reserve remains the retained one-use multiplier");
 }
 PersistenceChecks.Run(Check,directory);
-Console.WriteLine(JsonSerializer.Serialize(new { result = "passed", assertions = count, cards = 360, inheritedTraits = traitIds.Length, familyFixture = directory }));
+Console.WriteLine(JsonSerializer.Serialize(new { result = "passed", assertions = count, cards = 371, inheritedTraits = traitIds.Length, familyFixture = directory }));
 
 public static class ApiFixture
 {

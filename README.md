@@ -4,7 +4,7 @@ Every climb ends. Your bloodline grows.
 
 A custom character by **CapeKid** for solo and co-op on the regular and public-beta branches of **Slay the Spire 2**. Knight, Mage and Ranger heirs inherit traits and altered starters; crowns from each climb rebuild a permanent Family Manor. See [co-op setup and progression](docs/coop.md).
 
-- **82 reward cards per class on regular, 85 on public-beta**, plus three basics. Each includes 34 shared family cards alongside class specialties. All 360 historical definitions, saved IDs and original illustrations are retained.
+- **82 reward cards per class on regular, 85 on public-beta**, plus four basics including the shared starter Family Motto. Each includes 34 shared family cards alongside class specialties. All 371 historical definitions, saved IDs and original illustrations are retained.
 - 61 inherited traits, compatible inheritance, three new heirs after each climb and the first family's quick start.
 - Six manor upgrades, family naming, visible banner emblems, full trait descriptions, confirmed purchases. Crown balances cannot be edited from the public Manor UI.
 - Crowns reward completed progress and earned, unspent gold. Untouched or unfinished abandoned starts earn zero; a played combat loss retains participation credit. See [payout rules](docs/earned-crowns.md).
@@ -26,7 +26,7 @@ The port is a development release. Native automated and visual checks cover card
 
 `sts2/` contains the native C# port. Design remains in `sheets/*.json`. Generate stable models with `scripts/sts2-generate.py`, build `sts2/SpireLegacy.csproj` and package with `scripts/sts2-package.py`. Your owned StS2 assemblies are local build dependencies and are not in Git. Original SVG trait/class icons are reproducible with `scripts/author-heir-icons.py`; see [icon provenance](docs/original-icons.md).
 
-The active pools contain 187 distinct cards on regular and 196 on public-beta; the other historical definitions remain available to native model lookup and compatibility tools. [Pool guide](docs/card-pools.md), [card catalogue](docs/card-catalogue.md), [class mechanics and starter genetics](docs/classes-and-genes.md), [trait adaptations](docs/traits.md) and [manor balance](docs/manor-and-balance.md) describe the shared design. Their historical StS1 test results do not substitute for StS2 validation.
+The active pools contain 188 distinct cards on regular and 197 on public-beta; the other historical definitions remain available to native model lookup and compatibility tools. [Pool guide](docs/card-pools.md), [card catalogue](docs/card-catalogue.md), [class mechanics and starter genetics](docs/classes-and-genes.md), [trait adaptations](docs/traits.md) and [manor balance](docs/manor-and-balance.md) describe the shared design. Their historical StS1 test results do not substitute for StS2 validation.
 
 All 360 original illustrations are preserved. Current art-direction summaries replace the removed generation records. Review sheets: [Knight](media/card-art-knight.png), [Mage](media/card-art-mage.png), [Ranger](media/card-art-ranger.png).
 

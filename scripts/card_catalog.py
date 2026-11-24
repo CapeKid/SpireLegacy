@@ -5,8 +5,9 @@ ROOT=Path(__file__).resolve().parents[1]
 read=lambda name:json.loads((ROOT/'sheets'/f'{name}.json').read_text())
 powers={r['id']:r['summary'] for r in read('power_effects')}
 special={r['id']:r['summary'] for r in read('special_effects')}
+reactions={r['id']:r for r in read('class_reactions')}
 lines=['# Spire Legacy card catalogue','',
-       'Each class has 82 rewards on regular (20 common, 36 uncommon, 26 rare), or 85 on public-beta (20 common, 38 uncommon, 27 rare), plus 3 basics. The 34 shared family cards count toward every class. Rows marked Public-beta are added only on that branch. Historical cards remain loadable by stable ID. Values below are base cards before inherited traits and combat powers.','']
+       'Each class has 82 rewards on regular (20 common, 36 uncommon, 26 rare), or 85 on public-beta (20 common, 38 uncommon, 27 rare), plus 4 basics, one of them the shared starter Family Motto. The 34 shared family cards count toward every class; six of them add a line for the heir class. Rows marked Public-beta are added only on that branch. Historical cards remain loadable by stable ID. Values below are base cards before inherited traits and combat powers.','']
 members=read('card_pools')+read('branch_cards')
 beta={r['cardId'] for r in read('branch_cards')}
 for cls in read('classes'):
@@ -14,7 +15,7 @@ for cls in read('classes'):
     lines.extend(['## '+cls['name'],'','| Card | Rarity | Type | Energy | Effects |','| --- | --- | --- | ---: | --- |'])
     for row in read('cards'):
         if row['id'] not in pool:continue
-        effects=['Shared family card' if pool[row['id']]=='shared' else 'Class unique']
+        effects=[{'shared':'Shared family card','starter':'Shared starter'}.get(pool[row['id']],'Class unique')]
         if row['id'] in beta:effects.append('Public-beta only')
         if row['damage']:effects.append(str(row['damage'])+' damage'+(' ×'+str(row['hits']) if row['hits']>1 else '')+(' to all enemies' if row['aoe'] else ''))
         for key,label in [('block','Block'),('draw','draw'),('discard','discard'),('energy','Energy'),('strength','Strength'),('dexterity','Dexterity'),('weak','Weak'),('vulnerable','Vulnerable'),('poison','Poison'),('vigor','next Attack damage'),('thorns','Thorns'),('plated','Plated Armor'),('heal','healing'),('hpLoss','HP cost'),('nextDraw','draw next turn'),('nextEnergy','Energy next turn'),('nextBlock','Block next turn')]:
@@ -29,8 +30,12 @@ for cls in read('classes'):
             if row['special'] in ('block_damage','chain_damage'):
                 text=text.rstrip('.')+(' to all enemies' if row['aoe'] else '')+(' '+str(row['hits'])+' times' if row['hits']>1 else '')+'.'
             effects.append(text)
+        if row['id'] in reactions:
+            reaction=reactions[row['id']]
+            effects.append(cls['name']+': '+reaction[cls['id']].replace('{n}',str(reaction[cls['id']+'Amount'])))
         for key,label in [('retain','Retain'),('ethereal','Ethereal'),('innate','Innate'),('exhaust','Exhaust')]:
             if row[key]:effects.append(label)
+        if row.get('upgradeInnate'):effects.append('Upgrade: Innate')
         lines.append('| '+row['name']+' | '+row['rarity'].title()+' | '+row['type'].title()+' | '+str(row['cost'])+' | '+'; '.join(effects)+' |')
     lines.append('')
 (ROOT/'docs/card-catalogue.md').write_text('\n'.join(lines).rstrip()+'\n',encoding='utf-8')

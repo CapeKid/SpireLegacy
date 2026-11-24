@@ -2,28 +2,28 @@
   {
     "id": "knight",
     "reference": "StS2 regular v0.107.1: 82 rewards; public-beta v0.111.0: 85 rewards with branch additions",
-    "basic": 3,
+    "basic": 4,
     "common": 20,
     "uncommon": 36,
     "rare": 26,
-    "total": 85
+    "total": 86
   },
   {
     "id": "mage",
     "reference": "StS2 regular v0.107.1: 82 rewards; public-beta v0.111.0: 85 rewards with branch additions",
-    "basic": 3,
+    "basic": 4,
     "common": 20,
     "uncommon": 36,
     "rare": 26,
-    "total": 85
+    "total": 86
   },
   {
     "id": "ranger",
     "reference": "StS2 regular v0.107.1: 82 rewards; public-beta v0.111.0: 85 rewards with branch additions",
-    "basic": 3,
+    "basic": 4,
     "common": 20,
     "uncommon": 36,
     "rare": 26,
-    "total": 85
+    "total": 86
   }
 ]

@@ -360,3 +360,14 @@ public sealed class C_ranger_ancient_canopy : LegacyCard { public C_ranger_ancie
 public sealed class C_ranger_arrow_cascade : LegacyCard { public C_ranger_arrow_cascade() : base("ranger_arrow_cascade") { } }
 public sealed class C_ranger_hunt_without_end : LegacyCard { public C_ranger_hunt_without_end() : base("ranger_hunt_without_end") { } }
 public sealed class C_ranger_forest_oracle : LegacyCard { public C_ranger_forest_oracle() : base("ranger_forest_oracle") { } }
+public sealed class C_family_motto : LegacyCard { public C_family_motto() : base("family_motto") { } }
+public sealed class C_heirloom_blade : LegacyCard { public C_heirloom_blade() : base("heirloom_blade") { } }
+public sealed class C_banner_volley : LegacyCard { public C_banner_volley() : base("banner_volley") { } }
+public sealed class C_inherited_grudge : LegacyCard { public C_inherited_grudge() : base("inherited_grudge") { } }
+public sealed class C_lineage_strike : LegacyCard { public C_lineage_strike() : base("lineage_strike") { } }
+public sealed class C_heraldry : LegacyCard { public C_heraldry() : base("heraldry") { } }
+public sealed class C_hearth_memory : LegacyCard { public C_hearth_memory() : base("hearth_memory") { } }
+public sealed class C_old_grudges : LegacyCard { public C_old_grudges() : base("old_grudges") { } }
+public sealed class C_birthright : LegacyCard { public C_birthright() : base("birthright") { } }
+public sealed class C_crown_breaker : LegacyCard { public C_crown_breaker() : base("crown_breaker") { } }
+public sealed class C_generations : LegacyCard { public C_generations() : base("generations") { } }

@@ -198,5 +198,17 @@
   {
     "id": "guard_block",
     "summary": "If you already have Block, gain {n} additional Block."
+  },
+  {
+    "id": "grudge_repeat",
+    "summary": "If the target is Weak or Vulnerable, deal this damage again."
+  },
+  {
+    "id": "power_discount",
+    "summary": "Costs 1 less for each Power you have played this combat."
+  },
+  {
+    "id": "crown_breaker",
+    "summary": "If this kills the target, gain 1 Energy and draw 2 cards."
   }
 ]
