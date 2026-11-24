@@ -2,12 +2,14 @@ using System.Text.Json;
 using Godot;
 using HarmonyLib;
 using MegaCrit.Sts2.Core.Commands;
+using MegaCrit.Sts2.Core.ControllerInput;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Merchant;
 using MegaCrit.Sts2.Core.Entities.Players;
 using MegaCrit.Sts2.Core.Factories;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Models.Relics;
+using MegaCrit.Sts2.Core.Nodes.CommonUi;
 using MegaCrit.Sts2.Core.Nodes.Screens.CardLibrary;
 using MegaCrit.Sts2.Core.Random;
 using MegaCrit.Sts2.Core.Rewards;
@@ -225,7 +227,103 @@ public static class PoolAuditOracle
         }
         finally {foreach(var egg in eggs)player.RemoveRelicInternal(egg,silent:true);}
     }
-    public static async Task<object> Library(RunState? run,bool heir)
+    public static async Task<object> CompendiumClasses()
+    {
+        var stack=MegaCrit.Sts2.Core.Nodes.NGame.Instance!.MainMenu!.SubmenuStack;
+        var longReach=NativeCards.Get("knight_long_reach");
+        // Native search matches names and card text only after the card is seen.
+        SaveManager.Instance.MarkCardAsSeen(longReach);
+        var library=stack.GetSubmenuType<NCardLibrary>();
+        library.Initialize(null!);
+        stack.Push(library);
+        try
+        {
+            var tree=(SceneTree)Engine.GetMainLoop();
+            var filters=(Dictionary<CharacterModel,NCardPoolFilter>)AccessTools.Field(typeof(NCardLibrary),"_cardPoolFilters").GetValue(library)!;
+            var heir=filters.Single(pair=>pair.Key is HeirCharacter).Value;
+            var selector=library.GetNode<HBoxContainer>(HeirCompendiumPool.SelectorName);
+            var buttons=selector.GetChildren().OfType<Button>().ToArray();
+            Require(!selector.Visible && buttons[0].ButtonPressed,"The menu should open on the native character filter with All Classes ready.");
+            var grid=(NCardLibraryGrid)AccessTools.Field(typeof(NCardLibrary),"_grid").GetValue(library)!;
+            var search=library.GetNode<NSearchBar>("%SearchBar");
+            string[] VisibleCards()=>grid.VisibleCards.OfType<LegacyCard>().Select(card=>card.Key).Order().ToArray();
+            async Task Press(StringName action)
+            {
+                Input.ParseInputEvent(new InputEventAction {Action=action,Pressed=true});
+                await tree.ToSignal(tree,SceneTree.SignalName.ProcessFrame);
+                Input.ParseInputEvent(new InputEventAction {Action=action,Pressed=false});
+                await tree.ToSignal(tree,SceneTree.SignalName.ProcessFrame);
+            }
+            async Task Settle()=>await tree.ToSignal(tree.CreateTimer(.35),SceneTreeTimer.SignalName.Timeout);
+
+            heir.IsSelected=true;
+            heir.EmitSignal(NCardPoolFilter.SignalName.Toggled,heir);
+            await tree.ToSignal(tree.CreateTimer(1),SceneTreeTimer.SignalName.Timeout);
+            Require(selector.IsVisibleInTree(),"The selector did not appear with the Heir filter active.");
+            var views=new Dictionary<string,string[]> {["all"]=VisibleCards()};
+            tree.Root.GetTexture().GetImage().SavePng(Path.Combine(Runtime.DataDirectory,"compendium-classes.png"));
+            var bounds=buttons.Select(button=>button.GetGlobalRect()).ToArray();
+            Require(bounds.All(selector.GetGlobalRect().Encloses) &&
+                bounds.SelectMany((rect,index)=>bounds.Skip(index+1).Select(other=>rect.Intersects(other))).All(overlap=>!overlap),
+                "Class buttons overlap or run outside the selector.");
+            Require(selector.GetGlobalRect().End.Y<=grid.GetGlobalRect().Position.Y &&
+                library.GetGlobalRect().Encloses(selector.GetGlobalRect()),"The selector overlaps the cards or falls outside the screen.");
+
+            heir.GrabFocus();
+            await Press(MegaInput.down);
+            Require(buttons[0].HasFocus(),"Controller did not enter the selector from the Heir filter.");
+            await Press(MegaInput.right);
+            Require(buttons[1].HasFocus(),"Controller could not move to Knight.");
+            await Press(MegaInput.select);
+            Require(buttons[1].ButtonPressed,"Controller Select did not choose Knight.");
+            await Settle();
+            views["knight"]=VisibleCards();
+            await Press(MegaInput.right);
+            Require(buttons[2].HasFocus(),"Controller could not move to Mage.");
+            await Press(MegaInput.select);
+            await Settle();
+            views["mage"]=VisibleCards();
+            await Press(MegaInput.right);
+            Require(buttons[3].HasFocus(),"Controller could not move to Ranger.");
+            await Press(MegaInput.select);
+            await Settle();
+            views["ranger"]=VisibleCards();
+
+            var rare=library.GetNode<NTickbox>("%RareRarity");
+            rare.IsTicked=true;
+            AccessTools.Method(typeof(NCardLibrary),"UpdateRarityFilter").Invoke(library,[rare]);
+            await Settle();
+            var rareKeys=VisibleCards();
+            Require(rareKeys.Length>0 && grid.VisibleCards.All(card=>card.Rarity==CardRarity.Rare),
+                "Rarity did not filter the selected class.");
+            for(var index=0;index<3;index++) await Press(MegaInput.left);
+            await Press(MegaInput.select);
+            await Settle();
+            Require(buttons[0].ButtonPressed && grid.VisibleCards.All(card=>card.Rarity==CardRarity.Rare),
+                "Changing class cleared the rarity filter.");
+            rare.IsTicked=false;
+            AccessTools.Method(typeof(NCardLibrary),"UpdateRarityFilter").Invoke(library,[rare]);
+            var searchInput=NativeTestBridge.Descendants(search).OfType<LineEdit>().Single();
+            searchInput.Text=longReach.Title;
+            searchInput.EmitSignal(LineEdit.SignalName.TextChanged,searchInput.Text);
+            await Settle();
+            Require(VisibleCards().SequenceEqual(["knight_long_reach"]),"Search did not find the shared card once.");
+            await Press(MegaInput.right);
+            await Press(MegaInput.select);
+            await Settle();
+            Require(VisibleCards().SequenceEqual(["knight_long_reach"]),"Changing class cleared the search filter.");
+
+            var native=filters.First(pair=>pair.Key is not HeirCharacter).Value;
+            native.IsSelected=true;
+            native.EmitSignal(NCardPoolFilter.SignalName.Toggled,native);
+            await Settle();
+            Require(!selector.Visible && VisibleCards().Length==0,"The selector affected a native character.");
+            return new{views,rareCount=rareKeys.Length,selector=selector.GetGlobalRect().ToString(),controller=true};
+        }
+        finally {stack.Pop();}
+    }
+
+    public static async Task<object> Library(RunState? run,bool heir,string? compendiumClass=null)
     {
         var tree=(SceneTree)Engine.GetMainLoop();MegaCrit.Sts2.Core.Nodes.Screens.MainMenu.NSubmenuStack stack=run==null?MegaCrit.Sts2.Core.Nodes.NGame.Instance!.MainMenu!.SubmenuStack:MegaCrit.Sts2.Core.Nodes.NRun.Instance!.GlobalUi.SubmenuStack.Stack;
         var library=stack.GetSubmenuType<NCardLibrary>();library.Initialize(run!);
@@ -233,13 +331,21 @@ public static class PoolAuditOracle
         {
             stack.Push(library);
             if(heir){var filters=(Dictionary<CharacterModel,NCardPoolFilter>)AccessTools.Field(typeof(NCardLibrary),"_cardPoolFilters").GetValue(library)!;
-                var filter=filters.Single(p=>p.Key is HeirCharacter).Value;filter.IsSelected=true;AccessTools.Method(typeof(NCardLibrary),"UpdateCardPoolFilter").Invoke(library,[filter]);}
+                var filter=filters.Single(p=>p.Key is HeirCharacter).Value;filter.IsSelected=true;AccessTools.Method(typeof(NCardLibrary),"UpdateCardPoolFilter").Invoke(library,[filter]);
+                if (run is null && compendiumClass is not null)
+                {
+                    var index=Array.IndexOf(new[] {"all","knight","mage","ranger"},compendiumClass);
+                    if(index<0)throw new ArgumentException("Unknown Compendium class.",nameof(compendiumClass));
+                    var selector=library.GetNode<HBoxContainer>(HeirCompendiumPool.SelectorName);
+                    selector.GetChild<Button>(index).EmitSignal(BaseButton.SignalName.Pressed);
+                }}
             var deadline=Time.GetTicksMsec()+1000;while(Time.GetTicksMsec()<deadline)await tree.ToSignal(tree,SceneTree.SignalName.ProcessFrame);
             var grid=(NCardLibraryGrid)AccessTools.Field(typeof(NCardLibrary),"_grid").GetValue(library)!;
             var nodes=NativeTestBridge.Descendants(library).OfType<MegaCrit.Sts2.Core.Nodes.Cards.NCard>().ToArray();if(run==null)menuCards=nodes;
             var rendered=nodes.Select(c=>c.Model).Where(c=>c!=null).ToArray();
             var stale=new[]{"_portraitBlurMaterial","_canvasGroupMaskBlurMaterial","_canvasGroupBlurMaterial","_canvasGroupMaskMaterial"}.Where(name=>menuCards.Concat(nodes).Where(GodotObject.IsInstanceValid).Any(node=>AccessTools.Field(typeof(MegaCrit.Sts2.Core.Nodes.Cards.NCard),name).GetValue(node) is Material material&&!GodotObject.IsInstanceValid(material))).ToArray();
-            return new{cls=run!=null&&MegaCrit.Sts2.Core.Context.LocalContext.GetMe(run)?.Character is HeirCharacter character?character.ClassId:Runtime.Heir.classId,rendered=rendered.Length,filtered=grid.VisibleCards.Count(),filteredLegacy=grid.VisibleCards.OfType<LegacyCard>().Select(c=>c.Key).Distinct().ToArray(),legacy=rendered.OfType<LegacyCard>().Select(c=>c.Key).Distinct().ToArray(),staleMaterials=stale};
+            return new{cls=run!=null&&MegaCrit.Sts2.Core.Context.LocalContext.GetMe(run)?.Character is HeirCharacter character?character.ClassId:Runtime.Heir.classId,rendered=rendered.Length,filtered=grid.VisibleCards.Count(),filteredLegacy=grid.VisibleCards.OfType<LegacyCard>().Select(c=>c.Key).Distinct().ToArray(),legacy=rendered.OfType<LegacyCard>().Select(c=>c.Key).Distinct().ToArray(),staleMaterials=stale,
+                classSelector=NativeTestBridge.Descendants(library).Any(node=>node.Name==HeirCompendiumPool.SelectorName && node is Control {Visible:true})};
         }
         finally {stack.Pop();var deadline=Time.GetTicksMsec()+500;while(Time.GetTicksMsec()<deadline)await tree.ToSignal(tree,SceneTree.SignalName.ProcessFrame);}
     }

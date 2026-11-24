@@ -87,7 +87,7 @@ for cls in ['knight','mage','ranger','ironclad']:
     if 'import' not in tag:
         send('abandon');send('select')
         for selected in ['knight','mage','ranger','knight']:
-            menu=send('pool-audit-library',menu=True,heir=True,selectedClass=selected)
+            menu=send('pool-audit-library',menu=True,heir=True,selectedClass=selected,compendiumClass=selected)
             assert menu['cls']==selected and set(menu['filteredLegacy'])=={r['cardId'] for r in membership+ancients if r['classId']==selected} and menu['rendered']>0 and not menu['staleMaterials'],menu
     print(tag,cls,'reward/shop/transform/filter/history checks pass',flush=True)
 if 'import' in tag:send('abandon')

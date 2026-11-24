@@ -86,7 +86,7 @@ CARD_OVERRIDES = {
     'ranger_finishing_flurry': dict(specialAmount=5, upgradeSpecial=1),
     'knight_sweeping_edge': dict(damage=5),
     'ranger_scattershot': dict(damage=4, discard=1),
-    'knight_long_reach': dict(damage=5, upgradeDamage=3, weak=1),
+    'knight_long_reach': dict(damage=5, upgradeDamage=3, weak=1, draw=0),
     'knight_executioner_axe': dict(damage=11),
     'knight_unbroken_wall': dict(block=24, upgradeBlock=6),
     'bastion': dict(dexterity=3),

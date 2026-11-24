@@ -3519,7 +3519,7 @@
       "damage": 5,
       "block": 0,
       "hits": 1,
-      "draw": 1,
+      "draw": 0,
       "discard": 0,
       "energy": 0,
       "strength": 0,
@@ -3547,7 +3547,7 @@
       "upgradeCost": false,
       "upgradeDiscard": 0
     },
-    "reason": "Draw-attack trailed native Pommel Strike by more than the heir margin; 5 (8 upgraded) with 1 Weak keeps foes at spear length and stays distinct from Aim."
+    "reason": "Keep the Weak attack at 5 damage (8 upgraded) and remove draw so Steady Aim retains its role as a draw attack."
   },
   {
     "id": "knight_field_rations",

@@ -2213,7 +2213,7 @@
     "rarity": "COMMON",
     "damage": 5,
     "block": 0,
-    "draw": 1,
+    "draw": 0,
     "energy": 0,
     "strength": 0,
     "dexterity": 0,
